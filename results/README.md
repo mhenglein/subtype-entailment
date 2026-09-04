@@ -14,6 +14,11 @@ Additional recorded suites:
 | [topfree-bridge.json](topfree-bridge.json) | `python3 experiments/check_topfree_bridge.py` |
 | [context-cuts.json](context-cuts.json) | `python3 experiments/check_context_cuts.py` |
 | [budget-search.json](budget-search.json) | E011's explicit command in the experiment index |
+| [boundary-slices.json](boundary-slices.json) | `python3 experiments/check_boundary_slices.py` |
+| [summary-bridge.json](summary-bridge.json) | `python3 experiments/check_summary_bridge.py` |
+| [summary-bridge-audit.json](summary-bridge-audit.json) | `python3 experiments/check_summary_bridge_audit.py` |
+| [shortest-witnesses.json](shortest-witnesses.json) | `python3 experiments/shortest_witnesses.py` |
+| [trimmed-budget.json](trimmed-budget.json) | `python3 experiments/trim_budget_example.py` |
 
 See [the experiment index](../experiments/README.md) for IDs, coverage, interpretations, and limitations.
 

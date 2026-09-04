@@ -123,30 +123,40 @@
     {
       "id": "A008",
       "title": "Bound minimal witnesses after stronger truncation",
-      "status": "untried",
-      "outcome": "open",
+      "status": "tried",
+      "outcome": "inconclusive",
       "owner": null,
       "updated": "2026-09-04",
-      "summary": "The cuts exist; a systematic search of witnesses resisting them and a bound proof have not run.",
-      "next_step": "Enumerate and minimize resistant witnesses, then state one precise candidate bound.",
+      "summary": "Decided the two-state case; targeted shortest witnesses reach length 12, with exact critical-cut obstructions.",
+      "next_step": "Study the six-state budget-five example and test stronger bounds after trimming irrelevant states.",
       "record": "research/approaches/A008.md",
-      "evidence": [],
+      "evidence": [
+        "notes/2026-09-04-shortest-witnesses.md",
+        "notes/2026-09-04-minimal-witness-structure.md",
+        "results/shortest-witnesses.json",
+        "lean/Subtail/TwoState.lean"
+      ],
       "issue": "https://github.com/mhenglein/subtail/issues/2"
     },
     {
       "id": "A009",
       "title": "Find budget growth beyond the regular-language baseline",
       "status": "tried",
-      "outcome": "inconclusive",
+      "outcome": "supported",
       "owner": null,
       "updated": "2026-09-04",
-      "summary": "A 1,200-instance search found exact random budgets at most 1 and five +1 flag increases; 45 rows hit the state cap.",
-      "next_step": "Preserve a known bordered witness while mutating flags; separate simple state and endpoint pruning from proper-border effects.",
+      "summary": "Full boundary normalization removes the earlier increases; a new six-state instance has exact B=5 versus boundary B=1.",
+      "next_step": "Minimize and generalize the six-state example; seek B greater than the state count or prove a larger bound.",
       "record": "research/approaches/A009.md",
       "evidence": [
         "notes/2026-09-04-budget-search.md",
         "experiments/search_budgets.py",
-        "results/budget-search.json"
+        "results/budget-search.json",
+        "notes/2026-09-04-boundary-slices.md",
+        "notes/2026-09-04-trimmed-budget.md",
+        "experiments/trim_budget_example.py",
+        "results/trimmed-budget.json",
+        "results/boundary-slices.json"
       ],
       "issue": null
     },
@@ -157,14 +167,19 @@
       "outcome": "supported",
       "owner": null,
       "updated": "2026-09-04",
-      "summary": "Implemented and audited exact regular seed closure and supplied-path model checks; 3,577 bounded diagnostics and edge cases pass.",
-      "next_step": "Construct the actual W summary classes and prove their link to the canonical model; the global path search remains open.",
+      "summary": "Implemented actual W/Wrev summaries with S/F annotations; independent audit fixed two API errors and found no known comparison mismatch.",
+      "next_step": "Generate actual subtype-derived instances and test joint summary invariants in A013.",
       "record": "research/approaches/A010.md",
       "evidence": [
         "notes/2026-09-04-bridge-foundation.md",
         "experiments/topfree_bridge.py",
         "experiments/check_topfree_bridge.py",
-        "results/topfree-bridge.json"
+        "results/topfree-bridge.json",
+        "notes/2026-09-04-summary-bridge.md",
+        "notes/2026-09-04-summary-bridge-audit.md",
+        "experiments/summary_bridge.py",
+        "results/summary-bridge.json",
+        "results/summary-bridge-audit.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/3"
     },
@@ -254,14 +269,17 @@
     {
       "id": "A017",
       "title": "Bound essential repeated blocks",
-      "status": "untried",
-      "outcome": "open",
+      "status": "tried",
+      "outcome": "inconclusive",
       "owner": null,
       "updated": "2026-09-04",
-      "summary": "A bounded skeleton could make the restricted solver complete; no preservation or normalization theorem has been attempted.",
-      "next_step": "Test one precise block-deletion rule while recording every new border across the join.",
+      "summary": "An exact border-lifting condition makes loop deletion sound; a three-state example refutes deletion from state repetition alone.",
+      "next_step": "Find a finite join-context summary that guarantees border lifting and bounds essential blocks.",
       "record": "research/approaches/A017.md",
-      "evidence": [],
+      "evidence": [
+        "notes/2026-09-04-minimal-witness-structure.md",
+        "experiments/check_minimal_structure.py"
+      ],
       "issue": null
     },
     {
@@ -271,15 +289,19 @@
       "outcome": "supported",
       "owner": null,
       "updated": "2026-09-04",
-      "summary": "Lean 4.33.1 checks O1-O3 for binary words, the visited-state cut, and the conditional O5 enumeration; the bound remains open.",
-      "next_step": "Implement O4: the exact fixed-budget sufficient automaton and its language and nonemptiness proofs.",
+      "summary": "Lean checks direct budget predicates, reversal, and an exact two-state decision, in addition to the previous truncation and conditional proofs.",
+      "next_step": "Formalize the finite Sufficient automaton and its exact nonemptiness procedure; the global bound remains open.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
         "notes/2026-09-04-lean-core.md",
         "lean/Subtail/Conditional.lean",
         "scripts/check_lean.py",
-        "results/lean-checks.json"
+        "results/lean-checks.json",
+        "lean/Subtail/SandwichPredicates.lean",
+        "lean/Subtail/Boundary.lean",
+        "lean/Subtail/TwoState.lean",
+        "notes/2026-09-04-lean-sandwich.md"
       ],
       "issue": null
     }

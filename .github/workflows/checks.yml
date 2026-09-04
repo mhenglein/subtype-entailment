@@ -23,8 +23,14 @@ jobs:
           python3 experiments/check_topfree_bridge.py
           python3 experiments/check_context_cuts.py
           python3 experiments/search_budgets.py --replay-stored
+          python3 experiments/check_boundary_slices.py
+          python3 experiments/check_summary_bridge.py
+          python3 experiments/check_summary_bridge_audit.py
+          python3 experiments/check_minimal_structure.py
+          python3 experiments/shortest_witnesses.py
+          python3 experiments/trim_budget_example.py
       - name: Verify recorded results
-        run: git diff --exit-code -- results/independent-checks.json results/topfree-bridge.json results/context-cuts.json results/budget-search.json
+        run: git diff --exit-code -- results/independent-checks.json results/topfree-bridge.json results/context-cuts.json results/budget-search.json results/boundary-slices.json results/summary-bridge.json results/summary-bridge-audit.json results/shortest-witnesses.json results/trimmed-budget.json
   lean:
     runs-on: ubuntu-latest
     steps:

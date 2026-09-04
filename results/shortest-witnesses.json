@@ -1,0 +1,5910 @@
+{
+  "counts": {
+    "cut_applicable": {
+      "equal": 0,
+      "profile": 0,
+      "visited": 0
+    },
+    "cut_failures": [],
+    "failures": [],
+    "forward_reverse_oracle_comparisons": 56970,
+    "instances_enumerated": 20736,
+    "no_witness_to_word_cap": 18054,
+    "shorter_failure_categories": {
+      "bad_state": 0,
+      "flagged_border": 0,
+      "non_final": 90,
+      "oracle_mismatch": 0,
+      "undefined_transition": 0
+    },
+    "shortest_witness_instances": 2682,
+    "two_state_fallback_instances": 0,
+    "two_state_n00_state_histogram": {
+      "0": 15876,
+      "1": 968,
+      "3": 968,
+      "7": 242
+    },
+    "two_state_n00_status": {
+      "NO": 18054,
+      "UNKNOWN": 0,
+      "YES_FALLBACK": 0
+    },
+    "words_checked": 56970
+  },
+  "experiment": "A008-shortest-witnesses",
+  "extrema": {
+    "largest_lrs": [
+      {
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 0,
+          "minimum_exact_slice_budget": 0,
+          "original_per_word_budget": 0,
+          "selected_word_budget_growth_vs_slice": 0,
+          "slices": [
+            {
+              "diagonal_states_added": [],
+              "final_state": 0,
+              "full_boundary_states_added": [],
+              "search": {
+                "budget": 0,
+                "lower_no_splits": 0,
+                "search_states": 1,
+                "split": {
+                  "D": 0,
+                  "L": 0
+                },
+                "splits_checked": 1,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "",
+                "word_length": 0
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [],
+                "delta": [
+                  [
+                    -1,
+                    -1
+                  ],
+                  [
+                    -1,
+                    -1
+                  ]
+                ],
+                "final": [
+                  0
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "checked_words": 1,
+        "cut_diagnostics": {
+          "c008_equal_state_applicable": 0,
+          "c009_all_state_profile_applicable": 0,
+          "c013_visited_state_profile_applicable": 0,
+          "unexpected_cut_failures": []
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              -1
+            ],
+            [
+              -1,
+              -1
+            ]
+          ],
+          "final": [
+            0
+          ],
+          "flags": [],
+          "start": 0
+        },
+        "lrs": 0,
+        "per_word_budget": 0,
+        "shorter_failure_summary": {
+          "counts": {
+            "bad_state": 0,
+            "flagged_border": 0,
+            "non_final": 0,
+            "oracle_mismatch": 0,
+            "undefined_transition": 0
+          },
+          "examples": {}
+        },
+        "shortest_length": 0,
+        "shortest_word": "",
+        "shortestness_certified": true,
+        "state_trace": [
+          0
+        ]
+      },
+      {
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 0,
+          "minimum_exact_slice_budget": 0,
+          "original_per_word_budget": 0,
+          "selected_word_budget_growth_vs_slice": 0,
+          "slices": [
+            {
+              "diagonal_states_added": [],
+              "final_state": 0,
+              "full_boundary_states_added": [],
+              "search": {
+                "budget": 0,
+                "lower_no_splits": 0,
+                "search_states": 1,
+                "split": {
+                  "D": 0,
+                  "L": 0
+                },
+                "splits_checked": 1,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "",
+                "word_length": 0
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [],
+                "delta": [
+                  [
+                    -1,
+                    -1
+                  ],
+                  [
+                    -1,
+                    -1
+                  ]
+                ],
+                "final": [
+                  0
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "checked_words": 1,
+        "cut_diagnostics": {
+          "c008_equal_state_applicable": 0,
+          "c009_all_state_profile_applicable": 0,
+          "c013_visited_state_profile_applicable": 0,
+          "unexpected_cut_failures": []
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              -1
+            ],
+            [
+              -1,
+              -1
+            ]
+          ],
+          "final": [
+            0
+          ],
+          "flags": [
+            [
+              0,
+              1
+            ]
+          ],
+          "start": 0
+        },
+        "lrs": 0,
+        "per_word_budget": 0,
+        "shorter_failure_summary": {
+          "counts": {
+            "bad_state": 0,
+            "flagged_border": 0,
+            "non_final": 0,
+            "oracle_mismatch": 0,
+            "undefined_transition": 0
+          },
+          "examples": {}
+        },
+        "shortest_length": 0,
+        "shortest_word": "",
+        "shortestness_certified": true,
+        "state_trace": [
+          0
+        ]
+      },
+      {
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 0,
+          "minimum_exact_slice_budget": 0,
+          "original_per_word_budget": 0,
+          "selected_word_budget_growth_vs_slice": 0,
+          "slices": [
+            {
+              "diagonal_states_added": [],
+              "final_state": 0,
+              "full_boundary_states_added": [
+                1
+              ],
+              "search": {
+                "budget": 0,
+                "lower_no_splits": 0,
+                "search_states": 1,
+                "split": {
+                  "D": 0,
+                  "L": 0
+                },
+                "splits_checked": 1,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "",
+                "word_length": 0
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [
+                  1
+                ],
+                "delta": [
+                  [
+                    -1,
+                    -1
+                  ],
+                  [
+                    -1,
+                    -1
+                  ]
+                ],
+                "final": [
+                  0
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "checked_words": 1,
+        "cut_diagnostics": {
+          "c008_equal_state_applicable": 0,
+          "c009_all_state_profile_applicable": 0,
+          "c013_visited_state_profile_applicable": 0,
+          "unexpected_cut_failures": []
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              -1
+            ],
+            [
+              -1,
+              -1
+            ]
+          ],
+          "final": [
+            0
+          ],
+          "flags": [
+            [
+              1,
+              0
+            ]
+          ],
+          "start": 0
+        },
+        "lrs": 0,
+        "per_word_budget": 0,
+        "shorter_failure_summary": {
+          "counts": {
+            "bad_state": 0,
+            "flagged_border": 0,
+            "non_final": 0,
+            "oracle_mismatch": 0,
+            "undefined_transition": 0
+          },
+          "examples": {}
+        },
+        "shortest_length": 0,
+        "shortest_word": "",
+        "shortestness_certified": true,
+        "state_trace": [
+          0
+        ]
+      },
+      {
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 0,
+          "minimum_exact_slice_budget": 0,
+          "original_per_word_budget": 0,
+          "selected_word_budget_growth_vs_slice": 0,
+          "slices": [
+            {
+              "diagonal_states_added": [],
+              "final_state": 0,
+              "full_boundary_states_added": [
+                1
+              ],
+              "search": {
+                "budget": 0,
+                "lower_no_splits": 0,
+                "search_states": 1,
+                "split": {
+                  "D": 0,
+                  "L": 0
+                },
+                "splits_checked": 1,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "",
+                "word_length": 0
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [
+                  1
+                ],
+                "delta": [
+                  [
+                    -1,
+                    -1
+                  ],
+                  [
+                    -1,
+                    -1
+                  ]
+                ],
+                "final": [
+                  0
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "checked_words": 1,
+        "cut_diagnostics": {
+          "c008_equal_state_applicable": 0,
+          "c009_all_state_profile_applicable": 0,
+          "c013_visited_state_profile_applicable": 0,
+          "unexpected_cut_failures": []
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              -1
+            ],
+            [
+              -1,
+              -1
+            ]
+          ],
+          "final": [
+            0
+          ],
+          "flags": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "start": 0
+        },
+        "lrs": 0,
+        "per_word_budget": 0,
+        "shorter_failure_summary": {
+          "counts": {
+            "bad_state": 0,
+            "flagged_border": 0,
+            "non_final": 0,
+            "oracle_mismatch": 0,
+            "undefined_transition": 0
+          },
+          "examples": {}
+        },
+        "shortest_length": 0,
+        "shortest_word": "",
+        "shortestness_certified": true,
+        "state_trace": [
+          0
+        ]
+      },
+      {
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 0,
+          "minimum_exact_slice_budget": 0,
+          "original_per_word_budget": 0,
+          "selected_word_budget_growth_vs_slice": 0,
+          "slices": [
+            {
+              "diagonal_states_added": [
+                1
+              ],
+              "final_state": 0,
+              "full_boundary_states_added": [],
+              "search": {
+                "budget": 0,
+                "lower_no_splits": 0,
+                "search_states": 1,
+                "split": {
+                  "D": 0,
+                  "L": 0
+                },
+                "splits_checked": 1,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "",
+                "word_length": 0
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [
+                  1
+                ],
+                "delta": [
+                  [
+                    -1,
+                    -1
+                  ],
+                  [
+                    -1,
+                    -1
+                  ]
+                ],
+                "final": [
+                  0
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "checked_words": 1,
+        "cut_diagnostics": {
+          "c008_equal_state_applicable": 0,
+          "c009_all_state_profile_applicable": 0,
+          "c013_visited_state_profile_applicable": 0,
+          "unexpected_cut_failures": []
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              -1
+            ],
+            [
+              -1,
+              -1
+            ]
+          ],
+          "final": [
+            0
+          ],
+          "flags": [
+            [
+              1,
+              1
+            ]
+          ],
+          "start": 0
+        },
+        "lrs": 0,
+        "per_word_budget": 0,
+        "shorter_failure_summary": {
+          "counts": {
+            "bad_state": 0,
+            "flagged_border": 0,
+            "non_final": 0,
+            "oracle_mismatch": 0,
+            "undefined_transition": 0
+          },
+          "examples": {}
+        },
+        "shortest_length": 0,
+        "shortest_word": "",
+        "shortestness_certified": true,
+        "state_trace": [
+          0
+        ]
+      }
+    ],
+    "largest_per_word_budget": [
+      {
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 0,
+          "minimum_exact_slice_budget": 0,
+          "original_per_word_budget": 0,
+          "selected_word_budget_growth_vs_slice": 0,
+          "slices": [
+            {
+              "diagonal_states_added": [],
+              "final_state": 0,
+              "full_boundary_states_added": [],
+              "search": {
+                "budget": 0,
+                "lower_no_splits": 0,
+                "search_states": 1,
+                "split": {
+                  "D": 0,
+                  "L": 0
+                },
+                "splits_checked": 1,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "",
+                "word_length": 0
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [],
+                "delta": [
+                  [
+                    -1,
+                    -1
+                  ],
+                  [
+                    -1,
+                    -1
+                  ]
+                ],
+                "final": [
+                  0
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "checked_words": 1,
+        "cut_diagnostics": {
+          "c008_equal_state_applicable": 0,
+          "c009_all_state_profile_applicable": 0,
+          "c013_visited_state_profile_applicable": 0,
+          "unexpected_cut_failures": []
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              -1
+            ],
+            [
+              -1,
+              -1
+            ]
+          ],
+          "final": [
+            0
+          ],
+          "flags": [],
+          "start": 0
+        },
+        "lrs": 0,
+        "per_word_budget": 0,
+        "shorter_failure_summary": {
+          "counts": {
+            "bad_state": 0,
+            "flagged_border": 0,
+            "non_final": 0,
+            "oracle_mismatch": 0,
+            "undefined_transition": 0
+          },
+          "examples": {}
+        },
+        "shortest_length": 0,
+        "shortest_word": "",
+        "shortestness_certified": true,
+        "state_trace": [
+          0
+        ]
+      },
+      {
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 0,
+          "minimum_exact_slice_budget": 0,
+          "original_per_word_budget": 0,
+          "selected_word_budget_growth_vs_slice": 0,
+          "slices": [
+            {
+              "diagonal_states_added": [],
+              "final_state": 0,
+              "full_boundary_states_added": [],
+              "search": {
+                "budget": 0,
+                "lower_no_splits": 0,
+                "search_states": 1,
+                "split": {
+                  "D": 0,
+                  "L": 0
+                },
+                "splits_checked": 1,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "",
+                "word_length": 0
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [],
+                "delta": [
+                  [
+                    -1,
+                    -1
+                  ],
+                  [
+                    -1,
+                    -1
+                  ]
+                ],
+                "final": [
+                  0
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "checked_words": 1,
+        "cut_diagnostics": {
+          "c008_equal_state_applicable": 0,
+          "c009_all_state_profile_applicable": 0,
+          "c013_visited_state_profile_applicable": 0,
+          "unexpected_cut_failures": []
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              -1
+            ],
+            [
+              -1,
+              -1
+            ]
+          ],
+          "final": [
+            0
+          ],
+          "flags": [
+            [
+              0,
+              1
+            ]
+          ],
+          "start": 0
+        },
+        "lrs": 0,
+        "per_word_budget": 0,
+        "shorter_failure_summary": {
+          "counts": {
+            "bad_state": 0,
+            "flagged_border": 0,
+            "non_final": 0,
+            "oracle_mismatch": 0,
+            "undefined_transition": 0
+          },
+          "examples": {}
+        },
+        "shortest_length": 0,
+        "shortest_word": "",
+        "shortestness_certified": true,
+        "state_trace": [
+          0
+        ]
+      },
+      {
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 0,
+          "minimum_exact_slice_budget": 0,
+          "original_per_word_budget": 0,
+          "selected_word_budget_growth_vs_slice": 0,
+          "slices": [
+            {
+              "diagonal_states_added": [],
+              "final_state": 0,
+              "full_boundary_states_added": [
+                1
+              ],
+              "search": {
+                "budget": 0,
+                "lower_no_splits": 0,
+                "search_states": 1,
+                "split": {
+                  "D": 0,
+                  "L": 0
+                },
+                "splits_checked": 1,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "",
+                "word_length": 0
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [
+                  1
+                ],
+                "delta": [
+                  [
+                    -1,
+                    -1
+                  ],
+                  [
+                    -1,
+                    -1
+                  ]
+                ],
+                "final": [
+                  0
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "checked_words": 1,
+        "cut_diagnostics": {
+          "c008_equal_state_applicable": 0,
+          "c009_all_state_profile_applicable": 0,
+          "c013_visited_state_profile_applicable": 0,
+          "unexpected_cut_failures": []
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              -1
+            ],
+            [
+              -1,
+              -1
+            ]
+          ],
+          "final": [
+            0
+          ],
+          "flags": [
+            [
+              1,
+              0
+            ]
+          ],
+          "start": 0
+        },
+        "lrs": 0,
+        "per_word_budget": 0,
+        "shorter_failure_summary": {
+          "counts": {
+            "bad_state": 0,
+            "flagged_border": 0,
+            "non_final": 0,
+            "oracle_mismatch": 0,
+            "undefined_transition": 0
+          },
+          "examples": {}
+        },
+        "shortest_length": 0,
+        "shortest_word": "",
+        "shortestness_certified": true,
+        "state_trace": [
+          0
+        ]
+      },
+      {
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 0,
+          "minimum_exact_slice_budget": 0,
+          "original_per_word_budget": 0,
+          "selected_word_budget_growth_vs_slice": 0,
+          "slices": [
+            {
+              "diagonal_states_added": [],
+              "final_state": 0,
+              "full_boundary_states_added": [
+                1
+              ],
+              "search": {
+                "budget": 0,
+                "lower_no_splits": 0,
+                "search_states": 1,
+                "split": {
+                  "D": 0,
+                  "L": 0
+                },
+                "splits_checked": 1,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "",
+                "word_length": 0
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [
+                  1
+                ],
+                "delta": [
+                  [
+                    -1,
+                    -1
+                  ],
+                  [
+                    -1,
+                    -1
+                  ]
+                ],
+                "final": [
+                  0
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "checked_words": 1,
+        "cut_diagnostics": {
+          "c008_equal_state_applicable": 0,
+          "c009_all_state_profile_applicable": 0,
+          "c013_visited_state_profile_applicable": 0,
+          "unexpected_cut_failures": []
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              -1
+            ],
+            [
+              -1,
+              -1
+            ]
+          ],
+          "final": [
+            0
+          ],
+          "flags": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "start": 0
+        },
+        "lrs": 0,
+        "per_word_budget": 0,
+        "shorter_failure_summary": {
+          "counts": {
+            "bad_state": 0,
+            "flagged_border": 0,
+            "non_final": 0,
+            "oracle_mismatch": 0,
+            "undefined_transition": 0
+          },
+          "examples": {}
+        },
+        "shortest_length": 0,
+        "shortest_word": "",
+        "shortestness_certified": true,
+        "state_trace": [
+          0
+        ]
+      },
+      {
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 0,
+          "minimum_exact_slice_budget": 0,
+          "original_per_word_budget": 0,
+          "selected_word_budget_growth_vs_slice": 0,
+          "slices": [
+            {
+              "diagonal_states_added": [
+                1
+              ],
+              "final_state": 0,
+              "full_boundary_states_added": [],
+              "search": {
+                "budget": 0,
+                "lower_no_splits": 0,
+                "search_states": 1,
+                "split": {
+                  "D": 0,
+                  "L": 0
+                },
+                "splits_checked": 1,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "",
+                "word_length": 0
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [
+                  1
+                ],
+                "delta": [
+                  [
+                    -1,
+                    -1
+                  ],
+                  [
+                    -1,
+                    -1
+                  ]
+                ],
+                "final": [
+                  0
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "checked_words": 1,
+        "cut_diagnostics": {
+          "c008_equal_state_applicable": 0,
+          "c009_all_state_profile_applicable": 0,
+          "c013_visited_state_profile_applicable": 0,
+          "unexpected_cut_failures": []
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              -1
+            ],
+            [
+              -1,
+              -1
+            ]
+          ],
+          "final": [
+            0
+          ],
+          "flags": [
+            [
+              1,
+              1
+            ]
+          ],
+          "start": 0
+        },
+        "lrs": 0,
+        "per_word_budget": 0,
+        "shorter_failure_summary": {
+          "counts": {
+            "bad_state": 0,
+            "flagged_border": 0,
+            "non_final": 0,
+            "oracle_mismatch": 0,
+            "undefined_transition": 0
+          },
+          "examples": {}
+        },
+        "shortest_length": 0,
+        "shortest_word": "",
+        "shortestness_certified": true,
+        "state_trace": [
+          0
+        ]
+      }
+    ],
+    "largest_shortest_length": [
+      {
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 0,
+          "minimum_exact_slice_budget": 0,
+          "original_per_word_budget": 0,
+          "selected_word_budget_growth_vs_slice": 0,
+          "slices": [
+            {
+              "diagonal_states_added": [],
+              "final_state": 1,
+              "full_boundary_states_added": [],
+              "search": {
+                "budget": 0,
+                "lower_no_splits": 0,
+                "search_states": 2,
+                "split": {
+                  "D": 0,
+                  "L": 0
+                },
+                "splits_checked": 1,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "1",
+                "word_length": 1
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [],
+                "delta": [
+                  [
+                    -1,
+                    1
+                  ],
+                  [
+                    -1,
+                    -1
+                  ]
+                ],
+                "final": [
+                  1
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "checked_words": 3,
+        "cut_diagnostics": {
+          "c008_equal_state_applicable": 0,
+          "c009_all_state_profile_applicable": 0,
+          "c013_visited_state_profile_applicable": 0,
+          "unexpected_cut_failures": []
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              -1
+            ]
+          ],
+          "final": [
+            1
+          ],
+          "flags": [],
+          "start": 0
+        },
+        "lrs": 0,
+        "per_word_budget": 0,
+        "shorter_failure_summary": {
+          "counts": {
+            "bad_state": 0,
+            "flagged_border": 0,
+            "non_final": 1,
+            "oracle_mismatch": 0,
+            "undefined_transition": 0
+          },
+          "examples": {
+            "non_final": {
+              "end_state": 0,
+              "word": ""
+            }
+          }
+        },
+        "shortest_length": 1,
+        "shortest_word": "1",
+        "shortestness_certified": true,
+        "state_trace": [
+          0,
+          1
+        ]
+      },
+      {
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 0,
+          "minimum_exact_slice_budget": 0,
+          "original_per_word_budget": 0,
+          "selected_word_budget_growth_vs_slice": 0,
+          "slices": [
+            {
+              "diagonal_states_added": [],
+              "final_state": 1,
+              "full_boundary_states_added": [],
+              "search": {
+                "budget": 0,
+                "lower_no_splits": 0,
+                "search_states": 2,
+                "split": {
+                  "D": 0,
+                  "L": 0
+                },
+                "splits_checked": 1,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "1",
+                "word_length": 1
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [],
+                "delta": [
+                  [
+                    -1,
+                    1
+                  ],
+                  [
+                    -1,
+                    -1
+                  ]
+                ],
+                "final": [
+                  1
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "checked_words": 3,
+        "cut_diagnostics": {
+          "c008_equal_state_applicable": 0,
+          "c009_all_state_profile_applicable": 0,
+          "c013_visited_state_profile_applicable": 0,
+          "unexpected_cut_failures": []
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              -1
+            ]
+          ],
+          "final": [
+            1
+          ],
+          "flags": [
+            [
+              1,
+              0
+            ]
+          ],
+          "start": 0
+        },
+        "lrs": 0,
+        "per_word_budget": 0,
+        "shorter_failure_summary": {
+          "counts": {
+            "bad_state": 0,
+            "flagged_border": 0,
+            "non_final": 1,
+            "oracle_mismatch": 0,
+            "undefined_transition": 0
+          },
+          "examples": {
+            "non_final": {
+              "end_state": 0,
+              "word": ""
+            }
+          }
+        },
+        "shortest_length": 1,
+        "shortest_word": "1",
+        "shortestness_certified": true,
+        "state_trace": [
+          0,
+          1
+        ]
+      },
+      {
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 0,
+          "minimum_exact_slice_budget": 0,
+          "original_per_word_budget": 0,
+          "selected_word_budget_growth_vs_slice": 0,
+          "slices": [
+            {
+              "diagonal_states_added": [],
+              "final_state": 1,
+              "full_boundary_states_added": [],
+              "search": {
+                "budget": 0,
+                "lower_no_splits": 0,
+                "search_states": 2,
+                "split": {
+                  "D": 0,
+                  "L": 0
+                },
+                "splits_checked": 1,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "1",
+                "word_length": 1
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [],
+                "delta": [
+                  [
+                    -1,
+                    1
+                  ],
+                  [
+                    -1,
+                    0
+                  ]
+                ],
+                "final": [
+                  1
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "checked_words": 3,
+        "cut_diagnostics": {
+          "c008_equal_state_applicable": 0,
+          "c009_all_state_profile_applicable": 0,
+          "c013_visited_state_profile_applicable": 0,
+          "unexpected_cut_failures": []
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              0
+            ]
+          ],
+          "final": [
+            1
+          ],
+          "flags": [],
+          "start": 0
+        },
+        "lrs": 0,
+        "per_word_budget": 0,
+        "shorter_failure_summary": {
+          "counts": {
+            "bad_state": 0,
+            "flagged_border": 0,
+            "non_final": 1,
+            "oracle_mismatch": 0,
+            "undefined_transition": 0
+          },
+          "examples": {
+            "non_final": {
+              "end_state": 0,
+              "word": ""
+            }
+          }
+        },
+        "shortest_length": 1,
+        "shortest_word": "1",
+        "shortestness_certified": true,
+        "state_trace": [
+          0,
+          1
+        ]
+      },
+      {
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 0,
+          "minimum_exact_slice_budget": 0,
+          "original_per_word_budget": 0,
+          "selected_word_budget_growth_vs_slice": 0,
+          "slices": [
+            {
+              "diagonal_states_added": [],
+              "final_state": 1,
+              "full_boundary_states_added": [],
+              "search": {
+                "budget": 0,
+                "lower_no_splits": 0,
+                "search_states": 2,
+                "split": {
+                  "D": 0,
+                  "L": 0
+                },
+                "splits_checked": 1,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "1",
+                "word_length": 1
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [],
+                "delta": [
+                  [
+                    -1,
+                    1
+                  ],
+                  [
+                    -1,
+                    0
+                  ]
+                ],
+                "final": [
+                  1
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "checked_words": 3,
+        "cut_diagnostics": {
+          "c008_equal_state_applicable": 0,
+          "c009_all_state_profile_applicable": 0,
+          "c013_visited_state_profile_applicable": 0,
+          "unexpected_cut_failures": []
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              0
+            ]
+          ],
+          "final": [
+            1
+          ],
+          "flags": [
+            [
+              1,
+              0
+            ]
+          ],
+          "start": 0
+        },
+        "lrs": 0,
+        "per_word_budget": 0,
+        "shorter_failure_summary": {
+          "counts": {
+            "bad_state": 0,
+            "flagged_border": 0,
+            "non_final": 1,
+            "oracle_mismatch": 0,
+            "undefined_transition": 0
+          },
+          "examples": {
+            "non_final": {
+              "end_state": 0,
+              "word": ""
+            }
+          }
+        },
+        "shortest_length": 1,
+        "shortest_word": "1",
+        "shortestness_certified": true,
+        "state_trace": [
+          0,
+          1
+        ]
+      },
+      {
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 0,
+          "minimum_exact_slice_budget": 0,
+          "original_per_word_budget": 0,
+          "selected_word_budget_growth_vs_slice": 0,
+          "slices": [
+            {
+              "diagonal_states_added": [],
+              "final_state": 1,
+              "full_boundary_states_added": [],
+              "search": {
+                "budget": 0,
+                "lower_no_splits": 0,
+                "search_states": 3,
+                "split": {
+                  "D": 0,
+                  "L": 0
+                },
+                "splits_checked": 1,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "1",
+                "word_length": 1
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [],
+                "delta": [
+                  [
+                    -1,
+                    1
+                  ],
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                "final": [
+                  1
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "checked_words": 3,
+        "cut_diagnostics": {
+          "c008_equal_state_applicable": 0,
+          "c009_all_state_profile_applicable": 0,
+          "c013_visited_state_profile_applicable": 0,
+          "unexpected_cut_failures": []
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              1
+            ]
+          ],
+          "final": [
+            1
+          ],
+          "flags": [],
+          "start": 0
+        },
+        "lrs": 0,
+        "per_word_budget": 0,
+        "shorter_failure_summary": {
+          "counts": {
+            "bad_state": 0,
+            "flagged_border": 0,
+            "non_final": 1,
+            "oracle_mismatch": 0,
+            "undefined_transition": 0
+          },
+          "examples": {
+            "non_final": {
+              "end_state": 0,
+              "word": ""
+            }
+          }
+        },
+        "shortest_length": 1,
+        "shortest_word": "1",
+        "shortestness_certified": true,
+        "state_trace": [
+          0,
+          1
+        ]
+      }
+    ],
+    "with_boundary_diagnostics": [
+      {
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 0,
+          "minimum_exact_slice_budget": 0,
+          "original_per_word_budget": 0,
+          "selected_word_budget_growth_vs_slice": 0,
+          "slices": [
+            {
+              "diagonal_states_added": [],
+              "final_state": 1,
+              "full_boundary_states_added": [],
+              "search": {
+                "budget": 0,
+                "lower_no_splits": 0,
+                "search_states": 2,
+                "split": {
+                  "D": 0,
+                  "L": 0
+                },
+                "splits_checked": 1,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "1",
+                "word_length": 1
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [],
+                "delta": [
+                  [
+                    -1,
+                    1
+                  ],
+                  [
+                    -1,
+                    -1
+                  ]
+                ],
+                "final": [
+                  1
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "checked_words": 3,
+        "cut_diagnostics": {
+          "c008_equal_state_applicable": 0,
+          "c009_all_state_profile_applicable": 0,
+          "c013_visited_state_profile_applicable": 0,
+          "unexpected_cut_failures": []
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              -1
+            ]
+          ],
+          "final": [
+            1
+          ],
+          "flags": [],
+          "start": 0
+        },
+        "lrs": 0,
+        "per_word_budget": 0,
+        "shorter_failure_summary": {
+          "counts": {
+            "bad_state": 0,
+            "flagged_border": 0,
+            "non_final": 1,
+            "oracle_mismatch": 0,
+            "undefined_transition": 0
+          },
+          "examples": {
+            "non_final": {
+              "end_state": 0,
+              "word": ""
+            }
+          }
+        },
+        "shortest_length": 1,
+        "shortest_word": "1",
+        "shortestness_certified": true,
+        "state_trace": [
+          0,
+          1
+        ]
+      },
+      {
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 0,
+          "minimum_exact_slice_budget": 0,
+          "original_per_word_budget": 0,
+          "selected_word_budget_growth_vs_slice": 0,
+          "slices": [
+            {
+              "diagonal_states_added": [],
+              "final_state": 1,
+              "full_boundary_states_added": [],
+              "search": {
+                "budget": 0,
+                "lower_no_splits": 0,
+                "search_states": 2,
+                "split": {
+                  "D": 0,
+                  "L": 0
+                },
+                "splits_checked": 1,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "1",
+                "word_length": 1
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [],
+                "delta": [
+                  [
+                    -1,
+                    1
+                  ],
+                  [
+                    -1,
+                    -1
+                  ]
+                ],
+                "final": [
+                  1
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "checked_words": 3,
+        "cut_diagnostics": {
+          "c008_equal_state_applicable": 0,
+          "c009_all_state_profile_applicable": 0,
+          "c013_visited_state_profile_applicable": 0,
+          "unexpected_cut_failures": []
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              -1
+            ]
+          ],
+          "final": [
+            1
+          ],
+          "flags": [
+            [
+              1,
+              0
+            ]
+          ],
+          "start": 0
+        },
+        "lrs": 0,
+        "per_word_budget": 0,
+        "shorter_failure_summary": {
+          "counts": {
+            "bad_state": 0,
+            "flagged_border": 0,
+            "non_final": 1,
+            "oracle_mismatch": 0,
+            "undefined_transition": 0
+          },
+          "examples": {
+            "non_final": {
+              "end_state": 0,
+              "word": ""
+            }
+          }
+        },
+        "shortest_length": 1,
+        "shortest_word": "1",
+        "shortestness_certified": true,
+        "state_trace": [
+          0,
+          1
+        ]
+      },
+      {
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 0,
+          "minimum_exact_slice_budget": 0,
+          "original_per_word_budget": 0,
+          "selected_word_budget_growth_vs_slice": 0,
+          "slices": [
+            {
+              "diagonal_states_added": [],
+              "final_state": 1,
+              "full_boundary_states_added": [],
+              "search": {
+                "budget": 0,
+                "lower_no_splits": 0,
+                "search_states": 2,
+                "split": {
+                  "D": 0,
+                  "L": 0
+                },
+                "splits_checked": 1,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "1",
+                "word_length": 1
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [],
+                "delta": [
+                  [
+                    -1,
+                    1
+                  ],
+                  [
+                    -1,
+                    0
+                  ]
+                ],
+                "final": [
+                  1
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "checked_words": 3,
+        "cut_diagnostics": {
+          "c008_equal_state_applicable": 0,
+          "c009_all_state_profile_applicable": 0,
+          "c013_visited_state_profile_applicable": 0,
+          "unexpected_cut_failures": []
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              0
+            ]
+          ],
+          "final": [
+            1
+          ],
+          "flags": [],
+          "start": 0
+        },
+        "lrs": 0,
+        "per_word_budget": 0,
+        "shorter_failure_summary": {
+          "counts": {
+            "bad_state": 0,
+            "flagged_border": 0,
+            "non_final": 1,
+            "oracle_mismatch": 0,
+            "undefined_transition": 0
+          },
+          "examples": {
+            "non_final": {
+              "end_state": 0,
+              "word": ""
+            }
+          }
+        },
+        "shortest_length": 1,
+        "shortest_word": "1",
+        "shortestness_certified": true,
+        "state_trace": [
+          0,
+          1
+        ]
+      },
+      {
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 0,
+          "minimum_exact_slice_budget": 0,
+          "original_per_word_budget": 0,
+          "selected_word_budget_growth_vs_slice": 0,
+          "slices": [
+            {
+              "diagonal_states_added": [],
+              "final_state": 1,
+              "full_boundary_states_added": [],
+              "search": {
+                "budget": 0,
+                "lower_no_splits": 0,
+                "search_states": 2,
+                "split": {
+                  "D": 0,
+                  "L": 0
+                },
+                "splits_checked": 1,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "1",
+                "word_length": 1
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [],
+                "delta": [
+                  [
+                    -1,
+                    1
+                  ],
+                  [
+                    -1,
+                    0
+                  ]
+                ],
+                "final": [
+                  1
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "checked_words": 3,
+        "cut_diagnostics": {
+          "c008_equal_state_applicable": 0,
+          "c009_all_state_profile_applicable": 0,
+          "c013_visited_state_profile_applicable": 0,
+          "unexpected_cut_failures": []
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              0
+            ]
+          ],
+          "final": [
+            1
+          ],
+          "flags": [
+            [
+              1,
+              0
+            ]
+          ],
+          "start": 0
+        },
+        "lrs": 0,
+        "per_word_budget": 0,
+        "shorter_failure_summary": {
+          "counts": {
+            "bad_state": 0,
+            "flagged_border": 0,
+            "non_final": 1,
+            "oracle_mismatch": 0,
+            "undefined_transition": 0
+          },
+          "examples": {
+            "non_final": {
+              "end_state": 0,
+              "word": ""
+            }
+          }
+        },
+        "shortest_length": 1,
+        "shortest_word": "1",
+        "shortestness_certified": true,
+        "state_trace": [
+          0,
+          1
+        ]
+      },
+      {
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 0,
+          "minimum_exact_slice_budget": 0,
+          "original_per_word_budget": 0,
+          "selected_word_budget_growth_vs_slice": 0,
+          "slices": [
+            {
+              "diagonal_states_added": [],
+              "final_state": 1,
+              "full_boundary_states_added": [],
+              "search": {
+                "budget": 0,
+                "lower_no_splits": 0,
+                "search_states": 3,
+                "split": {
+                  "D": 0,
+                  "L": 0
+                },
+                "splits_checked": 1,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "1",
+                "word_length": 1
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [],
+                "delta": [
+                  [
+                    -1,
+                    1
+                  ],
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                "final": [
+                  1
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "checked_words": 3,
+        "cut_diagnostics": {
+          "c008_equal_state_applicable": 0,
+          "c009_all_state_profile_applicable": 0,
+          "c013_visited_state_profile_applicable": 0,
+          "unexpected_cut_failures": []
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              1
+            ]
+          ],
+          "final": [
+            1
+          ],
+          "flags": [],
+          "start": 0
+        },
+        "lrs": 0,
+        "per_word_budget": 0,
+        "shorter_failure_summary": {
+          "counts": {
+            "bad_state": 0,
+            "flagged_border": 0,
+            "non_final": 1,
+            "oracle_mismatch": 0,
+            "undefined_transition": 0
+          },
+          "examples": {
+            "non_final": {
+              "end_state": 0,
+              "word": ""
+            }
+          }
+        },
+        "shortest_length": 1,
+        "shortest_word": "1",
+        "shortestness_certified": true,
+        "state_trace": [
+          0,
+          1
+        ]
+      },
+      {
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 0,
+          "minimum_exact_slice_budget": 0,
+          "original_per_word_budget": 0,
+          "selected_word_budget_growth_vs_slice": 0,
+          "slices": [
+            {
+              "diagonal_states_added": [],
+              "final_state": 0,
+              "full_boundary_states_added": [],
+              "search": {
+                "budget": 0,
+                "lower_no_splits": 0,
+                "search_states": 1,
+                "split": {
+                  "D": 0,
+                  "L": 0
+                },
+                "splits_checked": 1,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "",
+                "word_length": 0
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [],
+                "delta": [
+                  [
+                    -1,
+                    -1
+                  ],
+                  [
+                    -1,
+                    -1
+                  ]
+                ],
+                "final": [
+                  0
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "checked_words": 1,
+        "cut_diagnostics": {
+          "c008_equal_state_applicable": 0,
+          "c009_all_state_profile_applicable": 0,
+          "c013_visited_state_profile_applicable": 0,
+          "unexpected_cut_failures": []
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              -1
+            ],
+            [
+              -1,
+              -1
+            ]
+          ],
+          "final": [
+            0
+          ],
+          "flags": [],
+          "start": 0
+        },
+        "lrs": 0,
+        "per_word_budget": 0,
+        "shorter_failure_summary": {
+          "counts": {
+            "bad_state": 0,
+            "flagged_border": 0,
+            "non_final": 0,
+            "oracle_mismatch": 0,
+            "undefined_transition": 0
+          },
+          "examples": {}
+        },
+        "shortest_length": 0,
+        "shortest_word": "",
+        "shortestness_certified": true,
+        "state_trace": [
+          0
+        ]
+      },
+      {
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 0,
+          "minimum_exact_slice_budget": 0,
+          "original_per_word_budget": 0,
+          "selected_word_budget_growth_vs_slice": 0,
+          "slices": [
+            {
+              "diagonal_states_added": [],
+              "final_state": 0,
+              "full_boundary_states_added": [],
+              "search": {
+                "budget": 0,
+                "lower_no_splits": 0,
+                "search_states": 1,
+                "split": {
+                  "D": 0,
+                  "L": 0
+                },
+                "splits_checked": 1,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "",
+                "word_length": 0
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [],
+                "delta": [
+                  [
+                    -1,
+                    -1
+                  ],
+                  [
+                    -1,
+                    -1
+                  ]
+                ],
+                "final": [
+                  0
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "checked_words": 1,
+        "cut_diagnostics": {
+          "c008_equal_state_applicable": 0,
+          "c009_all_state_profile_applicable": 0,
+          "c013_visited_state_profile_applicable": 0,
+          "unexpected_cut_failures": []
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              -1
+            ],
+            [
+              -1,
+              -1
+            ]
+          ],
+          "final": [
+            0
+          ],
+          "flags": [
+            [
+              0,
+              1
+            ]
+          ],
+          "start": 0
+        },
+        "lrs": 0,
+        "per_word_budget": 0,
+        "shorter_failure_summary": {
+          "counts": {
+            "bad_state": 0,
+            "flagged_border": 0,
+            "non_final": 0,
+            "oracle_mismatch": 0,
+            "undefined_transition": 0
+          },
+          "examples": {}
+        },
+        "shortest_length": 0,
+        "shortest_word": "",
+        "shortestness_certified": true,
+        "state_trace": [
+          0
+        ]
+      },
+      {
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 0,
+          "minimum_exact_slice_budget": 0,
+          "original_per_word_budget": 0,
+          "selected_word_budget_growth_vs_slice": 0,
+          "slices": [
+            {
+              "diagonal_states_added": [],
+              "final_state": 0,
+              "full_boundary_states_added": [
+                1
+              ],
+              "search": {
+                "budget": 0,
+                "lower_no_splits": 0,
+                "search_states": 1,
+                "split": {
+                  "D": 0,
+                  "L": 0
+                },
+                "splits_checked": 1,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "",
+                "word_length": 0
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [
+                  1
+                ],
+                "delta": [
+                  [
+                    -1,
+                    -1
+                  ],
+                  [
+                    -1,
+                    -1
+                  ]
+                ],
+                "final": [
+                  0
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "checked_words": 1,
+        "cut_diagnostics": {
+          "c008_equal_state_applicable": 0,
+          "c009_all_state_profile_applicable": 0,
+          "c013_visited_state_profile_applicable": 0,
+          "unexpected_cut_failures": []
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              -1
+            ],
+            [
+              -1,
+              -1
+            ]
+          ],
+          "final": [
+            0
+          ],
+          "flags": [
+            [
+              1,
+              0
+            ]
+          ],
+          "start": 0
+        },
+        "lrs": 0,
+        "per_word_budget": 0,
+        "shorter_failure_summary": {
+          "counts": {
+            "bad_state": 0,
+            "flagged_border": 0,
+            "non_final": 0,
+            "oracle_mismatch": 0,
+            "undefined_transition": 0
+          },
+          "examples": {}
+        },
+        "shortest_length": 0,
+        "shortest_word": "",
+        "shortestness_certified": true,
+        "state_trace": [
+          0
+        ]
+      },
+      {
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 0,
+          "minimum_exact_slice_budget": 0,
+          "original_per_word_budget": 0,
+          "selected_word_budget_growth_vs_slice": 0,
+          "slices": [
+            {
+              "diagonal_states_added": [],
+              "final_state": 0,
+              "full_boundary_states_added": [
+                1
+              ],
+              "search": {
+                "budget": 0,
+                "lower_no_splits": 0,
+                "search_states": 1,
+                "split": {
+                  "D": 0,
+                  "L": 0
+                },
+                "splits_checked": 1,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "",
+                "word_length": 0
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [
+                  1
+                ],
+                "delta": [
+                  [
+                    -1,
+                    -1
+                  ],
+                  [
+                    -1,
+                    -1
+                  ]
+                ],
+                "final": [
+                  0
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "checked_words": 1,
+        "cut_diagnostics": {
+          "c008_equal_state_applicable": 0,
+          "c009_all_state_profile_applicable": 0,
+          "c013_visited_state_profile_applicable": 0,
+          "unexpected_cut_failures": []
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              -1
+            ],
+            [
+              -1,
+              -1
+            ]
+          ],
+          "final": [
+            0
+          ],
+          "flags": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "start": 0
+        },
+        "lrs": 0,
+        "per_word_budget": 0,
+        "shorter_failure_summary": {
+          "counts": {
+            "bad_state": 0,
+            "flagged_border": 0,
+            "non_final": 0,
+            "oracle_mismatch": 0,
+            "undefined_transition": 0
+          },
+          "examples": {}
+        },
+        "shortest_length": 0,
+        "shortest_word": "",
+        "shortestness_certified": true,
+        "state_trace": [
+          0
+        ]
+      },
+      {
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 0,
+          "minimum_exact_slice_budget": 0,
+          "original_per_word_budget": 0,
+          "selected_word_budget_growth_vs_slice": 0,
+          "slices": [
+            {
+              "diagonal_states_added": [
+                1
+              ],
+              "final_state": 0,
+              "full_boundary_states_added": [],
+              "search": {
+                "budget": 0,
+                "lower_no_splits": 0,
+                "search_states": 1,
+                "split": {
+                  "D": 0,
+                  "L": 0
+                },
+                "splits_checked": 1,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "",
+                "word_length": 0
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [
+                  1
+                ],
+                "delta": [
+                  [
+                    -1,
+                    -1
+                  ],
+                  [
+                    -1,
+                    -1
+                  ]
+                ],
+                "final": [
+                  0
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "checked_words": 1,
+        "cut_diagnostics": {
+          "c008_equal_state_applicable": 0,
+          "c009_all_state_profile_applicable": 0,
+          "c013_visited_state_profile_applicable": 0,
+          "unexpected_cut_failures": []
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              -1
+            ],
+            [
+              -1,
+              -1
+            ]
+          ],
+          "final": [
+            0
+          ],
+          "flags": [
+            [
+              1,
+              1
+            ]
+          ],
+          "start": 0
+        },
+        "lrs": 0,
+        "per_word_budget": 0,
+        "shorter_failure_summary": {
+          "counts": {
+            "bad_state": 0,
+            "flagged_border": 0,
+            "non_final": 0,
+            "oracle_mismatch": 0,
+            "undefined_transition": 0
+          },
+          "examples": {}
+        },
+        "shortest_length": 0,
+        "shortest_word": "",
+        "shortestness_certified": true,
+        "state_trace": [
+          0
+        ]
+      }
+    ]
+  },
+  "histograms": {
+    "lrs": {
+      "0": 2682
+    },
+    "per_word_budget": {
+      "0": 2682
+    },
+    "shortest_length": {
+      "0": 2592,
+      "1": 90
+    }
+  },
+  "interpretation": {
+    "cuts": "C008, C009, and the proved visited-state C013 cut are tested on every proper prefix of each shortest witness. Applicable cuts should produce a shorter witness; failures are recorded.",
+    "necessary_search": "N'' searches are exact only for their fixed finite graph and budget parameters. A global NO certificate is recorded only for an explicit empty-language reason.",
+    "scope": "No result transfers to subtype-derived instances or Problem 1.7.",
+    "shortestness": "A returned shortest word has all words through the preceding lengths checked. For two states, no witness after length one uses the exact N''(0,0) shortcut below; capped searches remain UNKNOWN.",
+    "two_state_shortcut": "Each two-state boundary slice has a shortest accepting path of length at most one. Such words have only empty/full borders. Thus N''(0,0) is empty exactly when no witness exists. The census checks this finite encoding space; the binary all-word implication is proved in lean/Subtail/TwoState.lean."
+  },
+  "limits": {
+    "instances_expected": 20736,
+    "max_word_length": 12,
+    "no_witness_necessary_checks": 3,
+    "state_cap": 200000,
+    "targeted_attempts": 120,
+    "targeted_keep": 6,
+    "targeted_max_word_length": 12,
+    "targeted_seed": 8008,
+    "targeted_steps": 16,
+    "two_state_exact_shortcut": true,
+    "two_state_scan_length": 1
+  },
+  "no_witness_diagnostics": [
+    {
+      "global_no_certificate": "empty_final_set",
+      "instance": {
+        "alphabet": "01",
+        "bad": [],
+        "delta": [
+          [
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1
+          ]
+        ],
+        "final": [],
+        "flags": [],
+        "start": 0
+      },
+      "necessary_search": {
+        "D": 0,
+        "L": 12,
+        "graph_exhausted": true,
+        "kind": "N''",
+        "result": {
+          "states": 0,
+          "status": "NO"
+        },
+        "strong": false
+      },
+      "two_state_n00_search": {
+        "states": 0,
+        "status": "NO"
+      }
+    },
+    {
+      "global_no_certificate": "bad_initial_state",
+      "instance": {
+        "alphabet": "01",
+        "bad": [
+          0
+        ],
+        "delta": [
+          [
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1
+          ]
+        ],
+        "final": [
+          0
+        ],
+        "flags": [],
+        "start": 0
+      },
+      "necessary_search": {
+        "D": 0,
+        "L": 12,
+        "graph_exhausted": true,
+        "kind": "N''",
+        "result": {
+          "states": 0,
+          "status": "NO"
+        },
+        "strong": false
+      },
+      "two_state_n00_search": {
+        "states": 0,
+        "status": "NO"
+      }
+    },
+    {
+      "global_no_certificate": "no_reachable_non_bad_final_state",
+      "instance": {
+        "alphabet": "01",
+        "bad": [],
+        "delta": [
+          [
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1
+          ]
+        ],
+        "final": [
+          1
+        ],
+        "flags": [],
+        "start": 0
+      },
+      "necessary_search": {
+        "D": 0,
+        "L": 12,
+        "graph_exhausted": true,
+        "kind": "N''",
+        "result": {
+          "states": 1,
+          "status": "NO"
+        },
+        "strong": false
+      },
+      "two_state_n00_search": {
+        "states": 1,
+        "status": "NO"
+      }
+    }
+  ],
+  "scope": "abstract BorderAvoid; exhaustive two-state binary partial instances",
+  "targeted": {
+    "attempts": 120,
+    "attempts_with_base_candidates": 85,
+    "interpretation": "Targeted rows preserve a base admissible word while adding flags. Exact instance budgets are reported only when the strong finite search exhausts its graph; otherwise the row remains UNKNOWN.",
+    "largest_budget_excess_over_boundary_bound": -1,
+    "largest_budget_growth_vs_normalized_slice": 4,
+    "largest_length_growth_over_normalized_slice": 8,
+    "rows": [
+      {
+        "admissible_base_words_to_cap": 6287,
+        "attempt": 3,
+        "base_flags": [],
+        "base_instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              4,
+              6
+            ],
+            [
+              1,
+              4
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              7,
+              4
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              6,
+              6
+            ],
+            [
+              7,
+              5
+            ]
+          ],
+          "final": [
+            3,
+            6,
+            7
+          ],
+          "flags": [],
+          "start": 0
+        },
+        "base_shortest": {
+          "budget_search": {
+            "budget": 0,
+            "lower_no_splits": 0,
+            "search_states": 12,
+            "split": {
+              "D": 0,
+              "L": 0
+            },
+            "splits_checked": 1,
+            "status": "EXACT",
+            "sufficient_predicate": true,
+            "word": "1",
+            "word_length": 1
+          },
+          "summary": {
+            "certified_through_length": 1,
+            "length": 1,
+            "lrs": 0,
+            "per_word_budget": 0,
+            "status": "YES",
+            "word": "1",
+            "words_checked": 3
+          }
+        },
+        "best_step": 5,
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 1,
+          "minimum_exact_slice_budget": 1,
+          "original_per_word_budget": 5,
+          "selected_word_budget_growth_vs_slice": 4,
+          "slices": [
+            {
+              "diagonal_states_added": [],
+              "final_state": 3,
+              "full_boundary_states_added": [],
+              "search": {
+                "budget": 1,
+                "lower_no_splits": 1,
+                "search_states": 10,
+                "split": {
+                  "D": 1,
+                  "L": 0
+                },
+                "splits_checked": 2,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "0011",
+                "word_length": 4
+              },
+              "shortest_to_word_cap": {
+                "certified_through_length": 4,
+                "length": 4,
+                "lrs": 1,
+                "per_word_budget": 1,
+                "status": "YES",
+                "word": "0011",
+                "words_checked": 19
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [],
+                "delta": [
+                  [
+                    4,
+                    6
+                  ],
+                  [
+                    1,
+                    4
+                  ],
+                  [
+                    0,
+                    3
+                  ],
+                  [
+                    2,
+                    5
+                  ],
+                  [
+                    7,
+                    4
+                  ],
+                  [
+                    2,
+                    3
+                  ],
+                  [
+                    6,
+                    6
+                  ],
+                  [
+                    7,
+                    5
+                  ]
+                ],
+                "final": [
+                  3
+                ],
+                "flags": [],
+                "start": 0
+              }
+            },
+            {
+              "diagonal_states_added": [],
+              "final_state": 6,
+              "full_boundary_states_added": [
+                0
+              ],
+              "search": {
+                "reason": "bad_initial_state",
+                "search_skipped": true,
+                "status": "EXACT_NO"
+              },
+              "shortest_to_word_cap": {
+                "reason": "bad_initial_state",
+                "search_skipped": true,
+                "status": "EXACT_NO"
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [
+                  0
+                ],
+                "delta": [
+                  [
+                    4,
+                    6
+                  ],
+                  [
+                    1,
+                    4
+                  ],
+                  [
+                    0,
+                    3
+                  ],
+                  [
+                    2,
+                    5
+                  ],
+                  [
+                    7,
+                    4
+                  ],
+                  [
+                    2,
+                    3
+                  ],
+                  [
+                    6,
+                    6
+                  ],
+                  [
+                    7,
+                    5
+                  ]
+                ],
+                "final": [
+                  6
+                ],
+                "flags": [],
+                "start": 0
+              }
+            },
+            {
+              "diagonal_states_added": [],
+              "final_state": 7,
+              "full_boundary_states_added": [
+                0
+              ],
+              "search": {
+                "reason": "bad_initial_state",
+                "search_skipped": true,
+                "status": "EXACT_NO"
+              },
+              "shortest_to_word_cap": {
+                "reason": "bad_initial_state",
+                "search_skipped": true,
+                "status": "EXACT_NO"
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [
+                  0
+                ],
+                "delta": [
+                  [
+                    4,
+                    6
+                  ],
+                  [
+                    1,
+                    4
+                  ],
+                  [
+                    0,
+                    3
+                  ],
+                  [
+                    2,
+                    5
+                  ],
+                  [
+                    7,
+                    4
+                  ],
+                  [
+                    2,
+                    3
+                  ],
+                  [
+                    6,
+                    6
+                  ],
+                  [
+                    7,
+                    5
+                  ]
+                ],
+                "final": [
+                  7
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "budget_search": {
+          "budget": 5,
+          "lower_no_splits": 20,
+          "search_states": 4612,
+          "split": {
+            "D": 0,
+            "L": 5
+          },
+          "splits_checked": 21,
+          "status": "EXACT",
+          "sufficient_predicate": true,
+          "word": "001011010101",
+          "word_length": 12
+        },
+        "cuts": {
+          "equal": 0,
+          "profile": 0,
+          "visited": 0
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              4,
+              6
+            ],
+            [
+              1,
+              4
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              7,
+              4
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              6,
+              6
+            ],
+            [
+              7,
+              5
+            ]
+          ],
+          "final": [
+            3,
+            6,
+            7
+          ],
+          "flags": [
+            [
+              0,
+              6
+            ],
+            [
+              0,
+              7
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              5,
+              2
+            ],
+            [
+              7,
+              5
+            ]
+          ],
+          "start": 0
+        },
+        "lrs": 5,
+        "per_word_budget": 5,
+        "proper_border_analysis": {
+          "boundary_budget_bound": 6,
+          "boundary_safe_proper_example_count": 1,
+          "budget_excess_over_boundary_bound": -1,
+          "exact_budget_growth_vs_normalized_slice": 4,
+          "exact_instance_budget": 5,
+          "minimum_normalized_slice_budget": 1,
+          "minimum_normalized_slice_length": 4,
+          "proper_blocked_shorter_examples": [
+            {
+              "boundary_flag_pairs": [
+                [
+                  0,
+                  6
+                ]
+              ],
+              "boundary_safe": false,
+              "flag_pairs": [
+                [
+                  0,
+                  6
+                ]
+              ],
+              "word": "11"
+            },
+            {
+              "boundary_flag_pairs": [
+                [
+                  0,
+                  7
+                ]
+              ],
+              "boundary_safe": false,
+              "flag_pairs": [
+                [
+                  0,
+                  7
+                ]
+              ],
+              "word": "000"
+            },
+            {
+              "boundary_flag_pairs": [
+                [
+                  0,
+                  6
+                ]
+              ],
+              "boundary_safe": false,
+              "flag_pairs": [
+                [
+                  0,
+                  6
+                ]
+              ],
+              "word": "101"
+            },
+            {
+              "boundary_flag_pairs": [
+                [
+                  0,
+                  6
+                ]
+              ],
+              "boundary_safe": false,
+              "flag_pairs": [
+                [
+                  0,
+                  6
+                ]
+              ],
+              "word": "111"
+            },
+            {
+              "boundary_flag_pairs": [
+                [
+                  0,
+                  7
+                ]
+              ],
+              "boundary_safe": false,
+              "flag_pairs": [
+                [
+                  0,
+                  7
+                ]
+              ],
+              "word": "0000"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  7,
+                  5
+                ]
+              ],
+              "word": "0011"
+            },
+            {
+              "boundary_flag_pairs": [
+                [
+                  0,
+                  7
+                ]
+              ],
+              "boundary_safe": false,
+              "flag_pairs": [
+                [
+                  0,
+                  7
+                ]
+              ],
+              "word": "0100"
+            },
+            {
+              "boundary_flag_pairs": [
+                [
+                  0,
+                  6
+                ]
+              ],
+              "boundary_safe": false,
+              "flag_pairs": [
+                [
+                  0,
+                  6
+                ]
+              ],
+              "word": "1001"
+            }
+          ],
+          "proper_flag_pairs_blocking_shorter_base_words": [
+            [
+              0,
+              6
+            ],
+            [
+              0,
+              7
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              5,
+              2
+            ],
+            [
+              7,
+              5
+            ]
+          ],
+          "proper_flag_pairs_on_selected_word": [],
+          "properly_blocked_shorter_example_count": 8,
+          "selected_length_minus_normalized_slice": 8,
+          "selected_word_length": 12,
+          "state_count": 8
+        },
+        "shortest_length": 12,
+        "shortest_word": "001011010101",
+        "shortestness": {
+          "certified_through_length": 12,
+          "failure_summary": {
+            "counts": {
+              "bad_state": 0,
+              "flagged_border": 3080,
+              "non_final": 1015,
+              "oracle_mismatch": 0,
+              "undefined_transition": 0
+            },
+            "examples": {
+              "flagged_border": {
+                "blocking_pairs": [
+                  {
+                    "i": 0,
+                    "j": 1,
+                    "pair": [
+                      0,
+                      6
+                    ],
+                    "suffix_at_i": "1",
+                    "suffix_at_j": ""
+                  }
+                ],
+                "word": "1"
+              },
+              "non_final": {
+                "end_state": 0,
+                "word": ""
+              }
+            }
+          },
+          "forward_reverse_comparisons": 4821,
+          "words_checked": 4821
+        },
+        "state_trace": [
+          0,
+          4,
+          7,
+          5,
+          2,
+          3,
+          5,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ],
+        "steps_done": 5,
+        "steps_requested": 16,
+        "targeted_flags": [
+          [
+            0,
+            6
+          ],
+          [
+            0,
+            7
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            7,
+            5
+          ]
+        ],
+        "visited_states": [
+          0,
+          2,
+          3,
+          4,
+          5,
+          7
+        ]
+      },
+      {
+        "admissible_base_words_to_cap": 195,
+        "attempt": 13,
+        "base_flags": [],
+        "base_instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              6
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              7,
+              1
+            ],
+            [
+              5,
+              3
+            ],
+            [
+              -1,
+              4
+            ],
+            [
+              2,
+              -1
+            ],
+            [
+              6,
+              2
+            ],
+            [
+              -1,
+              7
+            ]
+          ],
+          "final": [
+            3,
+            5
+          ],
+          "flags": [],
+          "start": 0
+        },
+        "base_shortest": {
+          "budget_search": {
+            "budget": 0,
+            "lower_no_splits": 0,
+            "search_states": 10,
+            "split": {
+              "D": 0,
+              "L": 0
+            },
+            "splits_checked": 1,
+            "status": "EXACT",
+            "sufficient_predicate": true,
+            "word": "11110",
+            "word_length": 5
+          },
+          "summary": {
+            "certified_through_length": 4,
+            "length": 4,
+            "lrs": 3,
+            "per_word_budget": 3,
+            "status": "YES",
+            "word": "1111",
+            "words_checked": 31
+          }
+        },
+        "best_step": 3,
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 2,
+          "minimum_exact_slice_budget": 2,
+          "original_per_word_budget": 4,
+          "selected_word_budget_growth_vs_slice": 2,
+          "slices": [
+            {
+              "diagonal_states_added": [],
+              "final_state": 3,
+              "full_boundary_states_added": [],
+              "search": {
+                "budget": 2,
+                "lower_no_splits": 4,
+                "search_states": 19,
+                "split": {
+                  "D": 1,
+                  "L": 1
+                },
+                "splits_checked": 5,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "10111",
+                "word_length": 5
+              },
+              "shortest_to_word_cap": {
+                "certified_through_length": 4,
+                "length": 4,
+                "lrs": 3,
+                "per_word_budget": 3,
+                "status": "YES",
+                "word": "1111",
+                "words_checked": 31
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [],
+                "delta": [
+                  [
+                    -1,
+                    6
+                  ],
+                  [
+                    0,
+                    3
+                  ],
+                  [
+                    7,
+                    1
+                  ],
+                  [
+                    5,
+                    3
+                  ],
+                  [
+                    -1,
+                    4
+                  ],
+                  [
+                    2,
+                    -1
+                  ],
+                  [
+                    6,
+                    2
+                  ],
+                  [
+                    -1,
+                    7
+                  ]
+                ],
+                "final": [
+                  3
+                ],
+                "flags": [],
+                "start": 0
+              }
+            },
+            {
+              "diagonal_states_added": [],
+              "final_state": 5,
+              "full_boundary_states_added": [
+                0
+              ],
+              "search": {
+                "reason": "bad_initial_state",
+                "search_skipped": true,
+                "status": "EXACT_NO"
+              },
+              "shortest_to_word_cap": {
+                "reason": "bad_initial_state",
+                "search_skipped": true,
+                "status": "EXACT_NO"
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [
+                  0
+                ],
+                "delta": [
+                  [
+                    -1,
+                    6
+                  ],
+                  [
+                    0,
+                    3
+                  ],
+                  [
+                    7,
+                    1
+                  ],
+                  [
+                    5,
+                    3
+                  ],
+                  [
+                    -1,
+                    4
+                  ],
+                  [
+                    2,
+                    -1
+                  ],
+                  [
+                    6,
+                    2
+                  ],
+                  [
+                    -1,
+                    7
+                  ]
+                ],
+                "final": [
+                  5
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "budget_search": {
+          "budget": 4,
+          "lower_no_splits": 13,
+          "search_states": 140,
+          "split": {
+            "D": 1,
+            "L": 3
+          },
+          "splits_checked": 14,
+          "status": "EXACT",
+          "sufficient_predicate": true,
+          "word": "101110011111",
+          "word_length": 12
+        },
+        "cuts": {
+          "equal": 0,
+          "profile": 0,
+          "visited": 0
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              6
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              7,
+              1
+            ],
+            [
+              5,
+              3
+            ],
+            [
+              -1,
+              4
+            ],
+            [
+              2,
+              -1
+            ],
+            [
+              6,
+              2
+            ],
+            [
+              -1,
+              7
+            ]
+          ],
+          "final": [
+            3,
+            5
+          ],
+          "flags": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              5
+            ],
+            [
+              6,
+              1
+            ]
+          ],
+          "start": 0
+        },
+        "lrs": 4,
+        "per_word_budget": 4,
+        "proper_border_analysis": {
+          "boundary_budget_bound": 6,
+          "boundary_safe_proper_example_count": 7,
+          "budget_excess_over_boundary_bound": -2,
+          "exact_budget_growth_vs_normalized_slice": 2,
+          "exact_instance_budget": 4,
+          "minimum_normalized_slice_budget": 2,
+          "minimum_normalized_slice_length": 4,
+          "proper_blocked_shorter_examples": [
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  0,
+                  1
+                ],
+                [
+                  6,
+                  1
+                ]
+              ],
+              "word": "1111"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  0,
+                  1
+                ],
+                [
+                  6,
+                  1
+                ]
+              ],
+              "word": "10111"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  0,
+                  1
+                ],
+                [
+                  6,
+                  1
+                ]
+              ],
+              "word": "11111"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  0,
+                  1
+                ],
+                [
+                  6,
+                  1
+                ]
+              ],
+              "word": "100111"
+            },
+            {
+              "boundary_flag_pairs": [
+                [
+                  0,
+                  5
+                ]
+              ],
+              "boundary_safe": false,
+              "flag_pairs": [
+                [
+                  0,
+                  1
+                ]
+              ],
+              "word": "101110"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  6,
+                  1
+                ]
+              ],
+              "word": "101111"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  0,
+                  1
+                ],
+                [
+                  6,
+                  1
+                ]
+              ],
+              "word": "111111"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  0,
+                  1
+                ],
+                [
+                  6,
+                  1
+                ]
+              ],
+              "word": "1000111"
+            }
+          ],
+          "proper_flag_pairs_blocking_shorter_base_words": [
+            [
+              0,
+              1
+            ],
+            [
+              6,
+              1
+            ]
+          ],
+          "proper_flag_pairs_on_selected_word": [],
+          "properly_blocked_shorter_example_count": 8,
+          "selected_length_minus_normalized_slice": 8,
+          "selected_word_length": 12,
+          "state_count": 8
+        },
+        "shortest_length": 12,
+        "shortest_word": "101110011111",
+        "shortestness": {
+          "certified_through_length": 12,
+          "failure_summary": {
+            "counts": {
+              "bad_state": 0,
+              "flagged_border": 124,
+              "non_final": 318,
+              "oracle_mismatch": 0,
+              "undefined_transition": 3653
+            },
+            "examples": {
+              "flagged_border": {
+                "blocking_pairs": [
+                  {
+                    "i": 0,
+                    "j": 3,
+                    "pair": [
+                      0,
+                      1
+                    ],
+                    "suffix_at_i": "1111",
+                    "suffix_at_j": "1"
+                  },
+                  {
+                    "i": 1,
+                    "j": 3,
+                    "pair": [
+                      6,
+                      1
+                    ],
+                    "suffix_at_i": "111",
+                    "suffix_at_j": "1"
+                  }
+                ],
+                "word": "1111"
+              },
+              "non_final": {
+                "end_state": 0,
+                "word": ""
+              },
+              "undefined_transition": {
+                "word": "0"
+              }
+            }
+          },
+          "forward_reverse_comparisons": 7071,
+          "words_checked": 7071
+        },
+        "state_trace": [
+          0,
+          6,
+          6,
+          2,
+          1,
+          3,
+          5,
+          2,
+          1,
+          3,
+          3,
+          3,
+          3
+        ],
+        "steps_done": 3,
+        "steps_requested": 16,
+        "targeted_flags": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            6,
+            1
+          ]
+        ],
+        "visited_states": [
+          0,
+          1,
+          2,
+          3,
+          5,
+          6
+        ]
+      },
+      {
+        "admissible_base_words_to_cap": 563,
+        "attempt": 15,
+        "base_flags": [],
+        "base_instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              2,
+              6
+            ],
+            [
+              4,
+              2
+            ],
+            [
+              6,
+              7
+            ],
+            [
+              1,
+              6
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              4,
+              6
+            ],
+            [
+              3,
+              0
+            ],
+            [
+              5,
+              6
+            ]
+          ],
+          "final": [
+            4
+          ],
+          "flags": [],
+          "start": 0
+        },
+        "base_shortest": {
+          "budget_search": {
+            "budget": 1,
+            "lower_no_splits": 2,
+            "search_states": 14,
+            "split": {
+              "D": 0,
+              "L": 1
+            },
+            "splits_checked": 3,
+            "status": "EXACT",
+            "sufficient_predicate": true,
+            "word": "0100",
+            "word_length": 4
+          },
+          "summary": {
+            "certified_through_length": 4,
+            "length": 4,
+            "lrs": 1,
+            "per_word_budget": 1,
+            "status": "YES",
+            "word": "0100",
+            "words_checked": 20
+          }
+        },
+        "best_step": 5,
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 1,
+          "minimum_exact_slice_budget": 1,
+          "original_per_word_budget": 3,
+          "selected_word_budget_growth_vs_slice": 2,
+          "slices": [
+            {
+              "diagonal_states_added": [],
+              "final_state": 4,
+              "full_boundary_states_added": [],
+              "search": {
+                "budget": 1,
+                "lower_no_splits": 2,
+                "search_states": 14,
+                "split": {
+                  "D": 0,
+                  "L": 1
+                },
+                "splits_checked": 3,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "0100",
+                "word_length": 4
+              },
+              "shortest_to_word_cap": {
+                "certified_through_length": 4,
+                "length": 4,
+                "lrs": 1,
+                "per_word_budget": 1,
+                "status": "YES",
+                "word": "0100",
+                "words_checked": 20
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [],
+                "delta": [
+                  [
+                    2,
+                    6
+                  ],
+                  [
+                    4,
+                    2
+                  ],
+                  [
+                    6,
+                    7
+                  ],
+                  [
+                    1,
+                    6
+                  ],
+                  [
+                    0,
+                    1
+                  ],
+                  [
+                    4,
+                    6
+                  ],
+                  [
+                    3,
+                    0
+                  ],
+                  [
+                    5,
+                    6
+                  ]
+                ],
+                "final": [
+                  4
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "budget_search": {
+          "budget": 3,
+          "lower_no_splits": 9,
+          "search_states": 62,
+          "split": {
+            "D": 0,
+            "L": 3
+          },
+          "splits_checked": 10,
+          "status": "EXACT",
+          "sufficient_predicate": true,
+          "word": "101001100",
+          "word_length": 9
+        },
+        "cuts": {
+          "equal": 0,
+          "profile": 0,
+          "visited": 0
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              2,
+              6
+            ],
+            [
+              4,
+              2
+            ],
+            [
+              6,
+              7
+            ],
+            [
+              1,
+              6
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              4,
+              6
+            ],
+            [
+              3,
+              0
+            ],
+            [
+              5,
+              6
+            ]
+          ],
+          "final": [
+            4
+          ],
+          "flags": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              5
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              6,
+              3
+            ]
+          ],
+          "start": 0
+        },
+        "lrs": 3,
+        "per_word_budget": 3,
+        "proper_border_analysis": {
+          "boundary_budget_bound": 6,
+          "boundary_safe_proper_example_count": 8,
+          "budget_excess_over_boundary_bound": -3,
+          "exact_budget_growth_vs_normalized_slice": 2,
+          "exact_instance_budget": 3,
+          "minimum_normalized_slice_budget": 1,
+          "minimum_normalized_slice_length": 4,
+          "proper_blocked_shorter_examples": [
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  0,
+                  5
+                ]
+              ],
+              "word": "0100"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  3,
+                  1
+                ],
+                [
+                  6,
+                  3
+                ]
+              ],
+              "word": "1000"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  3,
+                  1
+                ],
+                [
+                  6,
+                  3
+                ]
+              ],
+              "word": "00000"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  5
+                ]
+              ],
+              "word": "010010"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  0,
+                  1
+                ],
+                [
+                  3,
+                  1
+                ],
+                [
+                  6,
+                  3
+                ]
+              ],
+              "word": "011000"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  3,
+                  1
+                ]
+              ],
+              "word": "100010"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  3,
+                  1
+                ],
+                [
+                  6,
+                  3
+                ]
+              ],
+              "word": "101000"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  0,
+                  5
+                ]
+              ],
+              "word": "110100"
+            }
+          ],
+          "proper_flag_pairs_blocking_shorter_base_words": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              5
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              6,
+              3
+            ]
+          ],
+          "proper_flag_pairs_on_selected_word": [],
+          "properly_blocked_shorter_example_count": 8,
+          "selected_length_minus_normalized_slice": 5,
+          "selected_word_length": 9,
+          "state_count": 8
+        },
+        "shortest_length": 9,
+        "shortest_word": "101001100",
+        "shortestness": {
+          "certified_through_length": 9,
+          "failure_summary": {
+            "counts": {
+              "bad_state": 0,
+              "flagged_border": 35,
+              "non_final": 476,
+              "oracle_mismatch": 0,
+              "undefined_transition": 0
+            },
+            "examples": {
+              "flagged_border": {
+                "blocking_pairs": [
+                  {
+                    "i": 0,
+                    "j": 3,
+                    "pair": [
+                      0,
+                      5
+                    ],
+                    "suffix_at_i": "0100",
+                    "suffix_at_j": "0"
+                  }
+                ],
+                "word": "0100"
+              },
+              "non_final": {
+                "end_state": 0,
+                "word": ""
+              }
+            }
+          },
+          "forward_reverse_comparisons": 844,
+          "words_checked": 844
+        },
+        "state_trace": [
+          0,
+          6,
+          3,
+          6,
+          3,
+          1,
+          2,
+          7,
+          5,
+          4
+        ],
+        "steps_done": 5,
+        "steps_requested": 16,
+        "targeted_flags": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            6,
+            3
+          ]
+        ],
+        "visited_states": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      {
+        "admissible_base_words_to_cap": 1723,
+        "attempt": 4,
+        "base_flags": [],
+        "base_instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              5,
+              0
+            ],
+            [
+              0,
+              7
+            ],
+            [
+              6,
+              2
+            ],
+            [
+              1,
+              4
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              4,
+              7
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              4,
+              2
+            ]
+          ],
+          "final": [
+            2
+          ],
+          "flags": [],
+          "start": 0
+        },
+        "base_shortest": {
+          "budget_search": {
+            "budget": 1,
+            "lower_no_splits": 1,
+            "search_states": 18,
+            "split": {
+              "D": 1,
+              "L": 0
+            },
+            "splits_checked": 2,
+            "status": "EXACT",
+            "sufficient_predicate": true,
+            "word": "011",
+            "word_length": 3
+          },
+          "summary": {
+            "certified_through_length": 3,
+            "length": 3,
+            "lrs": 1,
+            "per_word_budget": 1,
+            "status": "YES",
+            "word": "011",
+            "words_checked": 11
+          }
+        },
+        "best_step": 4,
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 1,
+          "minimum_exact_slice_budget": 1,
+          "original_per_word_budget": 2,
+          "selected_word_budget_growth_vs_slice": 1,
+          "slices": [
+            {
+              "diagonal_states_added": [
+                1
+              ],
+              "final_state": 2,
+              "full_boundary_states_added": [],
+              "search": {
+                "budget": 1,
+                "lower_no_splits": 1,
+                "search_states": 15,
+                "split": {
+                  "D": 1,
+                  "L": 0
+                },
+                "splits_checked": 2,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "011",
+                "word_length": 3
+              },
+              "shortest_to_word_cap": {
+                "certified_through_length": 3,
+                "length": 3,
+                "lrs": 1,
+                "per_word_budget": 1,
+                "status": "YES",
+                "word": "011",
+                "words_checked": 11
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [
+                  1
+                ],
+                "delta": [
+                  [
+                    5,
+                    0
+                  ],
+                  [
+                    0,
+                    7
+                  ],
+                  [
+                    6,
+                    2
+                  ],
+                  [
+                    1,
+                    4
+                  ],
+                  [
+                    0,
+                    1
+                  ],
+                  [
+                    4,
+                    7
+                  ],
+                  [
+                    2,
+                    5
+                  ],
+                  [
+                    4,
+                    2
+                  ]
+                ],
+                "final": [
+                  2
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "budget_search": {
+          "budget": 2,
+          "lower_no_splits": 5,
+          "search_states": 48,
+          "split": {
+            "D": 0,
+            "L": 2
+          },
+          "splits_checked": 6,
+          "status": "EXACT",
+          "sufficient_predicate": true,
+          "word": "01100111",
+          "word_length": 8
+        },
+        "cuts": {
+          "equal": 0,
+          "profile": 0,
+          "visited": 0
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              5,
+              0
+            ],
+            [
+              0,
+              7
+            ],
+            [
+              6,
+              2
+            ],
+            [
+              1,
+              4
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              4,
+              7
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              4,
+              2
+            ]
+          ],
+          "final": [
+            2
+          ],
+          "flags": [
+            [
+              0,
+              6
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              5,
+              7
+            ]
+          ],
+          "start": 0
+        },
+        "lrs": 2,
+        "per_word_budget": 2,
+        "proper_border_analysis": {
+          "boundary_budget_bound": 6,
+          "boundary_safe_proper_example_count": 8,
+          "budget_excess_over_boundary_bound": -4,
+          "exact_budget_growth_vs_normalized_slice": 1,
+          "exact_instance_budget": 2,
+          "minimum_normalized_slice_budget": 1,
+          "minimum_normalized_slice_length": 3,
+          "proper_blocked_shorter_examples": [
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  5,
+                  7
+                ]
+              ],
+              "word": "011"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  5,
+                  7
+                ]
+              ],
+              "word": "0111"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  5,
+                  7
+                ]
+              ],
+              "word": "1011"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  0,
+                  6
+                ],
+                [
+                  2,
+                  6
+                ]
+              ],
+              "word": "01100"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  5,
+                  7
+                ]
+              ],
+              "word": "01111"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  5,
+                  7
+                ]
+              ],
+              "word": "10111"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  5,
+                  7
+                ]
+              ],
+              "word": "11011"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  5,
+                  7
+                ]
+              ],
+              "word": "000011"
+            }
+          ],
+          "proper_flag_pairs_blocking_shorter_base_words": [
+            [
+              0,
+              6
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              5,
+              7
+            ]
+          ],
+          "proper_flag_pairs_on_selected_word": [],
+          "properly_blocked_shorter_example_count": 8,
+          "selected_length_minus_normalized_slice": 5,
+          "selected_word_length": 8,
+          "state_count": 8
+        },
+        "shortest_length": 8,
+        "shortest_word": "01100111",
+        "shortestness": {
+          "certified_through_length": 8,
+          "failure_summary": {
+            "counts": {
+              "bad_state": 0,
+              "flagged_border": 43,
+              "non_final": 212,
+              "oracle_mismatch": 0,
+              "undefined_transition": 0
+            },
+            "examples": {
+              "flagged_border": {
+                "blocking_pairs": [
+                  {
+                    "i": 1,
+                    "j": 2,
+                    "pair": [
+                      5,
+                      7
+                    ],
+                    "suffix_at_i": "11",
+                    "suffix_at_j": "1"
+                  }
+                ],
+                "word": "011"
+              },
+              "non_final": {
+                "end_state": 0,
+                "word": ""
+              }
+            }
+          },
+          "forward_reverse_comparisons": 359,
+          "words_checked": 359
+        },
+        "state_trace": [
+          0,
+          5,
+          7,
+          2,
+          6,
+          2,
+          2,
+          2,
+          2
+        ],
+        "steps_done": 4,
+        "steps_requested": 16,
+        "targeted_flags": [
+          [
+            0,
+            6
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            5,
+            7
+          ]
+        ],
+        "visited_states": [
+          0,
+          2,
+          5,
+          6,
+          7
+        ]
+      },
+      {
+        "admissible_base_words_to_cap": 2966,
+        "attempt": 45,
+        "base_flags": [],
+        "base_instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              2,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              6,
+              0
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              5,
+              -1
+            ]
+          ],
+          "final": [
+            2,
+            3,
+            5
+          ],
+          "flags": [],
+          "start": 0
+        },
+        "base_shortest": {
+          "budget_search": {
+            "budget": 0,
+            "lower_no_splits": 0,
+            "search_states": 9,
+            "split": {
+              "D": 0,
+              "L": 0
+            },
+            "splits_checked": 1,
+            "status": "EXACT",
+            "sufficient_predicate": true,
+            "word": "0",
+            "word_length": 1
+          },
+          "summary": {
+            "certified_through_length": 1,
+            "length": 1,
+            "lrs": 0,
+            "per_word_budget": 0,
+            "status": "YES",
+            "word": "0",
+            "words_checked": 2
+          }
+        },
+        "best_step": 3,
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 1,
+          "minimum_exact_slice_budget": 1,
+          "original_per_word_budget": 2,
+          "selected_word_budget_growth_vs_slice": 1,
+          "slices": [
+            {
+              "diagonal_states_added": [],
+              "final_state": 2,
+              "full_boundary_states_added": [
+                0
+              ],
+              "search": {
+                "reason": "bad_initial_state",
+                "search_skipped": true,
+                "status": "EXACT_NO"
+              },
+              "shortest_to_word_cap": {
+                "reason": "bad_initial_state",
+                "search_skipped": true,
+                "status": "EXACT_NO"
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [
+                  0
+                ],
+                "delta": [
+                  [
+                    2,
+                    2
+                  ],
+                  [
+                    1,
+                    3
+                  ],
+                  [
+                    1,
+                    1
+                  ],
+                  [
+                    4,
+                    5
+                  ],
+                  [
+                    6,
+                    0
+                  ],
+                  [
+                    3,
+                    1
+                  ],
+                  [
+                    5,
+                    -1
+                  ]
+                ],
+                "final": [
+                  2
+                ],
+                "flags": [],
+                "start": 0
+              }
+            },
+            {
+              "diagonal_states_added": [],
+              "final_state": 3,
+              "full_boundary_states_added": [
+                1,
+                2
+              ],
+              "search": {
+                "reason": "no_reachable_non_bad_final_state",
+                "search_skipped": true,
+                "status": "EXACT_NO"
+              },
+              "shortest_to_word_cap": {
+                "reason": "no_reachable_non_bad_final_state",
+                "search_skipped": true,
+                "status": "EXACT_NO"
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [
+                  1,
+                  2
+                ],
+                "delta": [
+                  [
+                    2,
+                    2
+                  ],
+                  [
+                    1,
+                    3
+                  ],
+                  [
+                    1,
+                    1
+                  ],
+                  [
+                    4,
+                    5
+                  ],
+                  [
+                    6,
+                    0
+                  ],
+                  [
+                    3,
+                    1
+                  ],
+                  [
+                    5,
+                    -1
+                  ]
+                ],
+                "final": [
+                  3
+                ],
+                "flags": [],
+                "start": 0
+              }
+            },
+            {
+              "diagonal_states_added": [],
+              "final_state": 5,
+              "full_boundary_states_added": [],
+              "search": {
+                "budget": 1,
+                "lower_no_splits": 1,
+                "search_states": 11,
+                "split": {
+                  "D": 1,
+                  "L": 0
+                },
+                "splits_checked": 2,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "0011",
+                "word_length": 4
+              },
+              "shortest_to_word_cap": {
+                "certified_through_length": 4,
+                "length": 4,
+                "lrs": 1,
+                "per_word_budget": 1,
+                "status": "YES",
+                "word": "0011",
+                "words_checked": 19
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [],
+                "delta": [
+                  [
+                    2,
+                    2
+                  ],
+                  [
+                    1,
+                    3
+                  ],
+                  [
+                    1,
+                    1
+                  ],
+                  [
+                    4,
+                    5
+                  ],
+                  [
+                    6,
+                    0
+                  ],
+                  [
+                    3,
+                    1
+                  ],
+                  [
+                    5,
+                    -1
+                  ]
+                ],
+                "final": [
+                  5
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "budget_search": {
+          "budget": 2,
+          "lower_no_splits": 3,
+          "search_states": 26,
+          "split": {
+            "D": 2,
+            "L": 0
+          },
+          "splits_checked": 4,
+          "status": "EXACT",
+          "sufficient_predicate": true,
+          "word": "111000",
+          "word_length": 6
+        },
+        "cuts": {
+          "equal": 0,
+          "profile": 0,
+          "visited": 0
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              2,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              6,
+              0
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              5,
+              -1
+            ]
+          ],
+          "final": [
+            2,
+            3,
+            5
+          ],
+          "flags": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          "start": 0
+        },
+        "lrs": 2,
+        "per_word_budget": 2,
+        "proper_border_analysis": {
+          "boundary_budget_bound": 5,
+          "boundary_safe_proper_example_count": 7,
+          "budget_excess_over_boundary_bound": -3,
+          "exact_budget_growth_vs_normalized_slice": 1,
+          "exact_instance_budget": 2,
+          "minimum_normalized_slice_budget": 1,
+          "minimum_normalized_slice_length": 4,
+          "proper_blocked_shorter_examples": [
+            {
+              "boundary_flag_pairs": [
+                [
+                  1,
+                  3
+                ],
+                [
+                  2,
+                  3
+                ]
+              ],
+              "boundary_safe": false,
+              "flag_pairs": [
+                [
+                  0,
+                  2
+                ]
+              ],
+              "word": "111"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  1,
+                  3
+                ]
+              ],
+              "word": "0011"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  1,
+                  3
+                ],
+                [
+                  2,
+                  3
+                ]
+              ],
+              "word": "0111"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  1,
+                  3
+                ]
+              ],
+              "word": "1011"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  0,
+                  2
+                ],
+                [
+                  1,
+                  3
+                ],
+                [
+                  2,
+                  3
+                ]
+              ],
+              "word": "1111"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  1,
+                  3
+                ]
+              ],
+              "word": "00011"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  1,
+                  3
+                ],
+                [
+                  2,
+                  3
+                ]
+              ],
+              "word": "01011"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  1,
+                  3
+                ]
+              ],
+              "word": "10011"
+            }
+          ],
+          "proper_flag_pairs_blocking_shorter_base_words": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          "proper_flag_pairs_on_selected_word": [],
+          "properly_blocked_shorter_example_count": 8,
+          "selected_length_minus_normalized_slice": 2,
+          "selected_word_length": 6,
+          "state_count": 7
+        },
+        "shortest_length": 6,
+        "shortest_word": "001000",
+        "shortestness": {
+          "certified_through_length": 6,
+          "failure_summary": {
+            "counts": {
+              "bad_state": 0,
+              "flagged_border": 26,
+              "non_final": 37,
+              "oracle_mismatch": 0,
+              "undefined_transition": 0
+            },
+            "examples": {
+              "flagged_border": {
+                "blocking_pairs": [
+                  {
+                    "i": 0,
+                    "j": 1,
+                    "pair": [
+                      0,
+                      2
+                    ],
+                    "suffix_at_i": "0",
+                    "suffix_at_j": ""
+                  }
+                ],
+                "word": "0"
+              },
+              "non_final": {
+                "end_state": 0,
+                "word": ""
+              }
+            }
+          },
+          "forward_reverse_comparisons": 72,
+          "words_checked": 72
+        },
+        "state_trace": [
+          0,
+          2,
+          1,
+          3,
+          4,
+          6,
+          5
+        ],
+        "steps_done": 6,
+        "steps_requested": 16,
+        "targeted_flags": [
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "visited_states": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      {
+        "admissible_base_words_to_cap": 4766,
+        "attempt": 112,
+        "base_flags": [],
+        "base_instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              4,
+              4
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              6,
+              5
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              1,
+              4
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              4,
+              6
+            ]
+          ],
+          "final": [
+            1,
+            3,
+            4
+          ],
+          "flags": [],
+          "start": 0
+        },
+        "base_shortest": {
+          "budget_search": {
+            "budget": 0,
+            "lower_no_splits": 0,
+            "search_states": 13,
+            "split": {
+              "D": 0,
+              "L": 0
+            },
+            "splits_checked": 1,
+            "status": "EXACT",
+            "sufficient_predicate": true,
+            "word": "0",
+            "word_length": 1
+          },
+          "summary": {
+            "certified_through_length": 1,
+            "length": 1,
+            "lrs": 0,
+            "per_word_budget": 0,
+            "status": "YES",
+            "word": "0",
+            "words_checked": 2
+          }
+        },
+        "best_step": 4,
+        "boundary_normalization": {
+          "boundary_budget_status": "EXACT",
+          "boundary_budget_upper_bound": 1,
+          "minimum_exact_slice_budget": 1,
+          "original_per_word_budget": 2,
+          "selected_word_budget_growth_vs_slice": 1,
+          "slices": [
+            {
+              "diagonal_states_added": [],
+              "final_state": 1,
+              "full_boundary_states_added": [
+                4
+              ],
+              "search": {
+                "reason": "no_reachable_non_bad_final_state",
+                "search_skipped": true,
+                "status": "EXACT_NO"
+              },
+              "shortest_to_word_cap": {
+                "reason": "no_reachable_non_bad_final_state",
+                "search_skipped": true,
+                "status": "EXACT_NO"
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [
+                  4
+                ],
+                "delta": [
+                  [
+                    4,
+                    4
+                  ],
+                  [
+                    2,
+                    0
+                  ],
+                  [
+                    6,
+                    5
+                  ],
+                  [
+                    2,
+                    6
+                  ],
+                  [
+                    1,
+                    4
+                  ],
+                  [
+                    3,
+                    1
+                  ],
+                  [
+                    4,
+                    6
+                  ]
+                ],
+                "final": [
+                  1
+                ],
+                "flags": [],
+                "start": 0
+              }
+            },
+            {
+              "diagonal_states_added": [],
+              "final_state": 3,
+              "full_boundary_states_added": [],
+              "search": {
+                "budget": 1,
+                "lower_no_splits": 2,
+                "search_states": 9,
+                "split": {
+                  "D": 0,
+                  "L": 1
+                },
+                "splits_checked": 3,
+                "status": "EXACT",
+                "sufficient_predicate": true,
+                "word": "00010",
+                "word_length": 5
+              },
+              "shortest_to_word_cap": {
+                "certified_through_length": 5,
+                "length": 5,
+                "lrs": 1,
+                "per_word_budget": 1,
+                "status": "YES",
+                "word": "00010",
+                "words_checked": 34
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [],
+                "delta": [
+                  [
+                    4,
+                    4
+                  ],
+                  [
+                    2,
+                    0
+                  ],
+                  [
+                    6,
+                    5
+                  ],
+                  [
+                    2,
+                    6
+                  ],
+                  [
+                    1,
+                    4
+                  ],
+                  [
+                    3,
+                    1
+                  ],
+                  [
+                    4,
+                    6
+                  ]
+                ],
+                "final": [
+                  3
+                ],
+                "flags": [],
+                "start": 0
+              }
+            },
+            {
+              "diagonal_states_added": [],
+              "final_state": 4,
+              "full_boundary_states_added": [
+                0
+              ],
+              "search": {
+                "reason": "bad_initial_state",
+                "search_skipped": true,
+                "status": "EXACT_NO"
+              },
+              "shortest_to_word_cap": {
+                "reason": "bad_initial_state",
+                "search_skipped": true,
+                "status": "EXACT_NO"
+              },
+              "slice_instance": {
+                "alphabet": "01",
+                "bad": [
+                  0
+                ],
+                "delta": [
+                  [
+                    4,
+                    4
+                  ],
+                  [
+                    2,
+                    0
+                  ],
+                  [
+                    6,
+                    5
+                  ],
+                  [
+                    2,
+                    6
+                  ],
+                  [
+                    1,
+                    4
+                  ],
+                  [
+                    3,
+                    1
+                  ],
+                  [
+                    4,
+                    6
+                  ]
+                ],
+                "final": [
+                  4
+                ],
+                "flags": [],
+                "start": 0
+              }
+            }
+          ]
+        },
+        "budget_search": {
+          "budget": 2,
+          "lower_no_splits": 5,
+          "search_states": 124,
+          "split": {
+            "D": 0,
+            "L": 2
+          },
+          "splits_checked": 6,
+          "status": "EXACT",
+          "sufficient_predicate": true,
+          "word": "110010",
+          "word_length": 6
+        },
+        "cuts": {
+          "equal": 0,
+          "profile": 0,
+          "visited": 0
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              4,
+              4
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              6,
+              5
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              1,
+              4
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              4,
+              6
+            ]
+          ],
+          "final": [
+            1,
+            3,
+            4
+          ],
+          "flags": [
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              4
+            ],
+            [
+              0,
+              5
+            ],
+            [
+              4,
+              1
+            ]
+          ],
+          "start": 0
+        },
+        "lrs": 2,
+        "per_word_budget": 2,
+        "proper_border_analysis": {
+          "boundary_budget_bound": 5,
+          "boundary_safe_proper_example_count": 1,
+          "budget_excess_over_boundary_bound": -3,
+          "exact_budget_growth_vs_normalized_slice": 1,
+          "exact_instance_budget": 2,
+          "minimum_normalized_slice_budget": 1,
+          "minimum_normalized_slice_length": 5,
+          "proper_blocked_shorter_examples": [
+            {
+              "boundary_flag_pairs": [
+                [
+                  4,
+                  1
+                ]
+              ],
+              "boundary_safe": false,
+              "flag_pairs": [
+                [
+                  0,
+                  4
+                ]
+              ],
+              "word": "00"
+            },
+            {
+              "boundary_flag_pairs": [
+                [
+                  0,
+                  4
+                ]
+              ],
+              "boundary_safe": false,
+              "flag_pairs": [
+                [
+                  0,
+                  4
+                ]
+              ],
+              "word": "11"
+            },
+            {
+              "boundary_flag_pairs": [
+                [
+                  4,
+                  1
+                ]
+              ],
+              "boundary_safe": false,
+              "flag_pairs": [
+                [
+                  0,
+                  4
+                ]
+              ],
+              "word": "010"
+            },
+            {
+              "boundary_flag_pairs": [
+                [
+                  0,
+                  4
+                ]
+              ],
+              "boundary_safe": false,
+              "flag_pairs": [
+                [
+                  0,
+                  4
+                ]
+              ],
+              "word": "111"
+            },
+            {
+              "boundary_flag_pairs": [
+                [
+                  4,
+                  1
+                ]
+              ],
+              "boundary_safe": false,
+              "flag_pairs": [
+                [
+                  0,
+                  4
+                ]
+              ],
+              "word": "0110"
+            },
+            {
+              "boundary_flag_pairs": [
+                [
+                  0,
+                  4
+                ]
+              ],
+              "boundary_safe": false,
+              "flag_pairs": [
+                [
+                  0,
+                  4
+                ]
+              ],
+              "word": "1111"
+            },
+            {
+              "boundary_flag_pairs": [
+                [
+                  0,
+                  4
+                ]
+              ],
+              "boundary_safe": false,
+              "flag_pairs": [
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  4
+                ],
+                [
+                  4,
+                  1
+                ]
+              ],
+              "word": "00000"
+            },
+            {
+              "boundary_flag_pairs": [],
+              "boundary_safe": true,
+              "flag_pairs": [
+                [
+                  0,
+                  5
+                ]
+              ],
+              "word": "00010"
+            }
+          ],
+          "proper_flag_pairs_blocking_shorter_base_words": [
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              4
+            ],
+            [
+              0,
+              5
+            ],
+            [
+              4,
+              1
+            ]
+          ],
+          "proper_flag_pairs_on_selected_word": [],
+          "properly_blocked_shorter_example_count": 8,
+          "selected_length_minus_normalized_slice": 1,
+          "selected_word_length": 6,
+          "state_count": 7
+        },
+        "shortest_length": 6,
+        "shortest_word": "110010",
+        "shortestness": {
+          "certified_through_length": 6,
+          "failure_summary": {
+            "counts": {
+              "bad_state": 0,
+              "flagged_border": 40,
+              "non_final": 23,
+              "oracle_mismatch": 0,
+              "undefined_transition": 0
+            },
+            "examples": {
+              "flagged_border": {
+                "blocking_pairs": [
+                  {
+                    "i": 0,
+                    "j": 1,
+                    "pair": [
+                      0,
+                      4
+                    ],
+                    "suffix_at_i": "0",
+                    "suffix_at_j": ""
+                  }
+                ],
+                "word": "0"
+              },
+              "non_final": {
+                "end_state": 0,
+                "word": ""
+              }
+            }
+          },
+          "forward_reverse_comparisons": 114,
+          "words_checked": 114
+        },
+        "state_trace": [
+          0,
+          4,
+          4,
+          1,
+          2,
+          5,
+          3
+        ],
+        "steps_done": 4,
+        "steps_requested": 16,
+        "targeted_flags": [
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "visited_states": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      }
+    ],
+    "rows_retained": 6,
+    "rows_with_budget_excess_over_boundary_bound": 0,
+    "rows_with_budget_growth_vs_normalized_slice": 6
+  }
+}

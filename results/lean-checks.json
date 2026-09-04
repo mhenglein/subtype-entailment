@@ -5,6 +5,36 @@
   "instances": 80,
   "max_word_length": 6,
   "witness_comparisons": 10160,
+  "boundary_comparisons": 10160,
+  "budget_pairs": [
+    [
+      0,
+      0
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      2,
+      0
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      0,
+      2
+    ]
+  ],
+  "necessary_comparisons": 60960,
+  "sufficient_comparisons": 60960,
+  "two_state_decision_comparisons": 33,
   "lrs_comparisons": 511,
   "axioms": {
     "witnessCheck": [
@@ -12,6 +42,22 @@
     ],
     "lrs": [],
     "finiteBudgetDecision": [],
+    "boundaryCheck": [
+      "propext"
+    ],
+    "admissibleCheck": [
+      "propext"
+    ],
+    "necessaryCheck": [
+      "propext"
+    ],
+    "suffixBoundCheck": [],
+    "sufficientCheck": [
+      "propext"
+    ],
+    "twoStateWitnessCheck": [
+      "propext"
+    ],
     "witnessCheck_correct": [
       "Quot.sound",
       "propext"
@@ -39,6 +85,62 @@
       "propext"
     ],
     "finiteBudgetDecision_correct": [
+      "Quot.sound",
+      "propext"
+    ],
+    "boundaryCheck_correct": [
+      "Quot.sound",
+      "propext"
+    ],
+    "witness_iff_finalSlice_proper": [
+      "Quot.sound",
+      "propext"
+    ],
+    "necessary_zero_iff_boundary": [
+      "Quot.sound",
+      "propext"
+    ],
+    "boundary_witness_of_length_le_one": [
+      "Quot.sound",
+      "propext"
+    ],
+    "admissibleCheck_correct": [
+      "Quot.sound",
+      "propext"
+    ],
+    "necessaryCheck_correct": [
+      "Quot.sound",
+      "propext"
+    ],
+    "suffixBoundCheck_correct": [
+      "Quot.sound",
+      "propext"
+    ],
+    "sufficientCheck_correct": [
+      "Quot.sound",
+      "propext"
+    ],
+    "suffixBound_iff_reverseSuffixBound": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "witness_implies_necessary": [
+      "propext"
+    ],
+    "sufficient_implies_witness": [
+      "Quot.sound",
+      "propext"
+    ],
+    "witness_implies_sufficient_lrs": [
+      "Quot.sound",
+      "propext"
+    ],
+    "exists_short_witness_two_states": [
+      "Quot.sound",
+      "propext"
+    ],
+    "twoStateWitnessCheck_correct": [
       "Quot.sound",
       "propext"
     ]

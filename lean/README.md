@@ -1,7 +1,8 @@
 # Lean core
 
-This project checks local lemmas for **binary BorderAvoid**. It does not yet
-decide witness existence or subtype entailment.
+This project checks local lemmas for **binary BorderAvoid** and decides
+witness existence for at most two states. The general problem and subtype
+entailment remain open.
 
 ## Build and check
 
@@ -34,6 +35,9 @@ lake env lean Subtail/Audit.lean
 |---|---|
 | [Basic.lean](Subtail/Basic.lean) | Finite partial DFA, witness definition, executable checker, and `witnessCheck_correct` |
 | [Truncation.lean](Subtail/Truncation.lean) | Maximum repeated-suffix specification; C008, C009, and the visited-state relaxation C013 |
+| [SandwichPredicates.lean](Subtail/SandwichPredicates.lean) | Direct necessary/sufficient checks, soundness, individual lrs coverage, and reversal of the occurrence condition |
+| [Boundary.lean](Subtail/Boundary.lean) | Exact separation of empty/full borders from proper borders and final-state slices |
+| [TwoState.lean](Subtail/TwoState.lean) | Executable exact witness-existence test under `k<=2` |
 | [Conditional.lean](Subtail/Conditional.lean) | Finite budget enumeration, correct under explicit test-soundness and bounded-coverage assumptions |
 | [Examples.lean](Subtail/Examples.lean) | Empty word, undefined transitions, bad initial state, diagonal flags, and strict shortening examples |
 | [Audit.lean](Subtail/Audit.lean) | Dependency-axiom reports for the runtime definitions and main theorems |
@@ -55,10 +59,12 @@ Python checks, but is not yet formalized.
 1. Every successful fixed-budget test yields a witness.
 2. Every instance with a witness has a successful budget within `F(size I)`.
 
-No implementation of the fixed-budget automaton or definition of `F` is
-supplied here. This theorem checks the finite enumeration argument. It does
-not settle either assumption. Arbitrary-tree semantics, normalization, and
-the subtype reduction also remain outside this Lean core.
+The direct sufficient predicate is now implemented and proved sound for an
+individual word. The finite automaton that decides whether any such word
+exists, and the definition of `F`, remain missing. The conditional theorem
+checks the enumeration argument; it does not settle these assumptions.
+Arbitrary-tree semantics, normalization, and the subtype reduction also
+remain outside this Lean core.
 
 The current binary formalization does not claim results for every finite
 alphabet. The general statements in the research notes retain their separate
@@ -67,9 +73,9 @@ written-proof status.
 ## Proof and computation boundaries
 
 The named proof dependencies use only Lean's standard `propext`, `Quot.sound`,
-and, for truncation proofs, `Classical.choice`. The checked runtime definitions
-do not depend on classical choice; `witnessCheck` uses `propext` in erased
-library proofs. No custom axiom or `sorryAx` discharges a research gap.
+and, for some list/truncation proofs, `Classical.choice`. The checked runtime
+definitions do not depend on classical choice. Several use `propext` in
+erased library proofs. No custom axiom or `sorryAx` discharges a research gap.
 The audit covers the named declarations and their transitive dependencies;
 new independent theorems must be added to that audit.
 

@@ -2,7 +2,7 @@
 
 Problem 1.7 is open. This is the current map of approaches, including unsuccessful work.
 
-**10 tried · 7 not tried · 1 blocked · 0 active**
+**12 tried · 5 not tried · 1 blocked · 0 active**
 
 Read [the problem and notation](problem.md), [claims and evidence](claims.md), and [the experiment index](../experiments/README.md).
 
@@ -27,13 +27,11 @@ None currently.
 
 | ID | Approach | Finding / next step | Owner |
 |---|---|---|---|
-| A008 | [Bound minimal witnesses after stronger truncation](approaches/A008.md) · [#2](https://github.com/mhenglein/subtail/issues/2) | Enumerate and minimize resistant witnesses, then state one precise candidate bound. | Unassigned |
 | A011 | [Complete the converse with regular annotations](approaches/A011.md) | State the desired converse precisely and construct a reduction preserving the regular restriction. | Unassigned |
 | A012 | [Make NO certificates complete](approaches/A012.md) | Find a precise invariant or instance that separates current NO certificates from full nonexistence. | Unassigned |
 | A013 | [Exploit restrictions shared by actual summary automata](approaches/A013.md) | Derive an invariant of both summary automata from one W, then test it on actual bridge outputs. | Unassigned |
 | A014 | [Apply cap and period-language saturation techniques](approaches/A014.md) | Choose one closure property, test small instances, and preserve all endpoint flags. | Unassigned |
 | A016 | [Implement and audit fixed-skeleton checkability](approaches/A016.md) | Audit and implement the one-block exponent test, then check two interacting blocks. | Unassigned |
-| A017 | [Bound essential repeated blocks](approaches/A017.md) | Test one precise block-deletion rule while recording every new border across the join. | Unassigned |
 
 ## Blocked
 
@@ -51,10 +49,12 @@ None currently.
 | A004 | [Transfer the shorter word's repeated suffix](approaches/A004.md) | Supported: C008 has a written proof and a checked binary Lean proof; earlier bounded cuts also pass. Next: Use C008 and the stronger C013 context rule in A008. | Unassigned |
 | A005 | [Weaken state equality to incoming flag-set inclusion](approaches/A005.md) | Supported: C009 has a written proof and a checked binary Lean proof with the incoming-flag direction verified. Next: Compare witnesses resistant to C009 and C013 in A008. | Unassigned |
 | A006 | [Calibrate small-budget expectations](approaches/A006.md) | Refuted: A singleton 0^n language has exact B=n-1 at n+1 states; the checked 13-state instance has B=11. Next: Use this baseline before searching for harder growth in A009. | Unassigned |
-| A009 | [Find budget growth beyond the regular-language baseline](approaches/A009.md) | Inconclusive: A 1,200-instance search found exact random budgets at most 1 and five +1 flag increases; 45 rows hit the state cap. Next: Preserve a known bordered witness while mutating flags; separate simple state and endpoint pruning from proper-border effects. | Unassigned |
-| A010 | [Build the exact top-free constraint-to-automata pipeline](approaches/A010.md) · [#3](https://github.com/mhenglein/subtail/issues/3) | Supported: Implemented and audited exact regular seed closure and supplied-path model checks; 3,577 bounded diagnostics and edge cases pass. Next: Construct the actual W summary classes and prove their link to the canonical model; the global path search remains open. | Unassigned |
+| A008 | [Bound minimal witnesses after stronger truncation](approaches/A008.md) · [#2](https://github.com/mhenglein/subtail/issues/2) | Inconclusive: Decided the two-state case; targeted shortest witnesses reach length 12, with exact critical-cut obstructions. Next: Study the six-state budget-five example and test stronger bounds after trimming irrelevant states. | Unassigned |
+| A009 | [Find budget growth beyond the regular-language baseline](approaches/A009.md) | Supported: Full boundary normalization removes the earlier increases; a new six-state instance has exact B=5 versus boundary B=1. Next: Minimize and generalize the six-state example; seek B greater than the state count or prove a larger bound. | Unassigned |
+| A010 | [Build the exact top-free constraint-to-automata pipeline](approaches/A010.md) · [#3](https://github.com/mhenglein/subtail/issues/3) | Supported: Implemented actual W/Wrev summaries with S/F annotations; independent audit fixed two API errors and found no known comparison mismatch. Next: Generate actual subtype-derived instances and test joint summary invariants in A013. | Unassigned |
 | A015 | [Strengthen truncation using occurrence context](approaches/A015.md) | Supported: Proved three context refinements and formalized the binary visited-state rule; strict examples and exhaustive two-state checks pass. Next: Use the visited-state summary to classify shortest witnesses resisting every admissible cut in A008. | Unassigned |
-| A018 | [Work backwards from an executable Lean theorem](approaches/A018.md) | Supported: Lean 4.33.1 checks O1-O3 for binary words, the visited-state cut, and the conditional O5 enumeration; the bound remains open. Next: Implement O4: the exact fixed-budget sufficient automaton and its language and nonemptiness proofs. | Unassigned |
+| A017 | [Bound essential repeated blocks](approaches/A017.md) | Inconclusive: An exact border-lifting condition makes loop deletion sound; a three-state example refutes deletion from state repetition alone. Next: Find a finite join-context summary that guarantees border lifting and bounds essential blocks. | Unassigned |
+| A018 | [Work backwards from an executable Lean theorem](approaches/A018.md) | Supported: Lean checks direct budget predicates, reversal, and an exact two-state decision, in addition to the previous truncation and conditional proofs. Next: Formalize the finite Sufficient automaton and its exact nonemptiness procedure; the global bound remains open. | Unassigned |
 
 ## Updating the record
 

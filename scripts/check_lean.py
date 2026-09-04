@@ -14,7 +14,8 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 LEAN = ROOT / "lean"
 sys.path.insert(0, str(ROOT / "experiments"))
-from border_lab import Instance, border_witness, lrs, witness, words
+from border_lab import Instance, border_witness, lrs, necessary, sufficient, witness, words
+from boundary_slices import two_state_decision
 
 
 def run(command):
@@ -68,10 +69,19 @@ def cases(seed, count):
 
 
 def check_axioms(output):
-    algorithms = {"witnessCheck", "lrs", "finiteBudgetDecision"}
+    algorithms = {"witnessCheck", "lrs", "finiteBudgetDecision", "boundaryCheck",
+                  "admissibleCheck", "necessaryCheck", "suffixBoundCheck", "sufficientCheck",
+                  "twoStateWitnessCheck"}
     theorems = {"witnessCheck_correct", "incomingLe_iff_flags", "lrs_spec",
                 "profile_truncation", "visited_profile_truncation",
-                "suffix_trace_truncation", "finiteBudgetDecision_correct"}
+                "suffix_trace_truncation", "finiteBudgetDecision_correct",
+                "boundaryCheck_correct", "witness_iff_finalSlice_proper",
+                "necessary_zero_iff_boundary", "boundary_witness_of_length_le_one",
+                "admissibleCheck_correct", "necessaryCheck_correct",
+                "suffixBoundCheck_correct", "sufficientCheck_correct",
+                "suffixBound_iff_reverseSuffixBound", "witness_implies_necessary",
+                "sufficient_implies_witness", "witness_implies_sufficient_lrs",
+                "exists_short_witness_two_states", "twoStateWitnessCheck_correct"}
     found = {}
     for name, empty, listed in re.findall(
             r"'Subtail\.([^']+)' (does not depend on any axioms|depends on axioms: \[([^]]*)\])",
@@ -96,24 +106,48 @@ def main():
     run(["lake", "env", "leanchecker", "Subtail"])
     axioms = check_axioms(run(["lake", "env", "lean", "Subtail/Audit.lean"]))
     seed, count, maximum = 20260904, 80, 6
+    budgets = [(0, 0), (1, 0), (0, 1), (2, 0), (1, 1), (0, 2)]
     lines = [
         "import Subtail", "open Subtail", "set_option maxRecDepth 4096",
         "set_option maxHeartbeats 10000000",
-        "def checkWords (I : Instance k) (rows : List (Word × Bool)) : IO Unit := do",
-        "  for (w, expected) in rows do",
+        "def budgets : List (Nat × Nat) := " + str(budgets),
+        "def checkWords (I : Instance k)",
+        "    (rows : List (Word × Bool × Bool × List (Bool × Bool))) : IO Unit := do",
+        "  for (w, expected, boundary, sandwich) in rows do",
         "    unless witnessCheck I w == expected do",
         '      throw (IO.userError s!"witness mismatch: {w}")',
+        "    unless boundaryCheck I w == boundary do",
+        '      throw (IO.userError s!"boundary mismatch: {w}")',
+        "    for ((l, d), (n, s)) in budgets.zip sandwich do",
+        "      unless necessaryCheck I w l d == n do",
+        '        throw (IO.userError s!"necessary mismatch: {w}, {l}, {d}")',
+        "      unless sufficientCheck I w l d == s do",
+        '        throw (IO.userError s!"sufficient mismatch: {w}, {l}, {d}")',
+        "def checkSmall (I : Instance k) (expected : Bool) : IO Unit := do",
+        "  unless twoStateWitnessCheck I == expected do",
+        '    throw (IO.userError "two-state decision mismatch")',
     ]
     comparisons = 0
+    small_comparisons = 0
     for index, instance in enumerate(cases(seed, count)):
         rows = []
         for word in words("01", maximum):
             expected = witness(instance, word)
             if expected != border_witness(instance, word):
                 raise RuntimeError(f"Python oracle disagreement: {index}, {word}")
-            rows.append("(" + word_term(word) + ", " + boolean(expected) + ")")
+            boundary = necessary(instance, word, 0, 0)
+            sandwich = ", ".join(
+                "(" + boolean(necessary(instance, word, l, d)) + ", " +
+                boolean(sufficient(instance, word, l, d)) + ")"
+                for l, d in budgets)
+            rows.append("(" + word_term(word) + ", " + boolean(expected) + ", " +
+                        boolean(boundary) + ", [" + sandwich + "])")
             comparisons += 1
         lines.append("#eval checkWords " + instance_term(instance) + " [" + ", ".join(rows) + "]")
+        if len(instance.delta) <= 2:
+            small_expected = two_state_decision(instance)["status"] == "YES"
+            lines.append("#eval checkSmall " + instance_term(instance) + " " + boolean(small_expected))
+            small_comparisons += 1
     lrs_words = list(words("01", 8))
     lines += [
         "def checkSuffixes (rows : List (Word × Nat)) : IO Unit := do",
@@ -134,6 +168,11 @@ def main():
         "instances": count,
         "max_word_length": maximum,
         "witness_comparisons": comparisons,
+        "boundary_comparisons": comparisons,
+        "budget_pairs": budgets,
+        "necessary_comparisons": comparisons * len(budgets),
+        "sufficient_comparisons": comparisons * len(budgets),
+        "two_state_decision_comparisons": small_comparisons,
         "lrs_comparisons": len(lrs_words),
         "axioms": axioms,
         "failures": 0,

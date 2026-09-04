@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "scope": "independent bounded audit of Pop summaries, S monitor, and summary/canonical bridge",
+  "seeds": {
+    "pop": 20260904,
+    "s_monitor": 20260904,
+    "summary": 222
+  },
+  "caps": {
+    "pop_trials": 300,
+    "pop_word_length": 4,
+    "pop_stack_length": "word_length + 5",
+    "pop_max_seen": 10000,
+    "s_trials": 400,
+    "s_word_length": 4,
+    "s_max_steps": 250,
+    "s_max_stack": 10,
+    "summary_trials": 400,
+    "summary_word_length": 6
+  },
+  "counts": {
+    "pop_membership_attempts": 98053,
+    "pop_known_comparisons": 68839,
+    "pop_unknown": 29214,
+    "s_monitor_attempts": 12400,
+    "s_known_comparisons": 10675,
+    "s_unknown": 1725,
+    "summary_satisfiable_cases": 228,
+    "summary_canonical_comparisons": 28956,
+    "summary_cases_with_absent_query_variable": 147
+  },
+  "checks": {
+    "generator_rule_input": "validated",
+    "unsatisfiable_precondition": "validated",
+    "absent_query_variables": "validated",
+    "empty_and_full_border_reversal": "validated"
+  },
+  "global_claim": "bounded evidence only; no decision procedure or all-length proof"
+}

@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "scope": "actual W/Wrev pop summaries, S/F annotations, and witness cross-check",
+  "witness_comparisons": 762,
+  "max_word_length": 6,
+  "c0_summary": {
+    "control_states": 2,
+    "w_pop_eps_edges": 0,
+    "w_pop_letter_edges": 0,
+    "a_pop_eps_edges": 0,
+    "a_pop_letter_edges": 2,
+    "summary_classes": 4,
+    "flag_pairs": 1,
+    "bad_classes": 0,
+    "final_classes": 2
+  },
+  "empty_stack_pop": "validated",
+  "push_pop_summary": "validated",
+  "generator_rule_input": "validated",
+  "actual_flag_relation": "validated",
+  "unsat_precondition": "validated",
+  "absent_query_variables": "validated",
+  "s_annotation": "exact denial predecessor NFA",
+  "f_annotation": "exact forced-root endpoint condition",
+  "global_claim": "not a decision procedure for Problem 1.7"
+}

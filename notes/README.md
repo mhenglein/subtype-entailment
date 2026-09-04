@@ -9,6 +9,13 @@ Current notes:
 - [Context-cut proof](2026-09-04-context-cut.md): three refinements of incoming-flag comparison, with strict examples.
 - [Bridge foundation](2026-09-04-bridge-foundation.md): regular seed closure, supplied-path countermodels, audit, and formal gaps.
 - [Budget search](2026-09-04-budget-search.md): 1,200 random instances, exact small budgets, and explicit capped outcomes.
+- [Boundary slices](2026-09-04-boundary-slices.md): exact two-state decision, regular subclass, and corrected budget baselines.
+- [Lean budget predicates](2026-09-04-lean-sandwich.md): direct checkers, soundness, individual coverage, and reversal proof.
+- [Minimal-witness structure](2026-09-04-minimal-witness-structure.md): critical occurrences and the missing loop-deletion condition.
+- [Shortest-witness search](2026-09-04-shortest-witnesses.md): complete two-state census and selected proper-border growth examples.
+- [Actual summary bridge](2026-09-04-summary-bridge.md): W/Wrev summary classes with the S/F side conditions.
+- [Summary bridge audit](2026-09-04-summary-bridge-audit.md): two fixed API errors and independent checks with explicit UNKNOWN outcomes.
+- [Six-state budget-five example](2026-09-04-trimmed-budget.md): state restriction, exact budget replay, and limits of the counterexample.
 
 Use `YYYY-MM-DD-short-topic.md` for new notes. Start from [the research template](../templates/research-note.md). Record sources, hypotheses, proof status, and the next concrete question.
 

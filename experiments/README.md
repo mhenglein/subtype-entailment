@@ -247,12 +247,15 @@ under exactly their compiled hypotheses; their alphabet is binary.
 
 **Result.** [lean-checks.json](../results/lean-checks.json) records the toolchain,
 kernel replay, axiom lists, 10,160 witness comparisons, 511 `lrs` comparisons,
-and zero failures. Runtime definitions do not depend on classical choice.
-The truncation proofs use standard classical axioms in erased proofs.
+and zero failures. It now also checks 10,160 boundary cases, 60,960 necessary
+and 60,960 sufficient cases at six budget pairs, and 33 one/two-state
+decisions. Runtime definitions do not depend on classical choice. Some list
+and truncation proofs use standard classical axioms in erased proofs.
 
 **Claims informed.** [C008](../research/claims.md#c008),
 [C009](../research/claims.md#c009), [C013](../research/claims.md#c013),
-[C014](../research/claims.md#c014). No concrete global bound or fixed-budget
+[C014](../research/claims.md#c014), [C016](../research/claims.md#c016),
+[C018](../research/claims.md#c018). No concrete global bound or fixed-budget
 automaton is supplied by the conditional theorem.
 
 <a id="e009"></a>
@@ -346,6 +349,8 @@ examples and adds a separate diagnostic. Three `+1` increases remain after
 diagonal flags are encoded as Bad states and start-to-final flags as final
 state exclusions. The other two increases are explained by those exclusions.
 CI reruns this small replay; it does not rerun the full random census.
+E012 later completes the boundary normalization: all five increases disappear
+when flags from every visited state into each fixed final state are included.
 
 **Interpretation.** `EXACT` requires exhaustive NO results for every lower
 split and a checked sufficient witness at the reported split. `NO_THROUGH`
@@ -359,6 +364,134 @@ for retained examples and the next generator design.
 does not establish a stronger growth family or a general bound. These are
 abstract instances; no SEP realizability claim is made.
 
+<a id="e012"></a>
+
+### E012 — Boundary slices and exact restricted decisions
+
+**Command.**
+
+```sh
+python3 experiments/check_boundary_slices.py
+```
+
+**Code.** [Boundary slices](boundary_slices.py) and
+[checker](check_boundary_slices.py).
+
+**Scope.** All 20,736 binary two-state instances, all words through length
+four; 100 seeded instances with words through length seven, seed `20260905`.
+The combined 668,316 comparisons test boundary slices against `N''(0,0)`
+and verify exact witness-language equality where the regularity certificate
+applies. The script also replays all five earlier growth rows against their
+complete boundary slices.
+
+**Result.** [boundary-slices.json](../results/boundary-slices.json) records
+2,682 nonempty and 18,054 empty two-state instances. All nonempty instances
+have a witness of length at most one and budget zero. Across both input sets,
+the regularity certificate returns 2,627 YES, 18,105 NO, and 104 UNKNOWN.
+No earlier E011 increase survives full boundary normalization.
+
+**Claims informed.** [C016](../research/claims.md#c016). The general restricted
+decision follows from the written graph proof; the binary two-state decision
+also has a Lean proof in E008. The general problem remains open.
+
+<a id="e013"></a>
+
+### E013 — Actual subtype summaries and independent pushdown audit
+
+**Commands.**
+
+```sh
+python3 experiments/check_summary_bridge.py
+python3 experiments/check_summary_bridge_audit.py
+```
+
+**Code.** [Summary bridge](summary_bridge.py),
+[targeted checks](check_summary_bridge.py), and
+[independent audit](check_summary_bridge_audit.py).
+
+**Scope.** The targeted run compares 762 words over six satisfiable systems,
+through length six. The independent run uses seeds `20260904` for 300 Pop
+trials and 400 denial-monitor trials, and `222` for 400 summary trials.
+Its direct stack/depth/state caps are recorded in the output; capped absence
+is UNKNOWN. The summary/canonical comparison itself uses exact finite
+automata for each supplied word, through length six.
+
+**Result.** [summary-bridge.json](../results/summary-bridge.json) and
+[summary-bridge-audit.json](../results/summary-bridge-audit.json) record the
+targeted regressions and 28,956 summary/canonical comparisons over 228
+satisfiable systems. Independent direct checks cover 68,839 known Pop cases
+and 10,675 known denial cases; another 29,214 and 1,725 respectively remain
+UNKNOWN under their caps. No known comparison disagrees.
+
+The audit found and fixed generator consumption and a missing satisfiability
+guard. Regressions include both, absent query variables, empty-stack pops,
+and denial reachability with residual stacks.
+
+**Claims informed.** [C017](../research/claims.md#c017). This is a reduction
+component and bounded implementation evidence, not a complete entailment
+solver or a formal proof of all-input saturation.
+
+<a id="e014"></a>
+
+### E014 — Shortest witnesses and flags that preserve a target word
+
+**Commands.**
+
+```sh
+python3 experiments/shortest_witnesses.py
+python3 experiments/check_minimal_structure.py
+```
+
+**Code.** [Shortest-witness search](shortest_witnesses.py) and
+[independent three-state example](check_minimal_structure.py).
+
+**Scope.** The first command covers all 20,736 two-state instances, using
+the exact zero-budget necessary graph to certify emptiness after testing
+words of length at most one. It also makes 120 targeted attempts with 3–8
+states, seed `8008`, at most 16 flag additions per attempt, and words through
+length 12. It retains the six best rows by its stated score, then certifies
+their shortest words and exact instance budgets with a 200,000-state cap.
+Unresolved fixed-budget searches remain UNKNOWN.
+
+**Result.** [shortest-witnesses.json](../results/shortest-witnesses.json)
+records the two-state census and six retained targeted rows. Their exact
+budgets are `5,4,3,2,2,2`; the largest shortest length is 12. Raw state
+counts are 7 or 8. Removing irrelevant states from the first row produces
+the stronger six-state result in E015. The second command verifies that
+`001` is shortest in a three-state example and deleting its final-state
+loop creates the forbidden word `00`.
+
+**Claims informed.** [C016](../research/claims.md#c016),
+[C019](../research/claims.md#c019), and [C020](../research/claims.md#c020).
+The targeted generator is selective. It is not a census of larger instances
+and proves no general bound. Per-word budget and exact instance budget are
+recorded separately.
+
+<a id="e015"></a>
+
+### E015 — Six-state counterexample to the regular-subclass bound
+
+**Command.**
+
+```sh
+python3 experiments/trim_budget_example.py
+```
+
+**Code.** [Restriction and replay](trim_budget_example.py) retains only the
+six states visited by E014 attempt 3's sufficient witness.
+
+**Result.** [trimmed-budget.json](../results/trimmed-budget.json) records exact
+`B=5`, shortest word `001011010101`, length 12, and full-boundary `B=1`.
+All 15 splits below budget five are exhausted, as are five splits at budget
+five before `(5,0)` succeeds. Each search allows 200,000 states; none hits
+the cap. All 8,191 binary words through length 12 are also checked against
+both direct witness predicates.
+
+**Claims informed.** [C020](../research/claims.md#c020), with the
+[restriction proof and exact limits](../notes/2026-09-04-trimmed-budget.md).
+This refutes the universal extension of `B<=max(0,|K|-2)`. It establishes no
+asymptotic lower bound, subtype realization, or general impossibility result.
+
 ## Not yet reproducible or not yet run
 
 These items have no executed experiment ID. Do not assign them `REPRO` status
@@ -371,10 +504,9 @@ until a committed command and compact output exist.
   exhaustive two-state check at the same word-length limit. It uses the new
   context criteria and two witness predicates; it does not recreate every
   historical assertion in the earlier border-audit note.
-- **Constructed hard-budget families.** E011 tried a bounded random search
-  and found only small flag-induced growth. No construction with stronger
-  asymptotic growth has been established. A witness-preserving generator is
-  a proposed next attempt.
+- **Constructed hard-budget families.** E014/E015 find proper-border growth
+  and a six-state budget-five example. No construction with stronger
+  asymptotic growth has been established.
 - **SEP-derived instance pipeline.** No executable experiment yet proves that
   the abstract summary automata and flag relations generated by `W` satisfy a
   structural restriction strong enough to bound `B(I)`.

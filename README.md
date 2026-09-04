@@ -24,10 +24,12 @@ The [tracker](research/README.md) is generated from [one registry](research/appr
 
 The original memo's `analysis-2026` code is still pending. The current scripts are an independent implementation, and their results must not be confused with the memo's full census.
 
-The first Lean core proves the binary witness checker, two truncation rules,
-a visited-state refinement, and a conditional finite-budget search theorem.
-The computable bound and subtype reduction remain open proof obligations.
-Python also constructs and validates regular countermodels for supplied paths.
+The Lean core proves the binary witness and budget predicates, stronger
+truncation rules, and an exact decision for at most two automaton states.
+Its general finite-budget decision theorem still assumes the missing bound.
+Python constructs actual summary instances from normalized subtype constraints
+and validates regular countermodels for supplied paths. The full problem,
+computable bound, and formal subtype reduction remain open.
 See the [claims ledger](research/claims.md) for the exact scope of each result.
 
 ## Run the checks
@@ -39,6 +41,13 @@ python3 scripts/research_index.py --check
 python3 experiments/run_experiments.py
 python3 experiments/check_topfree_bridge.py
 python3 experiments/check_context_cuts.py
+python3 experiments/search_budgets.py --replay-stored
+python3 experiments/check_boundary_slices.py
+python3 experiments/check_summary_bridge.py
+python3 experiments/check_summary_bridge_audit.py
+python3 experiments/check_minimal_structure.py
+python3 experiments/shortest_witnesses.py
+python3 experiments/trim_budget_example.py
 ```
 
 With Lean 4.33.1 and Lake installed, also run:

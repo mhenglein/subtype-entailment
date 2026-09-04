@@ -6,7 +6,8 @@ This ledger gives stable IDs for claims about Problem 1.7 and its BorderAvoid
 reduction. It is the shared index for notes, experiments, and future review.
 
 **Problem status:** Problem 1.7 remains unsolved in this repository. No claim
-below establishes a decision procedure, decidability result, or complete census.
+below establishes a general subtype decision procedure or reproduces the
+memo's original census. Results for named restricted classes are separate.
 
 ## Evidence labels
 
@@ -383,9 +384,149 @@ not a proof-assistant verification of P-automaton saturation.
 [E009](../experiments/README.md#e009).
 
 **Limit.** A rejected path does not establish entailment. Normalization from
-general input syntax, the full summary-class pipeline, and a complete search
-over candidate paths are not implemented. See the note for the remaining
-all-input formal proof obligations.
+general input syntax and a complete search over candidate paths remain open.
+The later summary-class implementation is recorded separately as C017.
+See the note for the remaining all-input formal proof obligations.
+
+<a id="c016"></a>
+
+### C016 — Boundary slices give exact restricted decisions
+
+**Claim.** Fix a final state `f` and forbid
+`D_f = Bad union {q:G(q,q)} union {q:G(q,f)}`. The union of the resulting
+single-final-state regular languages is exactly `N''(0,0)`. A full witness
+additionally avoids the proper nonempty agreements `i<j<|w|`.
+
+For at most two states, boundary nonemptiness is equivalent to witness
+existence: a shortest boundary path has length at most one and hence no
+proper obligations. Every nonempty such instance has `B=0`.
+
+More generally, if no flagged ordered pair can occur on any accepting
+boundary-safe run, the full witness language equals the boundary language.
+This certified regular subclass has `B<=max(0,|K|-2)` when nonempty.
+
+**Scope.** Well-formed finite annotated automata. The graph proofs allow any
+finite alphabet; the current Lean specialization and census are binary.
+
+**Status.** `WRITTEN PROOF + AUDIT` for the graph decisions and subclass
+bound. `LEAN` for the boundary decomposition, zero-budget equivalence, and
+the executable exact two-state decision.
+`REPRO` for the implementations and corrected experimental baselines.
+
+**Evidence.** [Boundary proof](../notes/2026-09-04-boundary-slices.md),
+[Boundary.lean](../lean/Subtail/Boundary.lean),
+[TwoState.lean](../lean/Subtail/TwoState.lean),
+[E012](../experiments/README.md#e012), [E008](../experiments/README.md#e008).
+
+**Limit.** Failure of the regularity certificate means UNKNOWN. Two subtype
+variables need not produce a two-state automaton. The bound does not extend
+to unrestricted BorderAvoid. None of E011's five budget increases survives
+full boundary normalization; equal budgets do not imply equal languages.
+
+<a id="c017"></a>
+
+### C017 — Actual summary classes preserve the subtype side conditions
+
+**Claim.** The Python construction builds paired pop-summary subsets for
+`W` and `W^rev`, flags them by `B(left) intersect A(right)`, and retains the
+memo's forced-root endpoint condition F and every-prefix denial condition S.
+It outputs a `border_lab.Instance` for a satisfiable normalized constraint
+system and query. Unsatisfiable input is explicitly rejected before summary
+witnesses can be interpreted as counterexamples.
+
+**Scope.** The four normalized binary top-free constraint forms. Query
+variables may be absent from the constraints. Summary construction uses
+finite saturation without a stack-depth cutoff.
+
+**Status.** `AUDIT + REPRO`. The audit checked saturation and orientation,
+identified generator consumption and a missing satisfiability guard, and
+the implementation fixes both with regressions. This is not a Lean proof of
+the complete reduction.
+
+**Evidence.** [Summary construction](../experiments/summary_bridge.py),
+[summary note](../notes/2026-09-04-summary-bridge.md),
+[E013](../experiments/README.md#e013).
+
+**Limit.** The finite comparisons cover particular input systems and candidate
+words. General input normalization, formal verification of the all-word
+reduction, and a complete witness search remain. This forward construction
+does not realize arbitrary abstract flags as subtype inputs.
+
+<a id="c018"></a>
+
+### C018 — Direct budget predicates have checked soundness and coverage
+
+**Claim.** For every binary instance and word, the Lean direct predicates
+satisfy `Witness -> Necessary(L,D)`, `Sufficient(L,D) -> Witness`, and
+`Witness w -> Sufficient(lrs(w),0)`. Executable Boolean checkers are proved
+equivalent to each predicate. The suffix-occurrence side condition is proved
+equivalent to its reversed-prefix formulation.
+
+**Scope.** Individual finite words, arbitrary nonnegative L and D, and the
+partial-DFA witness semantics including empty and full borders.
+
+**Status.** `LEAN`, with bounded native/Python agreement in E008.
+
+**Evidence.** [SandwichPredicates.lean](../lean/Subtail/SandwichPredicates.lean),
+[formalization note](../notes/2026-09-04-lean-sandwich.md),
+[E008](../experiments/README.md#e008).
+
+**Limit.** An executable checker for one word is not a decision procedure for
+existence of a word. The exact fixed-budget finite automaton remains the open
+part of O4. Individual lrs coverage supplies no computable instance bound.
+
+<a id="c019"></a>
+
+### C019 — Shortest witnesses expose exact cut obstructions
+
+**Claim.** Let `pi` be shortest and `v=pi[:e]` a proper prefix. If `v` ends
+in a final state and shares its suffix of length `h=lrs(v)` with `pi`, then
+some suffix of length `lambda<=h` has a strict earlier occurrence at `i`
+with `G(c(i),c(e-lambda))` but not `G(c(i),c(|pi|-lambda))`.
+
+Aligned shared contexts of any length `H>=h`, with equal states at their
+starts, would allow C008 to shorten the word and are therefore excluded.
+A three-state example has shortest witness `001`; deleting its final-state
+loop produces `00` and a new forbidden proper border.
+
+**Scope.** The finite-alphabet setting of C008/C013. Critical occurrences
+may be of the empty suffix. Their positions and contexts are unbounded.
+
+**Status.** `WRITTEN PROOF`, as consequences of C008/C013; `COUNTEREXAMPLE`
+to shortening based on repeated DFA states alone. The finite example has
+independent forward and reversed predicate checks.
+
+**Evidence.** [Structure note](../notes/2026-09-04-minimal-witness-structure.md),
+[example checker](../experiments/check_minimal_structure.py),
+[E014](../experiments/README.md#e014).
+
+**Limit.** No finite complete summary, deletion theorem for arbitrary loops,
+or global bound follows. The example increases shortest length while its
+minimum sufficient budget is still zero.
+
+<a id="c020"></a>
+
+### C020 — Six states exceed the regular-subclass budget bound
+
+**Claim.** The explicit six-state binary instance in E015 has computed exact
+budget `B=5`, shortest witness `001011010101` of length 12, and full-boundary
+budget one. It refutes `B<=max(0,|K|-2)` as a bound for all abstract instances.
+
+**Scope.** One abstract partial DFA, obtained by retaining only the states
+visited by a known witness in E014's eight-state attempt 3.
+
+**Status.** `REPRO + COUNTEREXAMPLE`, using complete fixed-budget automaton
+searches and independent direct checks. State restriction preserves every
+surviving sufficient word. The lower-budget graph correctness is audited
+Python/memo machinery, not a Lean-checked emptiness proof.
+
+**Evidence.** [Instance and argument](../notes/2026-09-04-trimmed-budget.md),
+[reproducer](../experiments/trim_budget_example.py),
+[E015](../experiments/README.md#e015).
+
+**Limit.** This does not refute `B<=|K|` or any computable bound. No subtype
+realization or asymptotic growth family is established. It does not contradict
+the regularity hypothesis in C016.
 
 ## Explicitly unestablished
 

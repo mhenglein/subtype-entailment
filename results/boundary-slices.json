@@ -1,0 +1,281 @@
+{
+  "status": "PASS",
+  "two_state_max_word_length": 4,
+  "random_seed": 20260905,
+  "random_max_word_length": 7,
+  "counts": {
+    "random_instances": 100,
+    "regularity_NO": 18105,
+    "regularity_UNKNOWN": 104,
+    "regularity_YES": 2627,
+    "two_state_NO": 18054,
+    "two_state_YES": 2682,
+    "two_state_instances": 20736,
+    "two_state_shortest_length_0": 2592,
+    "two_state_shortest_length_1": 90,
+    "words": 668316
+  },
+  "prior_growth_diagnostics": [
+    {
+      "generator": {
+        "index": 99,
+        "kind": "seeded_random_partial_dfa"
+      },
+      "flagged_budget": 1,
+      "full_boundary_budget": 1,
+      "proper_border_budget_increase": 0,
+      "slices": [
+        {
+          "final": 3,
+          "forbidden": [
+            5,
+            6
+          ],
+          "active_proper_flags": [],
+          "budget": {
+            "status": "EXACT",
+            "budget": 1,
+            "split": {
+              "L": 0,
+              "D": 1
+            },
+            "word": "00",
+            "word_length": 2,
+            "search_states": 4,
+            "splits_checked": 2,
+            "lower_no_splits": 1
+          }
+        },
+        {
+          "final": 5,
+          "forbidden": [
+            5
+          ],
+          "active_proper_flags": [],
+          "budget": {
+            "status": "EMPTY",
+            "reason": "finite graph exhausted"
+          }
+        },
+        {
+          "final": 6,
+          "forbidden": [
+            4,
+            5
+          ],
+          "active_proper_flags": [],
+          "budget": {
+            "status": "EMPTY",
+            "reason": "finite graph exhausted"
+          }
+        }
+      ]
+    },
+    {
+      "generator": {
+        "index": 619,
+        "kind": "seeded_random_partial_dfa"
+      },
+      "flagged_budget": 1,
+      "full_boundary_budget": 1,
+      "proper_border_budget_increase": 0,
+      "slices": [
+        {
+          "final": 1,
+          "forbidden": [
+            2,
+            3
+          ],
+          "active_proper_flags": [],
+          "budget": {
+            "status": "EMPTY",
+            "reason": "finite graph exhausted"
+          }
+        },
+        {
+          "final": 5,
+          "forbidden": [],
+          "active_proper_flags": [
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              1
+            ]
+          ],
+          "budget": {
+            "status": "EXACT",
+            "budget": 1,
+            "split": {
+              "L": 0,
+              "D": 1
+            },
+            "word": "100",
+            "word_length": 3,
+            "search_states": 14,
+            "splits_checked": 2,
+            "lower_no_splits": 1
+          }
+        }
+      ]
+    },
+    {
+      "generator": {
+        "index": 1029,
+        "kind": "seeded_random_partial_dfa"
+      },
+      "flagged_budget": 1,
+      "full_boundary_budget": 1,
+      "proper_border_budget_increase": 0,
+      "slices": [
+        {
+          "final": 2,
+          "forbidden": [
+            0
+          ],
+          "active_proper_flags": [],
+          "budget": {
+            "status": "EMPTY",
+            "reason": "finite graph exhausted"
+          }
+        },
+        {
+          "final": 5,
+          "forbidden": [],
+          "active_proper_flags": [
+            [
+              0,
+              2
+            ],
+            [
+              2,
+              1
+            ]
+          ],
+          "budget": {
+            "status": "EXACT",
+            "budget": 1,
+            "split": {
+              "L": 1,
+              "D": 0
+            },
+            "word": "0010",
+            "word_length": 4,
+            "search_states": 10,
+            "splits_checked": 3,
+            "lower_no_splits": 2
+          }
+        }
+      ]
+    },
+    {
+      "generator": {
+        "index": 166,
+        "kind": "seeded_random_partial_dfa"
+      },
+      "flagged_budget": 1,
+      "full_boundary_budget": 1,
+      "proper_border_budget_increase": 0,
+      "slices": [
+        {
+          "final": 5,
+          "forbidden": [
+            1,
+            3
+          ],
+          "active_proper_flags": [],
+          "budget": {
+            "status": "EXACT",
+            "budget": 1,
+            "split": {
+              "L": 0,
+              "D": 1
+            },
+            "word": "00",
+            "word_length": 2,
+            "search_states": 3,
+            "splits_checked": 2,
+            "lower_no_splits": 1
+          }
+        }
+      ]
+    },
+    {
+      "generator": {
+        "index": 1155,
+        "kind": "seeded_random_partial_dfa"
+      },
+      "flagged_budget": 1,
+      "full_boundary_budget": 1,
+      "proper_border_budget_increase": 0,
+      "slices": [
+        {
+          "final": 1,
+          "forbidden": [],
+          "active_proper_flags": [
+            [
+              0,
+              3
+            ]
+          ],
+          "budget": {
+            "status": "EXACT",
+            "budget": 1,
+            "split": {
+              "L": 0,
+              "D": 1
+            },
+            "word": "00",
+            "word_length": 2,
+            "search_states": 11,
+            "splits_checked": 2,
+            "lower_no_splits": 1
+          }
+        },
+        {
+          "final": 2,
+          "forbidden": [],
+          "active_proper_flags": [
+            [
+              0,
+              3
+            ]
+          ],
+          "budget": {
+            "status": "EXACT",
+            "budget": 1,
+            "split": {
+              "L": 0,
+              "D": 1
+            },
+            "word": "0011",
+            "word_length": 4,
+            "search_states": 8,
+            "splits_checked": 2,
+            "lower_no_splits": 1
+          }
+        },
+        {
+          "final": 3,
+          "forbidden": [
+            0
+          ],
+          "active_proper_flags": [],
+          "budget": {
+            "status": "EMPTY",
+            "reason": "finite graph exhausted"
+          }
+        }
+      ]
+    }
+  ],
+  "prior_growth_surviving_full_boundary_normalization": 0,
+  "scope": "exact boundary slices; certified regular subclass; at-most-two-state decision",
+  "global_claim": "no decision procedure for unrestricted BorderAvoid or SEP"
+}

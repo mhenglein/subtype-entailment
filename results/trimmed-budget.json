@@ -1,0 +1,121 @@
+{
+  "status": "PASS",
+  "source": {
+    "path": "results/shortest-witnesses.json",
+    "targeted_attempt": 3
+  },
+  "original_states": 8,
+  "retained_old_states": [
+    0,
+    2,
+    3,
+    4,
+    5,
+    7
+  ],
+  "instance": {
+    "alphabet": "01",
+    "start": 0,
+    "delta": [
+      [
+        3,
+        -1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        4
+      ],
+      [
+        5,
+        3
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        5,
+        4
+      ]
+    ],
+    "final": [
+      2,
+      5
+    ],
+    "bad": [],
+    "flags": [
+      [
+        0,
+        5
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        5,
+        4
+      ]
+    ]
+  },
+  "search_limits": {
+    "max_budget": 5,
+    "state_cap": 200000
+  },
+  "budget_search": {
+    "status": "EXACT",
+    "budget": 5,
+    "split": {
+      "L": 5,
+      "D": 0
+    },
+    "word": "001011010101",
+    "word_length": 12,
+    "search_states": 291,
+    "splits_checked": 21,
+    "lower_no_splits": 20
+  },
+  "shortest_word": "001011010101",
+  "shortest_length": 12,
+  "word_comparisons": 8191,
+  "max_word_length": 12,
+  "boundary_slices": [
+    {
+      "final": 2,
+      "shortest_word": "0011",
+      "budget": {
+        "status": "EXACT",
+        "budget": 1,
+        "split": {
+          "L": 0,
+          "D": 1
+        },
+        "word": "0011",
+        "word_length": 4,
+        "search_states": 10,
+        "splits_checked": 2,
+        "lower_no_splits": 1
+      }
+    },
+    {
+      "final": 5,
+      "shortest_word": null,
+      "budget": {
+        "status": "EMPTY",
+        "reason": "complete boundary graph exhausted"
+      }
+    }
+  ],
+  "full_boundary_budget": 1,
+  "proper_border_budget_increase": 4,
+  "refuted_candidate": "B(I) <= max(0, number_of_states - 2) for all abstract instances",
+  "scope": "finite computational counterexample; no asymptotic or SEP-realizability claim"
+}

@@ -12,11 +12,13 @@ executed attempts.
 
 ## Recommended starting order
 
-The first local Lean core and supplied-path bridge now exist. Use them to
-start the shortest-witness study and refine the adversarial budget search:
-angles 1 and 2. Next formalize the exact fixed-budget automaton in angle 11
-and extend the bridge to the actual summary classes in angle 3. The
-[context-cut result](claims.md#c013) supplies a stronger reduction rule.
+The Lean direct budget predicates and actual subtype summary bridge now
+exist. The two-state abstract case is decided. A new six-state example has
+exact budget five versus boundary-only budget one. Focus angles 1 and 2 on
+minimizing and generalizing that proper-border obstruction. Use actual bridge
+outputs for angle 4.
+In angle 11, the remaining O4 work is the exact finite automaton for word
+existence; the direct sufficient predicate is already proved sound.
 
 Use those results to choose between structural proofs in angles 4–7 and complete certificates or saturation in angles 8–9. Keep the converse and negative-result investigation in angle 10 separate. Reproducing the original memo's sources remains [A007](approaches/A007.md); the missing files do not block the independent proposals here.
 
@@ -30,7 +32,13 @@ Enumerate small instances, find shortest witnesses, and record why every stronge
 
 ### 2. Search for instances that defeat candidate bounds — A009
 
-Generate and mutate automata to maximize the minimum successful budget B. Seek B greater than the number of states, beyond the [linear singleton baseline](claims.md#c011). Exhaust every lower budget before claiming an exact B, and compare against matching instances with no flags.
+Generate and mutate automata to maximize the minimum successful budget B.
+The [six-state budget-five example](claims.md#c020) already exceeds
+`max(0,|K|-2)`, the tight bound for the certified regular subclass. Next seek
+`B>|K|` or generalize the example into a proved growth family. Trim irrelevant
+states and compare with full final-state boundary slices. Simply removing
+flags leaves empty-suffix effects mixed with proper borders. Exhaust every
+lower budget before claiming an exact B.
 
 **Target:** a family with a proved lower bound or sharper evidence for an upper-bound conjecture. Finite examples alone establish neither asymptotic growth nor a general upper bound. [Approach record](approaches/A009.md).
 
