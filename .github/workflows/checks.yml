@@ -1,0 +1,21 @@
+name: Research checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  experiments:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run reproducible experiments
+        run: python3 experiments/run_experiments.py
+      - name: Verify recorded results
+        run: git diff --exit-code -- results/independent-checks.json

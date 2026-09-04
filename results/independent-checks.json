@@ -1,0 +1,141 @@
+{
+  "seed": 17082026,
+  "random_instances": 80,
+  "max_word_length": 6,
+  "checks": {
+    "words_checked": 10160,
+    "automaton_comparisons": 121920,
+    "sandwich_implications": 121920,
+    "truncations_checked": 2142,
+    "finite_state_searches": 480,
+    "suffix_trace_cuts": 3504,
+    "profile_dominance_cuts": 4755,
+    "cuts_on_rigid_words": 789
+  },
+  "search_statuses": {
+    "YES": 282,
+    "NO": 198,
+    "UNKNOWN": 0
+  },
+  "failures": 0,
+  "rigid_family": [
+    {
+      "length": 1,
+      "states": 2,
+      "lrs": 0,
+      "rigid": true,
+      "word_budget": 0
+    },
+    {
+      "length": 2,
+      "states": 2,
+      "lrs": 1,
+      "rigid": true,
+      "word_budget": 1
+    },
+    {
+      "length": 3,
+      "states": 2,
+      "lrs": 2,
+      "rigid": true,
+      "word_budget": 2
+    },
+    {
+      "length": 10,
+      "states": 2,
+      "lrs": 9,
+      "rigid": true,
+      "word_budget": 9
+    },
+    {
+      "length": 100,
+      "states": 2,
+      "lrs": 99,
+      "rigid": true,
+      "word_budget": 99
+    },
+    {
+      "length": 500,
+      "states": 2,
+      "lrs": 499,
+      "rigid": true,
+      "word_budget": 499
+    }
+  ],
+  "rigid_family_shortest": {
+    "status": "YES",
+    "word": "0",
+    "states": 3
+  },
+  "singleton_budget_family": [
+    {
+      "n": 1,
+      "states": 2,
+      "exact_instance_budget": 0,
+      "emptiness_tests": 1,
+      "max_search_states": 2
+    },
+    {
+      "n": 2,
+      "states": 3,
+      "exact_instance_budget": 1,
+      "emptiness_tests": 3,
+      "max_search_states": 3
+    },
+    {
+      "n": 3,
+      "states": 4,
+      "exact_instance_budget": 2,
+      "emptiness_tests": 6,
+      "max_search_states": 4
+    },
+    {
+      "n": 5,
+      "states": 6,
+      "exact_instance_budget": 4,
+      "emptiness_tests": 15,
+      "max_search_states": 6
+    },
+    {
+      "n": 8,
+      "states": 9,
+      "exact_instance_budget": 7,
+      "emptiness_tests": 36,
+      "max_search_states": 9
+    },
+    {
+      "n": 12,
+      "states": 13,
+      "exact_instance_budget": 11,
+      "emptiness_tests": 78,
+      "max_search_states": 13
+    }
+  ],
+  "memo_no_examples": [
+    {
+      "example": "8.13(1)",
+      "L": 0,
+      "D": 1,
+      "status": "NO",
+      "states": 7
+    },
+    {
+      "example": "8.13(2)",
+      "L": 1,
+      "D": 0,
+      "status": "NO",
+      "states": 12
+    }
+  ],
+  "theorem_3_2": {
+    "words_checked": 4095,
+    "formula_disagreements": 4017,
+    "two_ones_language": [
+      "11",
+      "0101",
+      "001001",
+      "00010001",
+      "0000100001"
+    ]
+  }
+}
