@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "date": "2026-09-04",
+  "base_commit": "b8b8457245b693c760a52b5f445996c0fd2f8b0d",
+  "proof_status": "Written proofs; not Lean-checked",
+  "baseline_C020": {"exact_budget": 5, "shortest_word": "001011010101"},
+  "E016": {"parameter_pairs": 28, "direct_shortest_word_comparisons": 70680, "state_cap_per_split": 200000, "unknown_results": 0},
+  "E017": {"normalized_instances": 65536, "YES": 36640, "NO": 28896, "maximum_negative_graph_states": 65, "maximum_constructed_length": 6},
+  "E018": {"seed": 2026090421, "systems": 400, "YES": 281, "NO": 119, "maximum_summary_classes": 8, "invariant_violations": 0},
+  "limits": "Full repository regression suite and Lean were not rerun for this import. The independent summary census omits denials. No unrestricted decision is asserted."
+}
