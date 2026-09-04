@@ -224,6 +224,141 @@ characterization and disagreement count only within that length limit.
 
 **Claims informed.** [C005](../research/claims.md#c005).
 
+<a id="e008"></a>
+
+### E008 — Lean proofs, axiom audit, and Python agreement
+
+**Command.** With the pinned Lean 4.33.1 toolchain installed:
+
+```sh
+python3 scripts/check_lean.py
+```
+
+**Code.** [Check script](../scripts/check_lean.py) and the
+[Lean core](../lean/README.md). The script builds the project, runs the bundled
+`leanchecker`, inspects the named dependency closures, and generates native
+evaluation comparisons in ignored `tmp/`.
+
+**Scope and limits.** Seed `20260904`; 80 generated partial binary DFAs with
+1–5 states and all words of length 0–6. Both Python witness formulations must
+agree before each comparison with Lean. All 511 binary words of length 0–8
+also compare `lrs`. The named theorem proofs apply beyond these finite cases,
+under exactly their compiled hypotheses; their alphabet is binary.
+
+**Result.** [lean-checks.json](../results/lean-checks.json) records the toolchain,
+kernel replay, axiom lists, 10,160 witness comparisons, 511 `lrs` comparisons,
+and zero failures. Runtime definitions do not depend on classical choice.
+The truncation proofs use standard classical axioms in erased proofs.
+
+**Claims informed.** [C008](../research/claims.md#c008),
+[C009](../research/claims.md#c009), [C013](../research/claims.md#c013),
+[C014](../research/claims.md#c014). No concrete global bound or fixed-budget
+automaton is supplied by the conditional theorem.
+
+<a id="e009"></a>
+
+### E009 — Normalized constraints to regular countermodel checks
+
+**Command.**
+
+```sh
+python3 experiments/check_topfree_bridge.py
+```
+
+**Code.** [Bridge checker](check_topfree_bridge.py) and
+[topfree_bridge.py](topfree_bridge.py).
+
+**Scope and limits.** The deterministic fixtures cover the four normalized
+constraint forms. There are 3,577 NFA-membership comparisons on words of
+length at most 8 against a direct closure capped at intermediate stack height
+16. That finite oracle is diagnostic only; the implemented saturation and
+regular-language checks themselves have no depth cutoff.
+
+**Result.** [topfree-bridge.json](../results/topfree-bridge.json) records PASS
+for those comparisons, the C0 infinite countermodel, forced-root denial,
+quotient and epsilon constraints, mixed hashable state IDs, empty-stack pop,
+and push/pop cases. The supplied-path status contract is
+`YES / UNSAT / REJECTED_PATH`. A rejected path is not an entailment verdict.
+
+**Claims informed.** [C015](../research/claims.md#c015). The implementation has
+an independent audit, not a Lean correctness proof or complete search over
+all separating paths.
+
+<a id="e010"></a>
+
+### E010 — Context-restricted truncation and strict examples
+
+**Command.**
+
+```sh
+python3 experiments/check_context_cuts.py
+```
+
+**Code.** [Context-cut checks](check_context_cuts.py) implement a direct
+forward witness predicate and compare it with `border_lab.border_witness`.
+
+**Scope and limits.** Exhaust all 81 two-state binary transition tables,
+all 4 `Bad` sets, all 4 `Fin` sets, and all 16 flag relations, with initial
+state 0. Check all 127 words of length 0–6 for each of the 20,736 instances.
+The script also checks 120 seeded random instances with 2–5 states and every
+word of length 0–8, using seed `20260904`.
+
+**Result.** [context-cuts.json](../results/context-cuts.json) records
+2,633,472 independent/reference comparisons and zero failures. It records
+217,635 visited-state, 217,730 earlier-position, and 217,809 exact-occurrence
+implication checks across both parts. These counts overlap; they are not
+counts of distinct witnesses. The strict examples include `0010 -> 00` and
+`1011 -> 101`, plus an empty-prefix case.
+
+**Claims informed.** [C013](../research/claims.md#c013). The all-length claim
+comes from the written proof and, for the binary visited-state version, the
+Lean theorem. Enumeration establishes only the recorded finite cases and
+minimal example lengths within its explicit search.
+
+<a id="e011"></a>
+
+### E011 — Bounded adversarial budget search
+
+**Command.**
+
+```sh
+python3 experiments/search_budgets.py --instances 1200 --max-budget 8 --max-word-length 12 --state-cap 50000
+python3 experiments/search_budgets.py --replay-stored
+```
+
+**Code.** [Budget search](search_budgets.py), seed `2026090409`.
+
+**Scope and limits.** 1,200 generated abstract binary instances with 2–8
+states. Search strong budgets `L+D<=8`, with a cap of 50,000 explored states
+per split. An independent direct scan checks words of length at most 12.
+The six singleton calibrations separately allow their known budgets through
+11 and word lengths through 12. The input descriptions and generator limits
+are recorded in the output.
+
+**Result.** [budget-search.json](../results/budget-search.json) records 741
+exact random flagged budgets, 414 `NO_THROUGH` rows, and 45 `UNKNOWN` rows.
+The largest exact random budget is 1. Five rows have exact budget 1 versus
+0 with all flags removed. No certified random example has `B>|K|`.
+Calibration reproduces `B=n-1` through `n=12`.
+
+The second command independently replays the five retained exact/growth
+examples and adds a separate diagnostic. Three `+1` increases remain after
+diagonal flags are encoded as Bad states and start-to-final flags as final
+state exclusions. The other two increases are explained by those exclusions.
+CI reruns this small replay; it does not rerun the full random census.
+
+**Interpretation.** `EXACT` requires exhaustive NO results for every lower
+split and a checked sufficient witness at the reported split. `NO_THROUGH`
+means only that all budgets in the specified range were exhausted.
+`UNKNOWN` means a split hit the state cap. Neither latter status establishes
+that no witness exists. See the [attempt note](../notes/2026-09-04-budget-search.md)
+for retained examples and the next generator design.
+
+**Claims informed.** [C010](../research/claims.md#c010),
+[C011](../research/claims.md#c011), and the investigation in A009. This run
+does not establish a stronger growth family or a general bound. These are
+abstract instances; no SEP realizability claim is made.
+
 ## Not yet reproducible or not yet run
 
 These items have no executed experiment ID. Do not assign them `REPRO` status
@@ -232,13 +367,14 @@ until a committed command and compact output exist.
 - **Original memo census.** The `analysis-2026` directory and its scripts are
   still unavailable. There is no honest command or JSON key for reproducing
   its reported census.
-- **Exhaustive two-state/binary audit.** The border audit records an earlier
-  81-transition-table by 16 combined `Bad`/`Fin` choices by 16 flag choices check through
-  length 6. No committed script currently recreates that enumeration, so use
-  the note as historical evidence until the generator is checked in.
-- **Hard-budget search beyond the singleton family.** No experiment yet
-  searches deliberately constructed flag-heavy instances for superlinear or
-  otherwise stronger budget growth with a fixed state count.
+- **Original exhaustive audit replay.** E010 now supplies a reproducible
+  exhaustive two-state check at the same word-length limit. It uses the new
+  context criteria and two witness predicates; it does not recreate every
+  historical assertion in the earlier border-audit note.
+- **Constructed hard-budget families.** E011 tried a bounded random search
+  and found only small flag-induced growth. No construction with stronger
+  asymptotic growth has been established. A witness-preserving generator is
+  a proposed next attempt.
 - **SEP-derived instance pipeline.** No executable experiment yet proves that
   the abstract summary automata and flag relations generated by `W` satisfy a
   structural restriction strong enough to bound `B(I)`.

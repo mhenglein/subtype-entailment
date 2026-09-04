@@ -4,11 +4,19 @@ Updated: 2026-09-04
 
 **Goal:** decide [Problem 1.7](problem.md) for bottom and binary product over arbitrary, possibly infinite trees. No general solution is established here.
 
-This plan preserves the ten proposed research angles and adds working backwards from a Lean theorem as angle 11. Current execution status, owners, evidence, and next steps live in the [research tracker](README.md). The entries below describe proposed investigations; existing supporting results are identified by their claim IDs.
+This plan preserves the ten research angles and adds working backwards from a
+Lean theorem as angle 11. Current execution status, owners, evidence, and next
+steps live in the [research tracker](README.md). The entries describe each
+investigation's target; dated approach records distinguish proposals from
+executed attempts.
 
 ## Recommended starting order
 
-Start the exact subtype-to-automata bridge, shortest-witness study, and adversarial budget search together when resources allow: angles 3, 1, and 2. Begin the small Lean core in angle 11 alongside them. Its local word lemmas can proceed before the pushdown bridge is formalized.
+The first local Lean core and supplied-path bridge now exist. Use them to
+start the shortest-witness study and refine the adversarial budget search:
+angles 1 and 2. Next formalize the exact fixed-budget automaton in angle 11
+and extend the bridge to the actual summary classes in angle 3. The
+[context-cut result](claims.md#c013) supplies a stronger reduction rule.
 
 Use those results to choose between structural proofs in angles 4–7 and complete certificates or saturation in angles 8–9. Keep the converse and negative-result investigation in angle 10 separate. Reproducing the original memo's sources remains [A007](approaches/A007.md); the missing files do not block the independent proposals here.
 

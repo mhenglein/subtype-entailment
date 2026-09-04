@@ -1,0 +1,6 @@
+name = "subtail"
+version = "0.1.0"
+defaultTargets = ["Subtail"]
+
+[[lean_lib]]
+name = "Subtail"

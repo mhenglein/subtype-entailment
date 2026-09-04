@@ -6,6 +6,15 @@
 python3 experiments/run_experiments.py
 ```
 
+Additional recorded suites:
+
+| Output | Reproduce from the repository root |
+|---|---|
+| [lean-checks.json](lean-checks.json) | `python3 scripts/check_lean.py` with Lean 4.33.1 |
+| [topfree-bridge.json](topfree-bridge.json) | `python3 experiments/check_topfree_bridge.py` |
+| [context-cuts.json](context-cuts.json) | `python3 experiments/check_context_cuts.py` |
+| [budget-search.json](budget-search.json) | E011's explicit command in the experiment index |
+
 See [the experiment index](../experiments/README.md) for IDs, coverage, interpretations, and limitations.
 
 Commit compact results with their scripts. For new experiments, use a descriptive filename, record the command and seed in the experiment index, and distinguish exact conclusions from bounds or UNKNOWN outcomes. Keep large scratch outputs in ignored `tmp/` until a storage plan is agreed.

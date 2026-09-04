@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "scope": "exact regular post-closure and normalized constraint validation",
+  "bounded_diagnostic_checks": 3577,
+  "c0_countermodel": "validated",
+  "forced_root_denial": "validated",
+  "upper_and_epsilon_constraints": "validated",
+  "status_contract": "YES/UNSAT/REJECTED_PATH",
+  "mixed_hashable_ids": "validated",
+  "empty_pop_push_pop_epsilon": "validated",
+  "global_claim": "not a decision procedure for Problem 1.7"
+}

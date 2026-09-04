@@ -2,7 +2,10 @@
 
 Start with [the problem](research/problem.md), [the research tracker](research/README.md), and [claims and evidence](research/claims.md). The September 4 [review](REVIEW.md) is the initial snapshot; the tracker records later progress.
 
-The [research plan](research/PLAN.md) explains priorities and dependencies. It includes the proposed [Lean workstream](research/approaches/A018.md), whose proof obligations and validation criteria are separate from current mathematical claims.
+The [research plan](research/PLAN.md) explains priorities and dependencies. The
+[Lean workstream](research/approaches/A018.md) records completed local proofs
+and the remaining obligations. Its [build guide](lean/README.md) explains the
+pinned toolchain and validation commands.
 
 ## Pick and claim work
 
@@ -43,7 +46,17 @@ git diff --check
 
 The first command rebuilds the dashboard from the registry. CI checks that it is current, all referenced files exist, and the recorded experiment results reproduce. Local path checking does not validate web URLs, Markdown anchors, or mathematical claims.
 
-For a new theorem, ask a reviewer to check the argument independently. For a new witness or counterexample, provide a small input and an independent checker where possible. Current proofs are written arguments, not proof-assistant formalizations.
+Run the experiment commands relevant to the changed files; see the
+[experiment index](experiments/README.md). For Lean changes, run
+`python3 scripts/check_lean.py` with Lean 4.33.1 installed. This builds the
+proofs, replays compiled declarations, audits axioms, and checks agreement
+with Python. It rejects unexpected axioms in the named dependency closures.
+
+For a new theorem, ask a reviewer to check the argument independently. For a
+new witness or counterexample, provide a small input and an independent
+checker where possible. State whether a result has a written proof, a Lean
+proof, or only bounded evidence. A binary formalization must not be described
+as covering every finite alphabet. Keep every unproved hypothesis explicit.
 
 ## File ownership
 
@@ -56,6 +69,7 @@ For a new theorem, ask a reviewer to check the argument independently. For a new
 | Exact claims and mathematical status | `research/claims.md` |
 | Experiment commands and coverage | `experiments/README.md` |
 | Executable checks | `experiments/` |
+| Lean definitions and proofs | `lean/` |
 | Compact reproducible outputs | `results/` |
 | Sources and provenance | `papers/` |
 | Working analysis | `notes/` |

@@ -1,0 +1,221 @@
+{
+  "counts": {
+    "exhaustive_instances": 20736,
+    "exhaustive_words": 2633472,
+    "exhaustive_applicable_cuts": {
+      "all": 179760,
+      "visited": 181230,
+      "prefix": 181230,
+      "occurrence": 181306
+    },
+    "random_instances": 120,
+    "random_words": 61320,
+    "random_applicable_cuts": {
+      "all": 35644,
+      "visited": 36405,
+      "prefix": 36500,
+      "occurrence": 36503
+    },
+    "reference_witness_comparisons": 2633472,
+    "implication_checks": {
+      "visited": 217635,
+      "prefix": 217730,
+      "occurrence": 217809
+    },
+    "failures": []
+  },
+  "strict_examples": {
+    "visited_vs_c009": {
+      "delta": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ]
+      ],
+      "final": [
+        0,
+        1
+      ],
+      "bad": [],
+      "flags": [
+        [
+          1,
+          0
+        ]
+      ],
+      "word": "0010",
+      "end": 2,
+      "short_word": "00",
+      "state_trace": [
+        0,
+        0,
+        0,
+        1,
+        1
+      ],
+      "lrs_short": 1,
+      "short_is_witness": true,
+      "c009_all_state": false,
+      "visited_context": true,
+      "prefix_context": true,
+      "exact_occurrence_context": true,
+      "suffix_rows": [
+        {
+          "length": 0,
+          "suffix": "",
+          "new_target": 0,
+          "old_target": 1,
+          "earlier_positions": [
+            0,
+            1
+          ],
+          "earlier_states": [
+            0
+          ],
+          "all_state_failures": [
+            1
+          ]
+        },
+        {
+          "length": 1,
+          "suffix": "0",
+          "new_target": 0,
+          "old_target": 1,
+          "earlier_positions": [
+            0
+          ],
+          "earlier_states": [
+            0
+          ],
+          "all_state_failures": [
+            1
+          ]
+        }
+      ]
+    },
+    "occurrence_vs_c009": {
+      "delta": [
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "final": [
+        1
+      ],
+      "bad": [],
+      "flags": [
+        [
+          1,
+          0
+        ]
+      ],
+      "word": "1011",
+      "end": 3,
+      "short_word": "101",
+      "state_trace": [
+        0,
+        1,
+        0,
+        1,
+        1
+      ],
+      "lrs_short": 1,
+      "short_is_witness": true,
+      "c009_all_state": false,
+      "visited_context": false,
+      "prefix_context": false,
+      "exact_occurrence_context": true,
+      "suffix_rows": [
+        {
+          "length": 0,
+          "suffix": "",
+          "new_target": 1,
+          "old_target": 1,
+          "earlier_positions": [
+            0,
+            1,
+            2
+          ],
+          "earlier_states": [
+            0,
+            1
+          ],
+          "all_state_failures": []
+        },
+        {
+          "length": 1,
+          "suffix": "1",
+          "new_target": 0,
+          "old_target": 1,
+          "earlier_positions": [
+            0
+          ],
+          "earlier_states": [
+            0
+          ],
+          "all_state_failures": [
+            1
+          ]
+        }
+      ]
+    },
+    "empty_prefix_vs_c009": {
+      "delta": [
+        [
+          -1,
+          1
+        ],
+        [
+          -1,
+          -1
+        ]
+      ],
+      "final": [
+        0,
+        1
+      ],
+      "bad": [],
+      "flags": [
+        [
+          1,
+          0
+        ]
+      ],
+      "word": "1",
+      "end": 0,
+      "short_word": "",
+      "state_trace": [
+        0,
+        1
+      ],
+      "lrs_short": 0,
+      "short_is_witness": true,
+      "c009_all_state": false,
+      "visited_context": true,
+      "prefix_context": true,
+      "exact_occurrence_context": true,
+      "suffix_rows": [
+        {
+          "length": 0,
+          "suffix": "",
+          "new_target": 0,
+          "old_target": 1,
+          "earlier_positions": [],
+          "earlier_states": [],
+          "all_state_failures": [
+            1
+          ]
+        }
+      ]
+    }
+  }
+}

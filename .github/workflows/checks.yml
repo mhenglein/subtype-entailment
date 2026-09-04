@@ -18,6 +18,28 @@ jobs:
       - name: Validate research organization
         run: python3 scripts/research_index.py --check
       - name: Run reproducible experiments
-        run: python3 experiments/run_experiments.py
+        run: |
+          python3 experiments/run_experiments.py
+          python3 experiments/check_topfree_bridge.py
+          python3 experiments/check_context_cuts.py
+          python3 experiments/search_budgets.py --replay-stored
       - name: Verify recorded results
-        run: git diff --exit-code -- results/independent-checks.json
+        run: git diff --exit-code -- results/independent-checks.json results/topfree-bridge.json results/context-cuts.json results/budget-search.json
+  lean:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.11'
+      - uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596 # v1.6.0
+        with:
+          lake-package-directory: lean
+          build: 'true'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'false'
+      - name: Check proofs, axioms, and Python agreement
+        run: python3 scripts/check_lean.py
+      - name: Verify recorded Lean results
+        run: git diff --exit-code -- results/lean-checks.json

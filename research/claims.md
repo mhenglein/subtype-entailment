@@ -16,7 +16,10 @@ below establishes a decision procedure, decidability result, or complete census.
   sound under the stated assumptions. This is not a proof-assistant
   formalization.
 - **WRITTEN PROOF:** a mathematical proof was added to the review or notes.
-  It has not been machine formalized.
+  This label alone does not claim machine formalization.
+- **LEAN:** the linked statement and its dependencies compile with the pinned
+  Lean toolchain and pass the recorded axiom audit. Scope and hypotheses still
+  matter; a conditional theorem does not prove its assumptions.
 - **REPRO:** the committed Python code reproduced the stated finite cases.
   This is bounded evidence, not an all-length proof.
 - **COUNTEREXAMPLE:** an explicit family or instance refutes the stated
@@ -190,13 +193,17 @@ suffix equality is then automatic.
 **Scope.** Defined runs of the reviewed partial DFA model, with its `Fin`,
 `Bad`, and ordered flag obligations.
 
-**Status.** `WRITTEN PROOF` in the review, with `REPRO` bounded validation.
-It is not proof-assistant formalized, and its literature novelty is unknown.
+**Status.** `WRITTEN PROOF` for the stated finite-alphabet setting; `LEAN` for
+the binary specialization, with `REPRO` bounded validation. Its literature
+novelty is unknown.
 
 **Evidence.** [Review](../REVIEW.md#3-a-stronger-truncation-rule);
 [border audit](../notes/border-audit.md#a-stronger-useful-truncation-lemma);
 [result keys](../results/independent-checks.json) under
 `checks.suffix_trace_cuts` and `checks.cuts_on_rigid_words`.
+The Lean theorem is `suffix_trace_truncation` in
+[Truncation.lean](../lean/Subtail/Truncation.lean), checked by
+[E008](../experiments/README.md#e008).
 
 **Limit.** A sufficient cut is not a pumping theorem. It does not yet imply a
 computable bound on `B(I)`.
@@ -212,13 +219,17 @@ replaced by: `c(e)` is accepting and
 
 **Scope.** The same defined-run and suffix-transfer setting as C008.
 
-**Status.** `WRITTEN PROOF` in the review, with `REPRO` bounded validation.
-This is a sufficient condition only.
+**Status.** `WRITTEN PROOF` for the stated finite-alphabet setting; `LEAN` for
+the binary specialization, with `REPRO` bounded validation. This is a
+sufficient condition only.
 
 **Evidence.** [Review](../REVIEW.md#3-a-stronger-truncation-rule);
 [implementation](../experiments/border_lab.py) in `suffix_trace_cut(...,
 use_profiles=True)`; [result keys](../results/independent-checks.json) under
 `checks.profile_dominance_cuts`.
+The Lean theorem is `profile_truncation` in
+[Truncation.lean](../lean/Subtail/Truncation.lean), checked by
+[E008](../experiments/README.md#e008).
 
 **Limit.** Shortest witnesses resist every applicable cut only relative to the
 tested criterion. That observation alone gives no bound.
@@ -292,6 +303,89 @@ substantive bound and the top-free converse remain open.
 **Limit.** A source search is not proof that no later result exists. Do not
 promote the memo's unavailable source census or a bounded search to a global
 undecidability, decidability, or complexity claim.
+
+<a id="c013"></a>
+
+### C013 — Context-restricted flag comparison preserves truncation
+
+**Claim.** In C009, compare incoming flags only from states visited in the
+retained prefix. More precisely, write `V_e={c(i):0<=i<=e}`. For every
+`0<=lambda<=h`, require
+`Pred_G(c(e-lambda)) intersect V_e subseteq Pred_G(c(n-lambda))`.
+With the same suffix and acceptance hypotheses, `v` is still a witness.
+
+The condition can be weakened further by replacing `V_e` with the states at
+positions `i<e-lambda`, or only those positions where the suffix of length
+`lambda` occurs. These are three sufficient conditions, not a claim that no
+further weakening is possible.
+
+**Scope.** Finite words and the same partial-DFA conventions as C009,
+including the empty suffix, diagonal pairs, and `e=0`.
+
+**Status.** `WRITTEN PROOF` for all three context variants. `LEAN` for the
+binary visited-state variant. `REPRO` for the explicit strict examples and
+bounded implication checks.
+
+**Evidence.** [Context-cut proof](../notes/2026-09-04-context-cut.md);
+`visited_profile_truncation` in
+[Truncation.lean](../lean/Subtail/Truncation.lean);
+[E008](../experiments/README.md#e008), [E010](../experiments/README.md#e010).
+
+**Limit.** `0010 -> 00` shows that the visited-state rule can apply when C009
+fails. The exact-occurrence rule is close to checking the shortened word
+directly. None of these rules gives a global budget bound.
+
+<a id="c014"></a>
+
+### C014 — Finite budget enumeration is conditionally correct
+
+**Claim.** Let `size`, `F`, and `success I L D` be supplied executable
+functions. Suppose a successful test always yields a binary BorderAvoid
+witness, and every instance with a witness has a successful pair satisfying
+`L+D<=F(size I)`. Enumerating those finitely many pairs returns true exactly
+when the instance has a witness.
+
+**Scope.** Binary finite instances `Instance k`. The theorem exposes the
+test-soundness and bounded-coverage hypotheses explicitly.
+
+**Status.** `LEAN`, conditional. The runtime enumeration is total given its
+function arguments; the theorem does not supply their implementations.
+
+**Evidence.** `finiteBudgetDecision_correct` in
+[Conditional.lean](../lean/Subtail/Conditional.lean);
+[formalization note](../notes/2026-09-04-lean-core.md);
+[E008](../experiments/README.md#e008).
+
+**Limit.** The fixed-budget automaton, computable bound, semantic subtype
+reduction, and their correctness proofs remain to be supplied. This is the
+forward finite-enumeration argument, not a full formalization of the
+equivalence in Theorem 8.9.
+
+<a id="c015"></a>
+
+### C015 — Supplied-path regular countermodels can be checked by automata
+
+**Claim.** The new Python bridge represents all four normalized constraint
+forms, saturates a finite P-automaton for seed reachability, and validates a
+proposed regular countermodel using exact finite automata operations. Its
+runtime checks have no stack-depth cutoff. The finite-depth closure is used
+only as a diagnostic oracle.
+
+**Scope.** Normalized binary top-free constraints and one supplied candidate
+path. The output path sets may represent infinite regular trees.
+
+**Status.** `AUDIT + REPRO` for the implementation and recorded cases. The
+independent audit found no push/pop orientation or empty-stack error. This is
+not a proof-assistant verification of P-automaton saturation.
+
+**Evidence.** [Bridge implementation](../experiments/topfree_bridge.py);
+[foundation and proof obligations](../notes/2026-09-04-bridge-foundation.md);
+[E009](../experiments/README.md#e009).
+
+**Limit.** A rejected path does not establish entailment. Normalization from
+general input syntax, the full summary-class pipeline, and a complete search
+over candidate paths are not implemented. See the note for the remaining
+all-input formal proof obligations.
 
 ## Explicitly unestablished
 

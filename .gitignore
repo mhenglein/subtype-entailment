@@ -7,3 +7,4 @@ tmp/
 .env.*
 !.env.example
 *.log
+lean/.lake/

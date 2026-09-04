@@ -1,0 +1,48 @@
+{
+  "toolchain": "leanprover/lean4:v4.33.1",
+  "kernel_replay": "PASS (bundled leanchecker)",
+  "seed": 20260904,
+  "instances": 80,
+  "max_word_length": 6,
+  "witness_comparisons": 10160,
+  "lrs_comparisons": 511,
+  "axioms": {
+    "witnessCheck": [
+      "propext"
+    ],
+    "lrs": [],
+    "finiteBudgetDecision": [],
+    "witnessCheck_correct": [
+      "Quot.sound",
+      "propext"
+    ],
+    "incomingLe_iff_flags": [
+      "propext"
+    ],
+    "lrs_spec": [
+      "Quot.sound",
+      "propext"
+    ],
+    "profile_truncation": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "visited_profile_truncation": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "suffix_trace_truncation": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "finiteBudgetDecision_correct": [
+      "Quot.sound",
+      "propext"
+    ]
+  },
+  "failures": 0,
+  "scope": "binary BorderAvoid core; conditional budget theorem; no SEP decision procedure"
+}

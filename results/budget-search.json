@@ -1,0 +1,2657 @@
+{
+  "counts": {
+    "baseline_statuses": {
+      "EXACT": 978,
+      "NO_THROUGH": 194,
+      "UNKNOWN": 28
+    },
+    "bounded_lower_bound_rows": 0,
+    "calibration_instances": 6,
+    "exact_flagged_rows": 741,
+    "flagged_budget_greater_than_states": 0,
+    "flagged_splits_checked": 21043,
+    "flagged_statuses": {
+      "EXACT": 741,
+      "NO_THROUGH": 414,
+      "UNKNOWN": 45
+    },
+    "positive_exact_growth_rows": 5,
+    "random_direct_witness_instances": 741,
+    "random_instances": 1200
+  },
+  "description": "Bounded adversarial search over abstract BorderAvoid instances",
+  "experiment": "A009-budget-search",
+  "generator": {
+    "calibration": "fixed_word_instance(n) for n in {1,2,3,5,8,12}",
+    "random": "partial binary DFA; p_undefined in {0.02,0.05,0.10,0.16}; p_flag in {0.03,0.06,0.10,0.16,0.24}; sparse final and bad sets"
+  },
+  "interpretation": {
+    "exact": "EXACT means every lower (L,D) split was exhausted with NO and the reported split returned YES.",
+    "no_through": "NO_THROUGH means all requested budgets were exhausted; it is not a global NO result.",
+    "scope": "All generated instances are abstract BorderAvoid instances. No row establishes a result for SEP or Problem 1.7.",
+    "unknown": "UNKNOWN means a finite state cap interrupted a split and cannot be treated as NO."
+  },
+  "limits": {
+    "max_budget": 8,
+    "max_word_length": 12,
+    "predicate": "strong Sandwich search for S''(L,D)",
+    "random_instances": 1200,
+    "sandwich_state_cap": 50000,
+    "states": [
+      2,
+      8
+    ]
+  },
+  "replay": {
+    "all_checks_passed": true,
+    "description": "Independent replay of stored exact and growth examples",
+    "limits": {
+      "max_budget_for_normalized_search": 8,
+      "sandwich_state_cap": 50000
+    },
+    "rows": [
+      {
+        "baseline_direct_checks": {
+          "border_witness": true,
+          "sufficient": true,
+          "witness": true
+        },
+        "baseline_replay_budget": 0,
+        "flagged_direct_checks": {
+          "border_witness": true,
+          "sufficient": true,
+          "witness": true
+        },
+        "flagged_replay_budget": 1,
+        "generator": {
+          "index": 99,
+          "kind": "seeded_random_partial_dfa"
+        },
+        "normalized": {
+          "diagonal_states_added_to_bad": [
+            5
+          ],
+          "final_states_removed_for_empty_flag": [],
+          "original_growth_survives": true,
+          "residual_growth_vs_normalized": 1,
+          "result": {
+            "budget": 0,
+            "lower_no_splits": 0,
+            "search_states": 11,
+            "split": {
+              "D": 0,
+              "L": 0
+            },
+            "splits_checked": 1,
+            "status": "EXACT",
+            "word": "00001",
+            "word_length": 5
+          }
+        },
+        "states": 7,
+        "stored_baseline_budget": 0,
+        "stored_flagged_budget": 1,
+        "stored_growth": 1
+      },
+      {
+        "baseline_direct_checks": {
+          "border_witness": true,
+          "sufficient": true,
+          "witness": true
+        },
+        "baseline_replay_budget": 0,
+        "flagged_direct_checks": {
+          "border_witness": true,
+          "sufficient": true,
+          "witness": true
+        },
+        "flagged_replay_budget": 1,
+        "generator": {
+          "index": 619,
+          "kind": "seeded_random_partial_dfa"
+        },
+        "normalized": {
+          "diagonal_states_added_to_bad": [],
+          "final_states_removed_for_empty_flag": [],
+          "original_growth_survives": true,
+          "residual_growth_vs_normalized": 1,
+          "result": {
+            "budget": 0,
+            "lower_no_splits": 0,
+            "search_states": 15,
+            "split": {
+              "D": 0,
+              "L": 0
+            },
+            "splits_checked": 1,
+            "status": "EXACT",
+            "word": "110",
+            "word_length": 3
+          }
+        },
+        "states": 7,
+        "stored_baseline_budget": 0,
+        "stored_flagged_budget": 1,
+        "stored_growth": 1
+      },
+      {
+        "baseline_direct_checks": {
+          "border_witness": true,
+          "sufficient": true,
+          "witness": true
+        },
+        "baseline_replay_budget": 0,
+        "flagged_direct_checks": {
+          "border_witness": true,
+          "sufficient": true,
+          "witness": true
+        },
+        "flagged_replay_budget": 1,
+        "generator": {
+          "index": 1029,
+          "kind": "seeded_random_partial_dfa"
+        },
+        "normalized": {
+          "diagonal_states_added_to_bad": [],
+          "final_states_removed_for_empty_flag": [
+            2
+          ],
+          "original_growth_survives": false,
+          "residual_growth_vs_normalized": 0,
+          "result": {
+            "budget": 1,
+            "lower_no_splits": 2,
+            "search_states": 10,
+            "split": {
+              "D": 0,
+              "L": 1
+            },
+            "splits_checked": 3,
+            "status": "EXACT",
+            "word": "0010",
+            "word_length": 4
+          }
+        },
+        "states": 7,
+        "stored_baseline_budget": 0,
+        "stored_flagged_budget": 1,
+        "stored_growth": 1
+      },
+      {
+        "baseline_direct_checks": {
+          "border_witness": true,
+          "sufficient": true,
+          "witness": true
+        },
+        "baseline_replay_budget": 0,
+        "flagged_direct_checks": {
+          "border_witness": true,
+          "sufficient": true,
+          "witness": true
+        },
+        "flagged_replay_budget": 1,
+        "generator": {
+          "index": 166,
+          "kind": "seeded_random_partial_dfa"
+        },
+        "normalized": {
+          "diagonal_states_added_to_bad": [],
+          "final_states_removed_for_empty_flag": [],
+          "original_growth_survives": true,
+          "residual_growth_vs_normalized": 1,
+          "result": {
+            "budget": 0,
+            "lower_no_splits": 0,
+            "search_states": 6,
+            "split": {
+              "D": 0,
+              "L": 0
+            },
+            "splits_checked": 1,
+            "status": "EXACT",
+            "word": "0001",
+            "word_length": 4
+          }
+        },
+        "states": 6,
+        "stored_baseline_budget": 0,
+        "stored_flagged_budget": 1,
+        "stored_growth": 1
+      },
+      {
+        "baseline_direct_checks": {
+          "border_witness": true,
+          "sufficient": true,
+          "witness": true
+        },
+        "baseline_replay_budget": 0,
+        "flagged_direct_checks": {
+          "border_witness": true,
+          "sufficient": true,
+          "witness": true
+        },
+        "flagged_replay_budget": 1,
+        "generator": {
+          "index": 1155,
+          "kind": "seeded_random_partial_dfa"
+        },
+        "normalized": {
+          "diagonal_states_added_to_bad": [],
+          "final_states_removed_for_empty_flag": [
+            3
+          ],
+          "original_growth_survives": false,
+          "residual_growth_vs_normalized": 0,
+          "result": {
+            "budget": 1,
+            "lower_no_splits": 1,
+            "search_states": 15,
+            "split": {
+              "D": 1,
+              "L": 0
+            },
+            "splits_checked": 2,
+            "status": "EXACT",
+            "word": "00",
+            "word_length": 2
+          }
+        },
+        "states": 5,
+        "stored_baseline_budget": 0,
+        "stored_flagged_budget": 1,
+        "stored_growth": 1
+      }
+    ],
+    "source_groups": [
+      "top_exact_flagged",
+      "top_growth_over_no_flag"
+    ],
+    "unique_rows": 5
+  },
+  "results": {
+    "bounded_lower_bound_examples": [],
+    "calibration": [
+      {
+        "direct": {
+          "first_witness": {
+            "word": "0",
+            "word_budget": 0
+          },
+          "lowest_word_budget_witness": {
+            "word": "0",
+            "word_budget": 0
+          },
+          "words_checked": 8191
+        },
+        "exact_growth_over_baseline": 0,
+        "flagged": {
+          "budget": 0,
+          "lower_no_splits": 0,
+          "search_states": 2,
+          "split": {
+            "D": 0,
+            "L": 0
+          },
+          "splits_checked": 1,
+          "status": "EXACT",
+          "word": "0",
+          "word_length": 1
+        },
+        "generator": {
+          "kind": "fixed_word_calibration",
+          "n": 1
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              1,
+              -1
+            ],
+            [
+              -1,
+              -1
+            ]
+          ],
+          "final": [
+            1
+          ],
+          "flags": [],
+          "start": 0
+        },
+        "no_flag_baseline": {
+          "budget": 0,
+          "lower_no_splits": 0,
+          "search_states": 2,
+          "split": {
+            "D": 0,
+            "L": 0
+          },
+          "splits_checked": 1,
+          "status": "EXACT",
+          "word": "0",
+          "word_length": 1
+        },
+        "states": 2
+      },
+      {
+        "direct": {
+          "first_witness": {
+            "word": "00",
+            "word_budget": 1
+          },
+          "lowest_word_budget_witness": {
+            "word": "00",
+            "word_budget": 1
+          },
+          "words_checked": 8191
+        },
+        "exact_growth_over_baseline": 0,
+        "flagged": {
+          "budget": 1,
+          "lower_no_splits": 1,
+          "search_states": 3,
+          "split": {
+            "D": 1,
+            "L": 0
+          },
+          "splits_checked": 2,
+          "status": "EXACT",
+          "word": "00",
+          "word_length": 2
+        },
+        "generator": {
+          "kind": "fixed_word_calibration",
+          "n": 2
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              1,
+              -1
+            ],
+            [
+              2,
+              -1
+            ],
+            [
+              -1,
+              -1
+            ]
+          ],
+          "final": [
+            2
+          ],
+          "flags": [],
+          "start": 0
+        },
+        "no_flag_baseline": {
+          "budget": 1,
+          "lower_no_splits": 1,
+          "search_states": 3,
+          "split": {
+            "D": 1,
+            "L": 0
+          },
+          "splits_checked": 2,
+          "status": "EXACT",
+          "word": "00",
+          "word_length": 2
+        },
+        "states": 3
+      },
+      {
+        "direct": {
+          "first_witness": {
+            "word": "000",
+            "word_budget": 2
+          },
+          "lowest_word_budget_witness": {
+            "word": "000",
+            "word_budget": 2
+          },
+          "words_checked": 8191
+        },
+        "exact_growth_over_baseline": 0,
+        "flagged": {
+          "budget": 2,
+          "lower_no_splits": 3,
+          "search_states": 4,
+          "split": {
+            "D": 2,
+            "L": 0
+          },
+          "splits_checked": 4,
+          "status": "EXACT",
+          "word": "000",
+          "word_length": 3
+        },
+        "generator": {
+          "kind": "fixed_word_calibration",
+          "n": 3
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              1,
+              -1
+            ],
+            [
+              2,
+              -1
+            ],
+            [
+              3,
+              -1
+            ],
+            [
+              -1,
+              -1
+            ]
+          ],
+          "final": [
+            3
+          ],
+          "flags": [],
+          "start": 0
+        },
+        "no_flag_baseline": {
+          "budget": 2,
+          "lower_no_splits": 3,
+          "search_states": 4,
+          "split": {
+            "D": 2,
+            "L": 0
+          },
+          "splits_checked": 4,
+          "status": "EXACT",
+          "word": "000",
+          "word_length": 3
+        },
+        "states": 4
+      },
+      {
+        "direct": {
+          "first_witness": {
+            "word": "00000",
+            "word_budget": 4
+          },
+          "lowest_word_budget_witness": {
+            "word": "00000",
+            "word_budget": 4
+          },
+          "words_checked": 8191
+        },
+        "exact_growth_over_baseline": 0,
+        "flagged": {
+          "budget": 4,
+          "lower_no_splits": 10,
+          "search_states": 6,
+          "split": {
+            "D": 4,
+            "L": 0
+          },
+          "splits_checked": 11,
+          "status": "EXACT",
+          "word": "00000",
+          "word_length": 5
+        },
+        "generator": {
+          "kind": "fixed_word_calibration",
+          "n": 5
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              1,
+              -1
+            ],
+            [
+              2,
+              -1
+            ],
+            [
+              3,
+              -1
+            ],
+            [
+              4,
+              -1
+            ],
+            [
+              5,
+              -1
+            ],
+            [
+              -1,
+              -1
+            ]
+          ],
+          "final": [
+            5
+          ],
+          "flags": [],
+          "start": 0
+        },
+        "no_flag_baseline": {
+          "budget": 4,
+          "lower_no_splits": 10,
+          "search_states": 6,
+          "split": {
+            "D": 4,
+            "L": 0
+          },
+          "splits_checked": 11,
+          "status": "EXACT",
+          "word": "00000",
+          "word_length": 5
+        },
+        "states": 6
+      },
+      {
+        "direct": {
+          "first_witness": {
+            "word": "00000000",
+            "word_budget": 7
+          },
+          "lowest_word_budget_witness": {
+            "word": "00000000",
+            "word_budget": 7
+          },
+          "words_checked": 8191
+        },
+        "exact_growth_over_baseline": 0,
+        "flagged": {
+          "budget": 7,
+          "lower_no_splits": 28,
+          "search_states": 9,
+          "split": {
+            "D": 7,
+            "L": 0
+          },
+          "splits_checked": 29,
+          "status": "EXACT",
+          "word": "00000000",
+          "word_length": 8
+        },
+        "generator": {
+          "kind": "fixed_word_calibration",
+          "n": 8
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              1,
+              -1
+            ],
+            [
+              2,
+              -1
+            ],
+            [
+              3,
+              -1
+            ],
+            [
+              4,
+              -1
+            ],
+            [
+              5,
+              -1
+            ],
+            [
+              6,
+              -1
+            ],
+            [
+              7,
+              -1
+            ],
+            [
+              8,
+              -1
+            ],
+            [
+              -1,
+              -1
+            ]
+          ],
+          "final": [
+            8
+          ],
+          "flags": [],
+          "start": 0
+        },
+        "no_flag_baseline": {
+          "budget": 7,
+          "lower_no_splits": 28,
+          "search_states": 9,
+          "split": {
+            "D": 7,
+            "L": 0
+          },
+          "splits_checked": 29,
+          "status": "EXACT",
+          "word": "00000000",
+          "word_length": 8
+        },
+        "states": 9
+      },
+      {
+        "direct": {
+          "first_witness": {
+            "word": "000000000000",
+            "word_budget": 11
+          },
+          "lowest_word_budget_witness": {
+            "word": "000000000000",
+            "word_budget": 11
+          },
+          "words_checked": 8191
+        },
+        "exact_growth_over_baseline": 0,
+        "flagged": {
+          "budget": 11,
+          "lower_no_splits": 66,
+          "search_states": 13,
+          "split": {
+            "D": 11,
+            "L": 0
+          },
+          "splits_checked": 67,
+          "status": "EXACT",
+          "word": "000000000000",
+          "word_length": 12
+        },
+        "generator": {
+          "kind": "fixed_word_calibration",
+          "n": 12
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              1,
+              -1
+            ],
+            [
+              2,
+              -1
+            ],
+            [
+              3,
+              -1
+            ],
+            [
+              4,
+              -1
+            ],
+            [
+              5,
+              -1
+            ],
+            [
+              6,
+              -1
+            ],
+            [
+              7,
+              -1
+            ],
+            [
+              8,
+              -1
+            ],
+            [
+              9,
+              -1
+            ],
+            [
+              10,
+              -1
+            ],
+            [
+              11,
+              -1
+            ],
+            [
+              12,
+              -1
+            ],
+            [
+              -1,
+              -1
+            ]
+          ],
+          "final": [
+            12
+          ],
+          "flags": [],
+          "start": 0
+        },
+        "no_flag_baseline": {
+          "budget": 11,
+          "lower_no_splits": 66,
+          "search_states": 13,
+          "split": {
+            "D": 11,
+            "L": 0
+          },
+          "splits_checked": 67,
+          "status": "EXACT",
+          "word": "000000000000",
+          "word_length": 12
+        },
+        "states": 13
+      }
+    ],
+    "resistant_examples": [
+      {
+        "direct": {
+          "first_witness": null,
+          "lowest_word_budget_witness": null,
+          "words_checked": 8191
+        },
+        "flagged": {
+          "lower_no_splits": 45,
+          "splits_checked": 45,
+          "status": "NO_THROUGH",
+          "through_budget": 8
+        },
+        "generator": {
+          "index": 44,
+          "kind": "seeded_random_partial_dfa"
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              3,
+              3
+            ],
+            [
+              4,
+              4
+            ],
+            [
+              4,
+              4
+            ],
+            [
+              5,
+              3
+            ],
+            [
+              7,
+              3
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "final": [
+            4
+          ],
+          "flags": [
+            [
+              0,
+              7
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              5,
+              0
+            ],
+            [
+              6,
+              3
+            ]
+          ],
+          "start": 0
+        },
+        "no_flag_baseline": {
+          "budget": 0,
+          "lower_no_splits": 0,
+          "search_states": 15,
+          "split": {
+            "D": 0,
+            "L": 0
+          },
+          "splits_checked": 1,
+          "status": "EXACT",
+          "word": "0001",
+          "word_length": 4
+        },
+        "states": 8
+      },
+      {
+        "direct": {
+          "first_witness": null,
+          "lowest_word_budget_witness": null,
+          "words_checked": 8191
+        },
+        "flagged": {
+          "lower_no_splits": 45,
+          "splits_checked": 45,
+          "status": "NO_THROUGH",
+          "through_budget": 8
+        },
+        "generator": {
+          "index": 65,
+          "kind": "seeded_random_partial_dfa"
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              1,
+              -1
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              5,
+              6
+            ],
+            [
+              -1,
+              4
+            ],
+            [
+              4,
+              1
+            ],
+            [
+              2,
+              0
+            ]
+          ],
+          "final": [
+            4,
+            7
+          ],
+          "flags": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              7
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              4,
+              4
+            ],
+            [
+              4,
+              6
+            ],
+            [
+              4,
+              7
+            ],
+            [
+              6,
+              5
+            ],
+            [
+              6,
+              7
+            ],
+            [
+              7,
+              2
+            ]
+          ],
+          "start": 0
+        },
+        "no_flag_baseline": {
+          "budget": 1,
+          "lower_no_splits": 2,
+          "search_states": 20,
+          "split": {
+            "D": 0,
+            "L": 1
+          },
+          "splits_checked": 3,
+          "status": "EXACT",
+          "word": "010",
+          "word_length": 3
+        },
+        "states": 8
+      },
+      {
+        "direct": {
+          "first_witness": null,
+          "lowest_word_budget_witness": null,
+          "words_checked": 8191
+        },
+        "flagged": {
+          "lower_no_splits": 45,
+          "splits_checked": 45,
+          "status": "NO_THROUGH",
+          "through_budget": 8
+        },
+        "generator": {
+          "index": 70,
+          "kind": "seeded_random_partial_dfa"
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              4
+            ],
+            [
+              0,
+              -1
+            ],
+            [
+              5,
+              7
+            ],
+            [
+              6,
+              -1
+            ],
+            [
+              3,
+              7
+            ],
+            [
+              1,
+              4
+            ],
+            [
+              0,
+              4
+            ],
+            [
+              7,
+              3
+            ]
+          ],
+          "final": [
+            1
+          ],
+          "flags": [
+            [
+              3,
+              2
+            ]
+          ],
+          "start": 0
+        },
+        "no_flag_baseline": {
+          "lower_no_splits": 45,
+          "splits_checked": 45,
+          "status": "NO_THROUGH",
+          "through_budget": 8
+        },
+        "states": 8
+      },
+      {
+        "direct": {
+          "first_witness": null,
+          "lowest_word_budget_witness": null,
+          "words_checked": 8191
+        },
+        "flagged": {
+          "lower_no_splits": 45,
+          "splits_checked": 45,
+          "status": "NO_THROUGH",
+          "through_budget": 8
+        },
+        "generator": {
+          "index": 82,
+          "kind": "seeded_random_partial_dfa"
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              -1,
+              -1
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              0,
+              6
+            ],
+            [
+              7,
+              2
+            ],
+            [
+              6,
+              6
+            ],
+            [
+              4,
+              7
+            ],
+            [
+              1,
+              -1
+            ],
+            [
+              -1,
+              7
+            ]
+          ],
+          "final": [
+            1,
+            3
+          ],
+          "flags": [
+            [
+              0,
+              3
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              7
+            ],
+            [
+              4,
+              1
+            ],
+            [
+              4,
+              2
+            ],
+            [
+              7,
+              4
+            ],
+            [
+              7,
+              6
+            ]
+          ],
+          "start": 0
+        },
+        "no_flag_baseline": {
+          "lower_no_splits": 45,
+          "splits_checked": 45,
+          "status": "NO_THROUGH",
+          "through_budget": 8
+        },
+        "states": 8
+      },
+      {
+        "direct": {
+          "first_witness": null,
+          "lowest_word_budget_witness": null,
+          "words_checked": 8191
+        },
+        "flagged": {
+          "lower_no_splits": 45,
+          "splits_checked": 45,
+          "status": "NO_THROUGH",
+          "through_budget": 8
+        },
+        "generator": {
+          "index": 94,
+          "kind": "seeded_random_partial_dfa"
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              1,
+              6
+            ],
+            [
+              5,
+              7
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              3,
+              0
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              6,
+              6
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              7
+            ]
+          ],
+          "final": [
+            3,
+            4
+          ],
+          "flags": [
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              6
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              6
+            ],
+            [
+              4,
+              2
+            ],
+            [
+              4,
+              6
+            ],
+            [
+              5,
+              1
+            ],
+            [
+              6,
+              1
+            ],
+            [
+              6,
+              5
+            ],
+            [
+              7,
+              1
+            ]
+          ],
+          "start": 0
+        },
+        "no_flag_baseline": {
+          "budget": 0,
+          "lower_no_splits": 0,
+          "search_states": 10,
+          "split": {
+            "D": 0,
+            "L": 0
+          },
+          "splits_checked": 1,
+          "status": "EXACT",
+          "word": "110",
+          "word_length": 3
+        },
+        "states": 8
+      }
+    ],
+    "target_budget_greater_than_states": [],
+    "top_exact_flagged": [
+      {
+        "direct": {
+          "first_witness": {
+            "word": "00",
+            "word_budget": 1
+          },
+          "lowest_word_budget_witness": {
+            "word": "00",
+            "word_budget": 1
+          },
+          "words_checked": 8191
+        },
+        "exact_growth_over_baseline": 1,
+        "flagged": {
+          "budget": 1,
+          "lower_no_splits": 1,
+          "search_states": 7,
+          "split": {
+            "D": 1,
+            "L": 0
+          },
+          "splits_checked": 2,
+          "status": "EXACT",
+          "word": "00",
+          "word_length": 2
+        },
+        "generator": {
+          "index": 99,
+          "kind": "seeded_random_partial_dfa"
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              2,
+              0
+            ],
+            [
+              4,
+              0
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              1,
+              -1
+            ],
+            [
+              5,
+              6
+            ],
+            [
+              2,
+              -1
+            ],
+            [
+              1,
+              6
+            ]
+          ],
+          "final": [
+            3,
+            5,
+            6
+          ],
+          "flags": [
+            [
+              4,
+              6
+            ],
+            [
+              5,
+              5
+            ],
+            [
+              6,
+              3
+            ]
+          ],
+          "start": 0
+        },
+        "no_flag_baseline": {
+          "budget": 0,
+          "lower_no_splits": 0,
+          "search_states": 14,
+          "split": {
+            "D": 0,
+            "L": 0
+          },
+          "splits_checked": 1,
+          "status": "EXACT",
+          "word": "00001",
+          "word_length": 5
+        },
+        "states": 7
+      },
+      {
+        "direct": {
+          "first_witness": {
+            "word": "100",
+            "word_budget": 1
+          },
+          "lowest_word_budget_witness": {
+            "word": "100",
+            "word_budget": 1
+          },
+          "words_checked": 8191
+        },
+        "exact_growth_over_baseline": 1,
+        "flagged": {
+          "budget": 1,
+          "lower_no_splits": 1,
+          "search_states": 13,
+          "split": {
+            "D": 1,
+            "L": 0
+          },
+          "splits_checked": 2,
+          "status": "EXACT",
+          "word": "100",
+          "word_length": 3
+        },
+        "generator": {
+          "index": 619,
+          "kind": "seeded_random_partial_dfa"
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              2,
+              3
+            ],
+            [
+              5,
+              6
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              6,
+              2
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              5,
+              1
+            ]
+          ],
+          "final": [
+            1,
+            5
+          ],
+          "flags": [
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              1
+            ]
+          ],
+          "start": 0
+        },
+        "no_flag_baseline": {
+          "budget": 0,
+          "lower_no_splits": 0,
+          "search_states": 15,
+          "split": {
+            "D": 0,
+            "L": 0
+          },
+          "splits_checked": 1,
+          "status": "EXACT",
+          "word": "110",
+          "word_length": 3
+        },
+        "states": 7
+      },
+      {
+        "direct": {
+          "first_witness": {
+            "word": "0010",
+            "word_budget": 1
+          },
+          "lowest_word_budget_witness": {
+            "word": "0010",
+            "word_budget": 1
+          },
+          "words_checked": 8191
+        },
+        "exact_growth_over_baseline": 1,
+        "flagged": {
+          "budget": 1,
+          "lower_no_splits": 2,
+          "search_states": 12,
+          "split": {
+            "D": 0,
+            "L": 1
+          },
+          "splits_checked": 3,
+          "status": "EXACT",
+          "word": "0010",
+          "word_length": 4
+        },
+        "generator": {
+          "index": 1029,
+          "kind": "seeded_random_partial_dfa"
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              2,
+              3
+            ],
+            [
+              0,
+              4
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              5,
+              1
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              0,
+              2
+            ]
+          ],
+          "final": [
+            2,
+            5
+          ],
+          "flags": [
+            [
+              0,
+              2
+            ],
+            [
+              2,
+              1
+            ]
+          ],
+          "start": 0
+        },
+        "no_flag_baseline": {
+          "budget": 0,
+          "lower_no_splits": 0,
+          "search_states": 5,
+          "split": {
+            "D": 0,
+            "L": 0
+          },
+          "splits_checked": 1,
+          "status": "EXACT",
+          "word": "0",
+          "word_length": 1
+        },
+        "states": 7
+      },
+      {
+        "direct": {
+          "first_witness": {
+            "word": "00",
+            "word_budget": 1
+          },
+          "lowest_word_budget_witness": {
+            "word": "00",
+            "word_budget": 1
+          },
+          "words_checked": 8191
+        },
+        "exact_growth_over_baseline": 1,
+        "flagged": {
+          "budget": 1,
+          "lower_no_splits": 1,
+          "search_states": 3,
+          "split": {
+            "D": 1,
+            "L": 0
+          },
+          "splits_checked": 2,
+          "status": "EXACT",
+          "word": "00",
+          "word_length": 2
+        },
+        "generator": {
+          "index": 166,
+          "kind": "seeded_random_partial_dfa"
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [
+            3
+          ],
+          "delta": [
+            [
+              4,
+              3
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              5,
+              -1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "final": [
+            5
+          ],
+          "flags": [
+            [
+              1,
+              5
+            ],
+            [
+              3,
+              5
+            ]
+          ],
+          "start": 0
+        },
+        "no_flag_baseline": {
+          "budget": 0,
+          "lower_no_splits": 0,
+          "search_states": 6,
+          "split": {
+            "D": 0,
+            "L": 0
+          },
+          "splits_checked": 1,
+          "status": "EXACT",
+          "word": "0001",
+          "word_length": 4
+        },
+        "states": 6
+      },
+      {
+        "direct": {
+          "first_witness": {
+            "word": "00",
+            "word_budget": 1
+          },
+          "lowest_word_budget_witness": {
+            "word": "00",
+            "word_budget": 1
+          },
+          "words_checked": 8191
+        },
+        "exact_growth_over_baseline": 1,
+        "flagged": {
+          "budget": 1,
+          "lower_no_splits": 1,
+          "search_states": 22,
+          "split": {
+            "D": 1,
+            "L": 0
+          },
+          "splits_checked": 2,
+          "status": "EXACT",
+          "word": "00",
+          "word_length": 2
+        },
+        "generator": {
+          "index": 1155,
+          "kind": "seeded_random_partial_dfa"
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              4,
+              0
+            ],
+            [
+              -1,
+              3
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "final": [
+            1,
+            2,
+            3
+          ],
+          "flags": [
+            [
+              0,
+              3
+            ]
+          ],
+          "start": 0
+        },
+        "no_flag_baseline": {
+          "budget": 0,
+          "lower_no_splits": 0,
+          "search_states": 19,
+          "split": {
+            "D": 0,
+            "L": 0
+          },
+          "splits_checked": 1,
+          "status": "EXACT",
+          "word": "001",
+          "word_length": 3
+        },
+        "states": 5
+      }
+    ],
+    "top_growth_over_no_flag": [
+      {
+        "direct": {
+          "first_witness": {
+            "word": "00",
+            "word_budget": 1
+          },
+          "lowest_word_budget_witness": {
+            "word": "00",
+            "word_budget": 1
+          },
+          "words_checked": 8191
+        },
+        "exact_growth_over_baseline": 1,
+        "flagged": {
+          "budget": 1,
+          "lower_no_splits": 1,
+          "search_states": 7,
+          "split": {
+            "D": 1,
+            "L": 0
+          },
+          "splits_checked": 2,
+          "status": "EXACT",
+          "word": "00",
+          "word_length": 2
+        },
+        "generator": {
+          "index": 99,
+          "kind": "seeded_random_partial_dfa"
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              2,
+              0
+            ],
+            [
+              4,
+              0
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              1,
+              -1
+            ],
+            [
+              5,
+              6
+            ],
+            [
+              2,
+              -1
+            ],
+            [
+              1,
+              6
+            ]
+          ],
+          "final": [
+            3,
+            5,
+            6
+          ],
+          "flags": [
+            [
+              4,
+              6
+            ],
+            [
+              5,
+              5
+            ],
+            [
+              6,
+              3
+            ]
+          ],
+          "start": 0
+        },
+        "no_flag_baseline": {
+          "budget": 0,
+          "lower_no_splits": 0,
+          "search_states": 14,
+          "split": {
+            "D": 0,
+            "L": 0
+          },
+          "splits_checked": 1,
+          "status": "EXACT",
+          "word": "00001",
+          "word_length": 5
+        },
+        "states": 7
+      },
+      {
+        "direct": {
+          "first_witness": {
+            "word": "100",
+            "word_budget": 1
+          },
+          "lowest_word_budget_witness": {
+            "word": "100",
+            "word_budget": 1
+          },
+          "words_checked": 8191
+        },
+        "exact_growth_over_baseline": 1,
+        "flagged": {
+          "budget": 1,
+          "lower_no_splits": 1,
+          "search_states": 13,
+          "split": {
+            "D": 1,
+            "L": 0
+          },
+          "splits_checked": 2,
+          "status": "EXACT",
+          "word": "100",
+          "word_length": 3
+        },
+        "generator": {
+          "index": 619,
+          "kind": "seeded_random_partial_dfa"
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              2,
+              3
+            ],
+            [
+              5,
+              6
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              6,
+              2
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              5,
+              1
+            ]
+          ],
+          "final": [
+            1,
+            5
+          ],
+          "flags": [
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              1
+            ]
+          ],
+          "start": 0
+        },
+        "no_flag_baseline": {
+          "budget": 0,
+          "lower_no_splits": 0,
+          "search_states": 15,
+          "split": {
+            "D": 0,
+            "L": 0
+          },
+          "splits_checked": 1,
+          "status": "EXACT",
+          "word": "110",
+          "word_length": 3
+        },
+        "states": 7
+      },
+      {
+        "direct": {
+          "first_witness": {
+            "word": "0010",
+            "word_budget": 1
+          },
+          "lowest_word_budget_witness": {
+            "word": "0010",
+            "word_budget": 1
+          },
+          "words_checked": 8191
+        },
+        "exact_growth_over_baseline": 1,
+        "flagged": {
+          "budget": 1,
+          "lower_no_splits": 2,
+          "search_states": 12,
+          "split": {
+            "D": 0,
+            "L": 1
+          },
+          "splits_checked": 3,
+          "status": "EXACT",
+          "word": "0010",
+          "word_length": 4
+        },
+        "generator": {
+          "index": 1029,
+          "kind": "seeded_random_partial_dfa"
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              2,
+              3
+            ],
+            [
+              0,
+              4
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              5,
+              1
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              0,
+              2
+            ]
+          ],
+          "final": [
+            2,
+            5
+          ],
+          "flags": [
+            [
+              0,
+              2
+            ],
+            [
+              2,
+              1
+            ]
+          ],
+          "start": 0
+        },
+        "no_flag_baseline": {
+          "budget": 0,
+          "lower_no_splits": 0,
+          "search_states": 5,
+          "split": {
+            "D": 0,
+            "L": 0
+          },
+          "splits_checked": 1,
+          "status": "EXACT",
+          "word": "0",
+          "word_length": 1
+        },
+        "states": 7
+      },
+      {
+        "direct": {
+          "first_witness": {
+            "word": "00",
+            "word_budget": 1
+          },
+          "lowest_word_budget_witness": {
+            "word": "00",
+            "word_budget": 1
+          },
+          "words_checked": 8191
+        },
+        "exact_growth_over_baseline": 1,
+        "flagged": {
+          "budget": 1,
+          "lower_no_splits": 1,
+          "search_states": 3,
+          "split": {
+            "D": 1,
+            "L": 0
+          },
+          "splits_checked": 2,
+          "status": "EXACT",
+          "word": "00",
+          "word_length": 2
+        },
+        "generator": {
+          "index": 166,
+          "kind": "seeded_random_partial_dfa"
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [
+            3
+          ],
+          "delta": [
+            [
+              4,
+              3
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              5,
+              -1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "final": [
+            5
+          ],
+          "flags": [
+            [
+              1,
+              5
+            ],
+            [
+              3,
+              5
+            ]
+          ],
+          "start": 0
+        },
+        "no_flag_baseline": {
+          "budget": 0,
+          "lower_no_splits": 0,
+          "search_states": 6,
+          "split": {
+            "D": 0,
+            "L": 0
+          },
+          "splits_checked": 1,
+          "status": "EXACT",
+          "word": "0001",
+          "word_length": 4
+        },
+        "states": 6
+      },
+      {
+        "direct": {
+          "first_witness": {
+            "word": "00",
+            "word_budget": 1
+          },
+          "lowest_word_budget_witness": {
+            "word": "00",
+            "word_budget": 1
+          },
+          "words_checked": 8191
+        },
+        "exact_growth_over_baseline": 1,
+        "flagged": {
+          "budget": 1,
+          "lower_no_splits": 1,
+          "search_states": 22,
+          "split": {
+            "D": 1,
+            "L": 0
+          },
+          "splits_checked": 2,
+          "status": "EXACT",
+          "word": "00",
+          "word_length": 2
+        },
+        "generator": {
+          "index": 1155,
+          "kind": "seeded_random_partial_dfa"
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              4,
+              0
+            ],
+            [
+              -1,
+              3
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "final": [
+            1,
+            2,
+            3
+          ],
+          "flags": [
+            [
+              0,
+              3
+            ]
+          ],
+          "start": 0
+        },
+        "no_flag_baseline": {
+          "budget": 0,
+          "lower_no_splits": 0,
+          "search_states": 19,
+          "split": {
+            "D": 0,
+            "L": 0
+          },
+          "splits_checked": 1,
+          "status": "EXACT",
+          "word": "001",
+          "word_length": 3
+        },
+        "states": 5
+      }
+    ],
+    "unknown_examples": [
+      {
+        "direct": {
+          "first_witness": null,
+          "lowest_word_budget_witness": null,
+          "words_checked": 8191
+        },
+        "flagged": {
+          "first_unknown": {
+            "budget": 8,
+            "reason": "state cap",
+            "split": {
+              "D": 0,
+              "L": 8
+            },
+            "states": 50000
+          },
+          "lower_no_splits": 44,
+          "splits_checked": 45,
+          "status": "UNKNOWN"
+        },
+        "generator": {
+          "index": 155,
+          "kind": "seeded_random_partial_dfa"
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              0,
+              3
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              7,
+              3
+            ],
+            [
+              4,
+              1
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              7,
+              7
+            ],
+            [
+              4,
+              6
+            ]
+          ],
+          "final": [
+            0,
+            1,
+            6
+          ],
+          "flags": [
+            [
+              0,
+              0
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              3,
+              7
+            ]
+          ],
+          "start": 0
+        },
+        "no_flag_baseline": {
+          "budget": 0,
+          "lower_no_splits": 0,
+          "search_states": 3,
+          "split": {
+            "D": 0,
+            "L": 0
+          },
+          "splits_checked": 1,
+          "status": "EXACT",
+          "word": "",
+          "word_length": 0
+        },
+        "states": 8
+      },
+      {
+        "direct": {
+          "first_witness": null,
+          "lowest_word_budget_witness": null,
+          "words_checked": 8191
+        },
+        "flagged": {
+          "first_unknown": {
+            "budget": 8,
+            "reason": "state cap",
+            "split": {
+              "D": 0,
+              "L": 8
+            },
+            "states": 50000
+          },
+          "lower_no_splits": 44,
+          "splits_checked": 45,
+          "status": "UNKNOWN"
+        },
+        "generator": {
+          "index": 225,
+          "kind": "seeded_random_partial_dfa"
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [
+            0
+          ],
+          "delta": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              4,
+              3
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              5
+            ],
+            [
+              5,
+              3
+            ]
+          ],
+          "final": [
+            4
+          ],
+          "flags": [
+            [
+              0,
+              3
+            ],
+            [
+              4,
+              0
+            ],
+            [
+              5,
+              3
+            ]
+          ],
+          "start": 0
+        },
+        "no_flag_baseline": {
+          "first_unknown": {
+            "budget": 7,
+            "reason": "state cap",
+            "split": {
+              "D": 0,
+              "L": 7
+            },
+            "states": 50000
+          },
+          "lower_no_splits": 35,
+          "splits_checked": 36,
+          "status": "UNKNOWN"
+        },
+        "states": 6
+      },
+      {
+        "direct": {
+          "first_witness": null,
+          "lowest_word_budget_witness": null,
+          "words_checked": 8191
+        },
+        "flagged": {
+          "first_unknown": {
+            "budget": 8,
+            "reason": "state cap",
+            "split": {
+              "D": 0,
+              "L": 8
+            },
+            "states": 50000
+          },
+          "lower_no_splits": 44,
+          "splits_checked": 45,
+          "status": "UNKNOWN"
+        },
+        "generator": {
+          "index": 474,
+          "kind": "seeded_random_partial_dfa"
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "final": [
+            1,
+            2
+          ],
+          "flags": [
+            [
+              0,
+              2
+            ],
+            [
+              2,
+              1
+            ]
+          ],
+          "start": 0
+        },
+        "no_flag_baseline": {
+          "budget": 0,
+          "lower_no_splits": 0,
+          "search_states": 10,
+          "split": {
+            "D": 0,
+            "L": 0
+          },
+          "splits_checked": 1,
+          "status": "EXACT",
+          "word": "1",
+          "word_length": 1
+        },
+        "states": 3
+      },
+      {
+        "direct": {
+          "first_witness": null,
+          "lowest_word_budget_witness": null,
+          "words_checked": 8191
+        },
+        "flagged": {
+          "first_unknown": {
+            "budget": 8,
+            "reason": "state cap",
+            "split": {
+              "D": 0,
+              "L": 8
+            },
+            "states": 50000
+          },
+          "lower_no_splits": 44,
+          "splits_checked": 45,
+          "status": "UNKNOWN"
+        },
+        "generator": {
+          "index": 667,
+          "kind": "seeded_random_partial_dfa"
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [
+            0
+          ],
+          "delta": [
+            [
+              6,
+              0
+            ],
+            [
+              4,
+              0
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              1,
+              -1
+            ],
+            [
+              -1,
+              4
+            ],
+            [
+              2,
+              6
+            ]
+          ],
+          "final": [
+            2
+          ],
+          "flags": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              2,
+              5
+            ]
+          ],
+          "start": 0
+        },
+        "no_flag_baseline": {
+          "first_unknown": {
+            "budget": 7,
+            "reason": "state cap",
+            "split": {
+              "D": 0,
+              "L": 7
+            },
+            "states": 50000
+          },
+          "lower_no_splits": 35,
+          "splits_checked": 36,
+          "status": "UNKNOWN"
+        },
+        "states": 7
+      },
+      {
+        "direct": {
+          "first_witness": null,
+          "lowest_word_budget_witness": null,
+          "words_checked": 8191
+        },
+        "flagged": {
+          "first_unknown": {
+            "budget": 8,
+            "reason": "state cap",
+            "split": {
+              "D": 0,
+              "L": 8
+            },
+            "states": 50000
+          },
+          "lower_no_splits": 44,
+          "splits_checked": 45,
+          "status": "UNKNOWN"
+        },
+        "generator": {
+          "index": 744,
+          "kind": "seeded_random_partial_dfa"
+        },
+        "instance": {
+          "alphabet": "01",
+          "bad": [],
+          "delta": [
+            [
+              5,
+              5
+            ],
+            [
+              0,
+              7
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              5
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              7,
+              0
+            ],
+            [
+              5,
+              4
+            ],
+            [
+              2,
+              7
+            ]
+          ],
+          "final": [
+            2,
+            4
+          ],
+          "flags": [
+            [
+              2,
+              3
+            ],
+            [
+              4,
+              0
+            ],
+            [
+              4,
+              1
+            ],
+            [
+              5,
+              2
+            ]
+          ],
+          "start": 0
+        },
+        "no_flag_baseline": {
+          "budget": 0,
+          "lower_no_splits": 0,
+          "search_states": 13,
+          "split": {
+            "D": 0,
+            "L": 0
+          },
+          "splits_checked": 1,
+          "status": "EXACT",
+          "word": "0001",
+          "word_length": 4
+        },
+        "states": 8
+      }
+    ]
+  },
+  "seed": 2026090409
+}
