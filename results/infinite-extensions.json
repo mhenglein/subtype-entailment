@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "seed": 2026090429,
+  "abstract_instances": 1500,
+  "generated_actual_systems": 400,
+  "counts": {
+    "abstract_NO_INFINITE_EXTENSION": 845,
+    "exact_small_state_decisions": 502,
+    "abstract_YES": 655,
+    "method_finite periodic suffix monitor": 311,
+    "monitor_identity_comparisons": 305010,
+    "method_infinite cyclic branching": 317,
+    "method_nonpure ultimately periodic tail": 27,
+    "actual_SAT": 289,
+    "actual_decision_YES": 191,
+    "actual_word_comparisons": 18207,
+    "actual_decision_NO_INFINITE_EXTENSION": 98,
+    "actual_UNSAT": 111
+  },
+  "finite_terminal_obstruction": {
+    "status": "NO_INFINITE_EXTENSION",
+    "checks": [],
+    "scope": "does not exclude witnesses with only finite safe continuations"
+  },
+  "periodic_monitor_loop_example": null,
+  "nonpure_example": {
+    "status": "YES",
+    "word": "0001",
+    "method": "nonpure ultimately periodic tail",
+    "prefix": "00",
+    "stem": "0",
+    "cycle": "1"
+  },
+  "scope": "Exact theorem for infinite-safe-continuation witnesses; NO_INFINITE_EXTENSION is not unrestricted NO; written proofs not Lean-checked"
+}

@@ -6,6 +6,7 @@ Collaborative research on **Problem 1.7: subtype entailment over bottom and bina
 
 | You want to… | Go to |
 |---|---|
+| Read the latest results and remaining terminal-path problem | **[September 4 continuation: C021-C029 and E016-E020](research/CONTINUATION.md)** |
 | Understand the problem and notation | [Problem statement](research/problem.md) |
 | Choose the next research direction | **[Research plan: eleven angles](research/PLAN.md)** |
 | See what we tried, what failed, and what is next | **[Research tracker](research/README.md)** |
@@ -32,6 +33,14 @@ and validates regular countermodels for supplied paths. The full problem,
 computable bound, and formal subtype reduction remain open.
 See the [claims ledger](research/claims.md) for the exact scope of each result.
 
+The later [written continuation](research/CONTINUATION.md) proves the exact
+three-state bound, a family with B=2k-4, and actual summary absorption. The
+[denial-aware continuation](notes/2026-09-04-denials-and-continuations.md)
+removes the separate safety subset and decides the infinitely-extendable-
+witness branch. Terminal safe witnesses with unbounded pre-final histories
+remain unresolved. These new proofs are not Lean-checked; an infinite safe
+continuation of a separating path is not the same as an infinite type tree.
+
 ## Run the checks
 
 Python 3.9 or newer; no third-party packages required.
@@ -50,15 +59,25 @@ python3 experiments/shortest_witnesses.py
 python3 experiments/trim_budget_example.py
 ```
 
+For the later continuation:
+
+```sh
+python3 experiments/check_budget_growth_family.py
+python3 experiments/three_state_decision.py
+python3 experiments/check_summary_absorption.py
+python3 experiments/run_denial_continuation.py
+```
+
 With Lean 4.33.1 and Lake installed, also run:
 
 ```sh
 python3 scripts/check_lean.py
 ```
 
-GitHub Actions validates the tracker and local document paths, reruns these
-checks, and compares the saved results. The Lean theorem statements establish
-their specific implications; the Python comparisons remain bounded evidence.
+GitHub Actions validates the tracker and local document paths, reruns the
+original checks, and compares their saved results. The newer continuation
+commands are not yet wired into that workflow. The Lean theorem statements
+establish their specific implications; Python comparisons remain bounded evidence.
 
 ## Repository map
 

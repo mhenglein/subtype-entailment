@@ -124,17 +124,20 @@
       "id": "A008",
       "title": "Bound minimal witnesses after stronger truncation",
       "status": "tried",
-      "outcome": "inconclusive",
+      "outcome": "supported",
       "owner": null,
       "updated": "2026-09-04",
-      "summary": "Decided the two-state case; targeted shortest witnesses reach length 12, with exact critical-cut obstructions.",
-      "next_step": "Study the six-state budget-five example and test stronger bounds after trimming irrelevant states.",
+      "summary": "Written proof decides at most three states: shortest length at most six and budget at most two, both sharp; the global bound remains open.",
+      "next_step": "Formalize the three-state classification and study the actual terminal-path loop obstruction in A013.",
       "record": "research/approaches/A008.md",
       "evidence": [
         "notes/2026-09-04-shortest-witnesses.md",
         "notes/2026-09-04-minimal-witness-structure.md",
         "results/shortest-witnesses.json",
-        "lean/Subtail/TwoState.lean"
+        "lean/Subtail/TwoState.lean",
+        "notes/2026-09-04-three-state.md",
+        "experiments/three_state_decision.py",
+        "results/continuation-import.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/2"
     },
@@ -145,8 +148,8 @@
       "outcome": "supported",
       "owner": null,
       "updated": "2026-09-04",
-      "summary": "Full boundary normalization removes the earlier increases; a new six-state instance has exact B=5 versus boundary B=1.",
-      "next_step": "Minimize and generalize the six-state example; seek B greater than the state count or prove a larger bound.",
+      "summary": "A one-flag k-state family has exact B=2k-4 and shortest length 3k-3; five states refute B<=|K|.",
+      "next_step": "Any universal abstract bound must allow 2k-4. Separate abstract growth from actual summary outputs, which satisfy absorption.",
       "record": "research/approaches/A009.md",
       "evidence": [
         "notes/2026-09-04-budget-search.md",
@@ -156,7 +159,10 @@
         "notes/2026-09-04-trimmed-budget.md",
         "experiments/trim_budget_example.py",
         "results/trimmed-budget.json",
-        "results/boundary-slices.json"
+        "results/boundary-slices.json",
+        "notes/2026-09-04-budget-growth-family.md",
+        "experiments/check_budget_growth_family.py",
+        "results/continuation-import.json"
       ],
       "issue": null
     },
@@ -212,14 +218,23 @@
     {
       "id": "A013",
       "title": "Exploit restrictions shared by actual summary automata",
-      "status": "untried",
-      "outcome": "open",
+      "status": "tried",
+      "outcome": "supported",
       "owner": null,
       "updated": "2026-09-04",
-      "summary": "Intersection shape alone represents every finite flag relation; joint realizability may still help.",
-      "next_step": "Derive an invariant of both summary automata from one W, then test it on actual bridge outputs.",
+      "summary": "Proved summary absorption and B-prefix denial safety; decided infinitely extendable witnesses. An actual terminal example requires a pre-final loop.",
+      "next_step": "Decide terminal safe witnesses with unbounded pre-final histories; preserve the shared B/A/D structure and formalize the periodic-suffix monitor.",
       "record": "research/approaches/A013.md",
-      "evidence": [],
+      "evidence": [
+        "notes/2026-09-04-summary-absorption.md",
+        "notes/2026-09-04-denials-and-continuations.md",
+        "research/CONTINUATION.md",
+        "experiments/denial_bridge.py",
+        "experiments/safe_extensions.py",
+        "experiments/infinite_extensions.py",
+        "results/unrestricted-continuation.json",
+        "results/infinite-extensions.json"
+      ],
       "issue": null
     },
     {
