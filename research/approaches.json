@@ -208,6 +208,58 @@
       "record": "research/approaches/A014.md",
       "evidence": [],
       "issue": null
+    },
+    {
+      "id": "A015",
+      "title": "Strengthen truncation using occurrence context",
+      "status": "untried",
+      "outcome": "open",
+      "owner": null,
+      "updated": "2026-09-04",
+      "summary": "Refine the existing profile rule using states or positions relevant to the proposed cut; no refinement has been tested.",
+      "next_step": "State a cut rule restricted to visited states, then prove it or minimize a counterexample.",
+      "record": "research/approaches/A015.md",
+      "evidence": [],
+      "issue": null
+    },
+    {
+      "id": "A016",
+      "title": "Implement and audit fixed-skeleton checkability",
+      "status": "untried",
+      "outcome": "open",
+      "owner": null,
+      "updated": "2026-09-04",
+      "summary": "Proposition 7.5 claims fixed-skeleton checkability; its arithmetic translation has not been implemented here.",
+      "next_step": "Audit and implement the one-block exponent test, then check two interacting blocks.",
+      "record": "research/approaches/A016.md",
+      "evidence": [],
+      "issue": null
+    },
+    {
+      "id": "A017",
+      "title": "Bound essential repeated blocks",
+      "status": "untried",
+      "outcome": "open",
+      "owner": null,
+      "updated": "2026-09-04",
+      "summary": "A bounded skeleton could make the restricted solver complete; no preservation or normalization theorem has been attempted.",
+      "next_step": "Test one precise block-deletion rule while recording every new border across the join.",
+      "record": "research/approaches/A017.md",
+      "evidence": [],
+      "issue": null
+    },
+    {
+      "id": "A018",
+      "title": "Work backwards from an executable Lean theorem",
+      "status": "untried",
+      "outcome": "open",
+      "owner": null,
+      "updated": "2026-09-04",
+      "summary": "The Lean workstream is planned; no Lean implementation or checked proof has been produced.",
+      "next_step": "Build the finite-word witness core, formalize C008/C009, and state the conditional bound-to-decision theorem with explicit open interfaces.",
+      "record": "research/approaches/A018.md",
+      "evidence": [],
+      "issue": null
     }
   ]
 }

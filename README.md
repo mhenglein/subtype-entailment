@@ -7,6 +7,7 @@ Collaborative research on **Problem 1.7: subtype entailment over bottom and bina
 | You want to… | Go to |
 |---|---|
 | Understand the problem and notation | [Problem statement](research/problem.md) |
+| Choose the next research direction | **[Research plan: eleven angles](research/PLAN.md)** |
 | See what we tried, what failed, and what is next | **[Research tracker](research/README.md)** |
 | Check exactly what a result establishes | [Claims and evidence](research/claims.md) |
 | Reproduce a result or find its limits | [Experiment index](experiments/README.md) |

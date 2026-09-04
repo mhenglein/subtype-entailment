@@ -83,6 +83,7 @@ def render(data):
              "Problem 1.7 is open. This is the current map of approaches, including unsuccessful work.", "",
              f"**{counts['tried']} tried · {counts['untried']} not tried · {counts['blocked']} blocked · {counts['active']} active**", "",
              "Read [the problem and notation](problem.md), [claims and evidence](claims.md), and [the experiment index](../experiments/README.md).", "",
+             "Use [the research plan](PLAN.md) for the eleven proposed angles, priorities, and dependencies, including the Lean workstream.", "",
              "Choose a record below to see its scope, attempt history, evidence, and limitations. All unowned work is available to discuss; nobody has been assigned automatically.", "",
              "## How to read the status", "",
              "- **Not tried:** a proposed approach; reading a related paper does not count as trying it.",

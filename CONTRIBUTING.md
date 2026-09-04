@@ -2,6 +2,8 @@
 
 Start with [the problem](research/problem.md), [the research tracker](research/README.md), and [claims and evidence](research/claims.md). The September 4 [review](REVIEW.md) is the initial snapshot; the tracker records later progress.
 
+The [research plan](research/PLAN.md) explains priorities and dependencies. It includes the proposed [Lean workstream](research/approaches/A018.md), whose proof obligations and validation criteria are separate from current mathematical claims.
+
 ## Pick and claim work
 
 1. Find an untried approach or a useful next step in a tried record. Read its history before repeating work.
@@ -48,6 +50,7 @@ For a new theorem, ask a reviewer to check the argument independently. For a new
 | Material | Canonical location |
 |---|---|
 | Current approach status, owner, next step | `research/approaches.json` |
+| Research directions, priorities, and dependencies | `research/PLAN.md` |
 | Readable dashboard | Generated `research/README.md` |
 | Dated successes, failures, and inconclusive attempts | `research/approaches/Axxx.md` |
 | Exact claims and mathematical status | `research/claims.md` |

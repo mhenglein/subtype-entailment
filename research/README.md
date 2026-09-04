@@ -2,9 +2,11 @@
 
 Problem 1.7 is open. This is the current map of approaches, including unsuccessful work.
 
-**6 tried · 7 not tried · 1 blocked · 0 active**
+**6 tried · 11 not tried · 1 blocked · 0 active**
 
 Read [the problem and notation](problem.md), [claims and evidence](claims.md), and [the experiment index](../experiments/README.md).
+
+Use [the research plan](PLAN.md) for the eleven proposed angles, priorities, and dependencies, including the Lean workstream.
 
 Choose a record below to see its scope, attempt history, evidence, and limitations. All unowned work is available to discuss; nobody has been assigned automatically.
 
@@ -32,6 +34,10 @@ None currently.
 | A012 | [Make NO certificates complete](approaches/A012.md) | Find a precise invariant or instance that separates current NO certificates from full nonexistence. | Unassigned |
 | A013 | [Exploit restrictions shared by actual summary automata](approaches/A013.md) | Derive an invariant of both summary automata from one W, then test it on actual bridge outputs. | Unassigned |
 | A014 | [Apply cap and period-language saturation techniques](approaches/A014.md) | Choose one closure property, test small instances, and preserve all endpoint flags. | Unassigned |
+| A015 | [Strengthen truncation using occurrence context](approaches/A015.md) | State a cut rule restricted to visited states, then prove it or minimize a counterexample. | Unassigned |
+| A016 | [Implement and audit fixed-skeleton checkability](approaches/A016.md) | Audit and implement the one-block exponent test, then check two interacting blocks. | Unassigned |
+| A017 | [Bound essential repeated blocks](approaches/A017.md) | Test one precise block-deletion rule while recording every new border across the join. | Unassigned |
+| A018 | [Work backwards from an executable Lean theorem](approaches/A018.md) | Build the finite-word witness core, formalize C008/C009, and state the conditional bound-to-decision theorem with explicit open interfaces. | Unassigned |
 
 ## Blocked
 
