@@ -8,7 +8,7 @@ The [research plan](research/PLAN.md) explains priorities and dependencies. It i
 
 1. Find an untried approach or a useful next step in a tried record. Read its history before repeating work.
 2. Open a GitHub issue using the research template, or join the linked discussion. Name the approach ID and the exact question.
-3. Agree on an owner, then update `research/approaches.json` to `active`. Use a branch and pull request so others can see the work.
+3. Agree on an owner, then update `research/approaches.json` to `active`. For authorized updates, commit and push directly to `main` after the relevant checks. Use a pull request only when requested.
 
 Names in the tracker identify current owners. Historical authors belong in dated attempt entries. An unassigned record is not a commitment by any collaborator.
 
@@ -26,7 +26,7 @@ Do not erase a failed argument after finding a repair. State what failed and lin
 
 ## Finish or pause a session
 
-Update the central registry with the current status, outcome, owner, evidence, and one next step. If blocked, say exactly what is missing. If stopped after a limit, record UNKNOWN and the limit. If a claim changed, update its ledger entry in the same pull request.
+Update the central registry with the current status, outcome, owner, evidence, and one next step. If blocked, say exactly what is missing. If stopped after a limit, record UNKNOWN and the limit. If a claim changed, update its ledger entry in the same commit.
 
 Issues are for discussion and coordination. Approach metadata is the source for current research status; evidence files establish what was actually done. Do not infer a proof from a closed issue or a passing test.
 

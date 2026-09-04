@@ -1,5 +1,6 @@
 # Subtail research conventions
 
+- For authorized updates in this repository, commit and push directly to `main`. Pull requests are optional and should be created only when requested. Preserve unrelated changes and run the relevant checks before pushing.
 - Keep source papers in `papers/` unchanged; record provenance and checksums.
 - Read `README.md`, `research/README.md`, `research/claims.md`, and the relevant approach history before starting research.
 - Preserve exact quantifiers, constructor signatures, and finite/regular/arbitrary tree distinctions.

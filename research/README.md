@@ -61,7 +61,7 @@ None currently.
 1. Add a dated attempt to the approach's Markdown record; preserve previous failed and inconclusive attempts.
 2. Update its status, outcome, owner, evidence links, and next step in [approaches.json](approaches.json).
 3. Update the claims ledger or experiment index if a result changed.
-4. Run `python3 scripts/research_index.py` from the repository root, then open a pull request.
+4. Run `python3 scripts/research_index.py` from the repository root, complete the relevant checks, then commit and push authorized updates to `main`. Use a pull request only when requested.
 
 Use [the contribution guide](../CONTRIBUTING.md). GitHub issues hold discussion; this registry holds the current research status. Closing an issue does not establish a theorem.
 
