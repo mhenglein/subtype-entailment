@@ -2,6 +2,8 @@
 
 Reviewed 4 September 2026. Source: `sep-topfree.pdf`, 31 August 2026, 19 pages.
 
+This is the initial review snapshot. See the [research tracker](research/README.md) for current status and attempts, and the [claims ledger](research/claims.md) for exact result status.
+
 **Problem 1.7 remains unsolved in this work.** The memo gives a useful reduction and a practical search framework. This review finds a false equivalence in its proposed next attack, proves a stronger truncation rule, and supplies independent executable checks. These are concrete steps toward a better research program, not a decision procedure for subtype entailment.
 
 The PDF is the only supplied research source. Its earlier notes and `analysis-2026` scripts were unavailable during this review. The experiments here were written independently. They do not reproduce the memo's full reported census or formally verify its proofs.

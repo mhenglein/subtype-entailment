@@ -2,6 +2,8 @@
 
 Date:
 Author or agent:
+Approach ID:
+Claim / experiment IDs:
 Status: conjecture / proof sketch / proved / refuted / bounded evidence
 
 ## Question and exact scope

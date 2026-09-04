@@ -1,31 +1,49 @@
 # Subtail
 
-Private research workspace for the subtype entailment problem over bottom and binary product, particularly Problem 1.7 of the August 31, 2026 memo.
+Collaborative research on **Problem 1.7: subtype entailment over bottom and binary product**, with possibly infinite trees. The problem remains open.
 
-Start with [the review and research plan](REVIEW.md), then see [open questions](QUESTIONS.md).
+## Start here
 
-This work reviews Problem 1.7 of the supplied `sep-topfree.pdf`. It does not solve the problem.
+| You want to… | Go to |
+|---|---|
+| Understand the problem and notation | [Problem statement](research/problem.md) |
+| See what we tried, what failed, and what is next | **[Research tracker](research/README.md)** |
+| Check exactly what a result establishes | [Claims and evidence](research/claims.md) |
+| Reproduce a result or find its limits | [Experiment index](experiments/README.md) |
+| Join the work or hand it off | [Contribution guide](CONTRIBUTING.md) |
+| Read the initial analysis | [September 4 review](REVIEW.md) |
+| Find the original memo | [Sources and provenance](papers/README.md) |
 
-Run the independent experiments:
+## How the research is tracked
 
-```
+Each approach has a stable **A ID**, a current status, an owner when active, and a dated history of attempts. Failed and inconclusive attempts stay in the record. Claims have **C IDs** and separate mathematical statuses. Experiments have **E IDs**, commands, and evidence links.
+
+The [tracker](research/README.md) is generated from [one registry](research/approaches.json), so status is updated in one place. GitHub issues hold discussions linked to those records. See the [issues](https://github.com/mhenglein/subtail/issues) or [start a discussion using a template](https://github.com/mhenglein/subtail/issues/new/choose).
+
+The original memo's `analysis-2026` code is still pending. The current scripts are an independent implementation, and their results must not be confused with the memo's full census.
+
+## Run the checks
+
+Python 3.9 or newer; no third-party packages required.
+
+```sh
+python3 scripts/research_index.py --check
 python3 experiments/run_experiments.py
 ```
 
-- `experiments/border_lab.py`: exact finite-word predicates, N/S automata, and truncation criteria.
-- `experiments/run_experiments.py`: deterministic cross-checks and explicit counterexample families.
-- `results/independent-checks.json`: generated counts and exact examples.
-- [papers/](papers/README.md): original papers and source provenance.
-- [notes/](notes/README.md): proof audits, literature findings, and research notes.
-- [templates/](templates/): a template for new research notes and experiments.
-- `tmp/`: ignored local scratch files, including extracted PDF text.
+GitHub Actions validates the tracker and local document paths, reruns the experiments, and checks the saved results. Passing tests do not establish a mathematical proof.
 
-## Working conventions
+## Repository map
 
-Keep source papers unchanged. Add dated notes that link to the exact source theorem or page. Distinguish proved statements, conjectures, refuted claims, and bounded experimental evidence.
+```text
+research/     Current tracker, claims, problem definition, and approach histories
+experiments/  Executable checks and experiment index
+results/      Compact, reproducible output files
+papers/       Unchanged source documents and provenance
+notes/        Detailed audits and working analysis
+templates/    Research-note and attempt templates
+scripts/      Tracker generation and repository checks
+.github/      Issue forms, pull request template, and automated checks
+```
 
-Commit reproducible scripts and compact result files together. Record the seed, command, and search limits. A search limit means UNKNOWN, never NO. Use branches for new research directions and GitHub issues for discussions that need follow-up.
-
-No third-party Python packages are needed. Python 3.9 or newer is sufficient.
-
-The memo's original `analysis-2026` code was not supplied. This implementation was written independently.
+Keep scratch files in ignored `tmp/`. Use [the contribution guide](CONTRIBUTING.md) for the complete update and review workflow.

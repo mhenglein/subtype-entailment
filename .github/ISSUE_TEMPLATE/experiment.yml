@@ -1,0 +1,30 @@
+name: Experiment or reproduction
+description: Specify a reproducible experiment or report a mismatch.
+labels: [experiment]
+body:
+  - type: input
+    id: references
+    attributes:
+      label: Approach, claim, and experiment IDs
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Command, input, seed, and commit
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Hypothesis or expected result
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Observed result and evidence
+      description: Say NOT RUN for a proposal. Include output links and resource limits for completed runs.
+    validations:
+      required: true

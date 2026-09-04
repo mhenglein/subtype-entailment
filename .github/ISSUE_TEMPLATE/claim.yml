@@ -1,0 +1,29 @@
+name: Claim review or counterexample
+description: Challenge or review a precise mathematical statement.
+labels: [proof-review]
+body:
+  - type: input
+    id: claim
+    attributes:
+      label: Claim ID or exact source theorem
+    validations:
+      required: true
+  - type: textarea
+    id: statement
+    attributes:
+      label: Statement and assumptions
+    validations:
+      required: true
+  - type: textarea
+    id: reasoning
+    attributes:
+      label: Argument, gap, or counterexample
+      description: Distinguish a demonstrated error from an open question or bounded observation.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and proposed correction
+    validations:
+      required: true

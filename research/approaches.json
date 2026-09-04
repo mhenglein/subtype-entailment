@@ -1,0 +1,213 @@
+{
+  "version": 1,
+  "approaches": [
+    {
+      "id": "A001",
+      "title": "Audit the top-free characterization",
+      "status": "tried",
+      "outcome": "supported",
+      "owner": null,
+      "updated": "2026-09-04",
+      "summary": "Theorem 2.6 supports canonical regular countermodels under its satisfiability premise.",
+      "next_step": "No new work assigned; use the audited statement as a dependency.",
+      "record": "research/approaches/A001.md",
+      "evidence": [
+        "notes/proof-audit.md",
+        "REVIEW.md"
+      ],
+      "issue": null
+    },
+    {
+      "id": "A002",
+      "title": "Replace prefix reachability with a regular language",
+      "status": "tried",
+      "outcome": "refuted",
+      "owner": null,
+      "updated": "2026-09-04",
+      "summary": "The old formula disagrees on 4,017 words through length 11; the all-length family is nonregular.",
+      "next_step": "Do not reuse the old formula; retain the corrected cap decomposition.",
+      "record": "research/approaches/A002.md",
+      "evidence": [
+        "REVIEW.md",
+        "results/independent-checks.json",
+        "experiments/run_experiments.py"
+      ],
+      "issue": null
+    },
+    {
+      "id": "A003",
+      "title": "Bound all rigid witnesses using nonmerging runs",
+      "status": "tried",
+      "outcome": "refuted",
+      "owner": null,
+      "updated": "2026-09-04",
+      "summary": "Two states admit rigid words 0^n with unbounded repeated suffixes, while the runs merge.",
+      "next_step": "Use minimal witnesses and stronger cuts instead.",
+      "record": "research/approaches/A003.md",
+      "evidence": [
+        "notes/border-audit.md",
+        "REVIEW.md",
+        "results/independent-checks.json"
+      ],
+      "issue": null
+    },
+    {
+      "id": "A004",
+      "title": "Transfer the shorter word's repeated suffix",
+      "status": "tried",
+      "outcome": "supported",
+      "owner": null,
+      "updated": "2026-09-04",
+      "summary": "The stronger sufficient truncation rule passed 3,504 applicable cuts, including 789 on rigid words.",
+      "next_step": "Use this rule in A008.",
+      "record": "research/approaches/A004.md",
+      "evidence": [
+        "REVIEW.md",
+        "experiments/border_lab.py",
+        "results/independent-checks.json"
+      ],
+      "issue": null
+    },
+    {
+      "id": "A005",
+      "title": "Weaken state equality to incoming flag-set inclusion",
+      "status": "tried",
+      "outcome": "supported",
+      "owner": null,
+      "updated": "2026-09-04",
+      "summary": "The flag-profile version passed 4,755 applicable cuts.",
+      "next_step": "Compare irreducible witnesses under both versions in A008.",
+      "record": "research/approaches/A005.md",
+      "evidence": [
+        "REVIEW.md",
+        "experiments/border_lab.py",
+        "results/independent-checks.json"
+      ],
+      "issue": null
+    },
+    {
+      "id": "A006",
+      "title": "Calibrate small-budget expectations",
+      "status": "tried",
+      "outcome": "refuted",
+      "owner": null,
+      "updated": "2026-09-04",
+      "summary": "A singleton 0^n language has exact B=n-1 at n+1 states; the checked 13-state instance has B=11.",
+      "next_step": "Use this baseline before searching for harder growth in A009.",
+      "record": "research/approaches/A006.md",
+      "evidence": [
+        "REVIEW.md",
+        "results/independent-checks.json",
+        "experiments/border_lab.py"
+      ],
+      "issue": null
+    },
+    {
+      "id": "A007",
+      "title": "Reproduce the original memo's code and census",
+      "status": "blocked",
+      "outcome": "open",
+      "owner": null,
+      "updated": "2026-09-04",
+      "summary": "The original analysis-2026 folder has not been supplied.",
+      "next_step": "Import original sources unchanged, record provenance, and cross-check against the independent implementation.",
+      "record": "research/approaches/A007.md",
+      "evidence": [
+        "papers/README.md",
+        "REVIEW.md"
+      ],
+      "issue": "https://github.com/mhenglein/subtail/issues/1"
+    },
+    {
+      "id": "A008",
+      "title": "Bound minimal witnesses after stronger truncation",
+      "status": "untried",
+      "outcome": "open",
+      "owner": null,
+      "updated": "2026-09-04",
+      "summary": "The cuts exist; a systematic search of witnesses resisting them and a bound proof have not run.",
+      "next_step": "Enumerate and minimize resistant witnesses, then state one precise candidate bound.",
+      "record": "research/approaches/A008.md",
+      "evidence": [],
+      "issue": "https://github.com/mhenglein/subtail/issues/2"
+    },
+    {
+      "id": "A009",
+      "title": "Find budget growth beyond the regular-language baseline",
+      "status": "untried",
+      "outcome": "open",
+      "owner": null,
+      "updated": "2026-09-04",
+      "summary": "The linear singleton family is known; stronger growth driven by flags has not been searched here.",
+      "next_step": "Build an adversarial generator and certify all lower budgets before reporting exact B.",
+      "record": "research/approaches/A009.md",
+      "evidence": [],
+      "issue": null
+    },
+    {
+      "id": "A010",
+      "title": "Build the exact top-free constraint-to-automata pipeline",
+      "status": "untried",
+      "outcome": "open",
+      "owner": null,
+      "updated": "2026-09-04",
+      "summary": "The independent code starts at abstract BorderAvoid; a general W-to-classes bridge is not implemented.",
+      "next_step": "Implement exact pushdown saturation and S/F side conditions, then verify regular countermodels.",
+      "record": "research/approaches/A010.md",
+      "evidence": [],
+      "issue": "https://github.com/mhenglein/subtail/issues/3"
+    },
+    {
+      "id": "A011",
+      "title": "Complete the converse with regular annotations",
+      "status": "untried",
+      "outcome": "open",
+      "owner": null,
+      "updated": "2026-09-04",
+      "summary": "The memo leaves realization of arbitrary regular annotations unfinished.",
+      "next_step": "State the desired converse precisely and construct a reduction preserving the regular restriction.",
+      "record": "research/approaches/A011.md",
+      "evidence": [],
+      "issue": null
+    },
+    {
+      "id": "A012",
+      "title": "Make NO certificates complete",
+      "status": "untried",
+      "outcome": "open",
+      "owner": null,
+      "updated": "2026-09-04",
+      "summary": "Two example NO instances are reproduced; completeness of the certificate families is unproved.",
+      "next_step": "Find a precise invariant or instance that separates current NO certificates from full nonexistence.",
+      "record": "research/approaches/A012.md",
+      "evidence": [],
+      "issue": null
+    },
+    {
+      "id": "A013",
+      "title": "Exploit restrictions shared by actual summary automata",
+      "status": "untried",
+      "outcome": "open",
+      "owner": null,
+      "updated": "2026-09-04",
+      "summary": "Intersection shape alone represents every finite flag relation; joint realizability may still help.",
+      "next_step": "Derive an invariant of both summary automata from one W, then test it on actual bridge outputs.",
+      "record": "research/approaches/A013.md",
+      "evidence": [],
+      "issue": null
+    },
+    {
+      "id": "A014",
+      "title": "Apply cap and period-language saturation techniques",
+      "status": "untried",
+      "outcome": "open",
+      "owner": null,
+      "updated": "2026-09-04",
+      "summary": "Related sources have been read; no new saturation reduction has been built.",
+      "next_step": "Choose one closure property, test small instances, and preserve all endpoint flags.",
+      "record": "research/approaches/A014.md",
+      "evidence": [],
+      "issue": null
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+name: Research approach
+description: Propose, claim, or discuss a precise research direction.
+title: "[Axxx] "
+labels: [research]
+body:
+  - type: input
+    id: approach
+    attributes:
+      label: Approach ID
+      description: Use an existing A ID from research/README.md, or write NEW.
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Exact question and scope
+      description: State the claim, quantifiers, and type or word semantics.
+    validations:
+      required: true
+  - type: textarea
+    id: history
+    attributes:
+      label: What has already been tried?
+      description: Link to the approach record, claims, and prior attempts. Say if this is untried.
+    validations:
+      required: true
+  - type: textarea
+    id: next
+    attributes:
+      label: Proposed next step and success criteria
+    validations:
+      required: true
+  - type: input
+    id: owner
+    attributes:
+      label: Proposed owner
+      description: Leave blank if unassigned. Confirm with the person before assigning them.
