@@ -1,0 +1,58 @@
+{
+  "status": "PASS",
+  "fixture": {
+    "no_fixture": {
+      "source": 0,
+      "bound": 25,
+      "live_states": 4,
+      "targets": [
+        1,
+        2
+      ],
+      "enumeration_nodes": 602,
+      "status": "IMPOSSIBLE",
+      "reason": "generalized 6n+1 source-border certificate"
+    },
+    "positive_guard": {
+      "status": "NOT_APPLICABLE",
+      "source": 0,
+      "reason": "flagged target set is not forward closed",
+      "witness_edge": [
+        1,
+        2
+      ],
+      "live_states": 4,
+      "targets": [
+        1
+      ]
+    }
+  },
+  "four_state_unknowns": {
+    "unknown": 288,
+    "oracle_yes": 272,
+    "oracle_no": 16,
+    "start_impossible": 16,
+    "start_impossible_oracle_no": 16,
+    "false_impossible": 0
+  },
+  "hybrid_four_state": {
+    "overlap_unknown": 288,
+    "YES": 0,
+    "NO": 16,
+    "UNKNOWN": 272,
+    "false": 0
+  },
+  "random": {
+    "instances": 700,
+    "certificates": 700,
+    "impossible": 405,
+    "possible": 288,
+    "not_applicable": 7,
+    "unknown": 0,
+    "brute_words": 315840,
+    "false_impossible": 0,
+    "pruned_starts": 427
+  },
+  "theorem": "Forward-closed source-border 6n+1 adaptation; written proof, not Lean checked",
+  "scope": "Sound impossibility/pruning certificate; exact for source-only instances when applicable"
+}
