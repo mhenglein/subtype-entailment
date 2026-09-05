@@ -6,7 +6,34 @@ This is the compressed scientific memory of Problem 1.7. Exact statements,
 proof status, experiments, and failed attempts belong in the linked records.
 The unrestricted problem is not settled by this repository's current work.
 
-## Latest result: the sharp terminal normalization route is refuted
+## Latest continuation: whole-word synchronization
+
+**Proposed C048-C050 (written proofs + reproduction; independent review
+requested, not Lean-checked):** flags can force entire data words to agree,
+not just unary lengths. The binary construction has exactly `(E(u)00)^r` as
+witnesses for words u in the intersection of r supplied DFA languages. Its
+state count is 3*sum(n_i)+2r+1. Product reachability decides this genuinely
+nonflat subclass exactly, with a decomposition-dependent witness bound
+2r*product(n_i). Caps remain UNKNOWN.
+
+The explicit reduction from DFA intersection supplies PSPACE-hardness for
+terminal BorderAvoid and, through C030, the exact normalized bottom/product
+non-entailment and entailment problems, even on satisfiable systems. This is
+not a PSPACE upper bound or an unrestricted decidability result.
+
+An explicit polynomial-size counting family has just one witness containing
+2^d distinct length-2d factors. Any fixed-word power skeleton containing it
+has unexpanded body size at least 2^d/(2d), regardless of its exponent values.
+Ordinary binary straight-line grammars are also superpolynomial. Thus neither
+polynomial skeleton bodies nor polynomial ordinary straight-line descriptions
+can be assumed in the remaining normalization problem. An effective cover
+with larger members, or a richer symbolic representation, is not ruled out.
+
+[Proposed claim and experiment records](research/WORD_SYNC.md),
+[full proofs](notes/2026-09-05-word-synchronization.md),
+[E032 result](results/word-synchronization.json).
+
+## The sharp terminal normalization route is refuted
 
 **C046 (written proof + reproducible counterexample; independent review
 requested, not Lean-checked):** an eight-state terminal automaton has exact
@@ -79,28 +106,31 @@ Enumerating only flat edge subautomata loses genuine terminal witnesses.
 Source-local viability plus a cyclic residual is not sufficient for YES.
 Terminal separating languages can be nonregular (C032).
 
-Now also ruled out: the terminal k-2 budget bound, strict descent above that
-bound, every polynomial terminal-budget bound, and a universal constant
-number of coordinated loop deletions. Their precise scopes matter: local
-shortening rules and effective arithmetic descriptions remain useful.
+Also ruled out by the stated written constructions: the terminal k-2 budget
+bound, strict descent above that bound, every polynomial terminal-budget bound,
+a universal constant number of coordinated loop deletions, and polynomial-size
+fixed-word-skeleton or ordinary straight-line descriptions of witnesses.
+Their precise scopes matter: local shortening rules, finite products, and
+more expressive symbolic descriptions remain useful.
 
 ## Current frontier
 
 Find a complete effective representation of witnesses in general nonflat
-terminal graphs, while retaining arithmetic synchronization constraints.
-A finite existence-preserving skeleton cover remains a candidate, but its
-base cases must permit very large exponents and shortest witnesses. It must
-not assume Q002, Q003, or a polynomial budget.
+terminal graphs, allowing both arithmetic synchronization and equality of
+whole regular-constrained words. C048 supplies a useful product-based
+component but not a decomposition theorem for arbitrary instances.
 
 The strongest next discriminating question is whether productive cycles in
-the unflagged synchronized-pair graph can be reduced to finitely many coupled
-arithmetic constraints, with a proved completeness argument. Fixed-skeleton
-checkability alone does not supply that reduction. Complete NO certificates
-or another computable global bound remain alternatives.
+the unflagged synchronized-pair graph can be represented by finitely many
+shared word variables with regular constraints, with a proved completeness
+argument. The number of comparisons and the universal internal suffix tests
+must both be handled. A finite skeleton cover remains a candidate only with
+possibly superpolynomial body size. Complete NO certificates or another
+computable global bound remain alternatives.
 
-A008/A009 track minimal witnesses and lower bounds; A016/A017 cover arithmetic
-and effective skeletons; A012 covers complete NO certificates; A018 keeps the
-formal decision obligations explicit. The generated
-[approach tracker](research/README.md) remains the authoritative execution
-registry. Preserve failures, quantified assumptions, and review status when
-updating it.
+A008/A009 track minimal witnesses and lower bounds; A011 tracks signature-
+preserving reductions; A016/A017 cover arithmetic and effective skeletons;
+A012 covers complete NO certificates; A018 keeps formal decision obligations
+explicit. The generated [approach tracker](research/README.md) remains the
+authoritative execution registry. Preserve failures, quantified assumptions,
+and review status when updating it.

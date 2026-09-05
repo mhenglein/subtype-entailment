@@ -307,8 +307,8 @@
       "outcome": "inconclusive",
       "owner": null,
       "updated": "2026-09-05",
-      "summary": "Q002/Q003 strict low-budget descent is refuted; r blocks can require r coordinated deletions. Written C046/C047 proofs await independent review.",
-      "next_step": "Replace unconditional descent with arithmetic base cases; seek a complete effective skeleton cover for nonflat terminal graphs.",
+      "summary": "Whole-word synchronization gives a product-decided nonflat class, signature-specific PSPACE hardness, and superpolynomial fixed-skeleton size; written proofs await review.",
+      "next_step": "Seek a complete shared-word/regular-constraint abstraction; do not assume polynomial-size fixed-word skeletons or ordinary straight-line grammars.",
       "record": "research/approaches/A017.md",
       "evidence": [
         "notes/2026-09-04-minimal-witness-structure.md",
@@ -320,7 +320,13 @@
         "notes/2026-09-05-modular-synchronization.md",
         "experiments/modular_sync_family.py",
         "experiments/check_modular_sync.py",
-        "results/modular-synchronization.json"
+        "results/modular-synchronization.json",
+        "research/WORD_SYNC.md",
+        "notes/2026-09-05-word-synchronization.md",
+        "experiments/word_sync.py",
+        "experiments/counter_intersection.py",
+        "experiments/check_word_sync.py",
+        "results/word-synchronization.json"
       ],
       "issue": null
     },
