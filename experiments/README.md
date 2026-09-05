@@ -15,6 +15,11 @@ and prints the same JSON. The implementation uses only the Python standard
 library. See [border_lab.py](border_lab.py) for the executable predicates and
 the finite reverse-reading automaton.
 
+Later experiment records also live in [CONTINUATION.md](../research/CONTINUATION.md),
+[TERMINAL.md](../research/TERMINAL.md), [NONFLAT.md](../research/NONFLAT.md),
+[ANDERSON.md](../research/ANDERSON.md), and their dated notes. Their IDs are
+preserved. The new [E029](#e029) entry below records terminal copy synchronization.
+
 ## Result rules
 
 - `YES` includes a returned witness.
@@ -492,7 +497,63 @@ both direct witness predicates.
 This refutes the universal extension of `B<=max(0,|K|-2)`. It establishes no
 asymptotic lower bound, subtype realization, or general impossibility result.
 
-## Not yet reproducible or not yet run
+<a id="e029"></a>
+
+### E029 — Terminal LCM and regular-copy synchronization
+
+**Command.**
+
+```sh
+python3 experiments/check_terminal_copy.py
+```
+
+**Code.** [Construction and exact product solver](terminal_copy.py),
+[independent checker](check_terminal_copy.py).
+
+**Input and limits.** Base commit `2c6b4aac57634bf2b802c1bf4fae323862fd21e1`;
+seed `2026090546`. The small binary example is the (2,3) LCM family. Every
+Strong Sandwich search has a 200,000-state cap; none of the certificate
+searches hits it. The 100 LCM families use pairs of periods 1..6 and triples
+of periods 1..4, testing candidate exponents up to 12. The 126 copy inputs
+comprise six fixtures and 120 seeded tuples of two/three DFAs with 1..4 states.
+All data blocks through length three (two DFAs) or two (three DFAs) are tested;
+24 tuples also receive every arbitrary binary word through length eight.
+
+**Result.** [terminal-copy.json](../results/terminal-copy.json) records PASS:
+
+- `small`: eight states, five flags, exact budget seven, unique shortest word
+  `11111101111110`; 28 lower-budget splits exhausted, another 28 for maximal
+  preserving flags, and all 32,767 binary words through length 14 checked.
+  None of the seven shorter accepted words has a dominated profile. The
+  largest graph across the original searches through budget seven has 29 states.
+- `family`: 16,466 candidate words and 268 positive word-budget checks across
+  100 parameter families. Seven named families exhaust all 254 lower-budget
+  splits. `larger_formula_only_examples` evaluates the written formula; it
+  does not report those larger instances as exhaustively searched.
+- `copy`: 35,548 block candidates and 12,264 arbitrary binary words compared
+  with the exact copy formula and both witness predicates. All 126 product
+  answers agree with an independent backward fixed point on the full Cartesian
+  graph: 33 YES and 93 NO. Three cap and ten invalid-input regressions pass.
+- 65 exact canonical subtype-path checks use the unchanged regular-model
+  checker: 30 for the 17-variable example and 35 for encoded copy instances.
+  Source blob hashes are recorded for the existing dependencies and new module.
+
+The original `run_experiments.py` was also rerun unchanged: 10,160 word checks,
+121,920 automaton comparisons, zero failures, and output blob
+`aa6d1680b5442493744c667024d2df77a1bd8e78`. No Lean build or full repository
+suite is claimed by E029.
+
+**Claims informed.** [C046](../research/claims.md#c046),
+[C047](../research/claims.md#c047), [C048](../research/claims.md#c048),
+[C049](../research/claims.md#c049). The all-parameter lower bounds and reduction
+are written proofs pending independent review, not consequences of finite
+sampling. No general decision procedure or upper complexity bound is claimed.
+
+## Historical status notes from the E001-E015 snapshot
+
+The text below is retained as the original snapshot. Later continuation records
+and E029 supersede the statements about stronger families and additional
+realization work; the original memo's scripts remain unavailable.
 
 These items have no executed experiment ID. Do not assign them `REPRO` status
 until a committed command and compact output exist.
