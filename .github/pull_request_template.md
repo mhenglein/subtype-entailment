@@ -1,17 +1,45 @@
-## What changed
+## Research question
+
+What exact question did this work investigate?
 
 Approach ID(s):
-Claim / experiment ID(s):
-Related discussion:
+Claim / experiment / conjecture ID(s):
+Related issue(s):
 
-## Result and limits
+## Result
 
-State what was tried and learned. Distinguish proof, counterexample, bounded evidence, and UNKNOWN.
+Classify the outcome explicitly:
 
-## Verification
+- [ ] Proof / formal result
+- [ ] Counterexample / refutation
+- [ ] Bounded computational evidence
+- [ ] Implementation / tooling
+- [ ] Inconclusive / UNKNOWN
+- [ ] Research-state / organizational change
 
-- [ ] Dated attempt and central metadata updated where relevant.
-- [ ] Claims and evidence links updated where relevant.
+State what was learned in a few sentences.
+
+## Evidence
+
+Link the proof, Lean declaration, experiment, result file, counterexample, or independent checker. For computational work, state coverage and resource limits.
+
+## Limits
+
+What does this **not** establish? Which assumptions remain? If a search stopped at a bound or timeout, say `UNKNOWN` rather than `NO`.
+
+## Implications
+
+What existing claim/conjecture changes, and what is now the highest-value next question?
+
+## Integration checklist
+
+- [ ] Relevant dated A-record attempt updated.
+- [ ] `research/approaches.json` updated and tracker regenerated if status/owner/next step changed.
+- [ ] `research/claims.md` updated if a claim changed.
+- [ ] Q record updated/created if an important conjecture changed.
+- [ ] `STATE.md` updated if the scientific frontier materially changed.
+- [ ] Failed/inconclusive paths preserved rather than overwritten.
 - [ ] `python3 scripts/research_index.py --check`
-- [ ] `python3 experiments/run_experiments.py` if code or recorded results changed.
-- [ ] A reviewer checked any new mathematical claim independently, or it is marked awaiting review.
+- [ ] Relevant experiment commands rerun if code/results changed.
+- [ ] Lean checks run for Lean changes.
+- [ ] Important new theorem, completeness claim, witness, or counterexample independently reviewed, or explicitly marked awaiting review.
