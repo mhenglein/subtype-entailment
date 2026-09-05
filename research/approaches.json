@@ -127,8 +127,8 @@
       "outcome": "supported",
       "owner": null,
       "updated": "2026-09-05",
-      "summary": "Complete four-state terminal census: witness length at most four and budget at most two; general three-state proof remains separate.",
-      "next_step": "Formalize the terminal normalization and finite graph certificates; test terminal bounds beyond four states.",
+      "summary": "An eight-state terminal instance with exact B=7 refutes Q002 and Q003; the earlier four-state census remains valid.",
+      "next_step": "Seek a computable non-polynomial threshold or symbolic normalization; use the C046 synchronization family as a regression.",
       "record": "research/approaches/A008.md",
       "evidence": [
         "notes/2026-09-04-shortest-witnesses.md",
@@ -140,7 +140,11 @@
         "results/continuation-import.json",
         "notes/2026-09-05-four-state-terminal.md",
         "experiments/check_four_state_terminal.py",
-        "results/four-state-terminal.json"
+        "results/four-state-terminal.json",
+        "notes/2026-09-05-terminal-copy-synchronization.md",
+        "experiments/terminal_copy.py",
+        "experiments/check_terminal_copy.py",
+        "results/terminal-copy.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/2"
     },
@@ -150,9 +154,9 @@
       "status": "tried",
       "outcome": "supported",
       "owner": null,
-      "updated": "2026-09-04",
-      "summary": "A one-flag k-state family has exact B=2k-4 and shortest length 3k-3; five states refute B<=|K|.",
-      "next_step": "Any universal abstract bound must allow 2k-4. Separate abstract growth from actual summary outputs, which satisfy absorption.",
+      "updated": "2026-09-05",
+      "summary": "The flat terminal LCM family has exact B=(r-1)(lcm(p_i)+1) and super-polynomial state-count growth, with subtype realizations.",
+      "next_step": "Test candidate upper bounds on LCM and regular-copy synchronization; distinguish large exponents from many skeleton blocks.",
       "record": "research/approaches/A009.md",
       "evidence": [
         "notes/2026-09-04-budget-search.md",
@@ -165,7 +169,11 @@
         "results/boundary-slices.json",
         "notes/2026-09-04-budget-growth-family.md",
         "experiments/check_budget_growth_family.py",
-        "results/continuation-import.json"
+        "results/continuation-import.json",
+        "notes/2026-09-05-terminal-copy-synchronization.md",
+        "experiments/terminal_copy.py",
+        "experiments/check_terminal_copy.py",
+        "results/terminal-copy.json"
       ],
       "issue": null
     },
@@ -199,13 +207,17 @@
       "outcome": "supported",
       "owner": null,
       "updated": "2026-09-05",
-      "summary": "Every k-state terminal-final binary abstract instance has an exact word-preserving subtype realization on 2k+1 variables.",
-      "next_step": "Use the terminal converse for genuine lower bounds or a terminal decision theorem; the nonterminal arbitrary-annotation converse is still open.",
+      "summary": "Terminal realization plus regular-copy synchronization gives a written top-free PSPACE-hardness reduction, pending independent review.",
+      "next_step": "Audit C047-C049 and the C030 composition; no upper bound or unrestricted decision is claimed.",
       "record": "research/approaches/A011.md",
       "evidence": [
         "notes/2026-09-05-terminal-realization.md",
         "experiments/terminal_realization.py",
-        "results/terminal-realization.json"
+        "results/terminal-realization.json",
+        "notes/2026-09-05-terminal-copy-synchronization.md",
+        "experiments/terminal_copy.py",
+        "experiments/check_terminal_copy.py",
+        "results/terminal-copy.json"
       ],
       "issue": null
     },
@@ -303,8 +315,8 @@
       "outcome": "inconclusive",
       "owner": null,
       "updated": "2026-09-05",
-      "summary": "A six-state terminal example refutes flat-edge coverage; a last-flag synchronized-pair certificate decides some nonflat instances exactly.",
-      "next_step": "Control productive cycles of unflagged synchronized pairs; do not replace richer skeletons by flat edge restrictions.",
+      "summary": "Sharp profile descent Q002/Q003 is refuted; synchronized-copy subclasses are exactly solvable, while general finite symbolic coverage remains open.",
+      "next_step": "Bound symbolic skeletons or synchronized-block contexts while preserving every join; polynomial budget thresholds are impossible.",
       "record": "research/approaches/A017.md",
       "evidence": [
         "notes/2026-09-04-minimal-witness-structure.md",
@@ -312,7 +324,11 @@
         "notes/2026-09-05-nonflat-overlap.md",
         "experiments/terminal_overlap.py",
         "results/nonflat-overlap.json",
-        "research/NONFLAT.md"
+        "research/NONFLAT.md",
+        "notes/2026-09-05-terminal-copy-synchronization.md",
+        "experiments/terminal_copy.py",
+        "experiments/check_terminal_copy.py",
+        "results/terminal-copy.json"
       ],
       "issue": null
     },
