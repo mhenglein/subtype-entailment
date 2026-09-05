@@ -302,13 +302,17 @@
       "status": "tried",
       "outcome": "inconclusive",
       "owner": null,
-      "updated": "2026-09-04",
-      "summary": "An exact border-lifting condition makes loop deletion sound; a three-state example refutes deletion from state repetition alone.",
-      "next_step": "Find a finite join-context summary that guarantees border lifting and bounds essential blocks.",
+      "updated": "2026-09-05",
+      "summary": "A six-state terminal example refutes flat-edge coverage; a last-flag synchronized-pair certificate decides some nonflat instances exactly.",
+      "next_step": "Control productive cycles of unflagged synchronized pairs; do not replace richer skeletons by flat edge restrictions.",
       "record": "research/approaches/A017.md",
       "evidence": [
         "notes/2026-09-04-minimal-witness-structure.md",
-        "experiments/check_minimal_structure.py"
+        "experiments/check_minimal_structure.py",
+        "notes/2026-09-05-nonflat-overlap.md",
+        "experiments/terminal_overlap.py",
+        "results/nonflat-overlap.json",
+        "research/NONFLAT.md"
       ],
       "issue": null
     },

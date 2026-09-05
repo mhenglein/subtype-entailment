@@ -1,0 +1,487 @@
+{
+  "status": "PASS",
+  "fixture": {
+    "counts": {
+      "words": 8191,
+      "canonical_models": 521,
+      "all_edge_subgraphs": 128,
+      "flat_subgraphs": 127,
+      "flat_nonempty_candidate_subgraphs": 7,
+      "exact_flat_NO": 127,
+      "lower_budget_exhaustions": 3
+    },
+    "instance": {
+      "delta": [
+        [
+          1,
+          -1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          4,
+          -1
+        ],
+        [
+          -1,
+          5
+        ],
+        [
+          -1,
+          -1
+        ]
+      ],
+      "final": [
+        5
+      ],
+      "flags": [
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "bad": [],
+      "start": 0,
+      "alphabet": "01"
+    },
+    "realization_variables": 13,
+    "exact_language": "0 (0^{r} 1, r>=2)^+ 101",
+    "shortest_word": "0001101",
+    "shortest_length": 7,
+    "exact_budget": 2,
+    "certificate": {
+      "final": 5,
+      "kind": "last-flag detection bound",
+      "live_states": 6,
+      "pair_vertices": 6,
+      "pair_edges": 4,
+      "start_pairs": [
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "status": "BOUNDED",
+      "bound": 2,
+      "longest_pair_path": [
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          3,
+          5
+        ]
+      ]
+    },
+    "negative_variant": {
+      "delta": [
+        [
+          1,
+          -1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          4,
+          -1
+        ],
+        [
+          -1,
+          5
+        ],
+        [
+          -1,
+          -1
+        ]
+      ],
+      "final": [
+        5
+      ],
+      "flags": [
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "bad": [],
+      "start": 0,
+      "alphabet": "01"
+    },
+    "flagged_cycle_fixture": {
+      "delta": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          -1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          -1,
+          -1
+        ]
+      ],
+      "final": [
+        3
+      ],
+      "flags": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "bad": [],
+      "start": 0,
+      "alphabet": "01"
+    },
+    "flagged_cycle_certificate": {
+      "final": 3,
+      "kind": "last-flag detection bound",
+      "live_states": 4,
+      "pair_vertices": 2,
+      "pair_edges": 1,
+      "start_pairs": [
+        [
+          0,
+          2
+        ]
+      ],
+      "status": "BOUNDED",
+      "bound": 1,
+      "longest_pair_path": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ]
+    }
+  },
+  "four_state_census": {
+    "instances": 65536,
+    "YES": 45158,
+    "NO": 20090,
+    "UNKNOWN": 288,
+    "cyclic_slices": 288,
+    "maximum_overlap_bound": 2,
+    "classified_nonflat": 2136,
+    "classified_nonflat_YES": 1856,
+    "classified_nonflat_NO": 280
+  },
+  "random": {
+    "counts": {
+      "instances": 600,
+      "YES": 232,
+      "NO": 365,
+      "UNKNOWN": 3,
+      "predicate_comparisons": 62220,
+      "checked_nonmerging_agreements": 566,
+      "certificate_slices": 244,
+      "cyclic_slices": 3,
+      "maximum_overlap_bound": 4
+    },
+    "seed": 2026090537,
+    "nonflat_examples": [
+      {
+        "instance": {
+          "delta": [
+            [
+              -1,
+              0
+            ],
+            [
+              2,
+              -1
+            ],
+            [
+              4,
+              3
+            ],
+            [
+              -1,
+              -1
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "final": [
+            3
+          ],
+          "flags": [
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              3,
+              0
+            ],
+            [
+              4,
+              0
+            ]
+          ],
+          "bad": [],
+          "start": 2,
+          "alphabet": "01"
+        },
+        "certificate": {
+          "final": 3,
+          "kind": "last-flag detection bound",
+          "live_states": 3,
+          "pair_vertices": 3,
+          "pair_edges": 2,
+          "start_pairs": [
+            [
+              2,
+              4
+            ]
+          ],
+          "status": "BOUNDED",
+          "bound": 2,
+          "longest_pair_path": [
+            [
+              2,
+              4
+            ],
+            [
+              4,
+              2
+            ],
+            [
+              2,
+              3
+            ]
+          ]
+        },
+        "decision": "YES"
+      },
+      {
+        "instance": {
+          "delta": [
+            [
+              3,
+              2
+            ],
+            [
+              0,
+              4
+            ],
+            [
+              -1,
+              -1
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              0,
+              3
+            ]
+          ],
+          "final": [
+            2
+          ],
+          "flags": [
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              4,
+              3
+            ]
+          ],
+          "bad": [],
+          "start": 0,
+          "alphabet": "01"
+        },
+        "certificate": {
+          "final": 2,
+          "kind": "last-flag detection bound",
+          "live_states": 5,
+          "pair_vertices": 10,
+          "pair_edges": 9,
+          "start_pairs": [
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              4,
+              3
+            ]
+          ],
+          "status": "BOUNDED",
+          "bound": 4,
+          "longest_pair_path": [
+            [
+              0,
+              3
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              4,
+              2
+            ]
+          ]
+        },
+        "decision": "YES"
+      },
+      {
+        "instance": {
+          "delta": [
+            [
+              2,
+              5
+            ],
+            [
+              -1,
+              -1
+            ],
+            [
+              4,
+              1
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              4,
+              0
+            ]
+          ],
+          "final": [
+            1
+          ],
+          "flags": [
+            [
+              2,
+              0
+            ],
+            [
+              3,
+              2
+            ]
+          ],
+          "bad": [],
+          "start": 2,
+          "alphabet": "01"
+        },
+        "certificate": {
+          "final": 1,
+          "kind": "last-flag detection bound",
+          "live_states": 5,
+          "pair_vertices": 3,
+          "pair_edges": 2,
+          "start_pairs": [
+            [
+              2,
+              0
+            ]
+          ],
+          "status": "BOUNDED",
+          "bound": 2,
+          "longest_pair_path": [
+            [
+              2,
+              0
+            ],
+            [
+              4,
+              2
+            ],
+            [
+              5,
+              1
+            ]
+          ]
+        },
+        "decision": "YES"
+      }
+    ]
+  },
+  "scope": "Exact under a written acyclic last-flag synchronized-pair certificate; cyclic cases remain UNKNOWN",
+  "proof_status": "Written proofs plus reproducible checks, not Lean-checked",
+  "no_general_bound_claim": true
+}
