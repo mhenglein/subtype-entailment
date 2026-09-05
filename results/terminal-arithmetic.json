@@ -1,0 +1,119 @@
+{
+  "status": "PASS",
+  "seed": 2026090533,
+  "fixed_exponent_formula_cases": 164,
+  "formula_verdicts": {
+    "sat": 40,
+    "unsat": 124,
+    "unknown": 0
+  },
+  "flat_schemas_checked": 4,
+  "flat_language_membership_comparisons": 8188,
+  "unbounded_solver_fixtures": [
+    {
+      "status": "YES",
+      "word": "00000100000001",
+      "exponents": [
+        5,
+        6
+      ],
+      "backend": "Z3 version 4.13.3.0",
+      "schemas_in_cover": 1,
+      "schema": [
+        [
+          "0",
+          true
+        ],
+        [
+          "10",
+          false
+        ],
+        [
+          "0",
+          true
+        ],
+        [
+          "1",
+          false
+        ]
+      ]
+    },
+    {
+      "status": "YES",
+      "word": "110001",
+      "exponents": [
+        3
+      ],
+      "backend": "Z3 version 4.13.3.0",
+      "schemas_in_cover": 1,
+      "schema": [
+        [
+          "11",
+          false
+        ],
+        [
+          "0",
+          true
+        ],
+        [
+          "1",
+          false
+        ]
+      ]
+    },
+    {
+      "status": "NO",
+      "reason": "Every schema in complete flat cover is empty",
+      "schemas_in_cover": 1,
+      "results": [
+        {
+          "status": "NO_IN_SKELETON",
+          "backend": "Z3 version 4.13.3.0",
+          "negative_confirmation": "qe2"
+        }
+      ]
+    },
+    {
+      "status": "YES",
+      "word": "0001",
+      "exponents": [
+        1
+      ],
+      "backend": "Z3 version 4.13.3.0",
+      "schemas_in_cover": 1,
+      "schema": [
+        [
+          "00",
+          true
+        ],
+        [
+          "01",
+          false
+        ]
+      ]
+    }
+  ],
+  "large_unbounded_query": {
+    "status": "YES",
+    "word": "00000000000000000000000001000000000000000000000000001",
+    "exponents": [
+      25,
+      25
+    ],
+    "backend": "Z3 version 4.13.3.0"
+  },
+  "nonflat_guard": {
+    "status": "UNKNOWN",
+    "reason": "Nonflat productive SCC",
+    "component": [
+      1,
+      2
+    ],
+    "branching_states": [
+      1
+    ]
+  },
+  "backend": "Z3 4.13.3.0 shared library (optional)",
+  "proof_status": "Written Presburger translation and flat-cover proof; no Lean or solver proof certificate",
+  "limitations": "Bounded regressions are not the proof. Timeouts remain UNKNOWN; negatives require two backend entry points."
+}

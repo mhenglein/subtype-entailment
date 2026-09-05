@@ -126,9 +126,9 @@
       "status": "tried",
       "outcome": "supported",
       "owner": null,
-      "updated": "2026-09-04",
-      "summary": "Written proof decides at most three states: shortest length at most six and budget at most two, both sharp; the global bound remains open.",
-      "next_step": "Formalize the three-state classification and study the actual terminal-path loop obstruction in A013.",
+      "updated": "2026-09-05",
+      "summary": "Complete four-state terminal census: witness length at most four and budget at most two; general three-state proof remains separate.",
+      "next_step": "Formalize the terminal normalization and finite graph certificates; test terminal bounds beyond four states.",
       "record": "research/approaches/A008.md",
       "evidence": [
         "notes/2026-09-04-shortest-witnesses.md",
@@ -137,7 +137,10 @@
         "lean/Subtail/TwoState.lean",
         "notes/2026-09-04-three-state.md",
         "experiments/three_state_decision.py",
-        "results/continuation-import.json"
+        "results/continuation-import.json",
+        "notes/2026-09-05-four-state-terminal.md",
+        "experiments/check_four_state_terminal.py",
+        "results/four-state-terminal.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/2"
     },
@@ -192,14 +195,18 @@
     {
       "id": "A011",
       "title": "Complete the converse with regular annotations",
-      "status": "untried",
-      "outcome": "open",
+      "status": "tried",
+      "outcome": "supported",
       "owner": null,
-      "updated": "2026-09-04",
-      "summary": "The memo leaves realization of arbitrary regular annotations unfinished.",
-      "next_step": "State the desired converse precisely and construct a reduction preserving the regular restriction.",
+      "updated": "2026-09-05",
+      "summary": "Every k-state terminal-final binary abstract instance has an exact word-preserving subtype realization on 2k+1 variables.",
+      "next_step": "Use the terminal converse for genuine lower bounds or a terminal decision theorem; the nonterminal arbitrary-annotation converse is still open.",
       "record": "research/approaches/A011.md",
-      "evidence": [],
+      "evidence": [
+        "notes/2026-09-05-terminal-realization.md",
+        "experiments/terminal_realization.py",
+        "results/terminal-realization.json"
+      ],
       "issue": null
     },
     {
@@ -221,9 +228,9 @@
       "status": "tried",
       "outcome": "supported",
       "owner": null,
-      "updated": "2026-09-04",
-      "summary": "Proved summary absorption and B-prefix denial safety; decided infinitely extendable witnesses. An actual terminal example requires a pre-final loop.",
-      "next_step": "Decide terminal safe witnesses with unbounded pre-final histories; preserve the shared B/A/D structure and formalize the periodic-suffix monitor.",
+      "updated": "2026-09-05",
+      "summary": "The terminal branch realizes arbitrary abstract flags; a nine-variable system has a nonregular terminal separating language. Flat terminal graphs are decidable arithmetically.",
+      "next_step": "Target nonflat productive terminal components; shared B/A/D structure alone cannot exclude terminal abstract instances.",
       "record": "research/approaches/A013.md",
       "evidence": [
         "notes/2026-09-04-summary-absorption.md",
@@ -233,7 +240,10 @@
         "experiments/safe_extensions.py",
         "experiments/infinite_extensions.py",
         "results/unrestricted-continuation.json",
-        "results/infinite-extensions.json"
+        "results/infinite-extensions.json",
+        "research/TERMINAL.md",
+        "notes/2026-09-05-terminal-realization.md",
+        "results/terminal-nonregular.json"
       ],
       "issue": null
     },
@@ -271,14 +281,19 @@
     {
       "id": "A016",
       "title": "Implement and audit fixed-skeleton checkability",
-      "status": "untried",
-      "outcome": "open",
+      "status": "tried",
+      "outcome": "supported",
       "owner": null,
-      "updated": "2026-09-04",
-      "summary": "Proposition 7.5 claims fixed-skeleton checkability; its arithmetic translation has not been implemented here.",
-      "next_step": "Audit and implement the one-block exponent test, then check two interacting blocks.",
+      "updated": "2026-09-05",
+      "summary": "Implemented exact Presburger skeleton formulas and a finite complete cover for flat terminal graphs; unbounded loop counts are retained.",
+      "next_step": "Audit and formalize the arithmetic translation; extend bounded-skeleton coverage to nonflat terminal components without treating timeouts as NO.",
       "record": "research/approaches/A016.md",
-      "evidence": [],
+      "evidence": [
+        "notes/2026-09-05-terminal-arithmetic.md",
+        "experiments/skeleton_presburger.py",
+        "experiments/flat_terminal.py",
+        "results/terminal-arithmetic.json"
+      ],
       "issue": null
     },
     {

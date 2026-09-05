@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "seed": 2026090531,
+  "counts": {
+    "instances": 166,
+    "words": 10458,
+    "canonical_models": 2985,
+    "budget_predicates": 83664,
+    "summary_identities": 2416,
+    "terminal_restriction_words": 1023
+  },
+  "maximum_reduced_summary_states": 8,
+  "proof_status": "Written all-input proof, not Lean-checked",
+  "scope": "Binary terminal-final abstract automata; arbitrary flags, Bad, and start",
+  "realization_variables": "2*k+1",
+  "actual_obstruction": {
+    "original_summary_states": 7,
+    "realized_variables": 15,
+    "shortest_witness": "1101",
+    "language": "11 0^n 1, n>=1"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "status": "PASS",
+  "variables": 9,
+  "constraints": [
+    [
+      "denial",
+      8
+    ],
+    [
+      "upper",
+      0,
+      0,
+      1
+    ],
+    [
+      "lower",
+      4,
+      5,
+      4
+    ],
+    [
+      "upper",
+      1,
+      2,
+      8
+    ],
+    [
+      "lower",
+      6,
+      8,
+      5
+    ],
+    [
+      "upper",
+      2,
+      2,
+      3
+    ],
+    [
+      "lower",
+      6,
+      7,
+      6
+    ],
+    [
+      "upper",
+      3,
+      8,
+      8
+    ],
+    [
+      "leq",
+      0,
+      5
+    ]
+  ],
+  "alpha": 0,
+  "beta": 4,
+  "words_through_length_10": 2047,
+  "exact_canonical_model_checks": 266,
+  "exponent_pairs": 441,
+  "distinguishability_pairs": 465,
+  "language": "0^m 1 0^(n+1) 1, m,n>=0, n>=m",
+  "proof_status": "Written proof of all-length characterization and nonregularity; not Lean-checked"
+}

@@ -1,0 +1,50 @@
+{
+  "status": "PASS",
+  "transition_start": 0,
+  "transition_stop": 4096,
+  "counts": {
+    "instances": 65536,
+    "YES": 45430,
+    "NO": 20106,
+    "UNKNOWN": 0,
+    "searches": 135530,
+    "graph_cap_exits": 0,
+    "maximum_search_states": 29
+  },
+  "first_successful_budget_counts": {
+    "0": 42016,
+    "1": 3398,
+    "2": 16
+  },
+  "max_constructed_length": 4,
+  "longest_returned": {
+    "delta": [
+      [
+        -1,
+        1
+      ],
+      [
+        -1,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        -1,
+        -1
+      ]
+    ],
+    "flags": [],
+    "word": "1101",
+    "budget": 1
+  },
+  "residual": [],
+  "scope": "Exhaustive finite normalized census; audited Python graph certificates, not Lean proof",
+  "negative_budget": [
+    2,
+    2
+  ],
+  "state_cap_per_search": 20000
+}
