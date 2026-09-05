@@ -4,6 +4,20 @@ Use this directory for important open hypotheses that may coordinate multiple in
 
 Conjectures use stable IDs `Q001`, `Q002`, ... . Do not create a Q record for every passing thought; create one when the hypothesis is likely to be attacked, cited, refined, or depended on by more than one investigation.
 
+## Current records
+
+| ID | Hypothesis | Status |
+|---|---|---|
+| [Q001](Q001.md) | Computably bounded essential terminal skeletons | OPEN; large exponents do not refute a small symbolic skeleton |
+| [Q002](Q002.md) | Agreement-profile replacement with budget at most k-2 | REFUTED by C046's eight-state instance with exact budget seven |
+| [Q003](Q003.md) | Strict profile descent above budget k-2 | REFUTED by the same instance's shortest witness |
+
+[C046](../claims.md#c046) has written proofs and exact finite certificates,
+pending independent mathematical review and not Lean-checked. The earlier
+bounded evidence remains in each conjecture's historical record.
+
+## Record template
+
 Each record should contain:
 
 ```md
