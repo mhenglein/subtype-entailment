@@ -1,6 +1,7 @@
 # Claims ledger
 
 Last reviewed: 2026-09-04
+New claim records C046-C049 added: 2026-09-05; independent review pending.
 
 This ledger gives stable IDs for claims about Problem 1.7 and its BorderAvoid
 reduction. It is the shared index for notes, experiments, and future review.
@@ -8,6 +9,13 @@ reduction. It is the shared index for notes, experiments, and future review.
 **Problem status:** Problem 1.7 remains unsolved in this repository. No claim
 below establishes a general subtype decision procedure or reproduces the
 memo's original census. Results for named restricted classes are separate.
+
+Later pre-existing claim records are also indexed in [CONTINUATION.md](CONTINUATION.md),
+[TERMINAL.md](TERMINAL.md), [NONFLAT.md](NONFLAT.md), and [ANDERSON.md](ANDERSON.md).
+C041-C045 are recorded in the dated [budget geometry](../notes/2026-09-05-terminal-budget-geometry.md),
+[profile reformulation](../notes/2026-09-05-profile-and-fractional-power.md), and
+[local descent](../notes/2026-09-05-unbordered-gap-normalization.md) notes.
+C046-C049 below supersede Q002/Q003's open status, not those earlier local theorems.
 
 ## Evidence labels
 
@@ -297,8 +305,7 @@ then the narrower semantic top-free subtype problem.
 **Status.** `AUDIT + OPEN` — the equivalence proof was inspected, but the
 substantive bound and the top-free converse remain open.
 
-**Evidence.** [Review](../REVIEW.md#1-what-the-problem-actually-asks);
-[proof audit](../notes/proof-audit.md#consequence-for-the-attack);
+**Evidence.** [Proof audit](../notes/proof-audit.md#consequence-for-the-attack);
 [bounded literature check](../notes/literature-check.md#status).
 
 **Limit.** A source search is not proof that no later result exists. Do not
@@ -527,6 +534,112 @@ Python/memo machinery, not a Lean-checked emptiness proof.
 **Limit.** This does not refute `B<=|K|` or any computable bound. No subtype
 realization or asymptotic growth family is established. It does not contradict
 the regularity hypothesis in C016.
+
+## Terminal synchronization continuation — 2026-09-05
+
+The omitted C021-C045 numbers are pre-existing records in the continuation
+files and dated notes linked above. Their statements are not renumbered.
+
+<a id="c046"></a>
+
+### C046 — Flat terminal LCM synchronization refutes Q002/Q003 and polynomial budgets
+
+**Claim.** For positive periods p_1,...,p_r with r>=2, the binary flat terminal
+construction has k=1+r+sum p_i states, witness language
+`{(1^a0)^r : a>0 and lcm(p_i) divides a}`, exact budget
+`B=(r-1)(lcm(p_i)+1)`, and shortest witness length `r(lcm(p_i)+1)`.
+Periods (2,3) give an eight-state, five-flag instance with exact B=7>k-2=6
+and unique shortest witness `11111101111110`. It refutes both Q002 and Q003.
+Periods 1 through t prove `B>=2^(Omega(sqrt(k)))`, ruling out every polynomial
+state-count budget bound, even for flat terminal graphs.
+
+**Scope.** Explicit binary terminal-final instances; C030 preserves their
+separating words and budgets in satisfiable bottom/product subtype systems.
+The eight-state example has a 17-variable, 21-constraint realization.
+
+**Status.** `WRITTEN PROOF + COUNTEREXAMPLE + REPRO`, pending independent review;
+not Lean-checked. Exact lower-budget exhaustion is separate from bounded
+word comparisons and from formula-only evaluations of larger parameters.
+
+**Evidence.** [Proof](../notes/2026-09-05-terminal-copy-synchronization.md),
+[implementation](../experiments/terminal_copy.py),
+[E029](../experiments/README.md#e029),
+[certificates](../results/terminal-copy.json),
+[Q002](conjectures/Q002.md), [Q003](conjectures/Q003.md).
+
+**Limit.** No smallest-counterexample claim, no computable-bound refutation,
+and no failure of Q001 follows. Large exponents fit a small symbolic skeleton.
+C044's equivalence and C045's local hypotheses survive.
+
+<a id="c047"></a>
+
+### C047 — Terminal flags enforce equality of arbitrary regular blocks
+
+**Claim.** From r>=2 binary DFAs with total state count N, the construction
+builds a ternary terminal automaton with 1+r+2N states and polynomially many
+flags whose witnesses are exactly `(u#)^r` for words u accepted by all input
+DFAs. States remember the predecessor data letter or a fresh entry marker;
+a longest-common-suffix argument turns unequal blocks into flagged matches.
+
+**Scope.** Ordinary partial deterministic input automata, arbitrary input
+final states and empty-word acceptance. The output's sole final is terminal.
+
+**Status.** `WRITTEN PROOF + REPRO`, pending independent review; not Lean-checked.
+
+**Evidence.** [Proof](../notes/2026-09-05-terminal-copy-synchronization.md),
+`copy_instance` in [implementation](../experiments/terminal_copy.py),
+[E029](../experiments/README.md#e029).
+
+**Limit.** This characterizes a constructed subclass, not arbitrary terminal
+BorderAvoid. Product reachability decides it when the component DFAs are
+supplied; no general decomposition algorithm is proved.
+
+<a id="c048"></a>
+
+### C048 — Flag-boundary binary coding preserves witness languages
+
+**Claim.** Encoding 0,1,# as 00,01,10 and leaving intermediate states unflagged
+and nonfinal preserves and reflects witnesshood. The encoded witness language
+is exactly the image of the original language. Terminality is preserved and
+state count increases by at most a factor of three.
+
+**Scope.** Well-formed ternary 01# instances, with original flags and Bad/final
+annotations retained only at original code-boundary states.
+
+**Status.** `WRITTEN PROOF + REPRO`, pending independent review; not Lean-checked.
+
+**Evidence.** [Proof](../notes/2026-09-05-terminal-copy-synchronization.md),
+`binary_encode` in [implementation](../experiments/terminal_copy.py),
+[E029](../experiments/README.md#e029).
+
+**Limit.** Numerical word budgets are not claimed to be preserved. The proof
+uses aligned flagged endpoints, not self-synchronization at arbitrary bits.
+
+<a id="c049"></a>
+
+### C049 — A fragment-specific PSPACE-hardness reduction
+
+**Claim.** C047 and C048 polynomially reduce binary DFA intersection
+nonemptiness to binary terminal witness existence. Composing with C030 gives
+PSPACE-hardness of normalized subtype non-entailment using only bottom and
+binary product, on always-satisfiable inputs with arbitrary possibly infinite
+trees. Complement closure gives PSPACE-hardness of entailment as well.
+
+**Scope.** The exact top-free semantic signature, not merely top-free syntax
+over an ambient signature containing top. The source complexity theorem is
+Arrighi et al., FSTTCS 2021, Theorem 21; the new reduction uses the existing
+C030 and audited forward-bridge statements under their recorded statuses.
+
+**Status.** `WRITTEN PROOF + REPRO`, pending independent mathematical review;
+not Lean-checked. No literature-priority claim.
+
+**Evidence.** [Reduction and checked primary source](../notes/2026-09-05-terminal-copy-synchronization.md),
+[terminal realization](../notes/2026-09-05-terminal-realization.md),
+[E029](../experiments/README.md#e029).
+
+**Limit.** This is a lower bound, not PSPACE membership, decidability, or
+undecidability. The unrestricted nonterminal converse is not used. Finite
+checks do not establish the all-input reduction by themselves.
 
 ## Explicitly unestablished
 
