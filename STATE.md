@@ -1,87 +1,106 @@
-# Subtail — current research state
+# Subtail - current research state
 
 Updated: 2026-09-05
 
-This is the compressed scientific memory of the project. Read this after `research/problem.md` and before starting new work. It answers: **what do we currently know, what has failed, and what is the highest-value unresolved question?**
+This is the compressed scientific memory of Problem 1.7. Exact statements,
+proof status, experiments, and failed attempts belong in the linked records.
+The unrestricted problem is not settled by this repository's current work.
 
-Detailed proofs and evidence live in `research/claims.md`, approach histories, experiments, Lean, and notes. This file should summarize them without overstating them.
+## Latest result: the sharp terminal normalization route is refuted
 
-## Problem
+**C046 (written proof + reproducible counterexample; independent review
+requested, not Lean-checked):** an eight-state terminal automaton has exact
+witness language `{1^(6a) 0 1^(6a) 0 : a>=1}`, minimum budget seven, and
+unique shortest witness `11111101111110` of length 14. Hence the k-2 budget
+bound Q002 and the strict-descent conjecture Q003 are false. No shorter
+profile-dominated accepted word exists, regardless of deletion strategy.
 
-Decide Problem 1.7: subtype entailment over bottom and binary product for arbitrary, possibly infinite trees. The unrestricted problem remains open.
+More generally, r modular unary blocks with periods p_i require identical
+positive run lengths. Their minimum budget is
 
-## Established / strongest current results
+    (r-1)(lcm(p_1,...,p_r)+1),
 
-- The top-free characterization has been audited and supports canonical regular countermodels under its stated satisfiability premise.
-- Several witness-shortening rules have written proofs; core binary versions of the principal truncation/context rules are Lean-checked.
-- The direct finite-budget predicates, reversal machinery, and an exact two-state decision are Lean-checked. The general executable decision still depends on a missing global bound.
-- An actual subtype-to-summary pipeline exists and has independent checks for its implemented interfaces.
-- Abstract witness budgets can grow: a one-flag k-state family has exact budget `2k-4` and shortest length `3k-3`; therefore candidate universal bounds must accommodate at least this growth.
-- The terminal-final branch is expressive: every k-state terminal-final binary abstract instance has an exact word-preserving subtype realization on `2k+1` variables.
-- A genuine nine-variable subtype system has a nonregular terminal separating language.
-- Flat terminal graphs admit exact Presburger skeleton formulas and a finite complete cover. The normalized four-state terminal census is complete and leaves no unresolved instance in that finite census.
+on `1+sum_i(p_i+1)` states. Periods 1,...,m give budgets at least 2^(m-1) on
+(m+1)(m+2)/2 states: no polynomial state-count bound is possible, even for flat
+terminal graphs. C030 transfers this growth to normalized subtype inputs.
+This family is exactly decidable by an LCM calculation, so it is not an
+undecidability result and does not refute a general computable bound.
 
-These statements have different evidence levels. Consult `research/claims.md` before using any one of them as a theorem; not all newer written proofs are Lean-checked.
+**C047:** for periods all one, `(1110)^r` needs exactly r equal-state loop
+intervals deleted to obtain a shorter profile-dominated word. Thus no
+constant number of simultaneous deletions works independently of state count.
+This is distinct from C046's genuinely non-shortenable witness.
 
-## Strong evidence / partially established structure
+[Proofs](notes/2026-09-05-modular-synchronization.md),
+[claims](research/claims.md#c046), [E031](experiments/README.md#e031),
+[Q002](research/conjectures/Q002.md), [Q003](research/conjectures/Q003.md).
+The earlier finite samples supporting Q002/Q003 remain observations about
+their inputs; they were never all-state proofs.
 
-- Actual subtype-derived summaries exhibit absorption structure that is stronger than arbitrary abstract BorderAvoid instances in some branches.
-- Context-sensitive truncation rules substantially restrict shortest witnesses, but no known rule yields the required general computable witness bound.
-- Fixed-skeleton arithmetic is a viable exact technique once a finite skeleton cover is known. The unresolved difficulty is obtaining such a cover for general nonflat productive terminal components.
-- The terminal branch is no longer safely dismissible as an easy regular special case: arbitrary terminal flags can be realized and terminal separating languages can be nonregular.
+## Foundations and restricted decisions
 
-## Refuted ideas / dead ends worth preserving
+The exact problem is subtype entailment over bottom and one covariant binary
+product, with arbitrary, possibly infinite type trees. The audited path-set
+and pushdown characterization yields canonical regular countermodels under
+its satisfiability premise. Finite-tree entailment must not be substituted.
 
-Do not restart these without a materially new hypothesis:
+Binary truncation/context lemmas, direct budget predicates, reversal, and an
+exact two-state decision have Lean-checked statements. The general executable
+budget theorem still exposes its missing global bound as a hypothesis.
 
-- The old prefix-reachability regular-language formula is false; it disagrees on thousands of bounded words and the relevant all-length family is nonregular.
-- A universal rigid-word bound from nonmerging runs is false; even two states admit unbounded rigid words.
-- State repetition alone does not justify loop deletion; a three-state counterexample exists.
-- Bounds as small as `max(0, |K|-2)` or `|K|` are false for general abstract instances.
-- Passing bounded searches or CI does not establish nonexistence or a proof of Problem 1.7.
+The implemented subtype-to-summary bridge has independent checks, not a
+complete all-input Lean proof. Later written results include accepting-state
+absorption, simplified denial safety, and a decision for witnesses admitting
+an infinite safe continuation (C023-C029). A negative answer in that category
+is not unrestricted entailment.
 
-See the relevant A records in `research/README.md` for exact counterexamples and limitations.
+C030 realizes every k-state terminal-final binary instance on 2k+1 subtype
+variables, preserving words and budgets. Combined with the forward bridge
+and the infinite-continuation result, terminal witness existence captures the
+remaining normalized problem at the recorded proof levels (C031).
+
+Flat terminal graphs have a finite complete fixed-skeleton cover and an exact
+Presburger translation (C033). Practical solver caps remain UNKNOWN. The
+four-state terminal census is complete (C034), relying on audited finite-graph
+code, not a Lean theorem. Neither flatness nor the small-state result implies
+a linear budget bound: C046 is a flat counterexample.
+
+C035-C040 provide nonflat obstructions, terminal nonmerging and bounded
+repetition exponents, a last-flag pair-graph decision certificate, and a
+forward-closed source-border pruning criterion. Each keeps its hypotheses;
+none is a full unrestricted solver. C041-C045 give exact reformulations and
+local profile-preserving lemmas, not the now-refuted Q002/Q003 conclusions.
+
+## Failed routes not to restart unchanged
+
+The old exact regular prefix-reach language is false. Universal bounds on all
+rigid words are false. Arbitrary equal-state loop deletion is unsound.
+Enumerating only flat edge subautomata loses genuine terminal witnesses.
+Source-local viability plus a cyclic residual is not sufficient for YES.
+Terminal separating languages can be nonregular (C032).
+
+Now also ruled out: the terminal k-2 budget bound, strict descent above that
+bound, every polynomial terminal-budget bound, and a universal constant
+number of coordinated loop deletions. Their precise scopes matter: local
+shortening rules and effective arithmetic descriptions remain useful.
 
 ## Current frontier
 
-The highest-value unresolved question is:
+Find a complete effective representation of witnesses in general nonflat
+terminal graphs, while retaining arithmetic synchronization constraints.
+A finite existence-preserving skeleton cover remains a candidate, but its
+base cases must permit very large exponents and shortest witnesses. It must
+not assume Q002, Q003, or a polynomial budget.
 
-> **Can terminal witnesses in nonflat productive components be normalized into a computably bounded number of essential repeated blocks / skeletons while preserving every border obligation?**
+The strongest next discriminating question is whether productive cycles in
+the unflagged synchronized-pair graph can be reduced to finitely many coupled
+arithmetic constraints, with a proved completeness argument. Fixed-skeleton
+checkability alone does not supply that reduction. Complete NO certificates
+or another computable global bound remain alternatives.
 
-A positive answer would connect the exact fixed-skeleton Presburger machinery to a complete terminal decision procedure. The most relevant workstreams are A016 and A017, informed by the structural shortest-witness work in A008.
-
-Closely related frontier questions:
-
-1. Find a finite join-context summary strong enough to make loop deletion sound and bound essential repeated blocks.
-2. Extend the complete flat-terminal skeleton cover to nonflat productive terminal components.
-3. Formalize/audit the terminal normalization and arithmetic translation so experimental success is cleanly separated from theorem status.
-4. Continue the backwards Lean route: formalize the finite sufficient automaton and exact nonemptiness procedure while keeping the missing global bound explicit.
-5. Explore complete NO certificates or saturation only with a precise invariant; failure to find a witness remains `UNKNOWN`.
-
-## Open conjectures
-
-Important hypotheses should live in `research/conjectures/` with stable Q IDs. The registry is intentionally small: create a Q record only for hypotheses important enough that multiple researchers or agents may depend on them.
-
-## Research map
-
-- A008 — structure and bounds of minimal witnesses.
-- A009 — lower-bound families and candidate-bound destruction.
-- A010 — exact subtype-to-automata bridge.
-- A011 — converse/expressiveness, now including exact terminal realization.
-- A012 — complete nonexistence certificates; not yet tried.
-- A013 — restrictions shared by actual summary automata.
-- A014 — periodic/cap saturation; not yet tried.
-- A015 — occurrence-context truncation.
-- A016 — exact fixed-skeleton arithmetic and terminal covers.
-- A017 — bounding essential repeated blocks; currently inconclusive and central to the frontier.
-- A018 — backwards formalization from an executable Lean decision theorem.
-
-The generated tracker in `research/README.md` contains the authoritative execution status and next step for every A ID.
-
-## Integration rule
-
-A research session is not finished merely when an agent has an answer. It is finished when the reusable part of that answer is integrated into the shared state:
-
-`investigation -> evidence -> review -> claim/approach record -> STATE.md frontier update`
-
-Keep this file short enough that a new researcher can recover the project state in one sitting. Move derivations and chronological detail to the underlying records.
+A008/A009 track minimal witnesses and lower bounds; A016/A017 cover arithmetic
+and effective skeletons; A012 covers complete NO certificates; A018 keeps the
+formal decision obligations explicit. The generated
+[approach tracker](research/README.md) remains the authoritative execution
+registry. Preserve failures, quantified assumptions, and review status when
+updating it.

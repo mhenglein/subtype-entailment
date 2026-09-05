@@ -537,3 +537,65 @@ The following are deliberately not accepted claims in this ledger:
 - a computable bound on `B(I)` for SEP-derived instances;
 - decidability, undecidability, or PSPACE membership for Problem 1.7;
 - reproduction of the memo's original `analysis-2026` census.
+
+
+## Continuation records
+
+The existing continuation records retain their original proof levels:
+[C021-C029](CONTINUATION.md), [C030-C034](TERMINAL.md),
+[C035-C037](NONFLAT.md),
+[C038](../notes/2026-09-05-terminal-period-bound.md),
+[C039-C040](ANDERSON.md),
+[C041-C042](../notes/2026-09-05-terminal-budget-geometry.md),
+[C043-C044](../notes/2026-09-05-profile-and-fractional-power.md), and
+[C045](../notes/2026-09-05-unbordered-gap-normalization.md).
+Q002 and Q003, proposed during those continuations, are refuted by C046 below.
+Their earlier finite search evidence is retained as history.
+
+<a id="c046"></a>
+
+### C046 - Modular synchronization and superpolynomial terminal budgets
+
+**Claim.** For r>=2 and positive periods p_1,...,p_r, an explicit flat terminal
+instance with k=1+sum_i(p_i+1) states has precisely the witness language
+`{(1^N0)^r : N is a positive multiple of lcm(p_1,...,p_r)}`.
+Its exact minimum budget is `(r-1)(lcm(p_1,...,p_r)+1)`, and its unique shortest
+witness has length `r(lcm(p_1,...,p_r)+1)`.
+
+Periods 2,3 give eight states and exact budget seven, refuting Q002 and Q003.
+Periods 1,...,m give `k=(m+1)(m+2)/2` and `B>=2^(m-1)` for m>=3. Thus no
+polynomial terminal-state-count budget or shortest-length bound exists.
+C030 transfers the family to normalized subtype constraints with unchanged
+words and budgets, under its recorded proof status.
+
+**Status.** `WRITTEN PROOF + REPRO + COUNTEREXAMPLE`; independent review
+requested. Not Lean-checked. No literature-priority claim.
+
+**Evidence.** [All-length proof](../notes/2026-09-05-modular-synchronization.md),
+[generator](../experiments/modular_sync_family.py),
+[E031](../experiments/README.md#e031), and
+[result](../results/modular-synchronization.json).
+
+**Limit.** This family itself is decidable by an LCM calculation and lies in
+the existing flat Presburger class. It supplies no unrestricted decision or
+undecidability theorem and does not refute a general computable upper bound.
+
+<a id="c047"></a>
+
+### C047 - No constant number of coordinated loop deletions
+
+**Claim.** In C046 with r periods all equal to one, the accepted word
+`(1110)^r` has budget `4(r-1)>k-2`, where `k=2r+1`. Every strictly shorter
+profile-dominated accepted word needs at least r equal-state loop intervals
+deleted, and r suffice to obtain `(10)^r`. The two words have equal full
+agreement profiles. For r=3, seven states require three deletions.
+
+**Status.** `WRITTEN PROOF + REPRO + COUNTEREXAMPLE`; independent review
+requested. Not Lean-checked.
+
+**Evidence.** [Proof, Section 4](../notes/2026-09-05-modular-synchronization.md),
+[E031](../experiments/README.md#e031), and the result's `multi_pump` section.
+
+**Limit.** This rules out only a constant independent of k, not a computable
+state-dependent deletion bound. This specialization has a shorter dominated
+word; C046's different-period specialization is what refutes strict descent.

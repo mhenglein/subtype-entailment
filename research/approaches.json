@@ -150,9 +150,9 @@
       "status": "tried",
       "outcome": "supported",
       "owner": null,
-      "updated": "2026-09-04",
-      "summary": "A one-flag k-state family has exact B=2k-4 and shortest length 3k-3; five states refute B<=|K|.",
-      "next_step": "Any universal abstract bound must allow 2k-4. Separate abstract growth from actual summary outputs, which satisfy absorption.",
+      "updated": "2026-09-05",
+      "summary": "Written C046 modular family gives exact superpolynomial terminal budgets and refutes Q002/Q003; independent review pending.",
+      "next_step": "Audit the synchronization lower bound and its subtype transfer; general bounds must allow arithmetic growth beyond every polynomial.",
       "record": "research/approaches/A009.md",
       "evidence": [
         "notes/2026-09-04-budget-search.md",
@@ -165,7 +165,11 @@
         "results/boundary-slices.json",
         "notes/2026-09-04-budget-growth-family.md",
         "experiments/check_budget_growth_family.py",
-        "results/continuation-import.json"
+        "results/continuation-import.json",
+        "notes/2026-09-05-modular-synchronization.md",
+        "experiments/modular_sync_family.py",
+        "experiments/check_modular_sync.py",
+        "results/modular-synchronization.json"
       ],
       "issue": null
     },
@@ -303,8 +307,8 @@
       "outcome": "inconclusive",
       "owner": null,
       "updated": "2026-09-05",
-      "summary": "A six-state terminal example refutes flat-edge coverage; a last-flag synchronized-pair certificate decides some nonflat instances exactly.",
-      "next_step": "Control productive cycles of unflagged synchronized pairs; do not replace richer skeletons by flat edge restrictions.",
+      "summary": "Q002/Q003 strict low-budget descent is refuted; r blocks can require r coordinated deletions. Written C046/C047 proofs await independent review.",
+      "next_step": "Replace unconditional descent with arithmetic base cases; seek a complete effective skeleton cover for nonflat terminal graphs.",
       "record": "research/approaches/A017.md",
       "evidence": [
         "notes/2026-09-04-minimal-witness-structure.md",
@@ -312,7 +316,11 @@
         "notes/2026-09-05-nonflat-overlap.md",
         "experiments/terminal_overlap.py",
         "results/nonflat-overlap.json",
-        "research/NONFLAT.md"
+        "research/NONFLAT.md",
+        "notes/2026-09-05-modular-synchronization.md",
+        "experiments/modular_sync_family.py",
+        "experiments/check_modular_sync.py",
+        "results/modular-synchronization.json"
       ],
       "issue": null
     },
