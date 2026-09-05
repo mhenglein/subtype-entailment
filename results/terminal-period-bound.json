@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "seed": 2026090541,
+  "random_instances": 2000,
+  "accepted_words": 11631,
+  "flagged_agreements": 11918,
+  "maximum_full_period_copies": 6,
+  "sharp_family": [
+    {"k": 2, "word": "0", "t": 1},
+    {"k": 3, "word": "00", "t": 2},
+    {"k": 4, "word": "000", "t": 3},
+    {"k": 5, "word": "0000", "t": 4},
+    {"k": 6, "word": "00000", "t": 5},
+    {"k": 7, "word": "000000", "t": 6},
+    {"k": 8, "word": "0000000", "t": 7}
+  ],
+  "theorem": "For terminal accepted w and flagged suffix agreement i<j, floor((|w|-i)/(j-i)) <= k-1.",
+  "proof_status": "Written proof; finite checks are supporting evidence only."
+}
