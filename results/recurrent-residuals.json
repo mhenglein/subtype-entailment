@@ -1,0 +1,223 @@
+{
+  "status": "PASS",
+  "base_main": "bd4fde8f986a843fbc6f7b6f7ca626a5d0f67b0f",
+  "counts": {
+    "raw_words": 32767,
+    "raw_candidates": 286,
+    "count_vectors": 1024,
+    "suffix_summaries": 64,
+    "residual_word_checks": 16376,
+    "context_matrix_checks": 1024,
+    "effective_flag_sets": 16384,
+    "flag_bad_combinations": 524288,
+    "irrelevant_flag_extensions": 8192,
+    "canonical_paths": 22,
+    "guards": 4,
+    "copy_raw_words": 131071,
+    "copy_tuples": 900,
+    "copy_residual_checks": 14329,
+    "strong_collisions": 4
+  },
+  "effective_flag_census": {
+    "YES": 14,
+    "NO": 16370
+  },
+  "witness_language": "1^m 0^z 1^m 0, m>=1,z>=1",
+  "residual_language": "R_n = 1^n 0^+, n>=1; pairwise disjoint and nonempty",
+  "common_suffix_summary": {
+    "start": 2,
+    "final": 4,
+    "visited": [
+      2,
+      3,
+      4
+    ],
+    "action": [
+      2,
+      2,
+      4,
+      4,
+      -1
+    ],
+    "profile": [
+      [
+        2,
+        2
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        3,
+        3
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        4,
+        4
+      ]
+    ]
+  },
+  "collision": {
+    "suffixes": [
+      "10",
+      "110"
+    ],
+    "common_prefix": "10",
+    "concatenations": [
+      "1010",
+      "10110"
+    ],
+    "witness_verdicts": [
+      true,
+      false
+    ]
+  },
+  "complete_existence_basis": [
+    "1010",
+    "10110",
+    "11010"
+  ],
+  "copy_family": {
+    "states": 12,
+    "flags": [
+      [
+        0,
+        6
+      ],
+      [
+        0,
+        7
+      ],
+      [
+        1,
+        5
+      ],
+      [
+        1,
+        7
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        2,
+        6
+      ]
+    ],
+    "witness_language": "E(u)00(01)^a E(u)00, a>=0; E(0)=10,E(1)=11",
+    "residual_language": "R_u = E(u)00(01)*",
+    "same_length_collision": {
+      "data": [
+        "0100",
+        "0010"
+      ],
+      "suffixes": [
+        "1011101000",
+        "1010111000"
+      ],
+      "raw_length": 10,
+      "letter_counts": [
+        5,
+        5
+      ],
+      "action": [
+        5,
+        5,
+        5,
+        -1,
+        -1,
+        10,
+        10,
+        10,
+        -1,
+        -1,
+        -1,
+        -1
+      ],
+      "profile": [
+        [
+          5,
+          5
+        ],
+        [
+          5,
+          10
+        ],
+        [
+          6,
+          6
+        ],
+        [
+          6,
+          9
+        ],
+        [
+          6,
+          10
+        ],
+        [
+          7,
+          7
+        ],
+        [
+          7,
+          10
+        ],
+        [
+          8,
+          6
+        ],
+        [
+          8,
+          8
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          10,
+          10
+        ]
+      ],
+      "word_budget": 2,
+      "lrs": 2,
+      "common_prefix": "1011101000",
+      "witness_verdicts": [
+        true,
+        false
+      ]
+    },
+    "subtype_variables": 25,
+    "subtype_constraints": 30
+  },
+  "subtype_realization": {
+    "variables": 11,
+    "constraints": 12
+  },
+  "dependency_git_blobs": {
+    "border_lab.py": "1144ae52379e0417772e79582269cacd91c5bc17",
+    "terminal_realization.py": "00b5dbb2ab345fd15db8660e8ae5179b0bfc2969",
+    "denial_bridge.py": "a38a21df533d8853aa34b3b2593d164a4a688447"
+  },
+  "proof_status": "Written all-length proofs; independent review pending; not Lean-checked",
+  "limits": "Kernel-specific exact existence. Finite suffix summaries and literal residual inclusion fail; unrestricted decidability is not determined."
+}

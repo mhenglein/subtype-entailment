@@ -302,9 +302,9 @@
       "status": "tried",
       "outcome": "inconclusive",
       "owner": null,
-      "updated": "2026-09-05",
-      "summary": "A six-state terminal example refutes flat-edge coverage; a last-flag synchronized-pair certificate decides some nonflat instances exactly.",
-      "next_step": "Control productive cycles of unflagged synchronized pairs; do not replace richer skeletons by flat edge restrictions.",
+      "updated": "2026-09-06",
+      "summary": "Recurrent-reference tests refute content-free suffix merging and literal residual-inclusion termination; shared parameters retain the missing information.",
+      "next_step": "Develop composition of shared-word residual templates and prove existence-preserving closure; do not equate finite profile equality with contextual substitutability.",
       "record": "research/approaches/A017.md",
       "evidence": [
         "notes/2026-09-04-minimal-witness-structure.md",
@@ -312,7 +312,11 @@
         "notes/2026-09-05-nonflat-overlap.md",
         "experiments/terminal_overlap.py",
         "results/nonflat-overlap.json",
-        "research/NONFLAT.md"
+        "research/NONFLAT.md",
+        "notes/2026-09-06-recurrent-residuals.md",
+        "experiments/recurrent_residuals.py",
+        "experiments/check_recurrent_residuals.py",
+        "results/recurrent-residuals.json"
       ],
       "issue": null
     },
