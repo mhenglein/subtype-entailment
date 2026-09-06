@@ -2,7 +2,7 @@
 
 Problem 1.7 is open. This is the current map of approaches, including unsuccessful work.
 
-**15 tried · 2 not tried · 1 blocked · 0 active**
+**16 tried · 1 not tried · 1 blocked · 0 active**
 
 Read [the problem and notation](problem.md), [claims and evidence](claims.md), and [the experiment index](../experiments/README.md).
 
@@ -27,7 +27,6 @@ None currently.
 
 | ID | Approach | Finding / next step | Owner |
 |---|---|---|---|
-| A012 | [Make NO certificates complete](approaches/A012.md) | Find a precise invariant or instance that separates current NO certificates from full nonexistence. | Unassigned |
 | A014 | [Apply cap and period-language saturation techniques](approaches/A014.md) | Choose one closure property, test small instances, and preserve all endpoint flags. | Unassigned |
 
 ## Blocked
@@ -50,10 +49,11 @@ None currently.
 | A009 | [Find budget growth beyond the regular-language baseline](approaches/A009.md) | Supported: Written C046 modular family gives exact superpolynomial terminal budgets and refutes Q002/Q003; independent review pending. Next: Audit the synchronization lower bound and its subtype transfer; general bounds must allow arithmetic growth beyond every polynomial. | Unassigned |
 | A010 | [Build the exact top-free constraint-to-automata pipeline](approaches/A010.md) · [#3](https://github.com/mhenglein/subtail/issues/3) | Supported: Implemented actual W/Wrev summaries with S/F annotations; independent audit fixed two API errors and found no known comparison mismatch. Next: Generate actual subtype-derived instances and test joint summary invariants in A013. | Unassigned |
 | A011 | [Complete the converse with regular annotations](approaches/A011.md) | Supported: Every k-state terminal-final binary abstract instance has an exact word-preserving subtype realization on 2k+1 variables. Next: Use the terminal converse for genuine lower bounds or a terminal decision theorem; the nonterminal arbitrary-annotation converse is still open. | Unassigned |
+| A012 | [Make NO certificates complete](approaches/A012.md) | Inconclusive: A five-state NO instance defeats all finite necessary budgets; exact convolution supplies different complete certificates on a bounded-marker class. Next: Seek complete negative certificates beyond bounded-marker formats; necessary-budget emptiness alone is provably incomplete. | Unassigned |
 | A013 | [Exploit restrictions shared by actual summary automata](approaches/A013.md) | Supported: The terminal branch realizes arbitrary abstract flags; a nine-variable system has a nonregular terminal separating language. Flat terminal graphs are decidable arithmetically. Next: Target nonflat productive terminal components; shared B/A/D structure alone cannot exclude terminal abstract instances. | Unassigned |
 | A015 | [Strengthen truncation using occurrence context](approaches/A015.md) | Supported: Proved three context refinements and formalized the binary visited-state rule; strict examples and exhaustive two-state checks pass. Next: Use the visited-state summary to classify shortest witnesses resisting every admissible cut in A008. | Unassigned |
 | A016 | [Implement and audit fixed-skeleton checkability](approaches/A016.md) | Supported: Implemented exact Presburger skeleton formulas and a finite complete cover for flat terminal graphs; unbounded loop counts are retained. Next: Audit and formalize the arithmetic translation; extend bounded-skeleton coverage to nonflat terminal components without treating timeouts as NO. | Unassigned |
-| A017 | [Bound essential repeated blocks](approaches/A017.md) | Inconclusive: Whole-word synchronization gives a product-decided nonflat class, signature-specific PSPACE hardness, and superpolynomial fixed-skeleton size; written proofs await review. Next: Seek a complete shared-word/regular-constraint abstraction; do not assume polynomial-size fixed-word skeletons or ordinary straight-line grammars. | Unassigned |
+| A017 | [Bound essential repeated blocks](approaches/A017.md) | Inconclusive: Arbitrary-flag delimited schemas admit an exact finite convolution; an automatic bounded-marker cover decides a checkable nonflat raw-input class. Next: Handle unbounded or unaligned marker occurrences without inserting delimiters; the unrestricted coverage theorem is still missing. | Unassigned |
 | A018 | [Work backwards from an executable Lean theorem](approaches/A018.md) | Supported: Lean checks direct budget predicates, reversal, and an exact two-state decision, in addition to the previous truncation and conditional proofs. Next: Formalize the finite Sufficient automaton and its exact nonemptiness procedure; the global bound remains open. | Unassigned |
 
 ## Updating the record

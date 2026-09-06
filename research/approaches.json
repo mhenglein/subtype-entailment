@@ -216,14 +216,23 @@
     {
       "id": "A012",
       "title": "Make NO certificates complete",
-      "status": "untried",
-      "outcome": "open",
+      "status": "tried",
+      "outcome": "inconclusive",
       "owner": null,
-      "updated": "2026-09-04",
-      "summary": "Two example NO instances are reproduced; completeness of the certificate families is unproved.",
-      "next_step": "Find a precise invariant or instance that separates current NO certificates from full nonexistence.",
+      "updated": "2026-09-06",
+      "summary": "A five-state NO instance defeats all finite necessary budgets; exact convolution supplies different complete certificates on a bounded-marker class.",
+      "next_step": "Seek complete negative certificates beyond bounded-marker formats; necessary-budget emptiness alone is provably incomplete.",
       "record": "research/approaches/A012.md",
-      "evidence": [],
+      "evidence": [
+        "research/DELIMITED.md",
+        "notes/2026-09-06-delimited-convolution.md",
+        "experiments/delimited_blocks.py",
+        "experiments/marker_certificate.py",
+        "experiments/check_delimited_blocks.py",
+        "experiments/check_marker_certificate.py",
+        "results/delimited-blocks.json",
+        "results/marker-certificate.json"
+      ],
       "issue": null
     },
     {
@@ -306,9 +315,9 @@
       "status": "tried",
       "outcome": "inconclusive",
       "owner": null,
-      "updated": "2026-09-05",
-      "summary": "Whole-word synchronization gives a product-decided nonflat class, signature-specific PSPACE hardness, and superpolynomial fixed-skeleton size; written proofs await review.",
-      "next_step": "Seek a complete shared-word/regular-constraint abstraction; do not assume polynomial-size fixed-word skeletons or ordinary straight-line grammars.",
+      "updated": "2026-09-06",
+      "summary": "Arbitrary-flag delimited schemas admit an exact finite convolution; an automatic bounded-marker cover decides a checkable nonflat raw-input class.",
+      "next_step": "Handle unbounded or unaligned marker occurrences without inserting delimiters; the unrestricted coverage theorem is still missing.",
       "record": "research/approaches/A017.md",
       "evidence": [
         "notes/2026-09-04-minimal-witness-structure.md",
@@ -326,7 +335,15 @@
         "experiments/word_sync.py",
         "experiments/counter_intersection.py",
         "experiments/check_word_sync.py",
-        "results/word-synchronization.json"
+        "results/word-synchronization.json",
+        "research/DELIMITED.md",
+        "notes/2026-09-06-delimited-convolution.md",
+        "experiments/delimited_blocks.py",
+        "experiments/marker_certificate.py",
+        "experiments/check_delimited_blocks.py",
+        "experiments/check_marker_certificate.py",
+        "results/delimited-blocks.json",
+        "results/marker-certificate.json"
       ],
       "issue": null
     },
