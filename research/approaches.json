@@ -220,8 +220,8 @@
       "outcome": "inconclusive",
       "owner": null,
       "updated": "2026-09-06",
-      "summary": "A five-state NO instance defeats all finite necessary budgets; exact convolution supplies different complete certificates on a bounded-marker class.",
-      "next_step": "Seek complete negative certificates beyond bounded-marker formats; necessary-budget emptiness alone is provably incomplete.",
+      "summary": "An exact target-frontier powerset handles unbounded early marker cycles; necessary-budget emptiness remains incomplete.",
+      "next_step": "Find complete negative certificates for recurrent flag targets or unaligned formats; preserve UNKNOWN outside the proven class.",
       "record": "research/approaches/A012.md",
       "evidence": [
         "research/DELIMITED.md",
@@ -231,7 +231,12 @@
         "experiments/check_delimited_blocks.py",
         "experiments/check_marker_certificate.py",
         "results/delimited-blocks.json",
-        "results/marker-certificate.json"
+        "results/marker-certificate.json",
+        "research/TARGET_FRONTIER.md",
+        "notes/2026-09-06-target-frontier.md",
+        "experiments/target_frontier.py",
+        "experiments/check_target_frontier.py",
+        "results/target-frontier.json"
       ],
       "issue": null
     },
@@ -316,8 +321,8 @@
       "outcome": "inconclusive",
       "owner": null,
       "updated": "2026-09-06",
-      "summary": "Arbitrary-flag delimited schemas admit an exact finite convolution; an automatic bounded-marker cover decides a checkable nonflat raw-input class.",
-      "next_step": "Handle unbounded or unaligned marker occurrences without inserting delimiters; the unrestricted coverage theorem is still missing.",
+      "summary": "Target-free early blocks admit finite pending-mask normalization; a powerset selects common reference words and decides a larger raw-input class.",
+      "next_step": "Represent recurrent flag targets without conflating different suffix words; no general alignment or coverage theorem has been proved.",
       "record": "research/approaches/A017.md",
       "evidence": [
         "notes/2026-09-04-minimal-witness-structure.md",
@@ -343,7 +348,12 @@
         "experiments/check_delimited_blocks.py",
         "experiments/check_marker_certificate.py",
         "results/delimited-blocks.json",
-        "results/marker-certificate.json"
+        "results/marker-certificate.json",
+        "research/TARGET_FRONTIER.md",
+        "notes/2026-09-06-target-frontier.md",
+        "experiments/target_frontier.py",
+        "experiments/check_target_frontier.py",
+        "results/target-frontier.json"
       ],
       "issue": null
     },

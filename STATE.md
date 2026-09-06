@@ -6,7 +6,44 @@ The unrestricted Problem 1.7 is not settled. Preserve arbitrary, possibly
 infinite type-tree semantics, exact quantifiers, and proof/evidence levels.
 This is compressed scientific memory, not a replacement for the linked proofs.
 
-## Latest continuation: exact convolution and a negative-method obstruction
+## Latest continuation: target-free prefix saturation
+
+**Proposed C054-C056 (written proofs + tests; independent review pending,
+not Lean-checked):** the marker restriction is weakened. Productive marker
+cycles are allowed before the first relevant flag target; only cycles reachable
+from a target are excluded. A target is a SECOND endpoint of G, not a source.
+
+For a fixed r-block reference suffix containing all targets of a witness, early
+blocks are summarized by reference equality and equal-tail flag-hit subsets.
+A pending-pattern monitor has at most K*2^(r-1) boundary memories, so deleting
+repeated memories leaves at most K*2^(r-1)-1 early blocks with the SAME reference
+suffix. This is G-specific witness preservation, not profile domination or
+the refuted low-budget strict-descent theorem.
+
+A powerset construction chooses the reference words and simultaneously keeps
+all possible source-block observations relative to that same tuple. It closes
+longer unmatched source prefixes by finite data reachability. The resulting
+schema search is finite, with at most
+
+    2*(K+1)^r * 2^(2*binom(r,2)+2*K^2*4^r)
+
+states and an explicit computable witness-length bound. Under the raw-input
+certificate, r<=K-1 and the reference schemas can be enumerated completely.
+Candidates may still have unboundedly many early markers; the cover preserves
+existence rather than imposing a false candidate-language bound.
+
+Two fixtures allocated with 21 binary states (seven macro states, eighteen live
+raw states) are decided YES and NO respectively, while C053 returns UNKNOWN
+for both. E035 covers 160 complete acyclic oracles, 160 prior exact-schema
+comparisons, 256 cyclic-prefix flag relations, exact source-observation tests,
+and explicit normalization/scope/cap regressions. Main proof gap: target-reachable
+marker cycles or the absence of an agreement-preserving token format.
+
+[Proposed claims/E035](research/TARGET_FRONTIER.md),
+[proofs](notes/2026-09-06-target-frontier.md),
+[result](results/target-frontier.json).
+
+## Previous continuation: exact convolution and a negative-method obstruction
 
 **Proposed C051 (written proof + tests; independent review pending):** a
 five-state, three-flag flat terminal instance has no witnesses although EVERY
@@ -101,12 +138,13 @@ the flagged terminal path 00 becomes valid after encoding/appending a marker.
 
 ## Current frontier
 
-Extend complete alignment/decomposition beyond the automatic bounded-marker
-class, or find a different complete symbolic decision. C052 now handles all
-logical flags once data tails align; C053 proves coverage without supplied
-schemas for its explicit input certificate. It does not control marker cycles,
-arbitrary unaligned flags, or all possible terminal inputs. A generic word-
-equation solver does not discharge the universal internal suffix conditions.
+Extend complete alignment/decomposition beyond the target-frontier class, or
+find a different complete symbolic decision. C054-C056 now control arbitrarily
+many early marker loops when they contain no flag targets. They do not bound
+or represent recurrent targets in the remaining marker cycles, and cannot
+insert an absent delimiter without changing comparisons. Bounded border-chain
+depth alone has not supplied a finite memory for unbounded reference contents.
+A generic word-equation solver does not discharge the universal suffix tests.
 
 A012 tracks complete NO certificates and C051's obstruction. A016/A017 track
 finite representations and the convolution/cover machinery. A008/A009 retain
