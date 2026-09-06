@@ -1,0 +1,137 @@
+{
+  "status": "PASS",
+  "seed": 2026090654,
+  "counts": {
+    "three_state_tables": 256,
+    "short_accepted_words": 780,
+    "random_profile_words": 1974,
+    "transformations": 288,
+    "gap_comparisons": 135535,
+    "tail_trace_comparisons": 26136,
+    "long_profile_words": 344,
+    "huge_encoded_words": 216,
+    "strict_compressions": 331,
+    "finite_run_oracles": 120,
+    "finite_run_queries": 480,
+    "unary_intersections": 1296,
+    "unary_block_vectors": 20736,
+    "canonical_models": 2,
+    "counting_fixtures": 6,
+    "caps": 1,
+    "iterable_regressions": 3
+  },
+  "run_bound_verdicts": {
+    "YES": 215,
+    "NO_WITHIN_RUN_BOUND": 265,
+    "UNKNOWN": 0
+  },
+  "unary_intersection_oracles": {
+    "YES": 163,
+    "NO": 1133
+  },
+  "huge_fixture": {
+    "runs": [
+      [
+        "1",
+        37
+      ],
+      [
+        "0",
+        1
+      ],
+      [
+        "1",
+        38
+      ],
+      [
+        "0",
+        1
+      ]
+    ],
+    "original_length": 200000000000000000000000000000000000000000000000000000000000000000000000000000003,
+    "normalized_length": 77,
+    "run_count": 4,
+    "threshold": 36,
+    "periods": [
+      1,
+      1
+    ],
+    "length_bound": 592
+  },
+  "independent_compression_counterexample": {
+    "bad_runs": [
+      [
+        "1",
+        37
+      ],
+      [
+        "0",
+        1
+      ],
+      [
+        "1",
+        37
+      ],
+      [
+        "0",
+        1
+      ]
+    ],
+    "new_pair": [
+      0,
+      2
+    ]
+  },
+  "final_partial_run_fixture": "01101",
+  "counting_run_lower_bound": [
+    {
+      "width": 1,
+      "run_count": 8,
+      "word_length": 12
+    },
+    {
+      "width": 2,
+      "run_count": 30,
+      "word_length": 54
+    },
+    {
+      "width": 3,
+      "run_count": 104,
+      "word_length": 200
+    },
+    {
+      "width": 4,
+      "run_count": 330,
+      "word_length": 650
+    },
+    {
+      "width": 5,
+      "run_count": 972,
+      "word_length": 1932
+    },
+    {
+      "width": 6,
+      "run_count": 2702,
+      "word_length": 5390
+    }
+  ],
+  "cap": {
+    "run_bound": 4,
+    "count_bound": 148,
+    "threshold": 36,
+    "periods": [
+      1,
+      1
+    ],
+    "status": "UNKNOWN",
+    "reason": "Run-prefix cap",
+    "prefixes": 1
+  },
+  "scope": "Universal terminal-word normalization; bounded-run decision only",
+  "proof_status": "Written proof; not Lean-checked or independently reviewed",
+  "dependency_blobs": {
+    "border_lab.py": "1144ae52379e0417772e79582269cacd91c5bc17",
+    "terminal_realization.py": "00b5dbb2ab345fd15db8660e8ae5179b0bfc2969",
+    "denial_bridge.py": "a38a21df533d8853aa34b3b2593d164a4a688447"
+  }
+}
