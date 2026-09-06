@@ -6,7 +6,37 @@ The unrestricted Problem 1.7 is not settled. Preserve arbitrary, possibly
 infinite type-tree semantics, exact quantifiers, and proof/evidence levels.
 This is compressed scientific memory, not a replacement for the linked proofs.
 
-## Latest continuation: target-free prefix saturation
+## Latest continuation: universal binary normal forms and run profiles
+
+**Proposed C057-C059 (written proofs + E036, independent review pending):**
+the uniform code 0->00,1->10 gives an exact 2k-state reduction preserving every
+witness, with flags only at original-state boundaries. Thus the full terminal
+problem is already present when all data-1 runs have length at most one and
+nonempty words end in zero. Simple token structure is not a complete solution.
+
+For ANY binary DFA, even with nonterminal finals and recurrent flag targets,
+C058 contracts unary run lengths while preserving the exact full agreement
+profile, visited states, and endpoint. If r counts occurrences of the last
+letter and d counts distinct intervening run lengths, the new word length is
+at most r[(k+1)^2+d(k+P)+1], with P the unary transition's cycle-period LCM.
+The contraction preserves short differences, weak order and residues. It need
+not be strict, and it does not bound r. A recurrent-target witness contracts
+from 1,421 to 135 letters with exactly the same profile.
+
+A computable existential bound on r would supply a general word-length bound.
+But r can be superpolynomial even in C057's zero/one-run normal form, by the
+existing modular family. The remaining sequence problem retains the full
+expressive power of the original, not a known easy special case.
+
+Last-final/last-bit slicing also extends C056's front end without new states
+or markers. It resolves the former wrong-final-symbol format rejection, while
+unresolved recurrent-target cycles still return UNKNOWN.
+
+[Proposed claims/E036](research/RUN_PROFILES.md),
+[proof and failed simplifications](notes/2026-09-06-run-profile-normalization.md),
+[result](results/run-profiles.json). No independent review or Lean check.
+
+## Previous continuation: target-free prefix saturation
 
 **Proposed C054-C056 (written proofs + tests; independent review pending,
 not Lean-checked):** the marker restriction is weakened. Productive marker
@@ -138,17 +168,22 @@ the flagged terminal path 00 becomes valid after encoding/appending a marker.
 
 ## Current frontier
 
-Extend complete alignment/decomposition beyond the target-frontier class, or
-find a different complete symbolic decision. C054-C056 now control arbitrarily
-many early marker loops when they contain no flag targets. They do not bound
-or represent recurrent targets in the remaining marker cycles, and cannot
-insert an absent delimiter without changing comparisons. Bounded border-chain
-depth alone has not supplied a finite memory for unbounded reference contents.
-A generic word-equation solver does not discharge the universal suffix tests.
+Control the unbounded sequence of run-length values and its later-block
+suffix-equality guards. C058 gives a full-profile numerical contraction with
+no recurrent-target restriction, but the number of blocks remains unbounded.
+C057 shows the full terminal problem persists even when each data run has only
+zero or one letters. A computable marker-count bound, or a different complete
+representation of those sequences, is still missing.
 
-A012 tracks complete NO certificates and C051's obstruction. A016/A017 track
-finite representations and the convolution/cover machinery. A008/A009 retain
-lower-bound and minimal-witness evidence; A011 tracks exact reductions; A018
-retains formal decision obligations. The [generated tracker](research/README.md)
-holds execution status. Do not promote tests or failed-certificate UNKNOWN
-verdicts into an unrestricted conclusion.
+The earlier target-frontier and convolution solvers remain exact within their
+certificates. Last-bit slicing removes a representational failure, not the
+recurrent-cycle obstruction. Generic finite-register word-constraint results
+have not been shown to express all our arbitrary-distance suffix obligations.
+Neither a finite two-run signature nor successful bounded tests establish an
+unrestricted finite quotient or decision procedure.
+
+A008/A017 track the new normal forms; A012 retains the incomplete necessary-
+budget warning; A009 retains growth bounds; A011 tracks exact reductions;
+A018 retains formal decision obligations. The [generated tracker](research/README.md)
+holds execution status. Tests, written proofs and independent review remain
+separate evidence levels.

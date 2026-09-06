@@ -321,8 +321,8 @@
       "outcome": "inconclusive",
       "owner": null,
       "updated": "2026-09-06",
-      "summary": "Target-free early blocks admit finite pending-mask normalization; a powerset selects common reference words and decides a larger raw-input class.",
-      "next_step": "Represent recurrent flag targets without conflating different suffix words; no general alignment or coverage theorem has been proved.",
+      "summary": "Exact full-profile contraction works with recurrent targets; a 2k-state bounded-data normal form retains the entire terminal problem. Written proofs await review.",
+      "next_step": "Control the unbounded sequence of run values and later-block equality guards; a finite pair signature does not bound the number of blocks.",
       "record": "research/approaches/A017.md",
       "evidence": [
         "notes/2026-09-04-minimal-witness-structure.md",
@@ -353,7 +353,12 @@
         "notes/2026-09-06-target-frontier.md",
         "experiments/target_frontier.py",
         "experiments/check_target_frontier.py",
-        "results/target-frontier.json"
+        "results/target-frontier.json",
+        "research/RUN_PROFILES.md",
+        "notes/2026-09-06-run-profile-normalization.md",
+        "experiments/run_profiles.py",
+        "experiments/check_run_profiles.py",
+        "results/run-profiles.json"
       ],
       "issue": null
     },
