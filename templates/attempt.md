@@ -2,16 +2,32 @@
 
 Author / agent:
 Approach ID:
-Claim IDs:
+Claim / conjecture IDs:
 Experiment IDs, if applicable:
-Commit / branch:
+Base commit / branch:
+Owned paths or worktree:
 
-**Question.** State one exact claim, with quantifiers and the tree or word model.
+**Question and dependencies.** State one exact target, quantifiers, model,
+and assumptions. Link the required statements and their evidence levels.
+Separate open assumptions from established results. Name relevant failed
+attempts and explain what this attempt changes.
 
-**Method.** Give the proof steps or reproducible command, seed, inputs, and limits.
+**Acceptance and limits.** State what would count as a proof, a validated
+counterexample, useful bounded evidence, or an inconclusive result. Give the
+command, seed, inputs, word/state caps, and time or compute budget where relevant.
 
-**Result.** Record a proof, counterexample, supported bounded observation, or UNKNOWN. Link to the evidence.
+**Method and result.** Record the argument or exact commands actually run,
+checked revision, result, and evidence links. A stopped search is UNKNOWN.
+A conditional proof does not establish its assumptions.
 
-**What failed or remains uncertain.** Preserve failed arguments and explain the exact obstruction.
+**Independent check.** Name the reviewer or independent predicate, the exact
+scope checked, and any unresolved disagreement. If not reviewed, say so.
 
-**Next step.** Name one concrete action. Update the registry if status, owner, or outcome changed.
+**What failed or remains uncertain.** Preserve the smallest obstruction,
+failed strengthening, and uncovered scope. Keep unsuccessful attempts after
+recording a repair.
+
+**Handoff.** State the next discriminating action and enough detail to resume:
+remaining obligation, relevant paths, command/seed/limits, and partial outputs.
+Update `approaches.json` if current status, owner, evidence, or next step changed;
+update the claim/experiment/Q index and `STATE.md` only where the result warrants it.

@@ -56,6 +56,18 @@ None currently.
 | A017 | [Bound essential repeated blocks](approaches/A017.md) | Inconclusive: A six-state terminal example refutes flat-edge coverage; a last-flag synchronized-pair certificate decides some nonflat instances exactly. Next: Control productive cycles of unflagged synchronized pairs; do not replace richer skeletons by flat edge restrictions. | Unassigned |
 | A018 | [Work backwards from an executable Lean theorem](approaches/A018.md) | Supported: Lean checks direct budget predicates, reversal, and an exact two-state decision, in addition to the previous truncation and conditional proofs. Next: Formalize the finite Sufficient automaton and its exact nonemptiness procedure; the global bound remains open. | Unassigned |
 
+## Shared hypotheses
+
+These records keep exact hypotheses and failed strengthenings together. Their stated status is not inferred from tests or activity.
+
+| ID | Hypothesis | Recorded status |
+|---|---|---|
+| Q001 | [Q001 — Bounded essential terminal skeletons](conjectures/Q001.md) | OPEN |
+| Q002 | [Q002 — Agreement-profile domination for terminal words](conjectures/Q002.md) | OPEN |
+| Q003 | [Q003 — Strict agreement-profile descent](conjectures/Q003.md) | OPEN |
+
+Retrieve one canonical record as JSON with `python3 scripts/research_index.py --lookup Q003` (also accepts A/C/E IDs). Follow its linked evidence before relying on it.
+
 ## Updating the record
 
 1. Add a dated attempt to the approach's Markdown record; preserve previous failed and inconclusive attempts.

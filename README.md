@@ -12,6 +12,15 @@ Read these in order when joining or resuming the project:
 4. **[Claims and evidence](research/claims.md)** — exact scope and proof/evidence level of individual results.
 5. **[Agent operating rules](AGENTS.md)** — how humans and agents coordinate without losing or duplicating research.
 
+For a focused agent handoff, retrieve an exact record without rewriting files:
+
+```sh
+python3 scripts/research_index.py --lookup Q003
+```
+
+Use A/C/E/Q IDs. The response is JSON with source paths and the record's content.
+Read [the attempt template](templates/attempt.md) before starting a new attempt.
+
 Other useful entry points:
 
 | You want to… | Go to |

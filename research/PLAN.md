@@ -10,7 +10,12 @@ steps live in the [research tracker](README.md). The entries describe each
 investigation's target; dated approach records distinguish proposals from
 executed attempts.
 
-## Recommended starting order
+## September 4 starting order (historical)
+
+This programme predates C021–C045 and Q001–Q003. Some targets below have since
+been completed or refuted. Use [current shared memory](../STATE.md),
+[the tracker](README.md), and [conjecture records](conjectures/README.md)
+to select work; keep the original programme below as research history.
 
 The Lean direct budget predicates and actual subtype summary bridge now
 exist. The two-state abstract case is decided. A new six-state example has

@@ -1,6 +1,6 @@
 # Subtail — current research state
 
-Updated: 2026-09-05
+Navigation updated: 2026-09-06; scientific evidence remains at its linked recorded revisions.
 
 This is the compressed scientific memory of the project. Read this after `research/problem.md` and before starting new work. It answers: **what do we currently know, what has failed, and what is the highest-value unresolved question?**
 
@@ -44,7 +44,7 @@ See the relevant A records in `research/README.md` for exact counterexamples and
 
 ## Current frontier
 
-The highest-value unresolved question is:
+One open route, recorded as [Q001](research/conjectures/Q001.md), asks:
 
 > **Can terminal witnesses in nonflat productive components be normalized into a computably bounded number of essential repeated blocks / skeletons while preserving every border obligation?**
 
@@ -59,6 +59,18 @@ Closely related frontier questions:
 5. Explore complete NO certificates or saturation only with a precise invariant; failure to find a witness remains `UNKNOWN`.
 
 ## Open conjectures
+
+The later profile route is recorded in [Q002](research/conjectures/Q002.md)
+and its stronger descent conjecture [Q003](research/conjectures/Q003.md).
+Q003 would imply Q002. C044 relates Q002 to the sharp terminal budget bound;
+turning that into a subtype decision also needs the exact search and reduction
+results at their stated evidence levels. Both conjectures remain open.
+C045 supplies a restricted deletion lemma, not a proof of Q003. The failed
+single-loop version of Q003 is recorded with the conjecture.
+
+Use the [claim index](research/claims.md#continued-claim-records) for C021–C045
+and the [experiment index](experiments/README.md) for later checks. No newer
+written result is promoted to Lean status by this navigation update.
 
 Important hypotheses should live in `research/conjectures/` with stable Q IDs. The registry is intentionally small: create a Q record only for hypotheses important enough that multiple researchers or agents may depend on them.
 

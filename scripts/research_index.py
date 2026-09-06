@@ -1,4 +1,4 @@
-"""Build and validate the collaboration tracker using Python's standard library."""
+"""Build the research tracker, validate shared records, or look up an A/C/E/Q ID."""
 
 import argparse
 import datetime
@@ -14,6 +14,61 @@ REGISTRY = ROOT / "research/approaches.json"
 INDEX = ROOT / "research/README.md"
 STATUSES = ("active", "untried", "blocked", "tried")
 OUTCOMES = ("open", "supported", "refuted", "inconclusive")
+
+
+def markdown_sources():
+    for source in ROOT.rglob("*.md"):
+        parts = source.relative_to(ROOT).parts
+        if not any(p.startswith(".") or p in ("tmp", "__pycache__") for p in parts):
+            yield source
+
+
+def research_records(data):
+    """Read canonical records without copying their scientific status elsewhere."""
+    records = {}
+
+    def add(key, source, reference, content):
+        if key in records:
+            raise ValueError("Duplicate research ID: " + key)
+        if not content.strip():
+            raise ValueError("Empty research record: " + key)
+        records[key] = {"id": key, "source": str(source.relative_to(ROOT)),
+                        "reference": reference, "content": content.strip()}
+
+    for row in data["approaches"]:
+        source = ROOT / row["record"]
+        add(row["id"], source, row["record"], source.read_text())
+        records[row["id"]]["execution"] = row
+    for relative, prefix in (("research/claims.md", "c"), ("experiments/README.md", "e")):
+        source = ROOT / relative
+        contents = source.read_text()
+        anchors = list(re.finditer(r'<a id="(' + prefix + r'\d{3})"></a>', contents))
+        for index, match in enumerate(anchors):
+            end = anchors[index + 1].start() if index + 1 < len(anchors) else len(contents)
+            section = contents[match.end():end]
+            # Stop before a following general section, outside this record.
+            section = re.split(r"(?m)^## ", section, maxsplit=1)[0]
+            add(match[1].upper(), source, relative + "#" + match[1], section)
+    for source in sorted((ROOT / "research/conjectures").glob("Q*.md")):
+        contents = source.read_text()
+        if not re.fullmatch(r"Q\d{3}", source.stem) or not contents.startswith("# " + source.stem + " "):
+            raise ValueError("Conjecture filename and heading must share a Q ID: " + source.name)
+        if not re.search(r"(?m)^Status: (OPEN|REFUTED|PROVED|SUPERSEDED)$", contents):
+            raise ValueError("Conjecture needs an explicit status: " + source.name)
+        add(source.stem, source, str(source.relative_to(ROOT)), contents)
+    return records
+
+
+def validate_research_ids(records):
+    missing = {}
+    for source in markdown_sources():
+        referenced = set(re.findall(r"\b[ACEQ]\d{3}\b", source.read_text()))
+        for key in sorted(referenced - records.keys()):
+            missing.setdefault(key, []).append(str(source.relative_to(ROOT)))
+    if missing:
+        errors = [f"unregistered {key}: {', '.join(sorted(sources)[:3])} ({len(sources)} files)"
+                  for key, sources in sorted(missing.items())]
+        raise ValueError("Research IDs need canonical records:\n" + "\n".join(errors))
 
 
 def local_target(reference, base):
@@ -112,7 +167,16 @@ def render(data):
             path = Path(row["record"]).relative_to("research").as_posix()
             lines.append(f"| {row['id']} | [{cell(row['title'])}]({path}){discussion} | {cell(detail)} | {cell(row['owner'] or 'Unassigned')} |")
         lines.append("")
-    lines += ["## Updating the record", "",
+    lines += ["## Shared hypotheses", "",
+              "These records keep exact hypotheses and failed strengthenings together. Their stated status is not inferred from tests or activity.", "",
+              "| ID | Hypothesis | Recorded status |", "|---|---|---|"]
+    for source in sorted((ROOT / "research/conjectures").glob("Q*.md")):
+        contents = source.read_text()
+        title = contents.splitlines()[0].removeprefix("# ")
+        status = re.search(r"(?m)^Status: (.+)$", contents)[1]
+        lines.append(f"| {source.stem} | [{cell(title)}](conjectures/{source.name}) | {cell(status)} |")
+    lines += ["", "Retrieve one canonical record as JSON with `python3 scripts/research_index.py --lookup Q003` (also accepts A/C/E IDs). Follow its linked evidence before relying on it.", "",
+              "## Updating the record", "",
               "1. Add a dated attempt to the approach's Markdown record; preserve previous failed and inconclusive attempts.",
               "2. Update its status, outcome, owner, evidence links, and next step in [approaches.json](approaches.json).",
               "3. Update the claims ledger or experiment index if a result changed.",
@@ -124,15 +188,18 @@ def render(data):
 
 def validate_markdown_links():
     errors = []
-    for source in ROOT.rglob("*.md"):
-        parts = source.relative_to(ROOT).parts
-        if any(p.startswith(".") or p in ("tmp", "__pycache__") for p in parts):
-            continue
+    for source in markdown_sources():
         for reference in re.findall(r"\]\(([^)]+)\)", source.read_text()):
             try:
                 target = local_target(reference, source.parent)
                 if target is not None and not target.exists():
                     errors.append(f"{source.relative_to(ROOT)}: {reference}")
+                parsed = urlsplit(reference.strip("<>"))
+                fragment = parsed.fragment
+                anchor_target = source if not parsed.path and not parsed.scheme and not parsed.netloc else target
+                if anchor_target is not None and anchor_target.is_file() and re.fullmatch(r"[ACEQaceq]\d{3}", fragment):
+                    if f'<a id="{fragment}"></a>' not in anchor_target.read_text():
+                        errors.append(f"{source.relative_to(ROOT)}: missing ID anchor: {reference}")
             except ValueError as error:
                 errors.append(f"{source.relative_to(ROOT)}: {error}")
     if errors:
@@ -142,10 +209,19 @@ def validate_markdown_links():
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true", help="Validate without rewriting the tracker")
+    parser.add_argument("--lookup", metavar="ID", help="Print one canonical A/C/E/Q record as JSON; do not write files")
     args = parser.parse_args()
     try:
         data = json.loads(REGISTRY.read_text())
         validate_registry(data)
+        records = research_records(data)
+        if args.lookup:
+            key = args.lookup.upper()
+            if key not in records:
+                raise ValueError("Unknown research ID: " + key)
+            print(json.dumps(records[key], indent=2, ensure_ascii=False))
+            return 0
+        validate_research_ids(records)
         output = render(data)
         if args.check:
             if not INDEX.exists() or INDEX.read_text() != output:
@@ -156,7 +232,7 @@ def main():
     except (ValueError, KeyError, TypeError) as error:
         print(str(error), file=sys.stderr)
         return 1
-    print(f"Research tracker valid: {len(data['approaches'])} approaches; local Markdown paths checked.")
+    print(f"Research tracker valid: {len(data['approaches'])} approaches; {len(records)} A/C/E/Q records; local paths and ID links checked.")
     return 0
 
 

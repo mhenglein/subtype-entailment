@@ -46,7 +46,7 @@ Reference these IDs in issues, commits, notes, and pull requests.
 6. Validate new witnesses or counterexamples with an independent predicate/checker when possible.
 7. Record failed approaches. A dead end is reusable knowledge and must not disappear when a later repair is found.
 8. Finish every investigation with: result, evidence, confidence/status, limitations, implications, and the best next question.
-9. If the result changes the project frontier, update `STATE.md` in the same pull request.
+9. If the result changes the project frontier, update `STATE.md` in the same change.
 10. Do not promote a result into `Established` in `STATE.md` merely because tests pass or an issue is closed.
 
 ## Collaboration model
@@ -55,11 +55,36 @@ Exploration may be parallel; integration is deliberately serialized through revi
 
 - Use GitHub issues for scoped investigations and coordination.
 - Use branches/worktrees for implementation or proof attempts.
-- Submit substantive scientific changes through a pull request.
+- For authorized updates, commit and push directly to `main` after the relevant checks. Create a pull request only when requested.
 - Important new theorems, reductions, counterexamples, or completeness claims should receive independent review before being marked established.
 - If two agents disagree, preserve both arguments and resolve the disagreement with evidence rather than overwriting one path.
 
-Small mechanical fixes may go directly to `main` when explicitly requested, but research-state changes should normally use a pull request.
+Use one writer per path. Parallel workers should use separate worktrees or
+explicitly disjoint files. Give each worker a base commit, exact target,
+allowed paths, dependencies, resource limit, and required evidence. Serialize
+integration and writes to the shared tracker; do not share an active Lake build.
+Before integration, inspect the current diff and recheck changes affected by
+new commits. A worker's report is input for review, not proof of completion.
+
+## Recover context and choose work
+
+- Check `git status --short` and compare the checkout with current GitHub `main`
+  before relying on a local snapshot. Preserve unrelated work.
+- Use `python3 scripts/research_index.py --lookup Q003` (or an A/C/E ID) to
+  retrieve its canonical record as JSON. Follow the linked exact statements
+  and evidence before relying on a short index entry.
+- Read the Q records linked from `STATE.md` and the relevant failed attempts.
+  Choose one discriminating proof attempt, counterexample search, or audit.
+  Alternative approaches remain useful even when another route looks promising.
+- Record current execution status and ownership only in `approaches.json`.
+  Keep a session's historical target, base commit, findings, and handoff in
+  its dated A-record attempt using `templates/attempt.md`.
+- If a statement or a definition changes, name the changed assumptions and
+  recheck affected arguments. A prior build result applies to the checked
+  revision, not automatically to the replacement statement.
+- For a major formalization, independently read the Lean declaration and
+  definitions back into ordinary mathematics. Check quantifiers, hypotheses,
+  and semantics as well as compilation and axioms.
 
 ## Reproducibility
 

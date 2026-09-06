@@ -1,9 +1,11 @@
 # Claims ledger
 
-Last reviewed: 2026-09-04
+Index updated: 2026-09-06. Original C001-C020 review: 2026-09-04.
+Later claims retain the evidence and review scope of their linked records.
 
 This ledger gives stable IDs for claims about Problem 1.7 and its BorderAvoid
 reduction. It is the shared index for notes, experiments, and future review.
+Later continuation records are indexed in [Continued claim records](#continued-claim-records).
 
 **Problem status:** Problem 1.7 remains unsolved in this repository. No claim
 below establishes a general subtype decision procedure or reproduces the
@@ -527,6 +529,350 @@ Python/memo machinery, not a Lean-checked emptiness proof.
 **Limit.** This does not refute `B<=|K|` or any computable bound. No subtype
 realization or asymptotic growth family is established. It does not contradict
 the regularity hypothesis in C016.
+
+## Continued claim records
+
+C021-C045 extend the C001-C020 ledger. This section is a navigation index, not
+a second proof text: each anchored entry keeps the claim's status and scope,
+and links to the authoritative note containing its full statement, argument,
+evidence, and limitations. The continuation records are not Lean-checked;
+`REPRO` remains bounded evidence under the labels defined above.
+
+<a id="c021"></a>
+
+### C021 — Exact budget-growth family
+
+**Statement.** For integers `m>=2` and `1<=t<m`, the one-flag family has
+`B(I(m,t))=m+t-1` and shortest length `2m+t+1`; taking `k=m+1` and `t=m-1`
+gives exact budget `2k-4` and shortest length `3k-3`.
+
+**Status / scope.** `WRITTEN PROOF + REPRO`; abstract BorderAvoid only. No
+subtype realization or literature-priority claim.
+
+**Record.** [Full statement and proof](../notes/2026-09-04-budget-growth-family.md).
+
+<a id="c022"></a>
+
+### C022 — Exact decision for at most three states
+
+**Statement.** For well-formed instances with at most three states, witness
+existence, a witness of length at most six, nonemptiness of `Sufficient(2,0)`,
+and nonemptiness of `Necessary(1,1)` are equivalent; length six and budget two
+are sharp.
+
+**Status / scope.** `WRITTEN PROOF + REPRO`; the proof allows finite alphabets,
+while the exhaustive census is binary. No larger-state decision follows.
+
+**Record.** [Full statement and proof](../notes/2026-09-04-three-state.md).
+
+<a id="c023"></a>
+
+### C023 — Actual summary absorption invariant
+
+**Statement.** Every positive successor of a final state in an actual paired
+summary output is final, has an empty `A` component, and has an empty incoming
+flag column. The invariant also holds with denials.
+
+**Status / scope.** `WRITTEN PROOF + REPRO`; actual `W/F/G` summary outputs,
+not arbitrary abstract BorderAvoid instances.
+
+**Record.** [Full statement and proof](../notes/2026-09-04-summary-absorption.md).
+
+<a id="c024"></a>
+
+### C024 — Exact decision for the Bad-free absorbing subclass
+
+**Statement.** Total, Bad-free absorbing instances over at least two letters
+admit an exact graph decision with a padding witness, witness length at most
+`2k-1`, and budget at most `k-1`.
+
+**Status / scope.** `WRITTEN PROOF + REPRO`; denial-free normalized subtype
+outputs are included only through the audited forward bridge.
+
+**Record.** [Full statement and proof](../notes/2026-09-04-summary-absorption.md).
+
+<a id="c025"></a>
+
+### C025 — Denial safety needs no separate subset component
+
+**Statement.** On satisfiable normalized inputs, every-prefix safety is exactly
+avoidance of `B(u) ∩ D`; the separate `S` subset component is redundant.
+
+**Status / scope.** `WRITTEN PROOF + REPRO`; the satisfiability guard is
+essential, and the claim concerns normalized subtype inputs.
+
+**Record.** [Full statement and proof](../notes/2026-09-04-denials-and-continuations.md).
+
+<a id="c026"></a>
+
+### C026 — Exact continuation after a supplied safe prefix
+
+**Statement.** After a supplied safe prefix enters the zero-column final
+region, existence of a safe witnessing extension is decidable by a finite
+periodic-ray product.
+
+**Status / scope.** `WRITTEN PROOF + REPRO`; the result is local to the supplied
+prefix. `NO_EXTENSION` is not unrestricted `NO`; entry-frontier completeness
+also requires an acyclic safe pre-zero region.
+
+**Record.** [Full statement and proof](../notes/2026-09-04-denials-and-continuations.md).
+
+<a id="c027"></a>
+
+### C027 — Cubic branching witness certificate
+
+**Statement.** A reachable safe cyclic zero-region vertex with two safe outgoing
+letters supplies a cubic-length witness certificate.
+
+**Status / scope.** `WRITTEN PROOF + REPRO`; the alternate edge may leave the
+cycle, and absence of this certificate is not `NO`.
+
+**Record.** [Full statement and proof](../notes/2026-09-04-denials-and-continuations.md).
+
+<a id="c028"></a>
+
+### C028 — Actual subtype obstruction to deleting pre-final loops
+
+**Statement.** An actual eight-variable subtype system has exact separating
+paths `11 0^n 1` for `n>=1`; its shortest witness needs a pre-final loop, and
+every separating path is terminal.
+
+**Status / scope.** `WRITTEN PROOF + REPRO`; this refutes repeated-state deletion
+and an infinite-extension-only completeness argument for actual outputs.
+
+**Record.** [Full statement and proof](../notes/2026-09-04-denials-and-continuations.md).
+
+<a id="c029"></a>
+
+### C029 — Decision for infinitely extendable witnesses
+
+**Statement.** For absorbing instances, existence of a witness admitting an
+infinite safe continuation is decidable, including arbitrary pre-final loops,
+using a finite periodic-suffix monitor.
+
+**Status / scope.** `WRITTEN PROOF + REPRO`; `NO_INFINITE_EXTENSION` does not
+mean unrestricted `NO`, because terminal witnesses remain possible.
+
+**Record.** [Full statement and proof](../notes/2026-09-04-denials-and-continuations.md).
+
+<a id="c030"></a>
+
+### C030 — Terminal-final abstract instances are realizable
+
+**Statement.** Every `k`-state binary terminal-final BorderAvoid instance has
+an always-satisfiable normalized subtype realization on `2k+1` variables,
+preserving exactly its witness words and budgets.
+
+**Status / scope.** `WRITTEN PROOF + REPRO`; arbitrary flags and `Bad` are
+allowed, and every accepting state must be terminal.
+
+**Record.** [Full statement and proof](../notes/2026-09-05-terminal-realization.md).
+
+<a id="c031"></a>
+
+### C031 — Terminal-final decidability equivalence
+
+**Statement.** Terminal-final BorderAvoid and normalized Problem 1.7 have
+equivalent decidability through C030, C029, and the audited forward bridge.
+
+**Status / scope.** `WRITTEN PROOF`; this is not a complexity equivalence or a
+full converse for arbitrary BorderAvoid annotations.
+
+**Record.** [Full statement and proof](../notes/2026-09-05-terminal-realization.md).
+
+<a id="c032"></a>
+
+### C032 — A nonregular actual terminal language
+
+**Statement.** A nine-variable normalized system has exact terminal separating
+language `0^m 1 0^(n+1) 1` for `n>=m>=0`, and this language is nonregular.
+
+**Status / scope.** `WRITTEN PROOF + REPRO`; this rules out a finite automaton
+recognizing all such witnesses, not a decision procedure for their existence.
+
+**Record.** [Full statement and proof](../notes/2026-09-05-terminal-realization.md).
+
+<a id="c033"></a>
+
+### C033 — Presburger decision for fixed skeletons and flat terminal graphs
+
+**Statement.** Fixed word skeletons with unbounded nonnegative exponents have
+an exact Presburger translation; flat terminal candidate graphs have a finite
+complete skeleton cover and hence a decision procedure.
+
+**Status / scope.** `WRITTEN PROOF + REPRO`; practical solver caps retain
+`UNKNOWN`, and the result does not cover nonflat terminal graphs.
+
+**Record.** [Full statement and proof](../notes/2026-09-05-terminal-arithmetic.md).
+
+<a id="c034"></a>
+
+### C034 — Complete four-state terminal census
+
+**Statement.** All normalized binary terminal-final instances with at most four
+states are decided by exhaustive census; successful budget is at most two and
+witness length at most four, both sharp.
+
+**Status / scope.** `REPRO`; the finite census uses audited Python graph
+emptiness and a written normalization argument, and gives no bound for larger
+instances.
+
+**Record.** [Full statement and proof](../notes/2026-09-05-four-state-terminal.md).
+
+<a id="c035"></a>
+
+### C035 — Nonflat edge support can be necessary
+
+**Statement.** A six-state, two-flag terminal instance has exact witness
+language `0 (0^r 1, r>=2)^+ 101`; every witness uses a nonflat edge support.
+
+**Status / scope.** `WRITTEN PROOF + REPRO`; C030 gives a 13-variable subtype
+realization. The result refutes flat edge-subautomata as a complete cover, not
+richer bounded skeletons.
+
+**Record.** [Full statement and proof](../notes/2026-09-05-nonflat-overlap.md).
+
+<a id="c036"></a>
+
+### C036 — Terminal suffix agreements cannot merge
+
+**Statement.** Two agreeing suffix occurrences on a terminal accepted run
+cannot merge at any aligned position; suffix-prefix chains have height at most
+`k`.
+
+**Status / scope.** `WRITTEN PROOF + REPRO`; terminal acceptance is essential,
+and this gives no bound on suffix lengths or witness lengths.
+
+**Record.** [Full statement and proof](../notes/2026-09-05-nonflat-overlap.md).
+
+<a id="c037"></a>
+
+### C037 — Last-flag overlap certificate
+
+**Statement.** If the productive synchronized graph after the last flagged pair
+is acyclic, an effective `H` makes `Witness` equal `Necessary(H,0)` on each
+final slice.
+
+**Status / scope.** `WRITTEN PROOF + REPRO`; `H` bounds shortest violation
+detection, not the successful budget `B`. Cyclic residuals remain `UNKNOWN`.
+
+**Record.** [Full statement and proof](../notes/2026-09-05-nonflat-overlap.md).
+
+<a id="c038"></a>
+
+### C038 — Terminal violations have bounded overlap exponent
+
+**Statement.** For a terminal accepted run, a suffix violation with gap `d`
+satisfies `floor((n-i)/d) <= k-1`; its periodic suffix has at most `k-1`
+complete copies of the gap word, plus a prefix remainder.
+
+**Status / scope.** `WRITTEN PROOF + REPRO`; the gap word can still be
+arbitrarily long, and this is not a finite witness-length or decision bound.
+
+**Record.** [Full statement and proof](../notes/2026-09-05-terminal-period-bound.md).
+
+<a id="c039"></a>
+
+### C039 — Forward-closed source-border bound
+
+**Statement.** In a deterministic `n`-state terminal automaton with no positive
+return to start `p`, if nonfinal target set `T` is forward closed before
+terminal acceptance, a `T`-unbordered accepted word exists iff one exists of
+length at most `6n+1`.
+
+**Status / scope.** `WRITTEN PROOF + REPRO`; this is a written adaptation of
+Anderson et al.'s theorem for the forward-closed class, not a general flag
+theorem.
+
+**Record.** [Full statement and proof](../notes/2026-09-05-source-border-anderson.md).
+
+<a id="c040"></a>
+
+### C040 — Source-wise impossibility and pruning certificate
+
+**Statement.** Applying C039 to one source state's outgoing flags gives a
+sound all-state impossibility/pruning certificate: proved-impossible states
+may be added to `Bad` before rerunning C037, and the source-only
+forward-closed class is decided exactly.
+
+**Status / scope.** `WRITTEN PROOF + REPRO`; forward closure is required, and
+resource caps preserve `UNKNOWN`.
+
+**Record.** [Full statement and proof](../notes/2026-09-05-source-border-anderson.md).
+
+<a id="c041"></a>
+
+### C041 — Exact geometry of a word's sufficient budget
+
+**Statement.** For a witness `w` of length `n`, `word_budget(w)` equals
+`min_{1<=m<=n+1}(m-1+g_m)`, where `g_m` is the start gap from the earliest
+occurrence of the terminal suffix of length `m` to its terminal copy for
+`1<=m<=n`; the `m=n+1` term is the convention value `n`.
+
+**Status / scope.** `WRITTEN PROOF` for the exact word-level identity. It
+reframes the terminal `B<=k-2` candidate but does not prove that candidate.
+
+**Record.** [Full statement and proof](../notes/2026-09-05-terminal-budget-geometry.md).
+
+<a id="c042"></a>
+
+### C042 — Source viability plus a residual cycle does not imply YES
+
+**Statement.** A five-state terminal instance can satisfy every live
+nonfinal state's own outgoing flags while the full multi-source instance is
+exactly `NO`, certified by an empty `Necessary(2,0)` automaton.
+
+**Status / scope.** `COUNTEREXAMPLE`; it refutes the source-only-viability
+dichotomy for cyclic residuals. The exact instance and finite certificate are
+in the linked record.
+
+**Record.** [Full statement and proof](../notes/2026-09-05-terminal-budget-geometry.md).
+
+<a id="c043"></a>
+
+### C043 — Proper terminal violations have bounded fractional-power form
+
+**Statement.** After boundary exclusions, every proper terminal violation has
+the form `A(uv)^s u` with `1<=s<=k-1`, together with the stated flagged endpoint
+and acceptance conditions.
+
+**Status / scope.** `WRITTEN PROOF`; bounded checks are recorded in the linked
+note. The factors `u` and `v` remain unbounded, so this gives no finite
+automaton or decision procedure by itself.
+
+**Record.** [Full statement and proof](../notes/2026-09-05-profile-and-fractional-power.md).
+
+<a id="c044"></a>
+
+### C044 — Budget bound equals agreement-profile domination
+
+**Statement.** For each `k>=2`, the sharp terminal budget statement `TB(k)` is
+equivalent to the agreement-profile statement `PD(k)`: every `k`-state
+terminal DFA and every boundary-safe accepted word `w` have a boundary-safe
+accepted replacement `v` with `A(v) subseteq A(w)` and budget at most `k-2`.
+
+**Status / scope.** `WRITTEN PROOF`; C034 establishes `TB(k)` and hence
+`PD(k)` for `k<=4`, while the budget statement remains open for larger `k`.
+The linked bounded searches are falsification evidence only.
+
+**Record.** [Full statement and proof](../notes/2026-09-05-profile-and-fractional-power.md).
+
+<a id="c045"></a>
+
+### C045 — Unbordered gap deletion is profile-safe
+
+**Statement.** In a partial deterministic automaton, if an accepted word
+`w=Xsys` ends in a terminal final, `s` is nonempty and unbordered, the state
+after the first `s` equals the state before the terminal `s` (so `y` is a state
+loop), and the shortened word `v=Xss` has a unique terminal suffix of length
+`|s|+1`, then `v` is accepted, `A(v) subseteq A(w)`, and
+`word_budget(v)<=|s|`.
+
+**Status / scope.** `WRITTEN PROOF + REPRO`; this is a local theorem under its
+three hypotheses. The uniqueness condition is essential, and Q003 remains a
+conjecture.
+
+**Record.** [Full statement and proof](../notes/2026-09-05-unbordered-gap-normalization.md).
 
 ## Explicitly unestablished
 

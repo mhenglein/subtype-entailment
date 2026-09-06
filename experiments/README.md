@@ -4,7 +4,8 @@ This index gives stable IDs for executable checks. Each entry records the
 exact command, its scope and limits, the claims it informs, and the JSON keys
 that carry its result.
 
-Run the current suite from the repository root with:
+`run_experiments.py` is the original bundled runner, not the whole experiment
+index. Run that core check from the repository root with:
 
 ```text
 python3 experiments/run_experiments.py
@@ -14,6 +15,12 @@ The command writes [results/independent-checks.json](../results/independent-chec
 and prints the same JSON. The implementation uses only the Python standard
 library. See [border_lab.py](border_lab.py) for the executable predicates and
 the finite reverse-reading automaton.
+
+The current GitHub Actions workflow covers the pre-continuation E001-E015
+commands, including the separate checks listed below E008. It does not run
+E016-E028 or the additional unnumbered checks at the end of this index. Run
+each later command separately when its record says the executable and result
+are present.
 
 ## Result rules
 
@@ -492,6 +499,230 @@ both direct witness predicates.
 This refutes the universal extension of `B<=max(0,|K|-2)`. It establishes no
 asymptotic lower bound, subtype realization, or general impossibility result.
 
+## Continuation and terminal checks
+
+These entries extend E001-E015. They keep the continuation's written proofs,
+bounded replays, and missing artifacts distinct. The detailed research records
+remain the source for the mathematical arguments; this index is the command
+and evidence map for agents.
+
+<a id="e016"></a>
+
+### E016 — Exact budget-growth family
+
+| Field | Record |
+|---|---|
+| Command | `python3 experiments/check_budget_growth_family.py` |
+| Detail | [Budget-growth proof and limits](../notes/2026-09-04-budget-growth-family.md); [continuation record](../research/CONTINUATION.md) |
+| Evidence | [Imported checkpoint](../results/continuation-import.json), keys `E016`: 28 parameter pairs, every lower sufficient split exhausted, 70,680 direct shortest-word comparisons, cap 200,000, zero unknown results. |
+| Artifact status | The executable is present. The per-run `results/budget-growth-family.json` is absent in this checkout; the linked checkpoint is the saved evidence. |
+
+The all-parameter `B=2k-4` result is supported by the written proof, not by
+extrapolating the finite replay. The instances are abstract BorderAvoid
+instances; no subtype realization is claimed.
+
+<a id="e017"></a>
+
+### E017 — Exact three-state decision
+
+| Field | Record |
+|---|---|
+| Command | `python3 experiments/three_state_decision.py` |
+| Detail | [Three-state proof and limits](../notes/2026-09-04-three-state.md); [continuation record](../research/CONTINUATION.md) |
+| Evidence | [Imported checkpoint](../results/continuation-import.json), keys `E017`: all 65,536 normalized binary instances, 36,640 YES and 28,896 NO, maximum negative graph size 65, maximum constructed length 6. |
+| Artifact status | The executable is present. The per-run `results/three-state-exhaustive.json` is absent in this checkout; the linked checkpoint is the saved evidence. |
+
+The exact theorem is limited to at most three abstract states. Larger inputs
+are not decided by a six-letter cutoff.
+
+<a id="e018"></a>
+
+### E018 — Summary absorption and denial-free decision
+
+| Field | Record |
+|---|---|
+| Command | `python3 experiments/check_summary_absorption.py` |
+| Detail | [Summary absorption proof and limits](../notes/2026-09-04-summary-absorption.md); [continuation record](../research/CONTINUATION.md) |
+| Evidence | [Imported checkpoint](../results/continuation-import.json), keys `E018`: seed `2026090421`, 400 systems, 281 YES and 119 NO, maximum eight summary classes, zero invariant violations. |
+| Artifact status | The executable is present. The per-run `results/summary-absorption.json` is absent in this checkout; the linked checkpoint is the saved evidence. |
+
+This is an independent denial-free normalized implementation. It is not a
+rerun of the complete subtype bridge, and no unrestricted decision follows.
+
+<a id="e019"></a>
+
+### E019 — Denial-aware safe continuations
+
+| Field | Record |
+|---|---|
+| Command | `python3 experiments/check_unrestricted_continuation.py` |
+| Detail | [Denial-aware continuation proof](../notes/2026-09-04-denials-and-continuations.md); [continuation record](../research/CONTINUATION.md) |
+| Evidence | [Saved result](../results/unrestricted-continuation.json): 500 generated systems, 24,129 full/reduced/canonical comparisons, 45,615 periodic predictions, and the actual terminal obstruction. |
+| Status | Reproducible standard-library check; written proof, not Lean-checked. |
+
+`NO_EXTENSION` and `NO_INFINITE_EXTENSION` are local results. They do not
+classify terminal witnesses or solve unrestricted Problem 1.7.
+
+<a id="e020"></a>
+
+### E020 — Infinite-safe-continuation monitor
+
+| Field | Record |
+|---|---|
+| Command | `python3 experiments/check_infinite_extensions.py` |
+| Detail | [Infinite-extension proof and limits](../notes/2026-09-04-denials-and-continuations.md); [continuation record](../research/CONTINUATION.md) |
+| Evidence | [Saved result](../results/infinite-extensions.json): 1,500 abstract instances, 400 additional subtype systems, 305,010 monitor comparisons, and 502 exact small-state checks. |
+| Status | Reproducible standard-library check; written proof, not Lean-checked. |
+
+The theorem covers witnesses with an infinite safe continuation. A negative
+monitor result does not exclude a witness with only a finite continuation.
+
+<a id="e021"></a>
+
+### E021 — Terminal automaton realization
+
+| Field | Record |
+|---|---|
+| Command | `python3 experiments/check_terminal_realization.py` |
+| Detail | [Terminal continuation](../research/TERMINAL.md); [realization proof](../notes/2026-09-05-terminal-realization.md) |
+| Evidence | [Saved result](../results/terminal-realization.json): 166 instances, 10,458 word comparisons, 83,664 budget-predicate comparisons, 2,416 summary identities, and 2,985 exact canonical-model checks. |
+| Status | Reproducible check for the written terminal realization; not Lean-checked. |
+
+The construction covers binary terminal-final abstract automata with arbitrary
+flags and Bad states. It preserves words and budgets through `2*k+1`
+variables under the recorded construction.
+
+<a id="e022"></a>
+
+### E022 — Nonregular terminal separating language
+
+| Field | Record |
+|---|---|
+| Command | `python3 experiments/check_terminal_nonregular.py` |
+| Detail | [Terminal continuation](../research/TERMINAL.md); [realization and nonregularity proof](../notes/2026-09-05-terminal-realization.md) |
+| Evidence | [Saved result](../results/terminal-nonregular.json): 2,047 words through length 10, 266 exact canonical models, 441 exponent pairs, and 465 distinguishability pairs. |
+| Status | Reproducible bounded check plus written all-length nonregularity proof; not Lean-checked. |
+
+The result rules out a finite automaton for the displayed witness language. It
+does not rule out a finite decision procedure for whether a witness exists.
+
+<a id="e023"></a>
+
+### E023 — Presburger arithmetic for flat terminal skeletons
+
+| Field | Record |
+|---|---|
+| Command | `python3 experiments/check_terminal_arithmetic.py` |
+| Detail | [Terminal continuation](../research/TERMINAL.md); [arithmetic proof and limits](../notes/2026-09-05-terminal-arithmetic.md) |
+| Evidence | [Saved result](../results/terminal-arithmetic.json): 164 fixed-exponent formula cases, 8,188 flat-language comparisons, and guarded unbounded solver fixtures using Z3 4.13.3.0. |
+| Environment | The optional Z3 shared library is required for the recorded arithmetic run. Missing backends or resource caps must remain `UNKNOWN`. |
+
+The proof supplies a complete cover only for flat terminal candidate graphs.
+The executable check has no Lean or solver proof certificate.
+
+<a id="e024"></a>
+
+### E024 — Complete four-state terminal census
+
+| Field | Record |
+|---|---|
+| Command | `python3 experiments/check_four_state_terminal.py` |
+| Detail | [Terminal continuation](../research/TERMINAL.md); [four-state census proof and limits](../notes/2026-09-05-four-state-terminal.md) |
+| Evidence | [Saved result](../results/four-state-terminal.json): all 65,536 normalized cases, 45,430 YES, 20,106 NO, zero unresolved cases, and maximum witness length four. |
+| Status | Complete finite census under the audited Python graph certificates; not Lean-checked. |
+
+This exact result is limited to normalized binary terminal-final instances with
+at most four states. It does not establish the terminal budget candidate in
+general.
+
+<a id="e025"></a>
+
+### E025 — Nonflat overlap certificate
+
+| Field | Record |
+|---|---|
+| Command | `python3 experiments/check_nonflat_overlap.py` |
+| Detail | [Nonflat continuation](../research/NONFLAT.md); [proof and failed flat-cover route](../notes/2026-09-05-nonflat-overlap.md) |
+| Evidence | [Saved result](../results/nonflat-overlap.json): 65,536 four-state cases (45,158 YES, 20,090 NO, 288 UNKNOWN), 600 seeded instances, 62,220 predicate comparisons, 8,191 obstruction words, 521 canonical models, and all 128 edge restrictions. |
+| Status | Reproducible standard-library check for the acyclic last-flag certificate; cyclic residuals remain `UNKNOWN`. |
+
+The new certificate cross-checks cases already decided by E024. It does not
+provide a general terminal bound. The optional arithmetic backend is imported
+by helper code but is not invoked by this experiment.
+
+<a id="e026"></a>
+
+### E026 — Bounded exponent of terminal suffix violations
+
+| Field | Record |
+|---|---|
+| Command | `python3 experiments/check_terminal_period_bound.py` |
+| Detail | [Period-bound proof and limits](../notes/2026-09-05-terminal-period-bound.md) |
+| Evidence | [Saved result](../results/terminal-period-bound.json): 2,000 random terminal automata, 11,631 accepted words, 11,918 flagged agreements, maximum observed full-period count 6, and the sharp unary family for `k=2..8`. |
+| Status | Finite supporting evidence for a written all-input lemma; not Lean-checked. |
+
+The lemma bounds the number of aligned copies for a fixed gap. It does not
+bound the gap, witness length, or successful budget.
+
+<a id="e027"></a>
+
+### E027 — Forward-closed source-border certificate
+
+| Field | Record |
+|---|---|
+| Command | `PYTHONPATH=experiments python3 experiments/check_terminal_anderson.py` |
+| Detail | [Source-border continuation](../research/ANDERSON.md); [proof and limitations](../notes/2026-09-05-source-border-anderson.md) |
+| Evidence | [Saved result](../results/terminal-anderson.json): all 288 E025 cyclic leftovers, 16 certified negative and 272 positive cases left `UNKNOWN`; 700 seeded soundness instances and 315,840 direct short-word checks with zero false impossibility certificates. |
+| Status | Reproducible soundness/pruning check for the forward-closed source class; not Lean-checked. |
+
+The `6n+1` adaptation is a conditional certificate. A cyclic residual or a
+non-forward-closed target set remains unresolved.
+
+<a id="e028"></a>
+
+### E028 — Terminal budget-candidate falsification search
+
+| Field | Record |
+|---|---|
+| Command | No committed executable command is recorded. |
+| Detail | [Terminal budget geometry](../notes/2026-09-05-terminal-budget-geometry.md) |
+| Evidence | The note records deterministic standard-library runs for `k=5` (20,000 instances), `k=6` (15,000), and `k=7` (4,000), with no searched-range counterexample. |
+| Artifact status | The executable and result JSON are absent in this checkout. Do not treat the note-only counts as current `REPRO` output, and do not read an empty searched budget range as a `NO` classification. |
+
+E028 is useful falsification evidence, but it is not currently reproducible
+from a committed command. Add an executable and compact result artifact before
+reusing it as a fresh run.
+
+## Additional checks without E IDs
+
+These existing scripts are indexed for discovery without assigning new
+experiment IDs. Their status follows the saved artifact and the detailed
+record; no new `REPRO` claim is inferred from the command alone.
+
+### C045 — Unbordered-gap normalization
+
+| Field | Record |
+|---|---|
+| Command | `python3 experiments/check_unbordered_gap.py` |
+| Detail | [Unbordered-gap proof and limits](../notes/2026-09-05-unbordered-gap-normalization.md) |
+| Evidence | [Saved result](../results/unbordered-gap.json): seed `202609051817`, 20,000 random tables per `k=3..7`, 160 pure unbordered strings, and the earliest-copy failure regression. |
+| Status | Existing bounded C045 check; no E ID is assigned here. |
+
+The saved result supports the implementation only. C045 rests on its written
+proof and its stated terminal-uniqueness hypothesis.
+
+### Q003 — Strict agreement-profile descent
+
+| Field | Record |
+|---|---|
+| Command | `python3 experiments/check_profile_descent.py` |
+| Detail | [Q003 record](../research/conjectures/Q003.md); [profile-descent derivation](../notes/2026-09-05-unbordered-gap-normalization.md) |
+| Evidence | The script is present and would write `results/profile-descent.json`, but that result file is absent in this checkout. The Q003 note reports prior bounded evidence; this index does not assign an E ID or current `REPRO` status. |
+| Status | Open conjecture with bounded falsification evidence only; no all-length result. |
+
+Do not infer a current run from the script's presence or from the note-only
+counts. Preserve Q003 as an open hypothesis.
+
 ## Not yet reproducible or not yet run
 
 These items have no executed experiment ID. Do not assign them `REPRO` status
@@ -504,12 +735,14 @@ until a committed command and compact output exist.
   exhaustive two-state check at the same word-length limit. It uses the new
   context criteria and two witness predicates; it does not recreate every
   historical assertion in the earlier border-audit note.
-- **Constructed hard-budget families.** E014/E015 find proper-border growth
-  and a six-state budget-five example. No construction with stronger
-  asymptotic growth has been established.
-- **SEP-derived instance pipeline.** No executable experiment yet proves that
-  the abstract summary automata and flag relations generated by `W` satisfy a
-  structural restriction strong enough to bound `B(I)`.
+- **Universal terminal bound.** E016 supplies an abstract `2k-4` family;
+  E024 is complete only through four states, and E028 has no committed
+  reproducer. No general terminal budget bound or Q002/Q003 proof is
+  established.
+- **General subtype decision.** E018-E020 cover restricted summary branches,
+  while E021 shows the terminal branch can realize arbitrary abstract flags.
+  No executable experiment establishes a complete decision procedure for all
+  normalized subtype inputs.
 
 ## Adding an experiment
 
