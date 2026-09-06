@@ -6,7 +6,33 @@ The unrestricted Problem 1.7 is not settled. Preserve arbitrary, possibly
 infinite type-tree semantics, exact quantifiers, and proof/evidence levels.
 This is compressed scientific memory, not a replacement for the linked proofs.
 
-## Latest continuation: exact convolution and a negative-method obstruction
+## Latest continuation: universal run normalization
+
+Proposed C054-C055 (written proofs and tests, pending independent review;
+not Lean-checked) apply to arbitrary binary terminal instances, without the
+marker-format restrictions of C052-C053. Any defined terminal accepted word
+with r maximal homogeneous runs has a no-longer replacement preserving its
+EXACT agreement profile, visited states, run-boundary states, and run letters.
+Writing H=(k+1)^2, its length is at most r^2(H+P), where P is the maximum of
+LCMs of unary cycles reached from actual run starts. Uniformly,
+P<=min(lcm(1,...,k),k^r). Sorted-gap compression, not independent per-run
+truncation, preserves every relevant tail comparison.
+
+The full profile can be checked in polynomial time directly on binary-encoded
+run counts. Witness existence with a supplied UNARY run bound R is NP-complete;
+for each fixed R it has a polynomial-time enumeration (degree depends on R).
+NO_WITHIN_RUN_BOUND is not unrestricted NO, and practical caps remain UNKNOWN.
+This does not establish an NP upper bound for unrestricted Problem 1.7.
+
+The missing parameter is the number of runs. C050's unique counting witness
+has exactly (d+1)(d*2^d+2) runs on polynomial-size input, so no polynomial run
+bound is possible. No computable all-state run bound is proved in this update.
+
+[Proposed claims and E035](research/RUNS.md),
+[full proof](notes/2026-09-06-run-normalization.md),
+[saved results](results/run-normalization.json).
+
+## Previous continuation: exact convolution and a negative-method obstruction
 
 **Proposed C051 (written proof + tests; independent review pending):** a
 five-state, three-flag flat terminal instance has no witnesses although EVERY
@@ -101,16 +127,20 @@ the flagged terminal path 00 becomes valid after encoding/appending a marker.
 
 ## Current frontier
 
-Extend complete alignment/decomposition beyond the automatic bounded-marker
-class, or find a different complete symbolic decision. C052 now handles all
-logical flags once data tails align; C053 proves coverage without supplied
-schemas for its explicit input certificate. It does not control marker cycles,
-arbitrary unaligned flags, or all possible terminal inputs. A generic word-
-equation solver does not discharge the universal internal suffix conditions.
+Control the number of maximal homogeneous runs in some witness, or give a
+complete symbolic decision for unbounded alternation. C054 handles all run
+lengths and arbitrary offsets once the finite run sequence is given; it no
+longer requires a marker format. The state-count-only run bound remains
+unproved and cannot be polynomial by C050. The bounded-run NP classification
+must not be promoted to an unrestricted complexity or decidability result.
 
-A012 tracks complete NO certificates and C051's obstruction. A016/A017 track
-finite representations and the convolution/cover machinery. A008/A009 retain
-lower-bound and minimal-witness evidence; A011 tracks exact reductions; A018
-retains formal decision obligations. The [generated tracker](research/README.md)
-holds execution status. Do not promote tests or failed-certificate UNKNOWN
-verdicts into an unrestricted conclusion.
+C052-C053 remain exact alternative algorithms where their bounded-marker
+certificate applies. C051 still rules out necessary-budget emptiness as a
+complete negative semiprocedure. The previous local normalization rules and
+all counterexamples remain compatible with C054; Q002/Q003 remain refuted.
+
+A012 tracks complete NO certificates; A016/A017 track finite representations
+and normalization. A008/A009 retain lower-bound and minimal-witness evidence;
+A011 tracks exact reductions; A018 retains formal decision obligations. The
+[generated tracker](research/README.md) holds execution status. Do not promote
+tests or incomplete bounded searches into an unrestricted conclusion.
