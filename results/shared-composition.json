@@ -1,0 +1,123 @@
+{
+  "status": "PASS",
+  "seed": 2026090660,
+  "counts": {
+    "equation_words": 12218,
+    "equation_annotations": 12218,
+    "regex_checks": 15240,
+    "composition_cases": 60,
+    "associativity_cases": 12,
+    "capture_checks": 1,
+    "two_output_steps": 1,
+    "complete_finite_oracles": 381,
+    "finite_family_words": 1178,
+    "cyclic_tables": 256,
+    "cyclic_word_checks": 780,
+    "canonical_checks": 6,
+    "caps": 1,
+    "nonterminal_oracles": 320,
+    "nonterminal_words": 1225,
+    "nonterminal_analytic": 2
+  },
+  "finite_oracle_verdicts": {
+    "REGULAR_FAMILY_VALID": 97,
+    "COUNTEREXAMPLE": 284,
+    "UNKNOWN": 0
+  },
+  "cyclic_bounded_checks": {
+    "REGULAR_FAMILY_VALID": 215,
+    "COUNTEREXAMPLE": 41,
+    "UNKNOWN": 0
+  },
+  "arbitrary_final_oracles": {
+    "REGULAR_FAMILY_VALID": 65,
+    "COUNTEREXAMPLE": 255,
+    "UNKNOWN": 0
+  },
+  "fixtures": {
+    "infinite_regular_safe_family": {
+      "status": "REGULAR_FAMILY_VALID",
+      "inhabited": true,
+      "word": "1010",
+      "monoid_states": 11,
+      "product_states": 5,
+      "trials": 36,
+      "counterexample_length_bound": 103,
+      "exponent_bound": 4,
+      "reason": "Complete transition-monoid and bounded-period evaluation exhausted",
+      "scope": "Every word in THIS regular family is a witness; not unrestricted witness existence"
+    },
+    "mixed_family": {
+      "status": "COUNTEREXAMPLE",
+      "word": "11010",
+      "factorization": {
+        "head": "1",
+        "u": "",
+        "v": "10",
+        "exponent": 2
+      },
+      "flag": [
+        1,
+        2
+      ],
+      "monoid_states": 11,
+      "product_states": 5,
+      "trials": 10
+    },
+    "all_noflag_candidates": {
+      "status": "REGULAR_FAMILY_VALID",
+      "inhabited": true,
+      "word": "1010",
+      "monoid_states": 11,
+      "product_states": 5,
+      "trials": 0,
+      "counterexample_length_bound": 103,
+      "exponent_bound": 4,
+      "reason": "Complete transition-monoid and bounded-period evaluation exhausted",
+      "scope": "Every word in THIS regular family is a witness; not unrestricted witness existence"
+    },
+    "cap": {
+      "status": "UNKNOWN",
+      "reason": "Transition-monoid cap",
+      "monoid_states": 1,
+      "product_states": 5
+    },
+    "nonterminal_universal": {
+      "status": "REGULAR_FAMILY_VALID",
+      "inhabited": true,
+      "word": "",
+      "monoid_states": 1,
+      "product_states": 1,
+      "trials": 0,
+      "counterexample_length_bound": 3,
+      "exponent_bound": 1,
+      "reason": "Complete transition-monoid and bounded-period evaluation exhausted",
+      "scope": "Every word in THIS regular family is a witness; not unrestricted witness existence"
+    },
+    "nonterminal_period_two": {
+      "status": "COUNTEREXAMPLE",
+      "word": "00",
+      "factorization": {
+        "head": "",
+        "u": "",
+        "v": "0",
+        "exponent": 2
+      },
+      "flag": [
+        0,
+        1
+      ],
+      "monoid_states": 4,
+      "product_states": 3,
+      "trials": 2
+    }
+  },
+  "proof_status": "Written arguments and external word-equation theorem; no Lean or independent review",
+  "scope": "Universal validation of supplied families, not unrestricted existential decision",
+  "dependency_blobs": {
+    "border_lab.py": "1144ae52379e0417772e79582269cacd91c5bc17",
+    "recurrent_residuals.py": "9b7ca541623c6567217c61a04dc8aaec4cb5b73e",
+    "terminal_realization.py": "00b5dbb2ab345fd15db8660e8ae5179b0bfc2969",
+    "denial_bridge.py": "a38a21df533d8853aa34b3b2593d164a4a688447"
+  }
+}

@@ -303,8 +303,8 @@
       "outcome": "inconclusive",
       "owner": null,
       "updated": "2026-09-06",
-      "summary": "Recurrent-reference tests refute content-free suffix merging and literal residual-inclusion termination; shared parameters retain the missing information.",
-      "next_step": "Develop composition of shared-word residual templates and prove existence-preserving closure; do not equate finite profile equality with contextual substitutability.",
+      "summary": "Exact shared-word composition and universal family checking; generic template iteration encodes PCP, so unrestricted saturation needs a suffix-specific invariant.",
+      "next_step": "Find a complete terminating invariant for recurrent suffix relations; do not confuse all-family validity or one bad member with existential witness decision.",
       "record": "research/approaches/A017.md",
       "evidence": [
         "notes/2026-09-04-minimal-witness-structure.md",
@@ -316,7 +316,13 @@
         "notes/2026-09-06-recurrent-residuals.md",
         "experiments/recurrent_residuals.py",
         "experiments/check_recurrent_residuals.py",
-        "results/recurrent-residuals.json"
+        "results/recurrent-residuals.json",
+        "notes/2026-09-06-shared-word-composition.md",
+        "experiments/shared_word_templates.py",
+        "experiments/regular_family_safety.py",
+        "experiments/check_shared_composition.py",
+        "results/shared-composition.json",
+        "results/shared-composition-smt.json"
       ],
       "issue": null
     },

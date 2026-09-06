@@ -10,6 +10,41 @@ Detailed proofs and evidence live in `research/claims.md`, approach histories, e
 
 Decide Problem 1.7: subtype entailment over bottom and binary product for arbitrary, possibly infinite trees. The unrestricted problem remains open.
 
+## Latest main-branch continuation: shared-word relations
+
+The scoped A017 attempt based on `0318ff7` now provides exact finite
+composition of shared-word templates and a decidable universal verification
+problem: does EVERY instantiation of a supplied family produce a witness?
+A violation has the word-equation form w=x d z, d z=z t with regular constraints
+locating the flagged states. Classical regular-constrained word-equation
+solvability supplies the theoretical decision; the optional Z3 wrapper is
+incomplete and retains UNKNOWN, including four recorded infinite positive cases.
+
+A separate finite transition-monoid algorithm completely checks regular
+families, including arbitrary nonterminal accepting states. It certifies an
+infinite recurrent-target witness family, and returns a bad member for the
+broader candidate family WITHOUT implying that no witness exists. Empty
+families are explicitly distinguished from inhabited positive certificates.
+
+Generic iteration of these relations cannot be assumed decidable: two-output
+append relations already encode Post correspondence. This is not a reduction
+to BorderAvoid. The missing step is an effective, complete iteration invariant
+specific to actual recurrent suffix obligations. Universal family validation
+and exact finite composition do not settle unrestricted witness existence.
+
+[Full proof, dependencies and limitations](notes/2026-09-06-shared-word-composition.md),
+[prior residual counterexamples](notes/2026-09-06-recurrent-residuals.md),
+[core checks](results/shared-composition.json),
+[optional SMT checks](results/shared-composition-smt.json).
+New arguments are written and tested, not independently reviewed or Lean-checked.
+The partial working snapshot did not support full repository CI/link validation.
+
+Scientific branches remain separate; this update does not merge their proofs
+or promote their evidence levels. The [campaign](research/TEN_AGENT_CAMPAIGN.md)
+pins those branches and records the Q002/Q003 counterexamples missing from
+older main-branch Q records. Do not treat an older OPEN label as support for
+using either statement as a premise.
+
 ## Established / strongest current results
 
 - The top-free characterization has been audited and supports canonical regular countermodels under its stated satisfiability premise.
@@ -64,7 +99,9 @@ The later profile route is recorded in [Q002](research/conjectures/Q002.md)
 and its stronger descent conjecture [Q003](research/conjectures/Q003.md).
 Q003 would imply Q002. C044 relates Q002 to the sharp terminal budget bound;
 turning that into a subtype decision also needs the exact search and reduction
-results at their stated evidence levels. Both conjectures remain open.
+results at their stated evidence levels. Their main-branch records retain older
+OPEN labels; the campaign links later branch refutations awaiting independent
+review/integration. Do not use either conjecture as a premise.
 C045 supplies a restricted deletion lemma, not a proof of Q003. The failed
 single-loop version of Q003 is recorded with the conjecture.
 
