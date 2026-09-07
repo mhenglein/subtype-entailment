@@ -1,0 +1,1 @@
+This checkpoint is intentionally scoped. It records the exact terminal bad-language decomposition and the next proof target, but does not promote an unrestricted decidability claim. Start at `research/TERMINAL_BAD_LANGUAGE.md`.
