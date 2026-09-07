@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "date": "2026-09-07",
+  "seed": 2026090701,
+  "corpus_entries": 852,
+  "words_checked": 435372,
+  "admissible_candidates": 2630,
+  "bad_accepted_candidates": 1770,
+  "representative_proper_violations": {
+    "non_overlap": 407,
+    "overlap": 22
+  },
+  "all_proper_violations": {
+    "non_overlap": 749,
+    "overlap": 32
+  },
+  "maximum_observed_overlap_exponent": 4,
+  "decomposition_mismatches": 0,
+  "proof_status": "Written all-length argument; finite regression is supporting evidence only; not Lean-checked or independently reviewed",
+  "scope": "Terminal binary BorderAvoid proper violations. No unrestricted containment/decision theorem is claimed."
+}
