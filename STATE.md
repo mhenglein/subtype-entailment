@@ -1,6 +1,6 @@
 # Subtail — current research state
 
-Navigation updated: 2026-09-06; scientific evidence remains at its linked recorded revisions.
+Navigation updated: 2026-09-07; scientific evidence remains at its linked recorded revisions.
 
 This is the compressed scientific memory of the project. Read this after `research/problem.md` and before starting new work. It answers: **what do we currently know, what has failed, and what is the highest-value unresolved question?**
 
@@ -10,7 +10,36 @@ Detailed proofs and evidence live in `research/claims.md`, approach histories, e
 
 Decide Problem 1.7: subtype entailment over bottom and binary product for arbitrary, possibly infinite trees. The unrestricted problem remains open.
 
-## Latest main-branch continuation: shared-word relations
+## Latest main-branch continuation: exact realizable last-flag spectra
+
+The September 7 A017 continuation decides whether the lengths of ACTUAL
+last-aligned-flag comparisons are bounded. A joint finite word action on
+single states and synchronized pairs retains one common word assignment;
+terminality bounds the periodic exponent. The resulting length spectrum has
+an effective unary-regular presentation. The uncapped analysis computes its
+exact maximum H, or returns a pumping certificate proving it unbounded.
+
+A finite spectrum makes Witness exactly Necessary(H,0), strictly extending
+the older acyclic pair-graph certificate. A five-state example has H=1 even
+though its pair graph has a productive cycle; the solver returns 100.
+Unbounded spectra are NOT existential NO certificates. A seven-state NO
+example has unbounded last-aligned comparisons but a one-letter detection
+bound because another gap supplies a shorter violation in every candidate.
+
+The next distinction is global minimum violation length versus last-aligned
+comparison length. Even deciding boundedness of those global minima would
+not cover the known NO example defeating every finite necessary budget.
+Different comparisons must still be coordinated inside the SAME word.
+
+[Scoped record and commands](research/LASTFLAG_SPECTRUM.md),
+[proof and limitations](notes/2026-09-07-realizable-lastflag-spectrum.md),
+[results](results/lastflag-spectrum.json).
+Written proofs and independent-predicate tests; independent mathematical
+review pending, not Lean-checked. The original core replay is byte-identical.
+No full repository CI or global link scan was run from the partial snapshot.
+Other scientific branches are not merged or promoted by this continuation.
+
+## Previous main-branch continuation: shared-word relations
 
 The scoped A017 attempt based on `0318ff7` now provides exact finite
 composition of shared-word templates and a decidable universal verification

@@ -302,9 +302,9 @@
       "status": "tried",
       "outcome": "inconclusive",
       "owner": null,
-      "updated": "2026-09-06",
-      "summary": "Exact shared-word composition and universal family checking; generic template iteration encodes PCP, so unrestricted saturation needs a suffix-specific invariant.",
-      "next_step": "Find a complete terminating invariant for recurrent suffix relations; do not confuse all-family validity or one bad member with existential witness decision.",
+      "updated": "2026-09-07",
+      "summary": "Exact realizable last-aligned comparison spectra are decidable; finite spectra strengthen the pair-graph certificate, while unboundedness is not an existential NO verdict.",
+      "next_step": "Coordinate different-gap comparisons in one word; distinguish global minimum violation bounds from last-aligned spectra and retain the all-budget NO obstruction.",
       "record": "research/approaches/A017.md",
       "evidence": [
         "notes/2026-09-04-minimal-witness-structure.md",
@@ -322,7 +322,12 @@
         "experiments/regular_family_safety.py",
         "experiments/check_shared_composition.py",
         "results/shared-composition.json",
-        "results/shared-composition-smt.json"
+        "results/shared-composition-smt.json",
+        "research/LASTFLAG_SPECTRUM.md",
+        "notes/2026-09-07-realizable-lastflag-spectrum.md",
+        "experiments/lastflag_spectrum.py",
+        "experiments/check_lastflag_spectrum.py",
+        "results/lastflag-spectrum.json"
       ],
       "issue": null
     },

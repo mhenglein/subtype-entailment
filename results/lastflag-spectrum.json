@@ -1,0 +1,536 @@
+{
+  "base_main": "8e6c2e6c13754436871ff440cd52cd3e60294a74",
+  "seed": 2026090719,
+  "status": "PASS",
+  "proof_status": "WRITTEN; independent review pending; not Lean-checked",
+  "counts": {
+    "action_class_checks": 5617,
+    "action_generator_pairs": 746,
+    "action_lasso_checks": 15354,
+    "attained_maximum_certificates": 133,
+    "complete_acyclic_accepted_words": 449,
+    "complete_acyclic_oracles": 240,
+    "exhaustive_small_instances": 1034,
+    "fixture_word_checks": 24570,
+    "old_certificate_subsumptions": 248,
+    "pumping_instances": 40,
+    "random_instances": 600,
+    "random_word_checks": 153000,
+    "scope_and_cap_regressions": 9,
+    "small_word_checks": 263670,
+    "unbounded_but_short_detectable_family": 40
+  },
+  "statuses": {
+    "acyclic_NO": 114,
+    "acyclic_YES": 126,
+    "random_FINITE": 595,
+    "random_UNBOUNDED": 5,
+    "small_NO": 464,
+    "small_YES": 570
+  },
+  "fixtures": {
+    "strict_five_state": {
+      "delta": [
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          -1,
+          -1
+        ]
+      ],
+      "flags": [
+        [
+          0,
+          1
+        ]
+      ],
+      "final": [
+        4
+      ],
+      "status": "YES",
+      "word": "100",
+      "analysis": {
+        "status": "FINITE",
+        "slices": [
+          {
+            "status": "FINITE",
+            "H": 1,
+            "monoid_states": 16,
+            "checks": 240,
+            "templates": 1,
+            "maximum_certificate": {
+              "head": "",
+              "u": "",
+              "v": "1",
+              "exponent": 2
+            },
+            "final": 4,
+            "local_to_input": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ]
+          }
+        ],
+        "H": 1
+      },
+      "searches": [
+        {
+          "status": "YES",
+          "word": "100",
+          "states": 12,
+          "final": 4
+        }
+      ],
+      "spectrum_through_12": [
+        1
+      ]
+    },
+    "nonflat_positive": {
+      "delta": [
+        [
+          1,
+          -1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          4,
+          -1
+        ],
+        [
+          -1,
+          5
+        ],
+        [
+          -1,
+          -1
+        ]
+      ],
+      "flags": [
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "final": [
+        5
+      ],
+      "status": "YES",
+      "word": "0001101",
+      "analysis": {
+        "status": "FINITE",
+        "slices": [
+          {
+            "status": "FINITE",
+            "H": 2,
+            "monoid_states": 24,
+            "checks": 1104,
+            "templates": 4,
+            "maximum_certificate": {
+              "head": "",
+              "u": "",
+              "v": "01",
+              "exponent": 2
+            },
+            "final": 5,
+            "local_to_input": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        ],
+        "H": 2
+      },
+      "searches": [
+        {
+          "status": "YES",
+          "word": "0001101",
+          "states": 12,
+          "final": 5
+        }
+      ],
+      "spectrum_through_12": [
+        2
+      ]
+    },
+    "nonflat_negative": {
+      "delta": [
+        [
+          1,
+          -1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          4,
+          -1
+        ],
+        [
+          -1,
+          5
+        ],
+        [
+          -1,
+          -1
+        ]
+      ],
+      "flags": [
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "final": [
+        5
+      ],
+      "status": "NO",
+      "analysis": {
+        "status": "FINITE",
+        "slices": [
+          {
+            "status": "FINITE",
+            "H": 2,
+            "monoid_states": 24,
+            "checks": 1656,
+            "templates": 7,
+            "maximum_certificate": {
+              "head": "",
+              "u": "",
+              "v": "01",
+              "exponent": 2
+            },
+            "final": 5,
+            "local_to_input": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        ],
+        "H": 2
+      },
+      "searches": [
+        {
+          "status": "NO",
+          "states": 5,
+          "final": 5
+        }
+      ],
+      "spectrum_through_12": [
+        2
+      ]
+    },
+    "nonregular_positive": {
+      "delta": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          -1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          -1,
+          -1
+        ]
+      ],
+      "flags": [
+        [
+          0,
+          1
+        ]
+      ],
+      "final": [
+        3
+      ],
+      "status": "UNKNOWN",
+      "analysis": {
+        "status": "UNBOUNDED",
+        "slices": [
+          {
+            "status": "UNBOUNDED",
+            "monoid_states": 7,
+            "checks": 3,
+            "templates": 1,
+            "pumping_certificate": {
+              "head": "",
+              "u": "",
+              "v": "01",
+              "exponent": 2,
+              "pump": {
+                "prefix": "0",
+                "loop": "0",
+                "suffix": "1",
+                "factor": "v"
+              }
+            },
+            "final": 3,
+            "local_to_input": [
+              0,
+              1,
+              2,
+              3
+            ]
+          }
+        ]
+      },
+      "searches": [],
+      "spectrum_through_12": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    "necessary_incomplete": {
+      "delta": [
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          -1,
+          3
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          -1,
+          -1
+        ]
+      ],
+      "flags": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "final": [
+        4
+      ],
+      "status": "UNKNOWN",
+      "analysis": {
+        "status": "UNBOUNDED",
+        "slices": [
+          {
+            "status": "UNBOUNDED",
+            "monoid_states": 7,
+            "checks": 9,
+            "templates": 1,
+            "pumping_certificate": {
+              "head": "",
+              "u": "",
+              "v": "10",
+              "exponent": 2,
+              "pump": {
+                "prefix": "1",
+                "loop": "1",
+                "suffix": "0",
+                "factor": "v"
+              }
+            },
+            "final": 4,
+            "local_to_input": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ]
+          }
+        ]
+      },
+      "searches": [],
+      "spectrum_through_12": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    "unbounded_with_short_detection": {
+      "delta": [
+        [
+          -1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          -1
+        ],
+        [
+          -1,
+          4
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          6,
+          -1
+        ],
+        [
+          -1,
+          -1
+        ]
+      ],
+      "flags": [
+        [
+          0,
+          3
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "final": [
+        6
+      ],
+      "status": "UNKNOWN",
+      "analysis": {
+        "status": "UNBOUNDED",
+        "slices": [
+          {
+            "status": "UNBOUNDED",
+            "monoid_states": 16,
+            "checks": 17,
+            "templates": 2,
+            "pumping_certificate": {
+              "head": "",
+              "u": "",
+              "v": "100",
+              "exponent": 2,
+              "pump": {
+                "prefix": "1",
+                "loop": "1",
+                "suffix": "00",
+                "factor": "v"
+              }
+            },
+            "final": 6,
+            "local_to_input": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          }
+        ]
+      },
+      "searches": [],
+      "spectrum_through_12": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    }
+  },
+  "failures": 0,
+  "limits": {
+    "random_monoid_cap": 5000,
+    "random_combination_cap": 2000000,
+    "small_and_random_word_cutoff": 7,
+    "fixture_word_cutoff": 11,
+    "full_repository_ci": false,
+    "lean_build": false
+  }
+}
