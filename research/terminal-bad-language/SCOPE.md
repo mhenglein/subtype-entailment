@@ -1,0 +1,1 @@
+Scope guard: this checkpoint proves an exact decomposition of proper violations in terminal binary BorderAvoid. It does not prove containment decidability, a computable global witness bound, or unrestricted Problem 1.7.
