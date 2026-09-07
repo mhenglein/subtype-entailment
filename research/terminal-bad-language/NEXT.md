@@ -1,0 +1,1 @@
+Next proof target: any computable small-model bound for state-coloured terminal border avoidance, using the one-terminal-copy / bounded-overlap decomposition. See `research/TODO_TERMINAL_COLOURED_BORDER.md`.
