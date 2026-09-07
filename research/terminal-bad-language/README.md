@@ -1,0 +1,1 @@
+Scoped navigation only. The authoritative record is `research/TERMINAL_BAD_LANGUAGE.md`; proof is `notes/2026-09-07-terminal-bad-language-decomposition.md`; checker/result live under `experiments/` and `results/`. No unrestricted decision claim.
