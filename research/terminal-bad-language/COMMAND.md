@@ -1,0 +1,1 @@
+Run `python3 experiments/check_terminal_bad_decomposition.py` from the repository root. The checker writes `results/terminal-bad-language-decomposition.json` and asserts the saved deterministic counts.
