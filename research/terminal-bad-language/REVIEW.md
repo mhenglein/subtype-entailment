@@ -1,0 +1,1 @@
+Independent review checklist: verify non-overlap factorization; verify periodic overlap factorization and terminal nonmerging exponent bound; verify boundary cases; verify the regular-state constraints; verify the containment equivalence; do not promote it to a decision theorem without a containment/small-model proof.
