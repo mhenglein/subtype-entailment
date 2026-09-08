@@ -3,7 +3,7 @@
 Date: 2026-09-08. Continues the regular-decoration barrier by extracting its
 all-length NO proof into a reusable finite certificate rule.
 
-**Status: written proof + exact finite verifier; independent mathematical review pending; not Lean-checked. This is a sufficient NO rule, not a complete calculus and not a solution of Problem 1.7.**
+**Status: written proof + exact finite verifier/synthesizer; independent mathematical review pending; not Lean-checked. This is a sufficient NO rule, not a complete calculus and not a solution of Problem 1.7.**
 
 ## 1. Rule
 
@@ -117,13 +117,38 @@ the complete finite flag families above. Hence `VERIFIED_NO` is an all-language
 finite certificate verdict. Bounded enumeration is used only as an independent
 regression of the implementation.
 
-## 4. Two strict examples
+## 4. Automatic synthesis of M
+
+The certificate need not be supplied by hand. For each binary orientation
+`(a,b)`, `discover_three_way_certificate` computes the finite leading a-orbit
+and first checks that every possible leading exponent reaches one common b-anchor
+`q0`. It then computes
+
+    Good = { q : for every m>=1, delta(q,a^m b a)=final }.
+
+`Good` is effective because every positive a-orbit is finite. The synthesized
+middle DFA is simply the original transition graph, started at `q0`, with
+`Good` as its accepting set. Thus it recognizes the maximal regular collection
+of middle words whose endpoint supports **all** trailing exponents required by
+the three-way theorem.
+
+The exact verifier is then run on this synthesized M. This second stage is
+essential: the maximal middle may destroy the required first-letter property or
+may make `a* b M a+ b a` strictly larger than the true candidate language. Such
+cases return INCONCLUSIVE, never NO. Therefore automatic synthesis is sound:
+its only negative verdict is the already-proved `VERIFIED_NO` certificate.
+
+The search tries both binary orientations. It is a terminating recognizer for a
+nontrivial infinite NO subclass, not a complete NO procedure.
+
+## 5. Two strict examples
 
 ### Six-state regular-marking barrier
 
 For the original barrier use `a=0`, `b=1` and `M=(0+11)*`. Here the leading
 orbit is `{1}`, E is `{2}`, and the trailing orbit is `{3}`. The required flags
-reduce to exactly `(0,3), (0,2), (1,2)`.
+reduce to exactly `(0,3), (0,2), (1,2)`. The automatic synthesizer rediscovers a
+valid middle and returns `VERIFIED_NO` without being given M.
 
 ### Periodic/multi-effect fixture
 
@@ -131,12 +156,17 @@ The checker also uses the exact candidate language
 
     0* 1 (epsilon | 011) 0+ 1 0.
 
-Its middle has two terminal-automaton effects, and one effect has positive
-trailing orbit `2 -> 3 -> 3`. Therefore the former one-step-stabilization rule
-is inapplicable, while the orbit rule verifies NO. This is a strict regression
-for both finite middle effects and nontrivial unary preperiods.
+Its supplied middle has two terminal-automaton effects, and one effect has
+positive trailing orbit `2 -> 3 -> 3`. Therefore the former one-step-stabilization
+rule is inapplicable, while the orbit rule verifies NO. The automatic synthesizer
+also succeeds even though its maximal M may use alternative factorizations of
+the same candidate words. This is a strict regression for finite middle effects,
+nontrivial unary preperiods, and synthesis under nonunique factorization.
 
-## 5. Significance and limit
+A known positive three-state instance is included as a guard: automatic
+synthesis returns INCONCLUSIVE rather than manufacturing a negative proof.
+
+## 6. Significance and limit
 
 This is the first installed NO certificate in this continuation whose
 termination does **not** come from a bounded comparison length, bounded gap,
@@ -150,7 +180,9 @@ So the rule is already a small **affine/residue cut-selector calculus**:
 - Presburger partition: `n<m`, `n=m`, `n>m`;
 - affine selectors: 0, `m-n`, `n-m`;
 - finite residues: encoded by unary transition orbits;
-- arbitrary regular middle: summarized by finitely many transition effects.
+- arbitrary regular middle: summarized by finitely many transition effects;
+- synthesis: a maximal regular middle is derived automatically and validated by
+  exact language equality.
 
 Completeness is not claimed. The natural next generalization is to replace
 single letters `a` by fixed periodic words and then allow several parameterized
@@ -164,7 +196,7 @@ dovetailing its verifier with positive witness enumeration would decide terminal
 BorderAvoid. The regular-decoration barrier does not block this route because
 the certificate may select different violations in different arithmetic cells.
 
-## 6. Reproduction
+## 7. Reproduction
 
 Run
 
@@ -174,7 +206,9 @@ The checker verifies the infinite-language barrier certificate exactly,
 independently compares it with the family parser on all 32,767 binary words
 through length 14, confirms required-flag sensitivity, rejects an enlarged
 middle language, and separately verifies the strict periodic/multi-effect
-fixture with another 32,767 bounded language comparisons.
+fixture with another 32,767 bounded language comparisons. It additionally
+checks automatic synthesis on both NO fixtures and confirms INCONCLUSIVE on a
+known positive instance.
 
 Implementation: `experiments/three_way_cut_certificate.py`.
 Checker: `experiments/check_three_way_cut_certificate.py`.
