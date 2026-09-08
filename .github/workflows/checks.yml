@@ -59,6 +59,12 @@ jobs:
           python3 experiments/check_target_frontier.py
           python3 experiments/check_target_tail.py
           python3 experiments/check_run_normalization.py
+          python3 experiments/check_run_profiles.py
+          python3 experiments/check_regular_family_orbits_canonical.py
+          python3 experiments/check_oneflag_minimum_gap.py
+          python3 experiments/check_consolidation_regressions.py
+      - name: Verify repaired continuation results
+        run: git diff --exit-code -- results/run-profiles.json results/regular-family-orbits.json results/oneflag-minimum-gap.json results/consolidation-regressions.json
   lean:
     runs-on: ubuntu-latest
     steps:

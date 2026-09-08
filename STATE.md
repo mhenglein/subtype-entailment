@@ -65,11 +65,11 @@ obstruction but does not settle target-recurrent separator cycles.
 
 The reviewed research PR stack #6–#14 has been consolidated onto current main without replaying stale branch copies of shared ledgers/trackers. The integration preserves proof notes, implementations, and independent regressions while keeping later main-branch work authoritative.
 
-[Consolidation record, canonical result map, and held-back work](research/CONSOLIDATION_2026-09-08.md).
+[Consolidation record and canonical result map](research/CONSOLIDATION_2026-09-08.md). [Repaired PR #12/#14 supplement](research/REPAIRED_12_14_2026-09-08.md).
 
-The first consolidation merge includes the scientifically surviving material from PRs #6–#11 and #13. PR #12 and PR #14 are deliberately held back pending the concrete repairs recorded in the consolidation note. Their useful observations are not treated as discarded, but their reviewed heads are not integration-ready.
+The first consolidation merge integrated the scientifically surviving material from PRs #6–#11 and #13. The concrete review defects that initially held PR #12 and PR #14 back have since been repaired and their distinct results are indexed as C060–C064 and E038–E041. These remain written-proof/reproducer results at the evidence levels stated in the repair supplement; they are not newly Lean-checked and do not resolve Problem 1.7.
 
-A dedicated CI job now runs the imported continuation regressions together on one tree.
+A dedicated CI job runs the imported continuation regressions together on one tree, including the repaired #12/#14 checks.
 
 ## Major consequence: Q002 and Q003 are refuted
 
@@ -196,9 +196,9 @@ The highest-value constructive question is now:
 
 A negative result would also be decisive if it supplies a real reduction rather than only showing that a proposed abstraction fails.
 
-## Held-back reviewed work
+## Repaired reviewed work
 
-PR #12's broader nonterminal final-symbol/run-profile contraction is held for an iterable-API fix and notation cleanup. PR #14's regular-family orbit backend reproduced its main test counts, but its accompanying shared-lasso / one-flag proof text needs the scope and reproducibility repairs listed in the consolidation record. Do not use those held-back statements as new premises yet.
+PR #12's broader nonterminal final-symbol/run-profile contraction now includes the iterable-API repair and list/tuple/generator parity regression. PR #14's regular-family/shared-lasso/one-flag continuation now carries the boundary-safe theorem scope, whole-bad-language argument, corrected lower-bound scope, deterministic evidence publication, and narrowed MSO audit. Canonical records are C060–C064/E038–E041 in [the repair supplement](research/REPAIRED_12_14_2026-09-08.md). Independent mathematical review is still pending where noted.
 
 ## Research map
 
