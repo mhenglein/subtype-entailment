@@ -1,0 +1,23 @@
+{
+  "even_residue": {
+    "active_leading_states": 1,
+    "bounded_language_and_no_checks": 16383,
+    "leading_trajectory_states": 2,
+    "new_status": "VERIFIED_NO",
+    "old_status": "INCONCLUSIVE"
+  },
+  "parity_split": {
+    "active_leading_states": 2,
+    "bounded_language_and_no_checks": 16383,
+    "distinct_anchors": 2,
+    "leading_trajectory_states": 2,
+    "new_status": "VERIFIED_NO",
+    "old_status": "INCONCLUSIVE",
+    "required_flag_mutations_rejected": 8,
+    "required_flags": 8
+  },
+  "positive_control": "INCONCLUSIVE",
+  "proof_status": "Language equality and finite orbit premises verified exactly; written theorem not Lean-checked",
+  "scope": "Exact all-length orbit/residue-split family; bounded checks are regression only",
+  "status": "PASS"
+}
