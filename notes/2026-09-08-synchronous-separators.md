@@ -74,7 +74,7 @@ Take C051's five-state NO instance and its exact fixed-length encoding `C(0)=00,
 
 in that concrete ten-state numbering. These are the **second physical zero transitions** of the two synchronized logical-zero classes; `(9,0)` enters the final and forces its synchronized partner `(7,0)`. The physical transitions implementing logical-one loops remain data. Neither marked edge lies on a directed cycle.
 
-Compiling this colouring exposes exactly two logical separators on every accepted candidate. C053 exhausts the finite cover and returns NO. Hence the counterexample to raw-marker completeness is **not** a counterexample to synchronous-separator preprocessing. The original five-state source is certified directly as well.
+Compiling this colouring exposes exactly two logical separators on every accepted candidate. C053 therefore supplies an exact finite cover. Since the source/encoded obstruction is already proved NO and the compiler preserves witnesshood both ways, its compiled instance is NO as well. Hence the counterexample to raw-marker completeness is **not** a counterexample to synchronous-separator preprocessing.
 
 ## 6. Early-cycle strictness is removable; target-recurrent cycles remain
 
@@ -102,9 +102,11 @@ Run
 
     python3 experiments/check_synchronous_separators.py
 
-The checker exhausts normalized terminal tables/flag sets through three states, validates compiled/original witness equivalence for certified colourings, and runs downstream exact solvers. It separately checks the ten-state encoded obstruction, the early-cycle case rescued by C056, and the target-recurrent marker-cycle UNKNOWN fixture. Exact counts are recorded in `results/synchronous-separators.json` by CI.
+The deterministic census covers all 1,034 normalized terminal tables/flag sets through three states. Strict C053 colouring succeeds on 812 and fails on 222; the looser final-synchronized colouring exists on all 222 strict failures before the C056 structural test. The compiler is compared with the original predicates on 19,730 defined words through length six across the strict certified subset. The ten-state encoded obstruction contributes 75 additional defined-word equivalence checks and a direct C053 structural certificate. Selected downstream regressions execute C056 on the early-cycle positive fixture and preserve UNKNOWN on the target-recurrent cycle fixture.
 
-The proof is the all-length argument above; bounded word checks are regression evidence, not its justification. C053/C056 retain their consolidated `WRITTEN PROOF + REPRO` statuses. Existing Lean jobs may pass without formalizing this new theorem.
+The checker intentionally does not rerun hundreds of already-consolidated C053 schema searches: C053's own independent regression remains in the continuation CI job. The proof is the all-length argument above; bounded word checks are regression evidence, not its justification. Existing Lean jobs may pass without formalizing this new theorem.
+
+[Result](../results/synchronous-separators.json).
 
 ## 8. Next question
 
