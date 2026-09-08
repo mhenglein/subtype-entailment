@@ -38,11 +38,18 @@ def research_records(data):
     for row in data["approaches"]:
         source = ROOT / row["record"]
         add(row["id"], source, row["record"], source.read_text())
-    for relative, prefix in (("research/claims.md", "c"),
-                             ("research/CONSOLIDATED_2026-09-08.md", "c"),
-                             ("experiments/README.md", "e"),
-                             ("experiments/CONSOLIDATED_2026-09-08.md", "e")):
+        records[row["id"]]["execution"] = row
+
+    record_sources = (
+        ("research/claims.md", "c", False),
+        ("research/CONSOLIDATED_2026-09-08.md", "c", True),
+        ("experiments/README.md", "e", False),
+        ("experiments/CONSOLIDATED_2026-09-08.md", "e", True),
+    )
+    for relative, prefix, optional in record_sources:
         source = ROOT / relative
+        if optional and not source.exists():
+            continue
         contents = source.read_text()
         anchors = list(re.finditer(r'<a id="(' + prefix + r'\d{3})"></a>', contents))
         for index, match in enumerate(anchors):
