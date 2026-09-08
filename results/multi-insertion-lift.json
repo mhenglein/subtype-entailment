@@ -1,0 +1,31 @@
+{
+  "composition_control": {
+    "anchors": [
+      1,
+      2
+    ],
+    "assignments": 9,
+    "base": "0000"
+  },
+  "exhaustive_small": {
+    "base_violations": 144,
+    "base_word_max_length": 5,
+    "base_words": 60,
+    "insertion_assignments": 121756,
+    "language_options_per_anchor": 7,
+    "local_certificates": 50930,
+    "maximum_anchors": 2,
+    "multi_anchor_certificates": 46886
+  },
+  "negative_control": {
+    "agreement_destroyed": true,
+    "anchor": 1,
+    "base": "000",
+    "expanded": "0100",
+    "exposure": 1,
+    "forced_middle": "1"
+  },
+  "proof_status": "Finite exhaustive/sampled literal-equality regression for the written right-to-left multi-insertion theorem; not a substitute for its all-length proof",
+  "scope": "Literal comparison preservation only. Flag-state preservation additionally uses the regular return-state hypothesis in the written theorem.",
+  "status": "PASS"
+}
