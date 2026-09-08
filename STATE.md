@@ -10,13 +10,11 @@ Decide Problem 1.7: subtype entailment over bottom and binary product for arbitr
 
 ## September 8 consolidation
 
-The reviewed research PR stack #6–#14 has been consolidated onto current main without replaying stale branch copies of shared ledgers/trackers. The integration preserves proof notes, implementations, and independent regressions while keeping later main-branch work authoritative.
+The reviewed PR stack #6–#14 has now been consolidated in two controlled layers without replaying stale branch copies of shared ledgers/trackers. The first layer integrated #6–#11 and #13; the second layer imports only the repaired #12/#14 material after the concrete review blockers were fixed.
 
-[Consolidation record, canonical result map, and held-back work](research/CONSOLIDATION_2026-09-08.md).
+[Canonical consolidation record](research/CONSOLIDATION_2026-09-08.md).
 
-The first consolidation merge includes the scientifically surviving material from PRs #6–#11 and #13. PR #12 and PR #14 are deliberately held back pending the concrete repairs recorded in the consolidation note. Their useful observations are not treated as discarded, but their reviewed heads are not integration-ready.
-
-A dedicated CI job now runs the imported continuation regressions together on one tree.
+The repair layer adds the fixed nonterminal run-profile contraction, exact supplied regular-family verification, boundary-safe shared-lasso arithmetic, the strengthened all-bad-word one-flag result, deterministic evidence publication, and dedicated integration regressions. A dedicated CI job runs the complete continuation suite together on one tree.
 
 ## Major consequence: Q002 and Q003 are refuted
 
@@ -34,8 +32,6 @@ The same modular family, using periods `1,...,m`, gives terminal witness budgets
 
 ## Exact synchronization and certified recurrent subclasses
 
-Several integration results substantially enlarge the exact decidable toolkit without closing the unrestricted problem.
-
 ### Whole-word synchronization
 
 Binary terminal flags can force multiple regular blocks to be copies of one common word. The direct compiler reduces supplied DFA intersection to a terminal BorderAvoid subclass with an exact finite product solver. This supplies the recorded fragment-specific PSPACE-hardness route and a counting-word family showing that fixed-word skeleton bodies / ordinary concatenation descriptions can require superpolynomial size.
@@ -44,9 +40,9 @@ Binary terminal flags can force multiple regular blocks to be copies of one comm
 
 ### Necessary-budget incompleteness and bounded delimited schemas
 
-A fixed five-state flat terminal NO instance defeats the general strategy of waiting for some finite `Necessary(L,D)` automaton to become empty: for every finite budget pair there is a different non-witness that survives that test.
+A fixed five-state flat terminal NO instance defeats the strategy of waiting for some finite `Necessary(L,D)` automaton to become empty: for every finite budget pair there is a different non-witness that survives that test.
 
-For a supplied bounded delimited-block schema, however, a reverse padded-convolution machine with persistent equal-tail/hit masks decides arbitrary logical flag relations exactly; the supplied-schema problem is PSPACE-complete. A raw-input certificate derives a finite complete cover for a checkable bounded-marker class.
+For a supplied bounded delimited-block schema, a reverse padded-convolution machine with persistent equal-tail/hit masks decides arbitrary logical flag relations exactly; the supplied-schema problem is PSPACE-complete. A raw-input certificate derives a finite complete cover for a checkable bounded-marker class.
 
 [Proof](notes/2026-09-06-delimited-convolution.md), [schema solver](experiments/delimited_blocks.py), [raw certificate](experiments/marker_certificate.py).
 
@@ -58,49 +54,63 @@ A separate target-tail construction gives a finite pending-context pump when all
 
 [Target-frontier proof](notes/2026-09-06-target-frontier.md), [implementation](experiments/target_frontier.py), [target-tail proof](notes/2026-09-06-target-local-pumping.md), [implementation](experiments/target_tail.py).
 
-## Universal terminal run normalization
+## Run/profile normalization
 
-For every defined binary word ending at a terminal accepting state, fixing the number `r` of maximal homogeneous runs is enough to bound and normalize the **run lengths** while preserving:
+### Terminal maximal-run normalization
 
-- the run-letter pattern and run-boundary states;
-- the visited-state set;
-- the complete suffix-agreement profile.
+For every defined binary word ending at a terminal accepting state, fixing the number `r` of maximal homogeneous runs is enough to bound and normalize the **run lengths** while preserving the run-letter pattern, run-boundary states, visited-state set, and complete suffix-agreement profile.
 
-The construction compresses gaps between sorted repeated counts rather than truncating counts independently. It therefore preserves every flag relation and Bad annotation on the fixed automaton.
-
-Consequently witness existence with a supplied maximal-run bound `R` is decidable by finite symbolic search; with `R` supplied in unary the problem is NP-complete. For each fixed `R` there is an exact polynomial-time enumeration with degree depending on `R`.
-
-**What is not proved:** no computable bound on the number of runs required by some witness of every positive instance is known.
+Consequently witness existence with a supplied maximal-run bound `R` is decidable by finite symbolic search; with `R` supplied in unary the problem is NP-complete. No computable unrestricted bound on the number of runs required by some witness is known.
 
 [Proof](notes/2026-09-06-run-normalization.md), [normalizer](experiments/run_normalization.py), [bounded-run search](experiments/run_bound_decision.py).
 
-## Latest main-branch last-flag spectrum result
+### Nonterminal final-letter profile contraction
 
-The September 7 A017 continuation decides whether lengths of actual last-aligned flag comparisons are bounded. A finite word action on states and synchronized pairs yields an effective unary-regular spectrum. If finite, its exact maximum `H` makes `Witness = Necessary(H,0)` on the stated boundary-normalized slice; if unbounded, the procedure returns a pumping certificate.
+The repaired C060–C061 line is broader in a different direction. A uniform `2k`-state code embeds every binary instance into words with data runs of length at most one. Separately, for **any accepted binary word**, even with nonterminal accepting states, treating the word's own final letter as the marker yields an effective contraction of the intervening run lengths that preserves endpoint, visited states, run starts, and the complete ordered state-pair agreement profile.
 
-Unbounded last-aligned spectra are **not** existential NO certificates. The existing seven-state example has unbounded last-aligned comparisons while another comparison supplies a constant short violation.
+This again controls numerical magnitudes only after the number of final-letter occurrences is supplied. It does not supply the missing unrestricted occurrence-count bound.
 
-[Scoped record](research/LASTFLAG_SPECTRUM.md), [proof](notes/2026-09-07-realizable-lastflag-spectrum.md), [results](results/lastflag-spectrum.json).
+[Integrated proof](notes/2026-09-06-run-profile-normalization.md), [implementation](experiments/run_profiles.py), [regression](experiments/check_run_profiles.py).
+
+## Regular-family and shared-lasso verification
+
+### Supplied regular-family universal verification
+
+C062 classifies the following different problem: given an annotated instance and an unannotated regular domain, decide whether **every** domain member is a witness. This is PSPACE-complete, even with a one-forbidden-pair lower-bound construction. The shared-orbit backend's deterministic regression reproduces 43,069 exact backend agreements.
+
+This is universal verification of a supplied family, not the existential question of whether an arbitrary mixed family contains some good witness.
+
+[Corrected proof](notes/2026-09-07-regular-family-complexity.md), [backend](experiments/regular_family_orbits.py), [deterministic checker](experiments/check_regular_family_orbits_canonical.py).
+
+### Shared-lasso arithmetic
+
+For any supplied shared-lasso skeleton, witness parameter vectors are effectively Presburger-definable. On the explicitly **boundary-safe** bad subdomain, the relation `mu(w)>H` for the minimum proper violation length is also Presburger-definable. The boundary-safety hypothesis is part of the theorem; the equivalence is not asserted for merely admissible words with diagonal, Bad, nonfinal, or empty-suffix failures.
+
+Thus arithmetic inside a fixed synchronization schema is not the current obstacle. The missing theorem is still a finite/existence-preserving coverage result for arbitrary nonflat recurrent structure.
+
+[Corrected proof](notes/2026-09-08-shared-lasso-presburger.md).
+
+## Last-aligned spectra versus global minimum violations
+
+The September 7 A017 continuation decides whether lengths of actual last-aligned flag comparisons are bounded. A finite word action yields an effective unary-regular spectrum. If finite, its exact maximum strengthens the necessary-language certificate on the stated boundary-normalized slice; if unbounded, the procedure returns a pumping certificate.
+
+Unbounded last-aligned spectra are **not** existential NO certificates. The repaired four-state one-flag example sharpens this: its realizable last-aligned spectrum is unbounded, yet **every bad accepted word** has minimum proper violation length exactly one. The all-word statement now has a written proof and a bounded regression through length 16; no nonterminal C021 lower bound is transferred to this terminal class.
+
+[Last-flag spectrum](notes/2026-09-07-realizable-lastflag-spectrum.md), [one-flag separation](notes/2026-09-08-oneflag-minimum-gap.md), [integration regression](experiments/check_consolidation_regressions.py).
+
+## Direct MSO shortcut audit
+
+The naive Rabin/S2S shortcut still has a precise missing step: product propagation acts on the leading symbol of a path word while ordinary binary-tree prefix closure acts at the opposite end. The corrected audit claims only this orientation/definability gap. It withdraws the earlier untraceable enriched-MSO assertion and makes **no** undecidability claim.
+
+[Corrected scope audit](notes/2026-09-08-two-ended-mso-audit.md).
 
 ## Shared-word relations and fixed-skeleton arithmetic
 
-The earlier A017 work provides exact finite composition of shared-word templates and exact universal verification for supplied regular families. Generic iteration of those relations cannot be treated as a decidable black box because two-output append relations already encode Post correspondence; this is not itself a reduction to BorderAvoid.
+Earlier A017 work provides exact finite composition of shared-word templates. Generic iteration of those relations cannot be treated as a decidable black box because two-output append relations already encode Post correspondence; this is not itself a reduction to BorderAvoid.
 
-A016 provides exact Presburger formulas for fixed word skeletons and a finite complete cover for flat terminal candidate graphs. Once a finite schema is known, large arithmetic exponents are manageable. The missing problem is obtaining a complete finite/existence-preserving cover for arbitrary nonflat recurrent structure.
+A016 provides exact Presburger formulas for fixed word skeletons and a finite complete cover for flat terminal candidate graphs. C063 extends the arithmetic observation to shared exponent aliases inside one supplied lasso schema.
 
 [Shared-word composition](notes/2026-09-06-shared-word-composition.md), [recurrent residuals](notes/2026-09-06-recurrent-residuals.md), [flat arithmetic](notes/2026-09-05-terminal-arithmetic.md).
-
-## Established / strongest prior results
-
-- The top-free characterization has been audited and supports canonical regular countermodels under its stated satisfiability premise.
-- Principal binary truncation/context rules have Lean-checked core versions; finite-budget predicates, reversal machinery, and an exact two-state decision are Lean-checked.
-- The terminal-final branch is fully expressive for abstract binary terminal BorderAvoid: every `k`-state terminal-final instance has a word-preserving subtype realization on `2k+1` variables.
-- A genuine nine-variable subtype system has a nonregular terminal separating language.
-- Flat terminal graphs have an exact finite Presburger skeleton decision.
-- The normalized four-state terminal census is complete.
-- Terminal suffix comparisons have several bounded structural invariants, but none currently bounds arbitrary essential recurrent structure.
-
-Consult `research/claims.md` before treating any older result as formally established; evidence levels differ.
 
 ## Refuted ideas / dead ends worth preserving
 
@@ -111,9 +121,11 @@ Do not restart these without a materially new hypothesis:
 - any universal polynomial terminal witness-budget bound;
 - any universal constant bound on simultaneous loop deletions;
 - the negative semiprocedure that waits for a fixed `Necessary(L,D)` language to become empty;
+- identifying an unbounded last-aligned spectrum with unbounded global minimum violation length, even for one flag;
 - the old prefix-reachability regular-language formula;
 - a universal rigid-word bound from nonmerging runs;
 - ordinary state repetition as justification for loop deletion;
+- treating `w -> 0w` as an ordinary S2S tree successor without a definability proof;
 - reading bounded-search failure or resource exhaustion as mathematical `NO`.
 
 ## Current frontier
@@ -124,9 +136,11 @@ We can now:
 
 1. normalize run magnitudes exactly once the number of runs/markers/skeleton pieces is fixed;
 2. solve arbitrary regular data languages inside supplied bounded schemas;
-3. pump substantial target-free recurrent prefixes using finite pending contexts;
-4. decide several broader certified marker/target classes;
-5. represent and solve large arithmetic synchronization symbolically.
+3. verify supplied regular families exactly;
+4. solve shared-lasso arithmetic, including coordinated minimum-violation thresholds on the boundary-safe domain;
+5. pump substantial target-free recurrent prefixes using finite pending contexts;
+6. decide several broader certified marker/target classes;
+7. represent large arithmetic synchronization symbolically.
 
 What is still missing is one of:
 
@@ -135,15 +149,11 @@ What is still missing is one of:
 - a different terminating exact decision procedure; or
 - a genuine undecidability reduction using only the normalized subtype fragment.
 
-The highest-value constructive question is therefore:
+The highest-value constructive question remains:
 
 > Can every successful nonflat terminal component be normalized into finitely many effectively representable synchronization contexts while preserving all state-coloured suffix obligations?
 
 A negative result would also be decisive if it supplies a real reduction rather than only showing that a proposed abstraction fails.
-
-## Held-back reviewed work
-
-PR #12's broader nonterminal final-symbol/run-profile contraction is held for an iterable-API fix and notation cleanup. PR #14's regular-family orbit backend reproduced its main test counts, but its accompanying shared-lasso / one-flag proof text needs the scope and reproducibility repairs listed in the consolidation record. Do not use those held-back statements as new premises yet.
 
 ## Research map
 
