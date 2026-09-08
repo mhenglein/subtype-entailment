@@ -1,16 +1,19 @@
 {
+  "automatic_barrier_status": "VERIFIED_NO",
   "bad_middle_rejected": true,
   "bounded_independent_language_checks": 32767,
   "certificate_status": "VERIFIED_NO",
   "periodic_multieffect": {
+    "automatic_status": "VERIFIED_NO",
     "bounded_language_checks": 32767,
     "leading_orbit_states": 1,
     "max_trailing_orbit_states": 2,
     "middle_effects": 2,
     "status": "VERIFIED_NO"
   },
-  "proof_status": "Verifier checks all regular-language/orbit premises exactly; theorem proof recorded separately; not Lean-checked",
+  "positive_instance_rejected_by_synthesizer": true,
+  "proof_status": "Verifier/synthesizer checks all regular-language/orbit premises exactly; theorem proof recorded separately; not Lean-checked",
   "required_flag_mutations_rejected": 3,
-  "scope": "Exact finite verifier for a* b M a+ b a with finite middle effects and unary orbits",
+  "scope": "Exact finite verifier plus automatic synthesis for a* b M a+ b a with finite effects/orbits",
   "status": "PASS"
 }
