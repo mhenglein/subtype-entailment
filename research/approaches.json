@@ -11,361 +11,95 @@
       "summary": "Theorem 2.6 supports canonical regular countermodels under its satisfiability premise.",
       "next_step": "No new work assigned; use the audited statement as a dependency.",
       "record": "research/approaches/A001.md",
-      "evidence": [
-        "notes/proof-audit.md",
-        "REVIEW.md"
-      ],
+      "evidence": ["notes/proof-audit.md", "REVIEW.md"],
       "issue": null
     },
     {
-      "id": "A002",
-      "title": "Replace prefix reachability with a regular language",
-      "status": "tried",
-      "outcome": "refuted",
-      "owner": null,
-      "updated": "2026-09-04",
+      "id": "A002", "title": "Replace prefix reachability with a regular language", "status": "tried", "outcome": "refuted", "owner": null, "updated": "2026-09-04",
       "summary": "The old formula disagrees on 4,017 words through length 11; the all-length family is nonregular.",
-      "next_step": "Do not reuse the old formula; retain the corrected cap decomposition.",
-      "record": "research/approaches/A002.md",
-      "evidence": [
-        "REVIEW.md",
-        "results/independent-checks.json",
-        "experiments/run_experiments.py"
-      ],
-      "issue": null
+      "next_step": "Do not reuse the old formula; retain the corrected cap decomposition.", "record": "research/approaches/A002.md",
+      "evidence": ["REVIEW.md", "results/independent-checks.json", "experiments/run_experiments.py"], "issue": null
     },
     {
-      "id": "A003",
-      "title": "Bound all rigid witnesses using nonmerging runs",
-      "status": "tried",
-      "outcome": "refuted",
-      "owner": null,
-      "updated": "2026-09-04",
-      "summary": "Two states admit rigid words 0^n with unbounded repeated suffixes, while the runs merge.",
-      "next_step": "Use minimal witnesses and stronger cuts instead.",
-      "record": "research/approaches/A003.md",
-      "evidence": [
-        "notes/border-audit.md",
-        "REVIEW.md",
-        "results/independent-checks.json"
-      ],
-      "issue": null
+      "id": "A003", "title": "Bound all rigid witnesses using nonmerging runs", "status": "tried", "outcome": "refuted", "owner": null, "updated": "2026-09-04",
+      "summary": "Two states admit rigid words 0^n with unbounded repeated suffixes, while the runs merge.", "next_step": "Use minimal witnesses and stronger cuts instead.", "record": "research/approaches/A003.md",
+      "evidence": ["notes/border-audit.md", "REVIEW.md", "results/independent-checks.json"], "issue": null
     },
     {
-      "id": "A004",
-      "title": "Transfer the shorter word's repeated suffix",
-      "status": "tried",
-      "outcome": "supported",
-      "owner": null,
-      "updated": "2026-09-04",
-      "summary": "C008 has a written proof and a checked binary Lean proof; earlier bounded cuts also pass.",
-      "next_step": "Use C008 and the stronger C013 context rule in A008.",
-      "record": "research/approaches/A004.md",
-      "evidence": [
-        "REVIEW.md",
-        "lean/Subtail/Truncation.lean",
-        "results/lean-checks.json",
-        "results/independent-checks.json"
-      ],
-      "issue": null
+      "id": "A004", "title": "Transfer the shorter word's repeated suffix", "status": "tried", "outcome": "supported", "owner": null, "updated": "2026-09-04",
+      "summary": "C008 has a written proof and a checked binary Lean proof; earlier bounded cuts also pass.", "next_step": "Use C008 and the stronger C013 context rule in A008.", "record": "research/approaches/A004.md",
+      "evidence": ["REVIEW.md", "lean/Subtail/Truncation.lean", "results/lean-checks.json", "results/independent-checks.json"], "issue": null
     },
     {
-      "id": "A005",
-      "title": "Weaken state equality to incoming flag-set inclusion",
-      "status": "tried",
-      "outcome": "supported",
-      "owner": null,
-      "updated": "2026-09-04",
-      "summary": "C009 has a written proof and a checked binary Lean proof with the incoming-flag direction verified.",
-      "next_step": "Compare witnesses resistant to C009 and C013 in A008.",
-      "record": "research/approaches/A005.md",
-      "evidence": [
-        "REVIEW.md",
-        "lean/Subtail/Truncation.lean",
-        "results/lean-checks.json",
-        "results/independent-checks.json"
-      ],
-      "issue": null
+      "id": "A005", "title": "Weaken state equality to incoming flag-set inclusion", "status": "tried", "outcome": "supported", "owner": null, "updated": "2026-09-04",
+      "summary": "C009 has a written proof and a checked binary Lean proof with the incoming-flag direction verified.", "next_step": "Compare witnesses resistant to C009 and C013 in A008.", "record": "research/approaches/A005.md",
+      "evidence": ["REVIEW.md", "lean/Subtail/Truncation.lean", "results/lean-checks.json", "results/independent-checks.json"], "issue": null
     },
     {
-      "id": "A006",
-      "title": "Calibrate small-budget expectations",
-      "status": "tried",
-      "outcome": "refuted",
-      "owner": null,
-      "updated": "2026-09-04",
-      "summary": "A singleton 0^n language has exact B=n-1 at n+1 states; the checked 13-state instance has B=11.",
-      "next_step": "Use this baseline before searching for harder growth in A009.",
-      "record": "research/approaches/A006.md",
-      "evidence": [
-        "REVIEW.md",
-        "results/independent-checks.json",
-        "experiments/border_lab.py"
-      ],
-      "issue": null
+      "id": "A006", "title": "Calibrate small-budget expectations", "status": "tried", "outcome": "refuted", "owner": null, "updated": "2026-09-04",
+      "summary": "A singleton 0^n language has exact B=n-1 at n+1 states; the checked 13-state instance has B=11.", "next_step": "Use this baseline before searching for harder growth in A009.", "record": "research/approaches/A006.md",
+      "evidence": ["REVIEW.md", "results/independent-checks.json", "experiments/border_lab.py"], "issue": null
     },
     {
-      "id": "A007",
-      "title": "Reproduce the original memo's code and census",
-      "status": "blocked",
-      "outcome": "open",
-      "owner": null,
-      "updated": "2026-09-04",
-      "summary": "The original analysis-2026 folder has not been supplied.",
-      "next_step": "Import original sources unchanged, record provenance, and cross-check against the independent implementation.",
-      "record": "research/approaches/A007.md",
-      "evidence": [
-        "papers/README.md",
-        "REVIEW.md"
-      ],
-      "issue": "https://github.com/mhenglein/subtail/issues/1"
+      "id": "A007", "title": "Reproduce the original memo's code and census", "status": "blocked", "outcome": "open", "owner": null, "updated": "2026-09-04",
+      "summary": "The original analysis-2026 folder has not been supplied.", "next_step": "Import original sources unchanged, record provenance, and cross-check against the independent implementation.", "record": "research/approaches/A007.md",
+      "evidence": ["papers/README.md", "REVIEW.md"], "issue": "https://github.com/mhenglein/subtail/issues/1"
     },
     {
-      "id": "A008",
-      "title": "Bound minimal witnesses after stronger truncation",
-      "status": "tried",
-      "outcome": "supported",
-      "owner": null,
-      "updated": "2026-09-05",
-      "summary": "Complete four-state terminal census: witness length at most four and budget at most two; general three-state proof remains separate.",
-      "next_step": "Formalize the terminal normalization and finite graph certificates; test terminal bounds beyond four states.",
-      "record": "research/approaches/A008.md",
-      "evidence": [
-        "notes/2026-09-04-shortest-witnesses.md",
-        "notes/2026-09-04-minimal-witness-structure.md",
-        "results/shortest-witnesses.json",
-        "lean/Subtail/TwoState.lean",
-        "notes/2026-09-04-three-state.md",
-        "experiments/three_state_decision.py",
-        "results/continuation-import.json",
-        "notes/2026-09-05-four-state-terminal.md",
-        "experiments/check_four_state_terminal.py",
-        "results/four-state-terminal.json"
-      ],
+      "id": "A008", "title": "Bound minimal witnesses after stronger truncation", "status": "tried", "outcome": "supported", "owner": null, "updated": "2026-09-05",
+      "summary": "Complete four-state terminal census: witness length at most four and budget at most two; general three-state proof remains separate.", "next_step": "Formalize the terminal normalization and finite graph certificates; test terminal bounds beyond four states.", "record": "research/approaches/A008.md",
+      "evidence": ["notes/2026-09-04-shortest-witnesses.md", "notes/2026-09-04-minimal-witness-structure.md", "results/shortest-witnesses.json", "lean/Subtail/TwoState.lean", "notes/2026-09-04-three-state.md", "experiments/three_state_decision.py", "results/continuation-import.json", "notes/2026-09-05-four-state-terminal.md", "experiments/check_four_state_terminal.py", "results/four-state-terminal.json"],
       "issue": "https://github.com/mhenglein/subtail/issues/2"
     },
     {
-      "id": "A009",
-      "title": "Find budget growth beyond the regular-language baseline",
-      "status": "tried",
-      "outcome": "supported",
-      "owner": null,
-      "updated": "2026-09-04",
-      "summary": "A one-flag k-state family has exact B=2k-4 and shortest length 3k-3; five states refute B<=|K|.",
-      "next_step": "Any universal abstract bound must allow 2k-4. Separate abstract growth from actual summary outputs, which satisfy absorption.",
-      "record": "research/approaches/A009.md",
-      "evidence": [
-        "notes/2026-09-04-budget-search.md",
-        "experiments/search_budgets.py",
-        "results/budget-search.json",
-        "notes/2026-09-04-boundary-slices.md",
-        "notes/2026-09-04-trimmed-budget.md",
-        "experiments/trim_budget_example.py",
-        "results/trimmed-budget.json",
-        "results/boundary-slices.json",
-        "notes/2026-09-04-budget-growth-family.md",
-        "experiments/check_budget_growth_family.py",
-        "results/continuation-import.json"
-      ],
-      "issue": null
+      "id": "A009", "title": "Find budget growth beyond the regular-language baseline", "status": "tried", "outcome": "supported", "owner": null, "updated": "2026-09-04",
+      "summary": "A one-flag k-state family has exact B=2k-4 and shortest length 3k-3; five states refute B<=|K|.", "next_step": "Any universal abstract bound must allow 2k-4. Separate abstract growth from actual summary outputs, which satisfy absorption.", "record": "research/approaches/A009.md",
+      "evidence": ["notes/2026-09-04-budget-search.md", "experiments/search_budgets.py", "results/budget-search.json", "notes/2026-09-04-boundary-slices.md", "notes/2026-09-04-trimmed-budget.md", "experiments/trim_budget_example.py", "results/trimmed-budget.json", "results/boundary-slices.json", "notes/2026-09-04-budget-growth-family.md", "experiments/check_budget_growth_family.py", "results/continuation-import.json"], "issue": null
     },
     {
-      "id": "A010",
-      "title": "Build the exact top-free constraint-to-automata pipeline",
-      "status": "tried",
-      "outcome": "supported",
-      "owner": null,
-      "updated": "2026-09-04",
-      "summary": "Implemented actual W/Wrev summaries with S/F annotations; independent audit fixed two API errors and found no known comparison mismatch.",
-      "next_step": "Generate actual subtype-derived instances and test joint summary invariants in A013.",
-      "record": "research/approaches/A010.md",
-      "evidence": [
-        "notes/2026-09-04-bridge-foundation.md",
-        "experiments/topfree_bridge.py",
-        "experiments/check_topfree_bridge.py",
-        "results/topfree-bridge.json",
-        "notes/2026-09-04-summary-bridge.md",
-        "notes/2026-09-04-summary-bridge-audit.md",
-        "experiments/summary_bridge.py",
-        "results/summary-bridge.json",
-        "results/summary-bridge-audit.json"
-      ],
-      "issue": "https://github.com/mhenglein/subtail/issues/3"
+      "id": "A010", "title": "Build the exact top-free constraint-to-automata pipeline", "status": "tried", "outcome": "supported", "owner": null, "updated": "2026-09-04",
+      "summary": "Implemented actual W/Wrev summaries with S/F annotations; independent audit fixed two API errors and found no known comparison mismatch.", "next_step": "Generate actual subtype-derived instances and test joint summary invariants in A013.", "record": "research/approaches/A010.md",
+      "evidence": ["notes/2026-09-04-bridge-foundation.md", "experiments/topfree_bridge.py", "experiments/check_topfree_bridge.py", "results/topfree-bridge.json", "notes/2026-09-04-summary-bridge.md", "notes/2026-09-04-summary-bridge-audit.md", "experiments/summary_bridge.py", "results/summary-bridge.json", "results/summary-bridge-audit.json"], "issue": "https://github.com/mhenglein/subtail/issues/3"
     },
     {
-      "id": "A011",
-      "title": "Complete the converse with regular annotations",
-      "status": "tried",
-      "outcome": "supported",
-      "owner": null,
-      "updated": "2026-09-05",
-      "summary": "Every k-state terminal-final binary abstract instance has an exact word-preserving subtype realization on 2k+1 variables.",
-      "next_step": "Use the terminal converse for genuine lower bounds or a terminal decision theorem; the nonterminal arbitrary-annotation converse is still open.",
-      "record": "research/approaches/A011.md",
-      "evidence": [
-        "notes/2026-09-05-terminal-realization.md",
-        "experiments/terminal_realization.py",
-        "results/terminal-realization.json"
-      ],
-      "issue": null
+      "id": "A011", "title": "Complete the converse with regular annotations", "status": "tried", "outcome": "supported", "owner": null, "updated": "2026-09-05",
+      "summary": "Every k-state terminal-final binary abstract instance has an exact word-preserving subtype realization on 2k+1 variables.", "next_step": "Use the terminal converse for genuine lower bounds or a terminal decision theorem; the nonterminal arbitrary-annotation converse is still open.", "record": "research/approaches/A011.md",
+      "evidence": ["notes/2026-09-05-terminal-realization.md", "experiments/terminal_realization.py", "results/terminal-realization.json"], "issue": null
     },
     {
-      "id": "A012",
-      "title": "Make NO certificates complete",
-      "status": "tried",
-      "outcome": "inconclusive",
-      "owner": null,
-      "updated": "2026-09-08",
-      "summary": "Exact fixed-marker-tail emptiness certifies a recurrent nonflat all-budget NO instance, but an encoded NO defeats every raw marker bound.",
-      "next_step": "Go beyond raw marker costs: seek a complete agreement-preserving tokenization or shared-obligation invariant, retaining the encoded all-marker NO obstruction.",
-      "record": "research/approaches/A012.md",
-      "evidence": [
-        "research/SEMANTIC_MARKER_TAILS.md",
-        "notes/2026-09-08-semantic-marker-tails.md",
-        "experiments/marker_tail.py",
-        "experiments/marker_spectrum.py",
-        "experiments/check_marker_tails.py",
-        "results/semantic-marker-tails.json"
-      ],
+      "id": "A012", "title": "Make NO certificates complete", "status": "tried", "outcome": "inconclusive", "owner": null, "updated": "2026-09-08",
+      "summary": "Synchronous transition separators recover the prior encoded all-marker NO obstruction and compose with C053/C056; target-recurrent forced separator cycles remain open.",
+      "next_step": "Combine synchronized separator classes with shared-reference pending contexts to handle forced separator cycles reachable from relevant targets.", "record": "research/approaches/A012.md",
+      "evidence": ["research/SEMANTIC_MARKER_TAILS.md", "notes/2026-09-08-semantic-marker-tails.md", "experiments/marker_tail.py", "experiments/marker_spectrum.py", "experiments/check_marker_tails.py", "results/semantic-marker-tails.json", "notes/2026-09-08-synchronous-separators.md", "experiments/synchronous_separators.py", "experiments/check_synchronous_separators.py", "results/synchronous-separators.json"],
       "issue": "https://github.com/mhenglein/subtail/issues/15"
     },
     {
-      "id": "A013",
-      "title": "Exploit restrictions shared by actual summary automata",
-      "status": "tried",
-      "outcome": "supported",
-      "owner": null,
-      "updated": "2026-09-05",
-      "summary": "The terminal branch realizes arbitrary abstract flags; a nine-variable system has a nonregular terminal separating language. Flat terminal graphs are decidable arithmetically.",
-      "next_step": "Target nonflat productive terminal components; shared B/A/D structure alone cannot exclude terminal abstract instances.",
-      "record": "research/approaches/A013.md",
-      "evidence": [
-        "notes/2026-09-04-summary-absorption.md",
-        "notes/2026-09-04-denials-and-continuations.md",
-        "research/CONTINUATION.md",
-        "experiments/denial_bridge.py",
-        "experiments/safe_extensions.py",
-        "experiments/infinite_extensions.py",
-        "results/unrestricted-continuation.json",
-        "results/infinite-extensions.json",
-        "research/TERMINAL.md",
-        "notes/2026-09-05-terminal-realization.md",
-        "results/terminal-nonregular.json"
-      ],
-      "issue": null
+      "id": "A013", "title": "Exploit restrictions shared by actual summary automata", "status": "tried", "outcome": "supported", "owner": null, "updated": "2026-09-05",
+      "summary": "The terminal branch realizes arbitrary abstract flags; a nine-variable system has a nonregular terminal separating language. Flat terminal graphs are decidable arithmetically.", "next_step": "Target nonflat productive terminal components; shared B/A/D structure alone cannot exclude terminal abstract instances.", "record": "research/approaches/A013.md",
+      "evidence": ["notes/2026-09-04-summary-absorption.md", "notes/2026-09-04-denials-and-continuations.md", "research/CONTINUATION.md", "experiments/denial_bridge.py", "experiments/safe_extensions.py", "experiments/infinite_extensions.py", "results/unrestricted-continuation.json", "results/infinite-extensions.json", "research/TERMINAL.md", "notes/2026-09-05-terminal-realization.md", "results/terminal-nonregular.json"], "issue": null
     },
     {
-      "id": "A014",
-      "title": "Apply cap and period-language saturation techniques",
-      "status": "untried",
-      "outcome": "open",
-      "owner": null,
-      "updated": "2026-09-04",
-      "summary": "Related sources have been read; no new saturation reduction has been built.",
-      "next_step": "Choose one closure property, test small instances, and preserve all endpoint flags.",
-      "record": "research/approaches/A014.md",
-      "evidence": [],
-      "issue": null
+      "id": "A014", "title": "Apply cap and period-language saturation techniques", "status": "untried", "outcome": "open", "owner": null, "updated": "2026-09-04",
+      "summary": "Related sources have been read; no new saturation reduction has been built.", "next_step": "Choose one closure property, test small instances, and preserve all endpoint flags.", "record": "research/approaches/A014.md", "evidence": [], "issue": null
     },
     {
-      "id": "A015",
-      "title": "Strengthen truncation using occurrence context",
-      "status": "tried",
-      "outcome": "supported",
-      "owner": null,
-      "updated": "2026-09-04",
-      "summary": "Proved three context refinements and formalized the binary visited-state rule; strict examples and exhaustive two-state checks pass.",
-      "next_step": "Use the visited-state summary to classify shortest witnesses resisting every admissible cut in A008.",
-      "record": "research/approaches/A015.md",
-      "evidence": [
-        "notes/2026-09-04-context-cut.md",
-        "experiments/check_context_cuts.py",
-        "results/context-cuts.json",
-        "lean/Subtail/Truncation.lean"
-      ],
-      "issue": null
+      "id": "A015", "title": "Strengthen truncation using occurrence context", "status": "tried", "outcome": "supported", "owner": null, "updated": "2026-09-04",
+      "summary": "Proved three context refinements and formalized the binary visited-state rule; strict examples and exhaustive two-state checks pass.", "next_step": "Use the visited-state summary to classify shortest witnesses resisting every admissible cut in A008.", "record": "research/approaches/A015.md",
+      "evidence": ["notes/2026-09-04-context-cut.md", "experiments/check_context_cuts.py", "results/context-cuts.json", "lean/Subtail/Truncation.lean"], "issue": null
     },
     {
-      "id": "A016",
-      "title": "Implement and audit fixed-skeleton checkability",
-      "status": "tried",
-      "outcome": "supported",
-      "owner": null,
-      "updated": "2026-09-05",
-      "summary": "Implemented exact Presburger skeleton formulas and a finite complete cover for flat terminal graphs; unbounded loop counts are retained.",
-      "next_step": "Audit and formalize the arithmetic translation; extend bounded-skeleton coverage to nonflat terminal components without treating timeouts as NO.",
-      "record": "research/approaches/A016.md",
-      "evidence": [
-        "notes/2026-09-05-terminal-arithmetic.md",
-        "experiments/skeleton_presburger.py",
-        "experiments/flat_terminal.py",
-        "results/terminal-arithmetic.json"
-      ],
-      "issue": null
+      "id": "A016", "title": "Implement and audit fixed-skeleton checkability", "status": "tried", "outcome": "supported", "owner": null, "updated": "2026-09-05",
+      "summary": "Implemented exact Presburger skeleton formulas and a finite complete cover for flat terminal graphs; unbounded loop counts are retained.", "next_step": "Audit and formalize the arithmetic translation; extend bounded-skeleton coverage to nonflat terminal components without treating timeouts as NO.", "record": "research/approaches/A016.md",
+      "evidence": ["notes/2026-09-05-terminal-arithmetic.md", "experiments/skeleton_presburger.py", "experiments/flat_terminal.py", "results/terminal-arithmetic.json"], "issue": null
     },
     {
-      "id": "A017",
-      "title": "Bound essential repeated blocks",
-      "status": "tried",
-      "outcome": "inconclusive",
-      "owner": null,
-      "updated": "2026-09-08",
-      "summary": "Exact weighted last-flag spectra plus shared-reference tail search decide semantically bounded marker classes, even with recurrent flag-target cycles; unrestricted coverage remains open.",
-      "next_step": "Go beyond raw marker costs: seek a complete agreement-preserving tokenization or shared-obligation invariant, retaining the encoded all-marker NO obstruction.",
-      "record": "research/approaches/A017.md",
-      "evidence": [
-        "notes/2026-09-04-minimal-witness-structure.md",
-        "experiments/check_minimal_structure.py",
-        "notes/2026-09-05-nonflat-overlap.md",
-        "experiments/terminal_overlap.py",
-        "results/nonflat-overlap.json",
-        "research/NONFLAT.md",
-        "notes/2026-09-06-recurrent-residuals.md",
-        "experiments/recurrent_residuals.py",
-        "experiments/check_recurrent_residuals.py",
-        "results/recurrent-residuals.json",
-        "notes/2026-09-06-shared-word-composition.md",
-        "experiments/shared_word_templates.py",
-        "experiments/regular_family_safety.py",
-        "experiments/check_shared_composition.py",
-        "results/shared-composition.json",
-        "results/shared-composition-smt.json",
-        "research/LASTFLAG_SPECTRUM.md",
-        "notes/2026-09-07-realizable-lastflag-spectrum.md",
-        "experiments/lastflag_spectrum.py",
-        "experiments/check_lastflag_spectrum.py",
-        "results/lastflag-spectrum.json",
-        "research/SEMANTIC_MARKER_TAILS.md",
-        "notes/2026-09-08-semantic-marker-tails.md",
-        "experiments/marker_tail.py",
-        "experiments/marker_spectrum.py",
-        "experiments/check_marker_tails.py",
-        "results/semantic-marker-tails.json"
-      ],
+      "id": "A017", "title": "Bound essential repeated blocks", "status": "tried", "outcome": "inconclusive", "owner": null, "updated": "2026-09-08",
+      "summary": "Weighted marker tails and synchronous transition encodings now recover latent separators beyond raw-symbol bounds; target-recurrent synchronized separator cycles remain unresolved.",
+      "next_step": "Compose encoding-aware separator classes with the common-reference pending-context saturation on target-recurrent cycles.", "record": "research/approaches/A017.md",
+      "evidence": ["notes/2026-09-04-minimal-witness-structure.md", "experiments/check_minimal_structure.py", "notes/2026-09-05-nonflat-overlap.md", "experiments/terminal_overlap.py", "results/nonflat-overlap.json", "research/NONFLAT.md", "notes/2026-09-06-recurrent-residuals.md", "experiments/recurrent_residuals.py", "experiments/check_recurrent_residuals.py", "results/recurrent-residuals.json", "notes/2026-09-06-shared-word-composition.md", "experiments/shared_word_templates.py", "experiments/regular_family_safety.py", "experiments/check_shared_composition.py", "results/shared-composition.json", "results/shared-composition-smt.json", "research/LASTFLAG_SPECTRUM.md", "notes/2026-09-07-realizable-lastflag-spectrum.md", "experiments/lastflag_spectrum.py", "experiments/check_lastflag_spectrum.py", "results/lastflag-spectrum.json", "research/SEMANTIC_MARKER_TAILS.md", "notes/2026-09-08-semantic-marker-tails.md", "experiments/marker_tail.py", "experiments/marker_spectrum.py", "experiments/check_marker_tails.py", "results/semantic-marker-tails.json", "notes/2026-09-08-synchronous-separators.md", "experiments/synchronous_separators.py", "experiments/check_synchronous_separators.py", "results/synchronous-separators.json"],
       "issue": "https://github.com/mhenglein/subtail/issues/15"
     },
     {
-      "id": "A018",
-      "title": "Work backwards from an executable Lean theorem",
-      "status": "tried",
-      "outcome": "supported",
-      "owner": null,
-      "updated": "2026-09-04",
-      "summary": "Lean checks direct budget predicates, reversal, and an exact two-state decision, in addition to the previous truncation and conditional proofs.",
-      "next_step": "Formalize the finite Sufficient automaton and its exact nonemptiness procedure; the global bound remains open.",
-      "record": "research/approaches/A018.md",
-      "evidence": [
-        "lean/README.md",
-        "notes/2026-09-04-lean-core.md",
-        "lean/Subtail/Conditional.lean",
-        "scripts/check_lean.py",
-        "results/lean-checks.json",
-        "lean/Subtail/SandwichPredicates.lean",
-        "lean/Subtail/Boundary.lean",
-        "lean/Subtail/TwoState.lean",
-        "notes/2026-09-04-lean-sandwich.md"
-      ],
-      "issue": null
-    }
-  ]
-}
+      "id": "A018", "title": "Work backwards from an executable Lean theorem", "status": "tried", "outcome": "supported", "owner": null, "updated": "2026-09-04",
+      "summary": "Lean checks direct budget predicates, reversal, and an exact two-state decision, in addition to the previous truncation and conditional proofs.", "next_step": "Formalize the finite Sufficient automaton and its exact nonemptiness procedure; the global bound remains open.", "record": "research/approaches/A018.md",
+      "evidence": ["lean/README.md", "notes/2026-09-04-lean-core.md", "lean/Subtail/Conditional.lean", "scripts/check_lean.py", "results/lean-checks.json", "lean/Subtail/SandwichPredicates.lean", "lean/Subtail/Boundary.lean", "lean/Subtail/TwoState.
