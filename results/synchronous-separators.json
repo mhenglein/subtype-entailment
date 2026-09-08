@@ -1,0 +1,37 @@
+{
+  "early_cycle_fixture": {
+    "frontier_status": "YES",
+    "strict_status": "NOT_APPLICABLE"
+  },
+  "encoded_obstruction": {
+    "c053_statuses": [
+      "CERTIFIED"
+    ],
+    "compiled_states": 23,
+    "encoded_known_no": true,
+    "equivalence_checks": 75,
+    "marked": [
+      [
+        7,
+        0
+      ],
+      [
+        9,
+        0
+      ]
+    ]
+  },
+  "proof_status": "Written proof + reproducible checks; independent mathematical review pending; not newly Lean-checked",
+  "scope": "Exact on C053/C056 synchronous-separator certified terminal instances only",
+  "small_census": {
+    "certified": 812,
+    "frontier_colourings_on_strict_failures": 222,
+    "instances": 1034,
+    "uncertified": 222,
+    "word_equivalence_checks": 19730
+  },
+  "status": "PASS",
+  "target_cycle_fixture": {
+    "status": "UNKNOWN"
+  }
+}
