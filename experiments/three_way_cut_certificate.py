@@ -10,12 +10,15 @@ induce finitely many endpoint effects. Candidate-language equality is checked
 exactly by DFA x epsilon-NFA symmetric difference.
 
 `discover_three_way_certificate` removes the need to supply M manually. For
-each orientation (a,b), it derives the maximal regular middle whose endpoint
-states support every positive trailing a-power and then invokes the exact
-verifier. Success is a genuine all-length NO certificate; failure is UNKNOWN.
+each orientation (a,b), it derives the finite set of states supporting every
+positive trailing a-power, then tries endpoint subsets. Exact language equality
+and the verifier decide which subsets are genuine covers. This avoids the
+unsound/incomplete shortcut of assuming the maximal endpoint set is the right
+certificate. Success is a genuine all-length NO certificate; failure is UNKNOWN.
 """
 from collections import deque
 from dataclasses import dataclass
+from itertools import combinations
 from typing import FrozenSet, Tuple
 
 from border_lab import Instance
@@ -212,33 +215,50 @@ def _universal_tail_states(I,a,b):
     return frozenset(good)
 
 
-def synthesize_three_way_certificate(I,a,b):
-    """Derive the maximal middle supported by universal trailing a-powers."""
+def synthesize_three_way_certificates(I,a,b):
+    """Finite complete search over endpoint subsets for this certificate shape.
+
+    A maximal set of tail-capable endpoints can introduce decompositions that
+    are unnecessary for candidate-language coverage and demand extra flags.
+    Because the state set is finite, enumerate endpoint subsets and let exact
+    language equality + verification decide which subsets are valid covers.
+    """
     if {a,b}!={0,1} or a==b or len(I.final)!=1:
-        return None
+        return ()
     leading=_positive_orbit(I,I.start,a)
-    if leading is None: return None
+    if leading is None: return ()
     q0=I.delta[I.start][b]
-    if q0<0 or any(I.delta[p][b]!=q0 for p in leading): return None
-    good=_universal_tail_states(I,a,b)
-    if not good: return None
-    return ThreeWayCertificate(a,b,DFA(tuple(tuple(row) for row in I.delta),good,q0))
+    if q0<0 or any(I.delta[p][b]!=q0 for p in leading): return ()
+    good=sorted(_universal_tail_states(I,a,b))
+    if not good: return ()
+    table=tuple(tuple(row) for row in I.delta)
+    out=[]
+    # Small subsets first: they impose fewer comparison obligations and are
+    # often the intended symbolic decomposition. The search is still finite.
+    for size in range(1,len(good)+1):
+        for subset in combinations(good,size):
+            out.append(ThreeWayCertificate(a,b,DFA(table,frozenset(subset),q0)))
+    return tuple(out)
+
+
+def synthesize_three_way_certificate(I,a,b):
+    """Compatibility helper: return the first generated candidate, if any."""
+    xs=synthesize_three_way_certificates(I,a,b)
+    return xs[0] if xs else None
 
 
 def discover_three_way_certificate(I):
-    """Automatic exact NO recognizer for the three-way orbit family.
-
-    It tries both binary orientations. Failure to discover a certificate is
-    INCONCLUSIVE; only VERIFIED_NO is a mathematical negative verdict.
-    """
+    """Automatic exact NO recognizer for the three-way orbit family."""
     attempts=[]
     for a,b in ((0,1),(1,0)):
-        cert=synthesize_three_way_certificate(I,a,b)
-        if cert is None:
+        certs=synthesize_three_way_certificates(I,a,b)
+        if not certs:
             attempts.append({'a':a,'b':b,'status':'NO_SYNTHESIS'}); continue
-        out=verify_three_way_certificate(I,cert)
-        attempts.append({'a':a,'b':b,'status':out['status'],'reason':out.get('reason')})
-        if out['status']=='VERIFIED_NO':
-            return {'status':'VERIFIED_NO','a':a,'b':b,'certificate':cert,
-                    'verification':out,'attempts':attempts}
+        for index,cert in enumerate(certs):
+            out=verify_three_way_certificate(I,cert)
+            attempts.append({'a':a,'b':b,'subset_index':index,'middle_final':sorted(cert.middle.final),
+                             'status':out['status'],'reason':out.get('reason')})
+            if out['status']=='VERIFIED_NO':
+                return {'status':'VERIFIED_NO','a':a,'b':b,'certificate':cert,
+                        'verification':out,'attempts':attempts}
     return {'status':'INCONCLUSIVE','attempts':attempts}
