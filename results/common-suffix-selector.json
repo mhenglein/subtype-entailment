@@ -9,15 +9,34 @@
     "binary_words_through_12": 8191,
     "common_suffix": "100",
     "entry_sequences": [
-      [3, 4, 5, 6],
-      [4, 4, 5, 6]
+      [
+        3,
+        4,
+        5,
+        6
+      ],
+      [
+        4,
+        4,
+        5,
+        6
+      ]
     ],
     "longer_suffix_counterexample": "100100",
     "parameter_candidates": 196,
-    "relative_cuts": [1, 2],
+    "relative_cuts": [
+      1,
+      2
+    ],
     "state_pairs": [
-      [4, 5],
-      [4, 5]
+      [
+        4,
+        5
+      ],
+      [
+        4,
+        5
+      ]
     ],
     "target_length": 1,
     "witnesses": 0
