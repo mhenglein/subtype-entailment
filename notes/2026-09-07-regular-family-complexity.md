@@ -1,53 +1,77 @@
 # Regular-family validation: PSPACE classification and orbit backend
 
-Date: 2026-09-07. Workstream: A017. Base main: `f663a8d1072fbf21e899f860cba1538a64f3628a`.
+Date: 2026-09-07. Workstream: A017. Consolidated claim: C062.
 
-**Status:** written proof plus executed regression evidence; independent review pending; not Lean-checked. This does **not** settle unrestricted Problem 1.7.
+**Status: written proof plus executed regression evidence; independent review pending; not Lean-checked. This does not settle unrestricted Problem 1.7.**
 
-## Result
+## 1. Problem
 
-For a binary BorderAvoid instance `I` and an unannotated DFA `D`, consider the supplied-family verification problem
+For a binary BorderAvoid instance `I` and an unannotated binary DFA `D`, ask:
 
 > Is every word in `L(D)` a witness of `I`?
 
-This problem is PSPACE-complete. The lower bound already holds for terminal binary instances with no Bad states and one forbidden ordered pair whose two endpoints are each visited exactly once on every candidate word.
+This **supplied-family verification** problem is PSPACE-complete. It is deliberately different from existential witness synthesis in a mixed family.
 
-This is deliberately a verification theorem, not the existential question `L(D) ∩ Witness(I) != empty`. A mixed family can fail universal validation while still containing a witness.
+## 2. PSPACE upper bound
 
-## PSPACE upper bound
+Boundary failures—undefined runs, Bad visits, nonfinal endpoints and diagonal/empty-suffix failures—are regular and can be detected in a polynomial product graph.
 
-Boundary failures (undefined runs, Bad, nonfinal endpoints, diagonal flags) are regular and checked by a polynomial product graph. Every remaining bad member has a proper flagged agreement. Using the periodic normal form from the preceding A017 work, write such a member as
+For a remaining bad member there is a proper flagged suffix agreement. The periodic bad-member normal form used by A017 writes a counterexample as
 
     x (u v)^e u,
 
-where `v` is nonempty. In the safe product of `I` and `D`, the exponent can be shortened to at most the number `K` of reachable product states; for terminal `I`, terminal nonmerging gives the sharper original-state bound.
+with `v` nonempty. Work in the live product of `I` and `D`, with `K` reachable product states. The exponent can be shortened to at most `K`; in the terminal case the nonmerging argument gives the sharper original-state bound used by the implementation.
 
-For fixed `e`, source/target product states, and the intermediate orbit chain, existence of one common `u` and one common `v` is reachability in a synchronous product carrying at most `e+1` product states. A nondeterministic polynomial-space machine guesses this reachability path while retaining only the current tuple and a polynomial-space counter. Savitch yields PSPACE. Enumerating the polynomially represented outer choices does not increase the space bound.
+Fix the exponent, the source/target product states and the intermediate orbit chain. Existence of **one common** word `u` and **one common** word `v` realizing all repeated occurrences is reachability in a synchronous product whose tuple has at most `e+1` coordinates. A nondeterministic machine stores only the current tuple and a polynomial-space counter while guessing the path. The tuple has polynomial representation size because `e<=K`, and the outer choices can be enumerated in polynomial space. NPSPACE=PSPACE, equivalently Savitch's theorem also supplies a deterministic polynomial-space search.
 
-The important invariant is that every occurrence uses the SAME guessed `u` and `v`; independently chosen representatives would be unsound in view of the recurrent-residual counterexamples.
+The common-word condition is essential: choosing a different representative for each occurrence would be unsound in the recurrent-residual examples.
 
-## PSPACE lower bound
+## 3. PSPACE lower bound with one forbidden pair
 
-Reduce DFA intersection nonemptiness. For input binary DFAs `A_1,...,A_r`, candidate words encode blocks
+Reduce binary DFA intersection nonemptiness. Let `A_1,...,A_r` be the supplied DFAs. Build a terminal candidate automaton whose accepted macro words are exactly
 
-    1 w_1 # 1 w_2 # ... 1 w_r #
+    1 w_1 # 1 w_2 # ... 1 w_r #,
 
-with `w_i in L(A_i)`. Encode the ternary macro alphabet by the fixed binary code
+where `w_i in L(A_i)`. The leading `1` is a block tag that also makes empty data words harmless. Encode the macro alphabet by the fixed binary code
 
-    0 -> 10,  1 -> 11,  # -> 00.
+    0 -> 10,   1 -> 11,   # -> 00,
 
-The candidate automaton enforces code alignment. Add one forbidden pair between the unique boundary entering the first data block and the unique boundary entering the second data block. The final suffix agreement holds exactly when the two corresponding block contents agree; chaining the construction through all blocks yields a bad member exactly when one word is accepted by every input DFA. The construction is polynomial and has one terminal final state. Thus universal validity is PSPACE-hard by complement closure of PSPACE.
+and enforce code alignment in the candidate automaton. Only code-boundary states are relevant to the flag.
 
-The reduction was separately exercised on finite instances by complete candidate enumeration; this is implementation evidence, not the source of the all-length proof.
+Add **one** forbidden ordered pair: from the unique boundary entering block 1 to the unique boundary entering block 2. Those two states occur exactly once on every candidate.
 
-## Implementation
+Let
 
-`experiments/regular_family_orbits.py` implements an exact finite shared-word orbit search. With both caps set to `None` it terminates. The explicit Python breadth-first search can use exponential memory and is **not** itself claimed to be a polynomial-space implementation; the implicit reachability argument above supplies the PSPACE upper bound.
+    B_i = 1 w_i #.
 
-Every returned counterexample is validated with both existing forward and reversed witness predicates. Resource caps return `UNKNOWN`, never `NO`.
+At those two positions the source remainder is
 
-The previously executed regression compared this backend with the earlier transition-monoid backend on 43,069 cases, including a 41,472-case exhaustive two-state table/annotation census; all 23,781 returned counterexamples passed both witness predicates. It also included 160 complete finite-family oracles and 100 finite lower-bound construction instances. The detailed result/checker from that run should be integrated separately after the write path is stable.
+    B_1 B_2 ... B_r
 
-## Consequence for the frontier
+and the target suffix is
 
-The theorem makes supplied regular-family verification exact and complexity-classified, but it does not synthesize a good member of a mixed family. The unrestricted frontier therefore remains the recurrent-suffix synthesis/normalization problem: find a complete terminating representation of shared word obligations, or an exact negative certificate mechanism. The bad-member bound obtained here must not be reinterpreted as a good-witness bound.
+    B_2 ... B_r.
+
+The forbidden agreement holds iff the latter is a prefix of the former. Because `#` cannot occur inside a data word and every block starts with the same tag, equality up to the first delimiter forces `B_1=B_2`. After deleting that common first block from the comparison, the remaining prefix condition forces `B_2=B_3`; iterating through successive delimiter alignments forces
+
+    B_1 = B_2 = ... = B_r.
+
+Conversely, if all blocks are equal, then `B_2...B_r` is obviously a prefix of `B_1...B_r`. Therefore a bad member exists exactly when there is one word `w` accepted by every input DFA.
+
+The construction is polynomial, binary, has one terminal accepting state, no Bad states, and a single forbidden pair. Thus **existence of a bad member** is PSPACE-hard from DFA-intersection nonemptiness. The verification question asks for absence of such a bad member, and PSPACE is closed under complement, so universal supplied-family verification is PSPACE-hard as well.
+
+The classical source problem is the standard PSPACE-complete DFA intersection nonemptiness problem; the repository's word-synchronization notes record the primary-source attribution used for that fact. The new contribution here is the one-pair terminal reduction above, not the source complexity theorem.
+
+## 4. Implementation and evidence
+
+`experiments/regular_family_orbits.py` implements an exact shared-word orbit search. With both caps `None` it terminates. The explicit Python BFS can use exponential memory and is not claimed to be the polynomial-space implementation from the proof.
+
+Every returned counterexample is checked by both the forward and reversed witness predicates. Caps return `UNKNOWN`.
+
+The deterministic regression compares the orbit backend against the earlier exact backend on 43,069 cases, including 41,472 exhaustive two-state table/annotation instances. It independently rechecks all 23,781 returned counterexamples, includes 160 complete finite-family oracles, and exercises 100 finite instances of the lower-bound construction.
+
+These finite checks support the implementations; the PSPACE theorem rests on the written all-input argument.
+
+## 5. Frontier
+
+This theorem classifies **verification of a supplied regular family**. It does not decide whether a mixed regular family contains some good member, and its bad-member bound is not a good-witness bound. The unrestricted frontier remains synthesis/normalization of the shared recurrent suffix obligations.
