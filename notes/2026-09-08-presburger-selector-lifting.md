@@ -1,18 +1,18 @@
-# Canonical Presburger selectors after candidate-changing normalization
+# Presburger selectors and lifting through regular return insertions
 
-Date: 2026-09-08. Workstreams A012/A016/A017. Follows the regular-middle erasure continuation.
+Date: 2026-09-08. Workstreams A012/A016/A017. Follows the regular-middle erasure and loop-erased-spine continuations.
 
-**Status:** written consequence of the existing A016 fixed-skeleton translation plus finite regular-middle lift lemmas. It is not a new Lean theorem and does not decide unrestricted Problem 1.7.
+**Status:** written consequences of the existing A016 fixed-skeleton translation plus finite regular-middle lift lemmas. Not Lean-checked. They give decidable nonflat subclasses, not unrestricted Problem 1.7.
 
 ## 1. Selector synthesis inside a fixed skeleton is complete
 
 Fix one A016 skeleton
 
-    s0 u1^n1 s1 ... ud^nd sd,    n1,...,nd >= 0,
+    s0 u1^n1 s1 ... ud^nd sd,    n1,...,nd >= 0.
 
-for one annotated partial DFA. Let `A(n)` be the Presburger formula saying that the exponent vector produces an admissible accepted candidate. A016 already gives Presburger formulas for total length `N(n)`, state `c_n(x)`, letters at symbolic positions, and the exact witness condition.
+Let `A(n)` say that the exponent vector produces an admissible accepted candidate. A016 already gives Presburger formulas for total length `N(n)`, state `c_n(x)`, letters at symbolic positions, and the exact witness condition.
 
-Define
+Define the proper violation relation
 
     V(n,i,j) :=
       A(n)
@@ -20,155 +20,131 @@ Define
       and G(c_n(i),c_n(j))
       and forall h (0 <= h < N(n)-j -> letter_n(i+h)=letter_n(j+h)).
 
-Every atom is Presburger by A016, hence `V` is effectively Presburger-definable. On a boundary-safe slice, order cut pairs lexicographically and put
+Every atom is Presburger, hence `V` is effectively Presburger-definable. A fixed total order on cut pairs gives a canonical `LeastV` selector by excluding earlier violating pairs.
 
-    LeastV(n,i,j) := V(n,i,j)
-      and not exists i',j' (Earlier(i',j',i,j) and V(n,i',j')).
+**Theorem 1 (fixed-skeleton selector).** The graph of a canonical violating-cut selector is effectively Presburger-definable. The supplied skeleton is NO exactly when every admissible exponent vector has a selected violation. This is decidable. Hand-written arithmetic branches are explanatory certificates, not a completeness requirement for selector synthesis.
 
-For every bad admissible vector this defines exactly one pair; for every witness none.
+## 2. One regular insertion: exact bounded-exposure lifting
 
-**Theorem 1 (canonical fixed-skeleton selector).** For every supplied fixed skeleton, the graph of a canonical violating-cut selector is effectively Presburger-definable. The skeleton is NO exactly when
+Write a reduced candidate as
 
-    forall n ( A(n) -> exists i,j LeastV(n,i,j) ).
+    r_n = A_n B_n
 
-This is decidable in Presburger arithmetic. Quantifier elimination may turn the selector graph into finite Boolean combinations of inequalities and congruences. Hand-written cases such as `n<m / n=m / n>m` are therefore explanatory certificates, not a completeness requirement for fixed-skeleton selector synthesis.
-
-The selector need not be one affine function globally; congruence branches and finite exceptions may be necessary. The theorem also does not produce a selector before a finite skeleton has been obtained.
-
-## 2. Bounded insertion exposure is an exact finite lift condition
-
-Let a reduced candidate have a distinguished insertion boundary `a(n)` and write
-
-    r_n = A_n B_n.
-
-The original family inserts an arbitrary word `M` from a fixed regular language `L` at that boundary:
+with insertion boundary `a(n)`. Insert arbitrary `M` from a fixed regular language `L`:
 
     w_(n,M) = A_n M B_n.
 
-Assume every `M in L`, when read from the original DFA state at the boundary, returns to that same state. This is exactly checkable by the product routine in `regular_middle_interface.py`. Therefore every state on the continuation `B_n` is unchanged after shifting its position by `|M|`.
+Assume every `M in L`, read from the original DFA state at the boundary, returns to that same state. `regular_middle_interface.py` checks this exactly.
 
-Consider a reduced forbidden comparison at cuts `i<j` with
+For a reduced violation at `i<j` satisfying `i<a<=j`, lift the target to `j'=j+|M|`. Its suffix remains literally `r[j:]`, with length `ell=N-j`. The only changed part of the source's first `ell` symbols is after the insertion boundary. Define
 
-    i < a <= j.
+    d = max(0, i + ell - a).
 
-In the original word lift the target cut to
-
-    j' = j + |M|,
-
-and leave `i` unchanged. The target suffix `w[j':]` is literally the reduced target suffix `r[j:]`, so its length
-
-    ell = N-j
-
-is unchanged. The source prefix of length `ell` differs from the reduced source only if it reaches past the insertion point. Define the **insertion exposure**
-
-    d = max(0, i + ell - a)
-      = max(0, i + (N-j) - a).
-
-Only the first `d` symbols after the insertion boundary matter. The reduced source sees `prefix_d(B_n)`; the original source sees `prefix_d(M B_n)`.
-
-For a fixed depth `d`, define a reduced-tail prefix `P in Sigma^d` to be **L-compatible** when
+For fixed `d`, a word `P` of length `d` is **L-compatible** iff
 
     prefix_d(M P) = P    for every M in L.
 
-Equivalently:
+This is a finite regular-language property. `good_reduced_prefixes` computes it exactly by combining the finitely many accepted middles shorter than `d` with the finitely many length-`d` prefixes extendable to an accepted middle.
 
-* every accepted `M` with `|M|>=d` has prefix `P` of length `d`; and
-* every accepted `M` with `|M|<d` satisfies `M P[:d-|M|] = P`.
-
-Both sets are finite-state computable. `good_reduced_prefixes` implements exactly this characterization by enumerating the finitely many short accepted middles and the finitely many length-`d` prefixes that extend to an accepted middle.
-
-**Theorem 2 (bounded-exposure lift).** Suppose a selected reduced comparison always satisfies `i<a<=j`, its insertion exposure is bounded by `C`, every middle word returns the boundary state, and for each selected parameter vector `prefix_d(B_n)` is an L-compatible depth-`d` prefix. Then that selected comparison lifts to a forbidden comparison in `A_n M B_n` for every `M in L`.
-
-**Proof.** The state at `i` is unchanged. Because every middle returns the boundary state, the state at `j'` equals the reduced state at `j`, so the ordered flag is preserved. The lifted target suffix equals the reduced target suffix exactly. Before `a`, the lifted source segment equals the reduced source. Its only potentially changed part is its final `d` symbols after `a`; prefix compatibility makes those identical for every `M`. Hence the lifted source still begins with the target suffix. QED.
-
-Because `V`, `N`, `a`, `i`, and `j` are Presburger-definable, the set of possible exposure depths is Presburger-definable. Its boundedness and exact maximum are decidable. For a bounded maximum, the compatibility condition is a finite disjunction over finitely many depths and finitely many compatible words.
+**Theorem 2 (one-insertion lift).** If every middle returns the boundary state and the reduced continuation's first `d` symbols form an L-compatible word, then the reduced violation lifts through every `M in L`. If the possible exposure depths are bounded, all required compatibility checks are finite. Exposure boundedness and the exact maximum are Presburger-decidable.
 
 ## 3. Exposure-optimal selector synthesis
 
-A fixed lexicographic selector may choose an unnecessarily difficult violation even when another violation of the SAME reduced word lifts easily. The right object is therefore the best available violation relative to the insertion interface.
+A fixed lexicographic selector can choose an unnecessarily difficult violation. Relative to one insertion, call a violation finite-cost when its target cut is not before the insertion:
 
-Call a violation **right-target** when either
+* `a<=i<j`: cost 0; insertion is before both cuts and lifts for free;
+* `i<a<=j`: cost the exposure `d` above;
+* `j<a`: unresolved by this rule, treated as infinite cost.
 
-    a <= i < j,
+For finite `c`, `CostV(n,i,j,c)` is Presburger. So is the graph of the minimum finite cost among all violations of one reduced word.
 
-or
+**Theorem 3 (exposure-optimal selector).** It is decidable whether every bad member of a supplied fixed skeleton has at least one finite-cost violation. On that domain it is decidable whether the minimum costs are uniformly bounded and, if so, their exact maximum. A Presburger selector can choose a minimum-cost violation and a deterministic tie-break. Combining this with the finite `Good_c` tests gives an exact NO certificate for the corresponding regular-insertion family.
 
-    i < a <= j.
+This is strictly stronger than committing to `LeastV` first.
 
-The first kind is completely after the insertion and lifts for free: both cuts shift by `|M|` and the compared suffixes are unchanged. Give it cost zero. For the second kind give it cost equal to the exposure `d` above. Violations with `j<a` are left unresolved by this one-insertion rule and receive infinite cost.
+## 4. Multiple insertions compose right-to-left
 
-For finite cost `c`, the relation
+Now let a reduced fixed-skeleton candidate contain finitely many insertion anchors
 
-    CostV(n,i,j,c)
+    a_1 < a_2 < ... < a_s
 
-is Presburger-definable: it is `V(n,i,j)` conjoined with the appropriate finite-cost position case and the linear/max definition of `c`. Define
+and regular return languages `L_1,...,L_s`. Original candidates are obtained by independently inserting `M_t in L_t` at each anchor. Every `M_t` returns the DFA state at its own anchor to itself.
 
-    BestCost(n,c) := exists i,j CostV(n,i,j,c)
-      and not exists c' (0 <= c' < c and exists i',j' CostV(n,i',j',c')).
+Take one reduced violation `(i,j)` with target length `ell=N-j`. Say it is **right-safe for the erased set** when
 
-Thus the graph of the minimum finite interaction cost is Presburger-definable.
+    a_t <= j    for every t.
 
-**Theorem 3 (exposure-optimal selector).** For a supplied fixed skeleton and one regular return insertion, it is decidable whether EVERY bad admissible reduced word has at least one right-target violation. On that domain it is decidable whether the minimum finite exposure costs are bounded, and if so their exact maximum `C` is computable. Moreover a Presburger selector can choose, for each bad parameter vector, a violation of minimum cost and then a fixed tie-breaking order among equal-cost pairs.
+Anchors at or before `i` are harmless: inserting there shifts both cuts equally and leaves both suffixes unchanged. For each anchor strictly between the cuts,
 
-To turn this into a sound erasure certificate one additionally asks, for each `c<=C`, whether every minimum-cost selected pair of cost `c` sees at the reduced continuation an L-compatible prefix from `Good_c`. This is again Presburger because `Good_c` is finite and A016 makes the first `c` continuation letters definable.
+    i < a_t <= j,
 
-Therefore a NO fixed skeleton can be certified through a regular return insertion whenever:
+put
 
-1. every bad reduced member has a right-target violation;
-2. the best available finite exposure is uniformly bounded; and
-3. every exposure-optimal selected continuation satisfies the exact finite prefix-compatibility test.
+    d_t = max(0, i + ell - a_t).
 
-This is strictly stronger than fixing `LeastV` first. It automatically chooses the violation that interacts least with the recurrent insertion.
+The reduced source continuation beginning at `a_t` has a definite symbolic prefix of length `d_t`; require it to lie in `Good(L_t,d_t)`.
 
-### Six-state barrier benchmark
+**Theorem 4 (multi-insertion bounded-exposure lift).** If `(i,j)` is a reduced forbidden comparison that is right-safe for every erased anchor, and every between-cuts anchor satisfies its exact `Good(L_t,d_t)` condition, then `(i,j)` lifts to a forbidden comparison after arbitrary independent choices `M_t in L_t` at ALL erased anchors.
 
-After erasing `M in (0^+11)*`, the reduced family is
+**Proof.** Insert the return words in descending anchor order. Before the first insertion the comparison is valid. Consider the next anchor `a_t`.
 
-    0^n 1 0^m 10.
+If `a_t<=i`, both current cuts shift by `|M_t|`; neither compared suffix changes.
 
-Every reduced word is bad and possesses a right-target violation. The simple three-case selectors have costs at most one: the `n<m` branch crosses the insertion by one symbol and the other branches have cost zero. The exact interface computation gives
+Otherwise `i<a_t<=j`. All previously inserted anchors are to the right. By induction the current source prefix of length `ell` still equals the target suffix, and in particular its first `d_t` symbols after the current image of `a_t` equal the reduced continuation prefix used in the `Good` check. Inserting `M_t` leaves the target suffix unchanged because the target cut is to its right, and the exact `Good(L_t,d_t)` identity leaves those `d_t` source symbols unchanged. Earlier source symbols are untouched. Thus the same comparison remains valid. Continue to the leftmost insertion. Boundary-state return guarantees the flagged states at the shifted cuts. QED.
 
-    Good_0 = {epsilon},
-    Good_1 = {0},
-    Good_2 = empty.
+There is no independence assumption between the *effects* of insertions beyond independent language choices: the right-to-left induction is what makes the local finite prefix checks compose.
 
-The depth-one continuation starts with `0`, so an exposure-optimal selector certifies the entire original nonflat family.
+### Effective selector with many erased anchors
 
-## 4. Consequence for regular-middle erasure
+For a fixed finite erased set, define the interaction cost of a reduced violation as infinity if some anchor lies strictly after its target cut. Otherwise use, for example,
 
-Suppose a nonflat candidate family has a candidate-changing normalization whose image is a finite union of A016 fixed skeletons. Then arithmetic selector synthesis is no longer open:
+    C(i,j) = max { d_t : i < a_t <= j },
 
-1. decide exact reduced witness existence;
-2. on each NO skeleton synthesize the minimum-cost selector of Theorem 3;
-3. apply the finite lift check of Theorem 2.
+with empty maximum zero. The relation `C(i,j)=c` is Presburger because the number of anchors is fixed and each `d_t` is a linear/max expression. Hence minimum finite cost over all violations is Presburger-definable exactly as in Theorem 3.
 
-This isolates the genuinely new obligation as obtaining a finite existence-preserving erasure cover and handling the interaction types that have no bounded right-target selector.
+**Corollary 5 (multi-insertion exposure-optimal class).** For a supplied fixed skeleton plus finitely many regular state-return insertions, it is decidable whether every bad reduced member has a right-safe violation whose minimum maximum exposure is uniformly bounded. If so, one can synthesize an exposure-optimal Presburger selector and decide all finite `Good(L_t,d_t)` obligations. When they hold, every reduced NO member lifts to a bad original member.
 
-## 5. A genuine decidable nonflat class
+This is a genuine multi-SCC nonflat NO class. The inserted return languages may contain arbitrary productive cycles and words of unbounded length; only the selected comparison's exposure to each erased region must be bounded.
 
-Consider families represented as a finite union of triples
+## 5. Positive direction and exact decision subclasses
 
-    (fixed reduced skeleton S, regular return-middle L, insertion anchor a)
+For a NO certificate, lifting bad reduced members is enough. For a full YES/NO decision on a candidate-changing cover one also needs a witness-reflecting positive direction.
 
-with reconstruction `A_n M B_n`. Assume all accepted originals are covered by these triples. If, for each triple, either:
+A particularly simple case arises from the loop-erased spine cover. Every return language contains epsilon. Therefore the literal simple-spine word (all return variables set to epsilon) is itself a valid original candidate. If that word is a witness, the original instance is immediately YES.
 
-* the reduced skeleton has a witness and a stated witness-reflecting reconstruction condition produces an original witness; or
-* the reduced skeleton is NO and Theorem 3 plus the finite compatibility check succeeds,
+More generally, a finite erasure cover can keep selected recurrent regions as A016 arithmetic/shared variables and erase only the remaining regular return regions. If each reduced component is exactly decidable and:
 
-then the original family is decidable by finitely many Presburger and finite-automaton computations.
+* a reduced witness has a proved reconstruction to an original witness; and
+* every reduced NO component has an exposure-optimal lift certificate as above,
 
-This is genuinely nonflat: `L` may be the full return language of a productive SCC and contain arbitrarily long recurrent paths. The theorem does not bound their number or length.
+then the original covered class is decidable.
 
-The current branch mechanically discovers SCC return languages, checks the return-state condition, computes compatible bounded prefixes, synthesizes constant-from-end selectors, and gives the exact finite simple-spine cover described separately in `2026-09-08-loop-erased-spine-cover.md`.
+The six-state decoration-barrier benchmark is of this form: erase the genuinely nonflat `Ret(2)` middle, retain the unary/arithmetic `n,m` structure, and solve the two-counter reduced core. Its required exposures are at most one; `Good_1={0}`.
 
-## 6. What remains
+## 6. Exact loop-erased spine cover changes the global representation
 
-For arbitrary simple-spine return variables, the difficult selector interactions are now quite specific:
+The companion note `2026-09-08-loop-erased-spine-cover.md` proves that every accepted word lies in one of finitely many templates
 
-* every available violation may have its target cut before a recurrent insertion;
-* one-sided exposure may be unbounded;
-* the target suffix itself may contain a return variable that is absent or shifted in the source copy;
-* two return variables may interact in the same comparison; or
-* both compared occurrences consume the same recurrent word at different offsets, requiring literal shared-word reasoning rather than a finite prefix summary.
+    Ret(q0) a0 Ret(q1) a1 ... a_(r-1) Ret(qr),
 
-The next abstraction should classify these interaction types across the finitely many return variables of a loop-erased spine. Completely-after and bounded one-sided cases are solved above. Cases where both occurrences consume the same return variable should feed the A017 shared-word backend. A complete termination/coverage theorem for the remaining interaction graph is still open.
+where the `q_h` form a simple accepting path and `r<k`. Thus an arbitrary accepting run never needs an unbounded NUMBER of explicit recurrent variables: at most `k` regular return variables suffice while retaining their literal contents.
+
+This makes Corollary 5 applicable spine-by-spine after choosing which return variables to erase and which to retain symbolically. It also identifies the true hard residue.
+
+## 7. Remaining interaction types
+
+For a selected comparison and an erased return variable, the solved cases are:
+
+* insertion before both cuts: harmless;
+* insertion strictly between source and target, with bounded exposure: Theorems 2/4;
+* all such insertions simultaneously: Corollary 5;
+* a forbidden comparison entirely in a forced common tail: `common_suffix_selector.py`.
+
+The unsolved cases are now specific:
+
+1. every available violation has some erased anchor strictly after its target cut, so the TARGET suffix itself contains an arbitrary return word;
+2. the best right-safe exposure is unbounded;
+3. source and target consume the same return word at different offsets, requiring literal shared-word reasoning;
+4. multiple retained return variables interact inside one comparison.
+
+These are the cases that should feed the A017 shared-word / chain-free-string machinery next. No unrestricted termination theorem is claimed.
