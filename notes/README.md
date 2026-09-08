@@ -17,6 +17,7 @@ Current notes:
 - [Summary bridge audit](2026-09-04-summary-bridge-audit.md): two fixed API errors and independent checks with explicit UNKNOWN outcomes.
 - [Six-state budget-five example](2026-09-04-trimmed-budget.md): state restriction, exact budget replay, and limits of the counterexample.
 - [Strategy review and single-source period form](2026-09-08-strategy-review-and-period-state-form.md): route comparison, the shift and period forms, flag-direction observation, and the two single-source proof obligations.
+- [Single-source shape lemmas](2026-09-08-single-source-shape-lemmas.md): junction lemma, small-root bounds, the near-periodic shape theorem, the open root-length obligation, and the exact four/five-state census.
 
 Use `YYYY-MM-DD-short-topic.md` for new notes. Start from [the research template](../templates/research-note.md). Record sources, hypotheses, proof status, and the next concrete question.
 

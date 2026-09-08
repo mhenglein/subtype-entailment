@@ -303,8 +303,8 @@
       "outcome": "inconclusive",
       "owner": null,
       "updated": "2026-09-08",
-      "summary": "Exact realizable last-aligned comparison spectra are decidable; finite spectra strengthen the pair-graph certificate. A September 8 strategy review selects the terminal small-model route executed bottom-up by flag structure, restates single-source instances as period/state avoidance, and reduces them to two explicit proof obligations.",
-      "next_step": "Prove a computable single-source bound: synchronised loop deletion inside the primitive root with creation analysis (minimal period at most half the length), and colour tracking in the Anderson Theorem 58 argument (all borders short); then extend to one-directional flag patterns.",
+      "summary": "Exact realizable last-aligned comparison spectra are decidable. A September 8 review selects the terminal small-model route bottom-up by flag structure; for single-source instances a junction lemma and two small-root lemmas reduce a computable bound to bounding the primitive-root length of a near-periodic shape; exact census through five states (longest shortest witness 6).",
+      "next_step": "Close the single-source root-length obligation: show a synchronised window deletion inside the primitive root can keep the root primitive (or use another surgery), then extend to arbitrary single sources via C040 and to one-directional flag patterns.",
       "record": "research/approaches/A017.md",
       "evidence": [
         "notes/2026-09-04-minimal-witness-structure.md",
@@ -330,7 +330,10 @@
         "results/lastflag-spectrum.json",
         "notes/2026-09-08-strategy-review-and-period-state-form.md",
         "experiments/check_period_state_form.py",
-        "results/period-state-form.json"
+        "results/period-state-form.json",
+        "notes/2026-09-08-single-source-shape-lemmas.md",
+        "experiments/single_source_census.py",
+        "results/single-source-census.json"
       ],
       "issue": null
     },

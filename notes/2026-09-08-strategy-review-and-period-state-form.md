@@ -234,6 +234,13 @@ exponent lemma bounds `d0`; do not restart profile-descent or equal-state
 deletion; do not read the shift form as a finite quotient of words (the
 recurrent-residual counterexamples apply unchanged).
 
+**Progress after this note.** The single-source obligations were taken up
+the same day in [the shape-lemma note](2026-09-08-single-source-shape-lemmas.md):
+a junction lemma, two lemmas showing that small primitive roots force
+`N <= n^2 + 6n`, a theorem reducing the single-source bound to bounding the
+primitive-root length of a near-periodic shape, and an exact five-state
+census (longest shortest witness 6). The root-length step remains open.
+
 ## 6. Independent check and limits
 
 The Z-array implementation is a third, independently written witness

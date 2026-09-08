@@ -735,6 +735,15 @@ counts. Preserve Q003 as an open hypothesis.
 The census maxima are lower bounds from finite searches. C034 already decides
 every four-state case; this check does not add a small-state result.
 
+### Single-source census
+
+| Field | Record |
+|---|---|
+| Command | `python3 experiments/single_source_census.py 4` and `python3 experiments/single_source_census.py 5` |
+| Detail | [Shape-lemma note, Section 7](../notes/2026-09-08-single-source-shape-lemmas.md) |
+| Evidence | [Saved result](../results/single-source-census.json): every valid single-source table up to relabelling (414 for four states, 10,109 for five) with every nonempty target set; 1,242 and 70,763 instances; breadth-first shortest witnesses up to length 20; NO certified only by an exhausted Necessary automaton with `L, D <= 3`; zero UNKNOWN. Longest shortest witness: 4 (four states), 6 (five states). |
+| Status | Exact finite census for the single-source subclass; no E ID assigned; no all-state bound follows. |
+
 ## Not yet reproducible or not yet run
 
 These items have no executed experiment ID. Do not assign them `REPRO` status

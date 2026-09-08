@@ -24,7 +24,12 @@ lands on a flagged target state of their own run, i.e. Anderson's
 unbordered-word problem with coloured borders. C038 splits a shortest such
 witness into two regimes; the remaining obligations are synchronised loop
 deletion inside the primitive root with creation analysis, and colour
-tracking in the Anderson Theorem 58 argument. Neither is proved here.
+tracking in the Anderson Theorem 58 argument. The same day, a junction lemma
+and two small-root lemmas proved that a shortest single-source witness longer
+than `n^2 + 6n` is a near-power of a primitive word longer than `n` with a
+defect and tail shorter than `n` (at most `n+2` periods); bounding that root
+length is the one remaining single-source obligation. An exact census decides
+all single-source instances through five states (longest shortest witness 6).
 
 Every recorded hard family uses flags in both comparison directions; a
 one-directional flag pattern expresses only a colexicographic inequality
@@ -33,8 +38,10 @@ constructions, supported by a complete four-state one/two-flag census and
 small samples, not a theorem.
 
 [Note with review, proofs of the two exact forms, and obligations](notes/2026-09-08-strategy-review-and-period-state-form.md),
+[single-source lemmas, theorem, and open step](notes/2026-09-08-single-source-shape-lemmas.md),
 [checker](experiments/check_period_state_form.py),
-[results](results/period-state-form.json).
+[results](results/period-state-form.json),
+[census](results/single-source-census.json).
 No new claim or experiment identifier; no evidence level changes; no Lean.
 
 ## Previous main-branch continuation: exact realizable last-flag spectra
