@@ -1,18 +1,23 @@
 """Exact orbit-split three-way symbolic NO certificates.
 
-Generalizes three_way_cut_certificate by allowing the delimiter after the
-leading a^n block to reach different anchors on different finite a-orbit
-states. The candidate family is checked exactly as
+Generalizes three_way_cut_certificate in two independent ways:
 
-  a^n b M_{p_n} a^m b a,  n>=0, m>=1,
+* the delimiter after the leading a^n block may reach different anchors on
+  different finite a-orbit states;
+* the admissible leading lengths n need only form the ultimately-periodic set
+  whose orbit state has a defined b-edge. They need not be all n>=0.
 
-where p_n=delta(start,a^n) and M_p is a regular middle language from the
-branch-specific b-anchor. The same n<m / n=m / n>m cut proof then uses finite
-leading/trailing state orbits. VERIFIED_NO is all-length; failure is UNKNOWN.
+The candidate family is checked exactly as
+
+  a^n b M_{p_n} a^m b a,  n in N, m>=1,
+
+where p_n=delta(start,a^n), N={n : delta(p_n,b) is defined}, and M_p is a
+regular branch-specific middle language. The same n<m / n=m / n>m cut proof
+uses finite leading/trailing state orbits. VERIFIED_NO is all-length; failure
+is UNKNOWN.
 """
 from collections import deque
 
-from border_lab import Instance
 from terminal_realization import validate
 from three_way_cut_certificate import _positive_orbit
 
@@ -28,12 +33,16 @@ def _universal_tail_states(I,a,b):
     return frozenset(good)
 
 
-def _leading_states(I,a):
-    """All states delta(start,a^n), n>=0, or None if some power is undefined."""
-    seen=[]; q=I.start
-    while q not in seen:
-        if q<0: return None
-        seen.append(q); q=I.delta[q][a]
+def _a_prefix_states(I,a,include_start=True):
+    """Distinct states delta(start,a^n) until repeat or undefined.
+
+    This finitely represents all defined leading powers, whether the trajectory
+    is ultimately periodic or finite. `include_start=False` represents d>=1.
+    """
+    seen=[]; q=I.start; first=True
+    while q>=0 and q not in seen:
+        if include_start or not first: seen.append(q)
+        first=False; q=I.delta[q][a]
     return tuple(seen)
 
 
@@ -48,27 +57,16 @@ def _reachable_good(I,start,good):
 
 
 def _middle_nonempty_starts_a(I,start,good,b):
-    """No accepted middle word with first symbol b."""
     q=I.delta[start][b]
     if q<0: return True
     return not _reachable_good(I,q,good)
 
 
-def _family_step(I, states, letter, a, b, good):
-    """epsilon-NFA step for the orbit-split family.
-
-    states are tagged tuples:
-      ('L',p) leading a* at original control p
-      ('M',q) middle control
-      ('T0',) before mandatory trailing a+
-      ('T1',) inside trailing a+
-      ('B',) after final b
-      ('F',) accepting after final a
-    Epsilon M->T0 is closed before and after consuming a symbol.
-    """
+def _family_step(I,states,letter,a,b,good):
+    """epsilon-NFA step for the orbit/residue-split family."""
     def close(xs):
         out=set(xs)
-        if any(tag[0]=='M' and tag[1] in good for tag in tuple(out)):
+        if any(s[0]=='M' and s[1] in good for s in tuple(out)):
             out.add(('T0',))
         return frozenset(out)
     states=close(states); out=set()
@@ -96,8 +94,7 @@ def _candidate_language_equal(I,a,b,good):
     start=(I.start,frozenset({('L',I.start)})); parent={start:None}; todo=deque([start])
     f=next(iter(I.final))
     while todo:
-        p,ns=state=todo.popleft()
-        accepted=('F',) in ns
+        p,ns=state=todo.popleft(); accepted=('F',) in ns
         if (p==f)!=accepted:
             letters=[]; cur=state
             while parent[cur] is not None:
@@ -105,8 +102,7 @@ def _candidate_language_equal(I,a,b,good):
             return False,''.join(reversed(letters))
         for x in range(2):
             pp=I.delta[p][x] if p>=0 else -1
-            nn=_family_step(I,ns,x,a,b,good)
-            nxt=(pp,nn)
+            nn=_family_step(I,ns,x,a,b,good); nxt=(pp,nn)
             if nxt not in parent:
                 parent[nxt]=(state,x); todo.append(nxt)
     return True,None
@@ -121,19 +117,20 @@ def verify_orbit_split_certificate(I,a,b):
     f=next(iter(I.final))
     if any(q>=0 for q in I.delta[f]) or any(p==q or q==f for p,q in I.flags):
         return {'status':'NOT_APPLICABLE','reason':'Terminal final and boundary-normalized flags required'}
-    leading=_leading_states(I,a)
-    if leading is None:
-        return {'status':'NOT_APPLICABLE','reason':'Leading a-powers are not all defined'}
-    anchors={p:I.delta[p][b] for p in leading}
-    if any(q<0 for q in anchors.values()):
-        return {'status':'NOT_APPLICABLE','reason':'Some leading orbit state has no b-anchor'}
+
+    trajectory=_a_prefix_states(I,a,True)
+    branches=tuple(p for p in trajectory if I.delta[p][b]>=0)
+    if not branches:
+        return {'status':'NOT_APPLICABLE','reason':'No leading residue/state has a b-anchor'}
+    anchors={p:I.delta[p][b] for p in branches}
     good=_universal_tail_states(I,a,b)
     if not good:
         return {'status':'NOT_APPLICABLE','reason':'No universal trailing-tail states'}
     equal,counterexample=_candidate_language_equal(I,a,b,good)
     if not equal:
-        return {'status':'NOT_APPLICABLE','reason':'Candidate language differs from orbit-split family',
+        return {'status':'NOT_APPLICABLE','reason':'Candidate language differs from orbit/residue-split family',
                 'counterexample':counterexample}
+
     effects={}
     for p,q0 in anchors.items():
         if not _middle_nonempty_starts_a(I,q0,good,b):
@@ -144,29 +141,27 @@ def verify_orbit_split_certificate(I,a,b):
             return {'status':'NOT_APPLICABLE','reason':'A leading branch has no middle effect',
                     'leading_state':p,'anchor':q0}
 
-    positive=_positive_orbit(I,I.start,a)
-    if positive is None:
-        return {'status':'NOT_APPLICABLE','reason':'Positive leading orbit undefined'}
+    positive=frozenset(_a_prefix_states(I,a,False))
     required=set(); rows=[]
-    for p in leading:
+    for p in branches:
         erows=[]
         for q in sorted(effects[p]):
-            required.add((I.start,q)) # n=m
+            required.add((I.start,q))
             trailing=_positive_orbit(I,q,a)
             if trailing is None:
                 return {'status':'NOT_APPLICABLE','reason':'Trailing orbit undefined','effect':q}
-            for r in trailing:
-                required.add((I.start,r)) # n<m
-            for dstate in positive:
-                required.add((dstate,q)) # n>m
+            required.update((I.start,r) for r in trailing)
+            required.update((dstate,q) for dstate in positive)
             erows.append({'effect':q,'trailing_orbit':sorted(trailing)})
         rows.append({'leading_state':p,'anchor':anchors[p],'effects':erows})
     if not required.issubset(I.flags):
         return {'status':'NOT_APPLICABLE','reason':'Missing orbit-split comparison flags',
                 'missing_flags':sorted(required-I.flags),'required_flags':sorted(required)}
     return {'status':'VERIFIED_NO','family':'a^n b M_{p_n} a^m b a',
-            'leading_states':list(leading),'anchors':anchors,'good_states':sorted(good),
-            'branches':rows,'required_flags':sorted(required),
+            'leading_trajectory':list(trajectory),'active_leading_states':list(branches),
+            'anchors':anchors,'good_states':sorted(good),'branches':rows,
+            'required_flags':sorted(required),
+            'leading_parameter':'N={n>=0 : delta(start,a^n) has a defined b-edge}; finite/ultimately periodic',
             'argument':{
               'n<m':'r=delta(q,a^(m-n)); flag(start,r); target is a^n b a',
               'n=m':'flag(start,q); target is a^n b a',
