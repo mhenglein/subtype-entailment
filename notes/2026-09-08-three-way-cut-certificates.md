@@ -15,27 +15,35 @@ candidate language is exactly
 
 with `n>=0`, `m>=1`, and `u in M`.
 
-Assume the deterministic run has stable leading controls:
+No stabilization of the unary `a`-runs is required. Let
 
-- `s0` is the initial state;
-- after one or more leading `a`s the state is `s1`;
-- reading `b` from either `s0` or `s1` reaches the same anchor state `q0`.
+    P = { delta(s0,a^d) : d>=1 }
 
-The accepted middle words need **not** all loop `q0`. Let
+be the finite positive leading `a`-orbit from the start state `s0`. Require that
+reading `b` from `s0` and every state of P reaches one common anchor `q0`.
 
-    E = { delta(q0,u) : u in M }
+The accepted middle words may induce finitely many effects
 
-be their finite set of effects. For every `q in E`, require:
+    E = { delta(q0,u) : u in M }.
 
-- reading one or more trailing `a`s from `q` stabilizes at a state `r_q`;
-- from `r_q`, the final `b a` reaches the unique terminal final;
-- the flags contain
+For each `q in E`, let
 
-      (s0,r_q), (s0,q), (s1,q).
+    R_q = { delta(q,a^d) : d>=1 }
+
+be its finite positive trailing `a`-orbit. Require every positive power above to
+be defined, and for every `r in R_q` require that `r --b a--> final`.
+
+Finally require the finite flag families
+
+    (s0,r)   for every q in E and r in R_q,
+    (s0,q)   for every q in E,
+    (p,q)    for every p in P and q in E.
 
 Then the candidate language has no witness.
 
-The earlier one-control rule is the special case `E={q0}`.
+This strictly generalizes the earlier stable-state rule: finite unary orbits may
+contain preperiods and cycles, so the certificate already handles all eventual
+residue classes of the two unary parameters.
 
 ## 2. All-length proof
 
@@ -51,10 +59,13 @@ There are three exhaustive arithmetic cases.
 
 ### Case n < m
 
-Use source cut `i=0`. In the trailing `a^m` block choose the target cut after
-exactly `m-n` trailing `a`s. The target suffix and source suffix both begin
-`a^n b a`. At least one trailing `a` has been consumed, so the target state is
-`r_q`. The flag `(s0,r_q)` witnesses the violation.
+Put `d=m-n>=1`. Use source cut `i=0`. In the trailing `a^m` block choose the
+target cut after exactly d trailing `a`s. The target state is
+
+    r = delta(q,a^d) in R_q,
+
+and the target suffix and source suffix both begin `a^n b a`. The required flag
+`(s0,r)` witnesses a forbidden prefix agreement.
 
 ### Case n = m
 
@@ -63,13 +74,17 @@ Both suffixes begin `a^n b a`; their states are `(s0,q)`, which is flagged.
 
 ### Case n > m
 
-Use source cut `i=n-m`, inside the leading `a` block, and target cut at the start
-of the trailing `a^m` block. Both suffixes begin `a^m b a`. Since `n-m>=1`,
-the source state is `s1`; the target state is `q`. The flag `(s1,q)` witnesses
-the violation.
+Put `d=n-m>=1`. Use source cut `i=d`, inside the leading `a` block, and target
+cut at the start of the trailing `a^m` block. The source state is
 
-The chosen `q` depends on `u`, but it lies in the finite set E and the verifier
-checks all members of E. Thus every candidate is bad. QED.
+    p = delta(s0,a^d) in P,
+
+while the target state is q. Both suffixes begin `a^m b a`, and the required
+flag `(p,q)` witnesses the violation.
+
+The selected p, q, and r vary with the unary residues and the regular middle,
+but all lie in finite effect/orbit sets checked by the verifier. Thus every
+candidate is bad. QED.
 
 ## 3. Why the proof object is finite
 
@@ -88,66 +103,66 @@ proves exact language equality for all lengths.
 The verifier asks whether the middle DFA has any accepting path after consuming
 `b` as its first symbol. This is ordinary finite reachability.
 
-### Finite middle effects
+### Finite unary orbits and middle effects
 
-It explores the product of the middle DFA with the terminal automaton starting
-at `(middle.start,q0)`. Every accepting middle-product state contributes one
-endpoint `q` to E. Finiteness is immediate. Undefined endpoints invalidate the
-certificate. Each realized q is then checked for trailing stabilization, the
-forced terminal `ba`, and all three flags.
+Repeated application of one deterministic letter on finitely many states has a
+finite orbit. The verifier follows `a` until a state repeats; encountering an
+undefined transition invalidates the certificate. It separately explores the
+product of the middle DFA with the terminal automaton from `(middle.start,q0)`
+to enumerate E exactly. Thus all residue-sensitive state possibilities are
+finite and explicit.
 
-Hence `VERIFIED_NO` is an all-language finite certificate verdict. Bounded
-enumeration is used only as an independent regression of the implementation.
+For each q in E and r in R_q it checks the terminal `ba` suffix, and it checks
+the complete finite flag families above. Hence `VERIFIED_NO` is an all-language
+finite certificate verdict. Bounded enumeration is used only as an independent
+regression of the implementation.
 
-## 4. Barrier instance recovered exactly
+## 4. Two strict examples
 
-For the six-state regular-marking barrier use `a=0`, `b=1` and
+### Six-state regular-marking barrier
 
-    M = (0+ 11)*.
+For the original barrier use `a=0`, `b=1` and `M=(0+11)*`. Here the leading
+orbit is `{1}`, E is `{2}`, and the trailing orbit is `{3}`. The required flags
+reduce to exactly `(0,3), (0,2), (1,2)`.
 
-A three-state partial DFA recognizes M:
+### Periodic/multi-effect fixture
 
-- state 0: block boundary, accepting; `0 -> 1`;
-- state 1: inside `0+`; `0 -> 1`, `1 -> 2`;
-- state 2: after first `1`; `1 -> 0`.
+The checker also uses the exact candidate language
 
-Here E is the singleton `{2}`. The terminal automaton controls are
+    0* 1 (epsilon | 011) 0+ 1 0.
 
-    s0=0, s1=1, q=2, r_q=3, pre-final=4, final=5,
-
-and the required flags are exactly `(0,3), (0,2), (1,2)`. Thus the six-state
-arbitrary-regular-middle NO proof is an instance of the generic finite rule.
+Its middle has two terminal-automaton effects, and one effect has positive
+trailing orbit `2 -> 3 -> 3`. Therefore the former one-step-stabilization rule
+is inapplicable, while the orbit rule verifies NO. This is a strict regression
+for both finite middle effects and nontrivial unary preperiods.
 
 ## 5. Significance and limit
 
 This is the first installed NO certificate in this continuation whose
 termination does **not** come from a bounded comparison length, bounded gap,
-bounded marker count, or candidate-covering finite decoration. It covers an
-arbitrary recurrent regular middle by separating finite control from two unary
-anchor parameters and resolving their order by a finite Presburger case split.
-The generalized verifier additionally permits finitely many different middle
-transition effects rather than demanding one common reset state.
+bounded marker count, or candidate-covering finite decoration. It handles an
+arbitrary recurrent regular middle, finitely many middle effects, and arbitrary
+finite unary eventual periodicity while choosing violating cuts by the affine
+differences `m-n` and `n-m`.
 
-The rule is still narrow: one pair of unary anchors and three affine cut
-selectors. Completeness is not claimed.
+So the rule is already a small **affine/residue cut-selector calculus**:
 
-The natural next generalization is a **finite affine cut-selector certificate**:
+- Presburger partition: `n<m`, `n=m`, `n>m`;
+- affine selectors: 0, `m-n`, `n-m`;
+- finite residues: encoded by unary transition orbits;
+- arbitrary regular middle: summarized by finitely many transition effects.
 
-- a regular skeleton with finitely many parameterized unary/periodic blocks;
-- a finite Presburger partition of the parameter domain;
-- on each cell, affine source/target cut positions;
-- finite-state proofs that the selected cuts have a required flag and equal
-  target-length prefix.
+Completeness is not claimed. The natural next generalization is to replace
+single letters `a` by fixed periodic words and then allow several parameterized
+blocks. A016's fixed-skeleton Presburger compiler already supplies exact
+state/letter formulas for repeated fixed words; the remaining interface problem
+is how to let affine selectors cross arbitrary recurrent regular pieces without
+expanding those pieces into fixed words.
 
-A016's fixed-skeleton Presburger compiler already supplies exact state/letter
-formulas for parameterized fixed-word blocks. The missing ingredient is a
-regular-piece interface allowing such affine selectors to cross recurrent
-regular middles without expanding them into fixed words.
-
-If every terminal NO instance admitted a finite selector cover, dovetailing the
-verifier with positive witness enumeration would decide terminal BorderAvoid.
-The regular-decoration barrier does not block this route because the certificate
-may choose different violating cuts in different arithmetic regions.
+If every terminal NO instance admitted a finite affine/residue selector cover,
+dovetailing its verifier with positive witness enumeration would decide terminal
+BorderAvoid. The regular-decoration barrier does not block this route because
+the certificate may select different violations in different arithmetic cells.
 
 ## 6. Reproduction
 
@@ -155,10 +170,11 @@ Run
 
     python3 experiments/check_three_way_cut_certificate.py
 
-The checker verifies the infinite-language certificate exactly, independently
-compares the barrier DFA with the family parser on all 32,767 binary words
-through length 14, confirms that deleting any required flag invalidates the
-proof object, and rejects an enlarged middle language.
+The checker verifies the infinite-language barrier certificate exactly,
+independently compares it with the family parser on all 32,767 binary words
+through length 14, confirms required-flag sensitivity, rejects an enlarged
+middle language, and separately verifies the strict periodic/multi-effect
+fixture with another 32,767 bounded language comparisons.
 
 Implementation: `experiments/three_way_cut_certificate.py`.
 Checker: `experiments/check_three_way_cut_certificate.py`.
