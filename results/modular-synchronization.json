@@ -1,0 +1,841 @@
+{
+  "status": "PASS",
+  "counts": {
+    "binary_words": 32767,
+    "exponent_vectors": 288,
+    "uniform_word_budgets": 18,
+    "exact_budget_searches": 596,
+    "canonical_models": 153,
+    "bridge_word_checks": 152,
+    "profile_vectors": 3276,
+    "deletion_sets": 40
+  },
+  "dependency_git_blobs": {
+    "border_lab.py": "1144ae52379e0417772e79582269cacd91c5bc17",
+    "terminal_realization.py": "00b5dbb2ab345fd15db8660e8ae5179b0bfc2969",
+    "denial_bridge.py": "a38a21df533d8853aa34b3b2593d164a4a688447"
+  },
+  "primary": {
+    "instance": {
+      "delta": [
+        [
+          -1,
+          1
+        ],
+        [
+          -1,
+          2
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          -1,
+          4
+        ],
+        [
+          -1,
+          5
+        ],
+        [
+          -1,
+          6
+        ],
+        [
+          7,
+          4
+        ],
+        [
+          -1,
+          -1
+        ]
+      ],
+      "final": [
+        7
+      ],
+      "flags": [
+        [
+          0,
+          4
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          0,
+          6
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "bad": [],
+      "start": 0,
+      "alphabet": "01"
+    },
+    "word": "11111101111110",
+    "run": [
+      0,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      4,
+      5,
+      6,
+      7
+    ],
+    "budget": 7,
+    "rejected_bound": 6,
+    "accepted_shorter_words": 7,
+    "profile_dominated_shorter_words": [],
+    "all_budget_splits": [
+      {
+        "L": 0,
+        "D": 0,
+        "status": "NO",
+        "states": 6
+      },
+      {
+        "L": 0,
+        "D": 1,
+        "status": "NO",
+        "states": 7
+      },
+      {
+        "L": 1,
+        "D": 0,
+        "status": "NO",
+        "states": 8
+      },
+      {
+        "L": 0,
+        "D": 2,
+        "status": "NO",
+        "states": 8
+      },
+      {
+        "L": 1,
+        "D": 1,
+        "status": "NO",
+        "states": 9
+      },
+      {
+        "L": 2,
+        "D": 0,
+        "status": "NO",
+        "states": 10
+      },
+      {
+        "L": 0,
+        "D": 3,
+        "status": "NO",
+        "states": 10
+      },
+      {
+        "L": 1,
+        "D": 2,
+        "status": "NO",
+        "states": 11
+      },
+      {
+        "L": 2,
+        "D": 1,
+        "status": "NO",
+        "states": 12
+      },
+      {
+        "L": 3,
+        "D": 0,
+        "status": "NO",
+        "states": 13
+      },
+      {
+        "L": 0,
+        "D": 4,
+        "status": "NO",
+        "states": 14
+      },
+      {
+        "L": 1,
+        "D": 3,
+        "status": "NO",
+        "states": 13
+      },
+      {
+        "L": 2,
+        "D": 2,
+        "status": "NO",
+        "states": 14
+      },
+      {
+        "L": 3,
+        "D": 1,
+        "status": "NO",
+        "states": 15
+      },
+      {
+        "L": 4,
+        "D": 0,
+        "status": "NO",
+        "states": 18
+      },
+      {
+        "L": 0,
+        "D": 5,
+        "status": "NO",
+        "states": 15
+      },
+      {
+        "L": 1,
+        "D": 4,
+        "status": "NO",
+        "states": 16
+      },
+      {
+        "L": 2,
+        "D": 3,
+        "status": "NO",
+        "states": 16
+      },
+      {
+        "L": 3,
+        "D": 2,
+        "status": "NO",
+        "states": 17
+      },
+      {
+        "L": 4,
+        "D": 1,
+        "status": "NO",
+        "states": 19
+      },
+      {
+        "L": 5,
+        "D": 0,
+        "status": "NO",
+        "states": 20
+      },
+      {
+        "L": 0,
+        "D": 6,
+        "status": "NO",
+        "states": 17
+      },
+      {
+        "L": 1,
+        "D": 5,
+        "status": "NO",
+        "states": 18
+      },
+      {
+        "L": 2,
+        "D": 4,
+        "status": "NO",
+        "states": 19
+      },
+      {
+        "L": 3,
+        "D": 3,
+        "status": "NO",
+        "states": 20
+      },
+      {
+        "L": 4,
+        "D": 2,
+        "status": "NO",
+        "states": 21
+      },
+      {
+        "L": 5,
+        "D": 1,
+        "status": "NO",
+        "states": 22
+      },
+      {
+        "L": 6,
+        "D": 0,
+        "status": "NO",
+        "states": 23
+      },
+      {
+        "L": 0,
+        "D": 7,
+        "status": "YES",
+        "word": "11111101111110",
+        "states": 25
+      },
+      {
+        "L": 1,
+        "D": 6,
+        "status": "NO",
+        "states": 20
+      },
+      {
+        "L": 2,
+        "D": 5,
+        "status": "NO",
+        "states": 21
+      },
+      {
+        "L": 3,
+        "D": 4,
+        "status": "NO",
+        "states": 22
+      },
+      {
+        "L": 4,
+        "D": 3,
+        "status": "NO",
+        "states": 23
+      },
+      {
+        "L": 5,
+        "D": 2,
+        "status": "NO",
+        "states": 24
+      },
+      {
+        "L": 6,
+        "D": 1,
+        "status": "NO",
+        "states": 25
+      },
+      {
+        "L": 7,
+        "D": 0,
+        "status": "YES",
+        "word": "11111101111110",
+        "states": 29
+      }
+    ],
+    "subtype_variables": 17,
+    "subtype_constraints": [
+      [
+        "denial",
+        16
+      ],
+      [
+        "upper",
+        0,
+        16,
+        1
+      ],
+      [
+        "lower",
+        16,
+        9,
+        8
+      ],
+      [
+        "upper",
+        1,
+        16,
+        2
+      ],
+      [
+        "lower",
+        16,
+        10,
+        9
+      ],
+      [
+        "upper",
+        2,
+        3,
+        1
+      ],
+      [
+        "lower",
+        11,
+        9,
+        10
+      ],
+      [
+        "upper",
+        3,
+        16,
+        4
+      ],
+      [
+        "lower",
+        16,
+        12,
+        11
+      ],
+      [
+        "upper",
+        4,
+        16,
+        5
+      ],
+      [
+        "lower",
+        16,
+        13,
+        12
+      ],
+      [
+        "upper",
+        5,
+        16,
+        6
+      ],
+      [
+        "lower",
+        16,
+        14,
+        13
+      ],
+      [
+        "upper",
+        6,
+        7,
+        4
+      ],
+      [
+        "lower",
+        15,
+        12,
+        14
+      ],
+      [
+        "upper",
+        7,
+        16,
+        16
+      ],
+      [
+        "leq",
+        0,
+        12
+      ],
+      [
+        "leq",
+        0,
+        13
+      ],
+      [
+        "leq",
+        0,
+        14
+      ],
+      [
+        "leq",
+        1,
+        11
+      ],
+      [
+        "leq",
+        2,
+        11
+      ]
+    ],
+    "query": [
+      0,
+      8
+    ],
+    "full_summary_states": 11,
+    "reduced_summary_states": 11
+  },
+  "other_families": [
+    {
+      "periods": [
+        1,
+        1
+      ],
+      "states": 5,
+      "least_positive_common_length": 1,
+      "exact_budget_from_proof": 2,
+      "shortest_length_from_proof": 4,
+      "completed_graph_searches": 6,
+      "maximum_graph_states": 11
+    },
+    {
+      "periods": [
+        1,
+        2
+      ],
+      "states": 6,
+      "least_positive_common_length": 2,
+      "exact_budget_from_proof": 3,
+      "shortest_length_from_proof": 6,
+      "completed_graph_searches": 10,
+      "maximum_graph_states": 13
+    },
+    {
+      "periods": [
+        2,
+        2
+      ],
+      "states": 7,
+      "least_positive_common_length": 2,
+      "exact_budget_from_proof": 3,
+      "shortest_length_from_proof": 6,
+      "completed_graph_searches": 10,
+      "maximum_graph_states": 13
+    },
+    {
+      "periods": [
+        3,
+        2
+      ],
+      "states": 8,
+      "least_positive_common_length": 6,
+      "exact_budget_from_proof": 7,
+      "shortest_length_from_proof": 14,
+      "completed_graph_searches": 36,
+      "maximum_graph_states": 33
+    },
+    {
+      "periods": [
+        3,
+        4
+      ],
+      "states": 10,
+      "least_positive_common_length": 12,
+      "exact_budget_from_proof": 13,
+      "shortest_length_from_proof": 26,
+      "completed_graph_searches": 105,
+      "maximum_graph_states": 57
+    },
+    {
+      "periods": [
+        3,
+        5
+      ],
+      "states": 11,
+      "least_positive_common_length": 15,
+      "exact_budget_from_proof": 16,
+      "shortest_length_from_proof": 32,
+      "completed_graph_searches": 153,
+      "maximum_graph_states": 69
+    },
+    {
+      "periods": [
+        2,
+        3,
+        1
+      ],
+      "states": 10,
+      "least_positive_common_length": 6,
+      "exact_budget_from_proof": 14,
+      "shortest_length_from_proof": 21,
+      "completed_graph_searches": 120,
+      "maximum_graph_states": 140
+    },
+    {
+      "periods": [
+        1,
+        2,
+        3
+      ],
+      "states": 10,
+      "least_positive_common_length": 6,
+      "exact_budget_from_proof": 14,
+      "shortest_length_from_proof": 21,
+      "completed_graph_searches": 120,
+      "maximum_graph_states": 75
+    },
+    {
+      "periods": [
+        2,
+        3,
+        5
+      ],
+      "states": 14,
+      "least_positive_common_length": 30,
+      "exact_budget_from_proof": 62,
+      "shortest_length_from_proof": 93,
+      "completed_graph_searches": 0,
+      "maximum_graph_states": null
+    }
+  ],
+  "multi_pump": [
+    {
+      "blocks": 2,
+      "states": 5,
+      "source": "11101110",
+      "source_budget": 4,
+      "minimum_disjoint_deletions": 2,
+      "replacement": "1010",
+      "replacement_budget": 2,
+      "intervals": [
+        [
+          1,
+          3
+        ],
+        [
+          5,
+          7
+        ]
+      ],
+      "shorter_dominated_words": 2
+    },
+    {
+      "blocks": 3,
+      "states": 7,
+      "source": "111011101110",
+      "source_budget": 8,
+      "minimum_disjoint_deletions": 3,
+      "replacement": "101010",
+      "replacement_budget": 4,
+      "intervals": [
+        [
+          1,
+          3
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          9,
+          11
+        ]
+      ],
+      "shorter_dominated_words": 2
+    },
+    {
+      "blocks": 4,
+      "states": 9,
+      "source": "1110111011101110",
+      "source_budget": 12,
+      "minimum_disjoint_deletions": 4,
+      "replacement": "10101010",
+      "replacement_budget": 6,
+      "intervals": [
+        [
+          1,
+          3
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          13,
+          15
+        ]
+      ],
+      "shorter_dominated_words": 2
+    },
+    {
+      "blocks": 5,
+      "states": 11,
+      "source": "11101110111011101110",
+      "source_budget": 16,
+      "minimum_disjoint_deletions": 5,
+      "replacement": "1010101010",
+      "replacement_budget": 8,
+      "intervals": [
+        [
+          1,
+          3
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          13,
+          15
+        ],
+        [
+          17,
+          19
+        ]
+      ],
+      "shorter_dominated_words": 2
+    },
+    {
+      "blocks": 6,
+      "states": 13,
+      "source": "111011101110111011101110",
+      "source_budget": 20,
+      "minimum_disjoint_deletions": 6,
+      "replacement": "101010101010",
+      "replacement_budget": 10,
+      "intervals": [
+        [
+          1,
+          3
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          13,
+          15
+        ],
+        [
+          17,
+          19
+        ],
+        [
+          21,
+          23
+        ]
+      ],
+      "shorter_dominated_words": 2
+    },
+    {
+      "blocks": 7,
+      "states": 15,
+      "source": "1110111011101110111011101110",
+      "source_budget": 24,
+      "minimum_disjoint_deletions": 7,
+      "replacement": "10101010101010",
+      "replacement_budget": 12,
+      "intervals": [
+        [
+          1,
+          3
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          13,
+          15
+        ],
+        [
+          17,
+          19
+        ],
+        [
+          21,
+          23
+        ],
+        [
+          25,
+          27
+        ]
+      ],
+      "shorter_dominated_words": 2
+    }
+  ],
+  "superpolynomial_family": [
+    {
+      "m": 2,
+      "states": 6,
+      "subtype_variables": 13,
+      "lcm": 2,
+      "exact_budget_from_proof": 3,
+      "shortest_length_from_proof": 6
+    },
+    {
+      "m": 3,
+      "states": 10,
+      "subtype_variables": 21,
+      "lcm": 6,
+      "exact_budget_from_proof": 14,
+      "shortest_length_from_proof": 21
+    },
+    {
+      "m": 4,
+      "states": 15,
+      "subtype_variables": 31,
+      "lcm": 12,
+      "exact_budget_from_proof": 39,
+      "shortest_length_from_proof": 52
+    },
+    {
+      "m": 5,
+      "states": 21,
+      "subtype_variables": 43,
+      "lcm": 60,
+      "exact_budget_from_proof": 244,
+      "shortest_length_from_proof": 305
+    },
+    {
+      "m": 6,
+      "states": 28,
+      "subtype_variables": 57,
+      "lcm": 60,
+      "exact_budget_from_proof": 305,
+      "shortest_length_from_proof": 366
+    },
+    {
+      "m": 7,
+      "states": 36,
+      "subtype_variables": 73,
+      "lcm": 420,
+      "exact_budget_from_proof": 2526,
+      "shortest_length_from_proof": 2947
+    },
+    {
+      "m": 8,
+      "states": 45,
+      "subtype_variables": 91,
+      "lcm": 840,
+      "exact_budget_from_proof": 5887,
+      "shortest_length_from_proof": 6728
+    },
+    {
+      "m": 9,
+      "states": 55,
+      "subtype_variables": 111,
+      "lcm": 2520,
+      "exact_budget_from_proof": 20168,
+      "shortest_length_from_proof": 22689
+    },
+    {
+      "m": 10,
+      "states": 66,
+      "subtype_variables": 133,
+      "lcm": 2520,
+      "exact_budget_from_proof": 22689,
+      "shortest_length_from_proof": 25210
+    },
+    {
+      "m": 11,
+      "states": 78,
+      "subtype_variables": 157,
+      "lcm": 27720,
+      "exact_budget_from_proof": 277210,
+      "shortest_length_from_proof": 304931
+    },
+    {
+      "m": 12,
+      "states": 91,
+      "subtype_variables": 183,
+      "lcm": 27720,
+      "exact_budget_from_proof": 304931,
+      "shortest_length_from_proof": 332652
+    }
+  ],
+  "proof_status": "Written all-length proofs; not Lean-checked or independently reviewed",
+  "limitations": "Finite tests are regressions; growth formulas for unsearched parameters rely on the written proof. No unrestricted decision is claimed."
+}
