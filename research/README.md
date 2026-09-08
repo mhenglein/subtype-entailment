@@ -63,8 +63,8 @@ These records keep exact hypotheses and failed strengthenings together. Their st
 | ID | Hypothesis | Recorded status |
 |---|---|---|
 | Q001 | [Q001 — Bounded essential terminal skeletons](conjectures/Q001.md) | OPEN |
-| Q002 | [Q002 — Agreement-profile domination for terminal words](conjectures/Q002.md) | OPEN |
-| Q003 | [Q003 — Strict agreement-profile descent](conjectures/Q003.md) | OPEN |
+| Q002 | [Q002 — Agreement-profile domination for terminal words](conjectures/Q002.md) | REFUTED |
+| Q003 | [Q003 — Strict agreement-profile descent](conjectures/Q003.md) | REFUTED |
 
 Retrieve one canonical record as JSON with `python3 scripts/research_index.py --lookup Q003` (also accepts A/C/E IDs). Follow its linked evidence before relying on it.
 
