@@ -78,6 +78,7 @@ def split_runs(word: str, marker: str):
 
 
 def join_runs(lengths, marker: str) -> str:
+    lengths = tuple(lengths)
     if marker not in ('0', '1') or any(type(n) is not int or n < 0 for n in lengths):
         raise ValueError('Nonnegative integer lengths and binary marker required')
     return ''.join(str(1-int(marker))*n+marker for n in lengths)
