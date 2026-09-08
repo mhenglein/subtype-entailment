@@ -70,9 +70,9 @@ Therefore, when C056 certifies the compiled instance, its answer transfers exact
 
 Take C051's five-state NO instance and its exact fixed-length encoding `C(0)=00, C(1)=10`, producing the ten-state obstruction from the marker-tail note. The strict union-find certificate marks exactly
 
-    (0,0), (1,0), (3,0)
+    (7,0), (9,0)
 
-in the ten-state encoded automaton. These are the first physical transitions of the logical zero tokens. The physical loop transitions implementing logical ones remain data. The marked classes are synchronized across every potential flagged comparison, and no marked edge lies on a directed cycle.
+in that concrete ten-state numbering. These are the **second physical zero transitions** of the two synchronized logical-zero classes; `(9,0)` enters the final and forces its synchronized partner `(7,0)`. The physical transitions implementing logical-one loops remain data. Neither marked edge lies on a directed cycle.
 
 Compiling this colouring exposes exactly two logical separators on every accepted candidate. C053 exhausts the finite cover and returns NO. Hence the counterexample to raw-marker completeness is **not** a counterexample to synchronous-separator preprocessing. The original five-state source is certified directly as well.
 
