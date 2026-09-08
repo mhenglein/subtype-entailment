@@ -10,5 +10,11 @@
   },
   "scope": "Exact supplied-H paired macro tails plus exact macro separator spectrum on formatted slices",
   "small_differential_queries": 9,
-  "status": "PASS"
+  "status": "PASS",
+  "zero_marker_positive": {
+    "H": 0,
+    "fixed_status": "YES",
+    "semantic_status": "YES",
+    "word": "111100"
+  }
 }
