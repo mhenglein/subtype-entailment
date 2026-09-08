@@ -12,6 +12,9 @@ from synchronous_separators import (compile_separators, encode_word,
 
 UNCAPPED = FrontierLimits(states=None, transitions=None, descriptors=None,
                           schemas=None, reconstruction=None)
+CENSUS_LIMITS = FrontierLimits(states=20000, transitions=100000,
+                               descriptors=20000, schemas=1000,
+                               reconstruction=50000)
 
 
 def uniform_code(I):
@@ -38,7 +41,7 @@ def check_equivalence(I,maximum,frontier=False):
 
 
 def small_census():
-    instances=certified=comparisons=yes=no=unknown=frontier_extra=0
+    instances=certified=comparisons=yes=no=unknown=frontier_extra=frontier_capped=0
     for k in range(1,4):
         possible=[(p,q) for p in range(k-1) for q in range(k-1) if p!=q]
         for raw in product(range(-1,k),repeat=2*(k-1)):
@@ -49,10 +52,11 @@ def small_census():
                 summary,cert=separator_certificate(I)
                 if cert is None:
                     unknown += 1
-                    out=frontier_separator_decision(I,UNCAPPED)
+                    out=frontier_separator_decision(I,CENSUS_LIMITS)
                     if out['status'] in ('YES','NO'):
                         frontier_extra += 1
                         if out['status']=='YES': assert witness(I,out['word'])
+                    else: frontier_capped += 1
                     continue
                 certified += 1; comparisons += check_equivalence(I,6)
                 out=separator_decision(I,max_schemas=None,max_states=None,max_transitions=None)
@@ -61,7 +65,8 @@ def small_census():
                 else: no += 1
     return dict(instances=instances,certified=certified,uncertified=unknown,
                 word_equivalence_checks=comparisons,exact_yes=yes,exact_no=no,
-                additional_frontier_decisions=frontier_extra)
+                additional_frontier_decisions=frontier_extra,
+                frontier_unknown_or_capped=frontier_capped)
 
 
 def encoded_obstruction():
@@ -81,11 +86,8 @@ def encoded_obstruction():
 
 
 def early_cycle_fixture():
-    # Final edge and source 1-loop are synchronized, so the strict C053 colouring
-    # conflicts. The marked loop is before the target and C056 pumps it exactly.
     I=Instance(((1,0),(-1,2),(-1,-1)),frozenset({2}),frozenset({(0,1)}))
-    strict,_=separator_certificate(I)
-    assert strict['status']=='NOT_APPLICABLE'
+    strict,_=separator_certificate(I); assert strict['status']=='NOT_APPLICABLE'
     out=frontier_separator_decision(I,UNCAPPED)
     assert out['status']=='YES' and witness(I,out['word'])
     assert check_equivalence(I,7,frontier=True)>0
@@ -93,8 +95,6 @@ def early_cycle_fixture():
 
 
 def target_cycle_fixture():
-    # The same forced marked 1-loop is now reachable from target state 1 via 0.
-    # This precise C056 certificate is unavailable; no global verdict follows.
     I=Instance(((1,0),(0,2),(-1,-1)),frozenset({2}),frozenset({(0,1)}))
     out=frontier_separator_decision(I,UNCAPPED)
     assert out['status']=='UNKNOWN'
