@@ -177,8 +177,8 @@ def main():
                 assert accepted(erased)
                 erased_case = check_certificate(erased)
                 assert erased_case == case
-                assert not violations(word) == False
-                assert not violations(erased) == False
+                assert violations(word)
+                assert violations(erased)
                 erasure_checks += 1
 
                 if runs:
