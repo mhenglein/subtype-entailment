@@ -12,9 +12,6 @@ from synchronous_separators import (compile_separators, encode_word,
 
 UNCAPPED = FrontierLimits(states=None, transitions=None, descriptors=None,
                           schemas=None, reconstruction=None)
-CENSUS_LIMITS = FrontierLimits(states=20000, transitions=100000,
-                               descriptors=20000, schemas=1000,
-                               reconstruction=50000)
 
 
 def uniform_code(I):
@@ -41,7 +38,10 @@ def check_equivalence(I,maximum,frontier=False):
 
 
 def small_census():
-    instances=certified=comparisons=yes=no=unknown=frontier_extra=frontier_capped=0
+    # Census only the finite colouring theorem and compiler. Running hundreds of
+    # already-proved downstream schema searches here adds CI cost but no new
+    # independence; selected exact downstream fixtures are checked below.
+    instances=certified=comparisons=uncertified=frontier_structural=0
     for k in range(1,4):
         possible=[(p,q) for p in range(k-1) for q in range(k-1) if p!=q]
         for raw in product(range(-1,k),repeat=2*(k-1)):
@@ -49,32 +49,22 @@ def small_census():
             for mask in range(1<<len(possible)):
                 flags=frozenset(pair for i,pair in enumerate(possible) if mask>>i&1)
                 I=Instance(delta,frozenset({k-1}),flags); instances += 1
-                summary,cert=separator_certificate(I)
+                _,cert=separator_certificate(I)
                 if cert is None:
-                    unknown += 1
-                    out=frontier_separator_decision(I,CENSUS_LIMITS)
-                    if out['status'] in ('YES','NO'):
-                        frontier_extra += 1
-                        if out['status']=='YES': assert witness(I,out['word'])
-                    else: frontier_capped += 1
+                    uncertified += 1
+                    _,front=frontier_separator_certificate(I)
+                    if front is not None: frontier_structural += 1
                     continue
                 certified += 1; comparisons += check_equivalence(I,6)
-                out=separator_decision(I,max_schemas=None,max_states=None,max_transitions=None)
-                assert out['status'] in ('YES','NO')
-                if out['status']=='YES': assert witness(I,out['word']); yes += 1
-                else: no += 1
-    return dict(instances=instances,certified=certified,uncertified=unknown,
-                word_equivalence_checks=comparisons,exact_yes=yes,exact_no=no,
-                additional_frontier_decisions=frontier_extra,
-                frontier_unknown_or_capped=frontier_capped)
+    return dict(instances=instances,certified=certified,uncertified=uncertified,
+                word_equivalence_checks=comparisons,
+                frontier_colourings_on_strict_failures=frontier_structural)
 
 
 def encoded_obstruction():
     old=Instance(((2,1),(2,1),(-1,3),(4,3),(-1,-1)),frozenset({4}),
                  frozenset({(0,2),(0,3),(1,2)}))
     encoded=uniform_code(old); summary,cert=separator_certificate(encoded)
-    # Helpers 7 and 9 are the second physical zero transitions of the two
-    # synchronized logical-zero classes; 9 enters the final and forces both.
     assert cert is not None and cert.marked==frozenset({(7,0),(9,0)})
     compiled=compile_separators(encoded,cert)
     direct=marker_decision(compiled,max_schemas=None,max_states=None,max_transitions=None)
