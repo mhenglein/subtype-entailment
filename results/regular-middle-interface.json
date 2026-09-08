@@ -19,22 +19,36 @@
     {
       "boundary_state": 1,
       "common_nonempty_prefix": "0",
-      "component": [1]
+      "component": [
+        1
+      ]
     },
     {
       "boundary_state": 2,
       "common_nonempty_prefix": "0",
-      "component": [2,3,4]
+      "component": [
+        2,
+        3,
+        4
+      ]
     },
     {
       "boundary_state": 3,
       "common_nonempty_prefix": "",
-      "component": [2,3,4]
+      "component": [
+        2,
+        3,
+        4
+      ]
     },
     {
       "boundary_state": 4,
-      "common_nonempty_prefix": "1",
-      "component": [2,3,4]
+      "common_nonempty_prefix": "10",
+      "component": [
+        2,
+        3,
+        4
+      ]
     }
   ],
   "negative_controls": {
