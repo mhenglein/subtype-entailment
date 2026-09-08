@@ -1,16 +1,10 @@
 # One flag already separates last-aligned length from the global minimum
 
-Date: 2026-09-08. Workstream: A017. Base main: `99133037a60f65c8e0fab5ed9299524fbd95043e`.
+Date: 2026-09-08. Workstream: A017. Consolidated claim: C064.
 
-**Status: explicit all-length counterexample + deterministic reproduction. Independent review pending; not Lean-checked. This does not settle Problem 1.7.**
+**Status: written all-length argument plus deterministic reproduction; independent review pending; not Lean-checked. This does not settle Problem 1.7.**
 
-## 1. Question
-
-The September 7 last-flag continuation exhibited a seven-state, two-flag family in which a last-aligned violation can grow without bound while a different flag supplies a one-letter violation in the same word. A tempting repair is to restrict to a single forbidden ordered pair: perhaps then long last-aligned comparisons force the global minimum violation length to grow.
-
-That repair is false. Four states and one flag suffice.
-
-## 2. Instance
+## 1. Instance
 
 Take start state `0`, sole terminal final state `3`, no Bad states, and
 
@@ -25,97 +19,63 @@ The binary transition table is
 | 2 | 1 | 1 |
 | 3 | undefined | undefined |
 
-For every integer `r>=0`, put
+For every `r>=0`, let
 
     z_r = 10 1^(3r+2) 0,
     w_r = z_r z_r.
 
-Then `|z_r|=3r+5` and `|w_r|=6r+10`.
+Then `|z_r|=3r+5`.
 
-## 3. The square is always accepted
+## 2. Unbounded last-aligned spectrum
 
-On letter `1`, the nonfinal states cycle
+On letter `1`, the nonfinal states cycle `0 -> 2 -> 1 -> 0`. A direct transition calculation gives
 
-    0 -> 2 -> 1 -> 0.
-
-Starting from state `0`, the prefix `10` reaches state `1`. Reading `1^(3r+2)` from `1` reaches `2`, and the final `0` returns to `1`. Hence
-
-    delta(0,z_r)=1.
-
-Starting from state `1`, the prefix `10` reaches state `0`. Reading `1^(3r+2)` from `0` reaches `1`, and the final `0` reaches terminal state `3`. Hence
-
+    delta(0,z_r)=1,
     delta(1,z_r)=3.
 
-Therefore `w_r=z_r z_r` is an accepted word whose midpoint state is exactly the flag target `1`.
+Hence `w_r` is accepted and its midpoint is state `1`. Positions `0` and `|z_r|` therefore form the forbidden pair `(0,1)`, and the target suffix is exactly `z_r`, of length `3r+5`.
 
-## 4. An unbounded last-aligned violation
-
-At positions
-
-    i=0,
-    j=|z_r|,
-
-we have states `(0,1)` and
-
-    w_r[i:] = z_r z_r,
-    w_r[j:] = z_r.
-
-Thus the target suffix is a prefix of the source suffix and gives a forbidden agreement of length `|z_r|=3r+5`.
-
-It is last-aligned. Follow the two copies synchronously from the flagged root `(0,1)`. After the first `1` the pair is `(2,0)`; after the following `0` it is `(1,0)`. Under subsequent `1`s the pair cycles
+This comparison is last-aligned. After the first aligned `1` the state pair is `(2,0)`, after the following `0` it is `(1,0)`, and under the subsequent ones it cycles
 
     (1,0) -> (0,2) -> (2,1) -> (1,0).
 
-None of these pairs is `(0,1)`. The final `0` reaches `(1,3)`. Hence no positive aligned offset enters the sole flag again. The midpoint comparison is therefore last-aligned for every `r`.
+The sole flag `(0,1)` is never re-entered at a positive aligned offset; the final zero reaches `(1,3)`. Thus the realizable last-aligned violation lengths are unbounded.
 
-Consequently this ONE-FLAG instance has an unbounded realizable last-aligned length spectrum.
+## 3. Every bad accepted word has a one-letter violation
 
-## 5. The same flag supplies a one-letter violation
+The first draft established `mu(w_r)=1` only on the displayed square family. That is not enough to characterize the whole bad language. The following argument supplies the missing all-word statement.
 
-Now look inside the second copy. It begins in state `1`. After its first symbol `1`, the run is in source state `0`; the remaining suffix begins with the next symbol `0`.
+Every nonempty accepted word ends with a `0` read from state `1`, because `1 --0--> 3` is the only transition into the terminal final state.
 
-Immediately before the final symbol of the whole word, the run is in target state `1`, because the last transition of `z_r` is `1 --0--> 3`. The target suffix there is exactly the one-letter word `0`.
+Suppose an accepted word has an earlier occurrence of `0` read from state `0`. Since `0 --0--> 0`, that position is a source state `0`, while immediately before the final zero the state is `1`. The one-letter target suffix `0` therefore agrees at the earlier source position and gives the forbidden pair `(0,1)`. Hence every such bad word has minimum proper violation length one.
 
-Thus positions
+Conversely, suppose an accepted word has **no** earlier zero read from state `0`. We show that it cannot contain any forbidden proper agreement at all. Any matching comparison rooted at `(0,1)` evolves synchronously. On symbol `1` its pair orbit is
 
-    i=|z_r|+1,
-    j=2|z_r|-1
+    (0,1) -> (2,0) -> (1,2) -> (0,1).
 
-form another `(0,1)` forbidden agreement, now of target length one. Since proper target lengths are positive,
+A zero cannot be read while the pair is `(0,1)` or `(2,0)` without using the excluded state-0 zero transition in one of the two occurrences. At pair `(1,2)`, reading zero would send the earlier/source occurrence to terminal state `3` while the later occurrence continues, so it cannot realize a proper target suffix of an accepted word. Therefore a forbidden comparison rooted at `(0,1)` cannot reach the later occurrence's final zero. No proper forbidden agreement exists.
 
-    mu(w_r)=1
+Thus an accepted word is bad **iff** it contains an earlier state-0 zero, and every bad accepted word has
 
-for every `r>=0`, where `mu` is the global minimum proper violation length.
+    mu(w)=1.
 
-The short comparison is also last-aligned, so the same one-flag spectrum contains `1` as well as the unbounded sequence `3r+5`.
+The global set of proper minimum violation lengths for this one-flag instance is therefore exactly `{1}`, while its last-aligned violation spectrum is unbounded.
 
-## 6. Consequence
+For the specific square `w_r`, the short violation occurs after the first symbol of the second copy and immediately before the final zero, exactly as in the original construction.
+
+## 4. Consequence
 
 The implication
 
-    one flag + unbounded last-aligned spectrum
+    one flag + unbounded realizable last-aligned spectrum
         => unbounded global minimum violation lengths
 
-is false.
+is false even for a four-state terminal instance. The obstruction does not require multiple flag colours: distinct occurrences of the same ordered pair can generate a growing comparison and a constant-short comparison in the same language.
 
-More strongly, the obstruction does not require two unrelated flag colours: two different gaps of the SAME ordered state pair can coexist in one word, one growing and one constant. Therefore any exact abstraction of global minima must coordinate multiple occurrences/gaps even in the one-flag class.
+This does not rule out a separate computable small-witness theorem for terminal one-flag instances. The present automaton itself has short witnesses `100` and `110`.
 
-This invalidates the proposed shortcut of proving a one-flag decision merely by identifying the last-aligned spectrum with global-minimum behavior. It does **not** refute the possibility of a separate linear small-witness theorem for one-flag instances; this automaton itself has short witnesses (`100` and `110`).
+No lower bound from C021 is transferred here. C021's extremal family has nonterminal accepting behavior, so it cannot be used as a terminal one-flag lower bound without an additional reduction that preserves the relevant parameters.
 
-## 7. Reproduction
+## 5. Reproduction
 
-Run
-
-    python3 experiments/check_oneflag_minimum_gap.py
-
-The deterministic checker verifies the formulas above for `r=0..200`, using both forward and reversed witness predicates. It also enumerates all binary words through length 14 for this instance, checks the explicit violation extractor against the witness predicates, and confirms the short witnesses.
-
-Finite reproduction supports the implementation only; the unbounded conclusion rests on the all-`r` argument above.
-
-## 8. Handoff
-
-The useful surviving one-flag question is not whether different flags are needed—they are not. The next discriminating target is instead:
-
-> If a terminal one-flag instance has any witness, must it have a witness of length bounded by a computable (perhaps linear) function of the state count?
-
-C021 gives a one-flag lower family with unique shortest length `3k-3`, so any universal bound must be at least that large infinitely often. The present counterexample neither proves nor refutes a `3k-3`, `6k+O(1)`, or other computable upper bound.
+`experiments/check_oneflag_minimum_gap.py` checks the explicit family for `r=0..200`, compares the forward and reversed witness predicates, and exhausts bounded words. The consolidated regression additionally checks the strengthened all-bad-word characterization on a larger finite prefix of the language. Finite tests support the implementation; the unbounded and all-word conclusions above rest on the written argument.
