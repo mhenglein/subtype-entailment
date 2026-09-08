@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "instance": {
+    "delta": [[0,2],[3,0],[1,1],[-1,-1]],
+    "final": [3],
+    "flags": [[0,1]]
+  },
+  "family": "z_r = 10 1^(3r+2) 0; w_r = z_r z_r",
+  "proved_properties": [
+    "last-aligned violation length 3r+5 for every r>=0",
+    "global minimum proper violation length 1 for every r>=0",
+    "single forbidden ordered pair only"
+  ],
+  "counts": {
+    "parameter_values": 201,
+    "family_predicate_checks": 402,
+    "enumerated_words": 32767,
+    "accepted_words": 892,
+    "bad_accepted_words": 862,
+    "witnesses": 30
+  },
+  "limits": [
+    "The finite parameter range is not the unbounded proof",
+    "Independent mathematical review pending",
+    "Not Lean-checked",
+    "Does not settle one-flag witness existence or Problem 1.7"
+  ]
+}
