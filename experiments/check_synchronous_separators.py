@@ -63,18 +63,13 @@ def encoded_obstruction():
                  frozenset({(0,2),(0,3),(1,2)}))
     encoded=uniform_code(old); summary,cert=separator_certificate(encoded)
     assert cert is not None and cert.marked==frozenset({(7,0),(9,0)})
-    compiled=compile_separators(encoded,cert)
-    structures=[]
+    compiled=compile_separators(encoded,cert); statuses=[]
     for f in compiled.final:
         structure,_,_=marker_structure(compiled,f,code='paired')
-        assert structure['status']=='CERTIFIED'
-        structures.append(structure)
-    # C053 is already independently reproduced by the consolidated continuation
-    # suite. Here we test the new compiler/equivalence and its exact applicability,
-    # rather than redundantly rerunning its potentially large schema graph.
+        assert structure['status']=='CERTIFIED'; statuses.append('CERTIFIED')
     return dict(encoded_known_no=True,marked=summary['marked'],
                 compiled_states=len(compiled.delta),equivalence_checks=check_equivalence(encoded,12),
-                c053_structures=structures)
+                c053_statuses=statuses)
 
 
 def early_cycle_fixture():
@@ -83,14 +78,14 @@ def early_cycle_fixture():
     out=frontier_separator_decision(I,UNCAPPED)
     assert out['status']=='YES' and witness(I,out['word'])
     assert check_equivalence(I,7,frontier=True)>0
-    return dict(strict=strict,frontier_status=out['status'],word=out['word'])
+    return dict(strict_status=strict['status'],frontier_status='YES')
 
 
 def target_cycle_fixture():
     I=Instance(((1,0),(0,2),(-1,-1)),frozenset({2}),frozenset({(0,1)}))
     out=frontier_separator_decision(I,UNCAPPED)
     assert out['status']=='UNKNOWN'
-    return dict(status=out['status'],reason=out.get('reason'))
+    return dict(status='UNKNOWN')
 
 
 def main():
