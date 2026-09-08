@@ -1,165 +1,127 @@
 # Subtail — current research state
 
-Navigation updated: 2026-09-07; scientific evidence remains at its linked recorded revisions.
+Navigation updated: 2026-09-08. Scientific evidence remains at its linked recorded revisions.
 
-This is the compressed scientific memory of the project. Read this after `research/problem.md` and before starting new work. It answers: **what do we currently know, what has failed, and what is the highest-value unresolved question?**
-
-Detailed proofs and evidence live in `research/claims.md`, approach histories, experiments, Lean, and notes. This file should summarize them without overstating them.
+This is the compressed scientific memory of the project. Read this after `research/problem.md` and before starting new work.
 
 ## Problem
 
-Decide Problem 1.7: subtype entailment over bottom and binary product for arbitrary, possibly infinite trees. The unrestricted problem remains open.
+Decide Problem 1.7: subtype entailment over bottom and binary product for arbitrary, possibly infinite trees. **The unrestricted problem remains open.**
 
-## Latest main-branch continuation: exact realizable last-flag spectra
+The September 8 consolidation integrates the reusable research artifacts from open PRs #6–#14 onto the September 7 main frontier. It does **not** promote those written proofs to `AUDIT` or `LEAN`. Canonical continuation IDs C046–C064 and their branch-local aliases are recorded in [research/CONSOLIDATED_2026-09-08.md](research/CONSOLIDATED_2026-09-08.md).
 
-The September 7 A017 continuation decides whether the lengths of ACTUAL
-last-aligned-flag comparisons are bounded. A joint finite word action on
-single states and synchronized pairs retains one common word assignment;
-terminality bounds the periodic exponent. The resulting length spectrum has
-an effective unary-regular presentation. The uncapped analysis computes its
-exact maximum H, or returns a pumping certificate proving it unbounded.
+## Most important correction: Q002 and Q003 are refuted
 
-A finite spectrum makes Witness exactly Necessary(H,0), strictly extending
-the older acyclic pair-graph certificate. A five-state example has H=1 even
-though its pair graph has a productive cycle; the solver returns 100.
-Unbounded spectra are NOT existential NO certificates. A seven-state NO
-example has unbounded last-aligned comparisons but a one-letter detection
-bound because another gap supplies a shorter violation in every candidate.
+Do not use either conjecture as a premise.
 
-The next distinction is global minimum violation length versus last-aligned
-comparison length. Even deciding boundedness of those global minima would
-not cover the known NO example defeating every finite necessary budget.
-Different comparisons must still be coordinated inside the SAME word.
+C046 gives an eight-state terminal binary instance with exact witness language
 
-[Scoped record and commands](research/LASTFLAG_SPECTRUM.md),
-[proof and limitations](notes/2026-09-07-realizable-lastflag-spectrum.md),
-[results](results/lastflag-spectrum.json).
-Written proofs and independent-predicate tests; independent mathematical
-review pending, not Lean-checked. The original core replay is byte-identical.
-No full repository CI or global link scan was run from the partial snapshot.
-Other scientific branches are not merged or promoted by this continuation.
+    { (1^(6t) 0)^2 : t>=1 }.
 
-## Previous main-branch continuation: shared-word relations
+Its unique shortest witness has length 14 and exact sufficient budget 7, exceeding `k-2=6`. This refutes Q002's proposed agreement-profile replacement bound. Since the displayed word is already a shortest witness and every profile-dominated accepted word is again a witness of the same modular language, there is no strictly shorter profile-dominated replacement; Q003 is refuted as well.
 
-The scoped A017 attempt based on `0318ff7` now provides exact finite
-composition of shared-word templates and a decidable universal verification
-problem: does EVERY instantiation of a supplied family produce a witness?
-A violation has the word-equation form w=x d z, d z=z t with regular constraints
-locating the flagged states. Classical regular-constrained word-equation
-solvability supplies the theoretical decision; the optional Z3 wrapper is
-incomplete and retains UNKNOWN, including four recorded infinite positive cases.
+The same modular family has exact budget
 
-A separate finite transition-monoid algorithm completely checks regular
-families, including arbitrary nonterminal accepting states. It certifies an
-infinite recurrent-target witness family, and returns a bad member for the
-broader candidate family WITHOUT implying that no witness exists. Empty
-families are explicitly distinguished from inhabited positive certificates.
+    (r-1)(lcm(p_1,...,p_r)+1)
 
-Generic iteration of these relations cannot be assumed decidable: two-output
-append relations already encode Post correspondence. This is not a reduction
-to BorderAvoid. The missing step is an effective, complete iteration invariant
-specific to actual recurrent suffix obligations. Universal family validation
-and exact finite composition do not settle unrestricted witness existence.
+and yields superpolynomial terminal budgets. A separate C047 family requires an unbounded number of simultaneous equal-state loop deletions, so neither a constant deletion count nor unconditional descent above `k-2` is available.
 
-[Full proof, dependencies and limitations](notes/2026-09-06-shared-word-composition.md),
-[prior residual counterexamples](notes/2026-09-06-recurrent-residuals.md),
-[core checks](results/shared-composition.json),
-[optional SMT checks](results/shared-composition-smt.json).
-New arguments are written and tested, not independently reviewed or Lean-checked.
-The partial working snapshot did not support full repository CI/link validation.
+[Proof](notes/2026-09-05-modular-synchronization.md), [regression](experiments/check_modular_sync.py), [Q002](research/conjectures/Q002.md), [Q003](research/conjectures/Q003.md).
 
-Scientific branches remain separate; this update does not merge their proofs
-or promote their evidence levels. The [campaign](research/TEN_AGENT_CAMPAIGN.md)
-pins those branches and records the Q002/Q003 counterexamples missing from
-older main-branch Q records. Do not treat an older OPEN label as support for
-using either statement as a premise.
+## Latest main-line structural result: exact realizable last-flag spectra
 
-## Established / strongest current results
+The September 7 A017 work decides whether the lengths of actual last-aligned flag comparisons are bounded. A joint finite word action retains one common word assignment; terminality bounds the periodic exponent. The resulting length spectrum has an effective unary-regular representation and an exact finite maximum or pumping certificate.
 
-- The top-free characterization has been audited and supports canonical regular countermodels under its stated satisfiability premise.
-- Several witness-shortening rules have written proofs; core binary versions of the principal truncation/context rules are Lean-checked.
-- The direct finite-budget predicates, reversal machinery, and an exact two-state decision are Lean-checked. The general executable decision still depends on a missing global bound.
-- An actual subtype-to-summary pipeline exists and has independent checks for its implemented interfaces.
-- Abstract witness budgets can grow: a one-flag k-state family has exact budget `2k-4` and shortest length `3k-3`; therefore candidate universal bounds must accommodate at least this growth.
-- The terminal-final branch is expressive: every k-state terminal-final binary abstract instance has an exact word-preserving subtype realization on `2k+1` variables.
-- A genuine nine-variable subtype system has a nonregular terminal separating language.
-- Flat terminal graphs admit exact Presburger skeleton formulas and a finite complete cover. The normalized four-state terminal census is complete and leaves no unresolved instance in that finite census.
+A finite last-flag spectrum makes Witness equal to `Necessary(H,0)` for that certified case. An unbounded last-flag spectrum is **not** an existential NO certificate.
 
-These statements have different evidence levels. Consult `research/claims.md` before using any one of them as a theorem; not all newer written proofs are Lean-checked.
+The consolidated C064 correction sharpens this warning: a four-state terminal instance with one forbidden pair has an unbounded last-aligned spectrum while **every bad accepted word has minimum proper violation length one**. Different occurrences of the same flag can therefore hide a constant short violation behind arbitrarily long marked comparisons.
 
-## Strong evidence / partially established structure
+## Exact scoped solvers now available
 
-- Actual subtype-derived summaries exhibit absorption structure that is stronger than arbitrary abstract BorderAvoid instances in some branches.
-- Context-sensitive truncation rules substantially restrict shortest witnesses, but no known rule yields the required general computable witness bound.
-- Fixed-skeleton arithmetic is a viable exact technique once a finite skeleton cover is known. The unresolved difficulty is obtaining such a cover for general nonflat productive terminal components.
-- The terminal branch is no longer safely dismissible as an easy regular special case: arbitrary terminal flags can be realized and terminal separating languages can be nonregular.
+The continuation contains several complete procedures for explicitly stated subclasses. Their negative answers must never be generalized outside those scopes.
 
-## Refuted ideas / dead ends worth preserving
+- **C048–C050:** direct whole-word synchronization embeds supplied DFA intersection into terminal BorderAvoid and gives PSPACE hardness plus description-size lower bounds.
+- **C051:** a five-state NO instance defeats every fixed Necessary budget, proving that waiting for Necessary-language emptiness is not a complete general NO semiprocedure.
+- **C052–C053:** supplied delimited schemas are exactly decidable; a raw marker-format class with no productive marker cycle has a finite complete cover.
+- **C054–C056:** target-free prefixes can be pumped with pending context, and formatted inputs with no marker cycle reachable from a flag target are exactly decidable.
+- **C057–C058:** every terminal accepted word can have its maximal run lengths normalized while preserving the full agreement profile once the run count is fixed; existence with a supplied unary run bound is NP-complete. `NO_WITHIN_RUN_BOUND` is not unrestricted NO.
+- **C059:** bounded marker-tail height from every flag target gives a separate target-local exact class.
+- **C060–C061:** uniform binary coding embeds the full binary problem in bounded-data-run form, and arbitrary accepted words admit full-profile contraction of the lengths between occurrences of their final symbol. Neither result bounds the number of markers/runs.
+- **C062:** verifying that **every** member of a supplied regular family is a witness is PSPACE-complete. This is universal family validation, not mixed-family witness synthesis.
+- **C063:** supplied shared-lasso witness sets are Presburger-definable. Minimum-proper-violation threshold growth is Presburger-definable only on the explicitly **boundary-safe** bad subdomain.
+
+All of these are written proofs with reproducible code at their recorded scopes; independent mathematical review remains pending unless a linked older dependency already has a stronger status.
+
+## Shared-word and recurrent frontier
+
+Exact finite composition of shared-word templates and regular-family validation are available, but generic iteration of shared two-output append relations is too expressive to use as a black box. The missing constructive step is still **coverage**:
+
+> Can arbitrary nonflat productive terminal components be reduced to a finite existence-preserving family of controlled schemas, or otherwise given a terminating exact certificate calculus?
+
+A016's fixed-skeleton Presburger machinery solves the arithmetic once a finite skeleton/shared-lasso schema is supplied. C057/C061 eliminate unbounded exponent magnitudes as the primary obstacle once a run/marker count is fixed. What remains unbounded and unsolved is the **number and interleaving of essential recurrent blocks/contexts**.
+
+A promising technique source is the nonflat-to-flat machinery used for a single negated string-containment predicate, but no transfer to the synchronized family of state-coloured suffix obligations has been proved.
+
+## Logical shortcut audit
+
+The naive Rabin/S2S shortcut is incomplete because product propagation acts at the leading end of path words while ordinary prefix closure is represented using the trailing-end successors of the standard binary tree. An exact direct encoding therefore needs an additional cross-end relation such as `y=0x`. The consolidated MSO note makes **no** undecidability or undefinability claim; it records only this missing definability step.
+
+[Two-ended audit](notes/2026-09-08-two-ended-mso-audit.md).
+
+## Established older foundation
+
+The following pre-continuation facts retain their existing evidence levels in `research/claims.md`:
+
+- top-free path-set semantics and regular countermodel reasoning under the stated satisfiability premise;
+- the exact forward subtype-to-BorderAvoid bridge and terminal realization results at their recorded scopes;
+- direct finite-budget predicates, reversal machinery, and the exact two-state decision, with substantial Lean coverage;
+- flat terminal graphs admit exact Presburger skeleton formulas and a finite complete cover;
+- several local truncation/context rules are Lean-checked, but none yields the missing global bound.
+
+Consult the claims ledger before treating any item as a theorem; `WRITTEN PROOF`, `AUDIT`, `LEAN`, and `REPRO` are deliberately different evidence levels.
+
+## Refuted / failed routes to preserve
 
 Do not restart these without a materially new hypothesis:
 
-- The old prefix-reachability regular-language formula is false; it disagrees on thousands of bounded words and the relevant all-length family is nonregular.
-- A universal rigid-word bound from nonmerging runs is false; even two states admit unbounded rigid words.
-- State repetition alone does not justify loop deletion; a three-state counterexample exists.
-- Bounds as small as `max(0, |K|-2)` or `|K|` are false for general abstract instances.
-- Passing bounded searches or CI does not establish nonexistence or a proof of Problem 1.7.
+- Q002's `k-2` profile-domination/budget bound;
+- Q003's strict profile descent above `k-2`;
+- a universal constant bound on simultaneous loop deletions;
+- Necessary-language emptiness as a complete general negative semiprocedure;
+- state repetition alone as justification for loop deletion;
+- rigid-word or very small state-count-only witness bounds;
+- last-aligned spectrum growth as a proxy for global minimum violation growth;
+- a naive direct S2S translation that silently treats left-prefix as an ordinary tree successor;
+- interpreting resource caps, bounded-run exhaustion, or finite tests as unrestricted NO.
 
-See the relevant A records in `research/README.md` for exact counterexamples and limitations.
+## Highest-value next step
 
-## Current frontier
+The strongest constructive target is now:
 
-One open route, recorded as [Q001](research/conjectures/Q001.md), asks:
+> Prove an effective finite existence-preserving cover/normalization for arbitrary recurrent terminal suffix obligations, broad enough to survive whole-word synchronization and the five-state all-budget NO family.
 
-> **Can terminal witnesses in nonflat productive components be normalized into a computably bounded number of essential repeated blocks / skeletons while preserving every border obligation?**
+The most discriminating subproblem is a state-coloured copy/containment theorem: decide whether a regular candidate language has a word outside the finite family of state-constrained `x y x` / bounded-overlap patterns induced by its flags, while keeping all occurrences tied to the **same candidate word**. A successful nonflat-to-flat reduction here would plug directly into C063/A016.
 
-A positive answer would connect the exact fixed-skeleton Presburger machinery to a complete terminal decision procedure. The most relevant workstreams are A016 and A017, informed by the structural shortest-witness work in A008.
-
-Closely related frontier questions:
-
-1. Find a finite join-context summary strong enough to make loop deletion sound and bound essential repeated blocks.
-2. Extend the complete flat-terminal skeleton cover to nonflat productive terminal components.
-3. Formalize/audit the terminal normalization and arithmetic translation so experimental success is cleanly separated from theorem status.
-4. Continue the backwards Lean route: formalize the finite sufficient automaton and exact nonemptiness procedure while keeping the missing global bound explicit.
-5. Explore complete NO certificates or saturation only with a precise invariant; failure to find a witness remains `UNKNOWN`.
-
-## Open conjectures
-
-The later profile route is recorded in [Q002](research/conjectures/Q002.md)
-and its stronger descent conjecture [Q003](research/conjectures/Q003.md).
-Q003 would imply Q002. C044 relates Q002 to the sharp terminal budget bound;
-turning that into a subtype decision also needs the exact search and reduction
-results at their stated evidence levels. Their main-branch records retain older
-OPEN labels; the campaign links later branch refutations awaiting independent
-review/integration. Do not use either conjecture as a premise.
-C045 supplies a restricted deletion lemma, not a proof of Q003. The failed
-single-loop version of Q003 is recorded with the conjecture.
-
-Use the [claim index](research/claims.md#continued-claim-records) for C021–C045
-and the [experiment index](experiments/README.md) for later checks. No newer
-written result is promoted to Lean status by this navigation update.
-
-Important hypotheses should live in `research/conjectures/` with stable Q IDs. The registry is intentionally small: create a Q record only for hypotheses important enough that multiple researchers or agents may depend on them.
+An explicit undecidability reduction remains an honest alternative if the Horn/pushdown restrictions can encode the required shared sequence; no such reduction currently exists.
 
 ## Research map
 
 - A008 — structure and bounds of minimal witnesses.
 - A009 — lower-bound families and candidate-bound destruction.
 - A010 — exact subtype-to-automata bridge.
-- A011 — converse/expressiveness, now including exact terminal realization.
-- A012 — complete nonexistence certificates; not yet tried.
+- A011 — converse/expressiveness and terminal realization.
+- A012 — complete nonexistence certificates.
 - A013 — restrictions shared by actual summary automata.
-- A014 — periodic/cap saturation; not yet tried.
+- A014 — periodic/cap saturation.
 - A015 — occurrence-context truncation.
-- A016 — exact fixed-skeleton arithmetic and terminal covers.
-- A017 — bounding essential repeated blocks; currently inconclusive and central to the frontier.
-- A018 — backwards formalization from an executable Lean decision theorem.
-
-The generated tracker in `research/README.md` contains the authoritative execution status and next step for every A ID.
+- A016 — exact fixed-skeleton/shared-exponent arithmetic.
+- A017 — bounding/normalizing essential repeated blocks; central current frontier.
+- A018 — backwards formalization from executable decision components.
 
 ## Integration rule
 
-A research session is not finished merely when an agent has an answer. It is finished when the reusable part of that answer is integrated into the shared state:
+A research session is complete only when reusable results flow through
 
-`investigation -> evidence -> review -> claim/approach record -> STATE.md frontier update`
+`investigation -> evidence -> review -> canonical record -> STATE.md frontier update`.
 
-Keep this file short enough that a new researcher can recover the project state in one sitting. Move derivations and chronological detail to the underlying records.
+The September 8 consolidation deliberately keeps C046–C064 in a pending-review continuation ledger rather than silently promoting branch-local claims into the established ledger.
