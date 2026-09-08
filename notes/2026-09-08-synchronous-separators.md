@@ -18,16 +18,14 @@ Start a synchronized pair graph at every flag `(p,q)`. Whenever both states have
 
     colour(p,a) = colour(q,a).
 
-This is a finite set of equality constraints. It is deliberately stronger than requiring equality only along actually realized violations; the strengthening loses applicability, not soundness.
+This is a finite set of equality constraints. It is deliberately stronger than requiring equality only along actually realized violations; the strengthening loses applicability, not soundness. Every transition entering a terminal final is forced separator. Union-find solves these equality/constant constraints, with unconstrained classes chosen data.
 
-Add two kinds of constants:
+Two downstream certificates use the same synchrony relation:
 
-1. every transition that belongs to a directed cycle is forced data;
-2. every transition entering a terminal final is forced separator.
+1. **C053 mode:** additionally force every transition belonging to a directed cycle to data. A conflicting equality class makes this mode unavailable.
+2. **C056 mode:** do not force cycle edges to data. If synchronization with a final edge marks a cycle, compile it and let the target-frontier theorem decide whether that marker cycle occurs only before relevant targets.
 
-All equality constraints and constants are solved by union-find. A class forced to both values makes this certificate unavailable. Otherwise unconstrained classes are chosen data.
-
-The cycle test is also deliberately conservative: it includes irrelevant cycles before productive trimming. A future implementation may weaken it without changing this theorem.
+Thus the second mode strictly subsumes the artificial failure where a final edge is synchronized with an early source loop.
 
 ## 3. Exact binary compiler
 
@@ -52,40 +50,51 @@ Thus for every original word w,
 
 The same argument preserves the entire set of flagged comparisons after decoding; no assumption about a particular witness is used.
 
-## 4. Why C053 becomes applicable
+## 4. Downstream exactness
+
+### C053 mode
 
 Collapse each compiled `10`/`11` data token and each `00` separator. A macro separator corresponds to one marked original transition. If a productive macro cycle contained a separator, decoding that cycle would give an original directed cycle containing a marked transition. But every original cycle edge was forced data. Contradiction.
 
-Flags occur only on original states, all of which are paired-token boundaries. Every accepted word ends in a separator. Therefore the paired `marker_structure` certificate C053 applies to every compiled nonempty slice. Its finite schema cover and exact delimited-convolution solver decide the compiled instance, hence the original instance by comparison preservation.
+Flags occur only on original states, all of which are paired-token boundaries. Every accepted word ends in a separator. Therefore C053's finite schema cover decides the compiled instance exactly.
 
-**Theorem.** Existence of a consistent synchronous-separator colouring is an effective sufficient condition for exact terminal BorderAvoid decidability. Certificate failure is UNKNOWN, never NO.
+### C056 mode
 
-This is an encoding-aware preprocessing theorem: it can discover a useful logical delimiter even when neither raw symbol has bounded occurrence count.
+Drop the cycle=data constants but retain synchrony and final=separator. Any marked cycle in the compiled macro graph is now an actual original cycle whose transition class was forced separator by synchronization with a final transition. C056 permits arbitrarily many such marker cycles before the first relevant target. Its common-reference powerset keeps those early blocks tied to the same retained suffix tuple.
+
+Therefore, when C056 certifies the compiled instance, its answer transfers exactly back through the compiler. A marker cycle reachable from a relevant target remains UNKNOWN; its existence is not a negative verdict.
+
+**Theorem.** Either finite colouring certificate followed by its stated downstream solver is an effective exact decision procedure on the certified terminal class. Certificate/downstream failure is UNKNOWN, never NO.
 
 ## 5. It repairs the explicit encoded obstruction
 
-Take C051's five-state NO instance and its exact fixed-length encoding `C(0)=00, C(1)=10`, producing the ten-state obstruction from the marker-tail note. The union-find certificate marks exactly
+Take C051's five-state NO instance and its exact fixed-length encoding `C(0)=00, C(1)=10`, producing the ten-state obstruction from the marker-tail note. The strict union-find certificate marks exactly
 
     (0,0), (1,0), (3,0)
 
 in the ten-state encoded automaton. These are the first physical transitions of the logical zero tokens. The physical loop transitions implementing logical ones remain data. The marked classes are synchronized across every potential flagged comparison, and no marked edge lies on a directed cycle.
 
-Compiling this colouring exposes exactly two logical separators on every accepted candidate. C053 then exhausts the finite cover and returns NO. Hence the counterexample to raw-marker completeness is **not** a counterexample to synchronous-separator preprocessing.
+Compiling this colouring exposes exactly two logical separators on every accepted candidate. C053 exhausts the finite cover and returns NO. Hence the counterexample to raw-marker completeness is **not** a counterexample to synchronous-separator preprocessing. The original five-state source is certified directly as well.
 
-The original five-state source is certified directly as well.
+## 6. Early-cycle strictness is removable; target-recurrent cycles remain
 
-## 6. Genuine limitation
+Consider
 
-The certificate need not exist. In the three-state fixture
-
-    0: 0 -> 0, 1 -> 1
+    0: 0 -> 1, 1 -> 0
     1: 1 -> 2
     2: terminal
-    G={(0,1)},
+    G={(0,1)}.
 
-synchrony equates the `1` transition at state 0 with the `1` transition at state 1. The former lies on a productive cycle and is forced data; the latter enters the final and is forced separator. The equality class is inconsistent, so the method returns UNKNOWN.
+The final `1` edge from state 1 is synchronized with the `1` self-loop at state 0. Strict C053 mode therefore conflicts: the former must be separator and the latter was forced data. In C056 mode both are separators. The resulting marker loop is at state 0, before target state 1; it is not reachable from that target. Target-frontier pumping decides the compiled instance exactly and returns a genuine original witness. So this is not a real limitation of synchronous separators.
 
-This conflict is structural for this particular colouring theorem. It does not prove the fixture hard, and it does not rule out a richer variable-length code, a different finite cover, shared-word synthesis, or undecidability.
+A sharper three-state fixture is
+
+    0: 0 -> 1, 1 -> 0
+    1: 0 -> 0, 1 -> 2
+    2: terminal
+    G={(0,1)}.
+
+The same synchronized `1` loop is now reachable from target state 1 through its `0` edge. C056 rejects the structural certificate and the wrapper returns UNKNOWN. This is the next preserved obstruction. It does not prove the fixture hard and does not rule out target-local pumping with a richer context, another code, shared-word synthesis, or undecidability.
 
 ## 7. Reproduction and scope
 
@@ -93,10 +102,10 @@ Run
 
     python3 experiments/check_synchronous_separators.py
 
-The checker exhausts all normalized terminal tables/flag sets through three states, validates compiled/original witness equivalence on defined short words for every certified instance, and runs the downstream C053 solver uncapped on each certified case. It separately checks the ten-state encoded obstruction and the explicit colouring-conflict fixture. Exact counts are recorded in `results/synchronous-separators.json` by CI.
+The checker exhausts normalized terminal tables/flag sets through three states, validates compiled/original witness equivalence for certified colourings, and runs downstream exact solvers. It separately checks the ten-state encoded obstruction, the early-cycle case rescued by C056, and the target-recurrent marker-cycle UNKNOWN fixture. Exact counts are recorded in `results/synchronous-separators.json` by CI.
 
-The proof is the all-length argument above; bounded word checks are regression evidence, not its justification. The downstream C053 theorem retains its consolidated `WRITTEN PROOF + REPRO` status. Existing Lean jobs may pass without formalizing this new theorem.
+The proof is the all-length argument above; bounded word checks are regression evidence, not its justification. C053/C056 retain their consolidated `WRITTEN PROOF + REPRO` statuses. Existing Lean jobs may pass without formalizing this new theorem.
 
 ## 8. Next question
 
-The conflict fixture identifies the next precise generalization: permit a finite-state code in which an aligned transition may be represented at different separator depths while preserving equality of the complete codeword, rather than demanding one Boolean colour per aligned transition. Equivalently, search for a finite congruence/code on synchronized transition pairs whose cyclic classes are pumpable and whose terminal classes are cuttable. This is closer to an encoding-aware finite symbolic cover than to another raw numeric budget.
+The remaining obstruction is now narrower: a separator class forced by terminal synchronization can lie on a productive cycle reachable from a relevant target. The next target is to combine this encoding-aware compiler with the semantic-tail/pending-context machinery so that target-recurrent separator cycles can be summarized rather than structurally forbidden. Equivalently, seek a finite congruence on synchronized transition classes whose recurrent separator obligations compose with one common reference tuple.
