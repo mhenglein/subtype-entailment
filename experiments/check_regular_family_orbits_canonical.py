@@ -29,8 +29,9 @@ def check():
         'limits': raw['limits'],
     }
     path = ROOT / 'results' / 'regular-family-orbits.json'
-    path.write_text(json.dumps(result, indent=2, sort_keys=True) + '\n')
-    print(json.dumps(result, indent=2, sort_keys=True))
+    text = json.dumps(result, indent=2) + '\n'
+    path.write_text(text)
+    print(text, end='')
     return result
 
 
