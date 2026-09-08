@@ -212,15 +212,22 @@
     {
       "id": "A012",
       "title": "Make NO certificates complete",
-      "status": "untried",
-      "outcome": "open",
+      "status": "tried",
+      "outcome": "inconclusive",
       "owner": null,
-      "updated": "2026-09-04",
-      "summary": "Two example NO instances are reproduced; completeness of the certificate families is unproved.",
-      "next_step": "Find a precise invariant or instance that separates current NO certificates from full nonexistence.",
+      "updated": "2026-09-08",
+      "summary": "Exact fixed-marker-tail emptiness certifies a recurrent nonflat all-budget NO instance, but an encoded NO defeats every raw marker bound.",
+      "next_step": "Go beyond raw marker costs: seek a complete agreement-preserving tokenization or shared-obligation invariant, retaining the encoded all-marker NO obstruction.",
       "record": "research/approaches/A012.md",
-      "evidence": [],
-      "issue": null
+      "evidence": [
+        "research/SEMANTIC_MARKER_TAILS.md",
+        "notes/2026-09-08-semantic-marker-tails.md",
+        "experiments/marker_tail.py",
+        "experiments/marker_spectrum.py",
+        "experiments/check_marker_tails.py",
+        "results/semantic-marker-tails.json"
+      ],
+      "issue": "https://github.com/mhenglein/subtail/issues/15"
     },
     {
       "id": "A013",
@@ -302,9 +309,9 @@
       "status": "tried",
       "outcome": "inconclusive",
       "owner": null,
-      "updated": "2026-09-07",
-      "summary": "Exact realizable last-aligned comparison spectra are decidable; finite spectra strengthen the pair-graph certificate, while unboundedness is not an existential NO verdict.",
-      "next_step": "Coordinate different-gap comparisons in one word; distinguish global minimum violation bounds from last-aligned spectra and retain the all-budget NO obstruction.",
+      "updated": "2026-09-08",
+      "summary": "Exact weighted last-flag spectra plus shared-reference tail search decide semantically bounded marker classes, even with recurrent flag-target cycles; unrestricted coverage remains open.",
+      "next_step": "Go beyond raw marker costs: seek a complete agreement-preserving tokenization or shared-obligation invariant, retaining the encoded all-marker NO obstruction.",
       "record": "research/approaches/A017.md",
       "evidence": [
         "notes/2026-09-04-minimal-witness-structure.md",
@@ -327,9 +334,15 @@
         "notes/2026-09-07-realizable-lastflag-spectrum.md",
         "experiments/lastflag_spectrum.py",
         "experiments/check_lastflag_spectrum.py",
-        "results/lastflag-spectrum.json"
+        "results/lastflag-spectrum.json",
+        "research/SEMANTIC_MARKER_TAILS.md",
+        "notes/2026-09-08-semantic-marker-tails.md",
+        "experiments/marker_tail.py",
+        "experiments/marker_spectrum.py",
+        "experiments/check_marker_tails.py",
+        "results/semantic-marker-tails.json"
       ],
-      "issue": null
+      "issue": "https://github.com/mhenglein/subtail/issues/15"
     },
     {
       "id": "A018",

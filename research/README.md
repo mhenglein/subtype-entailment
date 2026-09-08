@@ -2,7 +2,7 @@
 
 Problem 1.7 is open. This is the current map of approaches, including unsuccessful work.
 
-**15 tried · 2 not tried · 1 blocked · 0 active**
+**16 tried · 1 not tried · 1 blocked · 0 active**
 
 Read [the problem and notation](problem.md), [claims and evidence](claims.md), and [the experiment index](../experiments/README.md).
 
@@ -27,7 +27,6 @@ None currently.
 
 | ID | Approach | Finding / next step | Owner |
 |---|---|---|---|
-| A012 | [Make NO certificates complete](approaches/A012.md) | Find a precise invariant or instance that separates current NO certificates from full nonexistence. | Unassigned |
 | A014 | [Apply cap and period-language saturation techniques](approaches/A014.md) | Choose one closure property, test small instances, and preserve all endpoint flags. | Unassigned |
 
 ## Blocked
@@ -50,10 +49,11 @@ None currently.
 | A009 | [Find budget growth beyond the regular-language baseline](approaches/A009.md) | Supported: A one-flag k-state family has exact B=2k-4 and shortest length 3k-3; five states refute B<=\|K\|. Next: Any universal abstract bound must allow 2k-4. Separate abstract growth from actual summary outputs, which satisfy absorption. | Unassigned |
 | A010 | [Build the exact top-free constraint-to-automata pipeline](approaches/A010.md) · [#3](https://github.com/mhenglein/subtail/issues/3) | Supported: Implemented actual W/Wrev summaries with S/F annotations; independent audit fixed two API errors and found no known comparison mismatch. Next: Generate actual subtype-derived instances and test joint summary invariants in A013. | Unassigned |
 | A011 | [Complete the converse with regular annotations](approaches/A011.md) | Supported: Every k-state terminal-final binary abstract instance has an exact word-preserving subtype realization on 2k+1 variables. Next: Use the terminal converse for genuine lower bounds or a terminal decision theorem; the nonterminal arbitrary-annotation converse is still open. | Unassigned |
+| A012 | [Make NO certificates complete](approaches/A012.md) · [#15](https://github.com/mhenglein/subtail/issues/15) | Inconclusive: Exact fixed-marker-tail emptiness certifies a recurrent nonflat all-budget NO instance, but an encoded NO defeats every raw marker bound. Next: Go beyond raw marker costs: seek a complete agreement-preserving tokenization or shared-obligation invariant, retaining the encoded all-marker NO obstruction. | Unassigned |
 | A013 | [Exploit restrictions shared by actual summary automata](approaches/A013.md) | Supported: The terminal branch realizes arbitrary abstract flags; a nine-variable system has a nonregular terminal separating language. Flat terminal graphs are decidable arithmetically. Next: Target nonflat productive terminal components; shared B/A/D structure alone cannot exclude terminal abstract instances. | Unassigned |
 | A015 | [Strengthen truncation using occurrence context](approaches/A015.md) | Supported: Proved three context refinements and formalized the binary visited-state rule; strict examples and exhaustive two-state checks pass. Next: Use the visited-state summary to classify shortest witnesses resisting every admissible cut in A008. | Unassigned |
 | A016 | [Implement and audit fixed-skeleton checkability](approaches/A016.md) | Supported: Implemented exact Presburger skeleton formulas and a finite complete cover for flat terminal graphs; unbounded loop counts are retained. Next: Audit and formalize the arithmetic translation; extend bounded-skeleton coverage to nonflat terminal components without treating timeouts as NO. | Unassigned |
-| A017 | [Bound essential repeated blocks](approaches/A017.md) | Inconclusive: Exact realizable last-aligned comparison spectra are decidable; finite spectra strengthen the pair-graph certificate, while unboundedness is not an existential NO verdict. Next: Coordinate different-gap comparisons in one word; distinguish global minimum violation bounds from last-aligned spectra and retain the all-budget NO obstruction. | Unassigned |
+| A017 | [Bound essential repeated blocks](approaches/A017.md) · [#15](https://github.com/mhenglein/subtail/issues/15) | Inconclusive: Exact weighted last-flag spectra plus shared-reference tail search decide semantically bounded marker classes, even with recurrent flag-target cycles; unrestricted coverage remains open. Next: Go beyond raw marker costs: seek a complete agreement-preserving tokenization or shared-obligation invariant, retaining the encoded all-marker NO obstruction. | Unassigned |
 | A018 | [Work backwards from an executable Lean theorem](approaches/A018.md) | Supported: Lean checks direct budget predicates, reversal, and an exact two-state decision, in addition to the previous truncation and conditional proofs. Next: Formalize the finite Sufficient automaton and its exact nonemptiness procedure; the global bound remains open. | Unassigned |
 
 ## Shared hypotheses

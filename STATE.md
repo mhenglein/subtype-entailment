@@ -8,6 +8,41 @@ This is the compressed scientific memory of the project. Read this after `resear
 
 Decide Problem 1.7: subtype entailment over bottom and binary product for arbitrary, possibly infinite trees. **The unrestricted problem remains open.**
 
+## Latest continuation: semantic marker tails
+
+The September 8 A012/A017 attempt decides the fixed-H marker-tail relaxation
+by finite shared-reference saturation. Earlier original flag-target STATES
+may recur without restriction: the omitted targets are positions before the
+last H blocks, not state labels. Weighted joint word actions decide whether
+actual last-aligned comparisons have bounded marker count. Finite marker
+spectra make this relaxation exact, even with unbounded comparison LENGTHS.
+
+A six-state nonflat NO example with recurrent marker targets is certified at
+H=1 although every finite necessary length/gap language is inhabited. Removing
+one flag gives the checked witness 1110110. The reset-marker corollary supplies
+a complete subclass independent of the older target-cone cycle prohibition.
+
+The closing strengthening fails: the exact code 0->00, 1->10 applied to the
+older five-state NO example produces an inhabited relaxation for EVERY H.
+Increasing raw marker budgets is therefore not a complete negative procedure.
+A complete encoding-aware or shared-obligation representation is still missing.
+The unrestricted problem is not resolved.
+
+[Scoped record and commands](research/SEMANTIC_MARKER_TAILS.md),
+[proof and limitations](notes/2026-09-08-semantic-marker-tails.md),
+[results](results/semantic-marker-tails.json).
+Written proofs and executed independent-predicate/complete-oracle checks;
+independent mathematical review pending, not Lean-checked. Original core
+replay is byte-identical. No full local repository CI/global link scan was
+run from the partial snapshot.
+
+This investigation used scientific base `99133037`; the publication was
+rebased onto consolidation checkpoint `aa555020` after main changed during
+the work. The consolidation below, its Q refutations, imported artifacts,
+indexer changes and continuation CI job are preserved. Historical references
+to unmerged branches in the dated attempt describe its investigation baseline;
+this contribution does not independently approve the held-back PRs.
+
 ## September 8 consolidation
 
 The reviewed research PR stack #6–#14 has been consolidated onto current main without replaying stale branch copies of shared ledgers/trackers. The integration preserves proof notes, implementations, and independent regressions while keeping later main-branch work authoritative.
