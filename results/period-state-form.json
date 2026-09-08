@@ -1,0 +1,376 @@
+{
+ "flag_census_k4": [
+  {
+   "flags": 1,
+   "instances": 13800,
+   "k": 4,
+   "longest_shortest_witness": {
+    "delta": [
+     [
+      -1,
+      1
+     ],
+     [
+      -1,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      -1,
+      -1
+     ]
+    ],
+    "flags": [
+     [
+      0,
+      1
+     ]
+    ],
+    "word": "1101"
+   },
+   "search_cap": 12,
+   "shortest_length_histogram": {
+    "1": 3936,
+    "2": 5724,
+    "3": 3404,
+    "4": 48,
+    "none": 28
+   },
+   "unknown_at_cap": 660
+  },
+  {
+   "flags": 2,
+   "instances": 34500,
+   "k": 4,
+   "longest_shortest_witness": {
+    "delta": [
+     [
+      -1,
+      1
+     ],
+     [
+      -1,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      -1,
+      -1
+     ]
+    ],
+    "flags": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      0
+     ]
+    ],
+    "word": "1101"
+   },
+   "search_cap": 12,
+   "shortest_length_histogram": {
+    "1": 9840,
+    "2": 13378,
+    "3": 7736,
+    "4": 144,
+    "none": 146
+   },
+   "unknown_at_cap": 3256
+  }
+ ],
+ "flag_samples": [
+  {
+   "flags": 1,
+   "k": 5,
+   "longest_shortest_witness_found": {
+    "delta": [
+     [
+      -1,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      -1,
+      1
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      -1,
+      -1
+     ]
+    ],
+    "flags": [
+     [
+      2,
+      0
+     ]
+    ],
+    "word": "1100"
+   },
+   "search_cap": 14,
+   "trials": 150,
+   "unknown_at_cap": 10
+  },
+  {
+   "flags": 2,
+   "k": 5,
+   "longest_shortest_witness_found": {
+    "delta": [
+     [
+      2,
+      0
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      -1,
+      -1
+     ]
+    ],
+    "flags": [
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      2
+     ]
+    ],
+    "word": "00010"
+   },
+   "search_cap": 14,
+   "trials": 150,
+   "unknown_at_cap": 6
+  },
+  {
+   "flags": 3,
+   "k": 5,
+   "longest_shortest_witness_found": {
+    "delta": [
+     [
+      3,
+      -1
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      1,
+      -1
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      -1,
+      -1
+     ]
+    ],
+    "flags": [
+     [
+      0,
+      2
+     ],
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      2
+     ]
+    ],
+    "word": "01000"
+   },
+   "search_cap": 14,
+   "trials": 150,
+   "unknown_at_cap": 11
+  },
+  {
+   "flags": 1,
+   "k": 6,
+   "longest_shortest_witness_found": {
+    "delta": [
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      1,
+      -1
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      0,
+      3
+     ],
+     [
+      -1,
+      -1
+     ]
+    ],
+    "flags": [
+     [
+      4,
+      1
+     ]
+    ],
+    "word": "01000"
+   },
+   "search_cap": 14,
+   "trials": 150,
+   "unknown_at_cap": 3
+  },
+  {
+   "flags": 2,
+   "k": 6,
+   "longest_shortest_witness_found": {
+    "delta": [
+     [
+      -1,
+      2
+     ],
+     [
+      5,
+      -1
+     ],
+     [
+      3,
+      -1
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      1,
+      0
+     ],
+     [
+      -1,
+      -1
+     ]
+    ],
+    "flags": [
+     [
+      3,
+      2
+     ],
+     [
+      4,
+      2
+     ]
+    ],
+    "word": "10000"
+   },
+   "search_cap": 14,
+   "trials": 150,
+   "unknown_at_cap": 7
+  },
+  {
+   "flags": 3,
+   "k": 6,
+   "longest_shortest_witness_found": {
+    "delta": [
+     [
+      -1,
+      1
+     ],
+     [
+      -1,
+      3
+     ],
+     [
+      4,
+      0
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      -1,
+      -1
+     ]
+    ],
+    "flags": [
+     [
+      0,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      0
+     ]
+    ],
+    "word": "11001"
+   },
+   "search_cap": 14,
+   "trials": 150,
+   "unknown_at_cap": 14
+  }
+ ],
+ "seed": 2026090801,
+ "shift_form": {
+  "instances": 300,
+  "max_word_length": 7,
+  "mismatches": [],
+  "words_compared": 76500
+ },
+ "single_source": {
+  "exponent_checks": 18,
+  "exponent_failures": [],
+  "finite_language_exhausted": 5,
+  "instances": 400,
+  "max_word_length": 7,
+  "mismatches": [],
+  "periodic_shortest_witnesses": 18,
+  "search_cap": 14,
+  "shortest_search_unknown": 22,
+  "words_compared": 102000
+ },
+ "status": "PASS"
+}

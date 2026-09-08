@@ -16,6 +16,7 @@ Current notes:
 - [Actual summary bridge](2026-09-04-summary-bridge.md): W/Wrev summary classes with the S/F side conditions.
 - [Summary bridge audit](2026-09-04-summary-bridge-audit.md): two fixed API errors and independent checks with explicit UNKNOWN outcomes.
 - [Six-state budget-five example](2026-09-04-trimmed-budget.md): state restriction, exact budget replay, and limits of the counterexample.
+- [Strategy review and single-source period form](2026-09-08-strategy-review-and-period-state-form.md): route comparison, the shift and period forms, flag-direction observation, and the two single-source proof obligations.
 
 Use `YYYY-MM-DD-short-topic.md` for new notes. Start from [the research template](../templates/research-note.md). Record sources, hypotheses, proof status, and the next concrete question.
 

@@ -1,6 +1,6 @@
 # Subtail — current research state
 
-Navigation updated: 2026-09-07; scientific evidence remains at its linked recorded revisions.
+Navigation updated: 2026-09-08; scientific evidence remains at its linked recorded revisions.
 
 This is the compressed scientific memory of the project. Read this after `research/problem.md` and before starting new work. It answers: **what do we currently know, what has failed, and what is the highest-value unresolved question?**
 
@@ -10,7 +10,34 @@ Detailed proofs and evidence live in `research/claims.md`, approach histories, e
 
 Decide Problem 1.7: subtype entailment over bottom and binary product for arbitrary, possibly infinite trees. The unrestricted problem remains open.
 
-## Latest main-branch continuation: exact realizable last-flag spectra
+## Latest continuation: strategy decision and the single-source target
+
+The September 8 review compares the four recorded routes (terminal small-model
+theorem, complete NO certificates / regular containment, undecidability, new
+logic or well-structured systems) against the accumulated refutations and
+selects the terminal small-model route, executed bottom-up by flag structure.
+By C030/C031 nothing is lost by restricting to terminal-final instances.
+
+The first concrete target is the single-source case: all flags leave the
+start state. Its witnesses are exactly accepted words none of whose periods
+lands on a flagged target state of their own run, i.e. Anderson's
+unbordered-word problem with coloured borders. C038 splits a shortest such
+witness into two regimes; the remaining obligations are synchronised loop
+deletion inside the primitive root with creation analysis, and colour
+tracking in the Anderson Theorem 58 argument. Neither is proved here.
+
+Every recorded hard family uses flags in both comparison directions; a
+one-directional flag pattern expresses only a colexicographic inequality
+between compared blocks, never equality. This is an observation about known
+constructions, supported by a complete four-state one/two-flag census and
+small samples, not a theorem.
+
+[Note with review, proofs of the two exact forms, and obligations](notes/2026-09-08-strategy-review-and-period-state-form.md),
+[checker](experiments/check_period_state_form.py),
+[results](results/period-state-form.json).
+No new claim or experiment identifier; no evidence level changes; no Lean.
+
+## Previous main-branch continuation: exact realizable last-flag spectra
 
 The September 7 A017 continuation decides whether the lengths of ACTUAL
 last-aligned-flag comparisons are bounded. A joint finite word action on
@@ -39,7 +66,7 @@ review pending, not Lean-checked. The original core replay is byte-identical.
 No full repository CI or global link scan was run from the partial snapshot.
 Other scientific branches are not merged or promoted by this continuation.
 
-## Previous main-branch continuation: shared-word relations
+## Earlier main-branch continuation: shared-word relations
 
 The scoped A017 attempt based on `0318ff7` now provides exact finite
 composition of shared-word templates and a decidable universal verification

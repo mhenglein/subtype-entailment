@@ -723,6 +723,18 @@ proof and its stated terminal-uniqueness hypothesis.
 Do not infer a current run from the script's presence or from the note-only
 counts. Preserve Q003 as an open hypothesis.
 
+### Shift form, single-source period form, and flag census
+
+| Field | Record |
+|---|---|
+| Command | `python3 experiments/check_period_state_form.py` |
+| Detail | [Strategy review and period form](../notes/2026-09-08-strategy-review-and-period-state-form.md) |
+| Evidence | [Saved result](../results/period-state-form.json): seed `2026090801`; 76,500 word comparisons between a Z-array implementation of Proposition 8.2 and the recorded predicates; 102,000 single-source period-form comparisons; 18 exponent regressions; the complete four-state census with one flag (13,800 instances) and two flags (34,500 instances) at cap 12; 900 random five/six-state samples at cap 14. |
+| Status | Regression and bounded census only; caps are UNKNOWN; no E ID is assigned and no claim changes status. |
+
+The census maxima are lower bounds from finite searches. C034 already decides
+every four-state case; this check does not add a small-state result.
+
 ## Not yet reproducible or not yet run
 
 These items have no executed experiment ID. Do not assign them `REPRO` status
