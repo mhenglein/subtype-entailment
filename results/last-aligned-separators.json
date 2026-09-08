@@ -4,15 +4,33 @@
   "status": "PASS",
   "strict_improvement": {
     "all_pair_marked": [
-      [6, 0],
-      [7, 0],
-      [8, 0],
-      [9, 0]
+      [
+        6,
+        0
+      ],
+      [
+        7,
+        0
+      ],
+      [
+        8,
+        0
+      ],
+      [
+        9,
+        0
+      ]
     ],
     "all_pair_status": "UNKNOWN",
     "last_aligned_marked": [
-      [7, 0],
-      [9, 0]
+      [
+        7,
+        0
+      ],
+      [
+        9,
+        0
+      ]
     ],
     "last_aligned_status": "NO",
     "live_pair_vertices": 6
