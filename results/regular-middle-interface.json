@@ -1,0 +1,15 @@
+{
+  "benchmark_interface": {
+    "all_words_return_boundary": true,
+    "boundary_counterexample": null,
+    "boundary_state": 2,
+    "common_nonempty_prefix": "0",
+    "epsilon_in_middle": true
+  },
+  "negative_controls": {
+    "branching_common_prefix": "",
+    "wrong_boundary_counterexample": "011"
+  },
+  "scope": "Exact finite interface analysis only. This does not establish a complete middle-erasure search or unrestricted BorderAvoid decision.",
+  "status": "PASS"
+}
