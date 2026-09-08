@@ -101,17 +101,21 @@ def boundary_action_counterexample(
     """Return an accepted middle whose original action does not return boundary.
 
     Returns None exactly when every accepted middle word maps boundary_state back
-    to boundary_state.  The returned word may be epsilon when epsilon itself is
-    a counterexample (which can only happen if the requested boundary comparison
-    is malformed; the original state is unchanged on epsilon).
+    to boundary_state. Undefined original transitions are represented by a dead
+    product component so any returned counterexample is a complete accepted
+    middle word, not merely a bad prefix.
     """
     middle_final, width = _validate(middle_delta, middle_start, middle_final)
     if len(alphabet) != width:
         raise ValueError("alphabet width mismatch")
     if boundary_state < 0 or boundary_state >= len(original_delta):
         raise ValueError("bad original boundary state")
-    if any(len(row) != width for row in original_delta):
-        raise ValueError("original alphabet width mismatch")
+    for row in original_delta:
+        if len(row) != width:
+            raise ValueError("original alphabet width mismatch")
+        for q in row:
+            if q < -1 or q >= len(original_delta):
+                raise ValueError("bad original transition target")
 
     first = (middle_start, boundary_state)
     parent = {first: None}
@@ -119,20 +123,12 @@ def boundary_action_counterexample(
     while todo:
         m, q = state = todo.popleft()
         if m in middle_final and q != boundary_state:
-            letters = []
-            while parent[state] is not None:
-                state, ch = parent[state]
-                letters.append(ch)
-            return "".join(reversed(letters))
+            return _reconstruct(parent, state)
         for a, ch in enumerate(alphabet):
             nm = middle_delta[m][a]
-            nq = original_delta[q][a]
             if nm < 0:
                 continue
-            # A middle accepted by its own DFA but undefined in the original is
-            # also a failed boundary-action certificate.
-            if nq < 0:
-                return _reconstruct(parent, state) + ch
+            nq = -1 if q < 0 else original_delta[q][a]
             nxt = (nm, nq)
             if nxt not in parent:
                 parent[nxt] = (state, ch)
