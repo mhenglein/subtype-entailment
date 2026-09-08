@@ -7,81 +7,69 @@ all-length NO proof into a reusable finite certificate rule.
 
 ## 1. Rule
 
-Fix distinct binary letters `a,b`. Let `M` be a regular language satisfying
-
-1. every nonempty word of `M` begins with `a`;
-2. on the terminal candidate automaton, every `u in M` acts as a loop on one
-   distinguished control state `q`.
-
-Suppose the complete boundary-normalized candidate language is exactly
+Fix distinct binary letters `a,b`. Let `M` be a regular language such that every
+nonempty word of `M` begins with `a`. Suppose the complete boundary-normalized
+candidate language is exactly
 
     a^n b u a^m b a
 
 with `n>=0`, `m>=1`, and `u in M`.
 
-Assume the deterministic run has the following stable controls:
+Assume the deterministic run has stable leading controls:
 
 - `s0` is the initial state;
 - after one or more leading `a`s the state is `s1`;
-- reading `b` from either `s0` or `s1` reaches `q`;
-- `M` loops `q` back to `q`;
-- after one or more trailing `a`s the state is `r`;
-- the final `b a` reaches the unique terminal final;
-- the flag relation contains
+- reading `b` from either `s0` or `s1` reaches the same anchor state `q0`.
 
-      (s0,r), (s0,q), (s1,q).
+The accepted middle words need **not** all loop `q0`. Let
+
+    E = { delta(q0,u) : u in M }
+
+be their finite set of effects. For every `q in E`, require:
+
+- reading one or more trailing `a`s from `q` stabilizes at a state `r_q`;
+- from `r_q`, the final `b a` reaches the unique terminal final;
+- the flags contain
+
+      (s0,r_q), (s0,q), (s1,q).
 
 Then the candidate language has no witness.
+
+The earlier one-control rule is the special case `E={q0}`.
 
 ## 2. All-length proof
 
 Write a candidate as
 
-    w = a^n b u a^m b a.
+    w = a^n b u a^m b a
 
-Because `m>=1` and every nonempty `u` begins with `a`, the symbol immediately
-after the first `b` is always `a`: if `u` is nonempty this is its first symbol;
-if `u` is empty it is the first symbol of the trailing `a^m` block.
+and put `q=delta(q0,u)`. Since `m>=1` and every nonempty `u` begins with `a`,
+the symbol immediately after the first `b` is always `a`: if `u` is nonempty
+this is its first symbol; if `u` is empty it is the first symbol of `a^m`.
 
 There are three exhaustive arithmetic cases.
 
 ### Case n < m
 
 Use source cut `i=0`. In the trailing `a^m` block choose the target cut after
-exactly `m-n` trailing `a`s. The target suffix begins
-
-    a^n b a.
-
-The source suffix begins with the leading
-
-    a^n b a
-
-for the observation above. The source state is `s0`; because at least one
-trailing `a` has already been consumed, the target state is `r`. Hence the flag
-`(s0,r)` witnesses a forbidden prefix agreement.
+exactly `m-n` trailing `a`s. The target suffix and source suffix both begin
+`a^n b a`. At least one trailing `a` has been consumed, so the target state is
+`r_q`. The flag `(s0,r_q)` witnesses the violation.
 
 ### Case n = m
 
 Use source cut `i=0` and target cut at the start of the trailing `a^m` block.
-Both suffixes begin
-
-    a^n b a.
-
-The states are `(s0,q)`, which is flagged.
+Both suffixes begin `a^n b a`; their states are `(s0,q)`, which is flagged.
 
 ### Case n > m
 
-Use source cut `i=n-m`, inside the leading `a` block, and target cut at the
-start of the trailing `a^m` block. Both suffixes begin
+Use source cut `i=n-m`, inside the leading `a` block, and target cut at the start
+of the trailing `a^m` block. Both suffixes begin `a^m b a`. Since `n-m>=1`,
+the source state is `s1`; the target state is `q`. The flag `(s1,q)` witnesses
+the violation.
 
-    a^m b a.
-
-Because `n-m>=1`, the source state is the stable leading state `s1`; the target
-state is `q`. The flag `(s1,q)` witnesses the violation.
-
-Thus every candidate is bad. The argument is independent of the length or
-internal recurrent structure of `u`; only the two finite regular premises on
-`M` matter. QED.
+The chosen `q` depends on `u`, but it lies in the finite set E and the verifier
+checks all members of E. Thus every candidate is bad. QED.
 
 ## 3. Why the proof object is finite
 
@@ -100,17 +88,16 @@ proves exact language equality for all lengths.
 The verifier asks whether the middle DFA has any accepting path after consuming
 `b` as its first symbol. This is ordinary finite reachability.
 
-### Middle control-loop condition
+### Finite middle effects
 
 It explores the product of the middle DFA with the terminal automaton starting
-at `(middle.start,q)`. Every accepting middle state must pair with `q`. This
-checks `delta(q,u)=q` for every `u in M`, including arbitrary recurrent words.
+at `(middle.start,q0)`. Every accepting middle-product state contributes one
+endpoint `q` to E. Finiteness is immediate. Undefined endpoints invalidate the
+certificate. Each realized q is then checked for trailing stabilization, the
+forced terminal `ba`, and all three flags.
 
-### Stable control and flag conditions
-
-The remaining hypotheses are direct transition/flag table equalities. Therefore
-`VERIFIED_NO` is an all-language finite certificate verdict. Bounded enumeration
-is used only as an independent regression of the implementation.
+Hence `VERIFIED_NO` is an all-language finite certificate verdict. Bounded
+enumeration is used only as an independent regression of the implementation.
 
 ## 4. Barrier instance recovered exactly
 
@@ -124,16 +111,12 @@ A three-state partial DFA recognizes M:
 - state 1: inside `0+`; `0 -> 1`, `1 -> 2`;
 - state 2: after first `1`; `1 -> 0`.
 
-The terminal automaton controls are
+Here E is the singleton `{2}`. The terminal automaton controls are
 
-    s0=0, s1=1, q=2, r=3, pre-final=4, final=5,
+    s0=0, s1=1, q=2, r_q=3, pre-final=4, final=5,
 
-and the required flags are exactly
-
-    (0,3), (0,2), (1,2).
-
-So the six-state arbitrary-regular-middle NO proof is an instance of the generic
-finite rule, not a one-off handwritten argument.
+and the required flags are exactly `(0,3), (0,2), (1,2)`. Thus the six-state
+arbitrary-regular-middle NO proof is an instance of the generic finite rule.
 
 ## 5. Significance and limit
 
@@ -142,9 +125,11 @@ termination does **not** come from a bounded comparison length, bounded gap,
 bounded marker count, or candidate-covering finite decoration. It covers an
 arbitrary recurrent regular middle by separating finite control from two unary
 anchor parameters and resolving their order by a finite Presburger case split.
+The generalized verifier additionally permits finitely many different middle
+transition effects rather than demanding one common reset state.
 
-The rule is still narrow. It has one pair of unary anchors, one regular middle,
-and three fixed cut selectors. Completeness is not claimed.
+The rule is still narrow: one pair of unary anchors and three affine cut
+selectors. Completeness is not claimed.
 
 The natural next generalization is a **finite affine cut-selector certificate**:
 
@@ -154,11 +139,15 @@ The natural next generalization is a **finite affine cut-selector certificate**:
 - finite-state proofs that the selected cuts have a required flag and equal
   target-length prefix.
 
-If verification of such certificates stays effective, the central A012
-question becomes whether every terminal NO instance admits a finite selector
-cover. The regular-decoration barrier no longer blocks this route because the
-certificate is allowed to choose different violating cuts in different
-arithmetic regions rather than preserving one finite tail abstraction.
+A016's fixed-skeleton Presburger compiler already supplies exact state/letter
+formulas for parameterized fixed-word blocks. The missing ingredient is a
+regular-piece interface allowing such affine selectors to cross recurrent
+regular middles without expanding them into fixed words.
+
+If every terminal NO instance admitted a finite selector cover, dovetailing the
+verifier with positive witness enumeration would decide terminal BorderAvoid.
+The regular-decoration barrier does not block this route because the certificate
+may choose different violating cuts in different arithmetic regions.
 
 ## 6. Reproduction
 
@@ -167,9 +156,10 @@ Run
     python3 experiments/check_three_way_cut_certificate.py
 
 The checker verifies the infinite-language certificate exactly, independently
-compares the barrier DFA with the family parser on all binary words through
-length 14, confirms that deleting any one of the three required flags invalidates
-the proof object, and rejects an enlarged middle language.
+compares the barrier DFA with the family parser on all 32,767 binary words
+through length 14, confirms that deleting any required flag invalidates the
+proof object, and rejects an enlarged middle language.
 
 Implementation: `experiments/three_way_cut_certificate.py`.
 Checker: `experiments/check_three_way_cut_certificate.py`.
+Recorded result: `results/three-way-cut-certificate.json`.
