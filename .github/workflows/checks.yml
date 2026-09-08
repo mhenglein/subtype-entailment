@@ -40,8 +40,9 @@ jobs:
           python3 experiments/trim_budget_example.py
           python3 experiments/check_marker_tails.py
           python3 experiments/check_synchronous_separators.py
+          python3 experiments/check_macro_marker_tails.py
       - name: Verify recorded results
-        run: git diff --exit-code -- results/independent-checks.json results/topfree-bridge.json results/context-cuts.json results/budget-search.json results/boundary-slices.json results/summary-bridge.json results/summary-bridge-audit.json results/shortest-witnesses.json results/trimmed-budget.json results/semantic-marker-tails.json results/synchronous-separators.json
+        run: git diff --exit-code -- results/independent-checks.json results/topfree-bridge.json results/context-cuts.json results/budget-search.json results/boundary-slices.json results/summary-bridge.json results/summary-bridge-audit.json results/shortest-witnesses.json results/trimmed-budget.json results/semantic-marker-tails.json results/synchronous-separators.json results/macro-marker-tails.json
   continuation-experiments:
     runs-on: ubuntu-latest
     steps:
