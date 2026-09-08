@@ -1,0 +1,172 @@
+{
+  "status": "PASS",
+  "seed": 2026090653,
+  "counts": {
+    "acyclic_instances": 400,
+    "complete_candidate_words": 918,
+    "cyclic_schema_instances": 160,
+    "cyclic_product_instances": 120,
+    "mismatches": 0,
+    "format_guards": 4,
+    "cap_guards": 1
+  },
+  "verdicts": {
+    "acyclic": {
+      "YES": 211,
+      "NO": 189,
+      "UNKNOWN": 0
+    },
+    "cyclic_schemas": {
+      "YES": 84,
+      "NO": 76,
+      "UNKNOWN": 0
+    },
+    "cyclic_products": {
+      "YES": 36,
+      "NO": 84,
+      "UNKNOWN": 0
+    }
+  },
+  "five_state_hierarchy_obstruction": {
+    "status": "NO",
+    "reason": "Every certified complete schema cover is empty",
+    "slices": [
+      {
+        "certificate": {
+          "status": "CERTIFIED",
+          "final": 4,
+          "code": "unary",
+          "macro_states": 5,
+          "maximum_blocks": 4,
+          "parser_product_states": 5,
+          "paired_failure": "Some safe accepted word is outside the fixed token format"
+        },
+        "schemas": 2
+      }
+    ],
+    "schemas": 2
+  },
+  "variable_marker_fixture": {
+    "status": "YES",
+    "word": "1000",
+    "blocks": [
+      "0"
+    ],
+    "slices": [
+      {
+        "certificate": {
+          "status": "CERTIFIED",
+          "final": 15,
+          "code": "paired",
+          "macro_states": 5,
+          "maximum_blocks": 4,
+          "parser_product_states": 13
+        },
+        "schemas": 1
+      }
+    ],
+    "schemas": 1,
+    "convolution": {
+      "stages": 1,
+      "pair_bits": 0,
+      "coordinate_bound": 19,
+      "finite_state_bound": 19,
+      "convolution_path_bound": 19,
+      "binary_witness_bound": 38,
+      "status": "YES",
+      "blocks": [
+        "0"
+      ],
+      "word": "1000",
+      "states": 3,
+      "transitions": 4,
+      "convolution_columns": 2
+    },
+    "delimiter_edges": [
+      [
+        0,
+        3,
+        15
+      ]
+    ]
+  },
+  "explicit_guards": {
+    "cyclic_markers": {
+      "status": "UNKNOWN",
+      "reason": "Uncertified slice or incomplete finite search",
+      "slices": [
+        {
+          "certificate": {
+            "status": "NOT_APPLICABLE",
+            "final": 6,
+            "reason": "A productive cycle contains a separator",
+            "separator_edge": [
+              0,
+              2
+            ],
+            "paired_failure": "A productive cycle contains a separator"
+          },
+          "schemas": 0
+        }
+      ],
+      "schemas": 0
+    },
+    "outside_format": {
+      "status": "UNKNOWN",
+      "reason": "Uncertified slice or incomplete finite search",
+      "slices": [
+        {
+          "certificate": {
+            "status": "NOT_APPLICABLE",
+            "final": 2,
+            "reason": "Some safe accepted word is outside the fixed token format",
+            "paired_failure": "Some safe accepted word is outside the fixed token format"
+          },
+          "schemas": 0
+        }
+      ],
+      "schemas": 0
+    },
+    "odd_flags": {
+      "status": "UNKNOWN",
+      "reason": "Uncertified slice or incomplete finite search",
+      "slices": [
+        {
+          "certificate": {
+            "status": "NOT_APPLICABLE",
+            "final": 6,
+            "reason": "A productive cycle contains a separator",
+            "separator_edge": [
+              1,
+              0
+            ],
+            "paired_failure": "A relevant flag endpoint can occur inside a two-bit token"
+          },
+          "schemas": 0
+        }
+      ],
+      "schemas": 0
+    },
+    "capped": {
+      "status": "UNKNOWN",
+      "reason": "Uncertified slice or incomplete finite search",
+      "slices": [
+        {
+          "certificate": {
+            "status": "CERTIFIED",
+            "final": 9,
+            "code": "paired",
+            "macro_states": 4,
+            "maximum_blocks": 3,
+            "parser_product_states": 12
+          },
+          "schemas": 1,
+          "capped_schema": true
+        }
+      ],
+      "schemas": 1
+    }
+  },
+  "proof_status": "Written certificate and complete-cover argument; not Lean checked",
+  "scope": "Certified bounded-marker raw inputs only; UNKNOWN outside this class"
+}

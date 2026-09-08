@@ -1,0 +1,179 @@
+{
+  "status": "PASS",
+  "seed": 2026090651,
+  "counts": {
+    "finite_instances": 350,
+    "finite_tuples": 482,
+    "formula_binary_comparisons": 40634,
+    "cyclic_instances": 180,
+    "cyclic_tuples": 30866,
+    "dictionary_instances": 120,
+    "dictionary_tuples": 9061,
+    "canonical_models": 18,
+    "guards": 3,
+    "caps": 1,
+    "independent_sync_decisions": 4096
+  },
+  "finite_language_oracles": {
+    "YES": 126,
+    "NO": 224,
+    "UNKNOWN": 0
+  },
+  "dictionary_oracles": {
+    "YES": 120,
+    "NO": 0,
+    "UNKNOWN": 0
+  },
+  "cyclic_checks": {
+    "YES": 49,
+    "NO": 131,
+    "UNKNOWN": 0
+  },
+  "sync_product_oracles": {
+    "YES": 1858,
+    "NO": 2238,
+    "UNKNOWN": 0
+  },
+  "fixtures": [
+    {
+      "name": "context_guard_needed",
+      "result": {
+        "stages": 3,
+        "pair_bits": 3,
+        "coordinate_bound": 8,
+        "finite_state_bound": 512,
+        "convolution_path_bound": 56,
+        "binary_witness_bound": 336,
+        "status": "YES",
+        "blocks": [
+          "0",
+          "0",
+          "1"
+        ],
+        "word": "100010001100",
+        "states": 22,
+        "transitions": 204,
+        "convolution_columns": 2
+      }
+    },
+    {
+      "name": "delimiter_insertion_is_not_sound_for_general_inputs",
+      "plain_word": "00",
+      "encoded_word": "101000"
+    },
+    {
+      "name": "whole_word_equality_subclass",
+      "result": {
+        "stages": 2,
+        "pair_bits": 1,
+        "coordinate_bound": 16,
+        "finite_state_bound": 64,
+        "convolution_path_bound": 48,
+        "binary_witness_bound": 192,
+        "status": "YES",
+        "blocks": [
+          "",
+          ""
+        ],
+        "word": "0000",
+        "states": 4,
+        "transitions": 19,
+        "convolution_columns": 1
+      }
+    },
+    {
+      "name": "nonconvergent_necessary_family_decided",
+      "result": {
+        "stages": 2,
+        "pair_bits": 1,
+        "coordinate_bound": 12,
+        "finite_state_bound": 48,
+        "convolution_path_bound": 36,
+        "binary_witness_bound": 144,
+        "status": "NO",
+        "reason": "Entire finite convolution graph exhausted",
+        "states": 1,
+        "transitions": 4
+      }
+    }
+  ],
+  "cap": {
+    "stages": 3,
+    "pair_bits": 3,
+    "coordinate_bound": 8,
+    "finite_state_bound": 512,
+    "convolution_path_bound": 56,
+    "binary_witness_bound": 336,
+    "status": "UNKNOWN",
+    "reason": "State cap",
+    "states": 1,
+    "transitions": 2
+  },
+  "necessary_hierarchy": {
+    "status": "PASS",
+    "states": 5,
+    "flags": 3,
+    "independent_sync_NO_fixture": {
+      "product_state_bound": 4,
+      "compiled_states": 17,
+      "compiled_flags": 16,
+      "status": "NO",
+      "reason": "Entire reachable product graph exhausted",
+      "explored_states": 1
+    },
+    "counts": {
+      "position_pairs": 16,
+      "budget_predicates": 3600,
+      "finite_necessary_graphs": 25,
+      "exponent_vectors": 100
+    },
+    "examples": [
+      {
+        "n": 0,
+        "length": 3,
+        "source": 0,
+        "target": 2,
+        "violating_suffix": 1,
+        "violating_gap": 2
+      },
+      {
+        "n": 1,
+        "length": 5,
+        "source": 0,
+        "target": 3,
+        "violating_suffix": 2,
+        "violating_gap": 3
+      },
+      {
+        "n": 3,
+        "length": 9,
+        "source": 0,
+        "target": 5,
+        "violating_suffix": 4,
+        "violating_gap": 5
+      },
+      {
+        "n": 10,
+        "length": 23,
+        "source": 0,
+        "target": 12,
+        "violating_suffix": 11,
+        "violating_gap": 12
+      },
+      {
+        "n": 15,
+        "length": 33,
+        "source": 0,
+        "target": 17,
+        "violating_suffix": 16,
+        "violating_gap": 17
+      }
+    ],
+    "subtype_variables": 11,
+    "subtype_constraints": 13,
+    "rejected_canonical_paths": 4,
+    "all_length_statement": "For every L,D some non-witness passes Necessary(L,D); witness language is empty"
+  },
+  "proof_status": "Written all-length arguments; not Lean-checked or independently reviewed",
+  "scope": "Exact supplied bounded-delimiter schema; no unrestricted decomposition theorem"
+}

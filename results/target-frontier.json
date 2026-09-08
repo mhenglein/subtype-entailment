@@ -1,0 +1,257 @@
+{
+  "status": "PASS",
+  "seed": 2026090654,
+  "counts": {
+    "acyclic_instances": 160,
+    "acyclic_candidates": 290,
+    "bounded_schemas": 160,
+    "cyclic_flag_relations": 256,
+    "independent_schema_calls": 512,
+    "source_observation_sets": 120,
+    "direct_word_comparisons": 600,
+    "normalized_words": 207,
+    "removed_blocks": 936,
+    "unsupported_guards": 4,
+    "intentional_caps": 5,
+    "uncapped_fixtures": 2,
+    "canonical_checks": 8,
+    "three_reference_observation_sets": 20,
+    "three_reference_words": 100,
+    "three_reference_decisions": 2
+  },
+  "verdicts": {
+    "acyclic": {
+      "YES": 65,
+      "NO": 95,
+      "UNKNOWN": 0
+    },
+    "bounded": {
+      "YES": 63,
+      "NO": 97,
+      "UNKNOWN": 0
+    },
+    "cyclic_prefix": {
+      "YES": 88,
+      "NO": 168,
+      "UNKNOWN": 0
+    }
+  },
+  "cyclic_prefix_NO": {
+    "status": "NO",
+    "reason": "All certified reference schemas are empty",
+    "slices": [
+      {
+        "final": 18,
+        "certificate": {
+          "status": "CERTIFIED",
+          "final": 18,
+          "code": "paired",
+          "macro_states": 7,
+          "targets": [
+            12,
+            15
+          ],
+          "target_cone_states": 3,
+          "early_cyclic_marker_edges": [
+            [
+              0,
+              3
+            ],
+            [
+              3,
+              0
+            ]
+          ],
+          "maximum_reference_blocks": 6,
+          "prefix_blocks_bound_formula": "K * 2**(r-1) - 1"
+        },
+        "schemas": [
+          {
+            "schema": [
+              [
+                12,
+                15,
+                18
+              ]
+            ],
+            "result": {
+              "status": "NO",
+              "reason": "Entire finite reference/observation graph exhausted",
+              "states": 9,
+              "transitions": 11,
+              "max_descriptors": 17
+            }
+          }
+        ]
+      }
+    ],
+    "schemas": 1
+  },
+  "cyclic_prefix_YES": {
+    "status": "YES",
+    "word": "001011001100",
+    "result": {
+      "status": "YES",
+      "word": "001011001100",
+      "prefix_blocks": [
+        "",
+        "01"
+      ],
+      "reference_blocks": [
+        "1"
+      ],
+      "reference_schema": [
+        [
+          12,
+          15,
+          18
+        ]
+      ],
+      "prefix_count_bound": 6,
+      "states": 6,
+      "transitions": 5,
+      "max_descriptors": 15
+    },
+    "slices": [
+      {
+        "final": 18,
+        "certificate": {
+          "status": "CERTIFIED",
+          "final": 18,
+          "code": "paired",
+          "macro_states": 7,
+          "targets": [
+            12,
+            15
+          ],
+          "target_cone_states": 3,
+          "early_cyclic_marker_edges": [
+            [
+              0,
+              3
+            ],
+            [
+              3,
+              0
+            ]
+          ],
+          "maximum_reference_blocks": 6,
+          "prefix_blocks_bound_formula": "K * 2**(r-1) - 1"
+        },
+        "schemas": [
+          {
+            "schema": [
+              [
+                12,
+                15,
+                18
+              ]
+            ],
+            "result": {
+              "status": "YES",
+              "word": "001011001100",
+              "prefix_blocks": [
+                "",
+                "01"
+              ],
+              "reference_blocks": [
+                "1"
+              ],
+              "reference_schema": [
+                [
+                  12,
+                  15,
+                  18
+                ]
+              ],
+              "prefix_count_bound": 6,
+              "states": 6,
+              "transitions": 5,
+              "max_descriptors": 15
+            }
+          }
+        ]
+      }
+    ],
+    "schemas": 1
+  },
+  "normalization_example": {
+    "flags": [
+      [
+        0,
+        2
+      ]
+    ],
+    "before": [
+      "1",
+      "",
+      "111",
+      "11",
+      "111",
+      "",
+      "",
+      "111",
+      "1",
+      "111",
+      "1",
+      "0",
+      "01"
+    ],
+    "after": [
+      "1",
+      "0",
+      "01"
+    ],
+    "before_prefix_blocks": 11,
+    "after_prefix_blocks": 1,
+    "reference": [
+      "0",
+      "01"
+    ]
+  },
+  "unsupported_marker_cycle": {
+    "status": "UNKNOWN",
+    "reason": "Uncertified or capped slice",
+    "slices": [
+      {
+        "final": 18,
+        "attempts": [
+          {
+            "code": "paired",
+            "status": "NOT_APPLICABLE",
+            "reason": "Marker cycle reachable from a flag target",
+            "marker_edge": [
+              0,
+              3
+            ]
+          },
+          {
+            "code": "unary",
+            "status": "NOT_APPLICABLE",
+            "reason": "Marker cycle reachable from a flag target",
+            "marker_edge": [
+              0,
+              2
+            ]
+          }
+        ],
+        "status": "UNKNOWN"
+      }
+    ],
+    "schemas": 0
+  },
+  "cap_results": {
+    "states": "Uncertified or capped slice",
+    "transitions": "Uncertified or capped slice",
+    "descriptors": "Uncertified or capped slice",
+    "reconstruction": "Uncertified or capped slice",
+    "schemas": "Uncertified or capped slice"
+  },
+  "dependency_blobs": {
+    "border_lab.py": "1144ae52379e0417772e79582269cacd91c5bc17",
+    "delimited_blocks.py": "16e8f13e57f0327354b92b12370eefb31b7bb04f",
+    "marker_certificate.py": "874081aae19f0c21258f9a178ab210cd89db862c"
+  },
+  "proof_status": "Written proofs; not independently reviewed or Lean-checked",
+  "scope": "Early marker cycles allowed; no marker cycle reachable from any relevant flag target"
+}

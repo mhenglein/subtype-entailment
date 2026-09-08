@@ -1,0 +1,142 @@
+{
+  "status": "PASS",
+  "seed": 2026090548,
+  "counts": {
+    "binary_words": 32767,
+    "block_tuples": 3785,
+    "product_decisions": 4222,
+    "two_state_complete_pairs": 4096,
+    "direct_intersection_words": 61440,
+    "canonical_models": 20,
+    "summary_comparisons": 196,
+    "counter_bit_flips": 642,
+    "counter_small_words": 518,
+    "grammar_factor_fixtures": 3055,
+    "capped_queries": 1
+  },
+  "two_state_census": {
+    "YES": 1858,
+    "NO": 2238
+  },
+  "random_decisions": {
+    "YES": 19,
+    "NO": 101,
+    "UNKNOWN": 0
+  },
+  "fixtures": {
+    "equal_counts_unequal_words": "101100111000",
+    "negative_product": {
+      "product_state_bound": 4,
+      "compiled_states": 17,
+      "compiled_flags": 16,
+      "status": "NO",
+      "reason": "Entire reachable product graph exhausted",
+      "explored_states": 1
+    },
+    "positive_nonempty": {
+      "product_state_bound": 4,
+      "compiled_states": 17,
+      "compiled_flags": 16,
+      "status": "YES",
+      "common_word": "0",
+      "word": "10001000",
+      "explored_states": 2,
+      "shortest_length": 8
+    },
+    "capped": {
+      "product_state_bound": 4,
+      "compiled_states": 17,
+      "compiled_flags": 16,
+      "status": "UNKNOWN",
+      "reason": "Product-state cap",
+      "explored_states": 1
+    }
+  },
+  "counting_family": [
+    {
+      "width": 1,
+      "input_dfas": 2,
+      "input_states": 6,
+      "compiled_states": 23,
+      "compiled_flags": 30,
+      "common_word_length": 2,
+      "witness_length": 12,
+      "explored_product_states": 3,
+      "distinct_factors": 4,
+      "factor_length": 2,
+      "skeleton_body_lower_bound": 2
+    },
+    {
+      "width": 2,
+      "input_dfas": 3,
+      "input_states": 20,
+      "compiled_states": 67,
+      "compiled_flags": 256,
+      "common_word_length": 8,
+      "witness_length": 54,
+      "explored_product_states": 9,
+      "distinct_factors": 10,
+      "factor_length": 4,
+      "skeleton_body_lower_bound": 3
+    },
+    {
+      "width": 3,
+      "input_dfas": 4,
+      "input_states": 44,
+      "compiled_states": 141,
+      "compiled_flags": 1018,
+      "common_word_length": 24,
+      "witness_length": 200,
+      "explored_product_states": 25,
+      "distinct_factors": 20,
+      "factor_length": 6,
+      "skeleton_body_lower_bound": 4
+    },
+    {
+      "width": 4,
+      "input_dfas": 5,
+      "input_states": 78,
+      "compiled_states": 245,
+      "compiled_flags": 2676,
+      "common_word_length": 64,
+      "witness_length": 650,
+      "explored_product_states": 65,
+      "distinct_factors": 38,
+      "factor_length": 8,
+      "skeleton_body_lower_bound": 5
+    },
+    {
+      "width": 5,
+      "input_dfas": 6,
+      "input_states": 122,
+      "compiled_states": 379,
+      "compiled_flags": 5590,
+      "common_word_length": 160,
+      "witness_length": 1932,
+      "explored_product_states": 161,
+      "distinct_factors": 72,
+      "factor_length": 10,
+      "skeleton_body_lower_bound": 8
+    },
+    {
+      "width": 6,
+      "input_dfas": 7,
+      "input_states": 176,
+      "compiled_states": 543,
+      "compiled_flags": 10120,
+      "common_word_length": 384,
+      "witness_length": 5390,
+      "explored_product_states": 385,
+      "distinct_factors": 138,
+      "factor_length": 12,
+      "skeleton_body_lower_bound": 12
+    }
+  ],
+  "dependency_blobs": {
+    "border_lab.py": "1144ae52379e0417772e79582269cacd91c5bc17",
+    "terminal_realization.py": "00b5dbb2ab345fd15db8660e8ae5179b0bfc2969",
+    "denial_bridge.py": "a38a21df533d8853aa34b3b2593d164a4a688447"
+  },
+  "proof_status": "Written arguments; not Lean-checked or independently reviewed",
+  "scope": "Construction-specific exact decision, not unrestricted BorderAvoid"
+}

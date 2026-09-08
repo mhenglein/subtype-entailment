@@ -1,0 +1,252 @@
+{
+  "status": "PASS",
+  "seed": 2026090656,
+  "counts": {
+    "acyclic_instances": 120,
+    "acyclic_candidates": 214,
+    "cyclic_family_instances": 256,
+    "cyclic_oracle_words": 1024,
+    "known_witness_pumps": 140,
+    "strict_pumps": 140,
+    "known_positive_decisions": 25,
+    "canonical_models": 6,
+    "unsupported_guards": 4,
+    "caps": 1,
+    "independent_word_comparisons": 2044
+  },
+  "verdicts": {
+    "acyclic": {
+      "YES": 63,
+      "NO": 57,
+      "UNKNOWN": 0
+    },
+    "cyclic_family": {
+      "YES": 32,
+      "NO": 224,
+      "UNKNOWN": 0
+    },
+    "known_positive": {
+      "YES": 25,
+      "NO": 0,
+      "UNKNOWN": 0
+    }
+  },
+  "extra_prefix_profile_checks": 3072,
+  "strict_extension_NO": {
+    "delta": [
+      [
+        2,
+        1
+      ],
+      [
+        3,
+        3
+      ],
+      [
+        0,
+        -1
+      ],
+      [
+        5,
+        -1
+      ],
+      [
+        -1,
+        -1
+      ],
+      [
+        6,
+        -1
+      ],
+      [
+        -1,
+        7
+      ],
+      [
+        9,
+        9
+      ],
+      [
+        -1,
+        -1
+      ],
+      [
+        11,
+        -1
+      ],
+      [
+        -1,
+        -1
+      ],
+      [
+        12,
+        -1
+      ],
+      [
+        -1,
+        -1
+      ],
+      [
+        -1,
+        -1
+      ],
+      [
+        -1,
+        -1
+      ]
+    ],
+    "flags": [
+      [
+        3,
+        9
+      ]
+    ],
+    "old_status": "UNKNOWN",
+    "new": {
+      "status": "NO",
+      "slices": [
+        {
+          "certificate": {
+            "final": 12,
+            "code": "paired",
+            "macro_states": 5,
+            "targets": [
+              9
+            ],
+            "status": "CERTIFIED",
+            "target_height": 1,
+            "prefix_monitor_states": 5,
+            "marker_bound": 6
+          },
+          "schemas": 5
+        }
+      ],
+      "schemas": 5,
+      "prefixes": 18,
+      "reason": "All complete target-local covers are empty"
+    }
+  },
+  "context_fixture": {
+    "original": "1000111000110011110010001100",
+    "unsafe_single_deletion": "1000110011110010001100",
+    "old_status": "UNKNOWN",
+    "new": {
+      "status": "YES",
+      "word": "1111001000101000",
+      "blocks": [
+        "11",
+        "0",
+        "00"
+      ],
+      "slices": [
+        {
+          "certificate": {
+            "final": 18,
+            "code": "paired",
+            "macro_states": 7,
+            "targets": [
+              9
+            ],
+            "status": "CERTIFIED",
+            "target_height": 2,
+            "prefix_monitor_states": 14,
+            "marker_bound": 16
+          },
+          "schemas": 1
+        }
+      ],
+      "schemas": 1,
+      "prefixes": 26,
+      "convolution": {
+        "stages": 3,
+        "pair_bits": 3,
+        "coordinate_bound": 10648,
+        "finite_state_bound": 681472,
+        "convolution_path_bound": 74536,
+        "binary_witness_bound": 447216,
+        "status": "YES",
+        "blocks": [
+          "11",
+          "0",
+          "00"
+        ],
+        "word": "1111001000101000",
+        "states": 77,
+        "transitions": 654,
+        "convolution_columns": 3
+      }
+    },
+    "pump": {
+      "word": "11110010001100",
+      "original_blocks": 6,
+      "retained_blocks": 3,
+      "deleted_blocks": 3,
+      "retained_prefix_indices": [
+        3
+      ],
+      "monitor_states": 2
+    },
+    "certificate": {
+      "final": 18,
+      "code": "paired",
+      "macro_states": 7,
+      "targets": [
+        9
+      ],
+      "status": "CERTIFIED",
+      "target_height": 2,
+      "prefix_monitor_states": 14,
+      "marker_bound": 16
+    }
+  },
+  "five_state_NO": {
+    "status": "NO",
+    "slices": [
+      {
+        "certificate": {
+          "final": 4,
+          "code": "unary",
+          "macro_states": 5,
+          "targets": [
+            2,
+            3
+          ],
+          "status": "CERTIFIED",
+          "target_height": 1,
+          "prefix_monitor_states": 5,
+          "marker_bound": 6,
+          "paired_failure": "Safe candidates escape token format"
+        },
+        "schemas": 2
+      }
+    ],
+    "schemas": 2,
+    "prefixes": 5,
+    "reason": "All complete target-local covers are empty"
+  },
+  "deliberate_cap": {
+    "status": "UNKNOWN",
+    "reason": "Complete-cover prefix cap",
+    "prefixes": 1,
+    "schemas": 0,
+    "slices": [
+      {
+        "certificate": {
+          "final": 18,
+          "code": "paired",
+          "macro_states": 7,
+          "targets": [
+            9
+          ],
+          "status": "CERTIFIED",
+          "target_height": 2,
+          "prefix_monitor_states": 14,
+          "marker_bound": 16
+        },
+        "schemas": 0
+      }
+    ]
+  },
+  "status_of_proof": "Written arguments; not Lean-checked or independently reviewed",
+  "scope": "Target-local marker class, not unrestricted witness existence"
+}
