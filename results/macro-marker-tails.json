@@ -1,0 +1,11 @@
+{
+  "proof_status": "Written proof pending independent review; regression evidence; not Lean-checked",
+  "recurrent_target_positive": {
+    "compiled_word": "101100",
+    "new_status": "YES",
+    "old_status": "UNKNOWN"
+  },
+  "scope": "Exact supplied-H paired macro-marker relaxation; no global marker bound claimed",
+  "small_differential_queries": 9,
+  "status": "PASS"
+}
