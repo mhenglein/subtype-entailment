@@ -1,9 +1,7 @@
 {
   "seed": 2026090701,
-  "base_commit": "f663a8d1072fbf21e899f860cba1538a64f3628a",
+  "base": "consolidated-2026-09-08",
   "status": "PASS",
-  "seconds": 1.748,
-  "comparison_harness": "Hash-verified snapshot; validator import substituted only",
   "counts": {
     "exact_backend_agreements": 43069,
     "exhaustive_two_state_instances": 41472,
@@ -25,16 +23,71 @@
     "COUNTEREXAMPLE": 23781
   },
   "examples": {
-    "infinite_recurrent_safe": {"status":"REGULAR_FAMILY_VALID","inhabited":true,"word":"1010","product_states":5,"exponent_bound":4,"nodes":22,"chains":6,"proper_counterexample_length_bound":18124,"reason":"Complete shared-word orbit products exhausted","scope":"Every domain word is a witness; NOT existential BorderAvoid"},
-    "infinite_recurrent_mixed": {"status":"COUNTEREXAMPLE","word":"10110","factorization":{"head":"","u":"10","v":"1","exponent":1},"flag":[0,3],"product_states":5,"nodes":6,"chains":1,"reason":"Shared-word orbit product reached acceptance"},
-    "nonterminal_no_flags": {"status":"REGULAR_FAMILY_VALID","inhabited":true,"word":"","product_states":1,"exponent_bound":1,"nodes":0,"chains":0,"proper_counterexample_length_bound":1,"reason":"Complete shared-word orbit products exhausted","scope":"Every domain word is a witness; NOT existential BorderAvoid"},
-    "infinite_one_flag_reduction": {"status":"COUNTEREXAMPLE","word":"11001100","factorization":{"head":"","u":"","v":"1100","exponent":2},"flag":[0,6],"product_states":11,"nodes":47,"chains":6,"reason":"Shared-word orbit product reached acceptance"}
+    "infinite_recurrent_safe": {
+      "status": "REGULAR_FAMILY_VALID",
+      "inhabited": true,
+      "word": "1010",
+      "product_states": 5,
+      "exponent_bound": 4,
+      "nodes": 22,
+      "chains": 6,
+      "proper_counterexample_length_bound": 18124,
+      "reason": "Complete shared-word orbit products exhausted",
+      "scope": "Every domain word is a witness; NOT existential BorderAvoid"
+    },
+    "infinite_recurrent_mixed": {
+      "status": "COUNTEREXAMPLE",
+      "word": "10110",
+      "factorization": {
+        "head": "",
+        "u": "10",
+        "v": "1",
+        "exponent": 1
+      },
+      "flag": [
+        0,
+        3
+      ],
+      "product_states": 5,
+      "nodes": 6,
+      "chains": 1,
+      "reason": "Shared-word orbit product reached acceptance"
+    },
+    "nonterminal_no_flags": {
+      "status": "REGULAR_FAMILY_VALID",
+      "inhabited": true,
+      "word": "",
+      "product_states": 1,
+      "exponent_bound": 1,
+      "nodes": 0,
+      "chains": 0,
+      "proper_counterexample_length_bound": 1,
+      "reason": "Complete shared-word orbit products exhausted",
+      "scope": "Every domain word is a witness; NOT existential BorderAvoid"
+    },
+    "infinite_one_flag_reduction": {
+      "status": "COUNTEREXAMPLE",
+      "word": "11001100",
+      "factorization": {
+        "head": "",
+        "u": "",
+        "v": "1100",
+        "exponent": 2
+      },
+      "flag": [
+        0,
+        6
+      ],
+      "product_states": 11,
+      "nodes": 47,
+      "chains": 6,
+      "reason": "Shared-word orbit product reached acceptance"
+    }
   },
   "reduction_summary": {
     "instances": 100,
     "complete_candidate_words": 232,
-    "raw_word_checks": 4000,
-    "note": "The original run also recorded per-instance block/state counts; omitted here only to keep the committed evidence compact. The complete source run is archived in the research bundle."
+    "raw_word_checks": 4000
   },
   "limits": [
     "Written proof; no independent review or Lean formalization",
