@@ -6,46 +6,41 @@
     "common_nonempty_prefix": "0",
     "epsilon_in_middle": true
   },
+  "bounded_insertion_exposure": {
+    "depth_0_good_prefixes": [
+      ""
+    ],
+    "depth_1_good_prefixes": [
+      "0"
+    ],
+    "depth_2_good_prefixes": []
+  },
   "discovered_scc_return_interfaces": [
     {
       "boundary_state": 1,
       "common_nonempty_prefix": "0",
-      "component": [
-        1
-      ]
+      "component": [1]
     },
     {
       "boundary_state": 2,
       "common_nonempty_prefix": "0",
-      "component": [
-        2,
-        3,
-        4
-      ]
+      "component": [2,3,4]
     },
     {
       "boundary_state": 3,
       "common_nonempty_prefix": "",
-      "component": [
-        2,
-        3,
-        4
-      ]
+      "component": [2,3,4]
     },
     {
       "boundary_state": 4,
       "common_nonempty_prefix": "1",
-      "component": [
-        2,
-        3,
-        4
-      ]
+      "component": [2,3,4]
     }
   ],
   "negative_controls": {
     "branching_common_prefix": "",
     "wrong_boundary_counterexample": "011"
   },
-  "scope": "Exact finite interface/SCC-return analysis only. A comparison selector is still required before any discovered middle may be erased soundly.",
+  "scope": "Exact finite interface/SCC-return and bounded-exposure prefix analysis. A finite erasure cover and selector-location proof are still required for an unrestricted decision.",
   "status": "PASS"
 }
