@@ -68,8 +68,9 @@ jobs:
           python3 experiments/check_regular_middle_interface.py
           python3 experiments/check_common_suffix_selector.py
           python3 experiments/check_loop_erased_spines.py
+          python3 experiments/check_multi_insertion_lift.py
       - name: Verify repaired continuation results
-        run: git diff --exit-code -- results/run-profiles.json results/regular-family-orbits.json results/oneflag-minimum-gap.json results/consolidation-regressions.json results/regular-middle-erasure.json results/regular-middle-interface.json results/common-suffix-selector.json results/loop-erased-spines.json
+        run: git diff --exit-code -- results/run-profiles.json results/regular-family-orbits.json results/oneflag-minimum-gap.json results/consolidation-regressions.json results/regular-middle-erasure.json results/regular-middle-interface.json results/common-suffix-selector.json results/loop-erased-spines.json results/multi-insertion-lift.json
   lean:
     runs-on: ubuntu-latest
     steps:
