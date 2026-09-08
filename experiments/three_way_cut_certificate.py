@@ -1,17 +1,18 @@
-"""Finite verifier for a reusable all-length terminal NO certificate.
+"""Finite verifier and synthesizer for all-length three-way terminal NO certificates.
 
-The rule covers a boundary-normalized binary terminal candidate language
+The verified rule covers a boundary-normalized binary terminal candidate language
 
     a^n b M a^m b a          (n >= 0, m >= 1)
 
-where M is supplied by a DFA and every nonempty M-word starts with a. No unary
-stabilization hypothesis is needed: positive powers of a from the leading and
-trailing anchors have finite state orbits, and the verifier checks every orbit
-state. Accepted M-words may likewise induce finitely many endpoint effects.
-Candidate-language equality is verified exactly by a DFA x epsilon-NFA
-symmetric-difference search, so VERIFIED_NO is an all-length finite proof.
+with a regular middle M whose nonempty words begin with a. Unary runs need not
+stabilize: finite transition orbits cover every residue. Middle words likewise
+induce finitely many endpoint effects. Candidate-language equality is checked
+exactly by DFA x epsilon-NFA symmetric difference.
 
-See notes/2026-09-08-three-way-cut-certificates.md.
+`discover_three_way_certificate` removes the need to supply M manually. For
+each orientation (a,b), it derives the maximal regular middle whose endpoint
+states support every positive trailing a-power and then invokes the exact
+verifier. Success is a genuine all-length NO certificate; failure is UNKNOWN.
 """
 from collections import deque
 from dataclasses import dataclass
@@ -54,14 +55,12 @@ def _middle_starts_with_a(dfa,a,b):
 
 
 def _positive_orbit(I,q,a):
-    """Exactly {delta(q,a^d): d>=1}, or None if a positive power is undefined."""
     cur=I.delta[q][a]
     if cur<0: return None
     seen=set()
     while cur not in seen:
         if cur<0: return None
-        seen.add(cur)
-        cur=I.delta[cur][a]
+        seen.add(cur); cur=I.delta[cur][a]
         if cur<0: return None
     return frozenset(seen)
 
@@ -166,8 +165,8 @@ def verify_three_way_certificate(I,cert):
     if not effects or -1 in effects:
         return {'status':'NOT_APPLICABLE','reason':'Accepted middle word is undefined from anchor control'}
 
-    required={(s0,q) for q in effects}  # n=m
-    required |= {(p,q) for p in leading for q in effects}  # n>m
+    required={(s0,q) for q in effects}
+    required|={(p,q) for p in leading for q in effects}
     rows=[]
     for q in sorted(effects):
         trailing=_positive_orbit(I,q,a)
@@ -180,15 +179,13 @@ def verify_three_way_certificate(I,cert):
             if pre<0 or I.delta[pre][a]!=f:
                 return {'status':'NOT_APPLICABLE','reason':'Terminal ba suffix fails on a trailing orbit state',
                         'middle_effect':q,'trailing_state':r}
-            required.add((s0,r))  # n<m
-            terminal_rows.append((r,pre))
+            required.add((s0,r)); terminal_rows.append((r,pre))
         rows.append({'middle_effect':q,'trailing_orbit':sorted(trailing),
                      'terminal_rows':terminal_rows})
 
     if not required.issubset(I.flags):
         return {'status':'NOT_APPLICABLE','reason':'Missing a required orbit-sensitive comparison flag',
-                'required_flags':sorted(required),
-                'missing_flags':sorted(required-I.flags)}
+                'required_flags':sorted(required),'missing_flags':sorted(required-I.flags)}
 
     return {'status':'VERIFIED_NO','family':'a* b M a+ b a',
             'leading_positive_orbit':sorted(leading),'post_b_anchor':q0,
@@ -197,3 +194,51 @@ def verify_three_way_certificate(I,cert):
               'n<m':'d=m-n>=1 selects delta(q,a^d) in the finite trailing orbit; compare from start',
               'n=m':'compare start with the middle endpoint q',
               'n>m':'d=n-m>=1 selects delta(start,a^d) in the finite leading orbit; compare with q'}}
+
+
+def _universal_tail_states(I,a,b):
+    """States q for which every q --a^m b a, m>=1, reaches the sole final."""
+    if len(I.final)!=1: return frozenset()
+    f=next(iter(I.final)); good=set()
+    for q in range(len(I.delta)):
+        orbit=_positive_orbit(I,q,a)
+        if orbit is None: continue
+        ok=True
+        for r in orbit:
+            pre=I.delta[r][b]
+            if pre<0 or I.delta[pre][a]!=f:
+                ok=False; break
+        if ok: good.add(q)
+    return frozenset(good)
+
+
+def synthesize_three_way_certificate(I,a,b):
+    """Derive the maximal middle supported by universal trailing a-powers."""
+    if {a,b}!={0,1} or a==b or len(I.final)!=1:
+        return None
+    leading=_positive_orbit(I,I.start,a)
+    if leading is None: return None
+    q0=I.delta[I.start][b]
+    if q0<0 or any(I.delta[p][b]!=q0 for p in leading): return None
+    good=_universal_tail_states(I,a,b)
+    if not good: return None
+    return ThreeWayCertificate(a,b,DFA(tuple(tuple(row) for row in I.delta),good,q0))
+
+
+def discover_three_way_certificate(I):
+    """Automatic exact NO recognizer for the three-way orbit family.
+
+    It tries both binary orientations. Failure to discover a certificate is
+    INCONCLUSIVE; only VERIFIED_NO is a mathematical negative verdict.
+    """
+    attempts=[]
+    for a,b in ((0,1),(1,0)):
+        cert=synthesize_three_way_certificate(I,a,b)
+        if cert is None:
+            attempts.append({'a':a,'b':b,'status':'NO_SYNTHESIS'}); continue
+        out=verify_three_way_certificate(I,cert)
+        attempts.append({'a':a,'b':b,'status':out['status'],'reason':out.get('reason')})
+        if out['status']=='VERIFIED_NO':
+            return {'status':'VERIFIED_NO','a':a,'b':b,'certificate':cert,
+                    'verification':out,'attempts':attempts}
+    return {'status':'INCONCLUSIVE','attempts':attempts}
