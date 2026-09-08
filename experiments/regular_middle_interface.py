@@ -1,13 +1,8 @@
 """Finite interface analysis for proof-directed regular-middle erasure.
 
-This module does not decide BorderAvoid.  It checks two regular properties used
-by the candidate-changing erasure rule:
-
-* all accepted middle words induce one required boundary action in the original
-  DFA; and
-* all nonempty accepted middle words share a computable maximal literal prefix.
-
-Both checks are exact finite graph computations for deterministic partial DFAs.
+This module does not decide BorderAvoid. It checks regular properties used by
+candidate-changing erasure rules and can discover return languages of productive
+SCCs directly from the original deterministic partial DFA.
 """
 
 from collections import deque
@@ -53,7 +48,7 @@ def coreachable(delta, final):
 def common_nonempty_prefix(delta, start, final, alphabet="01"):
     """Maximal common prefix of all nonempty accepted words.
 
-    Returns None when the language has no nonempty word.  Epsilon acceptance is
+    Returns None when the language has no nonempty word. Epsilon acceptance is
     ignored: the prefix describes only the nonempty branch, matching an erasure
     proof that handles empty/nonempty middles separately.
     """
@@ -75,8 +70,6 @@ def common_nonempty_prefix(delta, start, final, alphabet="01"):
     prefix = first[0][0]
     q = first[0][1]
     while True:
-        # Once the current prefix itself is accepted, longer accepted words no
-        # longer force another common symbol.
         if q in final:
             return prefix
         choices = []
@@ -102,8 +95,7 @@ def boundary_action_counterexample(
 
     Returns None exactly when every accepted middle word maps boundary_state back
     to boundary_state. Undefined original transitions are represented by a dead
-    product component so any returned counterexample is a complete accepted
-    middle word, not merely a bad prefix.
+    product component so any returned counterexample is a complete accepted word.
     """
     middle_final, width = _validate(middle_delta, middle_start, middle_final)
     if len(alphabet) != width:
@@ -152,7 +144,7 @@ def interface_summary(
     boundary_state,
     alphabet="01",
 ):
-    """Return the exact finite interface facts needed by an erasure proof."""
+    """Return exact finite interface facts needed by an erasure proof."""
     counterexample = boundary_action_counterexample(
         middle_delta,
         middle_start,
@@ -170,3 +162,105 @@ def interface_summary(
         ),
         "epsilon_in_middle": middle_start in frozenset(middle_final),
     }
+
+
+def strongly_connected_components(delta):
+    """Return SCCs of the defined transition graph as sorted tuples."""
+    _validate(delta, 0, set())
+    n = len(delta)
+    graph = [sorted({q for q in row if q >= 0}) for row in delta]
+    rev = [[] for _ in delta]
+    for p, qs in enumerate(graph):
+        for q in qs:
+            rev[q].append(p)
+
+    seen = set()
+    order = []
+    for root in range(n):
+        if root in seen:
+            continue
+        stack = [(root, 0)]
+        seen.add(root)
+        while stack:
+            q, i = stack[-1]
+            if i < len(graph[q]):
+                r = graph[q][i]
+                stack[-1] = (q, i + 1)
+                if r not in seen:
+                    seen.add(r)
+                    stack.append((r, 0))
+            else:
+                order.append(q)
+                stack.pop()
+
+    seen.clear()
+    out = []
+    for root in reversed(order):
+        if root in seen:
+            continue
+        comp = []
+        todo = [root]
+        seen.add(root)
+        for q in todo:
+            comp.append(q)
+            for r in rev[q]:
+                if r not in seen:
+                    seen.add(r)
+                    todo.append(r)
+        out.append(tuple(sorted(comp)))
+    return tuple(sorted(out))
+
+
+def restricted_return_dfa(original_delta, component, boundary_state):
+    """DFA for words that stay inside component and return boundary_state.
+
+    The returned tuple is (delta,start,final,index_to_original). Epsilon is
+    accepted. The language can be nonflat even though this representation is
+    finite, because it is exactly the SCC's return language at the boundary.
+    """
+    _validate(original_delta, 0, set())
+    component = tuple(sorted(set(component)))
+    if boundary_state not in component:
+        raise ValueError("boundary is not in component")
+    index = {q: i for i, q in enumerate(component)}
+    rows = []
+    for q in component:
+        row = []
+        for r in original_delta[q]:
+            row.append(index[r] if r in index else -1)
+        rows.append(tuple(row))
+    start = index[boundary_state]
+    return tuple(rows), start, frozenset({start}), component
+
+
+def scc_return_interfaces(original_delta, alphabet="01"):
+    """Discover cyclic SCC return languages and their forced prefixes.
+
+    Each row is a finite candidate interface. This does not prove that erasing
+    the SCC is semantically sound; a separate comparison selector must show that
+    its chosen forbidden comparison does not depend on the erased interior.
+    """
+    _validate(original_delta, 0, set())
+    rows = []
+    for component in strongly_connected_components(original_delta):
+        cyclic = len(component) > 1 or any(
+            original_delta[q][a] == q
+            for q in component
+            for a in range(len(original_delta[q]))
+        )
+        if not cyclic:
+            continue
+        for boundary in component:
+            md, start, final, mapping = restricted_return_dfa(
+                original_delta, component, boundary
+            )
+            prefix = common_nonempty_prefix(md, start, final, alphabet)
+            if prefix is None:
+                continue
+            rows.append({
+                "component": mapping,
+                "boundary_state": boundary,
+                "common_nonempty_prefix": prefix,
+                "epsilon_in_middle": True,
+            })
+    return tuple(rows)
