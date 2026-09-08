@@ -70,6 +70,20 @@ def recurrent_target_positive():
                 semantic_status=semantic['status'])
 
 
+def zero_marker_positive():
+    # No proper flags => exact macro spectrum H=0. The H=0 relaxation is plain
+    # boundary-safe reachability and must return a candidate, not NO.
+    I=Instance(((0,1),(-1,2),(-1,-1)),frozenset({2}),frozenset())
+    _,cert=frontier_separator_certificate(I); assert cert is not None
+    J=compile_separators(I,cert)
+    fmt,macro=parse_macro(J,2,'paired'); assert macro is not None,fmt
+    spectrum=spectrum_macro(macro,UNCAPPED); assert spectrum['status']=='FINITE' and spectrum['H']==0
+    fixed=solve_macro(macro,0,UNCAPPED); assert fixed['status']=='YES'
+    assert witness(J,fixed['word']) and border_witness(J,fixed['word'])
+    semantic=semantic_macro_decision(J,UNCAPPED); assert semantic['status']=='YES'
+    return dict(H=0,fixed_status='YES',semantic_status='YES',word=fixed['word'])
+
+
 def small_differential():
     fixtures=[
       Instance(((1,0),(0,2),(-1,-1)),frozenset({2}),frozenset({(0,1)})),
@@ -92,6 +106,7 @@ def small_differential():
 
 def main():
     result={'status':'PASS','recurrent_target_positive':recurrent_target_positive(),
+            'zero_marker_positive':zero_marker_positive(),
             'small_differential_queries':small_differential(),
             'scope':'Exact supplied-H paired macro tails plus exact macro separator spectrum on formatted slices',
             'proof_status':'Written proofs pending independent review; regression evidence; not Lean-checked'}
