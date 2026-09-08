@@ -2,14 +2,14 @@
 
 Date: 2026-09-08. Continues the arithmetic cut-selector route.
 
-**Status: written proof + exact finite verifier; CI integration pending at this
-commit; independent mathematical review pending; not Lean-checked. Unrestricted
-Problem 1.7 remains open.**
+**Status: written proof + exact finite verifier; integrated regression pending
+final CI replay at this commit; independent mathematical review pending; not
+Lean-checked. Unrestricted Problem 1.7 remains open.**
 
 ## 1. From unary powers to word powers
 
 The previous rules use two unary powers `a^n` and `a^m`. The arithmetic proof
-only needs a repeatable word whose block boundaries can be tracked by the finite
+only needs a repeatable word whose block boundaries can be tracked by finite
 control. Let `P` and `B` be fixed nonempty binary words and let `M` be a regular
 middle language. Consider a boundary-normalized terminal candidate language
 
@@ -39,44 +39,21 @@ This is the fixed-word analogue of the unary terminal-cap condition.
 
 ## 3. Exact cut proof
 
-Fix a candidate
+Fix a candidate `w = P^n B u P^m B P`, with middle effect q.
 
-    w = P^n B u P^m B P,
+- If `n<m`, put `d=m-n>=1` and `r=delta(q,P^d)`. The suffix at r is
+  `P^n B P`. The source begins with the same word because after `P^n B` the
+  middle is empty or begins with P. A flag `(start,r)` gives a violation.
+- If `n=m`, the suffix at q is `P^n B P`, so `(start,q)` gives a violation.
+- If `n>m`, put `d=n-m>=1` and `s=delta(start,P^d)`. The source suffix at s
+  and target suffix at q both expose `P^m B P`; `(s,q)` gives a violation.
 
-with middle effect q.
-
-### n < m
-
-Put `d=m-n>=1` and let `r=delta(q,P^d)`. The suffix at r is exactly
-
-    P^n B P.
-
-The source suffix from the start begins with the same word: after `P^n B`, the
-middle is either empty, in which case the trailing power begins with P, or it is
-nonempty and the verifier has proved that it begins with P. A flag `(start,r)`
-therefore gives a violation.
-
-### n = m
-
-The suffix at q is `P^n B P`, and the same source-prefix argument applies.
-A flag `(start,q)` gives a violation.
-
-### n > m
-
-Put `d=n-m>=1` and `s=delta(start,P^d)`. The source suffix from s begins
-
-    P^m B P,
-
-while the target suffix at q is exactly `P^m B P`. A flag `(s,q)` gives a
-violation.
-
-The three cases are exhaustive. Because only the finite positive `P`-orbits and
-finite middle-effect set are needed, the verifier checks a finite flag set.
-`VERIFIED_NO` is therefore an all-length certificate.
+The cases are exhaustive. Only finite positive P-orbits and the finite set of
+middle effects are required, so `VERIFIED_NO` is an all-length certificate.
 
 ## 4. Strict non-unary fixture
 
-The first regression uses
+The regression uses
 
     P = 01,    B = 1,    M = {epsilon},
 
@@ -84,26 +61,38 @@ and an automaton accepting exactly
 
     (01)^n 1 (01)^m 1 01,   n>=0,m>=1.
 
-Both P-actions are loops at their respective block-boundary states, so one flag
-covers all three arithmetic cases. The installed unary three-way, orbit-split,
-and bi-residue recognizers are required to remain inconclusive on this fixture.
-Thus this theorem is not merely a renaming of a unary run.
+The leading P-action loops at state 0. After the first delimiter, a one-shot
+entry state forces the mandatory first P and reaches the recurrent trailing
+P-boundary. This distinction is necessary: an earlier fixture reused the same
+state before and after the first P and accidentally accepted the `m=0` word
+`1101`; CI caught that fixture error before publication.
+
+In the corrected automaton the exact verifier sees:
+
+    leading P-orbit = {0}
+    middle effect   = 2
+    trailing P-orbit= {4}
+    required flags  = {(0,2),(0,4)}.
+
+The first flag handles equality and the `n>m` leading-orbit case; the second
+handles `n<m`. The installed unary three-way, orbit-split and bi-residue
+recognizers are required to remain inconclusive. Thus the theorem is genuinely
+about a non-unary period, not a renamed unary run.
 
 ## 5. Significance and next step
 
-The arithmetic certificate is now stable under nontrivial finite word periods.
-The next abstraction is to replace one fixed word P by a **regular transition-
-monoid fibre**: repetition pieces may be different words with the same finite
-action, while cut correctness must still preserve their literal shared content.
-That is precisely where earlier residual-collision counterexamples warn against
-forgetting the common word assignment. A safe extension will need either shared
-word parameters or an exact finite family of period representatives justified
-by the candidate-language cover.
+The arithmetic certificate is stable under nontrivial fixed word periods. The
+next abstraction is a **shared period variable with regular constraints**, not
+merely a transition-action class. Replacing literal P by arbitrary words with
+the same finite action would be unsound: the repository already has residual
+collisions where equal actions have incompatible literal left contexts.
 
-This is also the point where the 2026 1-use backreference matching machinery is
-relevant: its algorithms use transition monoids, factorization forests and word
-periodicity for the canonical `A(B)_x C x D` problem. Lifting those per-word
-techniques to regular-language containment remains unproved.
+A safe generalization must retain one common word assignment across all powers
+and cut comparisons, or provide an exact finite cover of possible periods. This
+is where the shared-word equations and the transition-monoid/factorization-
+forest machinery for 1-use backreference matching become directly relevant.
+Lifting those per-word techniques to regular-language containment remains the
+larger missing theorem.
 
 ## 6. Reproduction
 
