@@ -64,8 +64,11 @@ jobs:
           python3 experiments/check_regular_family_orbits_canonical.py
           python3 experiments/check_oneflag_minimum_gap.py
           python3 experiments/check_consolidation_regressions.py
+          python3 experiments/check_regular_middle_erasure.py
+          python3 experiments/check_regular_middle_interface.py
+          python3 experiments/check_common_suffix_selector.py
       - name: Verify repaired continuation results
-        run: git diff --exit-code -- results/run-profiles.json results/regular-family-orbits.json results/oneflag-minimum-gap.json results/consolidation-regressions.json
+        run: git diff --exit-code -- results/run-profiles.json results/regular-family-orbits.json results/oneflag-minimum-gap.json results/consolidation-regressions.json results/regular-middle-erasure.json results/regular-middle-interface.json results/common-suffix-selector.json
   lean:
     runs-on: ubuntu-latest
     steps:
