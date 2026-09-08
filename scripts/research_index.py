@@ -40,7 +40,8 @@ def research_records(data):
         add(row["id"], source, row["record"], source.read_text())
     for relative, prefix in (("research/claims.md", "c"),
                              ("research/CONSOLIDATED_2026-09-08.md", "c"),
-                             ("experiments/README.md", "e")):
+                             ("experiments/README.md", "e"),
+                             ("experiments/CONSOLIDATED_2026-09-08.md", "e")):
         source = ROOT / relative
         contents = source.read_text()
         anchors = list(re.finditer(r'<a id="(' + prefix + r'\d{3})"></a>', contents))
