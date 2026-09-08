@@ -1,0 +1,18 @@
+{
+  "benchmark": {
+    "accepted": 262,
+    "binary_words_through_14": 32767,
+    "decomposed": 262,
+    "max_return_variables": 6,
+    "observed_spines": 2,
+    "simple_spines": 2,
+    "structured_nonflat": 672
+  },
+  "generic_two_state": {
+    "accepted_words_checked": 1400,
+    "tables": 81
+  },
+  "proof_status": "Exact path factorization theorem by last occurrences; finite tests are supporting implementation evidence only. BorderAvoid decidability does not follow from the cover alone.",
+  "scope": "Exact finite language cover by simple labelled spines and regular state-return variables. The remaining problem is comparison interaction between those variables.",
+  "status": "PASS"
+}
