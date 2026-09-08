@@ -1,0 +1,39 @@
+{
+  "proof_status": "Written proof inherited/implemented from synchronized-tail note; independent review pending; not Lean-checked",
+  "scope": "Boundary-normalized binary single-final terminal slices; finite compiled macro spectrum is exact",
+  "status": "PASS",
+  "strict_improvement": {
+    "all_pair_marked": [
+      [
+        6,
+        0
+      ],
+      [
+        7,
+        0
+      ],
+      [
+        8,
+        0
+      ],
+      [
+        9,
+        0
+      ]
+    ],
+    "all_pair_status": "UNKNOWN",
+    "last_aligned_marked": [
+      [
+        7,
+        0
+      ],
+      [
+        9,
+        0
+      ]
+    ],
+    "last_aligned_status": "NO",
+    "live_pair_vertices": 6
+  },
+  "witness_preservation_checks": 265
+}

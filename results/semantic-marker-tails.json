@@ -1,0 +1,359 @@
+{
+  "acyclic": {
+    "accepted_candidates": 400,
+    "exact_spectra": 366,
+    "instances": 200,
+    "relaxation_queries": 800,
+    "semantic_decisions": 200,
+    "statuses": {
+      "NO": 472,
+      "YES": 328
+    }
+  },
+  "equality_schemas": {
+    "complete_queries": 360,
+    "infinite_languages": 75,
+    "tuple_formula_checks": 82810
+  },
+  "fixtures": {
+    "complete_necessary_graphs": 5,
+    "encoded_relaxation_survivors": 6,
+    "examples": {
+      "different_gap_seven": {
+        "decision": {
+          "slices": [
+            {
+              "analysis": {
+                "H": 2,
+                "checks": 480,
+                "maximum_certificate": {
+                  "exponent": 2,
+                  "head": "",
+                  "u": "",
+                  "v": "100"
+                },
+                "monoid_states": 16,
+                "status": "FINITE",
+                "templates": 2
+              },
+              "final": 6,
+              "last": "0",
+              "local_to_input": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "search": {
+                "schemas": 2,
+                "status": "NO"
+              }
+            }
+          ],
+          "status": "NO"
+        },
+        "length_spectrum": {
+          "checks": 17,
+          "monoid_states": 16,
+          "pumping_certificate": {
+            "exponent": 2,
+            "head": "",
+            "pump": {
+              "factor": "v",
+              "loop": "1",
+              "prefix": "1",
+              "suffix": "00"
+            },
+            "u": "",
+            "v": "100"
+          },
+          "status": "UNBOUNDED",
+          "templates": 2
+        },
+        "marker_spectrum": {
+          "H": 2,
+          "checks": 480,
+          "maximum_certificate": {
+            "exponent": 2,
+            "head": "",
+            "u": "",
+            "v": "100"
+          },
+          "monoid_states": 16,
+          "status": "FINITE",
+          "templates": 2
+        }
+      },
+      "encoded_obstruction": {
+        "slices": [
+          {
+            "analysis": {
+              "checks": 27,
+              "monoid_states": 21,
+              "pumping_certificate": {
+                "exponent": 2,
+                "head": "",
+                "pump": {
+                  "factor": "v",
+                  "loop": "01",
+                  "prefix": "1",
+                  "suffix": "000"
+                },
+                "u": "",
+                "v": "1000"
+              },
+              "status": "UNBOUNDED",
+              "templates": 1
+            },
+            "final": 4,
+            "last": "0",
+            "local_to_input": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              6,
+              7,
+              8,
+              9
+            ]
+          }
+        ],
+        "status": "UNKNOWN"
+      },
+      "nonflat_positive": {
+        "decision": {
+          "slices": [
+            {
+              "analysis": {
+                "H": 1,
+                "checks": 342,
+                "maximum_certificate": {
+                  "exponent": 2,
+                  "head": "",
+                  "u": "",
+                  "v": "110"
+                },
+                "monoid_states": 19,
+                "status": "FINITE",
+                "templates": 14
+              },
+              "final": 5,
+              "last": "0",
+              "local_to_input": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "search": {
+                "prefix_blocks": 1,
+                "reference_blocks": 1,
+                "schemas": 1,
+                "states": 6,
+                "status": "YES",
+                "steps": 5,
+                "word": "1110110"
+              }
+            }
+          ],
+          "status": "YES",
+          "word": "1110110"
+        },
+        "length_spectrum": {
+          "checks": 10,
+          "monoid_states": 19,
+          "pumping_certificate": {
+            "exponent": 2,
+            "head": "",
+            "pump": {
+              "factor": "v",
+              "loop": "11",
+              "prefix": "11",
+              "suffix": "0"
+            },
+            "u": "",
+            "v": "110"
+          },
+          "status": "UNBOUNDED",
+          "templates": 1
+        },
+        "marker_spectrum": {
+          "H": 1,
+          "checks": 342,
+          "maximum_certificate": {
+            "exponent": 2,
+            "head": "",
+            "u": "",
+            "v": "110"
+          },
+          "monoid_states": 19,
+          "status": "FINITE",
+          "templates": 14
+        }
+      },
+      "nonflat_six": {
+        "decision": {
+          "slices": [
+            {
+              "analysis": {
+                "H": 1,
+                "checks": 684,
+                "maximum_certificate": {
+                  "exponent": 2,
+                  "head": "",
+                  "u": "",
+                  "v": "110"
+                },
+                "monoid_states": 19,
+                "status": "FINITE",
+                "templates": 19
+              },
+              "final": 5,
+              "last": "0",
+              "local_to_input": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "search": {
+                "schemas": 3,
+                "status": "NO"
+              }
+            }
+          ],
+          "status": "NO"
+        },
+        "length_spectrum": {
+          "checks": 19,
+          "monoid_states": 19,
+          "pumping_certificate": {
+            "exponent": 2,
+            "head": "",
+            "pump": {
+              "factor": "v",
+              "loop": "11",
+              "prefix": "11",
+              "suffix": "0"
+            },
+            "u": "",
+            "v": "110"
+          },
+          "status": "UNBOUNDED",
+          "templates": 1
+        },
+        "marker_spectrum": {
+          "H": 1,
+          "checks": 684,
+          "maximum_certificate": {
+            "exponent": 2,
+            "head": "",
+            "u": "",
+            "v": "110"
+          },
+          "monoid_states": 19,
+          "status": "FINITE",
+          "templates": 19
+        }
+      },
+      "old_five": {
+        "decision": {
+          "slices": [
+            {
+              "analysis": {
+                "H": 1,
+                "checks": 84,
+                "maximum_certificate": {
+                  "exponent": 2,
+                  "head": "",
+                  "u": "",
+                  "v": "10"
+                },
+                "monoid_states": 7,
+                "status": "FINITE",
+                "templates": 4
+              },
+              "final": 4,
+              "last": "0",
+              "local_to_input": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
+              "search": {
+                "schemas": 2,
+                "status": "NO"
+              }
+            }
+          ],
+          "status": "NO"
+        },
+        "length_spectrum": {
+          "checks": 9,
+          "monoid_states": 7,
+          "pumping_certificate": {
+            "exponent": 2,
+            "head": "",
+            "pump": {
+              "factor": "v",
+              "loop": "1",
+              "prefix": "1",
+              "suffix": "0"
+            },
+            "u": "",
+            "v": "10"
+          },
+          "status": "UNBOUNDED",
+          "templates": 1
+        },
+        "marker_spectrum": {
+          "H": 1,
+          "checks": 84,
+          "maximum_certificate": {
+            "exponent": 2,
+            "head": "",
+            "u": "",
+            "v": "10"
+          },
+          "monoid_states": 7,
+          "status": "FINITE",
+          "templates": 4
+        }
+      }
+    },
+    "necessary_identity_checks": 1024,
+    "unique_violation_checks": 16
+  },
+  "proof_status": "Written all-length proofs; independent mathematical review pending; not Lean-checked",
+  "scope": "Exact fixed-marker-tail relaxation and finite-marker-spectrum class, not unrestricted Problem 1.7",
+  "scope_and_cap_guards": 11,
+  "seed": 2026090821,
+  "small_terminal": {
+    "accepted_word_predicate_checks": 7587,
+    "exact_relaxation_calls": 3102,
+    "instances": 1034,
+    "negative_oracle_scope": "Only complete acyclic languages elsewhere; short words do not certify NO",
+    "semantic_outcomes": {
+      "NO": 464,
+      "UNKNOWN": 0,
+      "YES": 570
+    }
+  },
+  "status": "PASS",
+  "weighted_graphs": {
+    "cost_cases": 2984,
+    "graphs": 746,
+    "lasso_checks": 15471
+  }
+}

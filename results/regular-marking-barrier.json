@@ -1,0 +1,13 @@
+{
+  "counts": {
+    "accepted_words_certified": 262,
+    "long_nonflat_certificates": 300,
+    "memoryless_decoration_bound_checks": 1024,
+    "raw_words_through_14": 32767,
+    "regular_relation_greedy_checks": 100,
+    "unique_violation_words": 64
+  },
+  "scope": "Fixed six-state instance; finite checks support the written all-length theorem; no general subtype decision",
+  "seed": 2026090863,
+  "status": "PASS"
+}

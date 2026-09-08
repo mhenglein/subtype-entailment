@@ -1,0 +1,20 @@
+{
+  "proof_status": "Written proofs pending independent review; regression evidence; not Lean-checked",
+  "recurrent_target_positive": {
+    "compiled_word": "101100",
+    "fixed_H1_status": "YES",
+    "macro_spectrum_H": 1,
+    "macro_spectrum_status": "FINITE",
+    "old_status": "UNKNOWN",
+    "semantic_status": "YES"
+  },
+  "scope": "Exact supplied-H paired macro tails plus exact macro separator spectrum on formatted slices",
+  "small_differential_queries": 9,
+  "status": "PASS",
+  "zero_marker_positive": {
+    "H": 0,
+    "fixed_status": "YES",
+    "semantic_status": "YES",
+    "word": "111100"
+  }
+}

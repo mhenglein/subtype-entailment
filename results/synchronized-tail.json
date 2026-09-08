@@ -1,0 +1,407 @@
+{
+  "counts": {
+    "acyclic_candidates": 201,
+    "acyclic_oracles": 240,
+    "all_memoryless_decorations": 1024,
+    "attained_spectrum_checks": 20,
+    "barrier_partition_checks": 600,
+    "barrier_raw_words": 32767,
+    "compiler_defined_words": 7006,
+    "complete_tail_queries": 372,
+    "infinite_tail_queries": 7,
+    "inhabited_barrier_tail_queries": 6,
+    "input_cap_regressions": 9,
+    "larger_memory_checks": 120,
+    "nonflat_accepted_certificates": 262,
+    "nonflat_block_formula_checks": 1372,
+    "nonflat_long_certificate_checks": 300,
+    "pump_checks": 6,
+    "random_word_checks": 102000,
+    "regular_relation_uniformization_checks": 100,
+    "small_instances": 1034,
+    "small_raw_words": 131318,
+    "two_sided_lookaround_checks": 2048,
+    "two_state_memory_checks": 512,
+    "unique_barrier_family_checks": 32
+  },
+  "fixtures": {
+    "encoded_original": {
+      "slices": [
+        {
+          "analysis": {
+            "H": 1,
+            "checks": 2664,
+            "maximum_certificate": {
+              "exponent": 2,
+              "head": "",
+              "u": "",
+              "v": "1000#"
+            },
+            "monoid_states": 37,
+            "status": "FINITE",
+            "templates": 4
+          },
+          "final": 4,
+          "last": "0",
+          "mapping": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            6,
+            7,
+            8,
+            9
+          ],
+          "marked": [
+            [
+              6,
+              0
+            ],
+            [
+              8,
+              0
+            ]
+          ],
+          "search": {
+            "schemas": 5,
+            "status": "NO"
+          }
+        }
+      ],
+      "status": "NO"
+    },
+    "oneflag": {
+      "slices": [
+        {
+          "analysis": {
+            "H": 2,
+            "checks": 19182,
+            "maximum_certificate": {
+              "exponent": 2,
+              "head": "",
+              "u": "",
+              "v": "10#110#"
+            },
+            "monoid_states": 139,
+            "status": "FINITE",
+            "templates": 25
+          },
+          "final": 3,
+          "last": "0",
+          "mapping": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "marked": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ]
+          ],
+          "search": {
+            "prefix_blocks": 0,
+            "reference_blocks": 1,
+            "schemas": 1,
+            "states": 5,
+            "status": "YES",
+            "steps": 5,
+            "word": "110#"
+          }
+        }
+      ],
+      "status": "YES",
+      "word": "110"
+    },
+    "reset_no": {
+      "slices": [
+        {
+          "analysis": {
+            "H": 1,
+            "checks": 2520,
+            "maximum_certificate": {
+              "exponent": 2,
+              "head": "",
+              "u": "",
+              "v": "110#"
+            },
+            "monoid_states": 36,
+            "status": "FINITE",
+            "templates": 19
+          },
+          "final": 5,
+          "last": "0",
+          "mapping": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "marked": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              4,
+              0
+            ]
+          ],
+          "search": {
+            "schemas": 4,
+            "status": "NO"
+          }
+        }
+      ],
+      "status": "NO"
+    },
+    "six_state_barrier": {
+      "slices": [
+        {
+          "analysis": {
+            "checks": 49,
+            "monoid_states": 60,
+            "pumping_certificate": {
+              "exponent": 2,
+              "head": "",
+              "pump": {
+                "factor": "v",
+                "loop": "#0",
+                "prefix": "0#0",
+                "suffix": "#10#"
+              },
+              "u": "",
+              "v": "0#10#"
+            },
+            "status": "UNBOUNDED",
+            "templates": 2
+          },
+          "final": 5,
+          "last": "0",
+          "mapping": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "marked": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              3,
+              0
+            ],
+            [
+              4,
+              0
+            ]
+          ]
+        }
+      ],
+      "status": "UNKNOWN"
+    }
+  },
+  "limits": {
+    "blocks": 8,
+    "combinations": 1000000,
+    "descriptors": 100000,
+    "monoid": 3000,
+    "schemas": 20000,
+    "states": 30000,
+    "steps": 300000
+  },
+  "memoryless_retaining_patterns": 16,
+  "random_status": {
+    "NO": 217,
+    "UNKNOWN": 3,
+    "YES": 180
+  },
+  "recurrent": {
+    "slices": [
+      {
+        "analysis": {
+          "H": 1,
+          "checks": 756,
+          "maximum_certificate": {
+            "exponent": 1,
+            "head": "",
+            "u": "1#",
+            "v": "0"
+          },
+          "monoid_states": 28,
+          "status": "FINITE",
+          "templates": 3
+        },
+        "final": 2,
+        "last": "1",
+        "mapping": [
+          0,
+          1,
+          2
+        ],
+        "marked": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "search": {
+          "prefix_blocks": 0,
+          "reference_blocks": 1,
+          "schemas": 1,
+          "states": 6,
+          "status": "YES",
+          "steps": 5,
+          "word": "01#"
+        }
+      }
+    ],
+    "status": "YES",
+    "word": "01"
+  },
+  "scope": "Written proofs with bounded/direct/complete-finite checks; no unrestricted resolution or Lean claim",
+  "seed": 2026090862,
+  "small_status": {
+    "NO": 464,
+    "YES": 570
+  },
+  "status": "PASS",
+  "strict_compiler": {
+    "all_comparisons": {
+      "slices": [
+        {
+          "analysis": {
+            "checks": 91,
+            "monoid_states": 49,
+            "pumping_certificate": {
+              "exponent": 2,
+              "head": "",
+              "pump": {
+                "factor": "v",
+                "loop": "#10",
+                "prefix": "10",
+                "suffix": "#00#"
+              },
+              "u": "",
+              "v": "10#00#"
+            },
+            "status": "UNBOUNDED",
+            "templates": 1
+          },
+          "final": 4,
+          "last": "0",
+          "mapping": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            6,
+            7,
+            8,
+            9
+          ],
+          "marked": [
+            [
+              5,
+              0
+            ],
+            [
+              6,
+              0
+            ],
+            [
+              7,
+              0
+            ],
+            [
+              8,
+              0
+            ]
+          ]
+        }
+      ],
+      "status": "UNKNOWN"
+    },
+    "lastflag_only": {
+      "slices": [
+        {
+          "analysis": {
+            "H": 1,
+            "checks": 3996,
+            "maximum_certificate": {
+              "exponent": 2,
+              "head": "",
+              "u": "",
+              "v": "1000#"
+            },
+            "monoid_states": 37,
+            "status": "FINITE",
+            "templates": 4
+          },
+          "final": 4,
+          "last": "0",
+          "mapping": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            6,
+            7,
+            8,
+            9
+          ],
+          "marked": [
+            [
+              6,
+              0
+            ],
+            [
+              8,
+              0
+            ]
+          ],
+          "search": {
+            "schemas": 5,
+            "status": "NO"
+          }
+        }
+      ],
+      "status": "NO"
+    }
+  }
+}
