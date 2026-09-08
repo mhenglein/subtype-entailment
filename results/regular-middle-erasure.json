@@ -1,0 +1,28 @@
+{
+  "binary_census": {
+    "accepted": 262,
+    "certified_accepted": 262,
+    "max_length": 14,
+    "parsed_accepted": 262,
+    "witnesses": 0,
+    "words": 32767
+  },
+  "proof_status": "Written all-length candidate-changing erasure proof; finite regression is supporting evidence only; not Lean-checked or independently reviewed",
+  "scope": "The six-state nonflat regular-decoration-barrier instance. The reusable comparison-isolated middle rule is proposed but not complete for arbitrary inputs.",
+  "status": "PASS",
+  "structured_erasure": {
+    "branches": {
+      "n<m": 3120,
+      "n=m": 480,
+      "n>m": 2640
+    },
+    "candidates": 6240,
+    "erasure_checks": 6240,
+    "m": "1..12",
+    "max_word_length": 42,
+    "middle_blocks": "0..3",
+    "middle_zero_run_lengths": "1..3",
+    "n": "0..12",
+    "nonempty_middle": 6084
+  }
+}
