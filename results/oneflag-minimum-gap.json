@@ -1,9 +1,33 @@
 {
   "status": "PASS",
   "instance": {
-    "delta": [[0,2],[3,0],[1,1],[-1,-1]],
-    "final": [3],
-    "flags": [[0,1]]
+    "delta": [
+      [
+        0,
+        2
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        -1,
+        -1
+      ]
+    ],
+    "final": [
+      3
+    ],
+    "flags": [
+      [
+        0,
+        1
+      ]
+    ]
   },
   "family": "z_r = 10 1^(3r+2) 0; w_r = z_r z_r",
   "proved_properties": [
