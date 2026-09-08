@@ -40,6 +40,23 @@ jobs:
           python3 experiments/trim_budget_example.py
       - name: Verify recorded results
         run: git diff --exit-code -- results/independent-checks.json results/topfree-bridge.json results/context-cuts.json results/budget-search.json results/boundary-slices.json results/summary-bridge.json results/summary-bridge-audit.json results/shortest-witnesses.json results/trimmed-budget.json
+  continuation-experiments:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.11'
+      - name: Run consolidated continuation regressions
+        run: |
+          python3 experiments/check_modular_sync.py
+          python3 experiments/check_terminal_copy.py
+          python3 experiments/check_word_sync.py
+          python3 experiments/check_delimited_blocks.py
+          python3 experiments/check_marker_certificate.py
+          python3 experiments/check_target_frontier.py
+          python3 experiments/check_target_tail.py
+          python3 experiments/check_run_normalization.py
   lean:
     runs-on: ubuntu-latest
     steps:
