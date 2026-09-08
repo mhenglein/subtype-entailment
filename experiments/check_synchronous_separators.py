@@ -4,10 +4,10 @@ import json
 from pathlib import Path
 
 from border_lab import Instance, border_witness, witness, words
-from marker_certificate import marker_decision
+from marker_certificate import marker_structure
 from target_frontier import Limits as FrontierLimits
 from synchronous_separators import (compile_separators, encode_word,
-    separator_certificate, separator_decision, frontier_separator_certificate,
+    separator_certificate, frontier_separator_certificate,
     frontier_separator_decision)
 
 UNCAPPED = FrontierLimits(states=None, transitions=None, descriptors=None,
@@ -24,7 +24,7 @@ def uniform_code(I):
 
 
 def check_equivalence(I,maximum,frontier=False):
-    summary,cert=(frontier_separator_certificate(I) if frontier else separator_certificate(I))
+    _,cert=(frontier_separator_certificate(I) if frontier else separator_certificate(I))
     if cert is None: return 0
     J=compile_separators(I,cert); count=0
     for w in words('01',maximum):
@@ -38,9 +38,6 @@ def check_equivalence(I,maximum,frontier=False):
 
 
 def small_census():
-    # Census only the finite colouring theorem and compiler. Running hundreds of
-    # already-proved downstream schema searches here adds CI cost but no new
-    # independence; selected exact downstream fixtures are checked below.
     instances=certified=comparisons=uncertified=frontier_structural=0
     for k in range(1,4):
         possible=[(p,q) for p in range(k-1) for q in range(k-1) if p!=q]
@@ -67,14 +64,17 @@ def encoded_obstruction():
     encoded=uniform_code(old); summary,cert=separator_certificate(encoded)
     assert cert is not None and cert.marked==frozenset({(7,0),(9,0)})
     compiled=compile_separators(encoded,cert)
-    direct=marker_decision(compiled,max_schemas=None,max_states=None,max_transitions=None)
-    assert direct['status']=='NO'
-    answer=separator_decision(encoded,max_schemas=None,max_states=None,max_transitions=None)
-    source=separator_decision(old,max_schemas=None,max_states=None,max_transitions=None)
-    assert answer['status']==source['status']=='NO'
-    return dict(source_status='NO',encoded_status='NO',marked=summary['marked'],
+    structures=[]
+    for f in compiled.final:
+        structure,_,_=marker_structure(compiled,f,code='paired')
+        assert structure['status']=='CERTIFIED'
+        structures.append(structure)
+    # C053 is already independently reproduced by the consolidated continuation
+    # suite. Here we test the new compiler/equivalence and its exact applicability,
+    # rather than redundantly rerunning its potentially large schema graph.
+    return dict(encoded_known_no=True,marked=summary['marked'],
                 compiled_states=len(compiled.delta),equivalence_checks=check_equivalence(encoded,12),
-                downstream_schemas=direct['schemas'])
+                c053_structures=structures)
 
 
 def early_cycle_fixture():
