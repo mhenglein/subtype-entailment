@@ -1,0 +1,29 @@
+{
+  "bi_residue": "VERIFIED_NO",
+  "bounded_accepted_words": 36,
+  "bounded_language_and_no_checks": 32767,
+  "exact_small_census": {
+    "bi_residue_no": 0,
+    "bi_residue_strict_gains": 0,
+    "exact_no": 464,
+    "instances": 1034,
+    "old_three_way_no": 0,
+    "orbit_split_no": 0,
+    "orbit_strict_gains": 0
+  },
+  "leading_trajectory_states": 1,
+  "old_three_way": "INCONCLUSIVE",
+  "orbit_split": "INCONCLUSIVE",
+  "positive_control": "INCONCLUSIVE",
+  "proof_status": "Exact finite language/orbit verifier; written theorem not Lean-checked",
+  "required_flag_mutations_rejected": 3,
+  "required_flags": 3,
+  "scope": "All-length bi-residue certificate; <=3-state census uses independent exact theorem only to measure coverage",
+  "status": "PASS",
+  "tail_capable_states": 3,
+  "terminal_residue_state_patterns": [
+    [
+      2
+    ]
+  ]
+}
