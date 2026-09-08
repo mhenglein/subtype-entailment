@@ -73,7 +73,9 @@ def encoded_obstruction():
     old=Instance(((2,1),(2,1),(-1,3),(4,3),(-1,-1)),frozenset({4}),
                  frozenset({(0,2),(0,3),(1,2)}))
     encoded=uniform_code(old); summary,cert=separator_certificate(encoded)
-    assert cert is not None and cert.marked==frozenset({(0,0),(1,0),(3,0)})
+    # Helpers 7 and 9 are the second physical zero transitions of the two
+    # synchronized logical-zero classes; 9 enters the final and forces both.
+    assert cert is not None and cert.marked==frozenset({(7,0),(9,0)})
     compiled=compile_separators(encoded,cert)
     direct=marker_decision(compiled,max_schemas=None,max_states=None,max_transitions=None)
     assert direct['status']=='NO'
