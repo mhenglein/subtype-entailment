@@ -8,7 +8,36 @@ This is the compressed scientific memory of the project. Read this after `resear
 
 Decide Problem 1.7: subtype entailment over bottom and binary product for arbitrary, possibly infinite trees. **The unrestricted problem remains open.**
 
-## Latest continuation: semantic marker tails
+## Latest continuation: encoding-aware synchronous separators
+
+The raw-marker obstruction from the previous continuation is no longer an
+obstruction to every delimiter-based method. A finite union-find colouring now
+synchronizes transition colours along every pair path rooted at a flag. The
+exact compiler maps each transition `a` to `1a` plus an optional `00` separator
+and preserves every flagged suffix comparison in both directions.
+
+If synchronized separator classes avoid original cycles, the compiled instance
+falls under C053. If terminal synchronization forces an early separator cycle,
+C056 can still pump it when it occurs before relevant targets. In particular,
+the ten-state `0->00, 1->10` NO example that survives every raw-zero tail bound
+has its latent logical-zero separators recovered and is inside the exact C053
+class. Thus the previous failure was encoding-sensitive, not a barrier to
+finite symbolic separator recovery.
+
+The next preserved obstruction is sharper: a separator cycle forced by terminal
+synchronization can be reachable from a relevant flag target. The current C056
+wrapper returns UNKNOWN there. The highest-value continuation for this route is
+to combine these encoding-aware transition classes with the semantic-tail
+pending-context construction so target-recurrent separator cycles are summarized
+rather than structurally forbidden.
+
+[Proof and limits](notes/2026-09-08-synchronous-separators.md),
+[compiler/deciders](experiments/synchronous_separators.py),
+[result](results/synchronous-separators.json).
+Written proof + reproducible checks; independent mathematical review pending;
+no new Lean theorem is claimed.
+
+## Previous continuation: semantic marker tails
 
 The September 8 A012/A017 attempt decides the fixed-H marker-tail relaxation
 by finite shared-reference saturation. Earlier original flag-target STATES
@@ -25,24 +54,12 @@ a complete subclass independent of the older target-cone cycle prohibition.
 The closing strengthening fails: the exact code 0->00, 1->10 applied to the
 older five-state NO example produces an inhabited relaxation for EVERY H.
 Increasing raw marker budgets is therefore not a complete negative procedure.
-A complete encoding-aware or shared-obligation representation is still missing.
-The unrestricted problem is not resolved.
+The synchronous-separator continuation above repairs this specific encoding
+obstruction but does not settle target-recurrent separator cycles.
 
 [Scoped record and commands](research/SEMANTIC_MARKER_TAILS.md),
 [proof and limitations](notes/2026-09-08-semantic-marker-tails.md),
 [results](results/semantic-marker-tails.json).
-Written proofs and executed independent-predicate/complete-oracle checks;
-independent mathematical review pending, not Lean-checked. Original core
-replay is byte-identical. No full local repository CI/global link scan was
-run from the partial snapshot.
-
-This investigation used scientific base `99133037`; the publication was
-rebased onto consolidation checkpoint `aa555020` after main changed during
-the work. The consolidation below, its Q refutations, imported artifacts,
-indexer changes and continuation CI job are preserved. Historical references
-to unmerged branches in the dated attempt describe its investigation baseline;
-the later reviewed-repair supplement integrates PR #12/#14 separately and does
-not change the evidence status of this continuation.
 
 ## September 8 consolidation
 
@@ -160,20 +177,22 @@ We can now:
 
 1. normalize run magnitudes exactly once the number of runs/markers/skeleton pieces is fixed;
 2. solve arbitrary regular data languages inside supplied bounded schemas;
-3. pump substantial target-free recurrent prefixes using finite pending contexts;
-4. decide several broader certified marker/target classes;
-5. represent and solve large arithmetic synchronization symbolically.
+3. recover some latent logical separators through exact transition encodings rather than raw symbols;
+4. pump target-free and pre-target recurrent prefixes using finite pending contexts;
+5. decide several broader certified marker/target classes;
+6. represent and solve large arithmetic synchronization symbolically.
 
 What is still missing is one of:
 
-- a computable bound on the number of essential runs/markers/schema pieces needed by some witness;
+- a complete treatment of synchronized separator cycles reachable from relevant targets;
+- a computable bound on essential runs/markers/schema pieces needed by some witness;
 - an effective finite symbolic cover that need not literally bound that count;
 - a different terminating exact decision procedure; or
 - a genuine undecidability reduction using only the normalized subtype fragment.
 
-The highest-value constructive question is therefore:
+The highest-value constructive question is now:
 
-> Can every successful nonflat terminal component be normalized into finitely many effectively representable synchronization contexts while preserving all state-coloured suffix obligations?
+> Can target-recurrent synchronized separator classes be composed with one common finite pending-context summary, so every successful nonflat terminal component admits an effective symbolic cover?
 
 A negative result would also be decisive if it supplies a real reduction rather than only showing that a proposed abstraction fails.
 
@@ -187,7 +206,7 @@ PR #12's broader nonterminal final-symbol/run-profile contraction now includes t
 - A009 — lower-bound families and candidate-bound destruction.
 - A010 — exact subtype-to-automata bridge.
 - A011 — converse/expressiveness, including exact terminal realization.
-- A012 — complete nonexistence certificates and certified subclasses.
+- A012 — complete nonexistence certificates and encoding-aware certified subclasses.
 - A013 — restrictions shared by actual summary automata.
 - A014 — periodic/cap saturation.
 - A015 — occurrence-context truncation.
