@@ -12,10 +12,10 @@ from word_period_cut_certificate import WordPeriodCertificate, verify_word_perio
 
 def period01_instance():
     # Exact language (01)^n 1 (01)^m 1 01, n>=0,m>=1.
-    # P=01 is genuinely non-unary. One flag (0,2) covers all three cases
-    # because both P-actions are loops at their respective boundaries.
-    delta=((1,2),(-1,0),(3,4),(-1,2),(5,-1),(-1,6),(-1,-1))
-    return Instance(delta,frozenset({6}),frozenset({(0,2)}))
+    # State 2 is a one-shot entry: one mandatory P reaches recurrent boundary 4.
+    # P=01 is genuinely non-unary. Flags (0,2) and (0,4) cover the three cases.
+    delta=((1,2),(-1,0),(3,-1),(-1,4),(5,6),(-1,4),(7,-1),(-1,8),(-1,-1))
+    return Instance(delta,frozenset({8}),frozenset({(0,2),(0,4)}))
 
 
 def middle_epsilon_dfa():
