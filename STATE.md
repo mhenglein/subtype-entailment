@@ -8,7 +8,35 @@ This is the compressed scientific memory of the project. Read this after `resear
 
 Decide Problem 1.7: subtype entailment over bottom and binary product for arbitrary, possibly infinite trees. **The unrestricted problem remains open.**
 
-## Latest continuation: encoding-aware synchronous separators
+## Latest continuation: combined tails and a regular-decoration barrier
+
+The synchronous-separator and semantic-tail methods have now been combined
+and tested locally for arbitrary nonflat data paths. A weaker G-specific
+compiler synchronizes only productive last-aligned comparisons, preserving
+witnesshood rather than every flagged agreement. This resolves the previous
+three-state target-recurrent structural obstruction and strictly improves on
+all-pair synchronization in a separate encoded regression.
+
+The proposed closing strengthening is false. A fixed six-state nonflat NO
+instance survives every finite semantic-tail bound after EVERY regular,
+candidate-covering choice of optional separator markings. This includes
+history, regular lookahead, nondeterministic decoration relations and finite
+families of them, with original cut-state flags unchanged. A suffix-viability
+and periodicity proof establishes the general statement. The instance itself
+has a simple all-length arithmetic NO certificate with an arbitrary regular
+middle region. This is not an undecidability result.
+
+The remaining normalization must be allowed to change or discard candidates
+with proof, or use a complete symbolic cover; larger finite-state separator
+memory by itself is not a complete repair.
+
+[Proof, checker, evidence levels and companion-code availability](research/SYNCHRONIZED_TAILS.md).
+The proof and standalone barrier checker are repository-contained. The full
+combined solver/checker were tested locally and provided in the reproduction
+package; their larger source upload was blocked. No new Lean proof,
+independent mathematical review or full local repository CI is claimed.
+
+## Previous continuation: encoding-aware synchronous separators
 
 The raw-marker obstruction from the previous continuation is no longer an
 obstruction to every delimiter-based method. A finite union-find colouring now
@@ -164,6 +192,7 @@ Do not restart these without a materially new hypothesis:
 - any universal polynomial terminal witness-budget bound;
 - any universal constant bound on simultaneous loop deletions;
 - the negative semiprocedure that waits for a fixed `Necessary(L,D)` language to become empty;
+- completeness of candidate-covering regular separator decoration followed by finite semantic-tail emptiness, with unchanged cut-state flags;
 - the old prefix-reachability regular-language formula;
 - a universal rigid-word bound from nonmerging runs;
 - ordinary state repetition as justification for loop deletion;
@@ -192,7 +221,11 @@ What is still missing is one of:
 
 The highest-value constructive question is now:
 
-> Can target-recurrent synchronized separator classes be composed with one common finite pending-context summary, so every successful nonflat terminal component admits an effective symbolic cover?
+> Can a G-specific transformation change or discard candidate words with a proved existence-preserving finite symbolic cover, while retaining shared assignments across recurrent components?
+
+The new regular-decoration barrier rules out one candidate-preserving route to
+this goal, not the goal itself. Fixed-H pending contexts remain useful exact
+subroutines; their tested combination does not supply global coverage.
 
 A negative result would also be decisive if it supplies a real reduction rather than only showing that a proposed abstraction fails.
 

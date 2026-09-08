@@ -1,0 +1,21 @@
+name: Regular marking barrier
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  standalone-barrier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.11'
+      - name: Replay independent barrier regression
+        run: python3 experiments/check_regular_marking_barrier.py
+      - name: Verify recorded evidence
+        run: git diff --exit-code -- results/regular-marking-barrier.json
