@@ -14,7 +14,7 @@ def period01_instance():
     # Exact language (01)^n 1 (01)^m 1 01, n>=0,m>=1.
     # P=01 is genuinely non-unary. One flag (0,2) covers all three cases
     # because both P-actions are loops at their respective boundaries.
-    delta=((1,2),( -1,0),(3,4),(-1,2),(5,-1),(-1,6),(-1,-1))
+    delta=((1,2),(-1,0),(3,4),(-1,2),(5,-1),(-1,6),(-1,-1))
     return Instance(delta,frozenset({6}),frozenset({(0,2)}))
 
 
@@ -24,7 +24,6 @@ def middle_epsilon_dfa():
 
 def formula(w):
     P='01'; B='1'
-    # Direct finite parser for P* B P+ B P.
     for n in range(len(w)//2+1):
         pref=P*n+B
         if not w.startswith(pref): continue
@@ -49,8 +48,7 @@ def bounded_checks(I,max_len=16):
 def main():
     I=period01_instance(); cert=WordPeriodCertificate('01','1',middle_epsilon_dfa())
     out=verify_word_period_certificate(I,cert)
-    assert out['status']=='VERIFIED_NO'
-    # All installed unary arithmetic recognizers should remain inconclusive.
+    assert out['status']=='VERIFIED_NO',out
     old=discover_three_way_certificate(I)['status']
     orbit=discover_orbit_split_certificate(I)['status']
     bi=discover_bi_residue_certificate(I)['status']
@@ -59,7 +57,6 @@ def main():
 
     J=Instance(I.delta,I.final,frozenset(),I.bad,I.start,I.alphabet)
     assert verify_word_period_certificate(J,cert)['status']=='NOT_APPLICABLE'
-    # Positive control: removing the only flag leaves accepted witnesses.
     assert any(witness(J,'01'*n+'1'+'01'*m+'1'+'01') for n in range(3) for m in range(1,4))
 
     result={'status':'PASS','period':'01','delimiter':'1',
