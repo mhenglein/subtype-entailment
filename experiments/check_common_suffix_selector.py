@@ -20,14 +20,6 @@ SEVEN=(
 FLAGS=frozenset({(0,3),(4,5)})
 FINAL={6}
 
-# Positive control: language {10,110}; maximal common suffix is 10, but no flag.
-CONTROL=(
-    (-1,1),
-    (3,2),
-    (3,-1),
-    (-1,-1),
-)
-
 
 def run(delta,word):
     q=0; states=[q]
@@ -50,34 +42,32 @@ def violations(delta,final,flags,word):
 
 
 def main():
-    assert maximal_common_suffix(SEVEN,0,FINAL) == '00'
+    assert maximal_common_suffix(SEVEN,0,FINAL) == '100'
     cert=forced_tail_violation(SEVEN,0,FINAL,FLAGS)
     assert cert['status']=='NO_CERTIFICATE'
-    assert cert['common_suffix']=='00'
-    assert tuple(cert['relative_cuts'])==(0,1)
+    assert cert['common_suffix']=='100'
+    assert tuple(cert['relative_cuts'])==(1,2)
     assert cert['target_length']==1
     assert set(cert['state_pairs'])=={(4,5)}
+    # The state before the forced suffix is not unique; the internal selector is.
+    assert set(cert['entry_sequences'])=={(3,4,5,6),(4,4,5,6)}
 
     # A non-universal longer suffix must produce a concrete accepted counterexample.
-    cex=suffix_counterexample(SEVEN,0,FINAL,'100')
+    cex=suffix_counterexample(SEVEN,0,FINAL,'1100')
     assert cex is not None
     st=run(SEVEN,cex)
-    assert st is not None and st[-1] in FINAL and not cex.endswith('100')
+    assert st is not None and st[-1] in FINAL and not cex.endswith('1100')
 
-    checked=0; accepted=0; certified=0
-    for n in range(15):
-        for m in range(15):
-            if n < 1 or m < 1: continue
+    checked=0
+    for n in range(1,15):
+        for m in range(1,15):
             w='1'*n+'00'+'1'*m+'00'
             st=run(SEVEN,w)
             assert st is not None and st[-1] in FINAL
-            accepted += 1
             vs=violations(SEVEN,FINAL,FLAGS,w)
             assert vs
-            # The synthesized constant-from-end selector is present in every word.
             i=len(w)-2; j=len(w)-1
             assert (i,j,4,5) in vs
-            certified += 1
             checked += 1
 
     words=0; accepted_short=0; witnesses=0
@@ -88,9 +78,8 @@ def main():
             if st is None or st[-1] not in FINAL: continue
             accepted_short += 1
             if not violations(SEVEN,FINAL,FLAGS,w): witnesses += 1
-            assert w.endswith('00')
+            assert w.endswith('100')
 
-    # No false certificate when the flag set is empty.
     noflag=forced_tail_violation(SEVEN,0,FINAL,set())
     assert noflag['status']=='NO_CERTIFICATE_NOT_FOUND'
 
@@ -106,15 +95,14 @@ def main():
             'relative_cuts':list(cert['relative_cuts']),
             'target_length':cert['target_length'],
             'state_pairs':[list(x) for x in cert['state_pairs']],
+            'entry_sequences':[list(x) for x in cert['entry_sequences']],
             'parameter_candidates':checked,
             'binary_words_through_12':words,
             'accepted_short':accepted_short,
             'witnesses':witnesses,
             'longer_suffix_counterexample':cex,
         },
-        'negative_control':{
-            'empty_flags_status':noflag['status'],
-        },
+        'negative_control':{'empty_flags_status':noflag['status']},
         'scope':(
             'Complete only for NO instances possessing a forbidden comparison entirely '
             'inside a common suffix with fixed relative cuts and universally flagged state pairs.'
