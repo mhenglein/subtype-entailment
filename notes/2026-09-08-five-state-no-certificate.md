@@ -22,7 +22,7 @@ The partial binary transition table is
 | 3 | 4 | 3 |
 | 4 | undefined | undefined |
 
-This is the five-state C051 obstruction first recorded on PR #9. Every accepted word has the unique form
+This is the five-state obstruction first recorded on PR #9. Every accepted word has the unique form
 
 ```text
 w(n,m) = 1^n 0 1^m 0,   n >= 0, m >= 1.
@@ -137,7 +137,7 @@ Run
 python3 experiments/check_five_state_no_certificate.py
 ```
 
-The checker independently reimplements the partial DFA, direct forward suffix-agreement predicate, certificate construction, and the special `Necessary` identity. It does not import the C051/#9 implementation.
+The checker independently reimplements the partial DFA, direct forward suffix-agreement predicate, certificate construction, and the special `Necessary` identity. It does not import the PR #9 implementation.
 
 The recorded result checks:
 
