@@ -38,15 +38,15 @@ def research_records(data):
     for row in data["approaches"]:
         source = ROOT / row["record"]
         add(row["id"], source, row["record"], source.read_text())
-        records[row["id"]]["execution"] = row
-    for relative, prefix in (("research/claims.md", "c"), ("experiments/README.md", "e")):
+    for relative, prefix in (("research/claims.md", "c"),
+                             ("research/CONSOLIDATED_2026-09-08.md", "c"),
+                             ("experiments/README.md", "e")):
         source = ROOT / relative
         contents = source.read_text()
         anchors = list(re.finditer(r'<a id="(' + prefix + r'\d{3})"></a>', contents))
         for index, match in enumerate(anchors):
             end = anchors[index + 1].start() if index + 1 < len(anchors) else len(contents)
             section = contents[match.end():end]
-            # Stop before a following general section, outside this record.
             section = re.split(r"(?m)^## ", section, maxsplit=1)[0]
             add(match[1].upper(), source, relative + "#" + match[1], section)
     for source in sorted((ROOT / "research/conjectures").glob("Q*.md")):
