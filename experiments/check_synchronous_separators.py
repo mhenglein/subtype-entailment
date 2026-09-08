@@ -96,7 +96,7 @@ def encoded_obstruction():
 def conflict_fixture():
     # Flag (0,1) synchronizes the terminal 1-edge from state 1 with the 1-loop
     # at state 0. The former must be a separator and the latter must be data.
-    I = Instance(((0,1),(-1,2),(-1,-1)), frozenset({2}), frozenset({(0,1)}))
+    I = Instance(((1,0),(-1,2),(-1,-1)), frozenset({2}), frozenset({(0,1)}))
     summary, cert = separator_certificate(I)
     assert cert is None and summary['status'] == 'NOT_APPLICABLE'
     assert separator_decision(I)['status'] == 'UNKNOWN'
