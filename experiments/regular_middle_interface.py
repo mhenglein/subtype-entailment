@@ -6,6 +6,7 @@ SCCs directly from the original deterministic partial DFA.
 """
 
 from collections import deque
+from itertools import product
 
 
 def _validate(delta, start, final):
@@ -46,17 +47,11 @@ def coreachable(delta, final):
 
 
 def common_nonempty_prefix(delta, start, final, alphabet="01"):
-    """Maximal common prefix of all nonempty accepted words.
-
-    Returns None when the language has no nonempty word. Epsilon acceptance is
-    ignored: the prefix describes only the nonempty branch, matching an erasure
-    proof that handles empty/nonempty middles separately.
-    """
+    """Maximal common prefix of all nonempty accepted words."""
     final, width = _validate(delta, start, final)
     if len(alphabet) != width:
         raise ValueError("alphabet width mismatch")
     live = coreachable(delta, final)
-
     first = []
     for a, ch in enumerate(alphabet):
         q = delta[start][a]
@@ -66,7 +61,6 @@ def common_nonempty_prefix(delta, start, final, alphabet="01"):
         return None
     if len(first) != 1:
         return ""
-
     prefix = first[0][0]
     q = first[0][1]
     while True:
@@ -83,20 +77,9 @@ def common_nonempty_prefix(delta, start, final, alphabet="01"):
         prefix += ch
 
 
-def boundary_action_counterexample(
-    middle_delta,
-    middle_start,
-    middle_final,
-    original_delta,
-    boundary_state,
-    alphabet="01",
-):
-    """Return an accepted middle whose original action does not return boundary.
-
-    Returns None exactly when every accepted middle word maps boundary_state back
-    to boundary_state. Undefined original transitions are represented by a dead
-    product component so any returned counterexample is a complete accepted word.
-    """
+def boundary_action_counterexample(middle_delta,middle_start,middle_final,
+    original_delta,boundary_state,alphabet="01"):
+    """Accepted middle whose original action does not return boundary, or None."""
     middle_final, width = _validate(middle_delta, middle_start, middle_final)
     if len(alphabet) != width:
         raise ValueError("alphabet width mismatch")
@@ -108,159 +91,155 @@ def boundary_action_counterexample(
         for q in row:
             if q < -1 or q >= len(original_delta):
                 raise ValueError("bad original transition target")
-
     first = (middle_start, boundary_state)
-    parent = {first: None}
-    todo = deque([first])
+    parent = {first: None}; todo = deque([first])
     while todo:
         m, q = state = todo.popleft()
         if m in middle_final and q != boundary_state:
             return _reconstruct(parent, state)
         for a, ch in enumerate(alphabet):
             nm = middle_delta[m][a]
-            if nm < 0:
-                continue
+            if nm < 0: continue
             nq = -1 if q < 0 else original_delta[q][a]
             nxt = (nm, nq)
             if nxt not in parent:
-                parent[nxt] = (state, ch)
-                todo.append(nxt)
+                parent[nxt] = (state, ch); todo.append(nxt)
     return None
 
 
 def _reconstruct(parent, state):
     letters = []
     while parent[state] is not None:
-        state, ch = parent[state]
-        letters.append(ch)
+        state, ch = parent[state]; letters.append(ch)
     return "".join(reversed(letters))
 
 
-def interface_summary(
-    middle_delta,
-    middle_start,
-    middle_final,
-    original_delta,
-    boundary_state,
-    alphabet="01",
-):
-    """Return exact finite interface facts needed by an erasure proof."""
+def interface_summary(middle_delta,middle_start,middle_final,original_delta,
+    boundary_state,alphabet="01"):
     counterexample = boundary_action_counterexample(
-        middle_delta,
-        middle_start,
-        middle_final,
-        original_delta,
-        boundary_state,
-        alphabet,
-    )
+        middle_delta,middle_start,middle_final,original_delta,boundary_state,alphabet)
     return {
         "boundary_state": boundary_state,
         "all_words_return_boundary": counterexample is None,
         "boundary_counterexample": counterexample,
         "common_nonempty_prefix": common_nonempty_prefix(
-            middle_delta, middle_start, middle_final, alphabet
-        ),
+            middle_delta, middle_start, middle_final, alphabet),
         "epsilon_in_middle": middle_start in frozenset(middle_final),
     }
 
 
+def accepted_words_shorter_than(delta,start,final,bound,alphabet="01"):
+    """All accepted words of length < bound (finite, exact)."""
+    final,width=_validate(delta,start,final)
+    if len(alphabet)!=width: raise ValueError('alphabet width mismatch')
+    out=[]
+    todo=[(start,'')]
+    for q,w in todo:
+        if q in final and len(w)<bound: out.append(w)
+        if len(w)+1 >= bound: continue
+        for a,ch in enumerate(alphabet):
+            r=delta[q][a]
+            if r>=0: todo.append((r,w+ch))
+    return tuple(sorted(out))
+
+
+def extendable_prefixes(delta,start,final,length,alphabet="01"):
+    """Length-exact prefixes that extend to some accepted word."""
+    final,width=_validate(delta,start,final)
+    if len(alphabet)!=width: raise ValueError('alphabet width mismatch')
+    live=coreachable(delta,final)
+    out=[]
+    for chars in product(alphabet,repeat=length):
+        q=start; ok=True
+        for ch in chars:
+            q=delta[q][alphabet.index(ch)]
+            if q<0: ok=False; break
+        if ok and q in live: out.append(''.join(chars))
+    return tuple(out)
+
+
+def good_reduced_prefixes(middle_delta,middle_start,middle_final,depth,alphabet="01"):
+    """Reduced-tail prefixes P for which inserting ANY middle preserves P.
+
+    Formally returns all P in Sigma^depth such that for every M in the regular
+    middle language, prefix_depth(M P) = P.  This is the exact finite condition
+    needed when a source comparison crosses an insertion point by at most
+    `depth` letters while its target lies after the insertion.
+    """
+    if type(depth) is not int or depth < 0: raise ValueError('bad depth')
+    if depth == 0: return ('',)
+    short=accepted_words_shorter_than(
+        middle_delta,middle_start,middle_final,depth,alphabet)
+    long_prefixes=set(extendable_prefixes(
+        middle_delta,middle_start,middle_final,depth,alphabet))
+    good=[]
+    for chars in product(alphabet,repeat=depth):
+        P=''.join(chars)
+        if any(Q != P for Q in long_prefixes): continue
+        ok=True
+        for M in short:
+            if M + P[:depth-len(M)] != P:
+                ok=False; break
+        if ok: good.append(P)
+    return tuple(good)
+
+
 def strongly_connected_components(delta):
-    """Return SCCs of the defined transition graph as sorted tuples."""
     _validate(delta, 0, set())
     n = len(delta)
     graph = [sorted({q for q in row if q >= 0}) for row in delta]
     rev = [[] for _ in delta]
     for p, qs in enumerate(graph):
-        for q in qs:
-            rev[q].append(p)
-
-    seen = set()
-    order = []
+        for q in qs: rev[q].append(p)
+    seen=set(); order=[]
     for root in range(n):
-        if root in seen:
-            continue
-        stack = [(root, 0)]
-        seen.add(root)
+        if root in seen: continue
+        stack=[(root,0)]; seen.add(root)
         while stack:
-            q, i = stack[-1]
+            q,i=stack[-1]
             if i < len(graph[q]):
-                r = graph[q][i]
-                stack[-1] = (q, i + 1)
-                if r not in seen:
-                    seen.add(r)
-                    stack.append((r, 0))
-            else:
-                order.append(q)
-                stack.pop()
-
-    seen.clear()
-    out = []
+                r=graph[q][i]; stack[-1]=(q,i+1)
+                if r not in seen: seen.add(r); stack.append((r,0))
+            else: order.append(q); stack.pop()
+    seen.clear(); out=[]
     for root in reversed(order):
-        if root in seen:
-            continue
-        comp = []
-        todo = [root]
-        seen.add(root)
+        if root in seen: continue
+        comp=[]; todo=[root]; seen.add(root)
         for q in todo:
             comp.append(q)
             for r in rev[q]:
-                if r not in seen:
-                    seen.add(r)
-                    todo.append(r)
+                if r not in seen: seen.add(r); todo.append(r)
         out.append(tuple(sorted(comp)))
     return tuple(sorted(out))
 
 
 def restricted_return_dfa(original_delta, component, boundary_state):
-    """DFA for words that stay inside component and return boundary_state.
-
-    The returned tuple is (delta,start,final,index_to_original). Epsilon is
-    accepted. The language can be nonflat even though this representation is
-    finite, because it is exactly the SCC's return language at the boundary.
-    """
     _validate(original_delta, 0, set())
     component = tuple(sorted(set(component)))
-    if boundary_state not in component:
-        raise ValueError("boundary is not in component")
-    index = {q: i for i, q in enumerate(component)}
-    rows = []
+    if boundary_state not in component: raise ValueError("boundary is not in component")
+    index = {q:i for i,q in enumerate(component)}
+    rows=[]
     for q in component:
-        row = []
-        for r in original_delta[q]:
-            row.append(index[r] if r in index else -1)
-        rows.append(tuple(row))
-    start = index[boundary_state]
-    return tuple(rows), start, frozenset({start}), component
+        rows.append(tuple(index[r] if r in index else -1 for r in original_delta[q]))
+    start=index[boundary_state]
+    return tuple(rows),start,frozenset({start}),component
 
 
 def scc_return_interfaces(original_delta, alphabet="01"):
-    """Discover cyclic SCC return languages and their forced prefixes.
-
-    Each row is a finite candidate interface. This does not prove that erasing
-    the SCC is semantically sound; a separate comparison selector must show that
-    its chosen forbidden comparison does not depend on the erased interior.
-    """
     _validate(original_delta, 0, set())
-    rows = []
+    rows=[]
     for component in strongly_connected_components(original_delta):
-        cyclic = len(component) > 1 or any(
-            original_delta[q][a] == q
-            for q in component
-            for a in range(len(original_delta[q]))
-        )
-        if not cyclic:
-            continue
+        cyclic = len(component)>1 or any(
+            original_delta[q][a]==q for q in component for a in range(len(original_delta[q])))
+        if not cyclic: continue
         for boundary in component:
-            md, start, final, mapping = restricted_return_dfa(
-                original_delta, component, boundary
-            )
-            prefix = common_nonempty_prefix(md, start, final, alphabet)
-            if prefix is None:
-                continue
+            md,start,final,mapping=restricted_return_dfa(original_delta,component,boundary)
+            prefix=common_nonempty_prefix(md,start,final,alphabet)
+            if prefix is None: continue
             rows.append({
-                "component": mapping,
-                "boundary_state": boundary,
-                "common_nonempty_prefix": prefix,
-                "epsilon_in_middle": True,
+                "component":mapping,
+                "boundary_state":boundary,
+                "common_nonempty_prefix":prefix,
+                "epsilon_in_middle":True,
             })
     return tuple(rows)
