@@ -1,6 +1,6 @@
 # Claims ledger
 
-Index updated: 2026-09-06. Original C001-C020 review: 2026-09-04.
+Index updated: 2026-09-09. Original C001-C020 review: 2026-09-04.
 Later claims retain the evidence and review scope of their linked records.
 
 This ledger gives stable IDs for claims about Problem 1.7 and its BorderAvoid
@@ -809,8 +809,11 @@ resource caps preserve `UNKNOWN`.
 occurrence of the terminal suffix of length `m` to its terminal copy for
 `1<=m<=n`; the `m=n+1` term is the convention value `n`.
 
-**Status / scope.** `WRITTEN PROOF` for the exact word-level identity. It
-reframes the terminal `B<=k-2` candidate but does not prove that candidate.
+**Status / scope.** `WRITTEN PROOF` for the exact word-level identity.
+The terminal `B<=k-2` candidate it originally reframed is now REFUTED; see
+[Q002](conjectures/Q002.md) and the
+[modular counterexample](../notes/2026-09-05-modular-synchronization.md).
+That refutation does not refute this word-level identity.
 
 **Record.** [Full statement and proof](../notes/2026-09-05-terminal-budget-geometry.md).
 
@@ -851,9 +854,17 @@ equivalent to the agreement-profile statement `PD(k)`: every `k`-state
 terminal DFA and every boundary-safe accepted word `w` have a boundary-safe
 accepted replacement `v` with `A(v) subseteq A(w)` and budget at most `k-2`.
 
-**Status / scope.** `WRITTEN PROOF`; C034 establishes `TB(k)` and hence
-`PD(k)` for `k<=4`, while the budget statement remains open for larger `k`.
-The linked bounded searches are falsification evidence only.
+**Status / scope.** `WRITTEN PROOF` for the equivalence, not for either
+universal bound. C034 establishes `TB(k)` and hence `PD(k)` for `k<=4`.
+**Q002 is REFUTED:** the eight-state modular instance violates the `k-2`
+budget and the corresponding profile-domination statement. See
+[Q002](conjectures/Q002.md) and the
+[counterexample](../notes/2026-09-05-modular-synchronization.md).
+This does not refute the equivalence or claim failure for every individual
+`k>4`. Earlier bounded searches remain historical evidence.
+
+**Status correction (2026-09-09).** Replaces the stale larger-state OPEN
+commentary. No new proof review or evidence-level promotion is claimed.
 
 **Record.** [Full statement and proof](../notes/2026-09-05-profile-and-fractional-power.md).
 
@@ -868,9 +879,16 @@ loop), and the shortened word `v=Xss` has a unique terminal suffix of length
 `|s|+1`, then `v` is accepted, `A(v) subseteq A(w)`, and
 `word_budget(v)<=|s|`.
 
-**Status / scope.** `WRITTEN PROOF + REPRO`; this is a local theorem under its
-three hypotheses. The uniqueness condition is essential, and Q003 remains a
-conjecture.
+**Status / scope.** `WRITTEN PROOF + REPRO` for this local theorem under
+its three hypotheses. The uniqueness condition is essential.
+**Q003 is REFUTED:** see [Q003](conjectures/Q003.md) and the
+[modular counterexample](../notes/2026-09-05-modular-synchronization.md).
+That refutation does not refute C045 or establish its hypotheses for arbitrary
+witnesses; unconditional strict profile descent must not be inferred.
+
+**Status correction (2026-09-09).** Replaces the stale conjecture commentary.
+The local proof and its recorded evidence are unchanged. This is not a new
+independent mathematical review or a full audit of every dependent use.
 
 **Record.** [Full statement and proof](../notes/2026-09-05-unbordered-gap-normalization.md).
 

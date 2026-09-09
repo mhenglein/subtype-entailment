@@ -1,14 +1,107 @@
 # Research plan
 
-Updated: 2026-09-04
+Updated: 2026-09-09 (current priorities; historical programme retained)
 
 **Goal:** decide [Problem 1.7](problem.md) for bottom and binary product over arbitrary, possibly infinite trees. No general solution is established here.
 
-This plan preserves the ten research angles and adds working backwards from a
-Lean theorem as angle 11. Current execution status, owners, evidence, and next
-steps live in the [research tracker](README.md). The entries describe each
-investigation's target; dated approach records distinguish proposals from
-executed attempts.
+Current priorities appear first. The original eleven-angle programme is
+preserved below as history, not as the current order of work. Execution status,
+owners, evidence, and exact next steps live in the [research tracker](README.md).
+Dated approach records distinguish proposed handoffs from executed attempts.
+
+## Current research priorities (2026-09-09)
+
+This is an organizational change following collaborator feedback, not a new
+proof, experiment, or change to the decidability status. The operating rules
+are in [AGENTS.md](../AGENTS.md); ownership and execution status remain solely in
+[approaches.json](approaches.json). No investigator is assigned by this plan.
+
+### The target, not a stronger substitute
+
+Keep terminal-final BorderAvoid as the principal mathematical testing ground,
+using the recorded C030/C031 bridge at its stated evidence level. The leading
+constructive hypothesis is an existence-preserving normalization, an effective
+finite symbolic cover, or another terminating exact procedure. A witness-bound
+route would suffice if it establishes
+
+```text
+there exists a total computable F such that, for every finite binary
+terminal instance I with k states,
+    (there exists w with Witness_I(w))
+    implies (there exists v with Witness_I(v) and |v| <= F(k)).
+```
+
+Here `Witness_I` is the exact existing predicate, including Bad states,
+diagonal flags and the empty suffix; see [the problem](problem.md) and
+[the checked binary definition](../lean/Subtail/Basic.lean). This is an
+existential target, not a claim that every candidate can be shortened, that
+all agreement profiles can be preserved, or that the witness language is
+regular. Q002/Q003 and the modular family already refute several stronger
+substitutes. A new proposal must survive those examples without assuming its
+missing completeness or termination argument.
+
+The single-source case remains a focused subproblem, not an automatic route
+through the multi-source case. The current root-length and new-border
+obligations are in the [single-source handoff](../notes/2026-09-08-strategy-review-and-period-state-form.md).
+C042 rules out a source-wise viability shortcut. The [overlap audit](../notes/2026-09-09-overlap-deletion-audit.md)
+repairs selected-equality preservation, not full witnesshood or a global bound.
+
+### Two hypotheses, forward and backward
+
+| Hypothesis | Forward from existing evidence | Backward from the final conclusion |
+|---|---|---|
+| SEP is decidable | Combine normalization, arithmetic and shared-word tools into an existence-preserving invariant. | State exactly what effective bound, complete finite cover, or terminating exact procedure would finish the reduction. |
+| SEP is undecidable | Test whether recurrent copying and shared-word interactions enforce transformations or computation steps. | Start with a named undecidable source problem; specify the finite encoding and both directions of correctness in our exact terminal fragment. |
+
+An obstruction in either row must yield a question for the other row. The
+constructive route remains the lead hypothesis, not a presumption of the
+answer. Block equality, nonregularity, a failed pump, or an undecidable more
+expressive relation is not by itself an undecidability reduction here. A
+failed encoding only rules out its stated gadget or construction class unless
+a broader impossibility theorem is proved.
+
+### Next research cycle: concrete handoffs
+
+Use one [end-to-end outline](../templates/proof-outline.md) per route, with all
+open implications named, before investing heavily in supporting machinery.
+A short falsification attempt can start immediately. The next assignments are:
+
+1. **Constructive and adversarial pair — A017/A008, with A016 support.** Choose
+   one replacement or finite-cover obligation. For the single-source root
+   pump, test the complete witness predicate after alignment-compatible
+   deletion, including new borders and primitivity; acceptance and selected
+   equality checks are not enough. Minimize counterexamples while preserving
+   the exact hypotheses. Explain how a surviving restricted lemma enters the
+   general outline, rather than assuming different sources compose.
+2. **Opposing investigation — A011.** Use the terminal converse to test a
+   specific computation/word-transformation gadget. Write both implications
+   of a proposed reduction and the missing gadget before building a solver.
+   Return a proved encoding, a precise obstruction to that encoding class,
+   or an explicitly unresolved obligation; feed the structural finding back
+   to A017/A012. This is a real research target, not a token negative route.
+3. **Coverage and critical review — A012, with selective A018 support.** Make
+   certificate soundness, coverage of all relevant instances, and termination
+   separate obligations. Audit exact construction definitions and critical
+   transfers in the leading outlines. New Lean work must resolve a specific
+   uncertainty or verify a stable critical dependency; maintain existing
+   checks without automatically extending the conditional framework.
+
+These are proposed handoffs, not reports of launched agents or completed
+research. Separate contexts may run sequentially or in parallel. Use an
+independent first attempt where useful, exchange checkable artifacts, and
+compare results surviving review per unit of effort. Different model families
+may diversify search but do not establish independence or correctness.
+
+### Review and stopping rules
+
+The default order is conceptual sketch, targeted falsification, precise
+ordinary proof, independent mathematical review, then selective formalization;
+iterate when a test or review exposes a gap. Exact definitions and openly
+labelled assumptions are required at every stage. Keep failed arguments and
+small counterexamples, and distinguish a local repair from the missing global
+existence/coverage theorem. Report which obligations were discharged, not how
+many lemmas remain or how close a result feels. A strategy-only update must
+not promote evidence labels, mark unperformed work active, or claim new checks.
 
 ## September 4 starting order (historical)
 
@@ -27,7 +120,7 @@ existence; the direct sufficient predicate is already proved sound.
 
 Use those results to choose between structural proofs in angles 4–7 and complete certificates or saturation in angles 8–9. Keep the converse and negative-result investigation in angle 10 separate. Reproducing the original memo's sources remains [A007](approaches/A007.md); the missing files do not block the independent proposals here.
 
-## Eleven angles
+## Eleven angles (historical programme)
 
 ### 1. Find the structure of shortest witnesses — A008
 

@@ -1,6 +1,7 @@
 """Regression checks for canonical research navigation and broken handoffs."""
 
 from pathlib import Path
+import json
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -77,6 +78,30 @@ class ResearchNavigationTests(unittest.TestCase):
         self.write("research/conjectures/Q001.md", "# Q002 — Wrong target\n\nStatus: OPEN\n")
         with self.assertRaisesRegex(ValueError, "filename and heading"):
             index.research_records(self.data)
+
+
+class CurrentClaimStatusTests(unittest.TestCase):
+    """Guard known status corrections, not the truth of mathematical proofs."""
+
+    def setUp(self):
+        root = Path(__file__).resolve().parents[1]
+        with patch.object(index, "ROOT", root):
+            data = json.loads((root / "research/approaches.json").read_text())
+            self.records = index.research_records(data)
+
+    def test_c044_keeps_equivalence_distinct_from_refuted_q002(self):
+        claim = self.records["C044"]["content"]
+        self.assertIn("Status: REFUTED", self.records["Q002"]["content"])
+        for text in ("WRITTEN PROOF", "equivalence", "C034", "Q002 is REFUTED"):
+            self.assertIn(text, claim)
+        self.assertNotIn("remains open for larger", claim)
+
+    def test_c045_keeps_conditional_lemma_distinct_from_refuted_q003(self):
+        claim = self.records["C045"]["content"]
+        self.assertIn("Status: REFUTED", self.records["Q003"]["content"])
+        for text in ("WRITTEN PROOF + REPRO", "three hypotheses", "Q003 is REFUTED"):
+            self.assertIn(text, claim)
+        self.assertNotIn("Q003 remains a", claim)
 
 
 if __name__ == "__main__":

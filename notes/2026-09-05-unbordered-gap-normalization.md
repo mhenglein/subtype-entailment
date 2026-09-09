@@ -2,9 +2,16 @@
 
 Date: 2026-09-05. Continues Q002/A017 after `dc90b7c`.
 
-**Status: C045 has a written proof plus bounded independent reproduction. Q003
-is a conjecture with falsification evidence only. Unrestricted Problem 1.7
-remains open.**
+**Status: C045 retains its written proof plus bounded independent reproduction
+under its exact hypotheses. Unrestricted Problem 1.7 remains open.**
+
+**Status correction (2026-09-09).** Q003 is REFUTED; see
+[Q003](../research/conjectures/Q003.md) and the
+[modular counterexample](2026-09-05-modular-synchronization.md).
+The unconditional descent conjecture and the conditional C045 lemma are
+separate statements. The refutation does not refute C045, and C045 does not
+supply its hypotheses for arbitrary witnesses. Original conjectural discussion
+below is retained as history, not a live target. No new proof review is claimed.
 
 ## C045: unbordered gap deletion is profile-safe under terminal uniqueness
 

@@ -2,11 +2,19 @@
 
 Start with [the problem](research/problem.md), [current shared memory](STATE.md), [the research tracker](research/README.md), and [claims and evidence](research/claims.md). The September 4 [review](REVIEW.md) is the initial snapshot; the tracker records later progress.
 
-The [research plan](research/PLAN.md) preserves the original programme; use
-`STATE.md` and the conjecture records for the current frontier. The
+The [research plan](research/PLAN.md) gives current priorities first and preserves
+the original programme as history; use `STATE.md` and the conjecture records
+for the current mathematical frontier. The
 [Lean workstream](research/approaches/A018.md) records completed local proofs
 and the remaining obligations. Its [build guide](lean/README.md) explains the
 pinned toolchain and validation commands.
+
+For a new route, reuse or complete [the proof-outline template](templates/proof-outline.md)
+before substantial supporting implementation or formalization. Exact definitions
+and named gaps are required from the beginning; a cheap counterexample search
+need not wait for a complete outline. New Lean work needs a specific semantic
+risk, disputed implication, or stable critical dependency to resolve; existing
+checks remain maintained. See [the operating rules](AGENTS.md).
 
 ## Pick and claim work
 
@@ -47,7 +55,7 @@ Keep the full proof in its linked note when the central entry is only an index.
 
 ## Finish or pause a session
 
-Update the central registry with the current status, outcome, owner, evidence, and one next step. If blocked, say exactly what is missing. If stopped after a limit, record UNKNOWN and the limit. If a claim changed, update its ledger entry in the same commit.
+Update the central registry with the current status, outcome, owner, evidence, and one next step. If blocked, say exactly what is missing. If stopped after a limit, record UNKNOWN and the limit. If a claim changed, update its individual ledger and Q lookup entries in the same commit, correct known original entry points, and record which dependent uses were checked or remain unaudited.
 
 Issues are for discussion and coordination. Approach metadata is the source for current research status; evidence files establish what was actually done. Do not infer a proof from a closed issue or a passing test.
 
@@ -74,7 +82,7 @@ For organization-only changes, the checks above are enough. If the border checke
 proofs, replays compiled declarations, audits axioms, and checks agreement
 with Python. It rejects unexpected axioms in the named dependency closures.
 
-For a new theorem, ask a reviewer to check the argument independently. For a
+Separate implementation checks, ordinary mathematical review, and formal verification. For a new theorem, ask a reviewer to check the argument independently, with exact construction definitions, quantifiers, imported theorem hypotheses, and both directions of any claimed reduction. For a
 new witness or counterexample, provide a small input and an independent
 checker where possible. State whether a result has a written proof, a Lean
 proof, or only bounded evidence. A binary formalization must not be described
@@ -86,7 +94,7 @@ as covering every finite alphabet. Keep every unproved hypothesis explicit.
 |---|---|
 | Current approach status, owner, next step | `research/approaches.json` |
 | Current scientific frontier and route overview | `STATE.md` |
-| Historical research programme | `research/PLAN.md` |
+| Current research priorities and historical programme | `research/PLAN.md` |
 | Exact open hypotheses, assumptions, and discriminating tests | `research/conjectures/Qxxx.md` |
 | Readable dashboard | Generated `research/README.md` |
 | Dated successes, failures, and inconclusive attempts | `research/approaches/Axxx.md` |

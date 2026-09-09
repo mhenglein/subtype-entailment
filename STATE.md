@@ -1,5 +1,21 @@
 # Subtail — current research state
 
+## September 9 research-method update (organizational)
+
+Current priorities now require an end-to-end conceptual route, targeted
+falsification, and a genuine opposing undecidability investigation alongside
+the leading terminal existence-preserving approach. Exact definitions remain
+mandatory; new Lean work is selective rather than the default milestone.
+[Current plan](research/PLAN.md#current-research-priorities-2026-09-09),
+[operating rules](AGENTS.md), [outline template](templates/proof-outline.md).
+
+The C041/C044/C045 entries and the known Q002/Q003 source-note entry points
+now distinguish the refuted universal conjectures from surviving identities,
+equivalences and conditional local lemmas. This is status synchronization, not
+a new proof or complete dependency re-audit. No mathematical evidence level,
+problem status, or worker ownership is promoted by this update.
+
+
 ## September 9 audit: overlapping deletions need full alignment closure
 
 <!-- overlap-deletion-audit-2026-09-09 -->

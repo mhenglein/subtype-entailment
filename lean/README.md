@@ -4,6 +4,18 @@ This project checks local lemmas for **binary BorderAvoid** and decides
 witness existence for at most two states. The general problem and subtype
 entailment remain open.
 
+## Role in the research process
+
+This core remains maintained. Extending it is not the default research
+milestone while the global mathematical argument is missing. Under
+[the current plan](../research/PLAN.md), a new formalization task must name the
+specific semantic uncertainty, disputed implication, or stable critical
+dependency it resolves. Early formalization is welcome when it answers that
+question; otherwise prioritize a conceptual route, falsification and ordinary
+mathematical review. Existing checks are still required for Lean changes.
+Conditional theorem hypotheses below remain open mathematics, not progress
+obtained merely by extending the formal framework.
+
 ## Build and check
 
 Use Lean **4.33.1**, pinned in [lean-toolchain](lean-toolchain), with its bundled

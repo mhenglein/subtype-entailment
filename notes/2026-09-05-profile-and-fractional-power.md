@@ -3,8 +3,15 @@
 Date: 2026-09-05. Base: `2ef127134535408a31ab2399328412c5ef8f26f2`.
 
 **Status: WRITTEN EXACT REFORMULATIONS + FALSIFICATION EVIDENCE. Not Lean-checked.**
-Unrestricted Problem 1.7 remains open. The profile-normalization statement in
-Section 2 is a conjecture, not a proved all-state theorem.
+Unrestricted Problem 1.7 remains open.
+
+**Status correction (2026-09-09).** The universal profile-normalization
+conjecture discussed below is REFUTED; see [Q002](../research/conjectures/Q002.md)
+and the [modular counterexample](2026-09-05-modular-synchronization.md).
+C044 records an equivalence, not a proof of either refuted universal claim;
+C043 and that equivalence retain their recorded evidence levels. The original
+argument and bounded-search discussion below are preserved as history. This
+correction is not a new independent review of their proofs.
 
 ## C043: every proper terminal violation has a bounded fractional-power form
 

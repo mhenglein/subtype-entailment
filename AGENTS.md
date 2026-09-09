@@ -49,6 +49,70 @@ Reference these IDs in issues, commits, notes, and pull requests.
 9. If the result changes the project frontier, update `STATE.md` in the same change.
 10. Do not promote a result into `Established` in `STATE.md` merely because tests pass or an issue is closed.
 
+## Research method: discovery before verification
+
+Precise mathematics is required from the start; complete formalization is not.
+The default sequence is a conceptual end-to-end sketch, targeted falsification,
+a precise ordinary proof, independent mathematical review, and selective Lean
+formalization. These stages may iterate. An intuitive or apparently robust idea
+is a reason to investigate a gap, not permission to assume it is repairable.
+
+Before substantial supporting implementation or formalization, write or update
+one route outline using [the proof-outline template](templates/proof-outline.md).
+Give the exact final claim, every unresolved implication, and how a restricted
+result would contribute to it. Reuse that outline across related attempts;
+inexpensive falsification does not need to wait for a complete sketch. Do not
+replace a missing global argument with an expanding inventory of local lemmas.
+
+Keep both decidability and undecidability live. Identify whether an attempt is
+forward from existing results, backward from a desired conclusion, or both.
+For each significant obstruction, state what question it suggests for the
+opposing route. Current priorities and concrete handoffs are in
+[the research plan](research/PLAN.md), not an implicit preference in one chat.
+
+## Mathematical precision and falsification
+
+- Define every construction before using it. For an automaton give the state
+  set, alphabet, transition function or relation, initial configuration, and
+  accepting states or output condition. Specify partial transitions and why
+  the construction is finite and effective from the input. A monitor or
+  transition system without acceptance should be identified as such. Explain
+  the state invariant; phrases such as "tracks everything simultaneously" do
+  not define a construction.
+- An imported theorem needs an exact source/theorem identifier, its hypotheses,
+  an explicit mapping to our objects, and the conclusion actually obtained.
+  If that transfer is unproved, record it as an open obligation. Name all
+  quantifiers and preserve arbitrary-tree semantics and shared word parameters.
+- Test the weakest statement that would suffice. An existential replacement
+  theorem need not preserve every candidate or its complete agreement profile.
+  A counterexample to a stronger universal statement does not refute the weaker
+  target. Preserve the hypothesis under test when minimizing an example;
+  shortestness and mere resistance to selected cuts are different properties.
+- For a word transformation, separate preservation of acceptance, selected
+  equalities and cut-state information, full witnesshood (including newly
+  created forbidden comparisons), and global coverage/termination. Proving one
+  does not prove the next. Include overlapping occurrences, empty/diagonal
+  boundary cases, and recurrent structure whenever the statement allows them.
+- Prefer a direct independent witness predicate to a second implementation of
+  the same optimization. Save minimal obstructions with commands, seeds and
+  limits. Search exhaustion is NO only when a proved completeness argument
+  covers the entire stated input; a bounded failure remains UNKNOWN.
+
+## Selective formalization
+
+Maintain the existing Lean core and its checks. New formalization is not the
+default next research milestone: name the disputed implication, semantic risk,
+or stable critical dependency it is meant to resolve. Early Lean work is useful
+when it can answer such a question, not merely because a local result exists.
+A conditional decision theorem does not discharge its bound or reduction
+hypotheses. Formalize a mature end-to-end argument preferentially, while keeping
+its intended semantics independently reviewable in ordinary mathematics.
+
+Report mathematical progress by the obligations discharged and remaining,
+including their difficulty and uncertainty. Counts of commits, lemmas, tests,
+or agreeing agents do not establish proximity to a solution. "One lemma left"
+is not evidence that the final step is small.
+
 ## Collaboration model
 
 Exploration may be parallel; integration is deliberately serialized through review.
@@ -65,6 +129,18 @@ allowed paths, dependencies, resource limit, and required evidence. Serialize
 integration and writes to the shared tracker; do not share an active Lake build.
 Before integration, inspect the current diff and recheck changes affected by
 new commits. A worker's report is input for review, not proof of completion.
+
+Use differentiated roles when multiple workers are useful: a constructive
+researcher, an adversarial counterexample researcher, an undecidability
+researcher, and a reviewer of definitions and critical implications. These are
+roles, not a requirement for four simultaneous agents. Give initial independent
+attempts the same exact definitions and evidence without forcing the same
+preferred argument. Exchange explicit claims, proof sketches, counterexamples
+and checkable results. Record what each reviewer actually checked and whether
+they inherited the original argument; model diversity or agreement alone is
+not independent validation. Compare parallel work with sequential separate
+contexts by useful results surviving review per unit of effort, not output
+volume. Do not claim workers were launched or reviews performed unless they were.
 
 ## Recover context and choose work
 
@@ -106,5 +182,11 @@ When an investigation materially changes what is known:
 4. Update or add a `Qxxx` conjecture record when an open hypothesis changed.
 5. Update `STATE.md` so a new researcher can understand the frontier without replaying the full history.
 6. Link all evidence and list exactly what remains unproved.
+7. When a conjecture is refuted or a statement repaired, update its individual
+   C/Q lookup entries and add visible corrections at known original entry points.
+   Inspect known dependents and distinguish invalid uses from valid conditional
+   lemmas. Record any unaudited dependency scope; do not silently erase history
+   or declare every associated theorem false. Separate code review, mathematical
+   review, and formal verification in the evidence record.
 
 The objective is not to maximize activity. It is to monotonically improve the quality of the shared scientific state.
