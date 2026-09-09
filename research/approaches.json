@@ -396,7 +396,11 @@
         "experiments/search_calculus.py",
         "experiments/check_collective_research.py",
         "results/flag-transport.json",
-        "results/collective-gap-research.json"
+        "results/collective-gap-research.json",
+        "notes/2026-09-09-overlap-deletion-audit.md",
+        "experiments/overlap_deletion.py",
+        "experiments/check_overlap_deletion.py",
+        "results/overlap-deletion-audit.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/15"
     },

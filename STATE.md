@@ -1,5 +1,13 @@
 # Subtail — current research state
 
+## September 9 audit: overlapping deletions need full alignment closure
+
+<!-- overlap-deletion-audit-2026-09-09 -->
+The equality-preservation clause of the paired-overlap pumping lemma is false for overlapping occurrences, including its stated large-shift window. A six-state family preserves acceptance after the two loop deletions but destroys the selected factor equality. The original note now carries a visible correction.
+
+A corrected deletion-mask closure computes all physical positions that must be removed consistently across the supplied equalities. Loop and protected-cut checks give executable certificates for acceptance, those equalities, and their endpoint states. This repairs the local example, not the no-new-forbidden-border or global small-model obligation. [Proof, counterexample, and checks](notes/2026-09-09-overlap-deletion-audit.md). Written proof plus reproduction; independent review pending, not Lean.
+
+
 ## September 9 recovery: flag rewrites and cross-gap inference
 
 <!-- saved-research-recovery-2026-09-09 -->

@@ -778,3 +778,8 @@ a new result key rather than silently changing the meaning of an existing key.
 The two September 8 scoped attempts allocate no new global IDs. [Recovery and integrity manifest](../research/SAVED_RESEARCH_RECOVERY.md) links their exact seeds, finite coverage, written proofs, and limits.
 
 Run `python3 scripts/check_recovered_research.py --replay` to rerun both new checkers, the unchanged core checker, and the previous last-flag checker. This verifies 17 source/proof files and the canonical hashes of both saved result objects. Stored results are compact JSON; canonical pretty-printing recovers the original blobs.
+
+## Overlap-deletion audit
+
+<!-- overlap-deletion-audit-2026-09-09 -->
+Run `python3 experiments/check_overlap_deletion.py`. [Scope and all-length arguments](../notes/2026-09-09-overlap-deletion-audit.md) distinguish selected equality/acceptance preservation from witness preservation. [Result](../results/overlap-deletion-audit.json), seed 2026090901. This scoped audit allocates no new global claim/experiment IDs.
