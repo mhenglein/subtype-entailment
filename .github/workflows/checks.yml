@@ -90,3 +90,15 @@ jobs:
         run: python3 scripts/check_lean.py
       - name: Verify recorded Lean results
         run: git diff --exit-code -- results/lean-checks.json
+
+  source-capture:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.11'
+      - name: Check source capture against independent word predicates
+        run: python3 experiments/check_source_capture.py
+      - name: Verify deterministic source-capture evidence
+        run: git diff --exit-code -- results/source-capture.json
