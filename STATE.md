@@ -1,5 +1,13 @@
 # Subtail — current research state
 
+## September 9: complete guarded-order chains; terminal anchoring remains open
+
+<!-- guarded-order-route-2026-09-09 -->
+The earlier finite three-stage census now has a uniform proof-producing decision for any supplied number of phase-blind unary stages, each with a positive lower bound and one congruence. Equality-guarded inequalities saturate finitely; strongly connected components force equal counts, and compatible arithmetic progressions supply distinct values for the remaining components. The solver returns compact witness vectors or independently replayable NO proofs. This is a complete restricted class, not a cover of arbitrary recurrent inputs.
+
+An opposing two-counter reduction is explicit for a nearby two-copy pattern-containment problem with arbitrary trailing context. It does NOT remove that context under terminal suffix-comparison semantics. The constructive coverage and opposing terminal-anchor implications remain open. [Proof, scope, evidence](notes/2026-09-09-guarded-order-and-terminal-anchor.md); [end-to-end outline](research/ORDER_COVER_ROUTE.md). Written proofs with executed checks; independent review pending, not Lean-checked. Earlier work remains below unchanged.
+
+
 ## September 9: an exact decision for every terminal one-flag instance
 
 C065 gives a complete finite procedure for binary terminal instances with at

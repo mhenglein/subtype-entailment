@@ -783,3 +783,8 @@ Run `python3 scripts/check_recovered_research.py --replay` to rerun both new che
 
 <!-- overlap-deletion-audit-2026-09-09 -->
 Run `python3 experiments/check_overlap_deletion.py`. [Scope and all-length arguments](../notes/2026-09-09-overlap-deletion-audit.md) distinguish selected equality/acceptance preservation from witness preservation. [Result](../results/overlap-deletion-audit.json), seed 2026090901. This scoped audit allocates no new global claim/experiment IDs.
+
+## Guarded-order chains and trailing-copy boundary
+
+<!-- guarded-order-route-2026-09-09 -->
+Run `python3 experiments/check_guarded_order_chains.py` and `python3 experiments/check_trailing_copy_barrier.py`. [Proof and complete scopes](../notes/2026-09-09-guarded-order-and-terminal-anchor.md) and [route outline](../research/ORDER_COVER_ROUTE.md) distinguish the complete restricted backend from both unproved end-to-end transfers. Results: [guarded order](../results/guarded-order-chains.json) and [trailing copy](../results/trailing-copy-barrier.json). No new global IDs are allocated.

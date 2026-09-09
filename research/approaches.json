@@ -205,7 +205,15 @@
       "evidence": [
         "notes/2026-09-05-terminal-realization.md",
         "experiments/terminal_realization.py",
-        "results/terminal-realization.json"
+        "results/terminal-realization.json",
+        "notes/2026-09-09-guarded-order-and-terminal-anchor.md",
+        "research/ORDER_COVER_ROUTE.md",
+        "experiments/guarded_order_chains.py",
+        "experiments/check_guarded_order_chains.py",
+        "results/guarded-order-chains.json",
+        "experiments/trailing_copy_barrier.py",
+        "experiments/check_trailing_copy_barrier.py",
+        "results/trailing-copy-barrier.json"
       ],
       "issue": null
     },
@@ -250,7 +258,15 @@
         "experiments/search_calculus.py",
         "experiments/check_collective_research.py",
         "results/flag-transport.json",
-        "results/collective-gap-research.json"
+        "results/collective-gap-research.json",
+        "notes/2026-09-09-guarded-order-and-terminal-anchor.md",
+        "research/ORDER_COVER_ROUTE.md",
+        "experiments/guarded_order_chains.py",
+        "experiments/check_guarded_order_chains.py",
+        "results/guarded-order-chains.json",
+        "experiments/trailing_copy_barrier.py",
+        "experiments/check_trailing_copy_barrier.py",
+        "results/trailing-copy-barrier.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/15"
     },
@@ -324,7 +340,15 @@
         "notes/2026-09-05-terminal-arithmetic.md",
         "experiments/skeleton_presburger.py",
         "experiments/flat_terminal.py",
-        "results/terminal-arithmetic.json"
+        "results/terminal-arithmetic.json",
+        "notes/2026-09-09-guarded-order-and-terminal-anchor.md",
+        "research/ORDER_COVER_ROUTE.md",
+        "experiments/guarded_order_chains.py",
+        "experiments/check_guarded_order_chains.py",
+        "results/guarded-order-chains.json",
+        "experiments/trailing_copy_barrier.py",
+        "experiments/check_trailing_copy_barrier.py",
+        "results/trailing-copy-barrier.json"
       ],
       "issue": null
     },
@@ -400,7 +424,15 @@
         "notes/2026-09-09-overlap-deletion-audit.md",
         "experiments/overlap_deletion.py",
         "experiments/check_overlap_deletion.py",
-        "results/overlap-deletion-audit.json"
+        "results/overlap-deletion-audit.json",
+        "notes/2026-09-09-guarded-order-and-terminal-anchor.md",
+        "research/ORDER_COVER_ROUTE.md",
+        "experiments/guarded_order_chains.py",
+        "experiments/check_guarded_order_chains.py",
+        "results/guarded-order-chains.json",
+        "experiments/trailing_copy_barrier.py",
+        "experiments/check_trailing_copy_barrier.py",
+        "results/trailing-copy-barrier.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/15"
     },
