@@ -9,6 +9,20 @@ preserved below as history, not as the current order of work. Execution status,
 owners, evidence, and exact next steps live in the [research tracker](README.md).
 Dated approach records distinguish proposed handoffs from executed attempts.
 
+## Latest mathematical continuation: single-source capture (2026-09-09)
+
+C067/C068 now provide a written single-source decision and exact bounded-source
+word-equation compilation; independent mathematical review is pending. The
+single-source root-pumping task below is superseded as a route to deciding that
+subclass, not proved by the new result. Use the
+[source-capture argument](../notes/2026-09-09-source-capture-word-equations.md)
+as the current end-to-end outline. First audit capture uniqueness, boundary
+cases, one-visit normalization and the exact external free-monoid theorem.
+Then attack [Q004](conjectures/Q004.md): control repeated interacting sources
+or produce a complete shared-word symbolic cover. For the opposing route,
+seek an encoding genuinely outside the now-decidable bounded-source setting.
+No general SEP decision or computable source-visit bound is claimed.
+
 ## Current research priorities (2026-09-09)
 
 This is an organizational change following collaborator feedback, not a new

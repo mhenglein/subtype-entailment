@@ -892,6 +892,56 @@ independent mathematical review or a full audit of every dependent use.
 
 **Record.** [Full statement and proof](../notes/2026-09-05-unbordered-gap-normalization.md).
 
+<a id="c067"></a>
+
+### C067 — Single-source terminal existence reduces to word equations
+
+**Statement.** Binary terminal BorderAvoid with at most one flagged source
+state is decidable and in PSPACE. The source need not be initial and may
+recur. Terminality makes each target's safe acceptance language prefix-free;
+its unique accepted prefix yields an exact positive existential capture
+formula. A first-to-last source deletion preserves witnesshood and reduces
+existence to one source visit. The formula uses only concatenation equations
+and explicit regular-language constraints, not a missing word-length bound.
+
+**Status / scope.** `WRITTEN PROOF + REPRO`; independent mathematical review
+pending; not Lean. The external dependency is Diekert--Gutierrez--Hagenah,
+Theorem 4 for free monoids with involution, used in its involution-free
+special case with all variables constrained to the binary alphabet. This is
+not a PSPACE lower bound, not a decision for multiple recurrent sources, and
+not a re-proof of the subtype bridge. Empty and diagonal flags, Bad states,
+multiple terminal finals and source returns are included. The optional Z3
+adapter is not the complete theoretical word-equation solver.
+
+**Evidence.** [Exact construction, both directions and theorem transfer](../notes/2026-09-09-source-capture-word-equations.md),
+[compiler](../experiments/source_capture.py), E043.
+The single-source pumping route remains historical; this result bypasses its
+new-border obligation rather than claiming that pump has been repaired.
+
+<a id="c068"></a>
+
+### C068 — Exact bounded-source-visit word-equation compilation
+
+**Statement.** For a supplied sequence of flagged-source states, witness
+existence with exactly that visit sequence reduces to a positive existential
+word-equation formula with explicit regular constraints. Segment and suffix
+variables retain one shared candidate word. Thus existence with at most a
+supplied R source visits is decidable (in PSPACE when R is unary). A productive
+graph with no cycle containing a source is a decidable special case, with
+R at most the number of source states; unflagged components may be nonflat
+and arbitrarily recurrent.
+
+**Status / scope.** `WRITTEN PROOF + REPRO`; independent mathematical review
+pending; not Lean. Counts are positions, not distinct states. There is no
+proved computable visit bound for all positive instances (Q004), and a
+terminating source-wise pruning iteration does not supply global completeness.
+The compiler handles a supplied sequence; optional SMT resource limits remain
+UNKNOWN. The implementation is not claimed to provide a complete practical
+all-sequences or unrestricted solver.
+
+**Evidence.** [Theorem, segment automata, limits and two-source counterexample](../notes/2026-09-09-source-capture-word-equations.md),
+[compiler](../experiments/source_capture.py), E043.
+
 ## Explicitly unestablished
 
 The following are deliberately not accepted claims in this ledger:

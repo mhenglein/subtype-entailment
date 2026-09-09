@@ -1,5 +1,13 @@
 # Single-source terminal BorderAvoid: junction lemma, shape lemmas, and the remaining root-length obligation
 
+> **Continuation, 2026-09-09:** C067 supplies a different written decision
+> proof for single-source terminal instances, via prefix-free source capture
+> and existential word equations. Independent mathematical review is pending.
+> See [the new construction and exact scope](2026-09-09-source-capture-word-equations.md).
+> The pumping obligations and strategy recommendations below are historical;
+> the new result does not assert that those pumps have been proved. The
+> unrestricted problem remains unresolved in this repository.
+
 Date: 2026-09-08. Base main: `9913303`. Workstream: A017 (single-source
 sub-target of the strategy note). Branch `claude/subtail-repo-strategy-hiom63`.
 

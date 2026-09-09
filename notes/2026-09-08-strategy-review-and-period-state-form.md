@@ -1,5 +1,13 @@
 # Strategy review, route selection, and the single-source period form
 
+> **Continuation, 2026-09-09:** C067 supplies a different written decision
+> proof for single-source terminal instances, via prefix-free source capture
+> and existential word equations. Independent mathematical review is pending.
+> See [the new construction and exact scope](2026-09-09-source-capture-word-equations.md).
+> The pumping obligations and strategy recommendations below are historical;
+> the new result does not assert that those pumps have been proved. The
+> unrestricted problem remains unresolved in this repository.
+
 Date: 2026-09-08. Base main: `9913303` (A017 last-flag spectra checkpoint).
 Workstreams: A017 (primary), A012, A008. Branch: `claude/subtail-repo-strategy-hiom63`.
 

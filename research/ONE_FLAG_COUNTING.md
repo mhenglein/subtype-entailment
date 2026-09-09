@@ -66,3 +66,13 @@ For arbitrary targets, compute joint-period incidence series for the SAME
 candidate word, or find a disjoint bad-word decomposition with an effective
 zero test. Single-target counting does not establish those higher intersections.
 Source-wise decisions also do not automatically compose across distinct sources.
+
+## Concurrent continuation: arbitrary single-source target sets
+
+C067 gives a different written decision/PSPACE upper-bound argument for all
+single-source terminal target sets, using prefix-free capture and shared-word
+equations; C068 handles supplied source-visit sequences. Independent review
+is pending. This bypasses the joint-counting extension for decidability, not
+for explicit counting series or the quantitative bounds recorded above. C065
+and the C066 subtraction counterexample are preserved unchanged.
+[Proof, compiler and exact limits](../notes/2026-09-09-source-capture-word-equations.md).

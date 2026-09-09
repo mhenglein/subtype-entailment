@@ -1,5 +1,29 @@
 # Subtail — current research state
 
+## September 9: source capture bypasses the single-source pumping gap
+
+C067 gives a written decision/PSPACE upper-bound proof for **all single-source
+binary terminal instances**, including an interior source that may recur.
+A target's safe terminal-acceptance language is prefix-free, so each fixed
+source suffix has at most one accepted-prefix capture per target. Exact
+existential word equations exclude the corresponding forbidden comparison.
+A one-source first-to-last deletion supplies a one-visit normal form.
+
+C068 compiles an exact supplied sequence of source visits, and hence a supplied
+visit bound, while allowing arbitrary unflagged recurrent data paths. The
+source-acyclic productive class is decided. This does not yet decide the general
+problem: Q004 asks for a computable existential bound on flagged-source visits,
+or a finite symbolic replacement retaining shared words. A five-state example
+refutes naive sequential source compression by creating an earlier violation.
+
+[Proof, precise external theorem and limitations](notes/2026-09-09-source-capture-word-equations.md),
+[compiler](experiments/source_capture.py), [checks](experiments/check_source_capture.py),
+[results](results/source-capture.json), [Q004](research/conjectures/Q004.md).
+Written proof + reproduction; independent mathematical review pending; no Lean.
+The optional SMT adapter is not the complete theoretical solver. Earlier
+single-source root-pumping handoffs below are historical, not the required
+next step; their individual lemmas are not promoted or refuted by this bypass.
+
 ## September 9: complete guarded-order chains; terminal anchoring remains open
 
 <!-- guarded-order-route-2026-09-09 -->
