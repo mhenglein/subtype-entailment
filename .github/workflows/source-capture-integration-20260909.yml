@@ -1,0 +1,90 @@
+name: Checked source-capture research integration
+
+on:
+  push:
+    branches:
+      - research/source-capture-20260909-checks
+
+permissions:
+  contents: write
+
+jobs:
+  apply-and-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.11'
+      - name: Verify and extract the prepared research bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib, json, os, zlib
+          packed = b''.join((Path('.github/source_capture_payload') / str(i)).read_bytes() for i in range(4))
+          raw = zlib.decompress(packed)
+          assert hashlib.sha256(raw).hexdigest() == 'b79a1e85e0bf501734987d960fef12a845faa0b9d4ca888092a5e61a6dbd34d8'
+          bundle = json.loads(raw)
+          expected = {'experiments/source_capture.py', 'experiments/check_source_capture.py', 'notes/2026-09-09-source-capture-word-equations.md', 'research/conjectures/Q004.md', 'results/source-capture.json', 'results/source-capture-smt.json', 'integrate_records.py'}
+          assert set(bundle) == expected
+          root = Path(os.environ['RUNNER_TEMP']) / 'source_capture_bundle'
+          for relative, content in bundle.items():
+              target = root / relative
+              target.parent.mkdir(parents=True, exist_ok=True)
+              target.write_text(content, encoding='utf-8')
+          print('Verified seven-file bundle; integration helper remains temporary.')
+          PY
+          git checkout --detach 05b20ee73841d0e7105a44beb761e553a7081a8d
+          test -z "$(git status --porcelain)"
+          python3 - <<'PY'
+          from pathlib import Path
+          import os, shutil
+          root = Path(os.environ['RUNNER_TEMP']) / 'source_capture_bundle'
+          paths = ['experiments/source_capture.py', 'experiments/check_source_capture.py', 'notes/2026-09-09-source-capture-word-equations.md', 'research/conjectures/Q004.md', 'results/source-capture.json', 'results/source-capture-smt.json']
+          for relative in paths:
+              target = Path(relative)
+              assert not target.exists(), relative
+              target.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copyfile(root / relative, target)
+          PY
+          python3 "$RUNNER_TEMP/source_capture_bundle/integrate_records.py"
+      - name: Check records, source capture, and existing core predicates
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m py_compile experiments/source_capture.py experiments/check_source_capture.py
+          python3 scripts/research_index.py --check
+          python3 -m unittest discover -s scripts -p 'test_research_index.py' -v
+          python3 experiments/check_source_capture.py
+          cmp "$RUNNER_TEMP/source_capture_bundle/results/source-capture.json" results/source-capture.json
+          python3 experiments/run_experiments.py
+          git diff --check
+          git diff --exit-code -- experiments/border_lab.py experiments/_word_smt_native.py results/independent-checks.json
+      - name: Check the integration boundary and publish a clean research commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import subprocess
+          expected = {'experiments/source_capture.py', 'experiments/check_source_capture.py', 'notes/2026-09-09-source-capture-word-equations.md', 'research/conjectures/Q004.md', 'results/source-capture.json', 'results/source-capture-smt.json', 'research/claims.md', 'experiments/README.md', 'STATE.md', 'research/PLAN.md', 'notes/2026-09-08-single-source-shape-lemmas.md', 'notes/2026-09-09-single-source-primitivity-correction.md', 'notes/2026-09-08-strategy-review-and-period-state-form.md', 'research/approaches.json', 'research/README.md', 'research/approaches/A017.md', 'research/approaches/A011.md', 'research/approaches/A012.md', 'research/approaches/A008.md', 'research/conjectures/README.md', '.github/workflows/checks.yml'}
+          changed = set(subprocess.check_output(['git','diff','--name-only'],text=True).splitlines())
+          changed.update(subprocess.check_output(['git','ls-files','--others','--exclude-standard'],text=True).splitlines())
+          assert changed == expected, sorted(changed ^ expected)
+          subprocess.run(['git','add','--'] + sorted(expected), check=True)
+          print('Only the 21 approved research, evidence and check paths are staged.')
+          PY
+          git diff --cached --check
+          git diff --cached --stat
+          test ! -e .github/source_capture_payload
+          test ! -e .github/workflows/source-capture-integration-20260909.yml
+          test ! -e integrate_records.py
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Decide single-source terminal existence via prefix capture and word equations' -m 'Record C065/C066, E042 and Q004: written proofs pending independent mathematical review, exact formula compilers, adversarial regressions, and updated handoffs. Record/index validation, 11 navigation tests, deterministic source-capture reproduction, existing core experiments and diff checks passed. Optional Z3 evidence is from the recorded local run, not this CI run. No new Lean proof or unrestricted SEP decision is claimed.'
+          git push origin HEAD:refs/heads/research/source-capture-20260909-verified
+          echo "VERIFIED_COMMIT=$(git rev-parse HEAD)"
+          echo "Checked research commit: $(git rev-parse HEAD)" >> "$GITHUB_STEP_SUMMARY"
+          echo 'Record validation, navigation tests, source-capture reproduction and existing core experiments passed. Independent mathematical review remains pending. Main has not been changed by this workflow.' >> "$GITHUB_STEP_SUMMARY"
