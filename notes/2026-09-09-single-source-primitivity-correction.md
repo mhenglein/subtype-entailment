@@ -1,5 +1,13 @@
 # Single-source synchronized deletion: primitivity correction and sharper remaining gap
 
+> **Continuation, 2026-09-09:** C065 supplies a different written decision
+> proof for single-source terminal instances, via prefix-free source capture
+> and existential word equations. Independent mathematical review is pending.
+> See [the new construction and exact scope](2026-09-09-source-capture-word-equations.md).
+> The pumping obligations and strategy recommendations below are historical;
+> the new result does not assert that those pumps have been proved. The
+> unrestricted problem remains unresolved in this repository.
+
 Date: 2026-09-09. Continues `notes/2026-09-08-single-source-shape-lemmas.md`.
 
 **Status: written correction + exhaustive diagnostic. Not Lean-checked. This does not decide the single-source problem or unrestricted Problem 1.7.**

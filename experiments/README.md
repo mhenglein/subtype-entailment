@@ -783,3 +783,32 @@ Run `python3 scripts/check_recovered_research.py --replay` to rerun both new che
 
 <!-- overlap-deletion-audit-2026-09-09 -->
 Run `python3 experiments/check_overlap_deletion.py`. [Scope and all-length arguments](../notes/2026-09-09-overlap-deletion-audit.md) distinguish selected equality/acceptance preservation from witness preservation. [Result](../results/overlap-deletion-audit.json), seed 2026090901. This scoped audit allocates no new global claim/experiment IDs.
+
+## Source-capture continuation (2026-09-09)
+
+<a id="e042"></a>
+
+### E042 — Terminal source-capture reduction and adversarial boundaries
+
+**Command.** `python3 experiments/check_source_capture.py`.
+Optional: `python3 experiments/check_source_capture.py --with-smt`.
+
+**Coverage.** Seed 2026090917. All 256 terminal three-state binary tables,
+every Bad subset and initial state, words through length 6: 8,568 actual
+capture/target comparisons. Another 1,800 recurrent paths on 300 generated
+3--9-state automata add 10,848 comparisons, maximum word length 88. A separate
+240-instance sample checks 122,640 words through length 8 against both existing
+witness predicates, with seven strict one-source normalizations. Source
+segments are reconstructed on 635 accepted words from 200 multi-source samples.
+Fixed regressions show failure without terminality and failure of naive
+source-by-source loop deletion, with a nonvacuous second flag.
+
+**Evidence.** [Code](check_source_capture.py), [formula compiler](source_capture.py),
+[deterministic result](../results/source-capture.json),
+[proof and scope](../notes/2026-09-09-source-capture-word-equations.md), C065/C066.
+The local native Z3 4.13.3.0 optional run returned 34 SAT and 17 UNSAT on 51
+probes, no UNKNOWN; every SAT word passed both original witness predicates.
+[Optional local result](../results/source-capture-smt.json) is not a byte-exact
+CI oracle: backend versions and model choices can differ. UNSAT remains
+backend-trusted, and timeout/unknown is not NO. Finite checks do not prove the
+quantified theorem or completeness of the optional solver.

@@ -44,3 +44,9 @@ The cheapest proof attempt, counterexample search, or experiment that would mate
 ```
 
 When a conjecture is proved or refuted, preserve the file and update its status. If it becomes a formal claim, add the corresponding C ID to `research/claims.md` and cross-link it here.
+
+## Source-visit target
+
+[Q004](Q004.md) records the computable existential source-visit bound isolated
+by C065/C066. It is OPEN, not inferred from finite searches or the single-source
+normal form. The generated research tracker lists the current Q statuses.

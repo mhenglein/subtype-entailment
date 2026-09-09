@@ -128,7 +128,7 @@
       "owner": null,
       "updated": "2026-09-09",
       "summary": "Complete four-state terminal census: witness length at most four and budget at most two; general three-state proof remains separate.",
-      "next_step": "Falsify precise shortest-witness replacement hypotheses against the complete witness predicate, including new borders after overlapping deletions. Minimize while retaining the stated hypotheses; use a surviving lemma in the A017 route outline rather than defaulting to more census formalization.",
+      "next_step": "Test minimum flagged-source visit requirements on controlled multi-source families for Q004, preserving shortestness/normalization hypotheses when minimizing failures. Do not restart the single-source root pump merely to obtain decidability already supplied by C065.",
       "record": "research/approaches/A008.md",
       "evidence": [
         "notes/2026-09-04-shortest-witnesses.md",
@@ -140,7 +140,11 @@
         "results/continuation-import.json",
         "notes/2026-09-05-four-state-terminal.md",
         "experiments/check_four_state_terminal.py",
-        "results/four-state-terminal.json"
+        "results/four-state-terminal.json",
+        "notes/2026-09-09-source-capture-word-equations.md",
+        "experiments/source_capture.py",
+        "experiments/check_source_capture.py",
+        "results/source-capture.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/2"
     },
@@ -200,12 +204,16 @@
       "owner": null,
       "updated": "2026-09-09",
       "summary": "Every k-state terminal-final binary abstract instance has an exact word-preserving subtype realization on 2k+1 variables.",
-      "next_step": "Run an opposing undecidability investigation: choose a named undecidable source problem, specify a transformation/computation gadget in the exact terminal fragment, and expose both reduction directions through C030/C031. Return an encoding, a scoped gadget obstruction, or an explicit gap; feed it back to A017/A012.",
+      "next_step": "Use C065/C066 as a precise restriction on a negative encoding: single-source terminal targets and positive outputs with a computable source-visit bound are decidable. Seek a genuine transformation/computation gadget with unbounded interacting source visits; equality or nonregularity alone remains insufficient.",
       "record": "research/approaches/A011.md",
       "evidence": [
         "notes/2026-09-05-terminal-realization.md",
         "experiments/terminal_realization.py",
-        "results/terminal-realization.json"
+        "results/terminal-realization.json",
+        "notes/2026-09-09-source-capture-word-equations.md",
+        "experiments/source_capture.py",
+        "experiments/check_source_capture.py",
+        "results/source-capture.json"
       ],
       "issue": null
     },
@@ -217,7 +225,7 @@
       "owner": null,
       "updated": "2026-09-09",
       "summary": "A six-state nonflat NO language has an all-length arithmetic certificate and defeats every candidate-covering regular separator decoration with a finite semantic-tail bound.",
-      "next_step": "Seek a complete symbolic NO cover that may change or discard candidates with proof. Separate certificate soundness, global coverage and termination; use A017 obstructions and A011 gadget failures as inputs, rather than only increasing finite-state separator memory.",
+      "next_step": "Use C065 for exact source-local impossibility/pruning, while retaining C042: positive local viability need not compose. Investigate complete shared-word NO covers beyond bounded-source compilation, and keep soundness, coverage and termination separate.",
       "record": "research/approaches/A012.md",
       "evidence": [
         "research/SEMANTIC_MARKER_TAILS.md",
@@ -250,7 +258,11 @@
         "experiments/search_calculus.py",
         "experiments/check_collective_research.py",
         "results/flag-transport.json",
-        "results/collective-gap-research.json"
+        "results/collective-gap-research.json",
+        "notes/2026-09-09-source-capture-word-equations.md",
+        "experiments/source_capture.py",
+        "experiments/check_source_capture.py",
+        "results/source-capture.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/15"
     },
@@ -335,8 +347,8 @@
       "outcome": "inconclusive",
       "owner": null,
       "updated": "2026-09-09",
-      "summary": "G-specific synchronized semantic tails were combined and tested locally; a six-state NO instance refutes completeness of candidate-covering regular separator decoration plus finite tails. A same-day strategy review selects the terminal small-model route bottom-up by flag structure and reduces the single-source subcase to bounding the primitive-root length of a near-periodic shape (exact census through five states).",
-      "next_step": "Write a complete conditional route outline, then attack one existence-preserving replacement or finite-cover obligation. For the single-source root pump, test full witnesshood and primitivity after alignment-compatible deletion. Feed obstructions to A011/A012; do not assume source-wise results compose.",
+      "summary": "Single-source terminal existence now has a written PSPACE upper-bound proof via unique prefix capture and constrained word equations. Exact source-sequence compilation permits arbitrary unflagged recurrent paths. A two-source counterexample prevents naive sequential loop compression; general source-visit control remains open.",
+      "next_step": "Independently audit C065/C066, then attack Q004: a computable existential source-visit bound or a complete shared-word cover for recurrent sources. Use the fixed two-source new-border counterexample; the single-source root pump is no longer needed to decide that subclass.",
       "record": "research/approaches/A017.md",
       "evidence": [
         "notes/2026-09-04-minimal-witness-structure.md",
@@ -400,7 +412,11 @@
         "notes/2026-09-09-overlap-deletion-audit.md",
         "experiments/overlap_deletion.py",
         "experiments/check_overlap_deletion.py",
-        "results/overlap-deletion-audit.json"
+        "results/overlap-deletion-audit.json",
+        "notes/2026-09-09-source-capture-word-equations.md",
+        "experiments/source_capture.py",
+        "experiments/check_source_capture.py",
+        "results/source-capture.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/15"
     },

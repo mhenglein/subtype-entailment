@@ -1,0 +1,113 @@
+{
+  "evidence": "finite regressions; all-length theorem is the linked written argument",
+  "guards": {
+    "multi_source_loop_failure": {
+      "deleted_interval": [
+        1,
+        2
+      ],
+      "delta": [
+        [
+          1,
+          2
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          -1,
+          -1
+        ]
+      ],
+      "final": [
+        4
+      ],
+      "flags": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "new_violation_cuts": [
+        0,
+        3
+      ],
+      "repeated_source": 2,
+      "second_flag_violation_example": "101010",
+      "shortened": "10010",
+      "word": "110010"
+    },
+    "nonterminal_first_capture_failure": {
+      "capture_clause": true,
+      "delta": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          -1,
+          -1
+        ]
+      ],
+      "direct_root": false,
+      "final": [
+        1,
+        2
+      ],
+      "flags": [
+        [
+          0,
+          1
+        ]
+      ],
+      "word": "11"
+    }
+  },
+  "long_recurrent_paths": {
+    "accepted_paths": 1800,
+    "instances": 300,
+    "longest_word": 88,
+    "overlapping_violations": 21,
+    "target_checks": 10848
+  },
+  "root_capture": {
+    "absent_captures": 3056,
+    "accepted_cases": 2856,
+    "empty_captures": 2856,
+    "nonempty_captures": 2656,
+    "nonsuffix_cases": 180,
+    "tables": 256,
+    "target_checks": 8568,
+    "wrong_state_cases": 320
+  },
+  "seed": 2026090917,
+  "single_source_normalization": {
+    "instances": 240,
+    "sequences_checked": 442,
+    "shortened": 7,
+    "witnesses": 201,
+    "word_checks": 122640
+  },
+  "source_segments": {
+    "accepted_words": 635,
+    "instances": 200,
+    "reconstructed": 581
+  }
+}
