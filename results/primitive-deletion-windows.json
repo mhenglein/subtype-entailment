@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "scope": "Exhaustive primitive binary words through length 15; combinatorial diagnostic only, not a proof of the single-source bound",
+  "max_n": 15,
+  "rows": [
+    {"n":2,"primitive_words":2,"max_bad_windows":0,"example":"01"},
+    {"n":3,"primitive_words":6,"max_bad_windows":1,"example":"001"},
+    {"n":4,"primitive_words":12,"max_bad_windows":3,"example":"0010"},
+    {"n":5,"primitive_words":30,"max_bad_windows":6,"example":"00100"},
+    {"n":6,"primitive_words":54,"max_bad_windows":9,"example":"000100"},
+    {"n":7,"primitive_words":126,"max_bad_windows":13,"example":"0001000"},
+    {"n":8,"primitive_words":240,"max_bad_windows":17,"example":"00001000"},
+    {"n":9,"primitive_words":504,"max_bad_windows":22,"example":"000010000"},
+    {"n":10,"primitive_words":990,"max_bad_windows":27,"example":"0000010000"},
+    {"n":11,"primitive_words":2046,"max_bad_windows":33,"example":"00000100000"},
+    {"n":12,"primitive_words":4020,"max_bad_windows":39,"example":"000000100000"},
+    {"n":13,"primitive_words":8190,"max_bad_windows":46,"example":"0000001000000"},
+    {"n":14,"primitive_words":16254,"max_bad_windows":53,"example":"00000001000000"},
+    {"n":15,"primitive_words":32730,"max_bad_windows":61,"example":"000000010000000"}
+  ],
+  "proved_lower_bound_family": "For a primitive length-n word with one 1 in an interior position a, every deletion interval containing that 1 and leaving at least two symbols produces 0^k and is bad. A centered 1 gives floor((n+1)^2/4)-3 bad windows.",
+  "observation": "The exhaustive maximum equals floor((n+1)^2/4)-3 for n=3..15. This equality is empirical beyond the displayed lower-bound family and is not claimed as a theorem.",
+  "consequence": "A proof that merely upper-bounds the total number of primitivity-destroying windows by o(n^2) cannot work."
+}
