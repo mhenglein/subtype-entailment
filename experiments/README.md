@@ -771,3 +771,10 @@ Use the next available ID. Record the exact command, code location, commit or
 input generator, seed, word/state/resource limits, output JSON paths, and the
 claim IDs that the run can support. Keep `UNKNOWN` separate from `NO`, and add
 a new result key rather than silently changing the meaning of an existing key.
+
+## Recovered flag-inference experiments
+
+<!-- saved-research-recovery-2026-09-09 -->
+The two September 8 scoped attempts allocate no new global IDs. [Recovery and integrity manifest](../research/SAVED_RESEARCH_RECOVERY.md) links their exact seeds, finite coverage, written proofs, and limits.
+
+Run `python3 scripts/check_recovered_research.py --replay` to rerun both new checkers, the unchanged core checker, and the previous last-flag checker. This verifies 17 source/proof files and the canonical hashes of both saved result objects. Stored results are compact JSON; canonical pretty-printing recovers the original blobs.

@@ -1,5 +1,13 @@
 # Subtail — current research state
 
+## September 9 recovery: flag rewrites and cross-gap inference
+
+<!-- saved-research-recovery-2026-09-09 -->
+The two previously local research bundles are now repository-contained: source, proofs, counterexamples, and reproducible results. Exact gap-implication backends compute the greatest gap-equivalent annotation on a fixed terminal automaton. Guarded cyclic predecessor proofs and periodic-grid cross-gap rules preserve witnesshood; they close the recorded six-state barrier and seven-state equality-cycle examples. A terminating flag calculus is NOT a complete existence procedure; its preserved counterexamples still require other methods.
+
+[Recovery, commands, and scope](research/SAVED_RESEARCH_RECOVERY.md). Written proofs remain pending independent mathematical review; no new Lean proof or unrestricted decision is claimed. The earlier and concurrent work below is retained unchanged.
+
+
 Navigation updated: 2026-09-08. Scientific evidence remains at the status recorded in the linked proofs, experiments, and Lean checks.
 
 This is the compressed scientific memory of the project. Read this after `research/problem.md` and before starting new work.
