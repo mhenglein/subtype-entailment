@@ -1,0 +1,15 @@
+{
+  "bi_residue": "INCONCLUSIVE",
+  "bounded_accepted_words": 21,
+  "bounded_language_and_no_checks": 131071,
+  "delimiter": "1",
+  "missing_flag_control": "NOT_APPLICABLE",
+  "old_three_way": "INCONCLUSIVE",
+  "orbit_split": "INCONCLUSIVE",
+  "period": "01",
+  "proof_status": "Exact candidate-language equality/orbit verifier; written theorem not Lean-checked",
+  "required_flags": 2,
+  "scope": "Exact all-length fixed-word-period family; bounded enumeration is regression only",
+  "status": "PASS",
+  "word_period_status": "VERIFIED_NO"
+}
