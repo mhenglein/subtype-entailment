@@ -1,0 +1,193 @@
+{
+  "complete_small_census": {
+    "1": {
+      "YES": 1
+    },
+    "2": {
+      "NO": 9,
+      "YES": 7
+    },
+    "3": {
+      "NO": 3387,
+      "YES": 709
+    }
+  },
+  "counts": {
+    "all_role_boundary_instances": 512,
+    "checked_positive_words": 717,
+    "complete_modular_oracles": 700,
+    "exhaustive_annotations": 4113,
+    "guards": 10,
+    "literal_modular_count_vectors": 23968,
+    "modular_NO": 303,
+    "modular_YES": 397,
+    "modular_positive_DFA_checks": 397,
+    "raw_compiler_words": 204700,
+    "unbounded_stage_family_queries": 8
+  },
+  "huge_equal_count": {
+    "answer": {
+      "count_bound": 184120360172839869206680093,
+      "length": 184120360172839869206680104,
+      "rounds": 2,
+      "status": "YES",
+      "steps": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "values": [
+        15343363347736655767223341,
+        15343363347736655767223341,
+        15343363347736655767223341,
+        15343363347736655767223341,
+        15343363347736655767223341,
+        15343363347736655767223341,
+        15343363347736655767223341,
+        15343363347736655767223341,
+        15343363347736655767223341,
+        15343363347736655767223341,
+        15343363347736655767223341,
+        15343363347736655767223341
+      ]
+    },
+    "count": 15343363347736655767223341,
+    "periods": [
+      101,
+      103,
+      107,
+      109,
+      113,
+      127,
+      131,
+      137,
+      139,
+      149,
+      151,
+      157
+    ]
+  },
+  "large_stage_cases": [
+    {
+      "no_steps": 14,
+      "period": 420,
+      "positive_length": 3368,
+      "stages": 8
+    },
+    {
+      "no_steps": 30,
+      "period": 420,
+      "positive_length": 6736,
+      "stages": 16
+    },
+    {
+      "no_steps": 62,
+      "period": 420,
+      "positive_length": 13472,
+      "stages": 32
+    },
+    {
+      "no_steps": 126,
+      "period": 420,
+      "positive_length": 26944,
+      "stages": 64
+    }
+  ],
+  "noncoprime_conflict": {
+    "conflict": {
+      "kind": "domain",
+      "pair": [
+        0,
+        1
+      ]
+    },
+    "rounds": 1,
+    "status": "NO",
+    "steps": [
+      0,
+      1
+    ]
+  },
+  "noncoprime_positive": {
+    "count_bound": 25,
+    "length": 20,
+    "rounds": 2,
+    "status": "YES",
+    "steps": [
+      0,
+      1
+    ],
+    "values": [
+      9,
+      9
+    ]
+  },
+  "phase_sensitive_limit": {
+    "delta": [
+      [
+        1,
+        -1
+      ],
+      [
+        2,
+        -1
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        4,
+        -1
+      ],
+      [
+        5,
+        -1
+      ],
+      [
+        4,
+        6
+      ],
+      [
+        -1,
+        -1
+      ]
+    ],
+    "flags": [
+      [
+        1,
+        5
+      ]
+    ],
+    "witness": "001001"
+  },
+  "proof_status": "Written all-input class proof, independent-algorithm checks; mathematical review pending; not Lean-checked",
+  "scope": "Complete for supplied modular phase-blind serial unary chains, not arbitrary terminal instances",
+  "seed": 2026090953,
+  "source_sha256": {
+    "border_lab.py": "61d42cc1c99f2fdbc50691ae427a77c70b4ec56021d2837187dd2eb6fb51925d",
+    "check_guarded_order_chains.py": "6f739d4bf1c7ea9cbadc8911d43fb4aa979ea96e80fb4231e7328e3af7cd4f1f",
+    "guarded_order_chains.py": "a8a5e8ed1f15648457e3417d71f383c752a74dc758a5889335e5488669686f31",
+    "search_calculus.py": "5d92b87450cf5b91fd018fa86a71f76570bc31bde532f339b78d4f4f15adb6bf"
+  },
+  "status": "PASS"
+}

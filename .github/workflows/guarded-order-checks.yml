@@ -1,0 +1,72 @@
+name: Guarded order and terminal-anchor checks
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'experiments/*guarded_order*'
+      - 'experiments/*trailing_copy*'
+      - 'experiments/border_lab.py'
+      - 'experiments/search_calculus.py'
+      - 'results/guarded-order-chains.json'
+      - 'results/trailing-copy-barrier.json'
+      - 'notes/2026-09-09-guarded-order-and-terminal-anchor.md'
+      - 'research/ORDER_COVER_ROUTE.md'
+      - 'scripts/integrate_order_route.py'
+      - '.github/workflows/guarded-order-checks.yml'
+  pull_request:
+    paths:
+      - 'experiments/**'
+      - 'results/guarded-order-chains.json'
+      - 'results/trailing-copy-barrier.json'
+      - 'scripts/integrate_order_route.py'
+      - '.github/workflows/guarded-order-checks.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.11'
+      - name: Replay exact class and opposing-route checks
+        run: |
+          python3 experiments/check_guarded_order_chains.py
+          python3 experiments/check_trailing_copy_barrier.py
+          python3 experiments/run_experiments.py
+          git diff --exit-code -- results/guarded-order-chains.json results/trailing-copy-barrier.json results/independent-checks.json
+          python3 scripts/research_index.py --check
+          git diff --check
+  record-route:
+    needs: replay
+    if: github.event_name == 'push' && contains(github.event.head_commit.message, '[record-order-route]')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.11'
+      - name: Add evidence without replacing prior attempts
+        run: |
+          python3 scripts/integrate_order_route.py
+          python3 scripts/research_index.py
+          python3 scripts/research_index.py --check
+          python3 -m unittest discover -s scripts -p 'test_research_index.py'
+          git diff --check
+      - name: Publish only named metadata by a normal fast-forward push
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add STATE.md research/approaches/A011.md research/approaches/A012.md research/approaches/A016.md research/approaches/A017.md research/approaches.json research/README.md experiments/README.md
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record guarded-order route and remaining terminal-anchor gap'
+            git push origin HEAD:main
+          fi

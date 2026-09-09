@@ -1,0 +1,15 @@
+{
+  "candidate_histories": 4900,
+  "erroneous_histories": 4891,
+  "interior_error": {
+    "matched_edges": [
+      1
+    ],
+    "word": "@S0:0,0;E0;S1:00,0;E1;S2:00000000,0;E2;S3:00000000,0!"
+  },
+  "original_gap": "Remove the arbitrary trailing context without changing the exact terminal comparison semantics",
+  "proof_status": "Written reduction for a nearby trailing-context pattern problem; not a reduction to BorderAvoid",
+  "selected_counter_queries": 9800,
+  "status": "PASS",
+  "valid_numeric_histories": 9
+}
