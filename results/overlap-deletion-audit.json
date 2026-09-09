@@ -1,0 +1,112 @@
+{
+  "counts": {
+    "binary_survivor_checks": 5616,
+    "exhaustive_mask_minima": 364,
+    "family_counterexamples": 78,
+    "guards": 6,
+    "large_shift_family_cases": 45,
+    "large_shift_window_pairs": 666,
+    "multiple_alignment_cases": 500,
+    "repaired_family_certificates": 78
+  },
+  "examples": [
+    {
+      "first_mismatch": 2,
+      "invalid_paired_deletions": [
+        [
+          5,
+          6
+        ],
+        [
+          9,
+          10
+        ]
+      ],
+      "m": 3,
+      "original_equalities": [
+        [
+          0,
+          4,
+          12
+        ]
+      ],
+      "original_length": 16,
+      "period": 4,
+      "repaired_deletions": [
+        [
+          1,
+          2
+        ],
+        [
+          5,
+          6
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          13,
+          14
+        ]
+      ],
+      "repaired_length": 12,
+      "states": 6,
+      "survivor_lengths": [
+        10,
+        10
+      ]
+    },
+    {
+      "first_mismatch": 79,
+      "invalid_paired_deletions": [
+        [
+          82,
+          83
+        ],
+        [
+          163,
+          164
+        ]
+      ],
+      "m": 80,
+      "original_equalities": [
+        [
+          0,
+          81,
+          243
+        ]
+      ],
+      "original_length": 324,
+      "period": 81,
+      "repaired_deletions": [
+        [
+          1,
+          2
+        ],
+        [
+          82,
+          83
+        ],
+        [
+          163,
+          164
+        ],
+        [
+          244,
+          245
+        ]
+      ],
+      "repaired_length": 320,
+      "states": 6,
+      "survivor_lengths": [
+        241,
+        241
+      ]
+    }
+  ],
+  "proof_status": "Written counterexample and corrected mask theorem; independent review pending; not Lean-checked",
+  "scope": "Selected equality/acceptance preservation, not preservation of every witness obligation or an unrestricted bound",
+  "seed": 2026090901,
+  "status": "PASS"
+}

@@ -1,5 +1,14 @@
 # Paired-state pumping for mismatched overlap borders
 
+> **Correction, 2026-09-09:** The equality-preservation clause of Lemma 1 is
+> false for overlapping occurrences, even when the two deletion intervals are
+> disjoint and lie inside both occurrences. Consequently the claimed large-shift
+> equality-preserving pump in Sections 3 and 5 is not established by this note.
+> Acceptance-only loop splicing remains valid. The historical argument below is
+> retained, not silently repaired. See the [counterexample, corrected mask
+> invariant, and executed checks](2026-09-09-overlap-deletion-audit.md) before
+> using these statements as premises.
+
 Date: 2026-09-09. Continues the single-source synchronized-deletion line.
 
 **Status: proved finite-word pumping lemmas and a large-shift/small-shift dichotomy. The lift through every periodic-root copy is still pending; no decision theorem is claimed.**
