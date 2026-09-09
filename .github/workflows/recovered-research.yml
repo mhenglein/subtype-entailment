@@ -1,0 +1,74 @@
+name: Recovered research checks
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'experiments/collective_transport.py'
+      - 'experiments/gap_equivalence.py'
+      - 'experiments/power_transport.py'
+      - 'experiments/calculus_limits.py'
+      - 'experiments/search_calculus.py'
+      - 'experiments/check_collective_research.py'
+      - 'experiments/flag_transport.py'
+      - 'experiments/separator_tail.py'
+      - 'experiments/check_flag_transport.py'
+      - 'results/collective-gap-research.json'
+      - 'results/flag-transport.json'
+      - 'scripts/*recovered_research.py'
+      - 'research/SAVED_RESEARCH_RECOVERY.md'
+      - '.github/workflows/recovered-research.yml'
+  pull_request:
+    paths:
+      - 'experiments/**'
+      - 'scripts/*recovered_research.py'
+      - 'results/collective-gap-research.json'
+      - 'results/flag-transport.json'
+      - '.github/workflows/recovered-research.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.11'
+      - name: Replay recovered sources and verify canonical evidence
+        run: python3 scripts/check_recovered_research.py --replay
+      - name: Check tracked results and whitespace
+        run: |
+          git diff --exit-code -- results/flag-transport.json results/collective-gap-research.json results/independent-checks.json results/lastflag-spectrum.json
+          git diff --check
+  record-recovery:
+    needs: replay
+    if: github.event_name == 'push' && contains(github.event.head_commit.message, '[recover-saved-research]')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.11'
+      - name: Add evidence to the current shared records
+        run: |
+          python3 scripts/integrate_recovered_research.py
+          python3 scripts/research_index.py
+          python3 scripts/research_index.py --check
+          python3 -m unittest discover -s scripts -p 'test_research_index.py'
+          git diff --check
+      - name: Publish only the six shared metadata files without force
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add STATE.md research/approaches/A012.md research/approaches/A017.md research/approaches.json research/README.md experiments/README.md
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record recovered flag-inference research in shared state'
+            git push origin HEAD:main
+          fi
