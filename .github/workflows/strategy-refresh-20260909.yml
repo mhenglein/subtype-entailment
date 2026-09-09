@@ -1,0 +1,52 @@
+name: Checked research-method integration
+
+on:
+  push:
+    branches:
+      - maintenance/strategy-refresh-20260909
+
+permissions:
+  contents: write
+
+jobs:
+  apply-and-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.11'
+      - name: Apply only approved changes to the pinned base
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp .github/apply_strategy_refresh.py "$RUNNER_TEMP/apply_strategy_refresh.py"
+          python3 -m py_compile "$RUNNER_TEMP/apply_strategy_refresh.py"
+          git checkout --detach 23f508b9c1b2ba5e36bfb0e5e5b576ebdf8c7a24
+          python3 "$RUNNER_TEMP/apply_strategy_refresh.py"
+      - name: Validate generated records and regression tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/research_index.py --check
+          python3 -m unittest discover -s scripts -p 'test_research_index.py' -v
+          git diff --check
+          git diff --stat
+          git diff -- research/claims.md scripts/test_research_index.py
+      - name: Publish checked commit without integration helpers
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = 23f508b9c1b2ba5e36bfb0e5e5b576ebdf8c7a24
+          test ! -e .github/apply_strategy_refresh.py
+          test ! -e .github/workflows/strategy-refresh-20260909.yml
+          git add -- AGENTS.md CONTRIBUTING.md STATE.md research/PLAN.md research/README.md research/approaches.json research/claims.md research/approaches/A008.md research/approaches/A011.md research/approaches/A012.md research/approaches/A016.md research/approaches/A017.md research/approaches/A018.md lean/README.md templates/attempt.md templates/proof-outline.md .github/pull_request_template.md notes/2026-09-05-profile-and-fractional-power.md notes/2026-09-05-unbordered-gap-normalization.md scripts/test_research_index.py
+          git diff --cached --check
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Prioritize conceptual research, adversarial tests and selective formalization' -m 'Apply user-approved September 9 method changes; refresh six workstream handoffs and correct Q002/Q003 status commentary without promoting proof evidence. Add two navigation regressions. Record/index checks, 11 navigation/status tests and diff checks passed before this commit.'
+          git push origin HEAD:refs/heads/maintenance/strategy-refresh-20260909-verified
+          echo "VERIFIED_COMMIT=$(git rev-parse HEAD)"
+          echo "Checked commit: $(git rev-parse HEAD)" >> "$GITHUB_STEP_SUMMARY"
+          echo 'Record/index validation, 11 navigation/status tests, and diff checks passed. Main has not been changed by this workflow.' >> "$GITHUB_STEP_SUMMARY"
