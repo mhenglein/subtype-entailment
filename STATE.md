@@ -1,5 +1,32 @@
 # Subtail — current research state
 
+## September 9: an exact decision for every terminal one-flag instance
+
+C065 gives a complete finite procedure for binary terminal instances with at
+most one forbidden ordered pair, including arbitrary Bad sets, initial/source
+states and multiple terminal finals. After an existence-preserving reduction
+to a return-free source, terminality makes the forbidden period unique. Rational
+length series count candidates and period incidences; their difference counts
+witnesses exactly. A numerator-degree bound gives a complete zero test and,
+for k>=2, the explicit witness bound `[k(k+1)/2]*(k+1)^k+k-2`.
+
+This closes the single-FLAG subcase, not arbitrary single-source target sets or
+Problem 1.7. It does not depend on the unresolved root-pumping claim. The same
+method applies when distinct productive targets cannot reach one another.
+C066 gives a seven-state acyclic two-target example where naive subtraction
+vanishes despite an existing witness: joint incidences of the SAME word are
+needed to extend the method. Rational length counting does not assert regularity
+of the witness language, nor that source-wise decisions compose.
+
+[Canonical C065/C066/E042 record](research/ONE_FLAG_COUNTING.md),
+[proof](notes/2026-09-09-one-flag-counting.md),
+[route outline](notes/2026-09-09-one-flag-route-outline.md),
+[code](experiments/one_flag_counting.py),
+[checks](results/one-flag-counting.json).
+Written proof and executed regressions; independent mathematical review pending,
+not Lean-checked. Earlier agent corrections and current unassigned handoffs below
+are preserved; no worker is assigned by this update.
+
 ## September 9 research-method update (organizational)
 
 Current priorities now require an end-to-end conceptual route, targeted

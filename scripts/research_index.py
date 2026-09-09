@@ -1,9 +1,8 @@
-"""Canonical research index with supplemental consolidation records.
+"""Canonical research index with supplemental research records.
 
 The historical indexer remains byte-for-byte in research_index_base.py. This
-front end adds canonical C/E records from the September 8 consolidation and
-its reviewed PR #12/#14 repair supplement without duplicating or renumbering
-the earlier monolithic ledgers.
+front end adds consolidation, repair and subsequent checked-result records
+without duplicating or renumbering the earlier monolithic ledgers.
 """
 import re
 import sys
@@ -46,7 +45,8 @@ def research_records(data):
     _sync_root()
     records = _original_research_records(data)
     for relative in ("research/CONSOLIDATION_2026-09-08.md",
-                     "research/REPAIRED_12_14_2026-09-08.md"):
+                     "research/REPAIRED_12_14_2026-09-08.md",
+                     "research/ONE_FLAG_COUNTING.md"):
         _add_ledger(records, ROOT / relative)
     return records
 

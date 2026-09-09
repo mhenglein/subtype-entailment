@@ -1,0 +1,161 @@
+{
+  "status": "PASS",
+  "seed": 2026090917,
+  "base": "05b20ee73841d0e7105a44beb761e553a7081a8d",
+  "counts": {
+    "raw_word_checks": 111413,
+    "accepted_word_checks": 760,
+    "period_incidences": 187,
+    "exact_length_coefficients": 1831,
+    "full_three_state_queries": 2304,
+    "sampled_four_state_queries": 320,
+    "finite_dag_queries": 300,
+    "finite_dag_words": 376,
+    "normalized_random_tables": 120,
+    "symbolic_denominator_checks": 321,
+    "scope_guards": 5,
+    "caps": 4
+  },
+  "three_state_verdicts": {
+    "NO": 1504,
+    "YES": 800
+  },
+  "dag_verdicts": {
+    "YES": 165,
+    "NO": 135
+  },
+  "fixtures": [
+    {
+      "name": "infinite_no_10star1",
+      "result": {
+        "monoid_size": 7,
+        "suffix_coefficient_bound": 42,
+        "full_witness_length_bound": 43,
+        "head": "",
+        "status": "NO",
+        "reason": "All coefficients below proved numerator-degree bound vanish",
+        "checked_coefficients": 42,
+        "work": 4513
+      }
+    },
+    {
+      "name": "infinite_yes_11101star1",
+      "result": {
+        "monoid_size": 17,
+        "suffix_coefficient_bound": 255,
+        "full_witness_length_bound": 258,
+        "head": "",
+        "status": "YES",
+        "word": "111011",
+        "method": "rational exact counting",
+        "first_positive_suffix_length": 6,
+        "witness_count": 1,
+        "accepted_count": 1,
+        "period_incidence_count": 0,
+        "checked_coefficients": 7,
+        "work": 1509,
+        "reconstruction_nodes": 7
+      }
+    },
+    {
+      "name": "six_state_extremal",
+      "result": {
+        "monoid_size": 46,
+        "suffix_coefficient_bound": 966,
+        "full_witness_length_bound": 970,
+        "head": "",
+        "status": "YES",
+        "word": "00001000",
+        "method": "rational exact counting",
+        "first_positive_suffix_length": 8,
+        "witness_count": 2,
+        "accepted_count": 2,
+        "period_incidence_count": 0,
+        "checked_coefficients": 9,
+        "work": 12176,
+        "reconstruction_nodes": 9
+      }
+    },
+    {
+      "name": "nonregular_unequal_blocks",
+      "result": {
+        "monoid_size": 9,
+        "suffix_coefficient_bound": 135,
+        "full_witness_length_bound": 138,
+        "head": "",
+        "status": "YES",
+        "word": "10110",
+        "method": "rational exact counting",
+        "first_positive_suffix_length": 5,
+        "witness_count": 2,
+        "accepted_count": 2,
+        "period_incidence_count": 0,
+        "checked_coefficients": 6,
+        "work": 477,
+        "reconstruction_nodes": 6
+      }
+    }
+  ],
+  "cancellation": {
+    "delta": [
+      [
+        1,
+        -1
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        3,
+        -1
+      ],
+      [
+        6,
+        -1
+      ],
+      [
+        -1,
+        5
+      ],
+      [
+        6,
+        -1
+      ],
+      [
+        -1,
+        -1
+      ]
+    ],
+    "flags": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ]
+    ],
+    "words": [
+      "0000",
+      "0110"
+    ],
+    "accepted_count": 2,
+    "period_incidence_count": 2,
+    "witness_count": 1
+  },
+  "antichain_result": {
+    "monoid_size": 15,
+    "suffix_coefficient_bound": 150,
+    "full_witness_length_bound": 152,
+    "head": "",
+    "status": "NO",
+    "reason": "All coefficients below proved numerator-degree bound vanish",
+    "checked_coefficients": 150,
+    "work": 129744
+  },
+  "border_lab_blob": "1144ae52379e0417772e79582269cacd91c5bc17",
+  "proof_status": "Written rational-series proof; not independently reviewed or Lean-checked",
+  "scope": "Every terminal one-flag instance; certified mutually-unreachable target sets; not arbitrary multi-flag existence"
+}
