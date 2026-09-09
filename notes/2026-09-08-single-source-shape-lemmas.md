@@ -254,6 +254,13 @@ values 4 and 6 this matches `2n - 4` for `n = 4, 5, 6`; the six-state value
 is a lower bound only, and no formula is conjectured beyond noting the
 coincidence with the C021 budget-growth pattern.
 
+Hill-climbing searches over single-source instances (scratch runs with a
+fixed seed, 8 restarts of 600 mutations each, cap 24; not part of the saved
+result) found shortest witnesses of length 8 for six states, 10 for seven
+states, and 10 for eight states. These are lower bounds from a weak search.
+Together with the exact values 4 and 6 they are consistent with, but do not
+establish, a linear maximum such as `2n - 4`.
+
 ## 8. Independent check and limits
 
 The census uses the direct witness predicate `border_lab.witness` and the
