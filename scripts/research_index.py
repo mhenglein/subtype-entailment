@@ -46,7 +46,8 @@ def research_records(data):
     records = _original_research_records(data)
     for relative in ("research/CONSOLIDATION_2026-09-08.md",
                      "research/REPAIRED_12_14_2026-09-08.md",
-                     "research/ONE_FLAG_COUNTING.md"):
+                     "research/ONE_FLAG_COUNTING.md",
+                     "research/COPY_CYCLES.md"):
         _add_ledger(records, ROOT / relative)
     return records
 

@@ -1,0 +1,514 @@
+{
+  "status": "PASS",
+  "seed": 2026091071,
+  "base": "2e431ff3d74d3ab1268866f86e24fd835ffe7fda",
+  "counts": {
+    "raw_general_words": 131071,
+    "raw_unary_annotation_words": 1048568,
+    "data_tuples": 1350,
+    "unary_tuple_annotations": 10880,
+    "complete_accepted_words": 10926,
+    "enumerated_length_coefficients": 86,
+    "one_flag_series_coefficients": 22,
+    "factor_coefficients": 500,
+    "unbordered_blocks": 510,
+    "commutation_words": 12282,
+    "primitivity_guards": 1,
+    "two_state_filters": 64,
+    "modular_filters": 136,
+    "finite_filter_words": 525,
+    "finite_filters": 90,
+    "exact_length_filters": 23,
+    "caps": 3,
+    "input_guards": 1,
+    "canonical_paths": 8,
+    "single_target_words": 72
+  },
+  "two_state_filters": {
+    "NO": 28,
+    "YES": 36
+  },
+  "modular_filters": {
+    "YES": 100,
+    "NO": 36
+  },
+  "finite_filters": {
+    "YES": 46,
+    "NO": 44
+  },
+  "exact_length_filters": [
+    {
+      "N": 2,
+      "length": 6,
+      "status": "NO"
+    },
+    {
+      "N": 3,
+      "length": 8,
+      "status": "NO"
+    },
+    {
+      "N": 4,
+      "length": 10,
+      "status": "YES"
+    },
+    {
+      "N": 5,
+      "length": 12,
+      "status": "NO"
+    },
+    {
+      "N": 6,
+      "length": 14,
+      "status": "YES"
+    },
+    {
+      "N": 7,
+      "length": 16,
+      "status": "NO"
+    },
+    {
+      "N": 8,
+      "length": 18,
+      "status": "YES"
+    },
+    {
+      "N": 9,
+      "length": 20,
+      "status": "YES"
+    },
+    {
+      "N": 10,
+      "length": 22,
+      "status": "YES"
+    },
+    {
+      "N": 11,
+      "length": 24,
+      "status": "NO"
+    },
+    {
+      "N": 12,
+      "length": 26,
+      "status": "YES"
+    },
+    {
+      "N": 13,
+      "length": 28,
+      "status": "NO"
+    },
+    {
+      "N": 14,
+      "length": 30,
+      "status": "YES"
+    },
+    {
+      "N": 15,
+      "length": 32,
+      "status": "YES"
+    },
+    {
+      "N": 16,
+      "length": 34,
+      "status": "YES"
+    },
+    {
+      "N": 17,
+      "length": 36,
+      "status": "NO"
+    },
+    {
+      "N": 18,
+      "length": 38,
+      "status": "YES"
+    },
+    {
+      "N": 19,
+      "length": 40,
+      "status": "NO"
+    },
+    {
+      "N": 20,
+      "length": 42,
+      "status": "YES"
+    },
+    {
+      "N": 21,
+      "length": 44,
+      "status": "YES"
+    },
+    {
+      "N": 22,
+      "length": 46,
+      "status": "YES"
+    },
+    {
+      "N": 23,
+      "length": 48,
+      "status": "NO"
+    },
+    {
+      "N": 24,
+      "length": 50,
+      "status": "YES"
+    }
+  ],
+  "cap_guards": [
+    "State cap",
+    "Work cap",
+    "Output expansion cap"
+  ],
+  "simplest": {
+    "domain_states": 1,
+    "data_states": 1,
+    "action_bound": 2,
+    "search_state_bound": 4,
+    "witness_length_bound": 22,
+    "status": "YES",
+    "word": "1000011000",
+    "data_word": "0",
+    "earlier_copies": 1,
+    "states": 2,
+    "work": 3
+  },
+  "semantic_realizations": [
+    {
+      "states": 11,
+      "variables": 23,
+      "constraints": 25
+    },
+    {
+      "states": 13,
+      "variables": 27,
+      "constraints": 34
+    }
+  ],
+  "single_target_fixture": {
+    "delta": [
+      [
+        2,
+        -1
+      ],
+      [
+        4,
+        3
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        -1,
+        -1
+      ]
+    ],
+    "flags": [
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        3,
+        2
+      ]
+    ],
+    "witness": "01100",
+    "sole_one_visit_candidate": "000"
+  },
+  "unary_table": [
+    [
+      -1,
+      6
+    ],
+    [
+      7,
+      6
+    ],
+    [
+      8,
+      6
+    ],
+    [
+      -1,
+      9
+    ],
+    [
+      10,
+      9
+    ],
+    [
+      -1,
+      -1
+    ],
+    [
+      -1,
+      1
+    ],
+    [
+      2,
+      -1
+    ],
+    [
+      -1,
+      3
+    ],
+    [
+      -1,
+      4
+    ],
+    [
+      5,
+      -1
+    ]
+  ],
+  "unary_flags": [
+    [
+      0,
+      4
+    ],
+    [
+      1,
+      3
+    ],
+    [
+      2,
+      4
+    ]
+  ],
+  "general_table": [
+    [
+      -1,
+      8
+    ],
+    [
+      9,
+      8
+    ],
+    [
+      9,
+      8
+    ],
+    [
+      10,
+      8
+    ],
+    [
+      -1,
+      11
+    ],
+    [
+      12,
+      11
+    ],
+    [
+      12,
+      11
+    ],
+    [
+      -1,
+      -1
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      3,
+      -1
+    ],
+    [
+      -1,
+      4
+    ],
+    [
+      5,
+      6
+    ],
+    [
+      7,
+      -1
+    ]
+  ],
+  "general_flags": [
+    [
+      0,
+      5
+    ],
+    [
+      0,
+      6
+    ],
+    [
+      1,
+      4
+    ],
+    [
+      1,
+      6
+    ],
+    [
+      2,
+      4
+    ],
+    [
+      2,
+      5
+    ],
+    [
+      3,
+      5
+    ],
+    [
+      3,
+      6
+    ]
+  ],
+  "coefficient_rows": [
+    {
+      "length": 10,
+      "equal": 1,
+      "two_flags": 1
+    },
+    {
+      "length": 12,
+      "equal": 0,
+      "two_flags": 1
+    },
+    {
+      "length": 14,
+      "equal": 2,
+      "two_flags": 3
+    },
+    {
+      "length": 16,
+      "equal": 0,
+      "two_flags": 2
+    },
+    {
+      "length": 18,
+      "equal": 2,
+      "two_flags": 5
+    },
+    {
+      "length": 20,
+      "equal": 1,
+      "two_flags": 4
+    },
+    {
+      "length": 22,
+      "equal": 2,
+      "two_flags": 6
+    },
+    {
+      "length": 24,
+      "equal": 0,
+      "two_flags": 6
+    },
+    {
+      "length": 26,
+      "equal": 4,
+      "two_flags": 9
+    },
+    {
+      "length": 28,
+      "equal": 0,
+      "two_flags": 6
+    },
+    {
+      "length": 30,
+      "equal": 2,
+      "two_flags": 11
+    },
+    {
+      "length": 32,
+      "equal": 2,
+      "two_flags": 10
+    },
+    {
+      "length": 34,
+      "equal": 3,
+      "two_flags": 11
+    },
+    {
+      "length": 36,
+      "equal": 0,
+      "two_flags": 11
+    },
+    {
+      "length": 38,
+      "equal": 4,
+      "two_flags": 15
+    },
+    {
+      "length": 40,
+      "equal": 0,
+      "two_flags": 12
+    },
+    {
+      "length": 42,
+      "equal": 4,
+      "two_flags": 17
+    },
+    {
+      "length": 44,
+      "equal": 2,
+      "two_flags": 14
+    },
+    {
+      "length": 46,
+      "equal": 2,
+      "two_flags": 17
+    },
+    {
+      "length": 48,
+      "equal": 0,
+      "two_flags": 18
+    },
+    {
+      "length": 50,
+      "equal": 6,
+      "two_flags": 21
+    },
+    {
+      "length": 52,
+      "equal": 1,
+      "two_flags": 16
+    },
+    {
+      "length": 54,
+      "equal": 2,
+      "two_flags": 22
+    },
+    {
+      "length": 56,
+      "equal": 2,
+      "two_flags": 22
+    },
+    {
+      "length": 58,
+      "equal": 4,
+      "two_flags": 23
+    },
+    {
+      "length": 60,
+      "equal": 0,
+      "two_flags": 22
+    },
+    {
+      "length": 62,
+      "equal": 6,
+      "two_flags": 27
+    }
+  ],
+  "border_lab_blob": "1144ae52379e0417772e79582269cacd91c5bc17",
+  "proof_status": "Written proofs; not independently reviewed or Lean-checked",
+  "scope": "Fixed explicit families and supplied regular filters, not unrestricted BorderAvoid"
+}

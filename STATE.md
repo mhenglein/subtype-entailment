@@ -1,5 +1,31 @@
 # Subtail — current research state
 
+## September 10: copy-cycle acceleration and nonrational length counts
+
+C069 supplies an eleven-state, three-flag terminal instance whose witnesses
+have lengths 2N+2 exactly for composite N. Its exact count is tau(N)-2; the
+length support is nonsemilinear and its counting series is nonrational.
+Two- and one-flag variants also have nonrational RAW counts. This does not
+contradict C065, which counts an existence-preserving return-free normal form,
+or the newer C067 source-capture decision. The fixed instance has a short
+witness; no noncomputability or undecidability conclusion follows.
+
+C070 supplies an exact finite summary for a concrete unbounded-copy recurrence:
+B^m 01 B with one shared primitive B=E(u)00. The equation UB=BU represents
+all positive copy counts. A finite action-product/orbit solver decides the
+family under arbitrary regular constraints on u and the whole output, without
+an external SMT engine. This is not a general automaton decomposition.
+
+[Canonical C069/C070/E044 record](research/COPY_CYCLES.md),
+[proof and precise scope](notes/2026-09-10-copy-cycles-and-length-series.md),
+[implementation](experiments/copy_cycle.py),
+[result](results/copy-cycle.json),
+[remaining route obligation](notes/2026-09-10-copy-cycle-route-outline.md).
+Written proofs plus reproduction; independent review pending, not Lean.
+The unresolved step is a complete existence-preserving cover, or a different
+terminating treatment when shared blocks change along recurrent interactions.
+Earlier agent results and ownership below are retained.
+
 ## September 9: source capture bypasses the single-source pumping gap
 
 C067 gives a written decision/PSPACE upper-bound proof for **all single-source
