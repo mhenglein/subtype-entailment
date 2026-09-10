@@ -1,10 +1,10 @@
 """Exact four-state diagnostic for Q004 source-simple normalization.
 
-Besides literal flagged sources, compute ACTIVE flags: a flag (p,q) is active
-only if some accepted safe run can visit p and later q. Dead flags can be
-removed without changing witnesshood. The normalized four-state theorem says
-every positive instance has a witness through length four, so this finite
-class can exactly falsify either source-simple conjecture.
+Besides literal flagged sources, compute LIVE flags: a flag (p,q) is live only
+if some accepted safe run can visit p and later q. Dead flags can be removed
+without changing witnesshood. The normalized four-state theorem says every
+positive instance has a witness through length four, so this finite class can
+exactly falsify either source-simple conjecture.
 """
 import itertools
 import json
@@ -45,17 +45,13 @@ def reverse_reachable(delta, targets):
     return seen
 
 
-def active_flags(I):
-    # No Bad states occur in this normalized census. A flag can occur at i<=j
-    # on an accepted run iff p is start-reachable, q is reachable from p, and
-    # q can still reach the terminal final.
+def live_flags(I):
+    """Flags realizable in order on some accepted run (no Bad in this census)."""
     from_start = reachable(I.delta, {I.start})
     to_final = reverse_reachable(I.delta, I.final)
-    out = set()
-    for p, q in I.flags:
-        if p in from_start and q in to_final and q in reachable(I.delta, {p}):
-            out.add((p, q))
-    return frozenset(out)
+    reach_cache = {p: reachable(I.delta, {p}) for p in range(len(I.delta))}
+    return frozenset((p, q) for p, q in I.flags
+                     if p in from_start and q in to_final and q in reach_cache[p])
 
 
 def counts_for_sources(I, w, sources):
@@ -69,13 +65,10 @@ def simple_for_sources(I, w, sources):
 
 def main():
     total = positive = negative = 0
-    literal_simple = active_simple = 0
-    literal_counterexamples = []
-    active_counterexamples = []
-    active_visit_distribution = Counter()
-    active_multiplicity_distribution = Counter()
-    max_active_total = max_active_mult = 0
-    active_extremal = None
+    literal_simple = live_simple = 0
+    live_visit_distribution = Counter()
+    live_multiplicity_distribution = Counter()
+    max_live_total = max_live_mult = 0
 
     for transitions in itertools.product((-1, 1, 2, 3), repeat=6):
         delta = tuple(tuple(transitions[2*q:2*q+2]) for q in range(3)) + ((-1, -1),)
@@ -89,59 +82,42 @@ def main():
                 continue
             positive += 1
             literal_sources = {p for p, _ in flags}
-            aflags = active_flags(I)
-            active_sources = {p for p, _ in aflags}
+            lflags = live_flags(I)
+            live_sources = {p for p, _ in lflags}
 
-            ls = [w for w in ws if simple_for_sources(I, w, literal_sources)]
-            if ls:
+            if any(simple_for_sources(I, w, literal_sources) for w in ws):
                 literal_simple += 1
-            elif len(literal_counterexamples) < 8:
-                literal_counterexamples.append({
-                    'delta': delta, 'flags': sorted(flags), 'active_flags': sorted(aflags),
-                    'witnesses_through_4': ws,
-                    'counts': {w: counts_for_sources(I, w, literal_sources) for w in ws},
-                })
-
-            ac = [w for w in ws if simple_for_sources(I, w, active_sources)]
-            if ac:
-                active_simple += 1
-            elif len(active_counterexamples) < 8:
-                active_counterexamples.append({
-                    'delta': delta, 'flags': sorted(flags), 'active_flags': sorted(aflags),
-                    'witnesses_through_4': ws,
-                    'counts': {w: counts_for_sources(I, w, active_sources) for w in ws},
-                })
+            if any(simple_for_sources(I, w, live_sources) for w in ws):
+                live_simple += 1
 
             scored = []
             for w in ws:
-                counts = counts_for_sources(I, w, active_sources)
-                scored.append((sum(counts.values()), max(counts.values(), default=0), len(w), w, counts))
+                counts = counts_for_sources(I, w, live_sources)
+                scored.append((sum(counts.values()), max(counts.values(), default=0)))
             best = min(scored)
-            active_visit_distribution[best[0]] += 1
-            active_multiplicity_distribution[best[1]] += 1
-            if (best[0], best[1]) > (max_active_total, max_active_mult):
-                max_active_total, max_active_mult = best[0], best[1]
-                active_extremal = {'delta': delta, 'flags': sorted(flags),
-                                   'active_flags': sorted(aflags), 'word': best[3],
-                                   'counts': best[4], 'length': best[2]}
+            live_visit_distribution[best[0]] += 1
+            live_multiplicity_distribution[best[1]] += 1
+            max_live_total = max(max_live_total, best[0])
+            max_live_mult = max(max_live_mult, best[1])
 
     assert total == 65536 and positive + negative == total
+    assert literal_simple == 45426  # catches accidental class-definition drift
     result = {
-        'status': 'PASS', 'instances': total, 'positive': positive, 'negative': negative,
+        'status': 'PASS',
+        'instances': total,
+        'positive': positive,
+        'negative': negative,
         'literal_source_simple_positive': literal_simple,
         'literal_source_simple_counterexamples': positive - literal_simple,
-        'literal_counterexample_samples': literal_counterexamples,
-        'active_source_simple_positive': active_simple,
-        'active_source_simple_counterexamples': positive - active_simple,
-        'active_counterexample_samples': active_counterexamples,
-        'max_min_active_source_visits': max_active_total,
-        'max_min_active_source_multiplicity': max_active_mult,
-        'minimum_active_visit_distribution': dict(sorted(active_visit_distribution.items())),
-        'minimum_active_multiplicity_distribution': dict(sorted(active_multiplicity_distribution.items())),
-        'active_extremal': active_extremal,
-        'scope': ('Exact over the complete normalized four-state terminal class. Active-flag '
-                  'normalization is exact here because dead flags cannot occur in any i<=j '
-                  'pair on a safe accepted run. Finite-class survival is not a general theorem.'),
+        'live_source_simple_positive': live_simple,
+        'live_source_simple_counterexamples': positive - live_simple,
+        'max_min_live_source_visits': max_live_total,
+        'max_min_live_source_multiplicity': max_live_mult,
+        'minimum_live_visit_distribution': dict(sorted(live_visit_distribution.items())),
+        'minimum_live_multiplicity_distribution': dict(sorted(live_multiplicity_distribution.items())),
+        'scope': ('Exact over the complete normalized four-state terminal class. Dead-flag '
+                  'pruning is exact here because such a flag cannot occur in order on any '
+                  'accepted run. Survival in this finite class is evidence, not a Q004 proof.'),
     }
     out = ROOT / 'results' / 'source-simple-four-state.json'
     out.write_text(json.dumps(result, indent=2, sort_keys=True) + '\n')
