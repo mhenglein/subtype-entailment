@@ -33,10 +33,8 @@ def in_formula(w):
         j = i
         while j < n and w[j] == '0':
             j += 1
-        # Final block 0*11.
         if w[j:] == '11':
             return True
-        # Recursive block 0*101.
         if w[j:j+3] != '101':
             return False
         i = j + 3
@@ -59,9 +57,8 @@ def source_simple(I, w):
 
 def main():
     I = instance()
-    # Explicit words make both flags live globally.
     assert live_pair_on_word(I, (0,1), '1111')
-    assert live_pair_on_word(I, (2,1), '11101111')
+    assert live_pair_on_word(I, (2,1), '1110111')
 
     positive = '11011'
     assert I.admissible(positive)
@@ -72,7 +69,6 @@ def main():
     assert I.admissible(only_source_simple) and source_simple(I, only_source_simple)
     assert not witness(I, only_source_simple)
 
-    # Bounded differential checks support the exact regular-expression proof.
     checked = accepted = witness_count = simple_accepted = 0
     for w in words('01', 14):
         direct = I.admissible(w)
@@ -80,7 +76,8 @@ def main():
         if direct:
             accepted += 1
             assert witness(I, w) == border_witness(I, w)
-            if witness(I, w): witness_count += 1
+            if witness(I, w):
+                witness_count += 1
             if source_simple(I, w):
                 simple_accepted += 1
                 assert w == only_source_simple
