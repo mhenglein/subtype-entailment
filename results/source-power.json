@@ -1,0 +1,69 @@
+{
+  "status": "PASS",
+  "seed": 2026091072,
+  "counts": {
+    "conjugacy_identities": 173910,
+    "three_state_loop_contexts": 2200,
+    "boundary_comparisons": 14424,
+    "capture_border_checks": 2404,
+    "first_return_commutations": 56896,
+    "random_contexts": 204,
+    "large_exponent_checks": 2404,
+    "rotation_checks": 2097,
+    "two_cycle_profiles": 81,
+    "guard_cases": 6,
+    "canonical_paths": 6
+  },
+  "exceptional_fixture": {
+    "delta": [
+      [
+        1,
+        3
+      ],
+      [
+        -1,
+        2
+      ],
+      [
+        0,
+        -1
+      ],
+      [
+        4,
+        -1
+      ],
+      [
+        -1,
+        5
+      ],
+      [
+        -1,
+        -1
+      ]
+    ],
+    "flags": [
+      [
+        0,
+        2
+      ]
+    ],
+    "base": "010",
+    "tail": "101",
+    "word": "010010101",
+    "earliest_source_valid": true,
+    "witness": false,
+    "certificate": [
+      1,
+      2,
+      "exceptional"
+    ]
+  },
+  "huge_exponent": 1000000000000000000000000000000000000000000000000000000000000,
+  "dependency_blobs": {
+    "border_lab.py": "1144ae52379e0417772e79582269cacd91c5bc17",
+    "terminal_realization.py": "00b5dbb2ab345fd15db8660e8ae5179b0bfc2969",
+    "denial_bridge.py": "a38a21df533d8853aa34b3b2593d164a4a688447"
+  },
+  "proof_status": "Written all-length arguments; not independently reviewed or Lean-checked",
+  "scope": "Boundary-origin reduction and supplied finite power schemes; not unrestricted coverage"
+}

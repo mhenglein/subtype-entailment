@@ -1,5 +1,34 @@
 # Subtail — current research state
 
+## September 10: exact synthesis inside unbounded source-cycle power schemes
+
+C071 eliminates every forbidden comparison from the repeated boundaries of
+B^m Y, with one unknown first-return loop word B, unknown terminal tail Y,
+and unbounded m. Periodic-prefix matches reduce to the earliest source;
+other matches reduce to finitely many captures of borders of Y and an exact
+three-case power-conjugacy calculation. A pair-state regular monitor checks
+all relevant block boundaries without expanding the exponent. The exceptional
+conjugacy is essential: 010010101 passes its earliest source but is invalid
+at a later copy. Lexical primitivity of B is not required.
+
+C072 rotates a source-simple cycle to cover its internal sources and composes
+finitely many such powered phases with shared tails. It gives a positive
+existential word-equation reduction, hence a decision and PSPACE upper bound
+for witness existence INSIDE A SUPPLIED SCHEME, allowing mixed good/bad families.
+This goes beyond listing a bounded number of source visits, but does not prove
+that a finite family of schemes covers every positive input. Changes of loop
+word and an unbounded number of phases remain the global gap; Q004 is open.
+
+[Canonical C071/C072/E045 record](research/SOURCE_POWER_SCHEMES.md),
+[proof and exact external-theorem mapping](notes/2026-09-10-source-power-schemes.md),
+[compiler](experiments/source_power_formula.py),
+[deterministic checks](results/source-power.json).
+Written proof plus reproduction; independent review pending, not Lean. The
+optional string engine remains incomplete: all six larger two-cycle probes
+and both free-exponent probes were UNKNOWN at the recorded caps. Earlier
+results, refutations, ownership and historical handoffs below are preserved.
+
+
 ## September 10: copy-cycle acceleration and nonrational length counts
 
 C069 supplies an eleven-state, three-flag terminal instance whose witnesses

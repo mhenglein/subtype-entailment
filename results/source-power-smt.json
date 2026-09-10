@@ -1,0 +1,287 @@
+{
+  "status": "PASS",
+  "counts": {
+    "SAT": 5,
+    "UNSAT": 10,
+    "UNKNOWN": 13
+  },
+  "probes": [
+    {
+      "name": "ground_0",
+      "expected": true,
+      "result": {
+        "status": "SAT",
+        "values": {
+          "B_1": "10",
+          "U_2": "10",
+          "Y_3": "110"
+        },
+        "backend": "Z3 version 4.13.3.0"
+      }
+    },
+    {
+      "name": "ground_1",
+      "expected": false,
+      "result": {
+        "status": "UNSAT",
+        "values": {},
+        "backend": "Z3 version 4.13.3.0"
+      }
+    },
+    {
+      "name": "ground_2",
+      "expected": true,
+      "result": {
+        "status": "UNKNOWN",
+        "reason": "Incomplete backend or solver timeout",
+        "backend": "Z3 version 4.13.3.0"
+      }
+    },
+    {
+      "name": "ground_3",
+      "expected": true,
+      "result": {
+        "status": "UNKNOWN",
+        "reason": "Incomplete backend or solver timeout",
+        "backend": "Z3 version 4.13.3.0"
+      }
+    },
+    {
+      "name": "ground_4",
+      "expected": true,
+      "result": {
+        "status": "SAT",
+        "values": {
+          "B_1": "0",
+          "U_2": "0",
+          "Y_3": "001"
+        },
+        "backend": "Z3 version 4.13.3.0"
+      }
+    },
+    {
+      "name": "ground_5",
+      "expected": true,
+      "result": {
+        "status": "UNKNOWN",
+        "reason": "Incomplete backend or solver timeout",
+        "backend": "Z3 version 4.13.3.0"
+      }
+    },
+    {
+      "name": "ground_6",
+      "expected": false,
+      "result": {
+        "status": "UNSAT",
+        "values": {},
+        "backend": "Z3 version 4.13.3.0"
+      }
+    },
+    {
+      "name": "ground_7",
+      "expected": false,
+      "result": {
+        "status": "UNSAT",
+        "values": {},
+        "backend": "Z3 version 4.13.3.0"
+      }
+    },
+    {
+      "name": "ground_8",
+      "expected": true,
+      "result": {
+        "status": "SAT",
+        "values": {
+          "B_1": "01",
+          "U_2": "",
+          "Y_3": "00"
+        },
+        "backend": "Z3 version 4.13.3.0"
+      }
+    },
+    {
+      "name": "ground_9",
+      "expected": false,
+      "result": {
+        "status": "UNSAT",
+        "values": {},
+        "backend": "Z3 version 4.13.3.0"
+      }
+    },
+    {
+      "name": "ground_10",
+      "expected": true,
+      "result": {
+        "status": "UNKNOWN",
+        "reason": "Incomplete backend or solver timeout",
+        "backend": "Z3 version 4.13.3.0"
+      }
+    },
+    {
+      "name": "ground_11",
+      "expected": false,
+      "result": {
+        "status": "UNSAT",
+        "values": {},
+        "backend": "Z3 version 4.13.3.0"
+      }
+    },
+    {
+      "name": "ground_12",
+      "expected": false,
+      "result": {
+        "status": "UNSAT",
+        "values": {},
+        "backend": "Z3 version 4.13.3.0"
+      }
+    },
+    {
+      "name": "ground_13",
+      "expected": false,
+      "result": {
+        "status": "UNSAT",
+        "values": {},
+        "backend": "Z3 version 4.13.3.0"
+      }
+    },
+    {
+      "name": "ground_14",
+      "expected": false,
+      "result": {
+        "status": "UNKNOWN",
+        "reason": "Incomplete backend or solver timeout",
+        "backend": "Z3 version 4.13.3.0"
+      }
+    },
+    {
+      "name": "ground_15",
+      "expected": false,
+      "result": {
+        "status": "UNSAT",
+        "values": {},
+        "backend": "Z3 version 4.13.3.0"
+      }
+    },
+    {
+      "name": "essential_exception",
+      "expected": false,
+      "result": {
+        "status": "UNSAT",
+        "values": {},
+        "backend": "Z3 version 4.13.3.0"
+      }
+    },
+    {
+      "name": "two_cycle_0",
+      "word": "10",
+      "expected": true,
+      "result": {
+        "status": "UNKNOWN",
+        "reason": "Incomplete backend or solver timeout",
+        "backend": "Z3 version 4.13.3.0"
+      }
+    },
+    {
+      "name": "two_cycle_1",
+      "word": "00111110",
+      "expected": true,
+      "result": {
+        "status": "UNKNOWN",
+        "reason": "Incomplete backend or solver timeout",
+        "backend": "Z3 version 4.13.3.0"
+      }
+    },
+    {
+      "name": "two_cycle_2",
+      "word": "00111110",
+      "expected": false,
+      "result": {
+        "status": "UNKNOWN",
+        "reason": "Incomplete backend or solver timeout",
+        "backend": "Z3 version 4.13.3.0"
+      }
+    },
+    {
+      "name": "two_cycle_3",
+      "word": "0000111110",
+      "expected": true,
+      "result": {
+        "status": "UNKNOWN",
+        "reason": "Incomplete backend or solver timeout",
+        "backend": "Z3 version 4.13.3.0"
+      }
+    },
+    {
+      "name": "two_cycle_4",
+      "word": "111110",
+      "expected": true,
+      "result": {
+        "status": "UNKNOWN",
+        "reason": "Incomplete backend or solver timeout",
+        "backend": "Z3 version 4.13.3.0"
+      }
+    },
+    {
+      "name": "two_cycle_5",
+      "word": "000010",
+      "expected": false,
+      "result": {
+        "status": "UNKNOWN",
+        "reason": "Incomplete backend or solver timeout",
+        "backend": "Z3 version 4.13.3.0"
+      }
+    },
+    {
+      "name": "small_full_scheme_0",
+      "expected": true,
+      "result": {
+        "status": "SAT",
+        "values": {
+          "word_4": "100",
+          "power_2": ""
+        },
+        "backend": "Z3 version 4.13.3.0"
+      }
+    },
+    {
+      "name": "small_full_scheme_1",
+      "expected": true,
+      "result": {
+        "status": "SAT",
+        "values": {
+          "word_4": "0100",
+          "power_2": "0"
+        },
+        "backend": "Z3 version 4.13.3.0"
+      }
+    },
+    {
+      "name": "small_full_scheme_2",
+      "expected": false,
+      "result": {
+        "status": "UNSAT",
+        "values": {},
+        "backend": "Z3 version 4.13.3.0"
+      }
+    },
+    {
+      "name": "small_full_scheme_positive",
+      "expected": true,
+      "result": {
+        "status": "UNKNOWN",
+        "reason": "Incomplete backend or solver timeout",
+        "backend": "Z3 version 4.13.3.0"
+      }
+    },
+    {
+      "name": "small_full_scheme_two_or_more",
+      "expected": false,
+      "result": {
+        "status": "UNKNOWN",
+        "reason": "Incomplete backend or solver timeout",
+        "backend": "Z3 version 4.13.3.0"
+      }
+    }
+  ],
+  "caveat": "Incomplete optional string backend, UNKNOWN retained; UNSAT is not independently proof checked"
+}
