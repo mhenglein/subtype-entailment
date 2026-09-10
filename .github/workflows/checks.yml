@@ -47,6 +47,7 @@ jobs:
           python3 experiments/check_bi_residue_cut_certificate.py
           python3 experiments/check_word_period_cut_certificate.py
           python3 experiments/primitive_deletion_windows.py
+          python3 experiments/check_source_simple_census.py
       - name: Verify recorded results
         run: git diff --exit-code -- results/independent-checks.json results/topfree-bridge.json results/context-cuts.json results/budget-search.json results/boundary-slices.json results/summary-bridge.json results/summary-bridge-audit.json results/shortest-witnesses.json results/trimmed-budget.json results/semantic-marker-tails.json results/synchronous-separators.json results/macro-marker-tails.json results/last-aligned-separators.json results/three-way-cut-certificate.json results/orbit-split-cut-certificate.json results/bi-residue-cut-certificate.json results/word-period-cut-certificate.json results/primitive-deletion-windows.json
   continuation-experiments:
