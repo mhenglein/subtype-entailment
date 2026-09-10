@@ -1,0 +1,23 @@
+{
+  "instances": 65536,
+  "literal_source_simple_counterexamples": 4,
+  "literal_source_simple_positive": 45426,
+  "live_source_simple_counterexamples": 0,
+  "live_source_simple_positive": 45430,
+  "max_min_live_source_multiplicity": 1,
+  "max_min_live_source_visits": 3,
+  "minimum_live_multiplicity_distribution": {
+    "0": 29656,
+    "1": 15774
+  },
+  "minimum_live_visit_distribution": {
+    "0": 29656,
+    "1": 13804,
+    "2": 1858,
+    "3": 112
+  },
+  "negative": 20106,
+  "positive": 45430,
+  "scope": "Exact over the complete normalized four-state terminal class. Dead-flag pruning is exact here because such a flag cannot occur in order on any accepted run. Survival in this finite class is evidence, not a Q004 proof.",
+  "status": "PASS"
+}
