@@ -1,5 +1,37 @@
 # Subtail — current research state
 
+## September 12: recovered source-visit bounds and closed-source-walk schemes
+
+C073 records exact source-visit counts for the existing C046 modular family,
+including genuinely live flags and the prime-period growth
+`exp((1+o(1))*sqrt(k*log(k)))`. Polynomial total-source-visit bounds are excluded;
+Q004's unrestricted computable-bound question is not refuted.
+
+C074 supplies an exact source-arrival counter lift. A loop with a supplied
+number of arrivals and every source-position rotation become first-return in
+the corresponding lift. Commutation plus the lifted pivot-loop condition
+represents whole-base powers, without lexical primitivity. Flags must be
+lifted over all residue pairs, not just equal residues.
+
+Using C071, C075 extends supplied power-scheme compilation to closed source
+walks with repeated labels. Phase-local counters retain one shared assignment
+of bases and tails. The formula gives a PSPACE upper bound INSIDE A SUPPLIED
+SCHEME through the stated external theorem; the implementation is a compiler,
+not the complete decision backend. A computable existence-preserving bound on
+phase count and total listed base-source occurrences remains unproved.
+
+Both formerly chat-only bundles are now recoverable from the repository:
+original proofs, code, route outline, counterexamples, compact checks and
+original manifests, plus deterministic reconstruction of every large result
+and the explicit positive certificate. All fourteen manifest-listed files
+replayed byte-for-byte during integration. No independent mathematical review,
+Lean check, or full local repository CI is claimed. False assignments are not
+UNSAT certificates. Earlier history, evidence levels and ownership are retained.
+
+[Canonical C073-C075 / E046-E047 record and handoff](research/RECOVERED_SOURCE_WALKS.md),
+[full recovery command and provenance](experiments/recovered_2026_09_12/README.md).
+The unrestricted subtype-entailment problem remains open.
+
 ## September 10: exact synthesis inside unbounded source-cycle power schemes
 
 C071 eliminates every forbidden comparison from the repeated boundaries of

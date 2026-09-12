@@ -1,0 +1,142 @@
+{
+  "status": "ALL CHECKS PASSED",
+  "seed": 2026091217,
+  "bounds": {
+    "projection": {
+      "instances": 90,
+      "states": "2..6",
+      "moduli": "1..4",
+      "all_binary_words_through": 7
+    },
+    "power_guards": {
+      "generated_tables": 200,
+      "loop_length_at_most": 6,
+      "bases_per_pivot_at_most": 18,
+      "all_U_loops_through": 6
+    },
+    "phase_rotation": {
+      "retained_contexts": 110,
+      "source_arrivals_per_base_at_most": 4,
+      "copy_exponents": "0..4"
+    }
+  },
+  "counts": {
+    "boundary_formula_false_assignments": 35,
+    "boundary_formula_grounded_models": 100,
+    "boundary_formula_true_models": 65,
+    "complete_phase_queries": 550,
+    "different_modulus_shared_tail_models": 9,
+    "empty_star_without_base_models": 2,
+    "existing_exceptional_conjugacy_regressions": 1,
+    "fractional_commuters_rejected": 1605,
+    "full_scheme_false_assignments": 12,
+    "full_scheme_grounded_models": 20,
+    "full_scheme_true_models": 8,
+    "lifted_boundary_queries": 1228,
+    "multisource_full_scheme_grounded_models": 9,
+    "nonsuffix_grounded_models": 225,
+    "power_guard_pairs": 39346,
+    "projection_instances": 90,
+    "projection_words": 22950,
+    "rotated_first_returns": 4925,
+    "terminal_border_width_words": 332
+  },
+  "formula_example": {
+    "nodes": 1935,
+    "equations": 564,
+    "regular_atoms": 689,
+    "variables": 676,
+    "dfas": 49,
+    "dfa_states": 824
+  },
+  "fractional_power_counterexample": {
+    "base": "1010",
+    "fractional_commuter": "10",
+    "base_source_arrivals": 2,
+    "commuter_source_arrivals": 1,
+    "commutes": true,
+    "whole_base_power": false,
+    "counter_guard_accepts": false,
+    "positive_word": "1010110",
+    "live_flag_word": "0110"
+  },
+  "interior_deletion_counterexample": {
+    "instance": {
+      "delta": [
+        [
+          0,
+          1
+        ],
+        [
+          3,
+          -1
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          -1,
+          -1
+        ]
+      ],
+      "start": 1,
+      "finals": [
+        4
+      ],
+      "bad": [],
+      "flags": [
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "witness": "01001011001",
+    "run": [
+      1,
+      3,
+      0,
+      0,
+      0,
+      1,
+      3,
+      0,
+      1,
+      3,
+      2,
+      4
+    ],
+    "deleted_interval": [
+      5,
+      8
+    ],
+    "deleted_word": "011",
+    "shortened": "01001001",
+    "shortened_run": [
+      1,
+      3,
+      0,
+      0,
+      0,
+      1,
+      3,
+      2,
+      4
+    ],
+    "new_forbidden_cuts": [
+      0,
+      3
+    ],
+    "new_repeated_suffix": "01001"
+  },
+  "solver_executed": false,
+  "lean_checked": false,
+  "independent_mathematical_review": false,
+  "unrestricted_problem_solved": false,
+  "interpretation": "Finite regressions and supplied-assignment checks. No bounded failure is an unrestricted NO."
+}

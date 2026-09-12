@@ -1,0 +1,26 @@
+{
+  "recovered_on": "2026-09-12",
+  "integration_base": "52d5270342b27aee3cad10e1b2d0ac7d9307a580",
+  "archives": {
+    "subtail_source_visit_bound.zip": "b63253f6d7b9513011e6ecf8147d1b8c3c650bb6cdb30cde71f14f3856a85432",
+    "subtail_closed_walk_lift.zip": "de3e5db82bdc72ce1b7df511334838ac082093916ff077b49dd86e1bf5424644"
+  },
+  "generated_files": {
+    "subtail_source_visit_bound/run.log": {
+      "sha256": "9032d5103313da609614b558f81fbbf0f31f8afe964a5f110928c65fb2752619",
+      "size_bytes": 5952
+    },
+    "subtail_source_visit_bound/results.json": {
+      "sha256": "795bd5b0f0e9eb134bcbce8b3e4cfb0da2c278395dd484bf0f321806b3f0d28f",
+      "size_bytes": 366011
+    },
+    "subtail_closed_walk_lift/formula-example.json": {
+      "sha256": "50ddf09e56c85d6a1dea7c0884d2ea33b177ad756b24090b179c1bdd467ad621",
+      "size_bytes": 1321119
+    },
+    "subtail_closed_walk_lift/witness-model.json": {
+      "sha256": "d15f29ae15f6f7785f60ea6879a0c905778f720ac1979b945e2b3640359939ff",
+      "size_bytes": 16425
+    }
+  }
+}
