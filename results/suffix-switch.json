@@ -1,0 +1,50 @@
+{
+  "complete_oracle_verdicts": {
+    "NO": 61,
+    "YES": 15
+  },
+  "counts": {
+    "cap_regressions": 2,
+    "complete_finite_candidate_words": 2426,
+    "complete_finite_instances": 16,
+    "complete_fixed_master_graphs": 60,
+    "exact_cost_partition_oracles": 244,
+    "raw_binary_comparisons": 8191,
+    "shared_assignment_regressions": 2,
+    "structured_five_way_comparisons": 1452
+  },
+  "demo": {
+    "data": [
+      [
+        0
+      ],
+      [
+        1
+      ]
+    ],
+    "sequence": [
+      0,
+      1
+    ],
+    "word": [
+      2,
+      0,
+      3,
+      1,
+      4,
+      3,
+      1,
+      4,
+      5,
+      2,
+      0,
+      3,
+      1,
+      4
+    ]
+  },
+  "evidence": "Executed finite checks, no Lean or independent mathematical review",
+  "scope": "Supplied suffix dictionary; targets confined to final master. Not general coverage.",
+  "seed": 2026091362,
+  "status": "PASS"
+}

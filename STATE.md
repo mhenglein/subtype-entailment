@@ -1,5 +1,29 @@
 # Subtail — current research state
 
+## September 13: exact exponential scheme cost; switching does not close coverage
+
+C076 strengthens the obstruction from source visits to the precise C075 symbolic
+scheme cost. A binary counter/synchronization family has at most 18d^2+11d+8
+states, one witness, and exact minimum cost (d+1)*(d*2^d+1), even after every
+semantically dead flag is removed. Same-phase counter windows are injective,
+so no source-pivot loop can repeat twice. Unknown bases and unbounded powers
+therefore do not give a polynomial-cost cover in this syntax. A larger computable
+cover, Q004 and C075's supplied-scheme theorem are not refuted. The underlying
+synchronization/counter construction is prior C048/C050 work.
+
+The attempted alternative gives an exact finite-action solver for finite-control
+switching among shared marked suffixes, with regular guards and a common terminal
+master. Its targets stay in that master, overlapping the earlier target-frontier
+regime. It does not establish new general recurrent-target coverage. The failed
+closing implication and the working restricted implementation are both retained.
+
+[Canonical C076 / E048-E049 record and handoff](research/SCHEME_COST_BARRIER.md),
+[proof, exact scope and commands](notes/2026-09-13-scheme-cost-and-switching-audit.md).
+Both deterministic suites were executed and replayed with identical compact
+results. Written proofs await independent mathematical review; no Lean or full
+local repository suite was run. The new read-only CI job checks the integrated
+index and both reproductions. Problem 1.7 remains unresolved.
+
 ## September 12: recovered source-visit bounds and closed-source-walk schemes
 
 C073 records exact source-visit counts for the existing C046 modular family,

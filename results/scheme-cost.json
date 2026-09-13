@@ -1,0 +1,65 @@
+{
+  "base_commit": "4ce1d6b5d20d3fa39a5c4f72d9c96da24e56356a",
+  "counts": {
+    "common_words": 518,
+    "corruptions": 642,
+    "four_predicate_comparisons": 20320,
+    "live_sources": 565,
+    "phase_automata": 54,
+    "phase_windows": 8158
+  },
+  "evidence": "Written proof and finite checks; independent review pending, not Lean",
+  "families": [
+    {
+      "exact_scheme_cost": 6,
+      "flags": 28,
+      "live_sources": 6,
+      "states": 28,
+      "width": 1,
+      "witness_bits": 18
+    },
+    {
+      "exact_scheme_cost": 27,
+      "flags": 86,
+      "live_sources": 23,
+      "states": 72,
+      "width": 2,
+      "witness_bits": 72
+    },
+    {
+      "exact_scheme_cost": 100,
+      "flags": 184,
+      "live_sources": 53,
+      "states": 146,
+      "width": 3,
+      "witness_bits": 250
+    },
+    {
+      "exact_scheme_cost": 325,
+      "flags": 322,
+      "live_sources": 97,
+      "states": 250,
+      "width": 4,
+      "witness_bits": 780
+    },
+    {
+      "exact_scheme_cost": 966,
+      "flags": 500,
+      "live_sources": 156,
+      "states": 384,
+      "width": 5,
+      "witness_bits": 2254
+    },
+    {
+      "exact_scheme_cost": 2695,
+      "flags": 718,
+      "live_sources": 230,
+      "states": 548,
+      "width": 6,
+      "witness_bits": 6160
+    }
+  ],
+  "scope": "Exact C075 cost for the stated singleton family, not general decision",
+  "seed": 2026091361,
+  "status": "PASS"
+}
