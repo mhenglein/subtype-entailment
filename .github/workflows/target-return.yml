@@ -1,0 +1,27 @@
+name: Target return elimination
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  target-return:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.12'
+      - name: Validate canonical research records and links
+        run: python3 scripts/research_index.py --check
+      - name: Replay shared-word filters and negative certificates
+        run: |
+          python3 experiments/check_target_return.py --output /tmp/target-return.json --full-output /tmp/target-return-full.json
+          cmp results/target-return.json /tmp/target-return.json
+          python3 experiments/target_return.py examples/target_return/legal_repeats.json
+          python3 experiments/target_return.py examples/target_return/recursive_no.json --output /tmp/target-return-no.json
+          python3 experiments/check_target_return.py --verify-instance examples/target_return/recursive_no.json --verify-certificate /tmp/target-return-no.json
+          python3 experiments/target_return.py examples/target_return/modular_unknown.json --uncapped
+      - name: Ensure tracked evidence is unchanged
+        run: git diff --exit-code

@@ -1,0 +1,495 @@
+{
+  "base_commit": "b79bc02d5a669fde60484a463941b16e03805050",
+  "counts": {
+    "boundary_no_slices": 501,
+    "complete_acyclic_instances": 120,
+    "complete_acyclic_words": 211,
+    "complete_filter_equivalences": 120,
+    "complete_three_state_instances": 1024,
+    "corrupt_proofs_rejected": 2,
+    "explicit_cap_cases": 1,
+    "explicit_overlapping_pattern_cases": 2,
+    "fixed_tail_literal_comparisons": 30600,
+    "last_column_word_comparisons": 113442,
+    "malformed_inputs_rejected": 1,
+    "named_fixtures": 5,
+    "negative_filter_equivalences": 43,
+    "negative_nodes": 41,
+    "negative_proofs": 536,
+    "negative_return_certificates": 3,
+    "original_label_grouping_regressions": 1,
+    "random_initially_closed_instances": 222,
+    "random_productive_instances": 248,
+    "return_closed_certificates": 207,
+    "three_state_word_comparisons": 64512,
+    "unsafe_last_only_regressions": 1
+  },
+  "evidence_limits": [
+    "Written proof, not independent mathematical review or Lean.",
+    "Complete on the return-closed class. Arbitrary failed branches remain UNKNOWN.",
+    "Finite scans are regression evidence; NO uses complete certificate trees.",
+    "The old C077 period lemma is a dependency, not newly independently certified."
+  ],
+  "fixtures": {
+    "dynamic_closed": {
+      "initially_all_closed": false,
+      "input": {
+        "bad": [],
+        "delta": [
+          [
+            3,
+            0
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            -1,
+            4
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            -1,
+            -1
+          ]
+        ],
+        "finals": [
+          6
+        ],
+        "flags": [
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            5,
+            0
+          ],
+          [
+            5,
+            1
+          ]
+        ],
+        "start": 0
+      },
+      "prior_status": "UNKNOWN",
+      "stats": {
+        "cycles": 0,
+        "eliminations": 5,
+        "filters": 5,
+        "max_states": 9,
+        "nodes": 6
+      },
+      "status": "YES",
+      "word": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    "legal_repeats": {
+      "initially_all_closed": true,
+      "input": {
+        "bad": [],
+        "delta": [
+          [
+            2,
+            -1
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            -1,
+            -1
+          ]
+        ],
+        "finals": [
+          4
+        ],
+        "flags": [
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            2
+          ]
+        ],
+        "start": 0
+      },
+      "prior_status": "UNKNOWN",
+      "stats": {
+        "cycles": 0,
+        "eliminations": 3,
+        "filters": 3,
+        "max_states": 10,
+        "nodes": 4
+      },
+      "status": "YES",
+      "word": [
+        0,
+        1,
+        0,
+        0
+      ]
+    },
+    "marking_unknown": {
+      "initially_all_closed": false,
+      "input": {
+        "bad": [],
+        "delta": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            -1
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            -1,
+            -1
+          ]
+        ],
+        "finals": [
+          5
+        ],
+        "flags": [
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "start": 0
+      },
+      "prior_status": "UNKNOWN",
+      "stats": {
+        "cycles": 0,
+        "eliminations": 0,
+        "filters": 1,
+        "max_states": 6,
+        "nodes": 1
+      },
+      "status": "UNKNOWN",
+      "word": null
+    },
+    "modular_unknown": {
+      "initially_all_closed": false,
+      "input": {
+        "bad": [],
+        "delta": [
+          [
+            -1,
+            1
+          ],
+          [
+            -1,
+            2
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            -1,
+            4
+          ],
+          [
+            -1,
+            5
+          ],
+          [
+            -1,
+            6
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            -1,
+            -1
+          ]
+        ],
+        "finals": [
+          7
+        ],
+        "flags": [
+          [
+            0,
+            4
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            0,
+            6
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "start": 0
+      },
+      "prior_status": "UNKNOWN",
+      "stats": {
+        "cycles": 0,
+        "eliminations": 0,
+        "filters": 1,
+        "max_states": 8,
+        "nodes": 1
+      },
+      "status": "UNKNOWN",
+      "word": null
+    },
+    "recursive_no": {
+      "initially_all_closed": true,
+      "input": {
+        "bad": [],
+        "delta": [
+          [
+            -1,
+            4
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            0,
+            7
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            -1,
+            -1
+          ]
+        ],
+        "finals": [
+          7
+        ],
+        "flags": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            6,
+            4
+          ]
+        ],
+        "start": 0
+      },
+      "prior_status": "UNKNOWN",
+      "stats": {
+        "cycles": 0,
+        "eliminations": 3,
+        "filters": 6,
+        "max_states": 9,
+        "nodes": 4
+      },
+      "status": "NO",
+      "word": null
+    }
+  },
+  "last_only_counterexample": {
+    "last_columns_pass": true,
+    "original_states": [
+      0,
+      5
+    ],
+    "violation_cuts": [
+      [
+        0,
+        7
+      ]
+    ],
+    "word": [
+      1,
+      1,
+      1,
+      1,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      0
+    ]
+  },
+  "seed": 20260913651,
+  "status": "PASS",
+  "verdicts": {
+    "random_NO": 11,
+    "random_UNKNOWN": 5,
+    "random_YES": 232,
+    "three_state_NO": 460,
+    "three_state_YES": 564
+  }
+}

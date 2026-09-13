@@ -1,5 +1,40 @@
 # Subtail — current research state
 
+## September 13: source-sensitive target-return elimination with legal repeats
+
+C079 replaces last-target uniqueness with a productive synchronized-return
+certificate for each incoming target column. A certified earlier violation
+transports to the last occurrence of that original target label. The certificate
+survives deterministic regular restrictions with an explicit state projection.
+Legal occurrences at unflagged source states remain permitted.
+
+An exact fixed-tail filter stores the longest matching proper prefix and its
+starting domain state, using at most K*m+1 states for a length-m pattern. Finite
+last-target tails have length at most K-1; the filter therefore squares state
+count at most. Each recursive step removes one ORIGINAL target column, not a
+single product-state copy. Together with the prior C077 infinite-tail lemma,
+this gives a native complete decision for initially return-closed inputs and
+witness bound 2*k^(2^r), where r counts original target labels. All recursive
+constraints act on the same full candidate word. This is not a general bound.
+
+A five-state recurrent positive example has no accepted word with a unique
+last-target suffix; three eliminations return 0100. An eight-state recursive
+negative example also goes beyond the prior target-anchor wrapper. Independent
+finite-language filter checks and negative-proof replay retain all branches.
+The modular word 111101111110 passes every last-per-target check but violates
+(0,5) at cuts (0,7), so dropping the return certificate is unsound. The known
+modular positive and marking-barrier negative inputs remain UNKNOWN here.
+
+[Canonical C079 / E051 record](research/TARGET_RETURN.md),
+[full proof and exact projection hypotheses](notes/2026-09-13-target-return-elimination.md),
+[solver](experiments/target_return.py),
+[independent filter and negative-proof checks](experiments/check_target_return.py).
+Written proof plus reproducible compact/full replay; independent mathematical
+review pending, not Lean. No full local repository suite was run. The dedicated
+read-only workflow checks the integrated index and reproduction; its remote
+result must be read before claiming success. Q004 and unrestricted Problem 1.7
+remain unresolved. Existing dependencies, history and ownership are preserved.
+
 ## September 13: native last-target anchoring and a quadratic certified-class bound
 
 C077 collapses complete target-column constraints to uniqueness of the suffix
