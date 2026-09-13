@@ -1,0 +1,28 @@
+name: Target anchoring certificates
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  target-anchor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.11'
+      - name: Validate canonical research records and links
+        run: python3 scripts/research_index.py --check
+      - name: Replay native solver and negative certificates
+        run: |
+          python3 experiments/check_target_anchor.py --output /tmp/target-anchor.json --full-output /tmp/target-anchor-full.json
+          cmp results/target-anchor.json /tmp/target-anchor.json
+          python3 experiments/target_anchor.py --fixture recurrent_no --certificate-output /tmp/target-anchor-no.json
+          python3 experiments/target_anchor.py --fixture recurrent_yes
+          python3 experiments/target_anchor.py --fixture modular_positive_unknown
+      - name: Ensure tracked evidence is unchanged
+        run: git diff --exit-code

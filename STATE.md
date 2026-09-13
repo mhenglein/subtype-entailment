@@ -1,5 +1,36 @@
 # Subtail — current research state
 
+## September 13: native last-target anchoring and a quadratic certified-class bound
+
+C077 collapses complete target-column constraints to uniqueness of the suffix
+at the LAST target cut. A productive accepting tail cycle with no positive
+return to any target supplies a witness of length at most k^2+k-2. This positive
+criterion works for arbitrary flags. Otherwise the last-target tail languages
+are finite, their productive graphs are acyclic, and explicit pattern-avoidance
+products decide every possible tail. This is a complete native decision for the
+complete-column class, not a reliance on an unimplemented string backend.
+
+C078 gives an automatic polynomial finite-graph certificate for sparse flags:
+finest transition colors preserve all last-aligned violations, and a second
+pair-graph check certifies that completing target columns creates no new bad
+words. State count and word length are unchanged. The same quadratic bound
+therefore holds on the certified original instances, including nonflat graphs
+with several recurrent sources and targets. No general polynomial bound follows.
+
+The known positive (2,3) modular instance and the six-state marking-barrier NO
+instance both remain UNKNOWN for this wrapper. An eight-state sparse instance
+fails coloring but is solved positively by the target-free tail-cycle criterion.
+These failures are retained, not promoted to NO or evidence of a complete cover.
+
+[Canonical C077-C078 / E050 record](research/TARGET_ANCHOR.md),
+[ordinary proof and exact scope](notes/2026-09-13-target-anchoring.md),
+[native solver](experiments/target_anchor.py),
+[checks and independent negative-product replay](experiments/check_target_anchor.py).
+Local deterministic replay passed, including 58 finite negative certificates.
+Written proof; independent mathematical review pending; not Lean. The dedicated
+read-only CI job checks the integrated index and reproduction. Q004 and the
+unrestricted subtype problem remain unresolved. Prior history below is retained.
+
 ## September 13: exact exponential scheme cost; switching does not close coverage
 
 C076 strengthens the obstruction from source visits to the precise C075 symbolic

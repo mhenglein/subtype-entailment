@@ -1,0 +1,120 @@
+{
+  "base_commit": "c4f7e56665828710b3bda77e32bb2904ad4006d6",
+  "counts": {
+    "acyclic_candidates": 268,
+    "boundary_instances": 320,
+    "boundary_word_comparisons": 40640,
+    "column_yes": 271,
+    "complete_acyclic_languages": 150,
+    "complete_bound_oracles": 588,
+    "corrupted_no_certificates_rejected": 1,
+    "dense_column_instances": 289,
+    "dense_column_words": 4228,
+    "empty_slices": 436,
+    "exhaustive_colored_word_comparisons": 3936,
+    "fixture_words": 803,
+    "infinite_tail_yes": 19,
+    "kmp_literal_comparisons": 31682,
+    "negative_certificates_replayed": 58,
+    "periodic_prefix_cases": 5400,
+    "sparse_certified": 298,
+    "sparse_coloring_words": 6765,
+    "sparse_uncertified": 88,
+    "three_state_instances": 1024
+  },
+  "evidence_limits": [
+    "Finite tests do not replace the all-length proof.",
+    "Small bounded NO oracles invoke the proved certified-class bound explicitly.",
+    "Independent negative replay checks finite closure and exhaustive tail coverage.",
+    "No Lean formalization or independent mathematical referee.",
+    "UNKNOWN outside the sufficient class is not NO."
+  ],
+  "fixtures": {
+    "exceptional_conjugacy": {
+      "colors": 2,
+      "recurrent_multi_source_target_nonflat": false,
+      "states": 6,
+      "status": "YES",
+      "word": [
+        1,
+        0,
+        1
+      ]
+    },
+    "marking_barrier": {
+      "colors": 3,
+      "recurrent_multi_source_target_nonflat": false,
+      "states": 6,
+      "status": "UNKNOWN",
+      "word": null
+    },
+    "modular_positive_unknown": {
+      "colors": 2,
+      "recurrent_multi_source_target_nonflat": false,
+      "states": 8,
+      "status": "UNKNOWN",
+      "word": null
+    },
+    "nonflat_target": {
+      "colors": 3,
+      "recurrent_multi_source_target_nonflat": false,
+      "states": 3,
+      "status": "YES",
+      "word": [
+        0,
+        1
+      ]
+    },
+    "recurrent_no": {
+      "colors": 5,
+      "recurrent_multi_source_target_nonflat": true,
+      "states": 7,
+      "status": "NO",
+      "word": null
+    },
+    "recurrent_yes": {
+      "colors": 7,
+      "recurrent_multi_source_target_nonflat": true,
+      "states": 6,
+      "status": "YES",
+      "word": [
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    "sparse_cycle_yes": {
+      "colors": 4,
+      "recurrent_multi_source_target_nonflat": true,
+      "states": 8,
+      "status": "YES",
+      "word": [
+        0,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    }
+  },
+  "seed": 20260913122,
+  "status": "PASS",
+  "three_state_verdicts": {
+    "NO": 460,
+    "YES": 564
+  }
+}

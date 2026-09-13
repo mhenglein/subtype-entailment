@@ -50,7 +50,8 @@ def research_records(data):
                      "research/COPY_CYCLES.md",
                      "research/SOURCE_POWER_SCHEMES.md",
                      "research/RECOVERED_SOURCE_WALKS.md",
-                     "research/SCHEME_COST_BARRIER.md"):
+                     "research/SCHEME_COST_BARRIER.md",
+                     "research/TARGET_ANCHOR.md"):
         _add_ledger(records, ROOT / relative)
     return records
 
