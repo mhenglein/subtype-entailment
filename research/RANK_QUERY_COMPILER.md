@@ -67,3 +67,36 @@ are not independent mathematical refereeing. No Lean build, full repository CI,
 or broad practical benchmark of the unrestricted algorithm has been completed.
 The previous candidate and all failed quotient/counterexample records remain
 unchanged except for a navigation link to this follow-up.
+
+## September 17: separate closure review and all-length fixed-base oracle
+
+A later support investigation reviewed commit
+`8b3ac145c67a1f7dabcc7173d76e8f14cca7a27a` without changing its proof, compiler,
+or the five recorded dependency files. Its ordinary-proof review supports the
+terminal rank, graph-surgery, both closure directions, recursive syntax and
+quantitative-unwind arguments. No substantive counterexample was found in that
+scope. This is a separate AI-assisted audit informed by the candidate, not a
+blind discovery, human mathematical referee, Lean proof or fresh audit of
+C029/C031 and the original arbitrary-tree semantic characterization. The
+proposed status above is retained; accepted C/Q statuses are not promoted.
+
+[Detailed review, finite-frontier invariant, evidence and remaining obligations](../notes/2026-09-17-rank-query-independent-review.md),
+[separate fixed-reference oracle](../experiments/rank_frontier_oracle.py),
+[review checker](../experiments/check_rank_closure_review.py),
+[compact results](../results/rank-closure-review.json).
+
+The review exhausts 16 complete tiny preimage unions (52,992 clauses), compared
+with 112 independent all-length fixed-reference answers (84 YES, 28 NO).
+There are 328 additional complete terminal-extension oracles, 280 separate
+finite-query checks, origin-alias/overlap/empty-path regressions, an incompatible
+shared-word conjunction, and seven successive coloured positive preimages.
+Full unions have one path atom; joint and higher-rank checks do not claim full
+union exhaustion. The proof audit, not finite test counts, supports the uniform
+claim. Local split replays were byte-identical. The dedicated read-only workflow
+replays both this suite and the unchanged candidate suite on the integrated tree;
+its actual status must be read before claiming integrated success.
+
+```sh
+python3 experiments/check_rank_closure_review.py --output /tmp/rank-closure-review.json --full-output /tmp/rank-closure-review-full.json
+cmp results/rank-closure-review.json /tmp/rank-closure-review.json
+```

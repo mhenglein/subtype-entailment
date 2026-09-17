@@ -1,0 +1,846 @@
+{
+  "core": {
+    "counts": {
+      "coincident_fresh_and_empty_path": 1,
+      "complete_terminal_extension_queries": 328,
+      "distinct_positions_shared_origin": 1,
+      "finite_query_no": 109,
+      "finite_query_yes": 171,
+      "frontier_cap_regressions": 1,
+      "independent_finite_query_truths": 280,
+      "literal_milestone_returns": 1850,
+      "literal_rank_words": 1022,
+      "shared_reference_all_length_queries": 3,
+      "singleton_overlap_wrap": 1,
+      "successive_coloured_preimages": 7,
+      "targeted_compiled_diagrams": 21,
+      "terminal_extension_no": 288,
+      "terminal_extension_yes": 40
+    },
+    "nested_compilation": [
+      {
+        "clause_weights": [
+          19,
+          90,
+          4368,
+          287508
+        ],
+        "flags": 18,
+        "milestones": [
+          1,
+          4,
+          7,
+          10
+        ],
+        "reverse_word": "0110110110",
+        "states": 11,
+        "word": "0110110110"
+      },
+      {
+        "clause_weights": [
+          19,
+          90,
+          527091
+        ],
+        "flags": 18,
+        "milestones": [
+          1,
+          3,
+          6
+        ],
+        "reverse_word": "0100101010",
+        "states": 11,
+        "word": "0101010010"
+      },
+      {
+        "clause_weights": [
+          22,
+          1274,
+          1191
+        ],
+        "flags": 31,
+        "milestones": [
+          1,
+          2,
+          8
+        ],
+        "reverse_word": "0010110010110",
+        "states": 14,
+        "word": "0110100110100"
+      }
+    ],
+    "shared_word_cases": [
+      {
+        "frontier_vertices": 3,
+        "labels": [
+          0,
+          0,
+          0
+        ],
+        "lengths": [
+          2
+        ],
+        "reference": "00",
+        "states": 8,
+        "status": "YES"
+      },
+      {
+        "frontier_vertices": 4,
+        "labels": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "lengths": [
+          3
+        ],
+        "reference": "010",
+        "states": 16,
+        "status": "YES"
+      },
+      {
+        "frontier_vertices": 4,
+        "lengths": [
+          2,
+          3
+        ],
+        "reason": "Complete finite fixed-reference frontier exhausted",
+        "states": 40,
+        "status": "NO"
+      }
+    ]
+  },
+  "limits": [
+    "The frontier oracle fixes B; it is not a uniform preimage theorem.",
+    "The full unions here have one path atom; joint tests use the independent fixed-base oracle and selected compiled diagrams.",
+    "Finite regression evidence does not certify the all-query mathematical statement.",
+    "No fresh independent review of C029/C031 or Lean verification is claimed."
+  ],
+  "part": "all",
+  "reviewed_blobs": {
+    "border_lab.py": "1144ae52379e0417772e79582269cacd91c5bc17",
+    "rank_preimage.py": "852fa7d7ba199b9d91ab24a8f7b5abf29ed8819b",
+    "rank_preimage_core.py": "fe297ab4f2252468b1734f6885765cde0d2cecb9",
+    "rank_query_graphs.py": "6fcc612e47ef65edbb7ec9ff973a528a422da8e4",
+    "rank_query_prefix.py": "135d3cb960d07dfddefd74dd255bba289a08af1b"
+  },
+  "reviewed_commit": "8b3ac145c67a1f7dabcc7173d76e8f14cca7a27a",
+  "seed": 20260917113,
+  "status": "PASS",
+  "unions": {
+    "counts": {
+      "all_length_no": 28,
+      "all_length_yes": 84,
+      "clause_base_evaluations": 127806,
+      "complete_all_length_oracle_comparisons": 112,
+      "complete_syntactic_unions": 16,
+      "fully_enumerated_clauses": 52992
+    },
+    "full_unions": [
+      {
+        "base_order": [
+          "0",
+          "1",
+          "00",
+          "01",
+          "10",
+          "11",
+          "010"
+        ],
+        "clauses": 3312,
+        "first_satisfying_clauses": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "frontier_states": [
+          20,
+          20,
+          32,
+          40,
+          40,
+          32,
+          60
+        ],
+        "labels": [],
+        "verdicts": [
+          "NO",
+          "NO",
+          "NO",
+          "NO",
+          "NO",
+          "NO",
+          "NO"
+        ],
+        "work": 618878
+      },
+      {
+        "base_order": [
+          "0",
+          "1",
+          "00",
+          "01",
+          "10",
+          "11",
+          "010"
+        ],
+        "clauses": 3312,
+        "first_satisfying_clauses": [
+          1,
+          2,
+          1,
+          2,
+          2,
+          2,
+          2
+        ],
+        "frontier_states": [
+          8,
+          16,
+          8,
+          28,
+          32,
+          16,
+          36
+        ],
+        "labels": [
+          "F"
+        ],
+        "verdicts": [
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES"
+        ],
+        "work": 45193
+      },
+      {
+        "base_order": [
+          "0",
+          "1",
+          "00",
+          "01",
+          "10",
+          "11",
+          "010"
+        ],
+        "clauses": 3312,
+        "first_satisfying_clauses": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "frontier_states": [
+          20,
+          20,
+          32,
+          40,
+          40,
+          32,
+          60
+        ],
+        "labels": [
+          "S"
+        ],
+        "verdicts": [
+          "NO",
+          "NO",
+          "NO",
+          "NO",
+          "NO",
+          "NO",
+          "NO"
+        ],
+        "work": 828604
+      },
+      {
+        "base_order": [
+          "0",
+          "1",
+          "00",
+          "01",
+          "10",
+          "11",
+          "010"
+        ],
+        "clauses": 3312,
+        "first_satisfying_clauses": [
+          1,
+          2,
+          1,
+          2,
+          2,
+          2,
+          2
+        ],
+        "frontier_states": [
+          8,
+          16,
+          8,
+          28,
+          32,
+          16,
+          36
+        ],
+        "labels": [
+          "F",
+          "S"
+        ],
+        "verdicts": [
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES"
+        ],
+        "work": 45193
+      },
+      {
+        "base_order": [
+          "0",
+          "1",
+          "00",
+          "01",
+          "10",
+          "11",
+          "010"
+        ],
+        "clauses": 3312,
+        "first_satisfying_clauses": [
+          0,
+          1612,
+          0,
+          0,
+          1612,
+          1612,
+          0
+        ],
+        "frontier_states": [
+          20,
+          16,
+          40,
+          40,
+          32,
+          16,
+          64
+        ],
+        "labels": [
+          "K0"
+        ],
+        "verdicts": [
+          "NO",
+          "YES",
+          "NO",
+          "NO",
+          "YES",
+          "YES",
+          "NO"
+        ],
+        "work": 646793
+      },
+      {
+        "base_order": [
+          "0",
+          "1",
+          "00",
+          "01",
+          "10",
+          "11",
+          "010"
+        ],
+        "clauses": 3312,
+        "first_satisfying_clauses": [
+          1,
+          2,
+          1,
+          2,
+          2,
+          2,
+          2
+        ],
+        "frontier_states": [
+          8,
+          16,
+          8,
+          28,
+          32,
+          16,
+          36
+        ],
+        "labels": [
+          "F",
+          "K0"
+        ],
+        "verdicts": [
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES"
+        ],
+        "work": 45193
+      },
+      {
+        "base_order": [
+          "0",
+          "1",
+          "00",
+          "01",
+          "10",
+          "11",
+          "010"
+        ],
+        "clauses": 3312,
+        "first_satisfying_clauses": [
+          0,
+          1612,
+          0,
+          0,
+          1612,
+          1612,
+          0
+        ],
+        "frontier_states": [
+          20,
+          16,
+          44,
+          40,
+          32,
+          16,
+          62
+        ],
+        "labels": [
+          "S",
+          "K0"
+        ],
+        "verdicts": [
+          "NO",
+          "YES",
+          "NO",
+          "NO",
+          "YES",
+          "YES",
+          "NO"
+        ],
+        "work": 790553
+      },
+      {
+        "base_order": [
+          "0",
+          "1",
+          "00",
+          "01",
+          "10",
+          "11",
+          "010"
+        ],
+        "clauses": 3312,
+        "first_satisfying_clauses": [
+          1,
+          2,
+          1,
+          2,
+          2,
+          2,
+          2
+        ],
+        "frontier_states": [
+          8,
+          16,
+          8,
+          28,
+          32,
+          16,
+          36
+        ],
+        "labels": [
+          "F",
+          "S",
+          "K0"
+        ],
+        "verdicts": [
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES"
+        ],
+        "work": 45193
+      },
+      {
+        "base_order": [
+          "0",
+          "1",
+          "00",
+          "01",
+          "10",
+          "11",
+          "010"
+        ],
+        "clauses": 3312,
+        "first_satisfying_clauses": [
+          1081,
+          0,
+          1081,
+          1082,
+          0,
+          0,
+          1082
+        ],
+        "frontier_states": [
+          8,
+          20,
+          8,
+          28,
+          40,
+          40,
+          36
+        ],
+        "labels": [
+          "K1"
+        ],
+        "verdicts": [
+          "YES",
+          "NO",
+          "YES",
+          "YES",
+          "NO",
+          "NO",
+          "YES"
+        ],
+        "work": 446073
+      },
+      {
+        "base_order": [
+          "0",
+          "1",
+          "00",
+          "01",
+          "10",
+          "11",
+          "010"
+        ],
+        "clauses": 3312,
+        "first_satisfying_clauses": [
+          1,
+          2,
+          1,
+          2,
+          2,
+          2,
+          2
+        ],
+        "frontier_states": [
+          8,
+          16,
+          8,
+          28,
+          32,
+          16,
+          36
+        ],
+        "labels": [
+          "F",
+          "K1"
+        ],
+        "verdicts": [
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES"
+        ],
+        "work": 45195
+      },
+      {
+        "base_order": [
+          "0",
+          "1",
+          "00",
+          "01",
+          "10",
+          "11",
+          "010"
+        ],
+        "clauses": 3312,
+        "first_satisfying_clauses": [
+          1081,
+          0,
+          1081,
+          1082,
+          0,
+          0,
+          1082
+        ],
+        "frontier_states": [
+          8,
+          20,
+          8,
+          28,
+          40,
+          44,
+          36
+        ],
+        "labels": [
+          "S",
+          "K1"
+        ],
+        "verdicts": [
+          "YES",
+          "NO",
+          "YES",
+          "YES",
+          "NO",
+          "NO",
+          "YES"
+        ],
+        "work": 528168
+      },
+      {
+        "base_order": [
+          "0",
+          "1",
+          "00",
+          "01",
+          "10",
+          "11",
+          "010"
+        ],
+        "clauses": 3312,
+        "first_satisfying_clauses": [
+          1,
+          2,
+          1,
+          2,
+          2,
+          2,
+          2
+        ],
+        "frontier_states": [
+          8,
+          16,
+          8,
+          28,
+          32,
+          16,
+          36
+        ],
+        "labels": [
+          "F",
+          "S",
+          "K1"
+        ],
+        "verdicts": [
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES"
+        ],
+        "work": 45195
+      },
+      {
+        "base_order": [
+          "0",
+          "1",
+          "00",
+          "01",
+          "10",
+          "11",
+          "010"
+        ],
+        "clauses": 3312,
+        "first_satisfying_clauses": [
+          1081,
+          1450,
+          1081,
+          1082,
+          1450,
+          1450,
+          1082
+        ],
+        "frontier_states": [
+          8,
+          16,
+          8,
+          28,
+          32,
+          16,
+          36
+        ],
+        "labels": [
+          "K0",
+          "K1"
+        ],
+        "verdicts": [
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES"
+        ],
+        "work": 360647
+      },
+      {
+        "base_order": [
+          "0",
+          "1",
+          "00",
+          "01",
+          "10",
+          "11",
+          "010"
+        ],
+        "clauses": 3312,
+        "first_satisfying_clauses": [
+          1,
+          2,
+          1,
+          2,
+          2,
+          2,
+          2
+        ],
+        "frontier_states": [
+          8,
+          16,
+          8,
+          28,
+          32,
+          16,
+          36
+        ],
+        "labels": [
+          "F",
+          "K0",
+          "K1"
+        ],
+        "verdicts": [
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES"
+        ],
+        "work": 45195
+      },
+      {
+        "base_order": [
+          "0",
+          "1",
+          "00",
+          "01",
+          "10",
+          "11",
+          "010"
+        ],
+        "clauses": 3312,
+        "first_satisfying_clauses": [
+          1081,
+          1216,
+          1081,
+          1082,
+          1216,
+          1216,
+          1082
+        ],
+        "frontier_states": [
+          8,
+          16,
+          8,
+          28,
+          32,
+          16,
+          36
+        ],
+        "labels": [
+          "S",
+          "K0",
+          "K1"
+        ],
+        "verdicts": [
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES"
+        ],
+        "work": 365229
+      },
+      {
+        "base_order": [
+          "0",
+          "1",
+          "00",
+          "01",
+          "10",
+          "11",
+          "010"
+        ],
+        "clauses": 3312,
+        "first_satisfying_clauses": [
+          1,
+          2,
+          1,
+          2,
+          2,
+          2,
+          2
+        ],
+        "frontier_states": [
+          8,
+          16,
+          8,
+          28,
+          32,
+          16,
+          36
+        ],
+        "labels": [
+          "F",
+          "S",
+          "K0",
+          "K1"
+        ],
+        "verdicts": [
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES",
+          "YES"
+        ],
+        "work": 45195
+      }
+    ]
+  }
+}
