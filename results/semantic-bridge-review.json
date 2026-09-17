@@ -1,0 +1,75 @@
+{
+  "base_commit": "8ed4f45b563cda0ae3d31980fc14e6d61a35357a",
+  "limits": [
+    "Finite corpora do not prove the all-input rank closure theorem.",
+    "Whole-language equivalence checks exhaust finite NFA subset products.",
+    "Unique-trajectory oracles decide all lengths for their stated class.",
+    "No Lean verification or external mathematical referee is claimed."
+  ],
+  "local": {
+    "counts": {
+      "all_depth_countermodels_checked": 396,
+      "canonical_vs_cut_pairs": 1200,
+      "complete_no_push_languages": 244,
+      "empty_query_regressions": 2,
+      "exact_infinite_spine_models": 1,
+      "forced_models_prefix_closed": 80,
+      "forced_root_unsat_regressions": 1,
+      "missing_prefix_regressions": 1,
+      "no_push_inclusion_states": 3848,
+      "satisfiable_random_systems": 50,
+      "unsatisfiable_random_systems": 30
+    },
+    "fixtures": {
+      "infinite_spine": {
+        "arbitrary_tree_satisfiability": true,
+        "bottom_language": "empty",
+        "constraints": [
+          [
+            "lower",
+            0,
+            1,
+            0
+          ],
+          [
+            "denial",
+            1
+          ]
+        ],
+        "finite_tree_satisfiability": false,
+        "separating_path": "",
+        "x_language": "0*"
+      }
+    }
+  },
+  "repository": {
+    "counts": {
+      "active_ray_phase_checks": 21260,
+      "actual_summary_absorption_checks": 44,
+      "actual_summary_word_comparisons": 660,
+      "complete_unique_trajectory_oracles": 320,
+      "finite_only_sink_extensions": 32,
+      "legacy_infinite_model_certificates": 19,
+      "period_monitor_literal_checks": 29890,
+      "sat_guard_comparisons": 72,
+      "terminal_inclusion_witnesses": 31,
+      "terminal_realization_paths": 2480,
+      "terminal_realizations_satisfiable": 80,
+      "unsat_summary_guards": 28,
+      "whole_pop_language_equivalences": 1518,
+      "whole_pop_language_product_states": 6826,
+      "whole_post_language_equivalences": 227,
+      "whole_post_language_product_states": 2936
+    },
+    "verified_git_blobs": {
+      "border_lab.py": "1144ae52379e0417772e79582269cacd91c5bc17",
+      "infinite_extensions.py": "eda28ac44cbfe969a5aa83b2cade036b0f171fdc",
+      "safe_extensions.py": "866b04fa67fa14684e56db75ce6cd850dff82009",
+      "summary_bridge.py": "f6a222891d9d7ca3b2995c82dbecf7182c64cb9f",
+      "terminal_realization.py": "00b5dbb2ab345fd15db8660e8ae5179b0bfc2969",
+      "topfree_bridge.py": "0092b9c4ed8474d91db5cc5dbb72b1e7f5f7ad3f"
+    }
+  },
+  "seed": 20260917041,
+  "status": "PASS"
+}

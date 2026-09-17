@@ -100,3 +100,48 @@ its actual status must be read before claiming integrated success.
 python3 experiments/check_rank_closure_review.py --output /tmp/rank-closure-review.json --full-output /tmp/rank-closure-review-full.json
 cmp results/rank-closure-review.json /tmp/rank-closure-review.json
 ```
+
+## September 17: independent arbitrary-tree and C029/C031 bridge audit
+
+A subsequent support investigation at `8ed4f45b563cda0ae3d31980fc14e6d61a35357a`
+addresses the semantic transfer deliberately left outside the preceding closure
+reviews. Its ordinary proof supports conservative expression naming, the least
+prefix-closed canonical model, exact ordered cut-pair characterization, final
+summary absorption, the complete infinite-continuation split, and safe terminal
+restriction. No substantive gap was found in those audited older interfaces.
+This does not re-certify the rank-query closure theorem or promote the proposed
+resolution to an established result.
+
+[Full proof and precise review scope](../notes/2026-09-17-semantic-bridge-independent-review.md),
+[route outline](../notes/2026-09-17-semantic-bridge-review-route.md),
+[independent grammar/minimum-stack checker](../experiments/check_semantic_bridge_review.py),
+[executed results and pinned dependencies](../results/semantic-bridge-review.json).
+
+The new oracle derives balanced control reachability by a finite grammar closure
+and constructs Post languages by minimum-stack factorization, rather than calling
+the original P-automaton saturation. Complete NFA inclusion products agree on
+1,518 Pop languages and 227 Post languages. The suite also checks regular models
+at all depths, 2,480 terminal-realization paths, 29,890 periodic-monitor cases,
+320 all-length unique-trajectory instances and explicit infinite-tree/all-prefix
+regressions. These are finite corpora and scoped exact oracles, not a test-based
+proof of arbitrary rank closure. The audit-branch execution and independent
+replay passed; the integration workflow must be checked at its own revision.
+
+One effective-bound detail is explicit: for a primitive period of length d,
+the C029 prefix monitor has at most K*d*2^(K*d+1) states (current control, phase,
+d subsets of controls, and one conflict bit). Its simple cycle has d<=K.
+Hence the finite numeric cap K^2*2^(K^2+1) suffices to exhaust every such monitor;
+no unsupported `None`-cap API assumption is needed for the mathematical transfer.
+The default implementation cap can still return UNKNOWN. This does not claim
+practical runtime or immunity to host resource exhaustion.
+
+The supported end-to-end implication is terminal BorderAvoid decidability =>
+arbitrary-tree subtype-entailment decidability. C030 is also sanity-checked but
+is not needed for that direction. Independent human review, the full compiler's
+implementation-level coverage and selective formalization remain distinct from
+this support audit. Existing proof/claim statuses and ownership are preserved.
+
+```sh
+python3 experiments/check_semantic_bridge_review.py --repository --output /tmp/semantic-bridge-review.json
+cmp results/semantic-bridge-review.json /tmp/semantic-bridge-review.json
+```

@@ -10,6 +10,8 @@ on:
       - 'experiments/infinite_extensions.py'
       - 'experiments/terminal_realization.py'
       - 'experiments/border_lab.py'
+      - 'results/semantic-bridge-review.json'
+      - 'notes/2026-09-17-semantic-bridge-*.md'
       - '.github/workflows/semantic-bridge-review.yml'
   pull_request:
     paths:
@@ -28,8 +30,12 @@ jobs:
       - uses: actions/setup-python@v7.0.0
         with:
           python-version: '3.11'
+      - name: Canonical research records and links
+        run: python3 scripts/research_index.py --check
       - name: Independent grammar and whole-language comparisons
-        run: python3 experiments/check_semantic_bridge_review.py --repository --output /tmp/semantic-bridge-review.json
+        run: |
+          python3 experiments/check_semantic_bridge_review.py --repository --output /tmp/semantic-bridge-review.json
+          cmp results/semantic-bridge-review.json /tmp/semantic-bridge-review.json
       - name: Deterministic replay
         run: |
           python3 experiments/check_semantic_bridge_review.py --repository --output /tmp/semantic-bridge-review-replay.json
