@@ -1,0 +1,436 @@
+{
+  "status": "PASS",
+  "seed": 2026091520,
+  "counts": {
+    "complete_dag_candidates": 228,
+    "complete_dag_oracles": 180,
+    "full_summary_graph_equivalences": 351,
+    "compared_boundary_pairs": 107350,
+    "terminal_hit_rank_regressions": 7,
+    "repaired_quotient_failures": 3,
+    "infinite_modular_positive_oracles": 9,
+    "rank_three_boundary_oracles": 3,
+    "intentional_caps": 2
+  },
+  "dag_verdicts": {
+    "NO_WITHIN_RANK_TWO": 78,
+    "FOUND_WITNESS": 102
+  },
+  "fixtures": [
+    {
+      "name": "endpoint_collision",
+      "result": {
+        "status": "FOUND_WITNESS",
+        "word": "0010",
+        "branches": [
+          {
+            "status": "FOUND_WITNESS",
+            "word": "0010",
+            "promotions": 1,
+            "promoted_reference": "010",
+            "reference_labels": [
+              3,
+              1,
+              1,
+              2
+            ],
+            "summaries": 2,
+            "work": 3,
+            "boundary_vertices": 13
+          }
+        ]
+      }
+    },
+    {
+      "name": "rich_collision",
+      "result": {
+        "status": "FOUND_WITNESS",
+        "word": "00100001",
+        "branches": [
+          {
+            "status": "FOUND_WITNESS",
+            "word": "00100001",
+            "promotions": 1,
+            "promoted_reference": "100001",
+            "reference_labels": [
+              5,
+              2,
+              1,
+              2,
+              1,
+              3,
+              4
+            ],
+            "summaries": 7,
+            "work": 9,
+            "boundary_vertices": 19
+          }
+        ]
+      }
+    },
+    {
+      "name": "equality_antichain",
+      "result": {
+        "status": "FOUND_WITNESS",
+        "word": "001001",
+        "branches": [
+          {
+            "status": "FOUND_WITNESS",
+            "word": "001001",
+            "promotions": 1,
+            "promoted_reference": "1001",
+            "reference_labels": [
+              5,
+              2,
+              1,
+              3,
+              4
+            ],
+            "summaries": 5,
+            "work": 5,
+            "boundary_vertices": 19
+          }
+        ]
+      }
+    },
+    {
+      "name": "two_block_modular",
+      "periods": [
+        1,
+        1
+      ],
+      "result": {
+        "status": "FOUND_WITNESS",
+        "word": "1010",
+        "branches": [
+          {
+            "status": "FOUND_WITNESS",
+            "word": "1010",
+            "promotions": 1,
+            "promoted_reference": "010",
+            "reference_labels": [
+              4,
+              3,
+              2,
+              1
+            ],
+            "summaries": 3,
+            "work": 3,
+            "boundary_vertices": 16
+          }
+        ]
+      }
+    },
+    {
+      "name": "two_block_modular",
+      "periods": [
+        1,
+        2
+      ],
+      "result": {
+        "status": "FOUND_WITNESS",
+        "word": "110110",
+        "branches": [
+          {
+            "status": "FOUND_WITNESS",
+            "word": "110110",
+            "promotions": 1,
+            "promoted_reference": "0110",
+            "reference_labels": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ],
+            "summaries": 4,
+            "work": 4,
+            "boundary_vertices": 19
+          }
+        ]
+      }
+    },
+    {
+      "name": "two_block_modular",
+      "periods": [
+        1,
+        3
+      ],
+      "result": {
+        "status": "FOUND_WITNESS",
+        "word": "11101110",
+        "branches": [
+          {
+            "status": "FOUND_WITNESS",
+            "word": "11101110",
+            "promotions": 1,
+            "promoted_reference": "01110",
+            "reference_labels": [
+              6,
+              5,
+              4,
+              3,
+              2,
+              1
+            ],
+            "summaries": 5,
+            "work": 5,
+            "boundary_vertices": 22
+          }
+        ]
+      }
+    },
+    {
+      "name": "two_block_modular",
+      "periods": [
+        2,
+        1
+      ],
+      "result": {
+        "status": "FOUND_WITNESS",
+        "word": "110110",
+        "branches": [
+          {
+            "status": "FOUND_WITNESS",
+            "word": "110110",
+            "promotions": 1,
+            "promoted_reference": "0110",
+            "reference_labels": [
+              5,
+              4,
+              4,
+              3,
+              2
+            ],
+            "summaries": 5,
+            "work": 6,
+            "boundary_vertices": 19
+          }
+        ]
+      }
+    },
+    {
+      "name": "two_block_modular",
+      "periods": [
+        2,
+        2
+      ],
+      "result": {
+        "status": "FOUND_WITNESS",
+        "word": "110110",
+        "branches": [
+          {
+            "status": "FOUND_WITNESS",
+            "word": "110110",
+            "promotions": 1,
+            "promoted_reference": "0110",
+            "reference_labels": [
+              6,
+              5,
+              4,
+              3,
+              2
+            ],
+            "summaries": 4,
+            "work": 4,
+            "boundary_vertices": 22
+          }
+        ]
+      }
+    },
+    {
+      "name": "two_block_modular",
+      "periods": [
+        2,
+        3
+      ],
+      "result": {
+        "status": "FOUND_WITNESS",
+        "word": "11111101111110",
+        "branches": [
+          {
+            "status": "FOUND_WITNESS",
+            "word": "11111101111110",
+            "promotions": 1,
+            "promoted_reference": "01111110",
+            "reference_labels": [
+              7,
+              6,
+              5,
+              4,
+              6,
+              5,
+              4,
+              3,
+              2
+            ],
+            "summaries": 9,
+            "work": 10,
+            "boundary_vertices": 25
+          }
+        ]
+      }
+    },
+    {
+      "name": "two_block_modular",
+      "periods": [
+        3,
+        1
+      ],
+      "result": {
+        "status": "FOUND_WITNESS",
+        "word": "11101110",
+        "branches": [
+          {
+            "status": "FOUND_WITNESS",
+            "word": "11101110",
+            "promotions": 1,
+            "promoted_reference": "01110",
+            "reference_labels": [
+              6,
+              5,
+              5,
+              5,
+              4,
+              3
+            ],
+            "summaries": 7,
+            "work": 9,
+            "boundary_vertices": 22
+          }
+        ]
+      }
+    },
+    {
+      "name": "two_block_modular",
+      "periods": [
+        3,
+        2
+      ],
+      "result": {
+        "status": "FOUND_WITNESS",
+        "word": "11111101111110",
+        "branches": [
+          {
+            "status": "FOUND_WITNESS",
+            "word": "11111101111110",
+            "promotions": 1,
+            "promoted_reference": "01111110",
+            "reference_labels": [
+              7,
+              6,
+              5,
+              6,
+              5,
+              6,
+              5,
+              4,
+              3
+            ],
+            "summaries": 10,
+            "work": 12,
+            "boundary_vertices": 25
+          }
+        ]
+      }
+    },
+    {
+      "name": "two_block_modular",
+      "periods": [
+        3,
+        3
+      ],
+      "result": {
+        "status": "FOUND_WITNESS",
+        "word": "11101110",
+        "branches": [
+          {
+            "status": "FOUND_WITNESS",
+            "word": "11101110",
+            "promotions": 1,
+            "promoted_reference": "01110",
+            "reference_labels": [
+              8,
+              7,
+              6,
+              5,
+              4,
+              3
+            ],
+            "summaries": 5,
+            "work": 5,
+            "boundary_vertices": 28
+          }
+        ]
+      }
+    },
+    {
+      "name": "positive_but_rank_three",
+      "periods": [
+        1,
+        1,
+        1
+      ],
+      "known_witness": "101010",
+      "result": {
+        "status": "NO_WITHIN_RANK_TWO",
+        "branches": [
+          {
+            "status": "NO_WITHIN_ONE_PROMOTION",
+            "summaries": 5,
+            "work": 8,
+            "boundary_vertices": 22,
+            "meaning": "Exact scoped negative, NOT unrestricted NO"
+          }
+        ],
+        "meaning": "No unrestricted negative conclusion unless an independent rank bound applies"
+      }
+    },
+    {
+      "name": "positive_but_rank_three",
+      "periods": [
+        1,
+        1,
+        2
+      ],
+      "known_witness": "110110110",
+      "result": {
+        "status": "NO_WITHIN_RANK_TWO",
+        "branches": [
+          {
+            "status": "NO_WITHIN_ONE_PROMOTION",
+            "summaries": 7,
+            "work": 9,
+            "boundary_vertices": 25,
+            "meaning": "Exact scoped negative, NOT unrestricted NO"
+          }
+        ],
+        "meaning": "No unrestricted negative conclusion unless an independent rank bound applies"
+      }
+    },
+    {
+      "name": "positive_but_rank_three",
+      "periods": [
+        1,
+        2,
+        2
+      ],
+      "known_witness": "110110110",
+      "result": {
+        "status": "NO_WITHIN_RANK_TWO",
+        "branches": [
+          {
+            "status": "NO_WITHIN_ONE_PROMOTION",
+            "summaries": 7,
+            "work": 9,
+            "boundary_vertices": 28,
+            "meaning": "Exact scoped negative, NOT unrestricted NO"
+          }
+        ],
+        "meaning": "No unrestricted negative conclusion unless an independent rank bound applies"
+      }
+    }
+  ],
+  "scope": "Exact one-promotion elimination and rank-at-most-two existence, not unrestricted existence",
+  "proof_status": "Written graph-interface proof plus executed checks; no independent mathematical review or Lean"
+}

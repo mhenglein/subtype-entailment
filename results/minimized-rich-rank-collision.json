@@ -1,0 +1,84 @@
+{
+  "delta": [
+    [
+      4,
+      -1
+    ],
+    [
+      2,
+      -1
+    ],
+    [
+      1,
+      5
+    ],
+    [
+      1,
+      -1
+    ],
+    [
+      4,
+      3
+    ],
+    [
+      -1,
+      -1
+    ]
+  ],
+  "final": [
+    5
+  ],
+  "flags": [
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      3
+    ],
+    [
+      4,
+      3
+    ]
+  ],
+  "start": 0,
+  "known": {
+    "status": "FOUND_WITNESS",
+    "word": "00100001",
+    "examined": 42
+  },
+  "rich": {
+    "status": "EXHAUSTED_HEURISTIC",
+    "calls": 2,
+    "trace": [
+      {
+        "reference": "1",
+        "labels": [
+          5,
+          2
+        ],
+        "depth": 1,
+        "status": "LAYER_EXHAUSTED",
+        "growth_count": 1,
+        "graph_states": 4
+      },
+      {
+        "reference": "1001",
+        "labels": [
+          5,
+          2,
+          1,
+          3,
+          4
+        ],
+        "depth": 2,
+        "status": "LAYER_EXHAUSTED",
+        "growth_count": 0,
+        "graph_states": 2
+      }
+    ],
+    "meaning": "Selected signatures exhausted; NOT a NO certificate"
+  },
+  "minimization_checks": 84
+}

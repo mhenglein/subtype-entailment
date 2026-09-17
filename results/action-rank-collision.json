@@ -1,0 +1,185 @@
+{
+  "trial": 10354,
+  "k": 8,
+  "delta": [
+    [
+      6,
+      0
+    ],
+    [
+      3,
+      5
+    ],
+    [
+      4,
+      2
+    ],
+    [
+      1,
+      7
+    ],
+    [
+      1,
+      -1
+    ],
+    [
+      4,
+      0
+    ],
+    [
+      6,
+      4
+    ],
+    [
+      -1,
+      -1
+    ]
+  ],
+  "flags": [
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      2
+    ],
+    [
+      0,
+      4
+    ],
+    [
+      0,
+      5
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      1,
+      3
+    ],
+    [
+      1,
+      4
+    ],
+    [
+      1,
+      6
+    ],
+    [
+      2,
+      6
+    ],
+    [
+      3,
+      0
+    ],
+    [
+      3,
+      4
+    ],
+    [
+      3,
+      6
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      3
+    ],
+    [
+      4,
+      5
+    ],
+    [
+      4,
+      6
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      5,
+      2
+    ],
+    [
+      5,
+      3
+    ],
+    [
+      5,
+      4
+    ],
+    [
+      6,
+      0
+    ],
+    [
+      6,
+      4
+    ],
+    [
+      6,
+      5
+    ]
+  ],
+  "known": {
+    "status": "FOUND_WITNESS",
+    "word": "00100001",
+    "examined": 157
+  },
+  "heuristic": {
+    "status": "EXHAUSTED_HEURISTIC",
+    "calls": 3,
+    "trace": [
+      {
+        "reference": "1",
+        "labels": [
+          7,
+          3
+        ],
+        "depth": 1,
+        "status": "LAYER_EXHAUSTED",
+        "growth_count": 2,
+        "graph_states": 7
+      },
+      {
+        "reference": "1001",
+        "labels": [
+          7,
+          3,
+          1,
+          4,
+          6
+        ],
+        "depth": 2,
+        "status": "LAYER_EXHAUSTED",
+        "growth_count": 0,
+        "graph_states": 2
+      },
+      {
+        "reference": "10001",
+        "labels": [
+          7,
+          3,
+          1,
+          4,
+          2,
+          2
+        ],
+        "depth": 2,
+        "status": "LAYER_EXHAUSTED",
+        "growth_count": 0,
+        "graph_states": 2
+      }
+    ],
+    "meaning": "Selected signatures exhausted; NOT a NO certificate"
+  },
+  "seed": 2026091518
+}

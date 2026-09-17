@@ -1,0 +1,457 @@
+{
+  "status": "PASS",
+  "seed": 2026091519,
+  "base": "47adf83c194aa941b525240f6470f3d77a69f81d",
+  "counts": {
+    "literal_border_chains": 458753,
+    "binary_rank_words": 32767,
+    "milestone_identities": 101392,
+    "word_predicate_comparisons": 202356,
+    "terminal_rank_checks": 1567,
+    "layer_equivalence_product_states": 834,
+    "complete_layer_equivalences": 192,
+    "exact_family_word_checks": 262142,
+    "parameterized_continuations": 1392,
+    "false_negative_regressions": 2,
+    "intentional_caps": 1,
+    "complete_bipartite_minor_certificates": 72,
+    "live_flag_width_fixture": 1
+  },
+  "endpoint_counterexample": {
+    "delta": [
+      [
+        2,
+        -1
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        1,
+        -1
+      ],
+      [
+        -1,
+        -1
+      ]
+    ],
+    "flags": [
+      [
+        0,
+        2
+      ]
+    ],
+    "word": "0010",
+    "result": {
+      "status": "EXHAUSTED_HEURISTIC",
+      "calls": 2,
+      "trace": [
+        {
+          "reference": "0",
+          "labels": [
+            3,
+            1
+          ],
+          "depth": 1,
+          "status": "LAYER_EXHAUSTED",
+          "endpoints": [
+            2
+          ]
+        },
+        {
+          "reference": "00",
+          "labels": [
+            3,
+            1,
+            2
+          ],
+          "depth": 2,
+          "status": "LAYER_EXHAUSTED",
+          "endpoints": []
+        }
+      ],
+      "meaning": "Only selected representatives exhausted; NOT a NO certificate"
+    }
+  },
+  "rich_counterexample": {
+    "delta": [
+      [
+        4,
+        -1
+      ],
+      [
+        2,
+        -1
+      ],
+      [
+        1,
+        5
+      ],
+      [
+        1,
+        -1
+      ],
+      [
+        4,
+        3
+      ],
+      [
+        -1,
+        -1
+      ]
+    ],
+    "flags": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        4,
+        3
+      ]
+    ],
+    "word": "00100001",
+    "result": {
+      "status": "EXHAUSTED_HEURISTIC",
+      "calls": 2,
+      "trace": [
+        {
+          "reference": "1",
+          "labels": [
+            5,
+            2
+          ],
+          "depth": 1,
+          "status": "LAYER_EXHAUSTED",
+          "growth_count": 1,
+          "graph_states": 4
+        },
+        {
+          "reference": "1001",
+          "labels": [
+            5,
+            2,
+            1,
+            3,
+            4
+          ],
+          "depth": 2,
+          "status": "LAYER_EXHAUSTED",
+          "growth_count": 0,
+          "graph_states": 2
+        }
+      ],
+      "meaning": "Selected signatures exhausted; NOT a NO certificate"
+    },
+    "reference_rows": [
+      {
+        "b": 1,
+        "reference": "1001",
+        "labels": [
+          5,
+          2,
+          1,
+          3,
+          4
+        ],
+        "signature": {
+          "endpoint": 4,
+          "action": [
+            6,
+            6,
+            6,
+            6,
+            5,
+            6,
+            6
+          ],
+          "visited": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "profile": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              5
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              4,
+              2
+            ],
+            [
+              4,
+              4
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              5,
+              5
+            ]
+          ]
+        }
+      },
+      {
+        "b": 2,
+        "reference": "100001",
+        "labels": [
+          5,
+          2,
+          1,
+          2,
+          1,
+          3,
+          4
+        ],
+        "signature": {
+          "endpoint": 4,
+          "action": [
+            6,
+            6,
+            6,
+            6,
+            5,
+            6,
+            6
+          ],
+          "visited": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "profile": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              5
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              4,
+              2
+            ],
+            [
+              4,
+              4
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              5,
+              5
+            ]
+          ]
+        }
+      },
+      {
+        "b": 3,
+        "reference": "10000001",
+        "labels": [
+          5,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          3,
+          4
+        ],
+        "signature": {
+          "endpoint": 4,
+          "action": [
+            6,
+            6,
+            6,
+            6,
+            5,
+            6,
+            6
+          ],
+          "visited": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "profile": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              5
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              4,
+              2
+            ],
+            [
+              4,
+              4
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              5,
+              5
+            ]
+          ]
+        }
+      },
+      {
+        "b": 4,
+        "reference": "1000000001",
+        "labels": [
+          5,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          3,
+          4
+        ],
+        "signature": {
+          "endpoint": 4,
+          "action": [
+            6,
+            6,
+            6,
+            6,
+            5,
+            6,
+            6
+          ],
+          "visited": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "profile": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              5
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              4,
+              2
+            ],
+            [
+              4,
+              4
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              5,
+              5
+            ]
+          ]
+        }
+      }
+    ]
+  },
+  "border_lab_blob": "1144ae52379e0417772e79582269cacd91c5bc17",
+  "scope": "Exact unrestricted finite-depth representation and fixed-reference languages; tested representative quotients REFUTED. No unrestricted decision.",
+  "proof_status": "Written proofs and finite implementation checks; no independent mathematical review or Lean"
+}
