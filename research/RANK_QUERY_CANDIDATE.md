@@ -70,7 +70,28 @@ wrap and final-promotion conventions.
 
 ## Publication and integration
 
-The active GitHub connector provides reads but no create/update action, and the
-CLI could not resolve github.com. This checkpoint is delivered as a package and
-an additive patch. No push or remote commit is claimed. Recheck current main,
-review the proof, and preserve the other agents' records during integration.
+**Publication confirmed on 2026-09-17.** The candidate checkpoint's nine native
+files were added to main in commit `7aed36227dbf67ec23f5aaaaf0da2d3d94f53eeb`.
+The preceding rank-hierarchy investigation's eighteen native files were added
+in `e0396ea023301704a7b273d2c68d77142641a7dd`, including its one-promotion
+algorithm, failed-quotient counterexamples, discovery scripts and saved results.
+See [the prerequisite record](RANK_ATTEMPT.md).
+
+A fresh publication check compared all twenty-seven expected Git blob hashes
+from the two supplied archives with main at `e0396ea`. Reconstructing its tree
+with those hashes returned the identical tree
+`f886167d2f964fa55309f8bcff30b4a5f9554a6b`. The archived native files therefore
+matched the published files byte-for-byte before this publication-note update.
+No mathematical source, implementation or saved result is changed here.
+
+The publication commits record their September 17 deterministic test replays.
+This status update independently checks publication integrity; it does not
+claim a new test run, full repository CI, independent mathematical review,
+Lean verification, or execution of the complete preimage compiler.
+
+**Historical delivery limitation.** The original September 15 packages were
+unpublished because their session lacked a working GitHub write path. Their
+preserved notes and manifests describe that earlier delivery, not the current
+repository status. The candidate remains CANDIDATE PROOF, NOT ESTABLISHED.
+Review of Lemma 4 and Sections 5-7, and a complete symbolic implementation,
+remain outstanding; publication does not settle Problem 1.7.
