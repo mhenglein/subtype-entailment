@@ -1,5 +1,20 @@
 # Candidate unrestricted decision: rank-query preimages
 
+## September 17 follow-up: full compiler and proposed witness bound
+
+The [compiler follow-up](RANK_QUERY_COMPILER.md) now supplies the complete finite
+syntactic diagram enumerator, shared-interval compiler, nested query tests and
+an explicit recursive witness bound. Its status is PROPOSED COMPLETE ORDINARY
+PROOF, independent mathematical review pending, not Lean-checked. The generic
+implementation is resource-limited in practice; timed UNKNOWN results are not
+negative certificates.
+
+The missing-compiler statements below describe the PRECEDING checkpoint and
+its publication. They are preserved as history, not the current implementation
+status. The original candidate proof is unchanged. The new proof, code, tests
+and exact limits are linked from the follow-up; they do not constitute external
+review or promotion into the project's established results.
+
 Date: 2026-09-15. Base: `47adf83c194aa941b525240f6470f3d77a69f81d`.
 
 **CANDIDATE PROOF; NOT ESTABLISHED.** No stable C/E identifier is reserved.

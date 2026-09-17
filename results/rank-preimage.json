@@ -1,0 +1,153 @@
+{
+  "counts": {
+    "caps": 1,
+    "changed_base_lengths": 267,
+    "changed_reference_lengths": 416,
+    "changed_references": 472,
+    "compiled_base_evaluations": 971,
+    "compiled_diagrams": 263,
+    "compiled_path_atoms": 1223,
+    "complete_preimage_unions": 4,
+    "complete_two_state_decisions": 1152,
+    "final_return_boundary_checks": 28,
+    "fully_enumerated_branches": 13248,
+    "incompatible_shared_products": 2,
+    "joint_queries": 177,
+    "largest_observer": 531441000000,
+    "nested_preimages": 21,
+    "reconstructed_atoms": 1638,
+    "reconstructed_models": 694,
+    "terminal_coloured_compilations": 65,
+    "unguided_promoted_positive": 1,
+    "word_comparisons": 5401
+  },
+  "full_enumeration": [
+    {
+      "branches": 3312,
+      "label": "F",
+      "result": true,
+      "satisfying": 3,
+      "work": 96520
+    },
+    {
+      "branches": 3312,
+      "label": "S",
+      "result": false,
+      "satisfying": 0,
+      "work": 93100
+    },
+    {
+      "branches": 3312,
+      "label": "K0",
+      "result": false,
+      "satisfying": 0,
+      "work": 93200
+    },
+    {
+      "branches": 3312,
+      "label": "K1",
+      "result": true,
+      "satisfying": 3,
+      "work": 93229
+    }
+  ],
+  "full_general_algorithm_benchmarked": false,
+  "full_syntactic_enumerator_implemented": true,
+  "independent_mathematical_review": false,
+  "lean_checked": false,
+  "nested_compilation": [
+    {
+      "final_atoms": 3,
+      "final_vertices": 2,
+      "rank": 2,
+      "states": 5,
+      "weights": [
+        13,
+        42
+      ],
+      "witness": "1010"
+    },
+    {
+      "final_atoms": 3,
+      "final_vertices": 2,
+      "rank": 3,
+      "states": 7,
+      "weights": [
+        15,
+        54,
+        1776
+      ],
+      "witness": "101010"
+    },
+    {
+      "final_atoms": 3,
+      "final_vertices": 2,
+      "rank": 4,
+      "states": 9,
+      "weights": [
+        17,
+        66,
+        2928,
+        157476
+      ],
+      "witness": "10101010"
+    },
+    {
+      "final_atoms": 3,
+      "final_vertices": 2,
+      "rank": 5,
+      "states": 11,
+      "weights": [
+        19,
+        78,
+        4368,
+        287508,
+        18974748
+      ],
+      "witness": "1010101010"
+    },
+    {
+      "final_atoms": 3,
+      "final_vertices": 2,
+      "rank": 6,
+      "states": 13,
+      "weights": [
+        21,
+        90,
+        6096,
+        474564,
+        37015068,
+        2887174380
+      ],
+      "witness": "101010101010"
+    },
+    {
+      "final_atoms": 3,
+      "final_vertices": 2,
+      "rank": 7,
+      "states": 15,
+      "weights": [
+        23,
+        102,
+        8112,
+        729012,
+        65610012,
+        5904900012,
+        531441000012
+      ],
+      "witness": "10101010101010"
+    }
+  ],
+  "scope": "Compiler, four complete tiny unions, and nested positive certificates; not external theorem review",
+  "seed": 2026091737,
+  "status": "PASS",
+  "two_state_verdicts": {
+    "NO": 998,
+    "YES": 154
+  },
+  "unguided_chain": {
+    "status": "YES",
+    "word": "00",
+    "work": 509
+  }
+}
