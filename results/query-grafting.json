@@ -1,0 +1,147 @@
+{
+  "counts": {
+    "candidate_graft_assignments": 12499,
+    "changed_reference_substitutions": 1598,
+    "independent_rechecked_query_atoms": 4758,
+    "joint_query_atoms": 685,
+    "length_changing_substitutions": 1484,
+    "original_joint_diagrams": 308,
+    "satisfying_joint_substitutions": 2108
+  },
+  "examples": [
+    {
+      "base": "10",
+      "joint_atoms": 3,
+      "marks": [
+        [
+          3,
+          3
+        ],
+        [
+          6,
+          4
+        ],
+        [
+          7,
+          5
+        ]
+      ],
+      "new": "10010",
+      "old": "1001110"
+    },
+    {
+      "base": "10",
+      "joint_atoms": 3,
+      "marks": [
+        [
+          3,
+          3
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          7,
+          8
+        ]
+      ],
+      "new": "10011110",
+      "old": "1001110"
+    },
+    {
+      "base": "10",
+      "joint_atoms": 3,
+      "marks": [
+        [
+          3,
+          3
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          7,
+          6
+        ]
+      ],
+      "new": "100110",
+      "old": "1001110"
+    },
+    {
+      "base": "10",
+      "joint_atoms": 3,
+      "marks": [
+        [
+          3,
+          3
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          7,
+          9
+        ]
+      ],
+      "new": "100111110",
+      "old": "1001110"
+    },
+    {
+      "base": "11",
+      "joint_atoms": 3,
+      "marks": [
+        [
+          3,
+          3
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          7,
+          5
+        ],
+        [
+          8,
+          6
+        ]
+      ],
+      "new": "110011",
+      "old": "11001011"
+    },
+    {
+      "base": "11",
+      "joint_atoms": 3,
+      "marks": [
+        [
+          3,
+          3
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          9
+        ]
+      ],
+      "new": "110010011",
+      "old": "11001011"
+    }
+  ],
+  "independent_mathematical_review": false,
+  "lean_checked": false,
+  "scope": "Finite shared-diagram substitution checks, not the full symbolic compiler",
+  "seed": 2026091532,
+  "status": "PASS",
+  "unrestricted_decider_executed": false
+}

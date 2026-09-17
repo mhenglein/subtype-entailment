@@ -1,0 +1,181 @@
+{
+  "converse_boundary": [
+    {
+      "inverse_failure_entries_from_root": 1,
+      "ones": 1
+    },
+    {
+      "inverse_failure_entries_from_root": 2,
+      "ones": 2
+    },
+    {
+      "inverse_failure_entries_from_root": 3,
+      "ones": 3
+    },
+    {
+      "inverse_failure_entries_from_root": 4,
+      "ones": 4
+    },
+    {
+      "inverse_failure_entries_from_root": 5,
+      "ones": 5
+    },
+    {
+      "inverse_failure_entries_from_root": 6,
+      "ones": 6
+    },
+    {
+      "inverse_failure_entries_from_root": 7,
+      "ones": 7
+    },
+    {
+      "inverse_failure_entries_from_root": 8,
+      "ones": 8
+    },
+    {
+      "inverse_failure_entries_from_root": 9,
+      "ones": 9
+    }
+  ],
+  "counts": {
+    "accepted_witness_hierarchies": 714,
+    "all_first_return_extensions": 826,
+    "classified_edges": 34702,
+    "compressed_path_pieces": 10966,
+    "direct_literal_graphs": 4094,
+    "fixed_finish_graph_oracles": 714,
+    "forward_stream_product_oracles": 1260,
+    "full_return_rank_boundary_cases": 45,
+    "higher_rank_fixture_promotions": 21,
+    "observed_shared_forward_pieces": 2913,
+    "old_core_edge_equalities": 826,
+    "original_word_comparisons": 122640,
+    "overlapping_one_vertex_extensions": 7,
+    "positive_diagram_certificates": 6419,
+    "regular_path_queries": 10080,
+    "safe_hierarchy_promotions": 663,
+    "shared_assignment_guard_cases": 9
+  },
+  "endpoint_wrap_regressions": [
+    {
+      "base_length": 1,
+      "fresh_vertices": 1,
+      "wrap_is_self_loop": true
+    },
+    {
+      "base_length": 2,
+      "fresh_vertices": 1,
+      "wrap_is_self_loop": true
+    },
+    {
+      "base_length": 3,
+      "fresh_vertices": 1,
+      "wrap_is_self_loop": true
+    },
+    {
+      "base_length": 4,
+      "fresh_vertices": 1,
+      "wrap_is_self_loop": true
+    },
+    {
+      "base_length": 5,
+      "fresh_vertices": 1,
+      "wrap_is_self_loop": true
+    },
+    {
+      "base_length": 6,
+      "fresh_vertices": 1,
+      "wrap_is_self_loop": true
+    },
+    {
+      "base_length": 7,
+      "fresh_vertices": 1,
+      "wrap_is_self_loop": true
+    }
+  ],
+  "full_query_elimination_compiler_executed": false,
+  "higher_rank_positive_fixtures": [
+    {
+      "milestone_lengths": [
+        1,
+        3
+      ],
+      "rank": 2,
+      "states": 5,
+      "word": "1010"
+    },
+    {
+      "milestone_lengths": [
+        1,
+        3,
+        5
+      ],
+      "rank": 3,
+      "states": 7,
+      "word": "101010"
+    },
+    {
+      "milestone_lengths": [
+        1,
+        3,
+        5,
+        7
+      ],
+      "rank": 4,
+      "states": 9,
+      "word": "10101010"
+    },
+    {
+      "milestone_lengths": [
+        1,
+        3,
+        5,
+        7,
+        9
+      ],
+      "rank": 5,
+      "states": 11,
+      "word": "1010101010"
+    },
+    {
+      "milestone_lengths": [
+        1,
+        3,
+        5,
+        7,
+        9,
+        11
+      ],
+      "rank": 6,
+      "states": 13,
+      "word": "101010101010"
+    },
+    {
+      "milestone_lengths": [
+        1,
+        3,
+        5,
+        7,
+        9,
+        11,
+        13
+      ],
+      "rank": 7,
+      "states": 15,
+      "word": "10101010101010"
+    }
+  ],
+  "independent_mathematical_review": false,
+  "lean_checked": false,
+  "repository_base": "47adf83c194aa941b525240f6470f3d77a69f81d",
+  "scope": "Graph identities and finite query-kernel audits only; NOT an executed unrestricted decider",
+  "seed": 2026091531,
+  "shared_strip_observers": {
+    "individually_satisfiable": [
+      true,
+      true
+    ],
+    "jointly_satisfiable": false
+  },
+  "status": "PASS"
+}
