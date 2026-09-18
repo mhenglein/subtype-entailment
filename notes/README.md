@@ -20,6 +20,9 @@ Current notes:
 - [Single-source shape lemmas](2026-09-08-single-source-shape-lemmas.md): junction lemma, small-root bounds, the near-periodic shape theorem, the open root-length obligation, and the exact four/five-state census.
 - [Lean rank-query statement](2026-09-18-lean-rank-query-statement.md): stage 4a readback; grammar, literal prefix graphs, decidable satisfaction, and the unproved pinned Closure Lemma.
 - [Closure Lemma adversarial fixtures](2026-09-18-closure-fixtures.md): independent brute force over safe first-return extensions against the compiled preimages; joint conjunction, shared generator, two-atom unions; no discrepancy, bounded evidence only.
+- [Semantic bridge audit contracts](2026-09-18-semantic-bridge-audit.md): eight exact stage-6 transfer contracts and restricted-input integration oracles; no Lean.
+- [Canonical-model formalization](2026-09-18-canonical-model-formalization.md): stage 6 semantic foundation; arbitrary prefix-closed trees, four normalized forms, `not_entails_iff_canonical`.
+- [Finite propagation formalization](2026-09-18-finite-propagation-formalization.md): stage 6 second layer; stack normal form, exact reachability, total `satCheck_correct`, supplied-address countermodel check; entailment not decided.
 
 Use `YYYY-MM-DD-short-topic.md` for new notes. Start from [the research template](../templates/research-note.md). Record sources, hypotheses, proof status, and the next concrete question.
 

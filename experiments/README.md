@@ -762,6 +762,15 @@ every four-state case; this check does not add a small-state result.
 | Evidence | [Saved result](../results/closure-fixtures.json): seed `2026091832`, work cap 1,500,000; an independent evaluator, literal safety predicate and first-return extension enumerator judge the imported compiler: 149 brute-force extensions, 54 of 54 forward certificates, 59 sound reconstructions, one exhausted two-atom union (5,256 clauses), 16 work-capped unions, 297,083 compiled clauses within `U_k(T)`, 12 separately-satisfiable/jointly-unsatisfiable pairs with no satisfiable enumerated joint clause, oracle YES/NO 10/24 consistent with brute force; no discrepancy. |
 | Status | Bounded adversarial regression against `rank_preimage.py`; caps are UNKNOWN, never NO; no E ID; C080 remains a candidate. |
 
+### Stage-6 semantic bridge: transfer contracts and finite propagation differential
+
+| Field | Record |
+|---|---|
+| Command | `python3 experiments/check_semantic_bridge_audit.py --output /tmp/semantic-bridge-audit.json && cmp results/semantic-bridge-audit.json /tmp/semantic-bridge-audit.json`; `python3 experiments/check_stack_summary.py --lean --output /tmp/finite-propagation.json && cmp results/finite-propagation.json /tmp/finite-propagation.json` (Lean 4.33.1) |
+| Detail | [Bridge audit contracts](../notes/2026-09-18-semantic-bridge-audit.md); [canonical model](../notes/2026-09-18-canonical-model-formalization.md); [finite propagation](../notes/2026-09-18-finite-propagation-formalization.md) |
+| Evidence | [semantic-bridge-audit.json](../results/semantic-bridge-audit.json): restricted-input integration oracles and guards for the C029/C031 composition. [finite-propagation.json](../results/finite-propagation.json): seed `2026091831`; 68 systems, 14,256 reachability, 1,488 control-reachability and 176 balanced comparisons against an independent saturation oracle, 8,050 complete monotone cross-checks, 32 `satCheck` and 896 supplied-address `separationCheck` comparisons of the compiled Lean Booleans. |
+| Status | Regressions for kernel-checked executable definitions; entailment itself is not decided (the separating address remains an explicit existential); no E ID; C080 unchanged. |
+
 ## Not yet reproducible or not yet run
 
 These items have no executed experiment ID. Do not assign them `REPRO` status

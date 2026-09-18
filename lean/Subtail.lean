@@ -9,3 +9,10 @@ import Subtail.TerminalRank
 import Subtail.RankMilestones
 import Subtail.FirstReturnColours
 import Subtail.RankQueryFirstReturn
+import Subtail.TreeSemantics
+import Subtail.CanonicalModel
+import Subtail.CanonicalModelAudit
+import Subtail.StackSummary
+import Subtail.StackReachability
+import Subtail.CanonicalReachability
+import Subtail.StackSummaryAudit

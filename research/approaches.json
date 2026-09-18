@@ -478,8 +478,8 @@
       "outcome": "supported",
       "owner": null,
       "updated": "2026-09-18",
-      "summary": "Lean kernel-checks the rank-query candidate's stages 1-2 (terminal border depth at most k-1, milestone first returns, failure-target confinement); stage 3 (coloured first-return graph surgery) is under active formalization on branch lean/first-return-graph-2026-09-18; stage 4a pins the query grammar, literal prefix-graph semantics, a kernel-checked decision of query satisfaction and the Closure Lemma as an unproved Prop; stages 4b-6 are unformalized.",
-      "next_step": "Finish and integrate stage 3; instantiate the pinned ClosureFor with an executable preimage compiler and prove both directions (issues #28/#29); formalize the weight bound/unwind and the C029/C031 bridge as separate obligations. One GitHub issue per obligation under the milestone 'Rank-query closure formalized'.",
+      "summary": "Lean kernel-checks the rank-query candidate's stages 1-3 (terminal border depth at most k-1, milestone first returns, failure-target confinement, exact coloured first-return graph surgery identified with the literal query graph); stage 4a pins the query grammar, decidable satisfaction and the Closure Lemma as an unproved Prop, with product-simple runs and the s+1 fresh-interval bound as 4b ingredients; stage 6 has a kernel-checked semantic foundation (arbitrary trees, canonical separating addresses) and total executable normalized satisfiability, but entailment is not yet decided; stages 4b/4c, 5 and the rest of 6 are unformalized.",
+      "next_step": "Instantiate the pinned ClosureFor with an executable preimage compiler and prove the reverse direction (#29, claimed) then the forward direction (#28); formalize the weight bound/unwind (#30); for stage 6, bound or finitely represent the separating address (Pop/Post regularity, I_C), then absorption, C029/C031 and the composition (#31). One GitHub issue per obligation under the milestone 'Rank-query closure formalized'.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
@@ -500,7 +500,20 @@
         "lean/Subtail/RankQuery.lean",
         "notes/2026-09-18-lean-rank-query-statement.md",
         "experiments/check_lean_rank_query.py",
-        "results/lean-rank-query.json"
+        "results/lean-rank-query.json",
+        "lean/Subtail/RankQueryPaths.lean",
+        "lean/Subtail/TreeSemantics.lean",
+        "lean/Subtail/CanonicalModel.lean",
+        "lean/Subtail/CanonicalReachability.lean",
+        "lean/Subtail/StackReachability.lean",
+        "notes/2026-09-18-canonical-model-formalization.md",
+        "notes/2026-09-18-finite-propagation-formalization.md",
+        "notes/2026-09-18-semantic-bridge-audit.md",
+        "experiments/check_stack_summary.py",
+        "experiments/check_semantic_bridge_audit.py",
+        "results/canonical-model.json",
+        "results/finite-propagation.json",
+        "results/semantic-bridge-audit.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/34"
     }

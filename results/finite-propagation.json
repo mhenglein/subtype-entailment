@@ -1,0 +1,19 @@
+{
+  "bounded_bfs_scope": "Only no-push or no-pop systems, where stack monotonicity proves completeness for tested endpoints",
+  "counts": {
+    "balanced_comparisons": 176,
+    "complete_monotone_bfs_checks": 8050,
+    "constraint_systems": 32,
+    "control_reachability_comparisons": 1488,
+    "reachability_comparisons": 14256,
+    "satisfiability_comparisons": 32,
+    "supplied_address_comparisons": 896,
+    "systems": 68
+  },
+  "lean_native": true,
+  "oracle": "Independent epsilon/letter P-automaton predecessor saturation; no stack cutoff",
+  "oracle_sha256": "692d4dcd18c9b9bce82c265af3533c471d038c7a018317814a52d62b3ff19a05",
+  "scope": "Finite corpus differential evidence; all-length claims require the separate Lean correctness proofs, not extrapolation from this corpus",
+  "seed": 2026091831,
+  "status": "PASS"
+}

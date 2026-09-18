@@ -35,8 +35,14 @@ fixtures for joint conjunction and shared generators found no discrepancy,
 3 is under active formalization on the branch
 `lean/first-return-graph-2026-09-18`, and the stage-4 Closure Lemma is PINNED
 as an unproved statement with decidable query satisfaction and a bounded-visits
-lemma ([readback](notes/2026-09-18-lean-rank-query-statement.md)). Stages 4–6
-remain unproved in Lean. The
+lemma ([readback](notes/2026-09-18-lean-rank-query-statement.md)). Stage 3 is
+now kernel-checked and identified with that literal query graph, with the
+`s+1` fresh-interval bound ([note](notes/2026-09-18-lean-first-return-graph.md));
+stage 6 has a checked semantic foundation and total executable normalized
+satisfiability, but not a decision of entailment
+([canonical model](notes/2026-09-18-canonical-model-formalization.md),
+[finite propagation](notes/2026-09-18-finite-propagation-formalization.md)).
+Stages 4b/4c, 5 and the remainder of 6 remain unproved in Lean. The
 generic compiled driver is resource-limited; timed UNKNOWN results are not
 negative certificates. Problem 1.7's accepted status is unchanged: CANDIDATE
 PROOF, independent human review pending.
