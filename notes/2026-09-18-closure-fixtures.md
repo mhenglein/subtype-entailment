@@ -42,9 +42,11 @@ For each fixture `(I, B, φ)` the checker records:
    against a brute-force `YES` is a discrepancy.
 3. **Completeness certificates.** For up to six found `C`: the compiler's
    `model(P(C), φ)` must agree with `truth` (else `compiler_evaluator_disagrees`);
-   the extracted diagram `D` must be produced by the compiler's own diagram
-   enumerator up to compression of zero-length core/forward pieces
-   (`enumerator_accepts`, else `certificate_diagram_not_enumerated`); the compiled
+   the extracted diagram `D` must pass a structural membership check against
+   the compiler's own diagram enumerator (each atom's kind/label sequence is
+   offered by `path_shapes` up to the zero-length core/forward pieces that
+   extraction omits, and the mark order passes the enumerator's filters;
+   `enumerator_accepts`, else `certificate_diagram_not_enumerated`); the compiled
    clause must have weight `≤ U_k(weight φ)`; it must be satisfiable on `P(B)`
    (forward direction, else `forward_direction_failed`); and its model must
    reconstruct (soundness, below). Where the same clause is also satisfiable on
@@ -100,9 +102,10 @@ requirement on `r_0`.
   extension.
 * Singleton wrap (`L = 1`): base `"00"`, a `K0` self-loop atom at the end
   vertex; the one-letter extension `"000"` is found and certified; 76,123
-  union clauses enumerated under the cap, none satisfiable (the certificate
-  clause lies beyond the enumerated prefix, so this is an `UNKNOWN_WORK` union,
-  not a miss: completeness is checked by the forward certificate).
+  union clauses enumerated under the cap, none satisfiable. The certificate's
+  diagram passes the structural membership check but its clause was not among
+  the enumerated clauses, so this union is `UNKNOWN_WORK`, not a miss;
+  completeness for this fixture rests on the forward certificate alone.
 * Return at the ultimate accepting cut: the `(1,1)` modular family, witness
   `1010`, reversed `0101`, base `"01"` returning exactly at the final position;
   the finishing query that the complete witness satisfies is the fixture. Brute
@@ -139,9 +142,10 @@ byte-identical output; status `PASS`, discrepancies `[]`.
 
 ## 4. What this does and does not show
 
-* Every brute-force extension of every fixture is reachable by the compiler's
-  own diagram enumeration and compiles to a clause that is true on the base
-  graph and reconstructs to exactly one safe first return. No compiled clause
+* Every brute-force extension of every fixture yields a diagram that passes
+  the structural membership check of the compiler's enumeration and compiles
+  to a clause that is true on the base graph and reconstructs to exactly one
+  safe first return. No compiled clause
   seen (297,083) exceeded the weight bound or reconstructed to anything other
   than a safe first-return extension satisfying the query.
 * Joint conjunction is tested only by finite prefixes of the joint unions
