@@ -774,6 +774,7 @@ structure Recon (I : Instance k) (c : Clause k) (D : Diagram k) (B : Reference k
     Gen I B (itemsAt I c D g) (σ (zVar D g)).val (x0 g) (exts g) (σ (zVar D (g + 1))).val (x1 g)
   x0_state : ∀ g, g < D.groups - 1 → (x0 g).state = markState D g
   x0_next : ∀ g, g < D.groups - 1 → (x0 g).next = nextOf D g
+  x0_seen : ∀ g, g < D.groups - 1 → (x0 g).seen = 0
   x0_controls : ∀ g, g < D.groups - 1 → (x0 g).controls = (itemsAt I c D g).map fun a => a.2.1
   x1_state : ∀ g, g < D.groups - 1 → (x1 g).state = markState D (g + 1)
   x1_next : ∀ g, g < D.groups - 1 → (x1 g).next = nextOf D (g + 1)
@@ -949,6 +950,7 @@ theorem exists_recon (I : Instance k) (c : Clause k) (D : Diagram k) (B : Refere
   exact ⟨{ exts := fun g => (f g).2.2, x0 := fun g => (f g).1, x1 := fun g => (f g).2.1,
            gen := fun g hg => (hf g hg).1,
            x0_state := fun g hg => (hf g hg).2.1, x0_next := fun g hg => (hf g hg).2.2.1,
+           x0_seen := fun g hg => (hf g hg).2.2.2.1,
            x0_controls := fun g hg => (hf g hg).2.2.2.2.1,
            x1_state := fun g hg => (hf g hg).2.2.2.2.2.1, x1_next := fun g hg => (hf g hg).2.2.2.2.2.2.1,
            x1_seen := fun g hg => (hf g hg).2.2.2.2.2.2.2.1,
@@ -1504,6 +1506,179 @@ theorem gen_forward_run (hm : 0 < B.word.length)
     exact this
 
 end Forward
+
+/-! ## Placement of the interval traces in the extension -/
+
+theorem stateAt_append_length (q : Fin k) : ∀ (l₁ l₂ : List (Bool × Fin k)),
+    stateAt q (l₁ ++ l₂) l₁.length = lastState q l₁ := by
+  intro l₁
+  induction l₁ generalizing q with
+  | nil => intro l₂; rfl
+  | cons e rest ih =>
+    intro l₂
+    obtain ⟨b, p⟩ := e
+    rw [List.cons_append, List.length_cons, stateAt_cons _ _ _ _ (by simp), lastState_cons]
+    exact ih p l₂
+
+theorem stateAt_succ? (q : Fin k) (ext : List (Bool × Fin k)) {i : Nat} {e : Bool × Fin k}
+    (h : ext[i]? = some e) : stateAt q ext (i + 1) = e.2 := by
+  simp [stateAt, h]
+
+namespace Recon
+variable {I : Instance k} {c : Clause k} {D : Diagram k} {B : Reference k}
+  {σ : Var D → Fin (prefixGraph I B).size}
+
+/-- Position of mark group `g` in the extension. -/
+def pos (r : Recon I c D B σ) (g : Nat) : Nat := B.word.length + 1 + (r.pre g).length
+
+theorem exts_ne_nil (r : Recon I c D B σ) {g : Nat} (hg : g < D.groups - 1) : r.exts g ≠ [] := by
+  intro h
+  have hgen := r.gen g hg
+  rw [h] at hgen
+  obtain ⟨-, hx⟩ := gen_nil_eq hgen
+  have h0 := r.x0_seen g hg
+  have h1 := r.x1_seen g hg
+  rw [hx] at h0
+  omega
+
+theorem pre_prefix (r : Recon I c D B σ) {g : Nat} : ∀ h, g ≤ h → ∃ rest, r.pre h = r.pre g ++ rest := by
+  intro h
+  induction h with
+  | zero => intro hg; exact ⟨[], by simp [Nat.le_zero.mp hg, pre]⟩
+  | succ h ih =>
+    intro hg
+    by_cases he : g = h + 1
+    · exact ⟨[], by simp [he]⟩
+    · obtain ⟨rest, hrest⟩ := ih (by omega)
+      exact ⟨rest ++ r.exts h, by rw [pre_succ, hrest, List.append_assoc]⟩
+
+theorem pos_succ (r : Recon I c D B σ) (g : Nat) : r.pos (g + 1) = r.pos g + (r.exts g).length := by
+  simp only [pos, pre_succ, List.length_append]
+  omega
+
+theorem ext_eq (r : Recon I c D B σ) : r.ext = (D.firstBit, markState D 0) :: r.pre (D.groups - 1) := rfl
+
+theorem length_ext (r : Recon I c D B σ) : (extRef B r.ext).word.length = r.pos (D.groups - 1) := by
+  rw [extRef_length, ext_eq, List.length_cons, pos]
+  omega
+
+theorem pos_le (r : Recon I c D B σ) {g : Nat} (hg : g ≤ D.groups - 1) :
+    r.pos g ≤ (extRef B r.ext).word.length := by
+  rw [length_ext]
+  obtain ⟨rest, hrest⟩ := r.pre_prefix (D.groups - 1) hg
+  simp only [pos, hrest, List.length_append]
+  omega
+
+theorem pos_lt (r : Recon I c D B σ) {g : Nat} (hg : g < D.groups - 1) :
+    r.pos g < (extRef B r.ext).word.length := by
+  have h1 := r.pos_le (g := g + 1) (by omega)
+  rw [pos_succ] at h1
+  have := List.length_pos_iff.mpr (r.exts_ne_nil hg)
+  omega
+
+/-- The label at a mark is the mark's actual state. -/
+theorem label_pos (r : Recon I c D B σ) {g : Nat} (hg : g ≤ D.groups - 1) :
+    (extRef B r.ext).label (r.pos g) = markState D g := by
+  obtain ⟨rest, hrest⟩ := r.pre_prefix (D.groups - 1) hg
+  have e : r.pos g = B.word.length + ((r.pre g).length + 1) := by simp only [pos]; omega
+  rw [e, extRef_label_add, ext_eq, hrest, stateAt_cons _ _ _ _ (by simp), stateAt_append_length,
+    (r.pre_revRun g hg).2]
+
+/-- The cursor at a mark is the origin the base model assigns to it. -/
+theorem cursor_pos (r : Recon I c D B σ) (hm : 0 < B.word.length) {g : Nat} (hg : g ≤ D.groups - 1) :
+    FirstReturnGraph.cursor (extRef B r.ext).word B.word.length (r.pos g - B.word.length) =
+      (σ (zVar D g)).val := by
+  obtain ⟨rest, hrest⟩ := r.pre_prefix (D.groups - 1) hg
+  have e : r.pos g - B.word.length = (r.pre g).length + 1 := by simp only [pos]; omega
+  rw [e, extRef_word, cursor_eq_walk B _ (by rw [ext_eq, hrest]; simp), ext_eq, hrest]
+  simp only [List.map_cons, List.map_append, List.take_succ_cons, walkTo]
+  rw [List.take_left' (by simp), ← r.z0_pos]
+  exact r.pre_walk g hg
+
+theorem pre_decomp (r : Recon I c D B σ) {g : Nat} (hg : g < D.groups - 1) :
+    ∃ rest, r.pre (D.groups - 1) = r.pre g ++ r.exts g ++ rest := by
+  obtain ⟨rest, hrest⟩ := r.pre_prefix (D.groups - 1) (g := g + 1) (by omega)
+  exact ⟨rest, by rw [hrest, pre_succ]⟩
+
+/-- Letters of interval `g` sit at positions `pos g + i`. -/
+theorem word_pos_add (r : Recon I c D B σ) {g : Nat} (hg : g < D.groups - 1) {i : Nat}
+    (hi : i < (r.exts g).length) :
+    (extRef B r.ext).word[r.pos g + i]? = some ((r.exts g)[i]).1 := by
+  obtain ⟨rest, hrest⟩ := r.pre_decomp hg
+  have e : r.pos g + i = B.word.length + ((r.pre g).length + i + 1) := by simp only [pos]; omega
+  rw [e, extRef_getElem?, ext_eq, hrest]
+  simp only [List.map_cons, List.map_append, List.getElem?_cons_succ, List.append_assoc]
+  rw [List.getElem?_append_right (by simp), List.length_map, Nat.add_sub_cancel_left,
+    List.getElem?_append_left (by simp; exact hi)]
+  simp [List.getElem?_eq_getElem hi]
+
+/-- States of interval `g` sit at positions `pos g + i + 1`. -/
+theorem label_pos_add (r : Recon I c D B σ) {g : Nat} (hg : g < D.groups - 1) {i : Nat}
+    (hi : i < (r.exts g).length) :
+    (extRef B r.ext).label (r.pos g + i + 1) = ((r.exts g)[i]).2 := by
+  obtain ⟨rest, hrest⟩ := r.pre_decomp hg
+  have e : r.pos g + i + 1 = B.word.length + ((r.pre g).length + i + 1 + 1) := by simp only [pos]; omega
+  rw [e, extRef_label_add]
+  apply stateAt_succ?
+  rw [ext_eq, hrest, List.getElem?_cons_succ, List.append_assoc, List.getElem?_append_right (by simp),
+    Nat.add_sub_cancel_left, List.getElem?_append_left hi]
+  simp [List.getElem?_eq_getElem hi]
+
+/-- The letter at a mark is the mark's next bit. -/
+theorem word_pos (r : Recon I c D B σ) (hv : validDiagram I c D = true) {g : Nat}
+    (hg : g ≤ D.groups - 1) : (extRef B r.ext).word[r.pos g]? = nextOf D g := by
+  by_cases hlt : g < D.groups - 1
+  · have hne := r.exts_ne_nil hlt
+    have hpos := List.length_pos_iff.mpr hne
+    have h := r.word_pos_add hlt (i := 0) hpos
+    rw [Nat.add_zero] at h
+    rw [h, ← r.x0_next g hlt]
+    have hh := gen_head (r.gen g hlt) hne
+    rw [← hh, List.head?_eq_getElem?, List.getElem?_map, List.getElem?_eq_getElem hpos]
+    rfl
+  · have hge : g = D.groups - 1 := by omega
+    subst hge
+    rw [nextOf_last I c D hv, ← length_ext]
+    exact List.getElem?_eq_none_iff.mpr (Nat.le_refl _)
+
+end Recon
+
+/-! ## Reading the emitted pieces -/
+
+theorem foldl_appendEmitted_proj {β : Type} (f : Emitted D → List β)
+    (hf : ∀ e g, f (appendEmitted e g) = f e ++ f g) :
+    ∀ (es : List (Emitted D)) (acc : Emitted D),
+      f (es.foldl appendEmitted acc) = f acc ++ (es.map f).flatten := by
+  intro es
+  induction es with
+  | nil => intro acc; simp
+  | cons e es ih =>
+    intro acc
+    rw [List.foldl_cons, ih, hf, List.map_cons, List.flatten_cons, List.append_assoc]
+
+theorem active_append (e g : Emitted D) : (appendEmitted e g).active = e.active ++ g.active := rfl
+theorem tests_append (e g : Emitted D) : (appendEmitted e g).tests = e.tests ++ g.tests := rfl
+theorem equal_append (e g : Emitted D) : (appendEmitted e g).equal = e.equal ++ g.equal := rfl
+theorem atoms_append (e g : Emitted D) : (appendEmitted e g).atoms = e.atoms ++ g.atoms := rfl
+
+/-- Anything emitted by piece `pi` of atom `ai` is emitted by the clause. -/
+theorem mem_allEmitted_of_piece (I : Instance k) (c : Clause k) (D : Diagram k)
+    {β : Type} (f : Emitted D → List β) (hf : ∀ e g, f (appendEmitted e g) = f e ++ f g)
+    (hf0 : f {} = []) {ai : Nat} (hai : ai < c.atoms.length) {pi : Nat}
+    (hpi : pi < (piecesOf D ai).length) {x : β}
+    (hx : x ∈ f (compilePiece I D ai pi (c.atoms[ai]).observer ((piecesOf D ai)[pi]))) :
+    x ∈ f (allEmitted I c D) := by
+  unfold allEmitted
+  rw [foldl_appendEmitted_proj f hf, hf0, List.nil_append]
+  apply List.mem_flatten.mpr
+  refine ⟨_, List.mem_map.mpr ⟨_, List.mem_map.mpr ⟨ai, List.mem_range.mpr hai, rfl⟩, rfl⟩, ?_⟩
+  simp only [List.getElem?_eq_getElem hai]
+  unfold compileAtom
+  rw [foldl_appendEmitted_proj f hf, hf0, List.nil_append]
+  apply List.mem_flatten.mpr
+  refine ⟨_, List.mem_map.mpr ⟨_, List.mem_map.mpr ⟨pi, List.mem_range.mpr hpi, rfl⟩, rfl⟩, ?_⟩
+  rw [List.getD_eq_getElem?_getD, List.getElem?_eq_getElem hpi, Option.getD_some]
+  exact hx
 
 end RankQuerySound
 end Subtail
