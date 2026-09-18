@@ -22,20 +22,21 @@ jobs:
           use-mathlib-cache: 'false'
       - name: Compile exact graph proof
         working-directory: lean
-        run: lake build +Subtail.FirstReturnGraph
+        run: lake build +Subtail.FirstReturnColours
       - name: Replay graph proof through kernel
         working-directory: lean
-        run: lake env leanchecker Subtail.FirstReturnGraph
+        run: lake env leanchecker Subtail.FirstReturnColours
       - name: Audit declaration dependencies
         run: |
           mkdir -p tmp
           python3 - <<'PY'
           import re
           from pathlib import Path
-          s='\n'.join(Path('lean/Subtail/'+n+'.lean').read_text() for n in ['PrefixMatching','FirstReturnGraph'])
-          rows=re.findall(r'^(def|theorem) ([A-Za-z_][A-Za-z_0-9]*)',s,re.M)
-          assert len(rows)>=20
-          Path('tmp/graph-axioms.lean').write_text('import Subtail.FirstReturnGraph\n'+''.join('#print axioms Subtail.FirstReturnGraph.'+n+'\n' for _,n in rows))
+          names=['PrefixMatching','FirstReturnGraph','FirstReturnGenerator','FirstReturnColours']
+          s='\n'.join(Path('lean/Subtail/'+n+'.lean').read_text() for n in names)
+          rows=re.findall(r'^(def|theorem|abbrev) ([A-Za-z_][A-Za-z_0-9]*)',s,re.M)
+          assert len(rows)>=35
+          Path('tmp/graph-axioms.lean').write_text('import Subtail.FirstReturnColours\n'+''.join('#print axioms Subtail.FirstReturnGraph.'+n+'\n' for _,n in rows))
           PY
           cd lean
           set -o pipefail
@@ -44,8 +45,9 @@ jobs:
           python3 - <<'PY'
           import re
           from pathlib import Path
-          s='\n'.join(Path('lean/Subtail/'+n+'.lean').read_text() for n in ['PrefixMatching','FirstReturnGraph'])
-          expected={n:k for k,n in re.findall(r'^(def|theorem) ([A-Za-z_][A-Za-z_0-9]*)',s,re.M)}
+          names=['PrefixMatching','FirstReturnGraph','FirstReturnGenerator','FirstReturnColours']
+          s='\n'.join(Path('lean/Subtail/'+n+'.lean').read_text() for n in names)
+          expected={n:k for k,n in re.findall(r'^(def|theorem|abbrev) ([A-Za-z_][A-Za-z_0-9]*)',s,re.M)}
           text=Path('/tmp/graph-axioms.txt').read_text()
           rows=re.findall(r"'Subtail\.FirstReturnGraph\.([^']+)' (does not depend on any axioms|depends on axioms: \[([^]]*)\])",text)
           assert {n for n,_,_ in rows}==set(expected),text
