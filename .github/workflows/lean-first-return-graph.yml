@@ -1,0 +1,63 @@
+name: Lean first-return graph
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  graph:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.11'
+      - uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596
+        with:
+          lake-package-directory: lean
+          build: 'true'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'false'
+      - name: Compile exact graph proof
+        working-directory: lean
+        run: lake build +Subtail.FirstReturnGraph
+      - name: Replay graph proof through kernel
+        working-directory: lean
+        run: lake env leanchecker Subtail.FirstReturnGraph
+      - name: Audit declaration dependencies
+        run: |
+          mkdir -p tmp
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          s=Path('lean/Subtail/FirstReturnGraph.lean').read_text()
+          rows=re.findall(r'^(def|theorem) ([A-Za-z_][A-Za-z_0-9]*)',s,re.M)
+          assert len(rows)>=20
+          Path('tmp/graph-axioms.lean').write_text('import Subtail.FirstReturnGraph\n'+''.join('#print axioms Subtail.FirstReturnGraph.'+n+'\n' for _,n in rows))
+          PY
+          cd lean
+          set -o pipefail
+          lake env lean ../tmp/graph-axioms.lean | tee /tmp/graph-axioms.txt
+          cd ..
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          s=Path('lean/Subtail/FirstReturnGraph.lean').read_text()
+          expected={n:k for k,n in re.findall(r'^(def|theorem) ([A-Za-z_][A-Za-z_0-9]*)',s,re.M)}
+          text=Path('/tmp/graph-axioms.txt').read_text()
+          rows=re.findall(r"'Subtail\.FirstReturnGraph\.([^']+)' (does not depend on any axioms|depends on axioms: \[([^]]*)\])",text)
+          assert {n for n,_,_ in rows}==set(expected),text
+          for n,_,ax in rows:
+              allowed={'propext','Quot.sound'}
+              if expected[n]=='theorem': allowed.add('Classical.choice')
+              assert {x.strip() for x in ax.split(',') if x.strip()}<=allowed,(n,ax)
+          print('PASS:',len(rows),'dependency closures')
+          PY
+      - name: Preserve existing Lean core
+        run: python3 scripts/check_lean.py
+      - name: Preserve saved evidence and index
+        run: |
+          git diff --exit-code -- results/lean-checks.json
+          python3 scripts/research_index.py --check
