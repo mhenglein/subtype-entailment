@@ -37,12 +37,14 @@ jobs:
           lake build +Subtail.RankQuery
           lake build +Subtail.RankQueryPaths
           lake build +Subtail.RankQueryCompiler
+          lake build +Subtail.RankQuerySound
       - name: Replay declarations through the kernel
         working-directory: lean
         run: |
           lake env leanchecker Subtail.RankQuery
           lake env leanchecker Subtail.RankQueryPaths
           lake env leanchecker Subtail.RankQueryCompiler
+          lake env leanchecker Subtail.RankQuerySound
       - name: Audit every public def and theorem
         run: |
           mkdir -p tmp
@@ -50,14 +52,22 @@ jobs:
           from pathlib import Path
           import re
           pattern = r"^(?:@\[simp\] )?(def|theorem) ([A-Za-z_][A-Za-z_0-9?']*)"
-          lines = ['import Subtail.RankQuery', 'import Subtail.RankQueryPaths', 'import Subtail.RankQueryCompiler']
+          lines = ['import Subtail.RankQuery', 'import Subtail.RankQueryPaths', 'import Subtail.RankQueryCompiler',
+                   'import Subtail.RankQuerySound']
           for module, minimum, ns in (('RankQuery', 60, 'RankQuery'), ('RankQueryPaths', 15, 'RankQuery'),
-                                      ('RankQueryCompiler', 30, 'RankQueryCompiler')):
+                                      ('RankQueryCompiler', 30, 'RankQueryCompiler'),
+                                      ('RankQuerySound', 50, 'RankQuerySound')):
               source = Path('lean/Subtail/' + module + '.lean').read_text()
               rows = re.findall(pattern, source, re.M)
               assert len(rows) == len(set(n for _, n in rows)) and len(rows) >= minimum, (module, len(rows))
               assert not re.search(r'^\s*(axiom|opaque)\b', source, re.M), 'no axiom or opaque declarations'
-              lines += ['#print axioms Subtail.' + ns + '.' + n for _, n in rows]
+              inner = False
+              for line in source.splitlines():
+                  if line.startswith('namespace Recon'): inner = True
+                  if line.startswith('end Recon'): inner = False
+                  m = re.match(pattern, line)
+                  if m:
+                      lines.append('#print axioms Subtail.' + ns + '.' + ('Recon.' if inner else '') + m.group(2))
           Path('tmp/rankquery-axioms.lean').write_text('\n'.join(lines) + '\n')
           PY
           cd lean
@@ -69,11 +79,11 @@ jobs:
           import re
           pattern = r"^(?:@\[simp\] )?(def|theorem) ([A-Za-z_][A-Za-z_0-9?']*)"
           expected = {}
-          for module in ('RankQuery', 'RankQueryPaths', 'RankQueryCompiler'):
+          for module in ('RankQuery', 'RankQueryPaths', 'RankQueryCompiler', 'RankQuerySound'):
               source = Path('lean/Subtail/' + module + '.lean').read_text()
               expected.update((n, k) for k, n in re.findall(pattern, source, re.M))
           text = Path('/tmp/rankquery-axioms.txt').read_text()
-          rows = re.findall(r"'Subtail\.RankQuery(?:Compiler)?\.([^']+)' (does not depend on any axioms|depends on axioms: \[([^]]*)\])", text)
+          rows = re.findall(r"'Subtail\.RankQuery(?:Compiler|Sound)?\.(?:Recon\.)?([^']+)' (does not depend on any axioms|depends on axioms: \[([^]]*)\])", text)
           assert set(n for n, _, _ in rows) == set(expected), text
           for name, _, axioms in rows:
               allowed = {'propext', 'Quot.sound'}
