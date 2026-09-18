@@ -4,7 +4,7 @@ Current notes:
 
 - [Proof audit](proof-audit.md): Sections 1–6 and the reduction to border avoidance.
 - [Border audit](border-audit.md): Sections 7–8, rigidity, truncation, and the finite-state implementation.
-- [Literature check](literature-check.md): checked primary sources and their exact scope.
+- [Literature check](literature-check.md): compact primary-source audit and exact scope.\n- [Prior-work repository](prior-work/README.md): clinical paper dossiers, adjacent machinery, bibliography, and claim-by-claim novelty matrix.
 - [First Lean core](2026-09-04-lean-core.md): checked binary lemmas, explicit assumptions, and remaining obligations.
 - [Context-cut proof](2026-09-04-context-cut.md): three refinements of incoming-flag comparison, with strict examples.
 - [Bridge foundation](2026-09-04-bridge-foundation.md): regular seed closure, supplied-path countermodels, audit, and formal gaps.
