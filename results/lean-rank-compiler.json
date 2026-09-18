@@ -1,0 +1,325 @@
+{
+  "compiler_blob": "852fa7d7ba199b9d91ab24a8f7b5abf29ed8819b",
+  "counts": {
+    "brute_force_extensions": 41,
+    "comparisons": 733,
+    "diagrams": 137,
+    "expected_INVALID": 326,
+    "expected_false": 189,
+    "expected_true": 218,
+    "variant_certificate": 37,
+    "variant_control": 37,
+    "variant_first_bit": 37,
+    "variant_first_state": 2,
+    "variant_next_bit": 24
+  },
+  "diagrams": [
+    {
+      "atoms": 1,
+      "base": "0",
+      "extension": "00",
+      "groups": 1,
+      "instance": "toy",
+      "query": "S2 root->end"
+    },
+    {
+      "atoms": 1,
+      "base": "0",
+      "extension": "00",
+      "groups": 1,
+      "instance": "toy",
+      "query": "K1 end->root"
+    },
+    {
+      "atoms": 1,
+      "base": "00",
+      "extension": "000",
+      "groups": 1,
+      "instance": "toy",
+      "query": "K1 end->root"
+    },
+    {
+      "atoms": 1,
+      "base": "01",
+      "extension": "0101",
+      "groups": 2,
+      "instance": "toy",
+      "query": "K1 end->root"
+    },
+    {
+      "atoms": 1,
+      "base": "01",
+      "extension": "01001",
+      "groups": 2,
+      "instance": "toy",
+      "query": "K1 end->root"
+    },
+    {
+      "atoms": 1,
+      "base": "01",
+      "extension": "010001",
+      "groups": 2,
+      "instance": "toy",
+      "query": "K1 end->root"
+    },
+    {
+      "atoms": 1,
+      "base": "0",
+      "extension": "00",
+      "groups": 1,
+      "instance": "toy",
+      "query": "loop F,S,K1"
+    },
+    {
+      "atoms": 1,
+      "base": "0",
+      "extension": "010",
+      "groups": 2,
+      "instance": "toy",
+      "query": "loop F,S,K1"
+    },
+    {
+      "atoms": 1,
+      "base": "0",
+      "extension": "0110",
+      "groups": 2,
+      "instance": "toy",
+      "query": "loop F,S,K1"
+    },
+    {
+      "atoms": 1,
+      "base": "0",
+      "extension": "01110",
+      "groups": 2,
+      "instance": "toy",
+      "query": "loop F,S,K1"
+    },
+    {
+      "atoms": 1,
+      "base": "00",
+      "extension": "000",
+      "groups": 1,
+      "instance": "toy",
+      "query": "loop F,S,K1"
+    },
+    {
+      "atoms": 1,
+      "base": "00",
+      "extension": "001100",
+      "groups": 2,
+      "instance": "toy",
+      "query": "loop F,S,K1"
+    },
+    {
+      "atoms": 1,
+      "base": "00",
+      "extension": "00100",
+      "groups": 2,
+      "instance": "toy",
+      "query": "loop F,S,K1"
+    },
+    {
+      "atoms": 1,
+      "base": "01",
+      "extension": "011101",
+      "groups": 2,
+      "instance": "toy",
+      "query": "loop F,S,K1"
+    },
+    {
+      "atoms": 1,
+      "base": "01",
+      "extension": "01101",
+      "groups": 2,
+      "instance": "toy",
+      "query": "loop F,S,K1"
+    },
+    {
+      "atoms": 1,
+      "base": "01",
+      "extension": "011001",
+      "groups": 2,
+      "instance": "toy",
+      "query": "loop F,S,K1"
+    },
+    {
+      "atoms": 1,
+      "base": "01",
+      "extension": "0101",
+      "groups": 2,
+      "instance": "toy",
+      "query": "loop F,S,K1"
+    },
+    {
+      "atoms": 2,
+      "base": "0",
+      "extension": "00",
+      "groups": 1,
+      "instance": "toy",
+      "query": "two atoms K1 | F,S"
+    },
+    {
+      "atoms": 2,
+      "base": "00",
+      "extension": "000",
+      "groups": 1,
+      "instance": "toy",
+      "query": "two atoms K1 | F,S"
+    },
+    {
+      "atoms": 2,
+      "base": "01",
+      "extension": "0101",
+      "groups": 2,
+      "instance": "toy",
+      "query": "two atoms K1 | F,S"
+    },
+    {
+      "atoms": 2,
+      "base": "01",
+      "extension": "01001",
+      "groups": 2,
+      "instance": "toy",
+      "query": "two atoms K1 | F,S"
+    },
+    {
+      "atoms": 2,
+      "base": "01",
+      "extension": "010001",
+      "groups": 2,
+      "instance": "toy",
+      "query": "two atoms K1 | F,S"
+    },
+    {
+      "atoms": 1,
+      "base": "0",
+      "extension": "00",
+      "groups": 1,
+      "instance": "toy",
+      "query": "K0 self wrap"
+    },
+    {
+      "atoms": 1,
+      "base": "00",
+      "extension": "000",
+      "groups": 1,
+      "instance": "toy",
+      "query": "K0 self wrap"
+    },
+    {
+      "atoms": 2,
+      "base": "0",
+      "extension": "00",
+      "groups": 1,
+      "instance": "toy",
+      "query": "zero-length shared"
+    },
+    {
+      "atoms": 2,
+      "base": "0",
+      "extension": "010",
+      "groups": 2,
+      "instance": "toy",
+      "query": "zero-length shared"
+    },
+    {
+      "atoms": 2,
+      "base": "0",
+      "extension": "0110",
+      "groups": 2,
+      "instance": "toy",
+      "query": "zero-length shared"
+    },
+    {
+      "atoms": 2,
+      "base": "0",
+      "extension": "01110",
+      "groups": 2,
+      "instance": "toy",
+      "query": "zero-length shared"
+    },
+    {
+      "atoms": 2,
+      "base": "00",
+      "extension": "000",
+      "groups": 1,
+      "instance": "toy",
+      "query": "zero-length shared"
+    },
+    {
+      "atoms": 2,
+      "base": "00",
+      "extension": "001100",
+      "groups": 2,
+      "instance": "toy",
+      "query": "zero-length shared"
+    },
+    {
+      "atoms": 2,
+      "base": "00",
+      "extension": "00100",
+      "groups": 2,
+      "instance": "toy",
+      "query": "zero-length shared"
+    },
+    {
+      "atoms": 2,
+      "base": "01",
+      "extension": "011101",
+      "groups": 2,
+      "instance": "toy",
+      "query": "zero-length shared"
+    },
+    {
+      "atoms": 2,
+      "base": "01",
+      "extension": "01101",
+      "groups": 2,
+      "instance": "toy",
+      "query": "zero-length shared"
+    },
+    {
+      "atoms": 2,
+      "base": "01",
+      "extension": "011001",
+      "groups": 2,
+      "instance": "toy",
+      "query": "zero-length shared"
+    },
+    {
+      "atoms": 2,
+      "base": "01",
+      "extension": "0101",
+      "groups": 2,
+      "instance": "toy",
+      "query": "zero-length shared"
+    },
+    {
+      "atoms": 1,
+      "base": "1",
+      "extension": "11",
+      "groups": 1,
+      "instance": "k3",
+      "query": "S2 root->end"
+    },
+    {
+      "atoms": 1,
+      "base": "1",
+      "extension": "11",
+      "groups": 1,
+      "instance": "k3",
+      "query": "loop F,S,K1"
+    }
+  ],
+  "eval_lines": 733,
+  "lean_source_blob": "ee28add657e220cef1866a45b38d5f0972a1979a",
+  "limits": [
+    "Finite translation regression; nothing about the Closure Lemma is proved.",
+    "Only table and plain one-edge observers are translated."
+  ],
+  "mismatches": [],
+  "native_lean": "PASS",
+  "quick": false,
+  "seed": 2026091841,
+  "status": "PASS"
+}

@@ -771,6 +771,15 @@ every four-state case; this check does not add a small-state result.
 | Evidence | [semantic-bridge-audit.json](../results/semantic-bridge-audit.json): restricted-input integration oracles and guards for the C029/C031 composition. [finite-propagation.json](../results/finite-propagation.json): seed `2026091831`; 68 systems, 14,256 reachability, 1,488 control-reachability and 176 balanced comparisons against an independent saturation oracle, 8,050 complete monotone cross-checks, 32 `satCheck` and 896 supplied-address `separationCheck` comparisons of the compiled Lean Booleans. |
 | Status | Regressions for kernel-checked executable definitions; entailment itself is not decided (the separating address remains an explicit existential); no E ID; C080 unchanged. |
 
+### Lean diagram compiler differential (stage 4c)
+
+| Field | Record |
+|---|---|
+| Command | `python3 experiments/check_lean_rank_compiler.py --lean --output /tmp/lean-rank-compiler.json && cmp results/lean-rank-compiler.json /tmp/lean-rank-compiler.json` (Lean 4.33.1 required) |
+| Detail | [Compiler module](../lean/Subtail/RankQueryCompiler.lean); issue #29 |
+| Evidence | [Saved result](../results/lean-rank-compiler.json): seed `2026091841`; 37 certificate diagrams extracted from brute-force first-return extensions on the toy and two random terminal instances, plus 100 mutated variants; 733 comparisons of `compileDiagram` (validity and `satCheck` on several bases) against `rank_preimage.compile_diagram`/`model`, no mismatch (326 rejections, 218 satisfiable, 189 unsatisfiable agree). |
+| Status | Translation regression for the executable Lean compiler; the reverse Closure direction is NOT proved by this check; no E ID; C080 unchanged. |
+
 ## Not yet reproducible or not yet run
 
 These items have no executed experiment ID. Do not assign them `REPRO` status

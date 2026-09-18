@@ -26,6 +26,7 @@ Additional recorded suites:
 | [semantic-bridge-audit.json](semantic-bridge-audit.json) | `python3 experiments/check_semantic_bridge_audit.py` |
 | [canonical-model.json](canonical-model.json) | Recorded workflow evidence for the canonical-model modules (run 35327770505); reproduce with `cd lean && lake build +Subtail.CanonicalModelAudit && lake env leanchecker Subtail.CanonicalModelAudit` |
 | [finite-propagation.json](finite-propagation.json) | `python3 experiments/check_stack_summary.py --lean --output results/finite-propagation.json` with Lean 4.33.1 |
+| [lean-rank-compiler.json](lean-rank-compiler.json) | `python3 experiments/check_lean_rank_compiler.py --lean` with Lean 4.33.1 |
 
 See [the experiment index](../experiments/README.md) for IDs, coverage, interpretations, and limitations.
 
