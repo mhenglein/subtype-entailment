@@ -192,12 +192,12 @@ theorem shifted_border {w : Word} {n p m : Nat}
   simp only [List.take_take, Nat.min_eq_left hp_le, Nat.min_eq_left hmp,
     List.drop_take] at he
   have hpm : n - (n - p) = p := by omega
-  simp only [hpm, List.take_take, Nat.min_eq_left hmp, Nat.min_eq_left hp_le] at he
+  simp only [hpm, Nat.min_eq_left hmp] at he
   have hj : n - p + m ≤ w.length := by omega
   have hmj : m ≤ n - p + m := by omega
   apply mem_borderLengths.mpr
   constructor
-  · simpa [List.length_take, Nat.min_eq_left hj] using hmj
+  · simp [List.length_take, Nat.min_eq_left hj]
   · simp only [List.length_take, Nat.min_eq_left hj, List.take_take,
       Nat.min_eq_left hmj, List.drop_take]
     have ha : n - p + m - m = n - p := by omega
@@ -332,8 +332,8 @@ theorem exists_first_milestone {w : Word} {h j : Nat}
   have aux : ∀ j, j ≤ w.length → h ≤ rank (w.take j) →
       ∃ m, FirstMilestone w h m ∧ m ≤ j := by
     intro j
-    induction j using Nat.strong_induction_on with
-    | h j ih =>
+    induction j using Nat.strongRecOn with
+    | ind j ih =>
       intro hj hr
       by_cases he : ∃ i, i < j ∧ h ≤ rank (w.take i)
       · obtain ⟨i, hij, hir⟩ := he
@@ -345,6 +345,63 @@ theorem exists_first_milestone {w : Word} {h j : Nat}
         · exact False.elim (he ⟨i, hij, hir⟩)
         · omega
   exact aux j hj hr
+
+/-- A literal first return of the prefix of length m, ending at n. -/
+def FirstReturn (w : Word) (m n : Nat) : Prop :=
+  m < n ∧ n ≤ w.length ∧ m ∈ borderLengths (w.take n) ∧
+    ∀ j, m < j → j < n → m ∉ borderLengths (w.take j)
+
+theorem milestones_are_first_returns {w : Word} {h m n : Nat}
+    (hh : 0 < h) (hm : FirstMilestone w h m)
+    (hn : FirstMilestone w (h + 1) n) : FirstReturn w m n := by
+  obtain ⟨hlt, hb, hno⟩ := first_milestones_first_return hh hm hn
+  exact ⟨hlt, hn.1, hb, hno⟩
+
+/-- At the end of ANY first return, not just a rank milestone, the failure
+parent is exactly the previous reference endpoint. -/
+theorem first_return_parent {w : Word} {m n : Nat}
+    (hr : FirstReturn w m n) : failureParent (w.take n) = m := by
+  obtain ⟨hmn, hnb, hborder, hno⟩ := hr
+  have hlen : (w.take n).length = n := List.length_take_of_le hnb
+  have hs := failureParent_spec (w.take n) (by omega)
+  have hp_lt : failureParent (w.take n) < n := by omega
+  have hmp := hs.2.2 m hborder (by omega)
+  by_cases he : failureParent (w.take n) = m
+  · exact he
+  · exfalso
+    have hpm : m < failureParent (w.take n) := by omega
+    let j := n - failureParent (w.take n) + m
+    have hmj : m < j := by dsimp [j]; omega
+    have hjn : j < n := by dsimp [j]; omega
+    exact hno j hmj hjn (shifted_border hnb hs.1 hmp)
+
+/-- Before the first complete return, each fresh prefix's failure parent lies
+strictly in the old reference. This is the old/new graph-surgery invariant. -/
+theorem first_return_internal_parent_lt {w : Word} {m n j : Nat}
+    (hr : FirstReturn w m n) (hmj : m < j) (hjn : j < n) :
+    failureParent (w.take j) < m := by
+  obtain ⟨hmn, hnb, hborder, hno⟩ := hr
+  have hjb : j ≤ w.length := Nat.le_trans (Nat.le_of_lt hjn) hnb
+  have hlen : (w.take j).length = j := List.length_take_of_le hjb
+  have hs := failureParent_spec (w.take j) (by omega)
+  have hp_lt : failureParent (w.take j) < j := by omega
+  by_cases he : failureParent (w.take j) < m
+  · exact he
+  · exfalso
+    have hmp : m ≤ failureParent (w.take j) := by omega
+    let e := j - failureParent (w.take j) + m
+    have hme : m < e := by dsimp [e]; omega
+    have hej : e ≤ j := by dsimp [e]; omega
+    exact hno e hme (by omega) (shifted_border hjb hs.1 hmp)
+
+/-- All failure targets of the new interval are accounted for: interior
+vertices return strictly inside the old prefix and the endpoint returns to m. -/
+theorem first_return_failure_targets {w : Word} {m n : Nat}
+    (hr : FirstReturn w m n) :
+    failureParent (w.take n) = m ∧
+      ∀ j, m < j → j < n → failureParent (w.take j) < m := by
+  exact ⟨first_return_parent hr,
+    fun _ hmj hjn => first_return_internal_parent_lt hr hmj hjn⟩
 
 #guard failureParent ([] : Word) == 0
 #guard failureParent [false, true, false] == 1
