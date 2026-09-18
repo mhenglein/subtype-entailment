@@ -33,21 +33,23 @@ jobs:
           use-mathlib-cache: 'false'
       - name: Compile shared reconstruction
         working-directory: lean
-        run: lake build +Subtail.RankQueryReconstruction
+        run: lake build +Subtail.RankQueryReconstructionFamily
       - name: Replay through kernel
         working-directory: lean
-        run: lake env leanchecker Subtail.RankQueryReconstruction
+        run: lake env leanchecker Subtail.RankQueryReconstructionFamily
       - name: Audit all new public declarations
         run: |
           mkdir -p tmp
           python3 - <<'PY'
           from pathlib import Path
           import json,re
-          source=Path('lean/Subtail/RankQueryReconstruction.lean').read_text()
-          rows=re.findall(r'^(?:@\[simp\] )?(def|theorem|inductive|structure|abbrev) ([A-Za-z_][A-Za-z_0-9]*)',source,re.M)
+          rows=[]
+          for path in sorted(Path('lean/Subtail').glob('RankQueryReconstruction*.lean')):
+              source=path.read_text()
+              rows += re.findall(r'^(?:@\[simp\] )?(def|theorem|inductive|structure|abbrev) ([A-Za-z_][A-Za-z_0-9]*)',source,re.M)
           assert rows and len(rows)==len(set(n for _,n in rows))
           Path('tmp/reconstruction-declarations.json').write_text(json.dumps(rows))
-          Path('tmp/reconstruction-axioms.lean').write_text('import Subtail.RankQueryReconstruction\n'+''.join('#print axioms Subtail.RankQueryReconstruction.'+n+'\n' for _,n in rows))
+          Path('tmp/reconstruction-axioms.lean').write_text('import Subtail.RankQueryReconstructionFamily\n'+''.join('#print axioms Subtail.RankQueryReconstruction.'+n+'\n' for _,n in rows))
           PY
           cd lean
           set -o pipefail
