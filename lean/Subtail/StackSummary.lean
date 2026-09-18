@@ -84,11 +84,24 @@ theorem balanced_least {M : System n} {R : Fin n -> Fin n -> Prop}
   | wrap h1 _ h2 ih => exact hc.2.2.2 _ _ _ _ _ h1 ih h2
 
 def closedCheck (M : System n) (R : List (Fin n × Fin n)) : Bool :=
-  @decide (Closed M (fun p q => (p,q) ∈ R)) (by unfold Closed; infer_instance)
+  decide ((∀ p, (p,p) ∈ R) ∧
+    (∀ p q, M.eps p q = true -> (p,q) ∈ R) ∧
+    (∀ p q r, (p,q) ∈ R -> (q,r) ∈ R -> (p,r) ∈ R) ∧
+    (∀ p q r s, M.push false p q = true -> (q,r) ∈ R -> M.pop false r s = true -> (p,s) ∈ R) ∧
+    (∀ p q r s, M.push true p q = true -> (q,r) ∈ R -> M.pop true r s = true -> (p,s) ∈ R))
 
 @[simp] theorem closedCheck_correct (M : System n) (R : List (Fin n × Fin n)) :
     closedCheck M R = true ↔ Closed M (fun p q => (p,q) ∈ R) := by
-  simp [closedCheck]
+  simp only [closedCheck,decide_eq_true_eq,Closed]
+  constructor
+  · rintro ⟨hr,he,ht,h0,h1⟩
+    refine ⟨hr,he,ht,?_⟩
+    intro a
+    cases a
+    · exact h0
+    · exact h1
+  · rintro ⟨hr,he,ht,hw⟩
+    exact ⟨hr,he,ht,hw false,hw true⟩
 
 /-- Intersection of all finite closed tables; not a classical choice of a table. -/
 def balancedCheck (M : System n) (p q : Fin n) : Bool :=

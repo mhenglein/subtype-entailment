@@ -32,10 +32,10 @@ jobs:
           use-mathlib-cache: 'false'
       - name: Compile finite propagation modules
         working-directory: lean
-        run: lake build +Subtail.StackSummary
+        run: lake build +Subtail.StackReachability
       - name: Replay through the kernel
         working-directory: lean
-        run: lake env leanchecker Subtail.StackSummary
+        run: lake env leanchecker Subtail.StackReachability
       - name: Audit new declarations
         run: |
           mkdir -p tmp
