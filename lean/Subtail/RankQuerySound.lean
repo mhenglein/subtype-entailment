@@ -972,5 +972,191 @@ theorem compiled_extension (I : Instance k) (c : Clause k) (D : Diagram k) (B : 
     exact ⟨extRef B r.ext, r.firstReturnExt hB hv⟩
   · contradiction
 
+/-! ## Colours and edges of the extension graph -/
+
+theorem get_ofFn (f : Fin k → Bool) (p : Fin k) : (Vector.ofFn f).get p = f p := by
+  simp [Vector.get] <;> rfl
+
+theorem next_iff_getElem? {w : Word} {i : Nat} (hi : i < w.length) (b : Bool) :
+    FirstReturnGraph.Next w i b ↔ w[i]? = some b := by
+  unfold FirstReturnGraph.Next
+  rw [List.take_succ_eq_append_getElem hi, List.getElem?_eq_getElem hi]
+  constructor
+  · intro h
+    have := List.append_cancel_left h
+    simp only [List.cons.injEq, and_true] at this
+    rw [this]
+  · intro h
+    rw [Option.some.inj h]
+
+section ExtGraph
+variable (I : Instance k) (B : Reference k) (ext : List (Bool × Fin k))
+
+theorem colC_old {j : Nat} (hj : j < B.word.length) :
+    colB I (extRef B ext) j = colB I B j := by
+  have hjC : ¬ j = (extRef B ext).word.length := by rw [extRef_length]; omega
+  have hjm : ¬ j = B.word.length := by omega
+  simp only [colB, extRef_label_le B ext (Nat.le_of_lt hj), extRef_mask_le I B ext (Nat.le_of_lt hj),
+    extRef_getElem?_lt B ext hj, decide_eq_false hjC, decide_eq_false hjm]
+
+theorem colC_m (a : Bool) (p : Fin k) (rest : List (Bool × Fin k)) :
+    colB I (extRef B ((a, p) :: rest)) B.word.length = coreMap a (colB I B B.word.length) := by
+  have hne : ¬ B.word.length = (extRef B ((a, p) :: rest)).word.length := by
+    rw [extRef_length]; simp
+  have hw : (extRef B ((a, p) :: rest)).word[B.word.length]? = some a := by
+    have := extRef_getElem? B ((a, p) :: rest) 0
+    simpa using this
+  simp only [colB, coreMap, extRef_label_le B _ (Nat.le_refl _), extRef_mask_le I B _ (Nat.le_refl _),
+    hw, decide_eq_false hne, decide_true, if_true]
+
+theorem cursor_le (hm : 0 < B.word.length) {d : Nat} (hd : d ≤ ext.length) :
+    FirstReturnGraph.cursor (extRef B ext).word B.word.length d ≤ B.word.length := by
+  rw [extRef_word, cursor_eq_walk B _ (by simpa using hd)]
+  have hfp : failureParent B.word ≤ B.word.length := by
+    have := failureParent_take_le B.word B.word.length
+    simpa using this
+  exact walkTo_le B hfp _
+
+theorem frMask_ext (hm : 0 < B.word.length) {cur : Nat} (hcur : cur ≤ B.word.length) (q : Fin k) :
+    FirstReturnGraph.mask ((extRef B ext).word.take B.word.length) (fun p t => (I.flags.get p).get t)
+      (extRef B ext).label cur q = (mask I B cur).get q := by
+  rw [extRef_take, frMask_congr _ (r' := B.label) (fun h hh => extRef_label_le B ext (Nat.le_trans hh hcur)),
+    ← RankQueryFirstReturn.mask_get_eq]
+
+/-- A fresh vertex has the colour the compiler's `freshMap` assigns at its cursor. -/
+theorem colC_fresh (hm : 0 < B.word.length)
+    (hr : FirstReturn (extRef B ext).word B.word.length (extRef B ext).word.length)
+    {j : Nat} (hmj : B.word.length < j) (hj : j ≤ (extRef B ext).word.length) :
+    colB I (extRef B ext) j =
+      freshMap I ((extRef B ext).label j) ((extRef B ext).word[j]?)
+        (colB I B (FirstReturnGraph.cursor (extRef B ext).word B.word.length (j - B.word.length))) := by
+  have h := RankQueryFirstReturn.colour_eq_surgery I (extRef B ext) hm hr ⟨j, by omega⟩
+  refine (h : colB I (extRef B ext) j = _).trans ?_
+  have h1 : ¬ j < B.word.length := by omega
+  have h2 : ¬ j = B.word.length := by omega
+  have hlen := extRef_length B ext
+  have hcur := cursor_le B ext hm (d := j - B.word.length) (by omega)
+  simp only [FirstReturnGraph.surgeryColour, h1, h2, if_false, RankQueryFirstReturn.toQueryColour,
+    freshMap, colB]
+  refine Colour.mk.injEq _ _ _ _ _ _ _ _ _ _ |>.mpr ⟨rfl, ?_, rfl, rfl, ?_⟩
+  · simp only [orMask, column]
+    congr 1
+    funext q
+    rw [get_ofFn, frMask_ext I B ext hm hcur q, Bool.or_comm]
+  · by_cases hje : j = (extRef B ext).word.length
+    · simp [hje]
+    · have hlt : j < (extRef B ext).word.length := by omega
+      simp [hje, List.getElem?_eq_getElem hlt]
+
+end ExtGraph
+
+section ExtEdges
+variable (I : Instance k) (B : Reference k) (ext : List (Bool × Fin k))
+
+/-- Edge destinations of the extension graph, by position. -/
+def edgeC (j : Nat) (hj : j ≤ (extRef B ext).word.length) (l : Label) : Option Nat :=
+  ((prefixGraph I (extRef B ext)).edge ⟨j, Nat.lt_succ_of_le hj⟩ l).map Fin.val
+
+theorem edgeC_eq (hm : 0 < B.word.length)
+    (hr : FirstReturn (extRef B ext).word B.word.length (extRef B ext).word.length)
+    {j : Nat} (hj : j ≤ (extRef B ext).word.length) (l : Label) :
+    edgeC I B ext j hj l = RankQueryFirstReturn.rowTarget
+      (FirstReturnGraph.surgeryEdges (extRef B ext).word B.word.length j) l :=
+  RankQueryFirstReturn.edge_eq_surgery I (extRef B ext) hm hr ⟨j, Nat.lt_succ_of_le hj⟩ l
+
+theorem edgeC_F_old (hm : 0 < B.word.length)
+    (hr : FirstReturn (extRef B ext).word B.word.length (extRef B ext).word.length)
+    {j : Nat} (hj : j ≤ B.word.length) (hjC : j ≤ (extRef B ext).word.length) :
+    edgeC I B ext j hjC .F = some (failureParent (B.word.take j)) := by
+  rw [edgeC_eq I B ext hm hr]
+  simp [RankQueryFirstReturn.rowTarget, FirstReturnGraph.surgeryEdges, hj, extRef_take]
+
+theorem edgeC_F_fresh (hm : 0 < B.word.length)
+    (hr : FirstReturn (extRef B ext).word B.word.length (extRef B ext).word.length)
+    {j : Nat} (hmj : B.word.length < j) (hjC : j ≤ (extRef B ext).word.length) :
+    edgeC I B ext j hjC .F =
+      some (FirstReturnGraph.cursor (extRef B ext).word B.word.length (j - B.word.length)) := by
+  rw [edgeC_eq I B ext hm hr]
+  have h : ¬ j ≤ B.word.length := by omega
+  simp [RankQueryFirstReturn.rowTarget, FirstReturnGraph.surgeryEdges, h]
+
+theorem edgeC_S (hm : 0 < B.word.length)
+    (hr : FirstReturn (extRef B ext).word B.word.length (extRef B ext).word.length)
+    {j : Nat} (hjC : j ≤ (extRef B ext).word.length) :
+    edgeC I B ext j hjC .S = if j < (extRef B ext).word.length then some (j + 1) else none := by
+  rw [edgeC_eq I B ext hm hr]
+  have hlen := extRef_length B ext
+  have hmlt : B.word.length < (extRef B ext).word.length := hr.1
+  by_cases h : j < B.word.length
+  · have h2 : j < (extRef B ext).word.length := by omega
+    have h1 : j < min B.word.length (extRef B ext).word.length := Nat.lt_min.mpr ⟨h, h2⟩
+    simp [RankQueryFirstReturn.rowTarget, FirstReturnGraph.surgeryEdges, h, h1, h2]
+  · simp [RankQueryFirstReturn.rowTarget, FirstReturnGraph.surgeryEdges, h]
+
+theorem surgeryK_value (hm : 0 < B.word.length)
+    (hr : FirstReturn (extRef B ext).word B.word.length (extRef B ext).word.length)
+    {j : Nat} (hjC : j ≤ (extRef B ext).word.length) (b : Bool) :
+    edgeC I B ext j hjC (.K b) = some (FirstReturnGraph.surgeryK (extRef B ext).word B.word.length j b) := by
+  rw [edgeC_eq I B ext hm hr]
+  cases b <;> rfl
+
+theorem edgeC_K_old (hm : 0 < B.word.length)
+    (hr : FirstReturn (extRef B ext).word B.word.length (extRef B ext).word.length)
+    {j : Nat} (hj : j < B.word.length) (hjC : j ≤ (extRef B ext).word.length) (b : Bool) :
+    edgeC I B ext j hjC (.K b) = some (advance B.word j b) := by
+  rw [surgeryK_value I B ext hm hr, FirstReturnGraph.surgeryK, if_pos hj, extRef_take,
+    RankQueryFirstReturn.advance_eq (Nat.le_of_lt hj)]
+
+theorem edgeC_K_m (hm : 0 < B.word.length)
+    (hr : FirstReturn (extRef B ext).word B.word.length (extRef B ext).word.length)
+    (hjC : B.word.length ≤ (extRef B ext).word.length) (b : Bool) :
+    edgeC I B ext B.word.length hjC (.K b) =
+      some (if (extRef B ext).word[B.word.length]? = some b then B.word.length + 1
+        else advance B.word B.word.length b) := by
+  rw [surgeryK_value I B ext hm hr, FirstReturnGraph.surgeryK, if_neg (Nat.lt_irrefl _), if_pos rfl,
+    extRef_take, RankQueryFirstReturn.advance_eq (Nat.le_refl _)]
+  have hmlt : B.word.length < (extRef B ext).word.length := hr.1
+  simp only [next_iff_getElem? hmlt]
+
+theorem edgeC_K_fresh (hm : 0 < B.word.length)
+    (hr : FirstReturn (extRef B ext).word B.word.length (extRef B ext).word.length)
+    {j : Nat} (hmj : B.word.length < j) (hj : j < (extRef B ext).word.length) (b : Bool) :
+    edgeC I B ext j (Nat.le_of_lt hj) (.K b) =
+      some (if (extRef B ext).word[j]? = some b then j + 1
+        else advance B.word (FirstReturnGraph.cursor (extRef B ext).word B.word.length (j - B.word.length)) b) := by
+  have h1 : ¬ j < B.word.length := by omega
+  have h2 : ¬ j = B.word.length := by omega
+  have hcur := cursor_le B ext hm (d := j - B.word.length) (by have := extRef_length B ext; omega)
+  rw [surgeryK_value I B ext hm hr, FirstReturnGraph.surgeryK, if_neg h1, if_neg h2, if_pos hj,
+    extRef_take, RankQueryFirstReturn.advance_eq hcur]
+  simp only [next_iff_getElem? hj]
+
+theorem edgeC_K_end (hm : 0 < B.word.length)
+    (hr : FirstReturn (extRef B ext).word B.word.length (extRef B ext).word.length) (b : Bool) :
+    edgeC I B ext (extRef B ext).word.length (Nat.le_refl _) (.K b) =
+      some (if (extRef B ext).word[B.word.length]? = some b then B.word.length + 1
+        else advance B.word B.word.length b) := by
+  have hmlt : B.word.length < (extRef B ext).word.length := hr.1
+  have h1 : ¬ (extRef B ext).word.length < B.word.length := by omega
+  have h2 : ¬ (extRef B ext).word.length = B.word.length := by omega
+  rw [surgeryK_value I B ext hm hr, FirstReturnGraph.surgeryK, if_neg h1, if_neg h2,
+    if_neg (Nat.lt_irrefl _), extRef_take, RankQueryFirstReturn.advance_eq (Nat.le_refl _)]
+  simp only [next_iff_getElem? hmlt]
+
+/-- Recover the `Fin`-valued edge from its position value. -/
+theorem edge_of_edgeC {j j' : Nat} (hj : j ≤ (extRef B ext).word.length) {l : Label}
+    (h : edgeC I B ext j hj l = some j') :
+    ∃ h' : j' < (prefixGraph I (extRef B ext)).size,
+      (prefixGraph I (extRef B ext)).edge ⟨j, Nat.lt_succ_of_le hj⟩ l = some ⟨j', h'⟩ := by
+  unfold edgeC at h
+  cases he : (prefixGraph I (extRef B ext)).edge ⟨j, Nat.lt_succ_of_le hj⟩ l with
+  | none => simp [he] at h
+  | some w =>
+    simp only [he, Option.map_some, Option.some.injEq] at h
+    subst h
+    exact ⟨w.isLt, rfl⟩
+
+end ExtEdges
+
 end RankQuerySound
 end Subtail
