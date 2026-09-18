@@ -153,10 +153,12 @@ theorem not_entails_iff_separating (C : List (Constraint n)) (a b : Fin n) :
   classical
   constructor
   · intro h
-    by_contra hn
+    apply Classical.byContradiction
+    intro hn
     apply h
     intro rho hm w ha
-    by_contra hb
+    apply Classical.byContradiction
+    intro hb
     exact hn ⟨rho, w, hm, ha, hb⟩
   · rintro ⟨rho, w, hm, ha, hb⟩ he
     exact hb (he rho hm w ha)

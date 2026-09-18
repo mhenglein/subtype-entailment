@@ -33,12 +33,12 @@ jobs:
           test: 'false'
           lint: 'false'
           use-mathlib-cache: 'false'
-      - name: Compile canonical semantic foundation
+      - name: Compile canonical semantic foundation and regression proofs
         working-directory: lean
-        run: lake build +Subtail.CanonicalModel
+        run: lake build +Subtail.CanonicalModelAudit
       - name: Replay declarations through the kernel
         working-directory: lean
-        run: lake env leanchecker Subtail.CanonicalModel
+        run: lake env leanchecker Subtail.CanonicalModelAudit
       - name: Audit all new declaration dependencies
         run: |
           mkdir -p tmp
@@ -46,13 +46,13 @@ jobs:
           from pathlib import Path
           import re,json
           rows=[]
-          for module in ('TreeSemantics','CanonicalModel'):
+          for module in ('TreeSemantics','CanonicalModel','CanonicalModelAudit'):
               source=Path('lean/Subtail/'+module+'.lean').read_text()
               for kind,name in re.findall(r'^(?:@\[simp\] )?(def|theorem|inductive|structure|abbrev) ([A-Za-z_][A-Za-z_0-9]*)',source,re.M):
                   rows.append((module+'.'+name,kind))
           assert rows and len(rows)==len(set(n for n,_ in rows))
           Path('tmp/canonical-declarations.json').write_text(json.dumps(rows))
-          Path('tmp/canonical-axioms.lean').write_text('import Subtail.CanonicalModel\n'+''.join('#print axioms Subtail.'+n+'\n' for n,_ in rows))
+          Path('tmp/canonical-axioms.lean').write_text('import Subtail.CanonicalModelAudit\n'+''.join('#print axioms Subtail.'+n+'\n' for n,_ in rows))
           PY
           cd lean
           set -o pipefail
