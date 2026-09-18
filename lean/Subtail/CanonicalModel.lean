@@ -59,10 +59,10 @@ theorem derived_take {C : List (Constraint n)} {S : Seeds n}
     (hc : SeedsClosed S) (hr : HasRoots C S) {q w}
     (h : Derived C S q w) : ∀ i, Derived C S q (w.take i) := by
   induction h with
-  | seed h =>
+  | @seed q w h =>
     intro i
     apply Derived.seed
-    apply hc _ (List.take i _) (List.drop i _)
+    apply hc q (w.take i) (w.drop i)
     simpa only [List.take_append_drop] using h
   | leq h _ ih => intro i; exact Derived.leq h (ih i)
   | popLeft h _ ih =>
@@ -192,9 +192,10 @@ theorem pathSeeds_in_model {C : List (Constraint n)} {rho : Valuation n}
     {alpha : Fin n} {pi : Word} (hm : Models C rho) (ha : (rho alpha).nodes pi) :
     SeedIncluded (pathSeeds C alpha pi) rho := by
   intro q w h
-  rcases h with h | ⟨rfl, t, ht⟩
+  rcases h with h | ⟨hq, t, ht⟩
   · exact forcedSeeds_in_model hm q w h
-  · apply (rho alpha).closed w t
+  · rw [hq]
+    apply (rho alpha).closed w t
     simpa only [ht] using ha
 
 def canonical (C : List (Constraint n)) (alpha : Fin n) (pi : Word) : Valuation n :=
@@ -245,7 +246,7 @@ theorem lower_self_zero_spine {C : List (Constraint n)} {a b : Fin n}
   | zero => exact hm (.lower a b a) hc [] (product_root _ _)
   | succ i ih =>
     have h := hm (.lower a b a) hc (false :: List.replicate i false) ih
-    simpa using h
+    simpa only [List.replicate_succ] using h
 
 theorem lower_self_has_arbitrarily_deep_nodes {C : List (Constraint n)} {a b : Fin n}
     (hc : Constraint.lower a b a ∈ C) {rho : Valuation n} (hm : Models C rho)

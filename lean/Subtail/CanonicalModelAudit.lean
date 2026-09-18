@@ -70,7 +70,8 @@ theorem single_word_seeds_are_not_closed : ¬ SeedsClosed singleWordOnly := by
 theorem bottom_root_exists : domain bottom [] := domain_root bottom
 
 theorem bottom_has_no_children (a : Bool) : ¬ domain bottom [a] := by
-  simpa only [List.nil_append, domain_child] using (show ¬ bottom.nodes [] from id)
+  intro h
+  exact (domain_child bottom [] a).mp h
 
 end CanonicalModelAudit
 end Subtail
