@@ -1,0 +1,47 @@
+name: Lean global marks
+on:
+  push:
+    branches:
+      - lean/global-marks-2026-09-18
+permissions:
+  contents: read
+jobs:
+  marks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596
+        with:
+          lake-package-directory: lean
+          build: 'false'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'false'
+      - name: Compile mark module
+        working-directory: lean
+        run: lake build +Subtail.RankQueryMarks
+      - name: Kernel replay
+        working-directory: lean
+        run: lake env leanchecker Subtail.RankQueryMarks
+      - name: Reject unfinished proof placeholders
+        run: "! grep -R -nE '\\bsorry\\b|sorryAx|axiom ' lean/Subtail/RankQueryMarks.lean"
+      - name: Audit theorem dependencies
+        run: |
+          cat > /tmp/mark-axioms.lean <<'EOF'
+          import Subtail.RankQueryMarks
+          #print axioms Subtail.RankQueryMarks.segmentEnds_length
+          #print axioms Subtail.RankQueryMarks.allSegmentEnds_length
+          #print axioms Subtail.RankQueryMarks.rawMarks_length
+          #print axioms Subtail.RankQueryMarks.FamiliesBound.length_eq
+          #print axioms Subtail.RankQueryMarks.FamiliesBound.sum_lengths_le
+          #print axioms Subtail.RankQueryMarks.rawMarks_length_le
+          #print axioms Subtail.RankQueryMarks.physicalMarks_nodup
+          #print axioms Subtail.RankQueryMarks.mem_physicalMarks
+          #print axioms Subtail.RankQueryMarks.physicalMarks_length_le
+          #print axioms Subtail.RankQueryMarks.variable_mem_global
+          #print axioms Subtail.RankQueryMarks.anchors_mem_global
+          EOF
+          cd lean
+          lake env lean /tmp/mark-axioms.lean | tee /tmp/mark-axioms.txt
+          ! grep -E 'sorryAx|Classical.choice' /tmp/mark-axioms.txt
