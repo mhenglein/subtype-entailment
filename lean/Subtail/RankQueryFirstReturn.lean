@@ -31,7 +31,7 @@ theorem advance_eq {w : Word} {j : Nat} (hj : j ≤ w.length) (a : Bool) :
 theorem mask_get_eq (I : Instance k) (B : Reference k) (j : Nat) (q : Fin k) :
     (RankQuery.mask I B j).get q =
       FirstReturnGraph.mask B.word (fun p t => (I.flags.get p).get t) B.label j q := by
-  simp [RankQuery.mask, FirstReturnGraph.mask, Vector.get]
+  simp [RankQuery.mask, FirstReturnGraph.mask, Vector.get] <;> rfl
 
 /-- Repackage a graph-surgery colour without changing any of its five fields. -/
 def toQueryColour (c : FirstReturnGraph.Colour k) : RankQuery.Colour k :=
