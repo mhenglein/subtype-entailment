@@ -135,12 +135,16 @@ def synchronize (A : Observer k) (V : Observation A) : Observer k where
 theorem sync_initial (A : Observer k) (V : Observation A) (i : Fin (pairs A V).length) :
     i ∈ (synchronize A V).initial ↔
     (pairAt A V i).1 ∈ A.initial ∧ (pairAt A V i).2 ∈ V.observer.initial := by
-  simp [synchronize, List.mem_filter, Bool.and_eq_true]
+  change i ∈ (List.finRange (pairs A V).length).filter _ ↔ _
+  rw [List.mem_filter]
+  simp [Bool.and_eq_true]
 
 theorem sync_final (A : Observer k) (V : Observation A) (i : Fin (pairs A V).length) :
     i ∈ (synchronize A V).final ↔
     (pairAt A V i).1 ∈ A.final ∧ (pairAt A V i).2 ∈ V.observer.final := by
-  simp [synchronize, List.mem_filter, Bool.and_eq_true]
+  change i ∈ (List.finRange (pairs A V).length).filter _ ↔ _
+  rw [List.mem_filter]
+  simp [Bool.and_eq_true]
 
 theorem sync_allowed (G : Graph k) (A : Observer k) (V : Observation A) (x) :
     Allowed G (synchronize A V) x ↔
@@ -155,7 +159,9 @@ theorem sync_move (A : Observer k) (V : Observation A) (i j : Fin (pairs A V).le
     ∃ a ∈ V.labels (pairAt A V i).1 c l d (pairAt A V j).1,
       (pairAt A V j).2 ∈ V.observer.move (pairAt A V i).2
         (V.colour (pairAt A V i).1 c) a (V.colour (pairAt A V j).1 d) := by
-  simp [synchronize, List.mem_filter, Bool.and_eq_true, List.any_eq_true]
+  change j ∈ (List.finRange (pairs A V).length).filter _ ↔ _
+  rw [List.mem_filter]
+  simp [Bool.and_eq_true,List.any_eq_true]
 
 def projectNode (A : Observer k) (V : Observation A) (G : Graph k)
     (x : Node G (synchronize A V)) : Node G A :=
