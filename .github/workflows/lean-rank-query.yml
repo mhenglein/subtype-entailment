@@ -48,13 +48,12 @@ jobs:
           from pathlib import Path
           import re
           pattern = r"^(?:@\[simp\] )?(def|theorem) ([A-Za-z_][A-Za-z_0-9?']*)"
-          lines = []
+          lines = ['import Subtail.RankQuery', 'import Subtail.RankQueryPaths']
           for module, minimum in (('RankQuery', 60), ('RankQueryPaths', 15)):
               source = Path('lean/Subtail/' + module + '.lean').read_text()
               rows = re.findall(pattern, source, re.M)
               assert len(rows) == len(set(n for _, n in rows)) and len(rows) >= minimum, (module, len(rows))
               assert not re.search(r'^\s*(axiom|opaque)\b', source, re.M), 'no axiom or opaque declarations'
-              lines.append('import Subtail.' + module)
               lines += ['#print axioms Subtail.RankQuery.' + n for _, n in rows]
           Path('tmp/rankquery-axioms.lean').write_text('\n'.join(lines) + '\n')
           PY
