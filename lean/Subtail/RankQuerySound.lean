@@ -619,7 +619,7 @@ end Compiled
 /-- A run of an observer that only moves from control `0` to control `1`. -/
 theorem two_control_run {G : Graph k} {O : Observer k}
     (hmove : ∀ q c l d p, p ∈ O.move q c l d → q.val = 0 ∧ p.val = 1)
-    {u : Fin G.size} {q0 : Fin O.size} (hq : q0.val = 0) {y : Node G O}
+    {u : Fin G.size} {q0 : Fin O.size} (_hq : q0.val = 0) {y : Node G O}
     (h : Run G O (u, q0) y) :
     y = (u, q0) ∨ (y.2.val = 1 ∧ ∃ l, G.edge u l = some y.1 ∧
       y.2 ∈ O.move q0 (G.colour u) l (G.colour y.1) ∧ Allowed G O y) := by
@@ -1037,7 +1037,7 @@ theorem colC_m (a : Bool) (p : Fin k) (rest : List (Bool × Fin k)) :
   simp only [colB, coreMap, extRef_label_le B _ (Nat.le_refl _), extRef_mask_le I B _ (Nat.le_refl _),
     hw, decide_eq_false hne, decide_true, if_true]
 
-theorem cursor_le (hm : 0 < B.word.length) {d : Nat} (hd : d ≤ ext.length) :
+theorem cursor_le (_hm : 0 < B.word.length) {d : Nat} (hd : d ≤ ext.length) :
     FirstReturnGraph.cursor (extRef B ext).word B.word.length d ≤ B.word.length := by
   rw [extRef_word, cursor_eq_walk B _ (by simpa using hd)]
   have hfp : failureParent B.word ≤ B.word.length := by
@@ -1045,7 +1045,7 @@ theorem cursor_le (hm : 0 < B.word.length) {d : Nat} (hd : d ≤ ext.length) :
     simpa using this
   exact walkTo_le B hfp _
 
-theorem frMask_ext (hm : 0 < B.word.length) {cur : Nat} (hcur : cur ≤ B.word.length) (q : Fin k) :
+theorem frMask_ext (_hm : 0 < B.word.length) {cur : Nat} (hcur : cur ≤ B.word.length) (q : Fin k) :
     FirstReturnGraph.mask ((extRef B ext).word.take B.word.length) (fun p t => (I.flags.get p).get t)
       (extRef B ext).label cur q = (mask I B cur).get q := by
   rw [extRef_take, frMask_congr _ (r' := B.label) (fun h hh => extRef_label_le B ext (Nat.le_trans hh hcur)),
@@ -1611,7 +1611,7 @@ theorem label_pos (r : Recon I c D B σ) {g : Nat} (hg : g ≤ D.groups - 1) :
     (r.pre_revRun g hg).2]
 
 /-- The cursor at a mark is the origin the base model assigns to it. -/
-theorem cursor_pos (r : Recon I c D B σ) (hm : 0 < B.word.length) {g : Nat} (hg : g ≤ D.groups - 1) :
+theorem cursor_pos (r : Recon I c D B σ) (_hm : 0 < B.word.length) {g : Nat} (hg : g ≤ D.groups - 1) :
     FirstReturnGraph.cursor (extRef B r.ext).word B.word.length (r.pos g - B.word.length) =
       (σ (zVar D g)).val := by
   obtain ⟨rest, hrest⟩ := r.pre_prefix (D.groups - 1) hg
@@ -1772,8 +1772,8 @@ theorem forwardControls_last (D : Diagram k) (ai pi i j : Nat) (P : Piece) (hij 
   obtain ⟨d, hd⟩ : ∃ d, j - i = d + 1 := ⟨j - i - 1, by omega⟩
   have hlen' : ((List.range (d + 1 - 1)).map fun t => seamControl D ai pi (i + 1 + t)).length = d := by
     simp
-  rw [hd, List.getD_eq_getElem?_getD, List.getElem?_append_right (by simp [hlen'])]
-  simp [hlen']
+  rw [hd, List.getD_eq_getElem?_getD, List.getElem?_append_right (by simp)]
+  simp
 
 theorem mem_forwardActive (D : Diagram k) (ai pi i j : Nat) (o : Observer k) (P : Piece) {t : Nat}
     (ht : t < j - i) :
@@ -2051,7 +2051,7 @@ theorem piece_run (r : Recon I c D B σ) (hB : SafeReference I B) (hv : validDia
     exact coreObs_run_transport I B D.firstBit (markState D 0) (r.pre (D.groups - 1)) hm hr o
       ⟨lc, hlc⟩ ⟨rc, hrc⟩ hrun
   | forward =>
-    simp only [pieceValid, Bool.and_eq_true, beq_iff_eq, decide_eq_true_eq] at hval
+    simp only [pieceValid, Bool.and_eq_true, decide_eq_true_eq] at hval
     obtain ⟨⟨hlc, hrc⟩, ⟨hst, htgt⟩, hcond⟩ := hval
     have hsrc_ok : LocOK D (.fresh src) := by change src < D.groups; omega
     have htgt_ok : LocOK D (.fresh tgt) := by change tgt < D.groups; omega
@@ -2471,6 +2471,24 @@ theorem preimage_sound (I : Instance k) (c : Clause k) (B : Reference k) (Ds : L
   obtain ⟨P, hP, hsatP⟩ := hsat
   obtain ⟨D, -, hD⟩ := List.mem_filterMap.mp hP
   exact compile_sound I c D B hB hD hsatP
+
+/-- The clause-wise preimage of a query over an arbitrary diagram enumeration
+(the Lean counterpart of `rank_preimage.preimage` once `iter_diagrams` is supplied). -/
+def preimageQuery (I : Instance k) (diagrams : Clause k → List (Diagram k)) (φ : Query k) : Query k :=
+  φ.flatMap fun c => preimageOver I c (diagrams c)
+
+/-- **Reverse half of `ClosureFor`**, for every diagram enumeration: a base model of
+the compiled preimage yields a safe first-return extension modelling the query.  The
+forward half (coverage of every extension by some enumerated diagram) and the weight
+bound are the open stages 4b and 5. -/
+theorem closure_reverse (I : Instance k) (diagrams : Clause k → List (Diagram k)) (φ : Query k)
+    (B : Reference k) (hB : SafeReference I B)
+    (hsat : Sat (prefixGraph I B) (preimageQuery I diagrams φ)) :
+    ∃ C : Reference k, FirstReturnExt I B C ∧ Sat (prefixGraph I C) φ := by
+  obtain ⟨P, hP, hsatP⟩ := hsat
+  obtain ⟨c, hc, hPc⟩ := List.mem_flatMap.mp hP
+  obtain ⟨C, hC, hsatC⟩ := preimage_sound I c B (diagrams c) hB ⟨P, hPc, hsatP⟩
+  exact ⟨C, hC, c, hc, hsatC⟩
 
 end RankQuerySound
 end Subtail

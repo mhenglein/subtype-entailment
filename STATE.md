@@ -42,7 +42,12 @@ stage 6 has a checked semantic foundation and total executable normalized
 satisfiability, but not a decision of entailment
 ([canonical model](notes/2026-09-18-canonical-model-formalization.md),
 [finite propagation](notes/2026-09-18-finite-propagation-formalization.md)).
-Stages 4b/4c, 5 and the remainder of 6 remain unproved in Lean. The
+Stage 4c is now kernel-checked: an executable diagram compiler mirroring
+`compile_diagram` and `closure_reverse`, the reverse half of the pinned
+`ClosureFor` for any diagram enumeration
+([compiler note](notes/2026-09-18-lean-rank-compiler.md)). Stage 4b (coverage
+by an enumerated diagram), stage 5 and the remainder of 6 remain unproved in
+Lean. The
 generic compiled driver is resource-limited; timed UNKNOWN results are not
 negative certificates. Problem 1.7's accepted status is unchanged: CANDIDATE
 PROOF, independent human review pending.
