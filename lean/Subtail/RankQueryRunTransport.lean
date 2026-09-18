@@ -96,10 +96,7 @@ theorem accepts_slice_iff (G : Graph k) (o : Observer k)
     Accepts G (sliceObs o lc rc) u v ↔ Run G o (u, lc) (v, rc) := by
   constructor
   · rintro ⟨q, hq, p, hp, hr⟩
-    have hq0 : q ∈ [lc] := by simpa [sliceObs] using hq
-    have hp0 : p ∈ [rc] := by simpa [sliceObs] using hp
-    have hq' : q = lc := List.mem_singleton.mp hq0
-    have hp' : p = rc := List.mem_singleton.mp hp0
+    simp only [sliceObs, List.mem_singleton] at hq hp
     subst q
     subst p
     exact (sliceToBase G o lc rc).run hr
