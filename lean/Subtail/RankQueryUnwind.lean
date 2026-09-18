@@ -182,5 +182,77 @@ theorem weight_finishQuery_le (I : Instance k) :
   omega
 
 
+/-! ## The candidate's explicit T_h recurrence -/
+
+/-- T₀ = k+10 and T_(h+1) = U_k(T_h). -/
+def weightBudget (k : Nat) : Nat → Nat
+  | 0 => k + 10
+  | h + 1 => closureBound k (weightBudget k h)
+
+/-- U_k is monotone in its query-weight argument. -/
+theorem closureBound_mono (k : Nat) {a b : Nat} (hab : a ≤ b) :
+    closureBound k a ≤ closureBound k b := by
+  unfold closureBound
+  apply Nat.mul_le_mul_left
+  have hbase : a ^ (2 * a + 2) ≤ b ^ (2 * a + 2) :=
+    Nat.pow_le_pow_left hab _
+  by_cases hb : b = 0
+  · have ha : a = 0 := by omega
+    subst a
+    subst b
+    simpa using hbase
+  · have hbpos : 0 < b := Nat.pos_of_ne_zero hb
+    have hexp : 2 * a + 2 ≤ 2 * b + 2 := by omega
+    exact Nat.le_trans hbase (Nat.pow_le_pow_right hbpos hexp)
+
+/-- For a nonempty automaton and a query-sized argument, U_k(T) dominates T. -/
+theorem le_closureBound (k T : Nat) (hk : 0 < k) (hT : 2 ≤ T) :
+    T ≤ closureBound k T := by
+  unfold closureBound
+  have hpow : T ≤ T ^ (2 * T + 2) := by
+    rw [← Nat.pow_one T]
+    exact Nat.pow_le_pow_right (by omega) (by omega)
+  have hmul : T ^ (2 * T + 2) ≤ (64 * k) * T ^ (2 * T + 2) := by
+    exact Nat.le_mul_of_pos_left _ (Nat.mul_pos (by decide) hk)
+  exact Nat.le_trans hpow hmul
+
+/-- Every query has weight at least two by definition. -/
+theorem two_le_weight (φ : Query k) : 2 ≤ weight φ := by
+  unfold weight
+  exact Nat.le_max_left _ _
+
+/-- Every T_h in the candidate recurrence stays at least two for k>0. -/
+theorem two_le_weightBudget (k : Nat) (hk : 0 < k) : ∀ h, 2 ≤ weightBudget k h := by
+  intro h
+  induction h with
+  | zero =>
+    simp [weightBudget]
+    omega
+  | succ h ih =>
+    rw [weightBudget]
+    exact Nat.le_trans ih (le_closureBound k _ hk ih)
+
+/-- Conditional on ClosureFor, the candidate's actual promoted finishing query
+has weight at most the explicit T_h recurrence used in the ordinary proof. -/
+theorem weight_promote_finish_le (I : Instance k) (pre : Query k → Query k)
+    (hclosure : ClosureFor I pre) :
+    ∀ h, weight (promote pre (finishQuery I) h) ≤ weightBudget k h := by
+  have hk : 0 < k := by
+    have hi := I.initial.isLt
+    omega
+  intro h
+  induction h with
+  | zero =>
+    simpa [weightBudget] using weight_finishQuery_le I
+  | succ h ih =>
+    rw [weightBudget]
+    have hstep := weight_promote_succ_le I pre hclosure (finishQuery I) h
+    apply Nat.le_trans hstep
+    apply Nat.max_le.mpr
+    constructor
+    · exact Nat.le_trans ih (le_closureBound k _ hk (two_le_weightBudget k hk h))
+    · exact closureBound_mono k ih
+
+
 end RankQueryUnwind
 end Subtail
