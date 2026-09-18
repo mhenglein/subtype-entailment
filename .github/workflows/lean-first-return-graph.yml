@@ -68,6 +68,12 @@ jobs:
           python3 experiments/check_lean_first_return_graph.py --repository --lean --output /tmp/first-return-graph.json
           python3 experiments/check_lean_first_return_graph.py --repository --lean --output /tmp/first-return-graph-replay.json
           cmp /tmp/first-return-graph.json /tmp/first-return-graph-replay.json
+      - name: Fresh interval count and premise regressions
+        run: |
+          python3 experiments/check_rank_query_first_return.py --lean --output /tmp/query-first-return.json --full-output /tmp/query-first-return-full.json
+          python3 experiments/check_rank_query_first_return.py --lean --output /tmp/query-first-return-replay.json --full-output /tmp/query-first-return-full-replay.json
+          cmp /tmp/query-first-return.json /tmp/query-first-return-replay.json
+          cmp /tmp/query-first-return-full.json /tmp/query-first-return-full-replay.json
       - name: Preserve query semantics regressions
         run: python3 experiments/check_lean_rank_query.py --lean --output /tmp/rank-query.json
       - name: Preserve existing Lean core
