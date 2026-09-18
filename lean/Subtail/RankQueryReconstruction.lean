@@ -132,12 +132,12 @@ def synchronize (A : Observer k) (V : Observation A) : Observer k where
       decide ((pairAt A V j).2 ∈ V.observer.move (pairAt A V i).2
         (V.colour (pairAt A V i).1 c) a (V.colour (pairAt A V j).1 d))
 
-theorem sync_initial (A : Observer k) (V : Observation A) (i) :
+theorem sync_initial (A : Observer k) (V : Observation A) (i : Fin (pairs A V).length) :
     i ∈ (synchronize A V).initial ↔
     (pairAt A V i).1 ∈ A.initial ∧ (pairAt A V i).2 ∈ V.observer.initial := by
   simp [synchronize, List.mem_filter, Bool.and_eq_true]
 
-theorem sync_final (A : Observer k) (V : Observation A) (i) :
+theorem sync_final (A : Observer k) (V : Observation A) (i : Fin (pairs A V).length) :
     i ∈ (synchronize A V).final ↔
     (pairAt A V i).1 ∈ A.final ∧ (pairAt A V i).2 ∈ V.observer.final := by
   simp [synchronize, List.mem_filter, Bool.and_eq_true]
@@ -149,7 +149,7 @@ theorem sync_allowed (G : Graph k) (A : Observer k) (V : Observation A) (x) :
       (V.colour (pairAt A V x.2).1 (G.colour x.1)) = true := by
   simp [Allowed, synchronize, Bool.and_eq_true]
 
-theorem sync_move (A : Observer k) (V : Observation A) (i j c l d) :
+theorem sync_move (A : Observer k) (V : Observation A) (i j : Fin (pairs A V).length) (c : Colour k) (l : Label) (d : Colour k) :
     j ∈ (synchronize A V).move i c l d ↔
     (pairAt A V j).1 ∈ A.move (pairAt A V i).1 c l d ∧
     ∃ a ∈ V.labels (pairAt A V i).1 c l d (pairAt A V j).1,
@@ -206,7 +206,9 @@ theorem trace_synchronize_complete {G : Graph k} {A : Observer k} {V : Observati
       obtain ⟨j,hj⟩ := pair_represented A V y.2 r
       obtain ⟨j',us,hj',hus,hrun⟩ := ih r p ht' j hj
       refine ⟨j',(l,(y.1,j))::us,hj',?_,.cons ?_ ?_ hrun⟩
-      · simp [projectTrace,projectNode,hj,hus]
+      · change (l, projectNode A V G (y.1,j)) :: projectTrace A V G us = (l,y)::ts
+        rw [hus]
+        simp [projectNode,hj]
       · apply (sync_allowed G A V _).mpr
         simpa [hi] using And.intro hx hq
       · refine ⟨hs.1,?_,?_⟩
