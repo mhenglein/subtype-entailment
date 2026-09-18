@@ -261,30 +261,53 @@ structure Diagram (k : Nat) where
   seams : List (Nat × Nat × Nat × Nat)
   deriving Repr
 
-/-! ## Compilation -/
+/-! ## Compilation
+
+The compiler is split into a Boolean validity check (`validDiagram`, the guards
+of `compile_diagram`) and a TOTAL construction (`compileValid`) that never fails
+and uses harmless fallbacks where the check would have rejected the diagram.
+`compileDiagram` returns the construction exactly when the check passes.  This
+shape lets proofs read facts about the compiled clause off plain list
+membership, with the validity facts as separate Boolean hypotheses. -/
 
 abbrev Var (D : Diagram k) := Fin (2 + D.groups + D.coreVars)
 
 def endVar (D : Diagram k) : Var D := ⟨0, by omega⟩
 def initVar (D : Diagram k) : Var D := ⟨1, by omega⟩
 
-def zVar (D : Diagram k) (g : Nat) : Option (Var D) :=
-  if h : g < D.groups then some ⟨2 + g, by omega⟩ else none
+/-- Origin variable of mark group `g` (falls back to `END` out of range). -/
+def zVar (D : Diagram k) (g : Nat) : Var D :=
+  if h : g < D.groups then ⟨2 + g, by omega⟩ else endVar D
 
-def coreVar (D : Diagram k) (x : Nat) : Option (Var D) :=
-  if h : x < D.coreVars then some ⟨2 + D.groups + x, by omega⟩ else none
+/-- Core variable `x` (falls back to `END` out of range). -/
+def coreVar (D : Diagram k) (x : Nat) : Var D :=
+  if h : x < D.coreVars then ⟨2 + D.groups + x, by omega⟩ else endVar D
 
-def locVar (D : Diagram k) : Loc → Option (Var D)
+def locVar (D : Diagram k) : Loc → Var D
   | .core x => coreVar D x
   | .fresh g => zVar D g
 
-def seamControl (D : Diagram k) (ai pi g : Nat) : Option Nat :=
-  (D.seams.find? fun s => s.1 = ai ∧ s.2.1 = pi ∧ s.2.2.1 = g).map fun s => s.2.2.2
+/-- Actual reverse state at mark group `g` (fallback: the old endpoint's state). -/
+def markState (D : Diagram k) (g : Nat) : Fin k := D.states.getD g D.oldEnd.state
+
+/-- Next bit at mark group `g` (fallback: END). -/
+def nextOf (D : Diagram k) (g : Nat) : Option Bool := D.nextBits.getD g none
+
+def locOf (D : Diagram k) (v : Nat) : Loc := D.loc.getD v (.core 0)
+
+def piecesOf (D : Diagram k) (ai : Nat) : List Piece := D.pieces.getD ai []
+
+def seamControl (D : Diagram k) (ai pi g : Nat) : Nat :=
+  ((D.seams.find? fun s => s.1 = ai ∧ s.2.1 = pi ∧ s.2.2.1 = g).map fun s => s.2.2.2).getD 0
+
+/-- The fresh colour map of mark group `g`. -/
+def fm (I : Instance k) (D : Diagram k) (g : Nat) : Colour k → Colour k :=
+  freshMap I (markState D g) (nextOf D g)
 
 def finOf (n : Nat) (i : Nat) : Option (Fin n) :=
   if h : i < n then some ⟨i, h⟩ else none
 
-/-- The finite output of compiling the pieces of one atom. -/
+/-- The finite output of compiling pieces. -/
 structure Emitted (D : Diagram k) where
   tests : List (Var D × (Colour k → Bool)) := []
   equal : List (Var D × Var D) := []
@@ -294,171 +317,170 @@ structure Emitted (D : Diagram k) where
 def appendEmitted (e f : Emitted D) : Emitted D :=
   ⟨e.tests ++ f.tests, e.equal ++ f.equal, e.atoms ++ f.atoms, e.active ++ f.active⟩
 
-/-- Compile one piece of atom `ai` (piece index `pi`) with observer `o`. -/
+def emptyEmitted : Emitted D := {}
+
+/-- The seam-control sequence of a forward piece from group `i` to group `j`. -/
+def forwardControls (D : Diagram k) (ai pi i j : Nat) (P : Piece) : List Nat :=
+  P.lc :: (List.range (j - i - 1)).map (fun t => seamControl D ai pi (i + 1 + t)) ++ [P.rc]
+
+/-- Active observations contributed by a forward piece from group `i` to group `j`. -/
+def forwardActive (D : Diagram k) (ai pi i j : Nat) (o : Observer k) (P : Piece) :
+    List (Nat × Active k) :=
+  let cs := forwardControls D ai pi i j P
+  (List.range (j - i)).map fun t => (i + t, (o, cs.getD t 0, cs.getD (t + 1) 0))
+
+/-- Total compilation of one piece; malformed pieces contribute nothing. -/
 def compilePiece (I : Instance k) (D : Diagram k) (ai pi : Nat) (o : Observer k)
-    (P : Piece) : Option (Emitted D) := do
+    (P : Piece) : Emitted D :=
   let a := D.firstBit
   let n := D.groups
-  let lc ← finOf o.size P.lc
-  let rc ← finOf o.size P.rc
-  let fm : Nat → Option (Colour k → Colour k) := fun g => do
-    let q ← D.states[g]?
-    let b ← D.nextBits[g]?
-    pure (freshMap I q b)
-  match P.kind with
-  | .core => do
-      let u ← coreVar D P.source
-      let v ← coreVar D P.target
-      pure { atoms := [⟨coreObs (sliceObs o lc rc) a, u, v⟩] }
-  | .forward => do
-      let i := P.source
-      let j := P.target
-      guard (i ≤ j ∧ j < n)
-      if i = j then do
-        guard (P.lc = P.rc)
-        let z ← zVar D i
-        let f ← fm i
-        pure { tests := [(z, fun c => o.allows lc (f c))] }
-      else do
-        let inner ← (List.range (j - i - 1)).mapM fun t => seamControl D ai pi (i + 1 + t)
-        let cs := P.lc :: inner ++ [P.rc]
-        guard (cs.all fun x => x < o.size)
-        let acts ← (List.range (j - i)).mapM fun t => do
-          let l ← cs[t]?
-          let r ← cs[t + 1]?
-          pure (i + t, (o, l, r))
-        pure { active := acts }
-  | .enter => do
-      guard (P.target = 0 ∧ (P.label = .S ∨ P.label = .K a))
-      let u ← coreVar D P.source
-      let z0 ← zVar D 0
-      let f0 ← fm 0
-      let leftColour := coreMap a D.oldEnd
-      pure { tests := [(z0, portalTest ⟨o, lc, rc, P.label, fun _ => leftColour, f0⟩)],
-             equal := [(u, endVar D)] }
-  | .wrap => do
-      guard (P.source = n - 1 ∧ P.target = 0 ∧ P.label = .K a)
-      let z0 ← zVar D 0
-      let f0 ← fm 0
-      let flast ← fm (n - 1)
-      let leftColour := flast D.oldEnd
-      pure { tests := [(z0, portalTest ⟨o, lc, rc, .K a, fun _ => leftColour, f0⟩)] }
-  | .exit => do
-      let i := P.source
-      let zi ← zVar D i
-      let fi ← fm i
-      let v ← coreVar D P.target
+  match finOf o.size P.lc, finOf o.size P.rc with
+  | some lc, some rc =>
+    match P.kind with
+    | .core => { atoms := [⟨coreObs (sliceObs o lc rc) a, coreVar D P.source, coreVar D P.target⟩] }
+    | .forward =>
+      if P.source = P.target then
+        { tests := [(zVar D P.source, fun c => o.allows lc (fm I D P.source c))] }
+      else { active := forwardActive D ai pi P.source P.target o P }
+    | .enter =>
+      { tests := [(zVar D 0, portalTest ⟨o, lc, rc, P.label, fun _ => coreMap a D.oldEnd, fm I D 0⟩)],
+        equal := [(coreVar D P.source, endVar D)] }
+    | .wrap =>
+      { tests := [(zVar D 0, portalTest ⟨o, lc, rc, .K a, fun _ => fm I D (n - 1) D.oldEnd, fm I D 0⟩)] }
+    | .exit =>
       match P.label with
       | .F =>
-          pure { tests := [(zi, portalTest ⟨o, lc, rc, .F, fi, coreMap a⟩)],
-                 equal := [(v, zi)] }
-      | .K b => do
-          let avoid ← if i = n - 1 then pure (some a) else D.nextBits[i]?
-          guard (some b ≠ avoid)
-          pure { atoms := [⟨edgeObs (.K b) (fun c => o.allows lc (fi c))
-                    (fun c => o.allows rc (coreMap a c))
-                    (some ⟨o, lc, rc, .K b, fi, coreMap a⟩), zi, v⟩] }
-      | .S => none
+        { tests := [(zVar D P.source, portalTest ⟨o, lc, rc, .F, fm I D P.source, coreMap a⟩)],
+          equal := [(coreVar D P.target, zVar D P.source)] }
+      | .K b =>
+        { atoms := [⟨edgeObs (.K b) (fun c => o.allows lc (fm I D P.source c))
+            (fun c => o.allows rc (coreMap a c))
+            (some ⟨o, lc, rc, .K b, fm I D P.source, coreMap a⟩), zVar D P.source, coreVar D P.target⟩] }
+      | .S => {}
+  | _, _ => {}
 
-/-- Compile the pieces of atom `ai`: endpoints, acceptance and seams are checked. -/
-def compileAtom (I : Instance k) (c : Clause k) (D : Diagram k) (ai : Nat)
-    (atm : Atom k c.vars) (ps : List Piece) : Option (Emitted D) := do
+/-- Validity of one piece (the guards of `compile_diagram`). -/
+def pieceValid (I : Instance k) (D : Diagram k) (ai pi : Nat) (o : Observer k) (P : Piece) : Bool :=
+  let a := D.firstBit
+  let n := D.groups
+  P.lc < o.size && P.rc < o.size &&
+  match P.kind with
+  | .core => P.source < D.coreVars && P.target < D.coreVars
+  | .forward =>
+    P.source ≤ P.target && P.target < n &&
+      (if P.source = P.target then P.lc == P.rc
+       else (forwardControls D ai pi P.source P.target P).all fun x => x < o.size)
+  | .enter => P.target == 0 && (P.label == .S || P.label == .K a) && P.source < D.coreVars
+  | .wrap => P.source == n - 1 && P.target == 0 && P.label == .K a
+  | .exit =>
+    P.source < n && P.target < D.coreVars &&
+      match P.label with
+      | .F => true
+      | .K b => some b != (if P.source == n - 1 then some a else nextOf D P.source)
+      | .S => false
+
+instance : Inhabited Piece := ⟨⟨.core, 0, 0, 0, 0, .F⟩⟩
+
+/-- Total compilation of the pieces of atom `ai`. -/
+def compileAtom (I : Instance k) (D : Diagram k) (ai : Nat) (o : Observer k) (ps : List Piece) :
+    Emitted D :=
+  ((List.range ps.length).map fun pi => compilePiece I D ai pi o (ps.getD pi default)).foldl
+    appendEmitted {}
+
+/-- Validity of the pieces of one atom: endpoints, acceptance, seams, pieces. -/
+def atomValid (I : Instance k) (c : Clause k) (D : Diagram k) (ai : Nat) (atm : Atom k c.vars)
+    (ps : List Piece) : Bool :=
   let o := atm.observer
-  let first ← ps.head?
-  let last ← ps.getLast?
-  let srcLoc ← D.loc[atm.source.val]?
-  let tgtLoc ← D.loc[atm.target.val]?
-  guard (pieceSourceLoc first = srcLoc ∧ pieceTargetLoc last = tgtLoc)
-  guard ((o.initial.any fun q => q.val = first.lc) ∧ (o.final.any fun q => q.val = last.rc))
-  guard ((ps.zip ps.tail).all fun (l, r) => pieceTargetLoc l = pieceSourceLoc r ∧ l.rc = r.lc)
-  let parts ← (List.range ps.length).mapM fun pi => do
-    let P ← ps[pi]?
-    compilePiece I D ai pi o P
-  pure (parts.foldl appendEmitted {})
+  match ps.head?, ps.getLast? with
+  | some first, some last =>
+    (pieceSourceLoc first == locOf D atm.source.val) && (pieceTargetLoc last == locOf D atm.target.val) &&
+    (o.initial.any fun q => q.val == first.lc) && (o.final.any fun q => q.val == last.rc) &&
+    ((ps.zip ps.tail).all fun (l, r) => (pieceTargetLoc l == pieceSourceLoc r) && (l.rc == r.lc)) &&
+    ((List.range ps.length).all fun pi => pieceValid I D ai pi o (ps.getD pi default))
+  | _, _ => false
+
+/-- Everything emitted by the atoms of the clause. -/
+def allEmitted (I : Instance k) (c : Clause k) (D : Diagram k) : Emitted D :=
+  ((List.range c.atoms.length).map fun ai =>
+    match c.atoms[ai]? with
+    | some atm => compileAtom I D ai atm.observer (piecesOf D ai)
+    | none => {}).foldl appendEmitted {}
+
+/-- Active observations of physical interval `g`, in emission order. -/
+def itemsAt (I : Instance k) (c : Clause k) (D : Diagram k) (g : Nat) : List (Active k) :=
+  ((allEmitted I c D).active.filter fun x => x.1 = g).map fun x => x.2
+
+/-- The interval product atom of physical interval `g`. -/
+def intervalAtom (I : Instance k) (c : Clause k) (D : Diagram k) (g : Nat) :
+    Atom k (2 + D.groups + D.coreVars) :=
+  ⟨intervalObs I (itemsAt I c D g) (markState D g) (nextOf D g) (markState D (g + 1)) (nextOf D (g + 1)),
+    zVar D g, zVar D (g + 1)⟩
+
+/-- Pulled-back unary test of clause variable `v`. -/
+def queryTest (I : Instance k) (D : Diagram k) (v : Nat) (t : Colour k → Bool) :
+    Var D × (Colour k → Bool) :=
+  match locOf D v with
+  | .core x => (coreVar D x, fun col => t (coreMap D.firstBit col))
+  | .fresh g => (zVar D g, fun col => t (fm I D g col))
+
+/-- Core-core equalities/disequalities of the clause (fresh ones are settled statically). -/
+def corePairs (D : Diagram k) (l : List (Fin v × Fin v)) : List (Var D × Var D) :=
+  l.filterMap fun (x, y) =>
+    match locOf D x.val, locOf D y.val with
+    | .core a, .core b => some (coreVar D a, coreVar D b)
+    | _, _ => none
+
+/-- The two base atoms: `END --F--> INITIAL` and `INITIAL --K_a--> z_0`. -/
+def baseAtoms (I : Instance k) (D : Diagram k) : List (Atom k (2 + D.groups + D.coreVars)) :=
+  [⟨oneEdge .F, endVar D, initVar D⟩,
+   ⟨edgeObs (.K D.firstBit) (fun _ => true)
+      (fun col => !col.mask.get (markState D 0) && (col.isEnd == decide (D.groups = 1))) none,
+    initVar D, zVar D 0⟩]
+
+/-- The total construction. -/
+def compileValid (I : Instance k) (c : Clause k) (D : Diagram k) : Clause k :=
+  let n := D.groups
+  let e := allEmitted I c D
+  { vars := 2 + n + D.coreVars
+    tests := (endVar D, fun col => decide (col = D.oldEnd)) ::
+      ((List.range (n - 1)).map fun j => (zVar D j, fun (col : Colour k) => !col.isEnd)) ++
+      (c.tests.map fun (v, t) => queryTest I D v.val t) ++ e.tests
+    equal := (zVar D (n - 1), endVar D) :: corePairs D c.equal ++ e.equal
+    unequal := corePairs D c.unequal
+    atoms := baseAtoms I D ++ e.atoms ++ (List.range (n - 1)).map (intervalAtom I c D) }
+
+/-- Equalities and disequalities of the clause are compatible with the locations. -/
+def pairsValid (D : Diagram k) (l : List (Fin v × Fin v)) (neg : Bool) : Bool :=
+  l.all fun (x, y) =>
+    match locOf D x.val, locOf D y.val with
+    | .core a, .core b => a < D.coreVars && b < D.coreVars
+    | .fresh g, .fresh h => (g < D.groups && h < D.groups) && ((g == h) != neg)
+    | _, _ => neg
+
+/-- The guards of `compile_diagram`. -/
+def validDiagram (I : Instance k) (c : Clause k) (D : Diagram k) : Bool :=
+  let n := D.groups
+  let a := D.firstBit
+  0 < n && D.states.length == n && D.nextBits.length == n && D.loc.length == c.vars &&
+  D.pieces.length == c.atoms.length &&
+  D.nextBits.getLast? == some none && (D.nextBits.take (n - 1)).all Option.isSome &&
+  D.oldEnd.isEnd && !D.oldEnd.root && D.oldEnd.next == none &&
+  step I (markState D 0) a == some D.oldEnd.state && !I.bad.get (markState D 0) &&
+  !(I.flags.get (markState D 0)).get (markState D 0) &&
+  (c.tests.all fun (v, _) => match locOf D v.val with
+    | .core x => x < D.coreVars
+    | .fresh g => g < n) &&
+  pairsValid D c.equal false && pairsValid D c.unequal true &&
+  (List.range c.atoms.length).all fun ai =>
+    match c.atoms[ai]? with
+    | some atm => atomValid I c D ai atm (piecesOf D ai)
+    | none => false
 
 /-- The compiled clause of one diagram, or `none` when the diagram is malformed.
 This is `rank_preimage.compile_diagram`, with variables `END = 0`, `INITIAL = 1`,
 origins `z_g = 2 + g` and core variables `2 + groups + x`. -/
-def compileDiagram (I : Instance k) (c : Clause k) (D : Diagram k) : Option (Clause k) := do
-  let n := D.groups
-  let a := D.firstBit
-  guard (0 < n ∧ D.states.length = n ∧ D.nextBits.length = n ∧ D.loc.length = c.vars ∧
-    D.pieces.length = c.atoms.length)
-  guard (D.nextBits.getLast? = some none ∧ (D.nextBits.take (n - 1)).all Option.isSome)
-  guard (D.oldEnd.isEnd ∧ !D.oldEnd.root ∧ D.oldEnd.next = none)
-  let p0 ← D.states[0]?
-  guard (step I p0 a = some D.oldEnd.state ∧ !I.bad.get p0 ∧ !(I.flags.get p0).get p0)
-  let z0 ← zVar D 0
-  let zlast ← zVar D (n - 1)
-  let notEnd ← (List.range (n - 1)).mapM fun j => (zVar D j).map fun z =>
-    (z, fun (col : Colour k) => !col.isEnd)
-  let baseTests : List (Var D × (Colour k → Bool)) :=
-    (endVar D, fun col => decide (col = D.oldEnd)) :: notEnd
-  let baseAtoms : List (Atom k (2 + n + D.coreVars)) :=
-    [⟨oneEdge .F, endVar D, initVar D⟩,
-     ⟨edgeObs (.K a) (fun _ => true)
-        (fun col => !col.mask.get p0 && (col.isEnd == decide (n = 1))) none, initVar D, z0⟩]
-  let fm : Nat → Option (Colour k → Colour k) := fun g => do
-    let q ← D.states[g]?
-    let b ← D.nextBits[g]?
-    pure (freshMap I q b)
-  -- unary tests of the clause, pulled back through the colour maps
-  let qTests ← c.tests.mapM fun (v, t) => do
-    let l ← D.loc[v.val]?
-    match l with
-    | .core x => do
-        let cv ← coreVar D x
-        pure (cv, fun col => t (coreMap a col))
-    | .fresh g => do
-        let zv ← zVar D g
-        let f ← fm g
-        pure (zv, fun col => t (f col))
-  -- equalities and disequalities
-  let qEqual ← c.equal.mapM fun (v, w) => do
-    let lv ← D.loc[v.val]?
-    let lw ← D.loc[w.val]?
-    match lv, lw with
-    | .core x, .core y => do
-        let cx ← coreVar D x
-        let cy ← coreVar D y
-        pure (some (cx, cy))
-    | .fresh g, .fresh h => do
-        guard (g = h)
-        pure none
-    | _, _ => none
-  let qUnequal ← c.unequal.mapM fun (v, w) => do
-    let lv ← D.loc[v.val]?
-    let lw ← D.loc[w.val]?
-    match lv, lw with
-    | .core x, .core y => do
-        let cx ← coreVar D x
-        let cy ← coreVar D y
-        pure (some (cx, cy))
-    | .fresh g, .fresh h => do
-        guard (g ≠ h)
-        pure none
-    | _, _ => pure none
-  -- path diagrams
-  let emitted ← (List.range c.atoms.length).mapM fun ai => do
-    let atm ← c.atoms[ai]?
-    let ps ← D.pieces[ai]?
-    compileAtom I c D ai atm ps
-  let e := emitted.foldl appendEmitted {}
-  -- one product observer per physical interval
-  let intervals ← (List.range (n - 1)).mapM fun g => do
-    let items := (e.active.filter fun x => x.1 = g).map fun x => x.2
-    let ql ← D.states[g]?
-    let nl ← D.nextBits[g]?
-    let qr ← D.states[g + 1]?
-    let nr ← D.nextBits[g + 1]?
-    let zg ← zVar D g
-    let zg' ← zVar D (g + 1)
-    pure (⟨intervalObs I items ql nl qr nr, zg, zg'⟩ : Atom k (2 + n + D.coreVars))
-  pure { vars := 2 + n + D.coreVars
-         tests := baseTests ++ qTests ++ e.tests
-         equal := (zlast, endVar D) :: qEqual.filterMap id ++ e.equal
-         unequal := qUnequal.filterMap id
-         atoms := baseAtoms ++ e.atoms ++ intervals }
+def compileDiagram (I : Instance k) (c : Clause k) (D : Diagram k) : Option (Clause k) :=
+  if validDiagram I c D then some (compileValid I c D) else none
 
 /-- The clause-level preimage over a supplied finite list of diagrams. -/
 def preimageOver (I : Instance k) (c : Clause k) (Ds : List (Diagram k)) : Query k :=

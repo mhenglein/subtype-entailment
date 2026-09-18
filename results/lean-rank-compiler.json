@@ -312,7 +312,7 @@
     }
   ],
   "eval_lines": 733,
-  "lean_source_blob": "ee28add657e220cef1866a45b38d5f0972a1979a",
+  "lean_source_blob": "32e034ba4e6dac48f639b3ca688b0ec561c6baaa",
   "limits": [
     "Finite translation regression; nothing about the Closure Lemma is proved.",
     "Only table and plain one-edge observers are translated."
