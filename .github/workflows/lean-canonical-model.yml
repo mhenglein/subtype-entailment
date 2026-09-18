@@ -1,0 +1,77 @@
+name: Lean canonical model
+
+on:
+  push:
+    branches: ['lean/canonical-model-2026-09-18', 'main']
+    paths:
+      - 'lean/Subtail/TreeSemantics.lean'
+      - 'lean/Subtail/CanonicalModel*.lean'
+      - '.github/workflows/lean-canonical-model.yml'
+      - 'experiments/check_canonical_model.py'
+  pull_request:
+    paths:
+      - 'lean/Subtail/TreeSemantics.lean'
+      - 'lean/Subtail/CanonicalModel*.lean'
+      - '.github/workflows/lean-canonical-model.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  canonical-model:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.11'
+      - uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596
+        with:
+          lake-package-directory: lean
+          build: 'true'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'false'
+      - name: Compile canonical semantic foundation
+        working-directory: lean
+        run: lake build +Subtail.CanonicalModel
+      - name: Replay declarations through the kernel
+        working-directory: lean
+        run: lake env leanchecker Subtail.CanonicalModel
+      - name: Audit all new declaration dependencies
+        run: |
+          mkdir -p tmp
+          python3 - <<'PY'
+          from pathlib import Path
+          import re,json
+          rows=[]
+          for module in ('TreeSemantics','CanonicalModel'):
+              source=Path('lean/Subtail/'+module+'.lean').read_text()
+              for kind,name in re.findall(r'^(?:@\[simp\] )?(def|theorem|inductive|structure|abbrev) ([A-Za-z_][A-Za-z_0-9]*)',source,re.M):
+                  rows.append((module+'.'+name,kind))
+          assert rows and len(rows)==len(set(n for n,_ in rows))
+          Path('tmp/canonical-declarations.json').write_text(json.dumps(rows))
+          Path('tmp/canonical-axioms.lean').write_text('import Subtail.CanonicalModel\n'+''.join('#print axioms Subtail.'+n+'\n' for n,_ in rows))
+          PY
+          cd lean
+          set -o pipefail
+          lake env lean ../tmp/canonical-axioms.lean | tee /tmp/canonical-axioms.txt
+          cd ..
+          python3 - <<'PY'
+          from pathlib import Path
+          import re,json
+          expected=dict(json.loads(Path('tmp/canonical-declarations.json').read_text()))
+          text=Path('/tmp/canonical-axioms.txt').read_text()
+          rows=re.findall(r"'Subtail\.([^']+)' (does not depend on any axioms|depends on axioms: \[([^]]*)\])",text)
+          assert set(n for n,_,_ in rows)==set(expected),text
+          for name,_,axioms in rows:
+              allowed={'propext','Quot.sound'}
+              if expected[name]=='theorem':allowed.add('Classical.choice')
+              assert set(a.strip() for a in axioms.split(',') if a.strip())<=allowed,(name,axioms)
+          print('PASS:',len(rows),'declaration dependency closures')
+          PY
+      - name: Preserve earlier Lean core
+        run: python3 scripts/check_lean.py
+      - name: Verify existing evidence unchanged
+        run: git diff --exit-code -- results/lean-checks.json
