@@ -1,0 +1,42 @@
+name: Lean promotion unwind
+on:
+  push:
+    branches:
+      - lean/promotion-unwind-2026-09-18
+permissions:
+  contents: read
+jobs:
+  unwind:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596
+        with:
+          lake-package-directory: lean
+          build: 'false'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'false'
+      - name: Compile unwind module
+        working-directory: lean
+        run: lake build +Subtail.RankQueryUnwind
+      - name: Kernel replay
+        working-directory: lean
+        run: lake env leanchecker Subtail.RankQueryUnwind
+      - name: Reject unfinished proof placeholders
+        run: "! grep -R -nE '\\bsorry\\b|sorryAx|axiom ' lean/Subtail/RankQueryUnwind.lean"
+      - name: Audit theorem dependencies
+        run: |
+          cat > /tmp/unwind-axioms.lean <<'EOF'
+          import Subtail.RankQueryUnwind
+          #print axioms Subtail.RankQueryUnwind.promotes_zero_eq
+          #print axioms Subtail.RankQueryUnwind.promotes_succ_iff
+          #print axioms Subtail.RankQueryUnwind.promotes_safe
+          #print axioms Subtail.RankQueryUnwind.sat_append
+          #print axioms Subtail.RankQueryUnwind.sat_promote_iff
+          #print axioms Subtail.RankQueryUnwind.sat_promote_of_chain
+          EOF
+          cd lean
+          lake env lean /tmp/unwind-axioms.lean | tee /tmp/unwind-axioms.txt
+          ! grep -E 'sorryAx|Classical.choice' /tmp/unwind-axioms.txt
