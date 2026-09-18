@@ -144,7 +144,7 @@ theorem maxNat_le_of_forall {xs : List Nat} {N : Nat}
     simp only [RankMilestones.maxNat]
     have hx := h x (List.mem_cons_self ..)
     have hrest : ∀ y ∈ xs, y ≤ N := fun y hy => h y (List.mem_cons_of_mem _ hy)
-    exact Nat.max_le hx (ih hrest)
+    exact Nat.max_le.mpr ⟨hx, ih hrest⟩
 
 /-- The clause-wise bound stored in ClosureFor also bounds the entire preimage query. -/
 theorem weight_pre_le (I : Instance k) (pre : Query k → Query k)
@@ -164,7 +164,7 @@ theorem weight_promote_succ_le (I : Instance k) (pre : Query k → Query k)
       max (weight (promote pre φ h))
         (closureBound k (weight (promote pre φ h))) := by
   rw [promote, weight_append]
-  exact Nat.max_le (Nat.le_refl _) (weight_pre_le I pre hclosure _)
+  exact Nat.max_le.mpr ⟨Nat.le_refl _, weight_pre_le I pre hclosure _⟩
 
 
 end RankQueryUnwind
