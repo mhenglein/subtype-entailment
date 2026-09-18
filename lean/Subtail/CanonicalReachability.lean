@@ -163,7 +163,8 @@ def pathList (C : List (Constraint n)) (a : Fin n) (w : Word) : List (Config n) 
   · rintro ⟨rfl,z,rfl⟩
     apply List.mem_map.mpr
     refine ⟨w.length,?_,?_⟩
-    · simp
+    · simp only [List.mem_range,List.length_append]
+      omega
     · simp
 
 theorem pathList_pred (C : List (Constraint n)) (a : Fin n) (w : Word) :
@@ -187,6 +188,21 @@ def separationCheck (C : List (Constraint n)) (a b : Fin n) (w : Word) : Bool :=
     separationCheck C a b w = true ↔
       AvoidsDenials C (pathSeeds C a w) ∧ ¬ Derived C (pathSeeds C a w) b w := by
   simp [separationCheck,Bool.eq_false_iff,pathList_pred]
+
+/-- A supplied finite address separates exactly when some ARBITRARY valuation
+satisfying C distinguishes the two variables at that very address. -/
+theorem separationCheck_iff_countermodel (C : List (Constraint n)) (a b : Fin n) (w : Word) :
+    separationCheck C a b w = true ↔
+      ∃ rho, Models C rho ∧ (rho a).nodes w ∧ ¬ (rho b).nodes w := by
+  rw [separationCheck_correct]
+  constructor
+  · rintro ⟨hs,hb⟩
+    refine ⟨canonical C a w,?_,canonical_contains C a w,hb⟩
+    exact closure_models (pathSeeds_closed C a w) (pathSeeds_roots C a w) hs
+  · rintro ⟨rho,hm,ha,hb⟩
+    refine ⟨avoids_of_model hm (pathSeeds_in_model hm ha),?_⟩
+    intro hd
+    exact hb (derived_sound hm (pathSeeds_in_model hm ha) hd)
 
 /-- The remaining unbounded word choice is explicit, not silently decided. -/
 theorem not_entails_iff_exists_check (C : List (Constraint n)) (a b : Fin n) :
