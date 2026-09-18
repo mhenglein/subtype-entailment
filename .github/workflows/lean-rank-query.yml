@@ -1,0 +1,78 @@
+name: Lean rank query statement
+
+# Stage 4a of the rank-query candidate (issue #27): the query grammar, literal
+# prefix-graph semantics, the kernel-checked decision of query satisfaction and
+# the pinned Closure Lemma statement. This workflow builds the module as an
+# explicit target so the import aggregator owned by the stage-3 formalizer is
+# not touched; it replays the module through the kernel, audits every public
+# declaration's axioms, and runs the Lean/Python semantics differential.
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  statement:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.11'
+      - uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596
+        with:
+          lake-package-directory: lean
+          build: 'true'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'false'
+      - name: Compile the rank-query module
+        working-directory: lean
+        run: lake build +Subtail.RankQuery
+      - name: Replay declarations through the kernel
+        working-directory: lean
+        run: lake env leanchecker Subtail.RankQuery
+      - name: Audit every public def and theorem
+        run: |
+          mkdir -p tmp
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          source = Path('lean/Subtail/RankQuery.lean').read_text()
+          rows = re.findall(r'^(?:@\[simp\] )?(def|theorem) ([A-Za-z_][A-Za-z_0-9]*)', source, re.M)
+          assert len(rows) == len(set(n for _, n in rows)) and len(rows) >= 60, len(rows)
+          assert 'sorry' not in source and 'axiom ' not in source
+          Path('tmp/rankquery-axioms.lean').write_text('import Subtail.RankQuery\n' + ''.join('#print axioms Subtail.RankQuery.' + n + '\n' for _, n in rows))
+          PY
+          cd lean
+          set -o pipefail
+          lake env lean ../tmp/rankquery-axioms.lean | tee /tmp/rankquery-axioms.txt
+          cd ..
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          source = Path('lean/Subtail/RankQuery.lean').read_text()
+          expected = dict((n, k) for k, n in re.findall(r'^(?:@\[simp\] )?(def|theorem) ([A-Za-z_][A-Za-z_0-9]*)', source, re.M))
+          text = Path('/tmp/rankquery-axioms.txt').read_text()
+          rows = re.findall(r"'Subtail\.RankQuery\.([^']+)' (does not depend on any axioms|depends on axioms: \[([^]]*)\])", text)
+          assert set(n for n, _, _ in rows) == set(expected), text
+          for name, _, axioms in rows:
+              allowed = {'propext', 'Quot.sound'}
+              if expected[name] == 'theorem': allowed.add('Classical.choice')
+              assert set(a.strip() for a in axioms.split(',') if a.strip()) <= allowed, (name, axioms)
+          print('PASS:', len(rows), 'complete axiom dependency closures')
+          PY
+      - name: Lean/Python semantics differential
+        run: |
+          python3 experiments/check_lean_rank_query.py --lean --output /tmp/lean-rank-query.json
+          cmp results/lean-rank-query.json /tmp/lean-rank-query.json
+      - name: Canonical research records and links
+        run: python3 scripts/research_index.py --check
+      - name: Preserve earlier Lean core
+        run: python3 scripts/check_lean.py
+      - name: Verify existing evidence unchanged
+        run: git diff --exit-code -- results/lean-checks.json

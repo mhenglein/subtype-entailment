@@ -21,6 +21,7 @@ Additional recorded suites:
 | [trimmed-budget.json](trimmed-budget.json) | `python3 experiments/trim_budget_example.py` |
 | [period-state-form.json](period-state-form.json) | `python3 experiments/check_period_state_form.py` |
 | [single-source-census.json](single-source-census.json) | `python3 experiments/single_source_census.py 4` and `python3 experiments/single_source_census.py 5` (about ten minutes) |
+| [lean-rank-query.json](lean-rank-query.json) | `python3 experiments/check_lean_rank_query.py --lean` with Lean 4.33.1 |
 
 See [the experiment index](../experiments/README.md) for IDs, coverage, interpretations, and limitations.
 

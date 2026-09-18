@@ -744,6 +744,15 @@ every four-state case; this check does not add a small-state result.
 | Evidence | [Saved result](../results/single-source-census.json): every valid single-source table up to relabelling (414 for four states, 10,109 for five) with every nonempty target set; 1,242 and 70,763 instances; breadth-first shortest witnesses up to length 20; NO certified only by an exhausted Necessary automaton with `L, D <= 3`; zero UNKNOWN. Longest shortest witness: 4 (four states), 6 (five states). |
 | Status | Exact finite census for the single-source subclass; no E ID assigned; no all-state bound follows. |
 
+### Lean rank-query statement differential
+
+| Field | Record |
+|---|---|
+| Command | `python3 experiments/check_lean_rank_query.py --lean --output /tmp/lean-rank-query.json && cmp results/lean-rank-query.json /tmp/lean-rank-query.json` (Lean 4.33.1 required; without `--lean` only the Python fixtures are built) |
+| Detail | [Statement readback](../notes/2026-09-18-lean-rank-query-statement.md); [module](../lean/Subtail/RankQuery.lean) |
+| Evidence | [Saved result](../results/lean-rank-query.json): seed `2026091801`; 16 literal prefix graphs, 16 finishing queries and 64 query unions (88 clauses) evaluated natively in Lean agree with `literal_graph`, `rank_preimage_core.model`, `explicit_query_truth` and `finish_queries`. |
+| Status | Translation/semantics regression for the pinned stage-4a definitions; no E ID; the Closure Lemma itself is untouched. |
+
 ## Not yet reproducible or not yet run
 
 These items have no executed experiment ID. Do not assign them `REPRO` status

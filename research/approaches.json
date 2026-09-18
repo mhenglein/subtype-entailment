@@ -475,8 +475,8 @@
       "outcome": "supported",
       "owner": null,
       "updated": "2026-09-18",
-      "summary": "Lean kernel-checks the rank-query candidate's stages 1-2 (terminal border depth at most k-1, milestone first returns, failure-target confinement) on top of the earlier core; stage 3 (coloured first-return graph surgery) is under active formalization on branch lean/first-return-graph-2026-09-18; stages 4-6 are unformalized.",
-      "next_step": "Finish and integrate stage 3; pin the stage-4 Closure Lemma (query grammar, prefix-graph semantics, both preimage directions) as a Prop before proving it; formalize the weight bound/unwind and the C029/C031 bridge as separate obligations. One GitHub issue per obligation under the milestone 'Rank-query closure formalized'.",
+      "summary": "Lean kernel-checks the rank-query candidate's stages 1-2 (terminal border depth at most k-1, milestone first returns, failure-target confinement); stage 3 (coloured first-return graph surgery) is under active formalization on branch lean/first-return-graph-2026-09-18; stage 4a pins the query grammar, literal prefix-graph semantics, a kernel-checked decision of query satisfaction and the Closure Lemma as an unproved Prop; stages 4b-6 are unformalized.",
+      "next_step": "Finish and integrate stage 3; instantiate the pinned ClosureFor with an executable preimage compiler and prove both directions (issues #28/#29); formalize the weight bound/unwind and the C029/C031 bridge as separate obligations. One GitHub issue per obligation under the milestone 'Rank-query closure formalized'.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
@@ -493,7 +493,11 @@
         "notes/2026-09-18-lean-rank-foundation.md",
         "notes/2026-09-18-lean-rank-milestones.md",
         "experiments/check_lean_rank_milestones.py",
-        "results/lean-rank-milestones.json"
+        "results/lean-rank-milestones.json",
+        "lean/Subtail/RankQuery.lean",
+        "notes/2026-09-18-lean-rank-query-statement.md",
+        "experiments/check_lean_rank_query.py",
+        "results/lean-rank-query.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/34"
     }

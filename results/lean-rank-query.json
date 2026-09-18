@@ -1,0 +1,20 @@
+{
+  "eval_lines": 96,
+  "fixtures": {
+    "finish_queries": 16,
+    "graphs": 16,
+    "sat_clauses": 88,
+    "sat_no": 21,
+    "sat_queries": 64,
+    "sat_yes": 43
+  },
+  "lean_source_blob": "6ee81d85c058a8f17342e4c341f8227e3a963731",
+  "native_lean": {
+    "mismatches": [],
+    "status": "PASS",
+    "toolchain": "leanprover/lean4:v4.33.1"
+  },
+  "scope": "Translation/semantics differential on small fixtures; not a proof of the Closure Lemma",
+  "seed": 2026091801,
+  "status": "PASS"
+}

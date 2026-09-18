@@ -67,6 +67,7 @@ latter audits every public definition/theorem in `RankMilestones.lean`.
 | [Audit.lean](Subtail/Audit.lean) | Dependency-axiom reports for the earlier runtime definitions and main theorems |
 | [TerminalRank.lean](Subtail/TerminalRank.lean) | Terminal prefix-freeness, border-state injection and at most k-1 positive borders of accepted suffixes |
 | [RankMilestones.lean](Subtail/RankMilestones.lean) | Literal rank recurrence, reversal and actual reversed-prefix bound; exact first milestones/first returns; interior failure-target confinement |
+| [RankQuery.lean](Subtail/RankQuery.lean) | Stage 4a (not default-imported): query grammar, literal prefix graphs, executable `satCheck` with `satCheck_correct`, and the UNPROVED `ClosureStatement`/`RankDecisionStatement` pinned as `Prop`s |
 
 Words are `List Bool`. State sets have type `Fin k`; tables are finite vectors.
 The flag condition includes both diagonal pairs and the empty suffix. A
@@ -78,6 +79,14 @@ are checked in Lean. The finer exact-occurrence rule has a written proof and
 Python checks, but is not yet formalized.
 
 ## What remains assumed or missing
+
+`RankQuery.lean` pins `ClosureFor`, `ClosureStatement` and `RankDecisionStatement`
+as statements only. No theorem in the repository proves them; the module is
+built as an explicit target by
+[the rank-query workflow](../.github/workflows/lean-rank-query.yml) and is not
+yet imported by `Subtail.lean`. See
+[the statement readback](../notes/2026-09-18-lean-rank-query-statement.md).
+
 
 `finiteBudgetDecision_correct` accepts executable parameters `size`, `F`, and
 `success`. Its statement assumes:
