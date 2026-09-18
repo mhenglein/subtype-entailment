@@ -1,0 +1,69 @@
+name: Lean rank foundation
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  terminal-rank:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.11'
+      - uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596
+        with:
+          lake-package-directory: lean
+          build: 'true'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'false'
+      - name: Compile terminal border proof
+        working-directory: lean
+        run: lake build +Subtail.TerminalRank
+      - name: Replay terminal border declarations through the kernel
+        working-directory: lean
+        run: lake env leanchecker Subtail.TerminalRank
+      - name: Inspect theorem dependencies
+        run: |
+          mkdir -p tmp
+          cat > tmp/terminal-rank-axioms.lean <<'EOF'
+          import Subtail.TerminalRank
+          #print axioms Subtail.TerminalRank.cutState
+          #print axioms Subtail.TerminalRank.borderLengths
+          #print axioms Subtail.TerminalRank.borderState
+          #print axioms Subtail.TerminalRank.positiveBorderCount
+          #print axioms Subtail.TerminalRank.runFrom_terminal
+          #print axioms Subtail.TerminalRank.accepted_prefix_eq
+          #print axioms Subtail.TerminalRank.runFrom_cutState_drop
+          #print axioms Subtail.TerminalRank.agreement_distinct
+          #print axioms Subtail.TerminalRank.mem_borderLengths
+          #print axioms Subtail.TerminalRank.borderState_injective
+          #print axioms Subtail.TerminalRank.border_count_le
+          #print axioms Subtail.TerminalRank.positive_border_count_le
+          #print axioms Subtail.TerminalRank.suffix_positive_border_count_le
+          EOF
+          cd lean
+          lake env lean ../tmp/terminal-rank-axioms.lean | tee /tmp/terminal-rank-axioms.txt
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          text = Path('/tmp/terminal-rank-axioms.txt').read_text()
+          rows = re.findall(r"'Subtail\.TerminalRank\.([^']+)' (does not depend on any axioms|depends on axioms: \[([^]]*)\])", text)
+          assert len(rows) == 13, text
+          runtime = {'cutState','borderLengths','borderState','positiveBorderCount'}
+          for name, _, axioms in rows:
+              allowed = {'propext','Quot.sound'}
+              if name not in runtime: allowed.add('Classical.choice')
+              assert set(x.strip() for x in axioms.split(',') if x.strip()) <= allowed, (name,axioms)
+          print('PASS: all 13 dependency closures; no research axioms or sorryAx')
+          PY
+      - name: Preserve the earlier Lean regression suite
+        run: python3 scripts/check_lean.py
+      - name: Verify existing saved Lean evidence is unchanged
+        run: git diff --exit-code -- results/lean-checks.json
