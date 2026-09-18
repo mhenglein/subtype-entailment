@@ -9,6 +9,9 @@ import Subtail.TerminalRank
 import Subtail.RankMilestones
 import Subtail.FirstReturnColours
 import Subtail.RankQueryFirstReturn
+import Subtail.RankQueryCompiler
+import Subtail.RankQuerySound
+import Subtail.RankQueryUnwind
 import Subtail.TreeSemantics
 import Subtail.CanonicalModel
 import Subtail.CanonicalModelAudit

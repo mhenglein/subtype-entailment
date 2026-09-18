@@ -22,35 +22,46 @@ correct, exhaustive search through F(k) decides every terminal instance, and the
 audited semantic bridge (stage 6) transfers the decision to arbitrary, possibly
 infinite trees. No polynomial, elementary or practical bound is claimed.
 
-Evidence status, kept deliberately distinct: written candidate proof (Sept 15)
-and full symbolic compiler with the bound (Sept 17); two separate AI-assisted
-audits found no gap in stages 1–5 and in the C029/C031 bridge, both informed by
-the author's argument and neither a blind derivation, a human referee, nor Lean;
-finite differential oracles agree on every recorded corpus; one-atom preimage
-unions and one zero-length two-atom union are exhausted, while other joint or
-higher-rank cases are certificate-guided or work-capped (independent adversarial
-fixtures for joint conjunction and shared generators found no discrepancy,
-[note](notes/2026-09-18-closure-fixtures.md)). Lean kernel-checks stages 1–2
-(`TerminalRank.lean`, `RankMilestones.lean`; no `sorry`, no custom axiom), stage
-3 is under active formalization on the branch
-`lean/first-return-graph-2026-09-18`, and the stage-4 Closure Lemma is PINNED
-as an unproved statement with decidable query satisfaction and a bounded-visits
-lemma ([readback](notes/2026-09-18-lean-rank-query-statement.md)). Stage 3 is
-now kernel-checked and identified with that literal query graph, with the
-`s+1` fresh-interval bound ([note](notes/2026-09-18-lean-first-return-graph.md));
-stage 6 has a checked semantic foundation and total executable normalized
-satisfiability, but not a decision of entailment
+Evidence status as of September 18, 21:00 UTC, kept deliberately distinct.
+Ordinary mathematics: written candidate proof (Sept 15) and full symbolic
+compiler with the bound (Sept 17); two separate AI-assisted audits found no gap
+in stages 1–5 and in the C029/C031 bridge, both informed by the author's
+argument, neither a blind derivation nor a human referee. Finite evidence:
+differential oracles agree on every recorded corpus; independent adversarial
+fixtures for joint conjunction, shared generators and two-atom unions found no
+discrepancy in the compiler, with one zero-length two-atom union exhausted and
+the other joint or higher-rank unions certificate-guided or work-capped
+([fixtures](notes/2026-09-18-closure-fixtures.md)). Lean, all kernel-checked
+with no `sorry` and no custom axiom: stages 1–3 (terminal border depth,
+milestone first returns, the exact coloured first-return graph identified with
+the literal query graph, single entrance, at most s+1 fresh intervals;
+[note](notes/2026-09-18-lean-first-return-graph.md)); stage 4a, the Closure
+Lemma PINNED as the unproved `ClosureFor`/`ClosureStatement` with decidable
+query satisfaction ([readback](notes/2026-09-18-lean-rank-query-statement.md));
+stage 4c, an executable diagram compiler mirroring `compile_diagram` and
+`closure_reverse`, the reverse half of `ClosureFor` for every diagram
+enumeration ([compiler note](notes/2026-09-18-lean-rank-compiler.md)); the
+conditional stage-5 unwind and the exact `T_h` weight recurrence, assuming
+`ClosureFor`; and the stage-6 foundation: arbitrary-tree path-set semantics,
+the canonical least model, `not_entails_iff_canonical`, exact stack
+reachability and total executable normalized satisfiability
 ([canonical model](notes/2026-09-18-canonical-model-formalization.md),
 [finite propagation](notes/2026-09-18-finite-propagation-formalization.md)).
-Stage 4c is now kernel-checked: an executable diagram compiler mirroring
-`compile_diagram` and `closure_reverse`, the reverse half of the pinned
-`ClosureFor` for any diagram enumeration
-([compiler note](notes/2026-09-18-lean-rank-compiler.md)). Stage 4b (coverage
-by an enumerated diagram), stage 5 and the remainder of 6 remain unproved in
-Lean. The
-generic compiled driver is resource-limited; timed UNKNOWN results are not
-negative certificates. Problem 1.7's accepted status is unchanged: CANDIDATE
-PROOF, independent human review pending.
+Still unproved in Lean, so `ClosureFor` and the decision are NOT discharged:
+stage 4b (an executable diagram enumerator and coverage of every safe
+first-return extension via `accepts_bounded_visits`; support work on global
+marks, run transport and portal transport is live on unmerged branches), the
+clause-weight bound and `F(k)` with finishing-query correctness (stage 5), and
+the entailment decision of stage 6 (a bound or finite representation for the
+separating address, `I_C`, absorption, C029/C031 and the composition). A
+prior-work audit ([dossier](notes/prior-work/README.md)) found no source
+supplying C080's whole-conjunction, shared-generator closure; it records
+Schubert's withdrawn 2021 PSPACE claim (Lemma 5.5) as a failed attempt whose
+invariant must be compared with stage 4 before any independence claim, and the
+2019 Breuvart–Penelle–Rehof 2-EXPTIME restriction as mandatory prior art for
+C067/C077. The generic compiled driver is resource-limited; timed UNKNOWN
+results are not negative certificates. Problem 1.7's accepted status is
+unchanged: CANDIDATE PROOF, independent human review pending (#33).
 
 Failed attempts on the way are retained, not erased: the proposed finite
 quotient of references by endpoint, transition action, visited set and full

@@ -967,18 +967,36 @@ through bounded portal diagrams and one shared generator per physical interval;
 unwind to `F(k)`; (6) the C029/C031 semantic transfer.
 
 **Status / scope.** `CANDIDATE`: `WRITTEN PROOF + AUDIT + REPRO`; not
-established; `LEAN` only for stages 1–2, kernel-checked in
-[TerminalRank.lean](../lean/Subtail/TerminalRank.lean) and
-[RankMilestones.lean](../lean/Subtail/RankMilestones.lean), with stage 3 under
-formalization. Two separate AI-assisted audits, both informed by the author's
-argument, found no gap in stages 1–5 and in the stage-6 bridge; neither is a
-human referee or a blind derivation. Finite oracles exhaust only one-atom
-preimage unions; joint and higher-rank checks are certificate-guided. The capped
-generic driver returns UNKNOWN on recorded hard fixtures, which is not negative
-evidence. No polynomial, elementary or practical bound is claimed. The exact
-review target is stage 4: Lemma 4 and Sections 5–7 of the candidate proof,
-Sections 3–5 of the closure note. Problem 1.7's accepted status is unchanged by
-this record; the ID exists so the candidate can be found, cited and reviewed.
+established. `LEAN` (kernel-checked, no `sorry`, no custom axiom) for stages
+1–3, for the pinned stage-4 statement with decidable satisfaction
+([RankQuery.lean](../lean/Subtail/RankQuery.lean)), for the reverse half of
+the Closure Lemma over any diagram enumeration (`closure_reverse` in
+[RankQuerySound.lean](../lean/Subtail/RankQuerySound.lean) with the executable
+compiler [RankQueryCompiler.lean](../lean/Subtail/RankQueryCompiler.lean)),
+for the conditional stage-5 unwind and `T_h` recurrence
+([RankQueryUnwind.lean](../lean/Subtail/RankQueryUnwind.lean)), and for the
+stage-6 semantic foundation and executable normalized satisfiability
+([CanonicalModel.lean](../lean/Subtail/CanonicalModel.lean),
+[StackReachability.lean](../lean/Subtail/StackReachability.lean)). NOT
+Lean-checked, hence `ClosureFor` and the decision remain unproved: the forward
+direction (stage 4b: executable diagram enumerator and coverage), the
+clause-weight bound and `F(k)` (stage 5), and the entailment decision of stage
+6 (separating-address bound, `I_C`, absorption, C029/C031, composition). Two
+separate AI-assisted audits, both informed by the author's argument, found no
+gap in stages 1–5 and in the stage-6 bridge; neither is a human referee or a
+blind derivation. Independent adversarial fixtures found no compiler
+discrepancy; only one-atom unions and one zero-length two-atom union are
+exhausted, other joint and higher-rank checks are certificate-guided or
+work-capped. The capped generic driver returns UNKNOWN on recorded hard
+fixtures, which is not negative evidence. No polynomial, elementary or
+practical bound is claimed. A prior-work audit found no source supplying this
+closure and requires comparison with the failed invariant of Schubert's
+withdrawn 2021 Lemma 5.5 before any methodological-independence claim
+([novelty matrix](../notes/prior-work/novelty-matrix.md)). The exact review
+target is stage 4: Lemma 4 and Sections 5–7 of the candidate proof, Sections
+3–5 of the closure note, now also readable as the pinned `ClosureFor`.
+Problem 1.7's accepted status is unchanged by this record; the ID exists so
+the candidate can be found, cited and reviewed.
 
 **Evidence.** [Candidate proof](../notes/2026-09-15-candidate-rank-query-decision.md),
 [closure proof and bound](../notes/2026-09-17-rank-query-closure-audit.md),
@@ -992,7 +1010,11 @@ this record; the ID exists so the candidate can be found, cited and reviewed.
 [candidate record](RANK_QUERY_CANDIDATE.md),
 [compiler record](RANK_QUERY_COMPILER.md),
 [prerequisites and failed quotients](RANK_ATTEMPT.md),
-[referee brief](../notes/2026-09-18-closure-lemma-referee-brief.md).
+[referee brief](../notes/2026-09-18-closure-lemma-referee-brief.md),
+[Lean statement readback](../notes/2026-09-18-lean-rank-query-statement.md),
+[Lean compiler note](../notes/2026-09-18-lean-rank-compiler.md),
+[adversarial fixtures](../notes/2026-09-18-closure-fixtures.md),
+[prior-work dossier](../notes/prior-work/README.md).
 Allocated 2026-09-18 by an integrator session (issue #25); the allocation is
 navigation, not a review.
 
