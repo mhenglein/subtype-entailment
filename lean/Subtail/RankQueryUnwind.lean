@@ -164,7 +164,8 @@ theorem weight_promote_succ_le (I : Instance k) (pre : Query k → Query k)
       max (weight (promote pre φ h))
         (closureBound k (weight (promote pre φ h))) := by
   rw [promote, weight_append]
-  exact Nat.max_le.mpr ⟨Nat.le_refl _, weight_pre_le I pre hclosure _⟩
+  exact Nat.max_le.mpr ⟨Nat.le_max_left _ _,
+    Nat.le_trans (weight_pre_le I pre hclosure _) (Nat.le_max_right _ _)⟩
 
 
 /-- The finishing query starts below the candidate proof's conservative
