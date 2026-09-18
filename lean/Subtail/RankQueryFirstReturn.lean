@@ -31,7 +31,7 @@ theorem advance_eq {w : Word} {j : Nat} (hj : j ≤ w.length) (a : Bool) :
 theorem mask_get_eq (I : Instance k) (B : Reference k) (j : Nat) (q : Fin k) :
     (RankQuery.mask I B j).get q =
       FirstReturnGraph.mask B.word (fun p t => (I.flags.get p).get t) B.label j q := by
-  simp [RankQuery.mask, FirstReturnGraph.mask]
+  simp [RankQuery.mask, FirstReturnGraph.mask, Vector.get]
 
 /-- Repackage a graph-surgery colour without changing any of its five fields. -/
 def toQueryColour (c : FirstReturnGraph.Colour k) : RankQuery.Colour k :=
@@ -81,6 +81,7 @@ theorem parent_le_old {w : Word} {m j : Nat}
     · by_cases hend : j = w.length
       · subst j
         rw [first_return_parent hr]
+        exact Nat.le_refl _
       · exact Nat.le_of_lt (first_return_internal_parent_lt hr (by omega) (by omega))
 
 /-- A fresh-target K edge is a physical successor or the exceptional end wrap. -/
@@ -106,8 +107,7 @@ theorem fresh_K_shape {w : Word} {m j : Nat}
     · subst j
       simp only [if_true] at hfresh ⊢
       by_cases ha : FirstReturnGraph.Next w m a
-      · simp only [ha, if_true]
-        exact Or.inl rfl
+      · simp [ha]
       · simp only [ha, if_false] at hfresh ⊢
         have := oldBound m (Nat.le_refl _)
         omega
@@ -115,8 +115,7 @@ theorem fresh_K_shape {w : Word} {m j : Nat}
       by_cases h2 : j < w.length
       · simp only [h2, if_true] at hfresh ⊢
         by_cases ha : FirstReturnGraph.Next w j a
-        · simp only [ha, if_true]
-          exact Or.inl rfl
+        · simp [ha]
         · simp only [ha, if_false] at hfresh ⊢
           have hc := FirstReturnGraph.cursor_eq_parent hm hr
             (d := j-m) (by omega)
@@ -129,7 +128,7 @@ theorem fresh_K_shape {w : Word} {m j : Nat}
       · simp only [h2, if_false] at hfresh ⊢
         by_cases ha : FirstReturnGraph.Next w m a
         · simp only [ha, if_true]
-          exact Or.inr ⟨by omega, rfl⟩
+          exact Or.inr ⟨by omega, True.intro⟩
         · simp only [ha, if_false] at hfresh ⊢
           have := oldBound m (Nat.le_refl _)
           omega
@@ -144,8 +143,7 @@ theorem fresh_edge_shape (I : Instance k) (B : Reference k) {m : Nat}
   cases l with
   | F =>
     have hval : failureParent (B.word.take u.val) = v.val := by
-      have := congrArg (fun x => x.map Fin.val) he
-      simpa only [prefixGraph, Option.map_some] using this
+      exact congrArg Fin.val (Option.some.inj he)
     have := parent_le_old hm hr hu
     omega
   | S =>
@@ -156,8 +154,7 @@ theorem fresh_edge_shape (I : Instance k) (B : Reference k) {m : Nat}
     · contradiction
   | K a =>
     have hval : RankQuery.advance B.word u.val a = v.val := by
-      have := congrArg (fun x => x.map Fin.val) he
-      simpa only [prefixGraph, Option.map_some] using this
+      exact congrArg Fin.val (Option.some.inj he)
     rw [advance_eq hu a] at hval
     have hs := fresh_K_shape hm hr hu a (by omega)
     simpa only [hval] using hs
@@ -220,7 +217,12 @@ theorem breaksAfter_le_visits (I : Instance k) (B : Reference k) {m : Nat}
     · obtain ⟨l, he, _, _⟩ := hpair.1
       have hval := fresh_break_target I B hm hr he hb
       have hye : y.1 = entry := Fin.ext (hval.trans hentry.symm)
-      simpa [breaksAfter, hb, visits, hye] using Nat.add_le_add_left hrest 1
+      simp only [breaksAfter, if_pos hb]
+      have hv : visits (prefixGraph I B) O (y :: ys) entry =
+          1 + visits (prefixGraph I B) O ys entry := by
+        simp [visits, hye, Nat.add_comm]
+      rw [hv]
+      exact Nat.add_le_add_left hrest 1
     · simp only [breaksAfter, hb, if_false, Nat.zero_add]
       exact Nat.le_trans hrest (visits_tail_le _ O y ys entry)
 
@@ -242,7 +244,8 @@ theorem accepts_bounded_fresh_intervals (I : Instance k) (B : Reference k) {m : 
   refine ⟨q,hq,p,hp,xs,hchain,hlast,hnd,hallowed,?_⟩
   have hbreak := breaksAfter_le_visits I B hm hr O entry rfl (u,q) xs hchain
   have htail := visits_tail_le (prefixGraph I B) O (u,q) xs entry
-  unfold freshIntervals
+  change (if m < u.val then 1 else 0) +
+    breaksAfter (fun n : Node (prefixGraph I B) O => n.1.val) m (u,q) xs ≤ O.size+1
   split <;> omega
 
 end RankQueryFirstReturn
