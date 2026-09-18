@@ -13,6 +13,10 @@ Read, in order:
 5. The relevant `research/approaches/Axxx.md` history before repeating an idea.
 
 Search existing issues and approach histories before starting a new line of work.
+Read recent comments on the relevant issues, open pull requests, and current
+branch commits; a missing assignee does not mean another agent's work is free.
+Before nontrivial research, formalization, review, tooling or documentation work,
+post a scoped claim using the issue-first protocol below.
 
 ## Canonical records
 
@@ -22,8 +26,11 @@ Search existing issues and approach histories before starting a new line of work
 - `research/claims.md`: exact mathematical claims and their proof/evidence status.
 - `experiments/README.md`: experiment registry and reproduction commands.
 - `research/conjectures/`: one file per important open conjecture or structural hypothesis.
+- GitHub Issues: task-level scope claims, file reservations, coordination, blockers and handoffs; link the canonical workstream and scientific records.
 
-Do not create a second source of truth in chats, issue comments, or ad hoc notes. Important conclusions must be integrated back into the repository.
+Do not create a second source of mathematical truth in chats, issue comments,
+or ad hoc notes. Important conclusions must be integrated back into the repository.
+Issue coordination does not replace the canonical workstream registry or ledgers.
 
 ## Stable IDs
 
@@ -130,6 +137,63 @@ integration and writes to the shared tracker; do not share an active Lake build.
 Before integration, inspect the current diff and recheck changes affected by
 new commits. A worker's report is input for review, not proof of completion.
 
+### Issue-first coordination and file ownership
+
+GitHub Issues are the required visible coordination channel between sessions.
+A chat message, local plan or unpushed branch is not a scope announcement to
+other agents. Reuse an existing relevant issue; create a linked, narrowly scoped
+issue only when the task is distinct. Link the parent workstream and dependent
+issues instead of duplicating their discussions.
+
+Before starting, post a claim with the following minimum information:
+
+```text
+Actor/session and role:
+Related workstream and issue:
+Status: proposed / active / blocked / handed off / completed
+Base commit; branch/worktree when applicable:
+Exact objective and deliverable:
+Owned write paths:
+Read-only / explicitly excluded paths:
+Dependencies, expected interfaces and limits:
+Validation plan:
+```
+
+Use a distinguishable session/role label even when agents share one GitHub
+account. Claim only work actually being undertaken. A list of suggestions is
+not a reservation, assignment or launch of workers. Workstream execution and
+ownership remain canonical in `research/approaches.json`; issue claims refine
+concrete task/file scope and must not silently reassign that workstream.
+
+Before touching a path, theorem signature, definition, import aggregator or
+shared workflow another agent is using, obtain explicit agreement in the issue
+from that worker or the coordinator. Until resolved, continue with read-only
+review or an announced disjoint task. Neither a missing assignee, an old comment,
+nor lack of a reply transfers ownership. Coordinate an explicit handoff instead
+of maintaining competing implementations of the same lemma.
+
+For formalization support, leave the current proof author's modules and core
+interfaces untouched by default. Prefer statement readbacks, dependency audits,
+independent counterexample fixtures and isolated helper lemmas. Agree helper
+signatures and separate files before coding. A review finding belongs first in
+the issue with an exact declaration, commit and reproducer; do not "fix" the
+proof under review by weakening its statement or changing shared semantics.
+
+Post meaningful progress, changed scope, blockers and requests for interfaces
+as issue comments. Re-read comments before integration. Include the issue number
+in commits; recheck current `main` and the affected file SHAs, preserve concurrent
+changes, and never use a force update to replace another worker's progress.
+Changes to shared ledgers, imports, toolchains and CI must be coordinated just
+like changes to proof files.
+
+At completion, pause or handoff, post the commit/artifact links, exact commands
+and checked revisions, outcomes, remaining obligations, and which path claims
+are released or explicitly retained. State when no remote push, build or test
+occurred. Do not leave a completed session appearing active or imply background
+work continues. Update durable scientific records when warranted; closing an
+issue or passing CI does not promote a conjecture to a theorem. If an issue
+stays open for follow-up proposals, explicitly release the completed write scope.
+
 Use differentiated roles when multiple workers are useful: a constructive
 researcher, an adversarial counterexample researcher, an undecidability
 researcher, and a reviewer of definitions and critical implications. These are
@@ -152,9 +216,11 @@ volume. Do not claim workers were launched or reviews performed unless they were
 - Read the Q records linked from `STATE.md` and the relevant failed attempts.
   Choose one discriminating proof attempt, counterexample search, or audit.
   Alternative approaches remain useful even when another route looks promising.
-- Record current execution status and ownership only in `approaches.json`.
-  Keep a session's historical target, base commit, findings, and handoff in
-  its dated A-record attempt using `templates/attempt.md`.
+- Record canonical workstream execution status and ownership in `approaches.json`.
+  Announce session scope and path reservations in the coordinating issue, without
+  silently changing that registry. Keep the session's historical target, base
+  commit, findings, and handoff in its dated A-record attempt using
+  `templates/attempt.md` when recording a research investigation.
 - If a statement or a definition changes, name the changed assumptions and
   recheck affected arguments. A prior build result applies to the checked
   revision, not automatically to the replacement statement.
