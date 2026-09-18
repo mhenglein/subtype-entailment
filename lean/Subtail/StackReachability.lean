@@ -176,7 +176,10 @@ theorem pop_iff_reaches_empty (M : System n) (p : Fin n) (w : Word) (q : Fin n) 
   · intro h; simpa using pop_sound h []
   · intro h
     obtain ⟨x,y,z,m,hx,hy,hp,hq⟩ := reaches_normal h
-    have hyz : y = [] ∧ z = [] := List.append_eq_nil.mp hy.symm
+    have hyz : y = [] ∧ z = [] := by
+      cases y with
+      | nil => exact ⟨rfl,by simpa using hy.symm⟩
+      | cons a ys => simp at hy
     rcases hyz with ⟨rfl,rfl⟩
     simp only [List.append_nil] at hx
     subst x
@@ -238,7 +241,7 @@ theorem exists_pop_iff_path (M : System n) (p q) :
       have h2 : Path (controlEdge M) r s := by
         apply Path.step Path.refl
         cases a <;> simp [controlEdge,hpop]
-      exact path_trans h1 (path_trans h2 (ih hrest))
+      exact path_trans h1 (path_trans h2 (ih s hrest))
   · intro h
     induction h with
     | refl => exact ⟨[],Balanced.refl p⟩
@@ -268,6 +271,7 @@ def controlReachCheck (M : System n) (p : Fin n) (u : Word) (q : Fin n) : Bool :
     exact (List.take_append_drop i u).symm
   · rintro ⟨v,hv⟩
     obtain ⟨x,y,z,m,hx,hy,hp,hq⟩ := reaches_normal hv
+    change u = x ++ z at hx
     subst u
     exact ⟨x.length,by simp,m,by simpa using hp,y,hq⟩
 
