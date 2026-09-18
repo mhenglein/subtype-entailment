@@ -36,6 +36,12 @@ jobs:
           #print axioms Subtail.RankQueryUnwind.sat_append
           #print axioms Subtail.RankQueryUnwind.sat_promote_iff
           #print axioms Subtail.RankQueryUnwind.sat_promote_of_chain
+          #print axioms Subtail.RankQueryUnwind.maxNat_append
+          #print axioms Subtail.RankQueryUnwind.weight_append
+          #print axioms Subtail.RankQueryUnwind.maxNat_le_of_forall
+          #print axioms Subtail.RankQueryUnwind.weight_pre_le
+          #print axioms Subtail.RankQueryUnwind.weight_promote_succ_le
+          #print axioms Subtail.RankQueryUnwind.weight_finishQuery_le
           EOF
           cd lean
           lake env lean /tmp/unwind-axioms.lean | tee /tmp/unwind-axioms.txt
