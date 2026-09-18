@@ -1158,5 +1158,352 @@ theorem edge_of_edgeC {j j' : Nat} (hj : j ≤ (extRef B ext).word.length) {l : 
 
 end ExtEdges
 
+/-! ## Transporting runs over old vertices -/
+
+theorem run_trans {G : Graph k} {O : Observer k} {x y z : Node G O}
+    (h₁ : Run G O x y) (h₂ : Run G O y z) : Run G O x z := by
+  induction h₂ with
+  | refl _ => exact h₁
+  | step _ hs ih => exact Run.step ih hs
+
+section Transport
+variable (I : Instance k) (B : Reference k) (ext : List (Bool × Fin k))
+
+/-- Edges of the base graph, by position. -/
+theorem edgeB_val {j : Nat} (hj : j < (prefixGraph I B).size) (l : Label) :
+    ((prefixGraph I B).edge ⟨j, hj⟩ l).map Fin.val =
+      match l with
+      | .F => some (failureParent (B.word.take j))
+      | .S => if j < B.word.length then some (j + 1) else none
+      | .K b => some (advance B.word j b) := by
+  cases l with
+  | F => rfl
+  | S =>
+    simp only [prefixGraph]
+    split <;> simp_all
+  | K b => rfl
+
+/-- Cast an old vertex into the extension graph. -/
+def castC (j : Fin (prefixGraph I B).size) : Fin (prefixGraph I (extRef B ext)).size :=
+  ⟨j.val, by
+    have := j.isLt
+    show j.val < (extRef B ext).word.length + 1
+    rw [extRef_length]
+    change j.val < B.word.length + 1 at this
+    omega⟩
+
+theorem edgeC_congr {j j' : Nat} (h : j = j') (hj : j ≤ (extRef B ext).word.length)
+    (hj' : j' ≤ (extRef B ext).word.length) (l : Label) :
+    edgeC I B ext j hj l = edgeC I B ext j' hj' l := by
+  subst h; rfl
+
+/-- Old edges other than the endpoint's `K_a` are unchanged in the extension graph. -/
+theorem edge_old_transport (a : Bool) (p : Fin k) (rest : List (Bool × Fin k))
+    (hm : 0 < B.word.length)
+    (hr : FirstReturn (extRef B ((a, p) :: rest)).word B.word.length
+      (extRef B ((a, p) :: rest)).word.length)
+    {u v : Fin (prefixGraph I B).size} {l : Label}
+    (hex : ¬ (u.val = B.word.length ∧ l = .K a))
+    (he : (prefixGraph I B).edge u l = some v) :
+    (prefixGraph I (extRef B ((a, p) :: rest))).edge (castC I B _ u) l = some (castC I B _ v) := by
+  have hmlt : B.word.length < (extRef B ((a, p) :: rest)).word.length := by
+    unfold FirstReturn at hr; exact hr.1
+  have hu : u.val ≤ B.word.length := by have := u.isLt; change u.val < B.word.length + 1 at this; omega
+  have huC : u.val ≤ (extRef B ((a, p) :: rest)).word.length := by omega
+  have hval : ((prefixGraph I B).edge u l).map Fin.val = some v.val := by rw [he]; rfl
+  rw [edgeB_val I B u.isLt] at hval
+  have key : edgeC I B ((a, p) :: rest) u.val huC l = some v.val := by
+    cases l with
+    | F =>
+      simp only at hval
+      rw [edgeC_F_old I B _ hm hr hu]
+      exact hval
+    | S =>
+      simp only at hval
+      rw [edgeC_S I B _ hm hr]
+      split at hval
+      · rename_i hlt
+        rw [if_pos (by omega)]
+        exact hval
+      · simp at hval
+    | K b =>
+      simp only at hval
+      by_cases hum : u.val = B.word.length
+      · have hba : ¬ b = a := fun hba => hex ⟨hum, by rw [hba]⟩
+        have hw : (extRef B ((a, p) :: rest)).word[B.word.length]? = some a := by
+          have := extRef_getElem? B ((a, p) :: rest) 0
+          simpa using this
+        have hne : ¬ (extRef B ((a, p) :: rest)).word[B.word.length]? = some b := by
+          rw [hw]; intro h; exact hba (Option.some.inj h).symm
+        rw [edgeC_congr I B _ hum huC (Nat.le_of_lt hmlt), edgeC_K_m I B _ hm hr _ b, if_neg hne,
+          ← hum]
+        exact hval
+      · rw [edgeC_K_old I B _ hm hr (by omega)]
+        exact hval
+  obtain ⟨h', he'⟩ := edge_of_edgeC I B _ huC key
+  exact he'
+
+/-- Core-piece runs of the base graph transfer to the extension graph, reading the
+recoloured old endpoint through `coreMap`. -/
+theorem coreObs_run_transport (a : Bool) (p : Fin k) (rest : List (Bool × Fin k))
+    (hm : 0 < B.word.length)
+    (hr : FirstReturn (extRef B ((a, p) :: rest)).word B.word.length
+      (extRef B ((a, p) :: rest)).word.length)
+    (o : Observer k) (lc rc : Fin o.size)
+    {x y : Node (prefixGraph I B) (coreObs (sliceObs o lc rc) a)}
+    (h : Run (prefixGraph I B) (coreObs (sliceObs o lc rc) a) x y) :
+    Run (prefixGraph I (extRef B ((a, p) :: rest))) o (castC I B _ x.1, x.2) (castC I B _ y.1, y.2) := by
+  have hcol : ∀ j : Fin (prefixGraph I B).size,
+      (prefixGraph I (extRef B ((a, p) :: rest))).colour (castC I B _ j) =
+        coreMap a ((prefixGraph I B).colour j) := by
+    intro j
+    have hj : j.val ≤ B.word.length := by have := j.isLt; change j.val < B.word.length + 1 at this; omega
+    rw [prefixGraph_colour, prefixGraph_colour]
+    show colB I (extRef B ((a, p) :: rest)) j.val = coreMap a (colB I B j.val)
+    by_cases hjm : j.val = B.word.length
+    · rw [hjm]; exact colC_m I B a p rest
+    · rw [colC_old I B _ (by omega)]
+      have hend : (colB I B j.val).isEnd = false := by simp [colB, hjm]
+      simp [coreMap, hend]
+  induction h with
+  | refl hx =>
+    apply Run.refl
+    show o.allows x.2 ((prefixGraph I (extRef B ((a, p) :: rest))).colour (castC I B _ x.1)) = true
+    rw [hcol]
+    exact hx
+  | @step y' z' _ hs ih =>
+    obtain ⟨l, he, hmv, hz⟩ := hs
+    simp only [coreObs, sliceObs] at hmv
+    split at hmv
+    · exact absurd hmv (List.not_mem_nil)
+    · rename_i hcond
+      have hex : ¬ (y'.1.val = B.word.length ∧ l = .K a) := by
+        intro hh
+        apply hcond
+        refine ⟨?_, hh.2⟩
+        simp [prefixGraph_colour, colB, hh.1]
+      refine Run.step ih ⟨l, edge_old_transport I B a p rest hm hr hex he, ?_, ?_⟩
+      · show z'.2 ∈ o.move y'.2 ((prefixGraph I (extRef B ((a, p) :: rest))).colour (castC I B _ y'.1)) l
+          ((prefixGraph I (extRef B ((a, p) :: rest))).colour (castC I B _ z'.1))
+        rw [hcol, hcol]
+        exact hmv
+      · show o.allows z'.2 ((prefixGraph I (extRef B ((a, p) :: rest))).colour (castC I B _ z'.1)) = true
+        rw [hcol]
+        exact hz
+
+end Transport
+
+/-! ## Forward runs along a generator trace -/
+
+theorem zipAll_get? {α β : Type} {f : α → β → Bool} : ∀ {l₁ : List α} {l₂ : List β},
+    zipAll f l₁ l₂ = true → ∀ (i : Nat) (a : α) (b : β), l₁[i]? = some a → l₂[i]? = some b → f a b = true := by
+  intro l₁
+  induction l₁ with
+  | nil => intro l₂ h i a b ha; simp at ha
+  | cons x xs ih =>
+    intro l₂ h i a b ha hb
+    cases l₂ with
+    | nil => simp [zipAll] at h
+    | cons y ys =>
+      simp only [zipAll, Bool.and_eq_true] at h
+      cases i with
+      | zero =>
+        simp only [List.getElem?_cons_zero, Option.some.injEq] at ha hb
+        rw [← ha, ← hb]; exact h.1
+      | succ i =>
+        simp only [List.getElem?_cons_succ] at ha hb
+        exact ih h.2 i a b ha hb
+
+theorem zipAll_length {α β : Type} {f : α → β → Bool} : ∀ {l₁ : List α} {l₂ : List β},
+    zipAll f l₁ l₂ = true → l₁.length = l₂.length := by
+  intro l₁
+  induction l₁ with
+  | nil => intro l₂ h; cases l₂ with | nil => rfl | cons _ _ => simp [zipAll] at h
+  | cons x xs ih =>
+    intro l₂ h
+    cases l₂ with
+    | nil => simp [zipAll] at h
+    | cons y ys =>
+      simp only [zipAll, Bool.and_eq_true] at h
+      simp [ih h.2]
+
+theorem allowsNat_fin {o : Observer k} {t : Nat} {c : Colour k} (h : allowsNat o t c = true)
+    (s : Fin o.size) (hs : s.val = t) : o.allows s c = true := by
+  unfold allowsNat at h
+  obtain ⟨s', -, hs'⟩ := List.any_eq_true.mp h
+  simp only [Bool.and_eq_true, decide_eq_true_eq] at hs'
+  have : s' = s := Fin.ext (by rw [hs'.1, hs])
+  rw [← this]; exact hs'.2
+
+theorem moveNat_fin {o : Observer k} {t t' : Nat} {b : Bool} {c d : Colour k}
+    (h : moveNat o t b c d t' = true) (s : Fin o.size) (hs : s.val = t) :
+    ∃ r : Fin o.size, r.val = t' ∧ (r ∈ o.move s c .S d ∨ r ∈ o.move s c (.K b) d) := by
+  unfold moveNat at h
+  obtain ⟨s', -, hs'⟩ := List.any_eq_true.mp h
+  simp only [Bool.and_eq_true, decide_eq_true_eq] at hs'
+  have : s' = s := Fin.ext (by rw [hs'.1, hs])
+  subst this
+  obtain ⟨r, hr, hrt⟩ := List.any_eq_true.mp hs'.2
+  exact ⟨r, of_decide_eq_true hrt, List.mem_append.mp hr⟩
+
+/-- The interval product's colour test gives each active observer its own test. -/
+theorem intervalAllows_active {I : Instance k} {items : List (Active k)} {x : IControl k}
+    {c : Colour k} (h : intervalAllows I items x c = true) {j : Nat} {o : Observer k} {l r : Nat}
+    (hj : items[j]? = some (o, l, r)) (s : Fin o.size) (hs : x.controls[j]? = some s.val) :
+    o.allows s (freshMap I x.state x.next c) = true := by
+  unfold intervalAllows at h
+  simp only [Bool.and_eq_true] at h
+  have := zipAll_get? h.2 j (o, l, r) s.val hj hs
+  exact allowsNat_fin this s rfl
+
+/-- One product step gives each active observer an `S` or `K_b` move and its new control. -/
+theorem intervalStep_active {I : Instance k} {items : List (Active k)} {x y : IControl k}
+    {c d : Colour k} {b : Bool} (h : intervalStep I items x y c (.K b) d = true) (hb : x.next = some b)
+    {j : Nat} {o : Observer k} {l r : Nat} (hj : items[j]? = some (o, l, r))
+    (s : Fin o.size) (hs : x.controls[j]? = some s.val) :
+    ∃ (t : Nat) (t' : Fin o.size), y.controls[j]? = some t ∧ t'.val = t ∧
+      (t' ∈ o.move s (freshMap I x.state (some b) c) .S (freshMap I y.state y.next d) ∨
+        t' ∈ o.move s (freshMap I x.state (some b) c) (.K b) (freshMap I y.state y.next d)) ∧
+      o.allows t' (freshMap I y.state y.next d) = true := by
+  unfold intervalStep at h
+  simp only [hb, Bool.and_eq_true] at h
+  obtain ⟨-, hzip, hlen⟩ := h
+  have hlen' : x.controls.length = y.controls.length := of_decide_eq_true hlen
+  have hjx : j < x.controls.length := by
+    have := List.getElem?_eq_some_iff.mp hs
+    exact this.1
+  have hjy : j < y.controls.length := by omega
+  have hy : y.controls[j]? = some (y.controls[j]) := List.getElem?_eq_getElem hjy
+  have hpair : (x.controls.zip y.controls)[j]? = some (s.val, y.controls[j]) :=
+    List.getElem?_zip_eq_some.mpr ⟨hs, hy⟩
+  have hf := zipAll_get? hzip j (o, l, r) (s.val, y.controls[j]) hj hpair
+  simp only [Bool.and_eq_true] at hf
+  obtain ⟨t', ht', hmv⟩ := moveNat_fin hf.1 s rfl
+  exact ⟨y.controls[j], t', hy, ht', hmv, allowsNat_fin hf.2 t' ht'⟩
+
+section Forward
+variable (I : Instance k) (B : Reference k) (ext : List (Bool × Fin k))
+
+theorem cursor_succ (hm : 0 < B.word.length) {d : Nat} {b : Bool}
+    (hd : (extRef B ext).word[B.word.length + d]? = some b) (hdl : d ≤ ext.length) :
+    FirstReturnGraph.cursor (extRef B ext).word B.word.length (d + 1) =
+      advance B.word (FirstReturnGraph.cursor (extRef B ext).word B.word.length d) b := by
+  have hcur := cursor_le B ext hm hdl
+  rw [FirstReturnGraph.cursor, extRef_take, hd, Option.getD_some,
+    RankQueryFirstReturn.advance_eq hcur]
+
+/-- **Forward runs.**  Along a generator trace placed at positions `p, p+1, ...` of the
+extension, every active observer runs from its entering control to its leaving control. -/
+theorem gen_forward_run (hm : 0 < B.word.length)
+    (hr : FirstReturn (extRef B ext).word B.word.length (extRef B ext).word.length)
+    (items : List (Active k)) :
+    ∀ {v v' : Nat} {x z : IControl k} {tr : List (Bool × Fin k)}, Gen I B items v x tr v' z →
+    ∀ (p : Nat), B.word.length < p → p + tr.length ≤ (extRef B ext).word.length →
+    (extRef B ext).label p = x.state →
+    FirstReturnGraph.cursor (extRef B ext).word B.word.length (p - B.word.length) = v →
+    (∀ i, (hi : i < tr.length) → (extRef B ext).word[p + i]? = some (tr[i]).1 ∧
+      (extRef B ext).label (p + i + 1) = (tr[i]).2) →
+    (extRef B ext).word[p + tr.length]? = z.next →
+    ∀ {j : Nat} {o : Observer k} {l0 r0 : Nat}, items[j]? = some (o, l0, r0) →
+    ∀ (s : Fin o.size), x.controls[j]? = some s.val →
+    ∀ (t : Fin o.size), z.controls[j]? = some t.val →
+    ∀ (hp : p < (prefixGraph I (extRef B ext)).size) (hq : p + tr.length < (prefixGraph I (extRef B ext)).size),
+    Run (prefixGraph I (extRef B ext)) o (⟨p, hp⟩, s) (⟨p + tr.length, hq⟩, t) := by
+  intro v v' x z tr h
+  induction h with
+  | @nil v x hx =>
+    intro p hmp hpC hlab hcur _ hlast j o l0 r0 hj s hs t ht hp hq
+    have hst : t = s := Fin.ext (by
+      have := hs.symm.trans ht
+      exact (Option.some.inj this).symm)
+    subst hst
+    have hcol : colB I (extRef B ext) p = freshMap I x.state x.next (colB I B v) := by
+      rw [colC_fresh I B ext hm hr hmp (by simpa using hpC), hlab, hcur]
+      simp only [List.length_nil, Nat.add_zero] at hlast
+      rw [hlast]
+    apply Run.refl
+    show o.allows t ((prefixGraph I (extRef B ext)).colour ⟨p, hp⟩) = true
+    rw [prefixGraph_colour, hcol]
+    exact intervalAllows_active hx hj t hs
+  | @cons v x y z b tr' v' hx hb hs' rest ih =>
+    intro p hmp hpC hlab hcur hplace hlast j o l0 r0 hj s hs t ht hp hq
+    have hlen : ((b, y.state) :: tr').length = tr'.length + 1 := rfl
+    have hp1 : p + 1 + tr'.length = p + ((b, y.state) :: tr').length := by rw [hlen]; omega
+    have hwp : (extRef B ext).word[p]? = some b := (hplace 0 (by simp)).1
+    have hlab1 : (extRef B ext).label (p + 1) = y.state := (hplace 0 (by simp)).2
+    have hnext1 : (extRef B ext).word[p + 1]? = y.next := by
+      cases tr' with
+      | nil =>
+        obtain ⟨-, rfl⟩ := gen_nil_eq rest
+        simpa using hlast
+      | cons e tr'' =>
+        have h0 := (hplace 1 (by simp)).1
+        have hh := gen_head rest (by simp)
+        simp only [List.map_cons, List.head?_cons] at hh
+        simp only [List.getElem_cons_succ, List.getElem_cons_zero] at h0
+        rw [h0, ← hh]
+    have hpm : p - B.word.length ≤ ext.length := by
+      have := extRef_length B ext; omega
+    have hcur1 : FirstReturnGraph.cursor (extRef B ext).word B.word.length (p + 1 - B.word.length) =
+        advance B.word v b := by
+      have e : p + 1 - B.word.length = (p - B.word.length) + 1 := by omega
+      rw [e, cursor_succ B ext hm (d := p - B.word.length) (by
+        rw [show B.word.length + (p - B.word.length) = p by omega]; exact hwp) hpm, hcur]
+    have hcolp : colB I (extRef B ext) p = freshMap I x.state (some b) (colB I B v) := by
+      rw [colC_fresh I B ext hm hr hmp (by omega), hlab, hcur, hwp, ← hb]
+    have hcolp1 : colB I (extRef B ext) (p + 1) =
+        freshMap I y.state y.next (colB I B (advance B.word v b)) := by
+      rw [colC_fresh I B ext hm hr (by omega) (by omega), hlab1, hcur1, hnext1]
+    obtain ⟨t1, t1', ht1, ht1', hmv, hallow⟩ := intervalStep_active hs' hb hj s hs
+    have hp1' : p + 1 < (prefixGraph I (extRef B ext)).size := by
+      show p + 1 < (extRef B ext).word.length + 1; omega
+    have hpC' : p < (extRef B ext).word.length := by omega
+    -- the single step from p to p+1
+    have hstep : Step (prefixGraph I (extRef B ext)) o (⟨p, hp⟩, s) (⟨p + 1, hp1'⟩, t1') := by
+      have hedge : ∀ l, (l = .S ∨ l = .K b) →
+          (prefixGraph I (extRef B ext)).edge ⟨p, hp⟩ l = some ⟨p + 1, hp1'⟩ := by
+        intro l hl
+        have key : edgeC I B ext p (Nat.le_of_lt hpC') l = some (p + 1) := by
+          rcases hl with rfl | rfl
+          · rw [edgeC_S I B ext hm hr, if_pos hpC']
+          · rw [edgeC_K_fresh I B ext hm hr hmp hpC', if_pos hwp]
+        obtain ⟨h', he'⟩ := edge_of_edgeC I B ext (Nat.le_of_lt hpC') key
+        exact he'
+      have hallow' : Allowed (prefixGraph I (extRef B ext)) o (⟨p + 1, hp1'⟩, t1') := by
+        show o.allows t1' ((prefixGraph I (extRef B ext)).colour ⟨p + 1, hp1'⟩) = true
+        rw [prefixGraph_colour, hcolp1]
+        exact hallow
+      rcases hmv with hmv | hmv
+      · refine ⟨.S, hedge .S (Or.inl rfl), ?_, hallow'⟩
+        show t1' ∈ o.move s ((prefixGraph I (extRef B ext)).colour ⟨p, hp⟩) .S
+          ((prefixGraph I (extRef B ext)).colour ⟨p + 1, hp1'⟩)
+        rw [prefixGraph_colour, prefixGraph_colour, hcolp, hcolp1]
+        exact hmv
+      · refine ⟨.K b, hedge (.K b) (Or.inr rfl), ?_, hallow'⟩
+        show t1' ∈ o.move s ((prefixGraph I (extRef B ext)).colour ⟨p, hp⟩) (.K b)
+          ((prefixGraph I (extRef B ext)).colour ⟨p + 1, hp1'⟩)
+        rw [prefixGraph_colour, prefixGraph_colour, hcolp, hcolp1]
+        exact hmv
+    have hstart : Allowed (prefixGraph I (extRef B ext)) o (⟨p, hp⟩, s) := by
+      show o.allows s ((prefixGraph I (extRef B ext)).colour ⟨p, hp⟩) = true
+      rw [prefixGraph_colour, hcolp, ← hb]
+      exact intervalAllows_active hx hj s hs
+    have hq' : p + 1 + tr'.length < (prefixGraph I (extRef B ext)).size := by rw [hp1]; exact hq
+    have hrest := ih (p + 1) (by omega) (by rw [hp1]; exact hpC) hlab1 hcur1
+      (fun i hi => by
+        have e1 : p + 1 + i = p + (i + 1) := by omega
+        rw [e1]
+        exact hplace (i + 1) (by simp; omega))
+      (by rw [hp1]; exact hlast) hj t1' (by rw [ht1, ht1']) t ht hp1' hq'
+    have hfirst : Run (prefixGraph I (extRef B ext)) o (⟨p, hp⟩, s) (⟨p + 1, hp1'⟩, t1') :=
+      Run.step (Run.refl hstart) hstep
+    have this := run_trans hfirst hrest
+    have hfin : (⟨p + 1 + tr'.length, hq'⟩ : Fin (prefixGraph I (extRef B ext)).size) =
+        ⟨p + ((b, y.state) :: tr').length, hq⟩ := Fin.ext hp1
+    rw [hfin] at this
+    exact this
+
+end Forward
+
 end RankQuerySound
 end Subtail
