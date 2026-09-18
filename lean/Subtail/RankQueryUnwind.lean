@@ -167,5 +167,19 @@ theorem weight_promote_succ_le (I : Instance k) (pre : Query k → Query k)
   exact Nat.max_le.mpr ⟨Nat.le_refl _, weight_pre_le I pre hclosure _⟩
 
 
+/-- The finishing query starts below the candidate proof's conservative
+T₀ = k + 10 budget.  Its two atoms have observer sizes 2 and k. -/
+theorem weight_finishQuery_le (I : Instance k) :
+    weight (finishQuery I) ≤ k + 10 := by
+  unfold weight
+  apply maxNat_le_of_forall
+  intro n hn
+  obtain ⟨c, hc, rfl⟩ := List.mem_map.mp hn
+  unfold finishQuery at hc
+  obtain ⟨q, hq, rfl⟩ := List.mem_map.mp hc
+  simp [clauseWeight, sumSizes, oneEdge, finishObserver]
+  omega
+
+
 end RankQueryUnwind
 end Subtail
