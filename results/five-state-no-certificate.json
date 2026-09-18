@@ -1,0 +1,30 @@
+{
+  "all_budget_regression": {
+    "D": "0..12",
+    "L": "0..12",
+    "necessary_identity_checks": 4225,
+    "special_family_n": "0..24",
+    "unique_violation_checks": 25
+  },
+  "binary_census": {
+    "accepted": 55,
+    "certified_accepted": 55,
+    "max_length": 12,
+    "parsed_accepted": 55,
+    "witnesses": 0,
+    "words": 8191
+  },
+  "parameter_grid": {
+    "branches": {
+      "n<m": 528,
+      "n=m": 32,
+      "n>m": 496
+    },
+    "candidates": 1056,
+    "m": "1..32",
+    "n": "0..32"
+  },
+  "proof_status": "Written all-length three-case certificate; bounded regression is supporting evidence only; not Lean-checked or independently reviewed",
+  "scope": "The fixed five-state terminal instance from the C051/#9 obstruction. This is not a complete NO-certificate calculus for arbitrary instances.",
+  "status": "PASS"
+}
