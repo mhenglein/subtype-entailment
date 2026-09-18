@@ -1,5 +1,59 @@
 # Subtail — current research state
 
+## September 15–18: a candidate unrestricted decision by rank-query preimages (CANDIDATE, not established)
+
+The A017 rank-query route proposes a complete ordinary proof that binary
+terminal BorderAvoid, and hence Problem 1.7 through C029/C031, is decidable.
+Terminality bounds the reversed prefix's positive border depth by k-1 (stage 1).
+Successive first depth milestones are first returns of the preceding reference
+(stage 2), and a first return has an exact coloured successor/KMP prefix-graph
+description whose only entrance from the old graph is its first fresh vertex
+(stage 3). The central claim is a promotion-preimage lemma (stage 4): a WHOLE
+conjunction of existential directed regular-path queries with finite-colour
+guards on the promoted graph compiles, in both directions, to a query of the
+same grammar on the old graph, using one shared generator word per physical
+interval. Closure of the grammar with an explicit clause-weight bound
+`U_k(T)=64*k*T^(2T+2)` (stage 5) yields the computable, tower-sized bound
+
+    F(1)=0,  F(k)=2*(k+1)*prod_{j=1..k-2}(T_j+2),  T_0=k+10,  T_(j+1)=U_k(T_j),
+
+on the length of SOME witness of every positive k-state instance. If stage 4 is
+correct, exhaustive search through F(k) decides every terminal instance, and the
+audited semantic bridge (stage 6) transfers the decision to arbitrary, possibly
+infinite trees. No polynomial, elementary or practical bound is claimed.
+
+Evidence status, kept deliberately distinct: written candidate proof (Sept 15)
+and full symbolic compiler with the bound (Sept 17); two separate AI-assisted
+audits found no gap in stages 1–5 and in the C029/C031 bridge, both informed by
+the author's argument and neither a blind derivation, a human referee, nor Lean;
+finite differential oracles agree on every recorded corpus, but only one-atom
+preimage unions are exhausted and joint or higher-rank cases are certificate-
+guided. Lean kernel-checks stages 1–2 (`TerminalRank.lean`, `RankMilestones.lean`;
+no `sorry`, no custom axiom), and stage 3 is under active formalization on the
+branch `lean/first-return-graph-2026-09-18`. Stages 4–6 are unformalized. The
+generic compiled driver is resource-limited; timed UNKNOWN results are not
+negative certificates. Problem 1.7's accepted status is unchanged: CANDIDATE
+PROOF, independent human review pending.
+
+Failed attempts on the way are retained, not erased: the proposed finite
+quotient of references by endpoint, transition action, visited set and full
+agreement profile is false (four- and six-state examples), and the single-entry
+hypothesis fails if inverse failure edges are admitted.
+
+[Claims record C080](research/claims.md#c080),
+[prerequisite rank hierarchy and failed quotients](research/RANK_ATTEMPT.md),
+[candidate proof record](research/RANK_QUERY_CANDIDATE.md),
+[compiler, bound and both audits](research/RANK_QUERY_COMPILER.md),
+[closure proof](notes/2026-09-17-rank-query-closure-audit.md),
+[closure review](notes/2026-09-17-rank-query-independent-review.md),
+[semantic-bridge review](notes/2026-09-17-semantic-bridge-independent-review.md),
+[Lean milestone readback](notes/2026-09-18-lean-rank-milestones.md),
+[referee brief for stage 4](notes/2026-09-18-closure-lemma-referee-brief.md).
+Formalization and review obligations are tracked one per GitHub issue under the
+milestone "Rank-query closure formalized". Q004 would follow from F(k) if the
+candidate holds, but remains OPEN. This entry is status synchronization by an
+integrator session (issue #25), not a new proof, review or Lean result.
+
 ## September 13: source-sensitive target-return elimination with legal repeats
 
 C079 replaces last-target uniqueness with a productive synchronized-return
@@ -499,7 +553,13 @@ Do not restart these without a materially new hypothesis:
 
 ## Current frontier
 
-The central problem has sharpened to **existence-preserving control of arbitrary recurrent structure**.
+**September 18 update.** The highest-value question is now whether the
+stage-4 promotion-preimage lemma of the rank-query candidate (C080, top entry)
+survives independent human review and formalization. If it does, the frontier
+below is resolved by that route; if it fails, the obstructions below remain the
+map. Nothing below is superseded until then.
+
+The central problem had sharpened to **existence-preserving control of arbitrary recurrent structure**.
 
 We can now:
 
@@ -543,8 +603,8 @@ PR #12's broader nonterminal final-symbol/run-profile contraction now includes t
 - A014 — periodic/cap saturation.
 - A015 — occurrence-context truncation.
 - A016 — exact fixed-skeleton arithmetic and terminal covers.
-- A017 — bounding/representing essential repeated blocks; central and unresolved.
-- A018 — backwards formalization from executable Lean decision infrastructure.
+- A017 — bounding/representing essential repeated blocks; central; its rank-query candidate (C080) is under review.
+- A018 — backwards formalization from executable Lean decision infrastructure; now formalizing C080's stages in order.
 
 ## Integration rule
 

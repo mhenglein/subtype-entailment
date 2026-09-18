@@ -370,9 +370,9 @@
       "status": "tried",
       "outcome": "inconclusive",
       "owner": null,
-      "updated": "2026-09-09",
-      "summary": "Single-source terminal existence now has a written PSPACE upper-bound proof via unique prefix capture and constrained word equations. Exact source-sequence compilation permits arbitrary unflagged recurrent paths. A two-source counterexample prevents naive sequential loop compression; general source-visit control remains open. Concurrent guarded-order chains have their own complete restricted solver; an arbitrary recurrent cover and terminal-anchor reduction remain open.",
-      "next_step": "Independently audit C067/C068, then attack Q004: a computable existential source-visit bound or complete shared-word cover for recurrent sources. Retain the concurrent guarded-order cover route and its terminal-anchor boundary; single-source root pumping is no longer needed for decidability.",
+      "updated": "2026-09-18",
+      "summary": "A candidate complete ordinary proof (C080) reduces terminal witness existence to finite rank-query preimages over first-return prefix graphs and derives an explicit computable witness bound F(k). Two separate AI-assisted audits found no gap in its stages 1-5 or in the C029/C031 bridge; no human referee; Lean covers stages 1-2 only. Earlier finite reference quotients are refuted and retained. Problem 1.7's status is unchanged.",
+      "next_step": "Obtain independent human review of the stage-4 promotion-preimage lemma (notes/2026-09-18-closure-lemma-referee-brief.md); build adversarial joint-conjunction and shared-generator fixtures against experiments/rank_preimage.py; keep Q004 and the opposing undecidability route as fallbacks if stage 4 fails.",
       "record": "research/approaches/A017.md",
       "evidence": [
         "notes/2026-09-04-minimal-witness-structure.md",
@@ -448,9 +448,25 @@
         "notes/2026-09-09-source-capture-word-equations.md",
         "experiments/source_capture.py",
         "experiments/check_source_capture.py",
-        "results/source-capture.json"
+        "results/source-capture.json",
+        "research/RANK_ATTEMPT.md",
+        "research/RANK_QUERY_CANDIDATE.md",
+        "research/RANK_QUERY_COMPILER.md",
+        "notes/2026-09-15-candidate-rank-query-decision.md",
+        "notes/2026-09-17-rank-query-closure-audit.md",
+        "notes/2026-09-17-rank-query-independent-review.md",
+        "notes/2026-09-17-semantic-bridge-independent-review.md",
+        "notes/2026-09-18-closure-lemma-referee-brief.md",
+        "experiments/rank_preimage_core.py",
+        "experiments/rank_preimage.py",
+        "experiments/check_rank_preimage.py",
+        "experiments/rank_frontier_oracle.py",
+        "experiments/check_rank_closure_review.py",
+        "results/rank-preimage.json",
+        "results/rank-closure-review.json",
+        "results/semantic-bridge-review.json"
       ],
-      "issue": "https://github.com/mhenglein/subtail/issues/15"
+      "issue": "https://github.com/mhenglein/subtail/issues/34"
     },
     {
       "id": "A018",
@@ -458,9 +474,9 @@
       "status": "tried",
       "outcome": "supported",
       "owner": null,
-      "updated": "2026-09-09",
-      "summary": "Lean checks direct budget predicates, reversal, and an exact two-state decision, in addition to the previous truncation and conditional proofs.",
-      "next_step": "Maintain the checked Lean core. Select new formalization only to resolve a named semantic uncertainty, disputed implication or stable critical dependency in an end-to-end outline; otherwise prioritize falsification and ordinary proof review. The global bound and subtype reduction remain open.",
+      "updated": "2026-09-18",
+      "summary": "Lean kernel-checks the rank-query candidate's stages 1-2 (terminal border depth at most k-1, milestone first returns, failure-target confinement) on top of the earlier core; stage 3 (coloured first-return graph surgery) is under active formalization on branch lean/first-return-graph-2026-09-18; stages 4-6 are unformalized.",
+      "next_step": "Finish and integrate stage 3; pin the stage-4 Closure Lemma (query grammar, prefix-graph semantics, both preimage directions) as a Prop before proving it; formalize the weight bound/unwind and the C029/C031 bridge as separate obligations. One GitHub issue per obligation under the milestone 'Rank-query closure formalized'.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
@@ -471,9 +487,15 @@
         "lean/Subtail/SandwichPredicates.lean",
         "lean/Subtail/Boundary.lean",
         "lean/Subtail/TwoState.lean",
-        "notes/2026-09-04-lean-sandwich.md"
+        "notes/2026-09-04-lean-sandwich.md",
+        "lean/Subtail/TerminalRank.lean",
+        "lean/Subtail/RankMilestones.lean",
+        "notes/2026-09-18-lean-rank-foundation.md",
+        "notes/2026-09-18-lean-rank-milestones.md",
+        "experiments/check_lean_rank_milestones.py",
+        "results/lean-rank-milestones.json"
       ],
-      "issue": null
+      "issue": "https://github.com/mhenglein/subtail/issues/34"
     }
   ]
 }

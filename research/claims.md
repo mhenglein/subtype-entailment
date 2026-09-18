@@ -1,6 +1,6 @@
 # Claims ledger
 
-Index updated: 2026-09-09. Original C001-C020 review: 2026-09-04.
+Index updated: 2026-09-18. Original C001-C020 review: 2026-09-04.
 Later claims retain the evidence and review scope of their linked records.
 
 This ledger gives stable IDs for claims about Problem 1.7 and its BorderAvoid
@@ -941,6 +941,60 @@ all-sequences or unrestricted solver.
 
 **Evidence.** [Theorem, segment automata, limits and two-source counterexample](../notes/2026-09-09-source-capture-word-equations.md),
 [compiler](../experiments/source_capture.py), E043.
+
+<a id="c080"></a>
+
+### C080 — Candidate unrestricted terminal decision by rank-query preimages
+
+**Statement (proposed).** For every finite binary terminal instance with k
+states, witness existence is equivalent to satisfaction of a finite existential
+directed regular-path query with finite-colour guards on finitely many
+two-vertex initial prefix graphs, obtained from a fixed finishing query by at
+most k-2 promotion preimages. Consequently every positive instance has a witness
+of length at most the explicit computable bound
+`F(1)=0, F(k)=2(k+1)*prod_{j=1..k-2}(T_j+2)` with `T_0=k+10` and
+`T_(j+1)=64k*T_j^(2T_j+2)`, and terminal BorderAvoid is decidable; through
+C029/C031 the same would hold for normalized subtype entailment over arbitrary,
+possibly infinite trees.
+
+**Stages.** (1) terminal positive border depth at most k-1; (2) first depth
+milestones are first returns of the preceding reference; (3) exact coloured
+successor/KMP prefix-graph surgery for a first return, with a single entrance
+from the old graph and no inverse edges; (4) promotion-preimage lemma: a whole
+conjunction of path atoms compiles jointly, in both directions, to the old graph
+through bounded portal diagrams and one shared generator per physical interval;
+(5) grammar closure with clause weight at most `U_k(T)=64k*T^(2T+2)` and the
+unwind to `F(k)`; (6) the C029/C031 semantic transfer.
+
+**Status / scope.** `CANDIDATE`: `WRITTEN PROOF + AUDIT + REPRO`; not
+established; `LEAN` only for stages 1–2, kernel-checked in
+[TerminalRank.lean](../lean/Subtail/TerminalRank.lean) and
+[RankMilestones.lean](../lean/Subtail/RankMilestones.lean), with stage 3 under
+formalization. Two separate AI-assisted audits, both informed by the author's
+argument, found no gap in stages 1–5 and in the stage-6 bridge; neither is a
+human referee or a blind derivation. Finite oracles exhaust only one-atom
+preimage unions; joint and higher-rank checks are certificate-guided. The capped
+generic driver returns UNKNOWN on recorded hard fixtures, which is not negative
+evidence. No polynomial, elementary or practical bound is claimed. The exact
+review target is stage 4: Lemma 4 and Sections 5–7 of the candidate proof,
+Sections 3–5 of the closure note. Problem 1.7's accepted status is unchanged by
+this record; the ID exists so the candidate can be found, cited and reviewed.
+
+**Evidence.** [Candidate proof](../notes/2026-09-15-candidate-rank-query-decision.md),
+[closure proof and bound](../notes/2026-09-17-rank-query-closure-audit.md),
+[closure review](../notes/2026-09-17-rank-query-independent-review.md),
+[bridge review](../notes/2026-09-17-semantic-bridge-independent-review.md),
+[compiler](../experiments/rank_preimage.py),
+[compiler checks](../experiments/check_rank_preimage.py),
+[separate fixed-reference oracle](../experiments/rank_frontier_oracle.py),
+[results](../results/rank-preimage.json),
+[review results](../results/rank-closure-review.json),
+[candidate record](RANK_QUERY_CANDIDATE.md),
+[compiler record](RANK_QUERY_COMPILER.md),
+[prerequisites and failed quotients](RANK_ATTEMPT.md),
+[referee brief](../notes/2026-09-18-closure-lemma-referee-brief.md).
+Allocated 2026-09-18 by an integrator session (issue #25); the allocation is
+navigation, not a review.
 
 ## Explicitly unestablished
 

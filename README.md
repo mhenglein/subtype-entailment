@@ -73,6 +73,8 @@ The Lean core proves the binary witness and budget predicates, stronger truncati
 
 Later work proves an exact three-state bound, a family with `B=2k-4`, actual summary absorption, and decision results for important terminal subclasses. The terminal-final branch can realize arbitrary finite abstract flags; a genuine subtype instance has a nonregular terminal separating language. Exact Presburger skeleton formulas and a complete flat-terminal cover now exist, together with a complete normalized four-state terminal census.
 
+Since September 15 the leading route is a **candidate** rank-query decision proof with an explicit computable witness bound ([C080](research/claims.md#c080)). It is a written proof with two AI-assisted audits, not a human-refereed or Lean-verified result; Lean covers its first two stages and the third is in progress.
+
 The unrestricted problem, a general computable witness/skeleton bound, and the full formal subtype reduction remain open. The live frontier is summarized in **[STATE.md](STATE.md)**. Newer written proofs are not automatically Lean-checked; consult the [claims ledger](research/claims.md) for exact status.
 
 ## Run the checks

@@ -1,6 +1,6 @@
 # Research plan
 
-Updated: 2026-09-09 (current priorities; historical programme retained)
+Updated: 2026-09-18 (navigation for the rank-query candidate; 2026-09-09 priorities and historical programme retained)
 
 **Goal:** decide [Problem 1.7](problem.md) for bottom and binary product over arbitrary, possibly infinite trees. No general solution is established here.
 
@@ -9,7 +9,21 @@ preserved below as history, not as the current order of work. Execution status,
 owners, evidence, and exact next steps live in the [research tracker](README.md).
 Dated approach records distinguish proposed handoffs from executed attempts.
 
-## Latest mathematical continuation: single-source capture (2026-09-09)
+## Latest mathematical continuation: rank-query candidate (2026-09-15 to 18)
+
+[C080](claims.md#c080) records a CANDIDATE complete ordinary proof of
+decidability by finite query preimages over first-return prefix graphs, with
+an explicit computable witness bound; see the top entry of [STATE.md](../STATE.md).
+It supersedes the source-capture outline below as the current end-to-end route
+without promoting Problem 1.7's status. Current priorities, in order:
+independent human review of the stage-4 promotion-preimage lemma using the
+[referee brief](../notes/2026-09-18-closure-lemma-referee-brief.md); Lean
+formalization of stages 3–6, one obligation per GitHub issue under the milestone
+"Rank-query closure formalized"; adversarial fixtures against the compiler's
+joint-conjunction and shared-generator contracts. The Q004 and opposing-route
+tasks below remain the fallback if stage 4 fails.
+
+## Earlier mathematical continuation: single-source capture (2026-09-09)
 
 C067/C068 now provide a written single-source decision and exact bounded-source
 word-equation compilation; independent mathematical review is pending. The

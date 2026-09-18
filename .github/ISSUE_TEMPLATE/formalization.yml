@@ -1,0 +1,57 @@
+name: Formalization obligation
+description: Claim or track one Lean proof obligation, statement readback, or dependency audit.
+title: "[A018] "
+labels: [lean, formalization]
+body:
+  - type: input
+    id: stage
+    attributes:
+      label: Proof stage and dependency
+      description: Which stage of the target argument this discharges (for the rank-query route, stage 1–6) and which record it depends on (C/Q IDs, notes).
+    validations:
+      required: true
+  - type: textarea
+    id: statement
+    attributes:
+      label: Exact statement to formalize
+      description: Ordinary-mathematics statement with every quantifier and hypothesis. Name the Lean file and intended declaration signature. A statement pinned as a `def ... : Prop` without proof is acceptable as a first deliverable; `sorry` and custom axioms are not.
+    validations:
+      required: true
+  - type: textarea
+    id: interfaces
+    attributes:
+      label: Interfaces and ownership
+      description: Which existing modules/definitions are reused unchanged, which files are owned by this task, and which files are read-only. Confirm agreement with the current proof author before touching their modules or the import aggregator.
+    validations:
+      required: true
+  - type: textarea
+    id: risk
+    attributes:
+      label: Semantic risk this resolves
+      description: Per AGENTS.md, name the disputed implication, semantic uncertainty, or stable critical dependency this formalization settles. If none, say why the work is still worth doing now.
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation and evidence
+      description: Commands (lake build target, leanchecker replay, axiom audit, Python differential), the workflow that will enforce them, and which results file they write.
+    validations:
+      required: true
+  - type: textarea
+    id: claim
+    attributes:
+      label: Scope claim (issue-first protocol)
+      description: Paste the AGENTS.md claim block - actor/role, status, base commit, owned write paths, read-only paths, validation plan.
+      value: |
+        ```text
+        Actor/session and role:
+        Related workstream and issue:
+        Status: proposed
+        Base commit; branch/worktree when applicable:
+        Exact objective and deliverable:
+        Owned write paths:
+        Read-only / explicitly excluded paths:
+        Dependencies, expected interfaces and limits:
+        Validation plan:
+        ```
