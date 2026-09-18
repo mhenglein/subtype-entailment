@@ -1,20 +1,22 @@
 # Lean core
 
-This project checks local lemmas for **binary BorderAvoid** and decides
-witness existence for at most two states. The general problem and subtype
-entailment remain open.
+This project checks local lemmas for **binary BorderAvoid**, decides witness
+existence for at most two states, and formalizes structural dependencies of the
+[proposed rank-query solution](../research/RANK_QUERY_COMPILER.md). There is no
+complete Lean-verified general BorderAvoid or subtype-entailment decision yet.
 
 ## Role in the research process
 
-This core remains maintained. Extending it is not the default research
-milestone while the global mathematical argument is missing. Under
+This core remains maintained. Under
 [the current plan](../research/PLAN.md), a new formalization task must name the
 specific semantic uncertainty, disputed implication, or stable critical
 dependency it resolves. Early formalization is welcome when it answers that
 question; otherwise prioritize a conceptual route, falsification and ordinary
 mathematical review. Existing checks are still required for Lean changes.
 Conditional theorem hypotheses below remain open mathematics, not progress
-obtained merely by extending the formal framework.
+obtained merely by extending the formal framework. The September 18
+user-requested continuation checks the rank/first-return dependency of the
+concrete candidate; its central shared-word compiler remains unformalized.
 
 ## Build and check
 
@@ -26,20 +28,30 @@ From the repository root:
 
 ```sh
 python3 scripts/check_lean.py
+python3 experiments/check_lean_rank_milestones.py --lean --output /tmp/lean-rank-milestones.json
+cmp results/lean-rank-milestones.json /tmp/lean-rank-milestones.json
 ```
 
-This builds the project, replays the compiled declarations with `leanchecker`,
-audits the named algorithms and theorems, and compares native Lean evaluations
-with the independent Python predicates. Results go to
-[lean-checks.json](../results/lean-checks.json).
+The first command builds the project, replays the compiled declarations with
+`leanchecker`, audits the earlier named algorithms and theorems, and compares
+native Lean evaluations with the independent Python predicates. Its results go
+to [lean-checks.json](../results/lean-checks.json). The second checks the new
+executable border/rank definitions; these finite native comparisons are not the
+proof of the all-word statements.
 
-To build or inspect the axioms directly, run these commands from `lean/`:
+To build or inspect the earlier axioms directly, run these commands from `lean/`:
 
 ```sh
 lake build
 lake env leanchecker --verbose Subtail
 lake env lean Subtail/Audit.lean
 ```
+
+The new modules are included by `Subtail.lean`. Their complete public dependency
+audits are separately enforced by
+[the foundation workflow](../.github/workflows/lean-rank-foundation.yml) and
+[the milestone workflow](../.github/workflows/lean-rank-milestones.yml); the
+latter audits every public definition/theorem in `RankMilestones.lean`.
 
 ## Checked statements
 
@@ -52,7 +64,9 @@ lake env lean Subtail/Audit.lean
 | [TwoState.lean](Subtail/TwoState.lean) | Executable exact witness-existence test under `k<=2` |
 | [Conditional.lean](Subtail/Conditional.lean) | Finite budget enumeration, correct under explicit test-soundness and bounded-coverage assumptions |
 | [Examples.lean](Subtail/Examples.lean) | Empty word, undefined transitions, bad initial state, diagonal flags, and strict shortening examples |
-| [Audit.lean](Subtail/Audit.lean) | Dependency-axiom reports for the runtime definitions and main theorems |
+| [Audit.lean](Subtail/Audit.lean) | Dependency-axiom reports for the earlier runtime definitions and main theorems |
+| [TerminalRank.lean](Subtail/TerminalRank.lean) | Terminal prefix-freeness, border-state injection and at most k-1 positive borders of accepted suffixes |
+| [RankMilestones.lean](Subtail/RankMilestones.lean) | Literal rank recurrence, reversal and actual reversed-prefix bound; exact first milestones/first returns; interior failure-target confinement |
 
 Words are `List Bool`. State sets have type `Fin k`; tables are finite vectors.
 The flag condition includes both diagonal pairs and the empty suffix. A
@@ -71,12 +85,19 @@ Python checks, but is not yet formalized.
 1. Every successful fixed-budget test yields a witness.
 2. Every instance with a witness has a successful budget within `F(size I)`.
 
-The direct sufficient predicate is now implemented and proved sound for an
-individual word. The finite automaton that decides whether any such word
-exists, and the definition of `F`, remain missing. The conditional theorem
-checks the enumeration argument; it does not settle these assumptions.
-Arbitrary-tree semantics, normalization, and the subtype reduction also
-remain outside this Lean core.
+The direct sufficient predicate is implemented and proved sound for an
+individual word. The earlier finite-budget interface is still conditional:
+its exact language nonemptiness test and concrete covering bound have not been
+instantiated in Lean. The new rank-route formalization does not silently
+discharge those parameters.
+
+For the current candidate, first-return successor/KMP graph identities and
+colours, finite observer/diagram syntax, both uniform preimage directions,
+quantitative repeated closure and the executable global witness bound remain
+unformalized. Arbitrary-tree semantics, normalization, and the subtype reduction
+also remain outside this Lean core. See the
+[precise milestone readback and handoff](../notes/2026-09-18-lean-rank-milestones.md).
+The proved rank bound is not a word-length or source-visit bound.
 
 The current binary formalization does not claim results for every finite
 alphabet. The general statements in the research notes retain their separate
@@ -88,11 +109,16 @@ The named proof dependencies use only Lean's standard `propext`, `Quot.sound`,
 and, for some list/truncation proofs, `Classical.choice`. The checked runtime
 definitions do not depend on classical choice. Several use `propext` in
 erased library proofs. No custom axiom or `sorryAx` discharges a research gap.
-The audit covers the named declarations and their transitive dependencies;
-new independent theorems must be added to that audit.
+The audits cover the named declarations and their transitive dependencies;
+new independent theorems must be included in the relevant audit. In the new
+milestone module, `rank`, `failureParent`, `maxNat`, `FirstMilestone` and
+`FirstReturn` have no axiom dependencies in the recorded execution.
 
 The native evaluation comparisons are regression tests, separate from the
 kernel-checked theorem proofs. `leanchecker` replays declarations through
 Lean's own kernel; it is not an independent external proof checker. Read the
-[formalization note](../notes/2026-09-04-lean-core.md) and the
-[A018 obligations](../research/approaches/A018.md) before extending the core.
+[formalization note](../notes/2026-09-04-lean-core.md),
+[terminal foundation note](../notes/2026-09-18-lean-rank-foundation.md), and the
+[A018 obligations and current history](../research/approaches/A018.md) before
+extending the core. The new statements were read back by their author; no
+independent human semantic review is claimed.

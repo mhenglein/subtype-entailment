@@ -61,6 +61,7 @@ jobs:
       - name: Literal word regressions and native Lean agreement
         run: |
           python3 experiments/check_lean_rank_milestones.py --lean --output /tmp/lean-rank-milestones.json
+          cmp results/lean-rank-milestones.json /tmp/lean-rank-milestones.json
           python3 experiments/check_lean_rank_milestones.py --lean --output /tmp/lean-rank-milestones-replay.json
           cmp /tmp/lean-rank-milestones.json /tmp/lean-rank-milestones-replay.json
       - name: Canonical research records and links

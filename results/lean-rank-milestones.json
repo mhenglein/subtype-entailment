@@ -1,0 +1,26 @@
+{
+  "base_foundation": "2fe18864e39a26f6dd256bf05bea166c8c6b3d20",
+  "counts": {
+    "arbitrary_first_returns": 25966,
+    "binary_words": 8191,
+    "maximal_rank_tails": 8190,
+    "milestones_at_final_position": 446,
+    "overlapping_first_returns": 6228,
+    "overlapping_milestones": 5096,
+    "prefixes_checked": 98305,
+    "singleton_extensions": 8166,
+    "successive_milestones": 16434
+  },
+  "limits": [
+    "Finite regressions are separate from the kernel-checked all-word proofs.",
+    "No uniform preimage compiler or unrestricted subtype decision is verified here."
+  ],
+  "native_lean": {
+    "max_word_length": 10,
+    "status": "PASS",
+    "toolchain": "leanprover/lean4:v4.33.1",
+    "words": 2047
+  },
+  "python_max_word_length": 12,
+  "status": "PASS"
+}
