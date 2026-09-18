@@ -6,10 +6,12 @@ on:
     paths:
       - 'lean/Subtail/RankQueryEnumeration*.lean'
       - '.github/workflows/lean-rank-enumeration.yml'
+      - 'experiments/check_rank_enumeration.py'
   pull_request:
     paths:
       - 'lean/Subtail/RankQueryEnumeration*.lean'
       - '.github/workflows/lean-rank-enumeration.yml'
+      - 'experiments/check_rank_enumeration.py'
 
 permissions:
   contents: read
@@ -30,23 +32,25 @@ jobs:
           test: 'false'
           lint: 'false'
           use-mathlib-cache: 'false'
-      - name: Compile finite diagram enumeration
+      - name: Compile finite diagram enumeration and boundary proofs
         working-directory: lean
-        run: lake build +Subtail.RankQueryEnumeration
+        run: lake build +Subtail.RankQueryEnumerationAudit
       - name: Replay declarations through the kernel
         working-directory: lean
-        run: lake env leanchecker Subtail.RankQueryEnumeration
+        run: lake env leanchecker Subtail.RankQueryEnumerationAudit
       - name: Audit all new declaration dependencies
         run: |
           mkdir -p tmp
           python3 - <<'PY'
           from pathlib import Path
           import re,json
-          source=Path('lean/Subtail/RankQueryEnumeration.lean').read_text()
-          rows=re.findall(r'^(def|theorem|structure|abbrev) ([A-Za-z_][A-Za-z_0-9]*)',source,re.M)
+          rows=[]
+          for module in ('RankQueryEnumeration','RankQueryEnumerationAudit'):
+              source=Path('lean/Subtail/'+module+'.lean').read_text()
+              rows.extend((kind,module+'.'+name) for kind,name in re.findall(r'^(def|theorem|structure|abbrev) ([A-Za-z_][A-Za-z_0-9]*)',source,re.M))
           assert rows and len(rows)==len(set(n for _,n in rows))
           Path('tmp/enumeration-declarations.json').write_text(json.dumps(rows))
-          Path('tmp/enumeration-axioms.lean').write_text('import Subtail.RankQueryEnumeration\n'+''.join('#print axioms Subtail.RankQueryEnumeration.'+n+'\n' for _,n in rows))
+          Path('tmp/enumeration-axioms.lean').write_text('import Subtail.RankQueryEnumerationAudit\n'+''.join('#print axioms Subtail.'+n+'\n' for _,n in rows))
           PY
           cd lean
           set -o pipefail
@@ -57,7 +61,7 @@ jobs:
           import re,json
           expected={n:k for k,n in json.loads(Path('tmp/enumeration-declarations.json').read_text())}
           text=Path('/tmp/enumeration-axioms.txt').read_text()
-          rows=re.findall(r"'Subtail\.RankQueryEnumeration\.([^']+)' (does not depend on any axioms|depends on axioms: \[([^]]*)\])",text)
+          rows=re.findall(r"'Subtail\.([^']+)' (does not depend on any axioms|depends on axioms: \[([^]]*)\])",text)
           assert set(n for n,_,_ in rows)==set(expected),text
           for name,_,axioms in rows:
               allowed={'propext','Quot.sound'}
@@ -65,6 +69,11 @@ jobs:
               assert set(a.strip() for a in axioms.split(',') if a.strip())<=allowed,(name,axioms)
           print('PASS:',len(rows),'named declaration dependency closures')
           PY
+      - name: Independent complete syntax census and deterministic native replay
+        run: |
+          PYTHONHASHSEED=17 python3 experiments/check_rank_enumeration.py --output /tmp/enumeration-native.json
+          PYTHONHASHSEED=91 python3 experiments/check_rank_enumeration.py --output /tmp/enumeration-native-replay.json
+          cmp /tmp/enumeration-native.json /tmp/enumeration-native-replay.json
       - name: Preserve earlier Lean core
         run: python3 scripts/check_lean.py
       - name: Preserve tracked evidence

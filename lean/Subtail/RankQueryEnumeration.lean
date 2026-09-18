@@ -238,6 +238,7 @@ theorem mem_diagrams (c : Clause k) (b : Limits) (D : Diagram k) :
       obtain ⟨hnLen, _⟩ := (mem_exactLists _ _ _).mp hn
       obtain ⟨hpLen, hpAll⟩ := (mem_exactLists _ _ _).mp hp
       obtain ⟨hjLen, hjAll⟩ := (mem_boundedLists _ _ _).mp hj
+      dsimp only [Bounded]
       refine ⟨by omega, by have := List.mem_range.mp hng; omega,
         by have := List.mem_range.mp hnc; omega, hloLen, ?_, hsLen, hnLen,
         hpLen, ?_, hjLen, ?_⟩
