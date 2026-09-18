@@ -52,6 +52,18 @@ theorem Simulation.accepts {G H : Graph k} {O P : Observer k}
   obtain ⟨q, hq, p, hp, hr⟩ := h
   exact ⟨S.control q, hinit q hq, S.control p, hfinal p hp, S.run hr⟩
 
+/-- Slicing changes only the initial/final lists, never Allowed. -/
+theorem allowed_slice_iff (G : Graph k) (o : Observer k) (lc rc : Fin o.size)
+    (x : Node G o) :
+    Allowed G (sliceObs o lc rc) x ↔ Allowed G o x := by
+  rfl
+
+/-- Slicing changes only the initial/final lists, never Step. -/
+theorem step_slice_iff (G : Graph k) (o : Observer k) (lc rc : Fin o.size)
+    (x y : Node G o) :
+    Step G (sliceObs o lc rc) x y ↔ Step G o x y := by
+  rfl
+
 /-- Slicing an observer changes only its permitted initial/final controls.
 The run relation itself is unchanged. -/
 def sliceToBase (G : Graph k) (o : Observer k) (lc rc : Fin o.size) :
@@ -60,10 +72,10 @@ def sliceToBase (G : Graph k) (o : Observer k) (lc rc : Fin o.size) :
   control := id
   allowed := by
     intro x hx
-    simpa [Allowed, sliceObs] using hx
+    exact (allowed_slice_iff G o lc rc x).mp hx
   step := by
     intro x y hxy
-    simpa [Step, Allowed, sliceObs] using hxy
+    exact (step_slice_iff G o lc rc x y).mp hxy
 
 /-- Conversely, the base observer run relation is unchanged by slicing. -/
 def baseToSlice (G : Graph k) (o : Observer k) (lc rc : Fin o.size) :
@@ -72,10 +84,10 @@ def baseToSlice (G : Graph k) (o : Observer k) (lc rc : Fin o.size) :
   control := id
   allowed := by
     intro x hx
-    simpa [Allowed, sliceObs] using hx
+    exact (allowed_slice_iff G o lc rc x).mpr hx
   step := by
     intro x y hxy
-    simpa [Step, Allowed, sliceObs] using hxy
+    exact (step_slice_iff G o lc rc x y).mpr hxy
 
 /-- Acceptance of a slice is exactly one base-observer run between the selected
 seam controls.  This is the form used when concatenating diagram pieces. -/
@@ -84,15 +96,19 @@ theorem accepts_slice_iff (G : Graph k) (o : Observer k)
     Accepts G (sliceObs o lc rc) u v ↔ Run G o (u, lc) (v, rc) := by
   constructor
   · rintro ⟨q, hq, p, hp, hr⟩
-    have hq' : q = lc := by simpa [sliceObs] using hq
-    have hp' : p = rc := by simpa [sliceObs] using hp
+    have hq0 : q ∈ [lc] := by simpa [sliceObs] using hq
+    have hp0 : p ∈ [rc] := by simpa [sliceObs] using hp
+    have hq' : q = lc := List.mem_singleton.mp hq0
+    have hp' : p = rc := List.mem_singleton.mp hp0
     subst q
     subst p
     exact (sliceToBase G o lc rc).run hr
   · intro hr
     refine ⟨lc, ?_, rc, ?_, ?_⟩
-    · simp [sliceObs]
-    · simp [sliceObs]
+    · change lc ∈ [lc]
+      exact List.mem_singleton.mpr rfl
+    · change rc ∈ [rc]
+      exact List.mem_singleton.mpr rfl
     · exact (baseToSlice G o lc rc).run hr
 
 /-- Three already-transported pieces with exact seam nodes reassemble into one
