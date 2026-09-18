@@ -31,6 +31,19 @@ jobs:
           test: 'false'
           lint: 'false'
           use-mathlib-cache: 'false'
+      - name: Package pinned public toolchain and proof sources
+        if: github.ref == 'refs/heads/lean/closure-reconstruction-2026-09-18'
+        run: |
+          tar --use-compress-program='zstd -1 -T0' -cf /tmp/lean-proof-bootstrap.tar.zst --exclude='.lake' --exclude='.git' -C "$HOME/.elan/toolchains" leanprover--lean4---v4.33.1 -C "$GITHUB_WORKSPACE" lean
+          sha256sum /tmp/lean-proof-bootstrap.tar.zst
+      - name: Retain bootstrap for this isolated proof check
+        if: github.ref == 'refs/heads/lean/closure-reconstruction-2026-09-18'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: lean-proof-bootstrap
+          path: /tmp/lean-proof-bootstrap.tar.zst
+          retention-days: 1
+          compression-level: 0
       - name: Compile every new reconstruction module
         working-directory: lean
         run: |
