@@ -32,10 +32,10 @@ jobs:
           use-mathlib-cache: 'false'
       - name: Compile finite propagation modules
         working-directory: lean
-        run: lake build +Subtail.StackReachability
+        run: lake build +Subtail.CanonicalReachability
       - name: Replay through the kernel
         working-directory: lean
-        run: lake env leanchecker Subtail.StackReachability
+        run: lake env leanchecker Subtail.CanonicalReachability
       - name: Audit new declarations
         run: |
           mkdir -p tmp
@@ -43,7 +43,8 @@ jobs:
           from pathlib import Path
           import re,json
           rows=[]
-          for path in sorted(Path('lean/Subtail').glob('Stack*.lean')):
+          paths=sorted(Path('lean/Subtail').glob('Stack*.lean'))+[Path('lean/Subtail/CanonicalReachability.lean')]
+          for path in paths:
               source=path.read_text()
               for kind,name in re.findall(r'^(?:@\[simp\] )?(def|theorem|inductive|structure|abbrev) ([A-Za-z_][A-Za-z_0-9]*)',source,re.M):
                   rows.append((path.stem+'.'+name,kind))

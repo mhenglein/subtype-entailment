@@ -83,16 +83,25 @@ theorem balanced_least {M : System n} {R : Fin n -> Fin n -> Prop}
   | trans _ _ ih1 ih2 => exact hc.2.2.1 _ _ _ ih1 ih2
   | wrap h1 _ h2 ih => exact hc.2.2.2 _ _ _ _ _ h1 ih h2
 
+def allFin (f : Fin n -> Bool) : Bool := (List.finRange n).all f
+
+@[simp] theorem allFin_correct (f : Fin n -> Bool) :
+    allFin f = true ↔ ∀ p, f p = true := by
+  simp [allFin,List.all_eq_true]
+
 def closedCheck (M : System n) (R : List (Fin n × Fin n)) : Bool :=
-  decide ((∀ p, (p,p) ∈ R) ∧
-    (∀ p q, M.eps p q = true -> (p,q) ∈ R) ∧
-    (∀ p q r, (p,q) ∈ R -> (q,r) ∈ R -> (p,r) ∈ R) ∧
-    (∀ p q r s, M.push false p q = true -> (q,r) ∈ R -> M.pop false r s = true -> (p,s) ∈ R) ∧
-    (∀ p q r s, M.push true p q = true -> (q,r) ∈ R -> M.pop true r s = true -> (p,s) ∈ R))
+  allFin (fun p => decide ((p,p) ∈ R)) &&
+  allFin (fun p => allFin (fun q => decide (M.eps p q = true -> (p,q) ∈ R))) &&
+  allFin (fun p => allFin (fun q => allFin (fun r =>
+    decide ((p,q) ∈ R -> (q,r) ∈ R -> (p,r) ∈ R)))) &&
+  allFin (fun p => allFin (fun q => allFin (fun r => allFin (fun s =>
+    decide (M.push false p q = true -> (q,r) ∈ R -> M.pop false r s = true -> (p,s) ∈ R))))) &&
+  allFin (fun p => allFin (fun q => allFin (fun r => allFin (fun s =>
+    decide (M.push true p q = true -> (q,r) ∈ R -> M.pop true r s = true -> (p,s) ∈ R)))))
 
 @[simp] theorem closedCheck_correct (M : System n) (R : List (Fin n × Fin n)) :
     closedCheck M R = true ↔ Closed M (fun p q => (p,q) ∈ R) := by
-  simp only [closedCheck,decide_eq_true_eq,Closed]
+  simp only [closedCheck,Bool.and_eq_true,allFin_correct,decide_eq_true_eq,Closed,and_assoc]
   constructor
   · rintro ⟨hr,he,ht,h0,h1⟩
     refine ⟨hr,he,ht,?_⟩
