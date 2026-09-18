@@ -37,7 +37,7 @@ jobs:
           import re
           source = Path('lean/Subtail/RankMilestones.lean').read_text()
           rows = re.findall(r'^(?:@\[simp\] )?(def|theorem) ([A-Za-z_][A-Za-z_0-9]*)', source, re.M)
-          assert len(rows) >= 18 and len(rows) == len(set(n for _,n in rows))
+          assert len(rows) == 32 and len(rows) == len(set(n for _,n in rows))
           Path('tmp/milestone-axioms.lean').write_text('import Subtail.RankMilestones\n' + ''.join('#print axioms Subtail.RankMilestones.'+n+'\n' for _,n in rows))
           PY
           cd lean
@@ -58,6 +58,13 @@ jobs:
               assert set(a.strip() for a in axioms.split(',') if a.strip()) <= allowed, (name,axioms)
           print('PASS:',len(rows),'complete axiom dependency closures')
           PY
+      - name: Literal word regressions and native Lean agreement
+        run: |
+          python3 experiments/check_lean_rank_milestones.py --lean --output /tmp/lean-rank-milestones.json
+          python3 experiments/check_lean_rank_milestones.py --lean --output /tmp/lean-rank-milestones-replay.json
+          cmp /tmp/lean-rank-milestones.json /tmp/lean-rank-milestones-replay.json
+      - name: Canonical research records and links
+        run: python3 scripts/research_index.py --check
       - name: Preserve earlier Lean core
         run: python3 scripts/check_lean.py
       - name: Verify existing evidence unchanged

@@ -5,3 +5,5 @@ import Subtail.Boundary
 import Subtail.TwoState
 import Subtail.Conditional
 import Subtail.Examples
+import Subtail.TerminalRank
+import Subtail.RankMilestones
