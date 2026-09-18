@@ -1,0 +1,42 @@
+name: Lean run transport support
+on:
+  push:
+    branches:
+      - lean/run-transport-support-2026-09-18
+permissions:
+  contents: read
+jobs:
+  transport:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596
+        with:
+          lake-package-directory: lean
+          build: 'false'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'false'
+      - name: Compile helper module
+        working-directory: lean
+        run: lake build +Subtail.RankQueryRunTransport
+      - name: Kernel replay
+        working-directory: lean
+        run: lake env leanchecker Subtail.RankQueryRunTransport
+      - name: Reject unfinished proof placeholders
+        run: |
+          ! grep -R -nE '\\bsorry\\b|sorryAx|axiom ' lean/Subtail/RankQueryRunTransport.lean
+      - name: Audit theorem dependencies
+        run: |
+          cat > /tmp/run-transport-axioms.lean <<'EOF'
+          import Subtail.RankQueryRunTransport
+          #print axioms Subtail.RankQueryRunTransport.run_trans
+          #print axioms Subtail.RankQueryRunTransport.Simulation.run
+          #print axioms Subtail.RankQueryRunTransport.Simulation.accepts
+          #print axioms Subtail.RankQueryRunTransport.accepts_slice_iff
+          #print axioms Subtail.RankQueryRunTransport.run_trans3
+          EOF
+          cd lean
+          lake env lean /tmp/run-transport-axioms.lean | tee /tmp/run-transport-axioms.txt
+          ! grep -E 'sorryAx|Classical.choice|propext|Quot.sound' /tmp/run-transport-axioms.txt
