@@ -31,12 +31,22 @@ jobs:
           test: 'false'
           lint: 'false'
           use-mathlib-cache: 'false'
-      - name: Compile shared reconstruction
+      - name: Compile every new reconstruction module
         working-directory: lean
-        run: lake build +Subtail.RankQueryReconstructionFamily
-      - name: Replay through kernel
+        run: |
+          for source in Subtail/RankQueryReconstruction*.lean; do
+            target="${source%.lean}"
+            target="${target//\//.}"
+            lake build "+$target"
+          done
+      - name: Replay every new module through kernel
         working-directory: lean
-        run: lake env leanchecker Subtail.RankQueryReconstructionFamily
+        run: |
+          for source in Subtail/RankQueryReconstruction*.lean; do
+            target="${source%.lean}"
+            target="${target//\//.}"
+            lake env leanchecker "$target"
+          done
       - name: Audit all new public declarations
         run: |
           mkdir -p tmp
@@ -44,12 +54,14 @@ jobs:
           from pathlib import Path
           import json,re
           rows=[]
-          for path in sorted(Path('lean/Subtail').glob('RankQueryReconstruction*.lean')):
+          paths=sorted(Path('lean/Subtail').glob('RankQueryReconstruction*.lean'))
+          for path in paths:
               source=path.read_text()
               rows += re.findall(r'^(?:@\[simp\] )?(def|theorem|inductive|structure|abbrev) ([A-Za-z_][A-Za-z_0-9]*)',source,re.M)
           assert rows and len(rows)==len(set(n for _,n in rows))
           Path('tmp/reconstruction-declarations.json').write_text(json.dumps(rows))
-          Path('tmp/reconstruction-axioms.lean').write_text('import Subtail.RankQueryReconstructionFamily\n'+''.join('#print axioms Subtail.RankQueryReconstruction.'+n+'\n' for _,n in rows))
+          imports=''.join('import Subtail.'+p.stem+'\n' for p in paths)
+          Path('tmp/reconstruction-axioms.lean').write_text(imports+''.join('#print axioms Subtail.RankQueryReconstruction.'+n+'\n' for _,n in rows))
           PY
           cd lean
           set -o pipefail
