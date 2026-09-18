@@ -118,5 +118,54 @@ theorem sat_promote_of_chain (I : Instance k) (pre : Query k → Query k)
   (sat_promote_iff I pre hclosure φ n B hB).mpr
     ⟨n, Nat.le_refl _, C, hchain, hφ⟩
 
+/-! ## Query-weight consequences of ClosureFor -/
+
+/-- Maximum distributes over list append. -/
+theorem maxNat_append (xs ys : List Nat) :
+    RankMilestones.maxNat (xs ++ ys) =
+      max (RankMilestones.maxNat xs) (RankMilestones.maxNat ys) := by
+  induction xs with
+  | nil => simp [RankMilestones.maxNat]
+  | cons x xs ih =>
+    simp only [List.cons_append, RankMilestones.maxNat, ih]
+    omega
+
+/-- Query union has maximum clause weight equal to the maximum of the two sides. -/
+theorem weight_append (φ ψ : Query k) :
+    weight (φ ++ ψ) = max (weight φ) (weight ψ) := by
+  simp only [weight, List.map_append, maxNat_append]
+
+/-- A pointwise upper bound on a finite list bounds its maximum. -/
+theorem maxNat_le_of_forall {xs : List Nat} {N : Nat}
+    (h : ∀ x ∈ xs, x ≤ N) : RankMilestones.maxNat xs ≤ N := by
+  induction xs with
+  | nil => simp [RankMilestones.maxNat]
+  | cons x xs ih =>
+    simp only [RankMilestones.maxNat]
+    have hx := h x (List.mem_cons_self ..)
+    have hrest : ∀ y ∈ xs, y ≤ N := fun y hy => h y (List.mem_cons_of_mem _ hy)
+    exact Nat.max_le hx (ih hrest)
+
+/-- The clause-wise bound stored in ClosureFor also bounds the entire preimage query. -/
+theorem weight_pre_le (I : Instance k) (pre : Query k → Query k)
+    (hclosure : ClosureFor I pre) (φ : Query k) :
+    weight (pre φ) ≤ closureBound k (weight φ) := by
+  unfold weight
+  apply maxNat_le_of_forall
+  intro n hn
+  obtain ⟨c, hc, rfl⟩ := List.mem_map.mp hn
+  exact hclosure.2 φ c hc
+
+/-- One promotion step grows query weight by at most the old weight or the
+ClosureFor preimage bound, whichever is larger. -/
+theorem weight_promote_succ_le (I : Instance k) (pre : Query k → Query k)
+    (hclosure : ClosureFor I pre) (φ : Query k) (h : Nat) :
+    weight (promote pre φ (h + 1)) ≤
+      max (weight (promote pre φ h))
+        (closureBound k (weight (promote pre φ h))) := by
+  rw [promote, weight_append]
+  exact Nat.max_le (Nat.le_refl _) (weight_pre_le I pre hclosure _)
+
+
 end RankQueryUnwind
 end Subtail
