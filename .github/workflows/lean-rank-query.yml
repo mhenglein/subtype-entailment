@@ -45,7 +45,7 @@ jobs:
           source = Path('lean/Subtail/RankQuery.lean').read_text()
           rows = re.findall(r'^(?:@\[simp\] )?(def|theorem) ([A-Za-z_][A-Za-z_0-9]*)', source, re.M)
           assert len(rows) == len(set(n for _, n in rows)) and len(rows) >= 60, len(rows)
-          assert 'sorry' not in source and 'axiom ' not in source
+          assert not re.search(r'^\s*(axiom|opaque)\b', source, re.M), 'no axiom or opaque declarations'
           Path('tmp/rankquery-axioms.lean').write_text('import Subtail.RankQuery\n' + ''.join('#print axioms Subtail.RankQuery.' + n + '\n' for _, n in rows))
           PY
           cd lean
