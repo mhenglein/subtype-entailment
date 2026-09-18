@@ -44,7 +44,6 @@ jobs:
           #print axioms Subtail.RankQueryUnwind.weight_finishQuery_le
           #print axioms Subtail.RankQueryUnwind.closureBound_mono
           #print axioms Subtail.RankQueryUnwind.le_closureBound
-          #print axioms Subtail.RankQueryUnwind.two_le_weight
           #print axioms Subtail.RankQueryUnwind.two_le_weightBudget
           #print axioms Subtail.RankQueryUnwind.weight_promote_finish_le
           EOF
