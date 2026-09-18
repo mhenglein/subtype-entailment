@@ -89,24 +89,15 @@ def baseToSlice (G : Graph k) (o : Observer k) (lc rc : Fin o.size) :
     intro x y hxy
     exact (step_slice_iff G o lc rc x y).mpr hxy
 
-/-- Acceptance of a slice is exactly one base-observer run between the selected
-seam controls.  This is the form used when concatenating diagram pieces. -/
-theorem accepts_slice_iff (G : Graph k) (o : Observer k)
+/-- The run relation of a sliced observer is exactly the original run relation
+at the selected seam controls.  Initial/final-list bookkeeping is deliberately
+kept outside this lemma; diagram validity already supplies the seam controls. -/
+theorem run_slice_iff (G : Graph k) (o : Observer k)
     (lc rc : Fin o.size) (u v : Fin G.size) :
-    Accepts G (sliceObs o lc rc) u v ↔ Run G o (u, lc) (v, rc) := by
+    Run G (sliceObs o lc rc) (u, lc) (v, rc) ↔ Run G o (u, lc) (v, rc) := by
   constructor
-  · rintro ⟨q, hq, p, hp, hr⟩
-    simp only [sliceObs, List.mem_singleton] at hq hp
-    subst q
-    subst p
-    exact (sliceToBase G o lc rc).run hr
-  · intro hr
-    refine ⟨lc, ?_, rc, ?_, ?_⟩
-    · change lc ∈ [lc]
-      exact List.mem_singleton.mpr rfl
-    · change rc ∈ [rc]
-      exact List.mem_singleton.mpr rfl
-    · exact (baseToSlice G o lc rc).run hr
+  · exact fun hr => (sliceToBase G o lc rc).run hr
+  · exact fun hr => (baseToSlice G o lc rc).run hr
 
 /-- Three already-transported pieces with exact seam nodes reassemble into one
 run.  Kept explicit because this is the shape repeatedly used by portal diagrams. -/
