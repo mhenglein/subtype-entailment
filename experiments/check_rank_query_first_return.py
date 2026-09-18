@@ -86,10 +86,18 @@ def native_counts(cases: list[tuple[int, list[int]]]) -> dict:
     lean_dir = repo / 'lean'
     source = ('import Subtail.RankQueryFirstReturn\nset_option maxRecDepth 20000\n'
               'set_option maxHeartbeats 0\nopen Subtail.RankQueryFirstReturn\n')
-    source += 'def inputCases : List (Nat × List Nat) := [\n'
-    source += ',\n'.join(f'({m}, [{",".join(map(str, p))}])' for m, p in cases) + '\n]\n'
-    source += ('def main : IO Unit := inputCases.forM fun c =>\n'
-               '  IO.println (toString (freshIntervals (fun n : Nat => n) c.1 c.2))\n')
+    # Small named batches avoid deep elaboration of one huge list literal.
+    # Every retained input is still evaluated in its original order.
+    batches = [cases[i:i + 64] for i in range(0, len(cases), 64)]
+    for i, batch in enumerate(batches):
+        source += f'def inputBatch{i} : List (Nat × List Nat) := [\n'
+        source += ',\n'.join(f'({m}, [{",".join(map(str, p))}])' for m, p in batch) + '\n]\n'
+    source += ('def emitCounts (xs : List (Nat × List Nat)) : IO Unit :=\n'
+               '  xs.forM fun c =>\n'
+               '    IO.println (toString (freshIntervals (fun n : Nat => n) c.1 c.2))\n')
+    source += 'def main : IO Unit := do\n'
+    source += ''.join(f'  emitCounts inputBatch{i}\n' for i in range(len(batches)))
+    source += '  pure ()\n'
     version = subprocess.run(['lake', 'env', 'lean', '--version'], cwd=lean_dir,
                              check=True, text=True, capture_output=True, timeout=60).stdout
     if 'version 4.33.1,' not in version:
@@ -130,7 +138,8 @@ def check(use_lean: bool = False) -> dict:
                         if label == 'F':
                             assert v <= m
                         if v > m:
-                            assert v == u + 1 or (u == n and v == m + 1)
+                            assert v == u + 1 or (u == n and v == m + 1):
+                                pass
                             if u <= m:
                                 assert u == m and v == m + 1
                             if not (u > m and v == u + 1):
