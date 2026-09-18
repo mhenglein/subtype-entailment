@@ -1,0 +1,72 @@
+name: Lean closure reconstruction
+
+on:
+  push:
+    branches: ['lean/closure-reconstruction-2026-09-18', 'main']
+    paths:
+      - 'lean/Subtail/RankQueryReconstruction*.lean'
+      - '.github/workflows/lean-closure-reconstruction.yml'
+      - 'experiments/check_closure_reconstruction.py'
+  pull_request:
+    paths:
+      - 'lean/Subtail/RankQueryReconstruction*.lean'
+      - '.github/workflows/lean-closure-reconstruction.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  reconstruction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.11'
+      - uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596
+        with:
+          lake-package-directory: lean
+          build: 'true'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'false'
+      - name: Compile shared reconstruction
+        working-directory: lean
+        run: lake build +Subtail.RankQueryReconstruction
+      - name: Replay through kernel
+        working-directory: lean
+        run: lake env leanchecker Subtail.RankQueryReconstruction
+      - name: Audit all new public declarations
+        run: |
+          mkdir -p tmp
+          python3 - <<'PY'
+          from pathlib import Path
+          import json,re
+          source=Path('lean/Subtail/RankQueryReconstruction.lean').read_text()
+          rows=re.findall(r'^(?:@\[simp\] )?(def|theorem|inductive|structure|abbrev) ([A-Za-z_][A-Za-z_0-9]*)',source,re.M)
+          assert rows and len(rows)==len(set(n for _,n in rows))
+          Path('tmp/reconstruction-declarations.json').write_text(json.dumps(rows))
+          Path('tmp/reconstruction-axioms.lean').write_text('import Subtail.RankQueryReconstruction\n'+''.join('#print axioms Subtail.RankQueryReconstruction.'+n+'\n' for _,n in rows))
+          PY
+          cd lean
+          set -o pipefail
+          lake env lean ../tmp/reconstruction-axioms.lean | tee /tmp/reconstruction-axioms.txt
+          cd ..
+          python3 - <<'PY'
+          from pathlib import Path
+          import re,json
+          expected={n:k for k,n in json.loads(Path('tmp/reconstruction-declarations.json').read_text())}
+          text=Path('/tmp/reconstruction-axioms.txt').read_text()
+          rows=re.findall(r"'Subtail\.RankQueryReconstruction\.([^']+)' (does not depend on any axioms|depends on axioms: \[([^]]*)\])",text)
+          assert set(n for n,_,_ in rows)==set(expected),text
+          for name,_,axioms in rows:
+              allowed={'propext','Quot.sound'}
+              if expected[name]=='theorem':allowed.add('Classical.choice')
+              assert set(a.strip() for a in axioms.split(',') if a.strip())<=allowed,(name,axioms)
+          print('PASS:',len(rows),'complete declaration dependency closures')
+          PY
+      - name: Preserve existing Lean core
+        run: python3 scripts/check_lean.py
+      - name: Verify tracked evidence unchanged
+        run: git diff --exit-code -- results/lean-checks.json
