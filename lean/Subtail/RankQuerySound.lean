@@ -586,6 +586,32 @@ theorem nextOf_last (h : validDiagram I c D = true) : nextOf D (D.groups - 1) = 
   rw [← this, hlast]
   rfl
 
+/-- Tested variables placed at a fresh location point into the diagram's groups. -/
+theorem valid_tests (h : validDiagram I c D = true) {v : Fin c.vars} {t : Colour k → Bool}
+    (hm : (v, t) ∈ c.tests) : ∀ g, locOf D v.val = .fresh g → g < D.groups := by
+  simp only [validDiagram, Bool.and_eq_true] at h
+  obtain ⟨⟨⟨⟨-, ht⟩, -⟩, -⟩, -⟩ := h
+  have h := List.all_eq_true.mp ht _ hm
+  intro g hg
+  simp only [hg, decide_eq_true_eq] at h
+  exact h
+
+/-- The equality and disequality lists are compatible with the locations. -/
+theorem valid_pairs (h : validDiagram I c D = true) :
+    pairsValid D c.equal false = true ∧ pairsValid D c.unequal true = true := by
+  simp only [validDiagram, Bool.and_eq_true] at h
+  obtain ⟨⟨⟨-, he⟩, hu⟩, -⟩ := h
+  exact ⟨he, hu⟩
+
+/-- Every atom's piece list is valid. -/
+theorem valid_atom (h : validDiagram I c D = true) {ai : Nat} (hai : ai < c.atoms.length) :
+    atomValid I c D ai c.atoms[ai] (piecesOf D ai) = true := by
+  simp only [validDiagram, Bool.and_eq_true] at h
+  obtain ⟨-, ha⟩ := h
+  have h := List.all_eq_true.mp ha ai (List.mem_range.mpr hai)
+  simp only [List.getElem?_eq_getElem hai] at h
+  exact h
+
 end Compiled
 
 /-! ## Two-control edge observers accept exactly their edge -/
@@ -2174,7 +2200,277 @@ theorem piece_run (r : Recon I c D B σ) (hB : SafeReference I B) (hv : validDia
       exact portal_run hedge (by rw [hcu]; exact hleft) (by rw [hcv]; exact hright)
         (by rw [hcu, hcv]; exact hmv)
 
+
+/-! ## Reassembling the original clause on the extension -/
+
+theorem run_cast {G : Graph k} {O : Observer k} {x x' y y' : Node G O} (h : Run G O x y)
+    (hx : x = x') (hy : y = y') : Run G O x' y' := hx ▸ hy ▸ h
+
+theorem node_congr {G : Graph k} {O : Observer k} {a a' b b' : Nat} (ha : a = a') (hb : b = b')
+    {pa : a < G.size} {pa' : a' < G.size} {pb : b < O.size} {pb' : b' < O.size} :
+    ((⟨a, pa⟩, ⟨b, pb⟩) : Node G O) = (⟨a', pa'⟩, ⟨b', pb'⟩) := by
+  subst ha; subst hb; rfl
+
+theorem pos_mono (r : Recon I c D B σ) {g h : Nat} (hgh : g ≤ h) : r.pos g ≤ r.pos h := by
+  obtain ⟨rest, hrest⟩ := r.pre_prefix h hgh
+  simp only [pos, hrest, List.length_append]
+  omega
+
+theorem pos_strict (r : Recon I c D B σ) {g h : Nat} (hgh : g < h) (hh : h ≤ D.groups - 1) :
+    r.pos g < r.pos h := by
+  have h1 := r.pos_mono (g := g + 1) (h := h) hgh
+  rw [pos_succ] at h1
+  have := List.length_pos_iff.mpr (r.exts_ne_nil (g := g) (by omega))
+  omega
+
+theorem base_lt_ext (r : Recon I c D B σ) : B.word.length < (extRef B r.ext).word.length := by
+  rw [r.length_ext]
+  simp only [pos]
+  omega
+
+/-- Position assigned to a location (clamped to the extension for junk locations). -/
+def assignLoc (r : Recon I c D B σ) (l : Loc) : Nat :=
+  min (r.locPos l) (extRef B r.ext).word.length
+
+theorem assignLoc_le (r : Recon I c D B σ) (l : Loc) :
+    r.assignLoc l ≤ (extRef B r.ext).word.length := Nat.min_le_right _ _
+
+theorem assignLoc_ok (r : Recon I c D B σ) {l : Loc} (hl : LocOK D l) : r.assignLoc l = r.locPos l :=
+  Nat.min_eq_left (r.locPos_le hl)
+
+theorem assignLoc_core (r : Recon I c D B σ) (a : Nat) :
+    r.assignLoc (.core a) = (σ (coreVar D a)).val := r.assignLoc_ok trivial
+
+theorem assignLoc_core_le (r : Recon I c D B σ) (a : Nat) : r.assignLoc (.core a) ≤ B.word.length := by
+  rw [r.assignLoc_core]
+  have := (σ (coreVar D a)).isLt
+  change (σ (coreVar D a)).val < B.word.length + 1 at this
+  omega
+
+theorem assignLoc_fresh (r : Recon I c D B σ) {g : Nat} (hg : g < D.groups) :
+    r.assignLoc (.fresh g) = r.pos g := r.assignLoc_ok (by change g < D.groups; exact hg)
+
+theorem assignLoc_fresh_gt (r : Recon I c D B σ) (g : Nat) : B.word.length < r.assignLoc (.fresh g) := by
+  have h1 := r.base_lt_ext
+  have h2 : B.word.length < r.locPos (.fresh g) := by simp only [locPos, pos]; omega
+  simp only [assignLoc]
+  omega
+
+/-- The vertex assignment of the original clause on the extension. -/
+def assign (r : Recon I c D B σ) (v : Nat) : Fin (prefixGraph I (extRef B r.ext)).size :=
+  ⟨r.assignLoc (locOf D v), Nat.lt_succ_of_le (r.assignLoc_le _)⟩
+
+theorem assign_val (r : Recon I c D B σ) (v : Nat) : (r.assign v).val = r.assignLoc (locOf D v) := rfl
+
+/-- **Chaining.**  The pieces of one atom, glued at their seams, yield one run from the
+first piece's source to the last piece's target. -/
+theorem chain_run (r : Recon I c D B σ) (hB : SafeReference I B) (hv : validDiagram I c D = true)
+    (hM : r.Model) {ai : Nat} (hai : ai < c.atoms.length) (hne : 0 < (piecesOf D ai).length)
+    (hseam : ∀ pi (h : pi + 1 < (piecesOf D ai).length),
+      pieceTargetLoc (piecesOf D ai)[pi] = pieceSourceLoc (piecesOf D ai)[pi + 1] ∧
+      ((piecesOf D ai)[pi]).rc = ((piecesOf D ai)[pi + 1]).lc)
+    (hval : ∀ pi (h : pi < (piecesOf D ai).length),
+      pieceValid I D ai pi (c.atoms[ai]).observer (piecesOf D ai)[pi] = true) :
+    ∀ pi (hpi : pi < (piecesOf D ai).length),
+      ∃ (hs : LocOK D (pieceSourceLoc (piecesOf D ai)[0]))
+        (ht : LocOK D (pieceTargetLoc (piecesOf D ai)[pi]))
+        (hlc : ((piecesOf D ai)[0]).lc < (c.atoms[ai]).observer.size)
+        (hrc : ((piecesOf D ai)[pi]).rc < (c.atoms[ai]).observer.size),
+        Run (prefixGraph I (extRef B r.ext)) (c.atoms[ai]).observer
+          (⟨r.locPos (pieceSourceLoc (piecesOf D ai)[0]), r.locPos_size hs⟩, ⟨((piecesOf D ai)[0]).lc, hlc⟩)
+          (⟨r.locPos (pieceTargetLoc (piecesOf D ai)[pi]), r.locPos_size ht⟩,
+            ⟨((piecesOf D ai)[pi]).rc, hrc⟩) := by
+  intro pi
+  induction pi with
+  | zero =>
+    intro h0
+    exact r.piece_run hB hv hM hai h0 _ rfl _ rfl (hval 0 h0)
+  | succ pi ih =>
+    intro hpi
+    obtain ⟨hs, ht, hlc, hrc, hrun⟩ := ih (by omega)
+    obtain ⟨hs', ht', hlc', hrc', hrun'⟩ := r.piece_run hB hv hM hai hpi _ rfl _ rfl (hval _ hpi)
+    obtain ⟨hloc, hctl⟩ := hseam pi hpi
+    refine ⟨hs, ht', hlc, hrc', ?_⟩
+    exact run_trans hrun (run_cast hrun' (node_congr (congrArg r.locPos hloc.symm) hctl.symm) rfl)
+
+/-- Every atom of the original clause is accepted on the extension under `assign`. -/
+theorem atom_accepts (r : Recon I c D B σ) (hB : SafeReference I B) (hv : validDiagram I c D = true)
+    (hM : r.Model) {ai : Nat} (hai : ai < c.atoms.length) :
+    Accepts (prefixGraph I (extRef B r.ext)) (c.atoms[ai]).observer
+      (r.assign (c.atoms[ai]).source.val) (r.assign (c.atoms[ai]).target.val) := by
+  have hval := valid_atom I c D hv hai
+  have hne : 0 < (piecesOf D ai).length := by
+    cases hps : piecesOf D ai with
+    | nil => simp [atomValid, hps] at hval
+    | cons _ _ => simp
+  have hhead : (piecesOf D ai).head? = some (piecesOf D ai)[0] := by
+    rw [List.head?_eq_getElem?, List.getElem?_eq_getElem hne]
+  have hlast : (piecesOf D ai).getLast? =
+      some (piecesOf D ai)[(piecesOf D ai).length - 1] := by
+    rw [List.getLast?_eq_getElem?, List.getElem?_eq_getElem (by omega)]
+  simp only [atomValid, hhead, hlast, Bool.and_eq_true, beq_iff_eq] at hval
+  obtain ⟨⟨⟨⟨⟨hsrc, htgt⟩, hinit⟩, hfin⟩, hseams⟩, hpieces⟩ := hval
+  have hseam : ∀ pi (h : pi + 1 < (piecesOf D ai).length),
+      pieceTargetLoc (piecesOf D ai)[pi] = pieceSourceLoc (piecesOf D ai)[pi + 1] ∧
+      ((piecesOf D ai)[pi]).rc = ((piecesOf D ai)[pi + 1]).lc := by
+    intro pi h
+    have hmem : ((piecesOf D ai)[pi], (piecesOf D ai)[pi + 1]) ∈
+        (piecesOf D ai).zip (piecesOf D ai).tail := by
+      rw [List.mem_iff_getElem]
+      refine ⟨pi, by simp only [List.length_zip, List.length_tail]; omega, ?_⟩
+      rw [List.getElem_zip, List.getElem_tail]
+    have := List.all_eq_true.mp hseams _ hmem
+    simp only [Bool.and_eq_true, beq_iff_eq] at this
+    exact this
+  have hval' : ∀ pi (h : pi < (piecesOf D ai).length),
+      pieceValid I D ai pi (c.atoms[ai]).observer (piecesOf D ai)[pi] = true := by
+    intro pi h
+    have := List.all_eq_true.mp hpieces pi (List.mem_range.mpr h)
+    simpa only [List.getD_eq_getElem?_getD, List.getElem?_eq_getElem h, Option.getD_some] using this
+  obtain ⟨hs, ht, hlc, hrc, hrun⟩ :=
+    r.chain_run hB hv hM hai hne hseam hval' ((piecesOf D ai).length - 1) (by omega)
+  obtain ⟨q, hq, hqv⟩ := List.any_eq_true.mp hinit
+  obtain ⟨p, hp, hpv⟩ := List.any_eq_true.mp hfin
+  refine ⟨q, hq, p, hp, ?_⟩
+  have hq' : q = ⟨_, hlc⟩ := Fin.ext (beq_iff_eq.mp hqv)
+  have hp' : p = ⟨_, hrc⟩ := Fin.ext (beq_iff_eq.mp hpv)
+  subst hq' hp'
+  have e1 : r.assign (c.atoms[ai]).source.val =
+      ⟨r.locPos (pieceSourceLoc (piecesOf D ai)[0]), r.locPos_size hs⟩ := by
+    apply Fin.ext
+    rw [assign_val, ← hsrc]
+    exact r.assignLoc_ok hs
+  have e2 : r.assign (c.atoms[ai]).target.val =
+      ⟨r.locPos (pieceTargetLoc (piecesOf D ai)[(piecesOf D ai).length - 1]), r.locPos_size ht⟩ := by
+    apply Fin.ext
+    rw [assign_val, ← htgt]
+    exact r.assignLoc_ok ht
+  rw [e1, e2]
+  exact hrun
+
+/-- Every unary test of the original clause holds on the extension under `assign`. -/
+theorem test_sound (r : Recon I c D B σ) (hB : SafeReference I B) (hv : validDiagram I c D = true)
+    (hM : r.Model) {v : Fin c.vars} {t : Colour k → Bool} (hm : (v, t) ∈ c.tests) :
+    t ((prefixGraph I (extRef B r.ext)).colour (r.assign v.val)) = true := by
+  have hok := valid_tests I c D hv hm
+  have h := hM.tests _ (mem_tests_query I c D hm)
+  rw [prefixGraph_colour, assign_val]
+  cases hl : locOf D v.val with
+  | core x =>
+    simp only [queryTest, hl] at h
+    rw [r.assignLoc_core]
+    show t (colB I (extRef B r.ext) (σ (coreVar D x)).val) = true
+    rw [r.colC_core]
+    exact h
+  | fresh g =>
+    have hg := hok g hl
+    simp only [queryTest, hl] at h
+    rw [r.assignLoc_fresh hg]
+    rw [r.colC_pos hB hv (by omega)]
+    exact h
+
+/-- Every equality of the original clause holds on the extension under `assign`. -/
+theorem equal_sound (r : Recon I c D B σ) (hv : validDiagram I c D = true) (hM : r.Model)
+    {x y : Fin c.vars} (hm : (x, y) ∈ c.equal) : r.assign x.val = r.assign y.val := by
+  have h := List.all_eq_true.mp (valid_pairs I c D hv).1 _ hm
+  apply Fin.ext
+  rw [assign_val, assign_val]
+  cases hx : locOf D x.val with
+  | core a =>
+    cases hy : locOf D y.val with
+    | core b =>
+      have hmem : (coreVar D a, coreVar D b) ∈ corePairs D c.equal := by
+        rw [corePairs, List.mem_filterMap]
+        exact ⟨(x, y), hm, by simp only [hx, hy]⟩
+      have := hM.equal _ (mem_equal_core I c D hmem)
+      rw [r.assignLoc_core, r.assignLoc_core]
+      exact congrArg Fin.val this
+    | fresh g => simp only [hx, hy, Bool.false_eq_true] at h
+  | fresh g =>
+    cases hy : locOf D y.val with
+    | core b => simp only [hx, hy, Bool.false_eq_true] at h
+    | fresh g' =>
+      simp only [hx, hy, Bool.and_eq_true, bne_iff_ne, ne_eq, Bool.not_eq_false, beq_iff_eq,
+        decide_eq_true_eq] at h
+      rw [h.2]
+
+/-- Every disequality of the original clause holds on the extension under `assign`. -/
+theorem unequal_sound (r : Recon I c D B σ) (hv : validDiagram I c D = true) (hM : r.Model)
+    {x y : Fin c.vars} (hm : (x, y) ∈ c.unequal) : r.assign x.val ≠ r.assign y.val := by
+  have h := List.all_eq_true.mp (valid_pairs I c D hv).2 _ hm
+  intro heq
+  have heq' : r.assignLoc (locOf D x.val) = r.assignLoc (locOf D y.val) := congrArg Fin.val heq
+  cases hx : locOf D x.val with
+  | core a =>
+    rw [hx] at heq'
+    cases hy : locOf D y.val with
+    | core b =>
+      rw [hy, r.assignLoc_core, r.assignLoc_core] at heq'
+      have hmem : (coreVar D a, coreVar D b) ∈ corePairs D c.unequal := by
+        rw [corePairs, List.mem_filterMap]
+        exact ⟨(x, y), hm, by simp only [hx, hy]⟩
+      have hne := hM.unequal _ (by rw [unequal_eq]; exact hmem)
+      exact hne (Fin.ext heq')
+    | fresh g =>
+      rw [hy] at heq'
+      have h1 := r.assignLoc_core_le a
+      have h2 := r.assignLoc_fresh_gt g
+      omega
+  | fresh g =>
+    rw [hx] at heq'
+    cases hy : locOf D y.val with
+    | core b =>
+      rw [hy] at heq'
+      have h1 := r.assignLoc_core_le b
+      have h2 := r.assignLoc_fresh_gt g
+      omega
+    | fresh g' =>
+      rw [hy] at heq'
+      simp only [hx, hy, Bool.and_eq_true, bne_iff_ne, ne_eq, Bool.not_eq_true, beq_eq_false_iff_ne,
+        decide_eq_true_eq] at h
+      obtain ⟨⟨hg, hg'⟩, hne⟩ := h
+      rw [r.assignLoc_fresh hg, r.assignLoc_fresh hg'] at heq'
+      rcases Nat.lt_or_gt_of_ne hne with hlt | hlt
+      · have := r.pos_strict hlt (by omega); omega
+      · have := r.pos_strict hlt (by omega); omega
+
 end Recon
+
+/-- **Reverse direction of the Closure Lemma (stage 4c).**  A safe base whose literal
+prefix graph satisfies the compiled clause of some diagram has a safe first-return
+extension whose literal prefix graph satisfies the original clause. -/
+theorem compile_sound (I : Instance k) (c : Clause k) (D : Diagram k) (B : Reference k)
+    (hB : SafeReference I B) {P : Clause k} (hP : compileDiagram I c D = some P)
+    (hsat : SatClause (prefixGraph I B) P) :
+    ∃ C : Reference k, FirstReturnExt I B C ∧ SatClause (prefixGraph I C) c := by
+  unfold compileDiagram at hP
+  split at hP
+  · rename_i hv
+    have hPe : P = compileValid I c D := (Option.some.inj hP).symm
+    subst hPe
+    obtain ⟨σ, htests, hequal, hunequal, hatoms⟩ := hsat
+    obtain ⟨r⟩ := exists_recon I c D B hv σ htests hequal hatoms
+    have hM : r.Model := ⟨htests, hequal, hunequal, hatoms⟩
+    refine ⟨extRef B r.ext, r.firstReturnExt hB hv, fun v => r.assign v.val, ?_, ?_, ?_, ?_⟩
+    · intro t ht
+      exact r.test_sound hB hv hM (v := t.1) (t := t.2) ht
+    · intro e he
+      exact r.equal_sound hv hM (x := e.1) (y := e.2) he
+    · intro e he
+      exact r.unequal_sound hv hM (x := e.1) (y := e.2) he
+    · intro a ha
+      obtain ⟨ai, hai, rfl⟩ := List.mem_iff_getElem.mp ha
+      exact r.atom_accepts hB hv hM hai
+  · contradiction
+
+/-- Query-level corollary: a base model of the clause preimage over any finite list of
+diagrams yields a safe first-return extension modelling the clause. -/
+theorem preimage_sound (I : Instance k) (c : Clause k) (B : Reference k) (Ds : List (Diagram k))
+    (hB : SafeReference I B) (hsat : Sat (prefixGraph I B) (preimageOver I c Ds)) :
+    ∃ C : Reference k, FirstReturnExt I B C ∧ SatClause (prefixGraph I C) c := by
+  obtain ⟨P, hP, hsatP⟩ := hsat
+  obtain ⟨D, -, hD⟩ := List.mem_filterMap.mp hP
+  exact compile_sound I c D B hB hD hsatP
 
 end RankQuerySound
 end Subtail
