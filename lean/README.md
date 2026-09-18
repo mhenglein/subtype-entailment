@@ -30,14 +30,16 @@ From the repository root:
 python3 scripts/check_lean.py
 python3 experiments/check_lean_rank_milestones.py --lean --output /tmp/lean-rank-milestones.json
 cmp results/lean-rank-milestones.json /tmp/lean-rank-milestones.json
+python3 experiments/check_lean_first_return_graph.py --repository --lean --output /tmp/first-return-graph.json
+python3 experiments/check_rank_query_first_return.py --lean --output /tmp/query-first-return.json
 ```
 
 The first command builds the project, replays the compiled declarations with
 `leanchecker`, audits the earlier named algorithms and theorems, and compares
 native Lean evaluations with the independent Python predicates. Its results go
-to [lean-checks.json](../results/lean-checks.json). The second checks the new
-executable border/rank definitions; these finite native comparisons are not the
-proof of the all-word statements.
+to [lean-checks.json](../results/lean-checks.json). The remaining checks exercise
+the executable border/rank, graph and interval definitions; these finite native
+comparisons are not the proof of the all-word statements.
 
 To build or inspect the earlier axioms directly, run these commands from `lean/`:
 
@@ -49,9 +51,12 @@ lake env lean Subtail/Audit.lean
 
 The new modules are included by `Subtail.lean`. Their complete public dependency
 audits are separately enforced by
-[the foundation workflow](../.github/workflows/lean-rank-foundation.yml) and
-[the milestone workflow](../.github/workflows/lean-rank-milestones.yml); the
-latter audits every public definition/theorem in `RankMilestones.lean`.
+[the foundation workflow](../.github/workflows/lean-rank-foundation.yml),
+[the milestone workflow](../.github/workflows/lean-rank-milestones.yml),
+[the query workflow](../.github/workflows/lean-rank-query.yml), and
+[the graph/interface workflow](../.github/workflows/lean-first-return-graph.yml).
+The latter audits all 65 public declarations of the four graph modules and
+`RankQueryFirstReturn.lean` at the checked revision.
 
 ## Checked statements
 
@@ -67,8 +72,11 @@ latter audits every public definition/theorem in `RankMilestones.lean`.
 | [Audit.lean](Subtail/Audit.lean) | Dependency-axiom reports for the earlier runtime definitions and main theorems |
 | [TerminalRank.lean](Subtail/TerminalRank.lean) | Terminal prefix-freeness, border-state injection and at most k-1 positive borders of accepted suffixes |
 | [RankMilestones.lean](Subtail/RankMilestones.lean) | Literal rank recurrence, reversal and actual reversed-prefix bound; exact first milestones/first returns; interior failure-target confinement |
-| [RankQuery.lean](Subtail/RankQuery.lean) | Stage 4a (not default-imported): query grammar, literal prefix graphs, executable `satCheck` with `satCheck_correct`, and the UNPROVED `ClosureStatement`/`RankDecisionStatement` pinned as `Prop`s |
-| [RankQueryPaths.lean](Subtail/RankQueryPaths.lean) | Stage 4b ingredient (not default-imported): runs are chains of nodes, every accepted run has a repetition-free chain, and such a chain visits any vertex at most `O.size` times (`accepts_bounded_visits`) |
+| [RankQuery.lean](Subtail/RankQuery.lean) | Stage 4a: query grammar, literal prefix graphs, executable `satCheck` with `satCheck_correct`, and the UNPROVED `ClosureStatement`/`RankDecisionStatement` pinned as `Prop`s |
+| [RankQueryPaths.lean](Subtail/RankQueryPaths.lean) | Stage 4b ingredient: runs are chains of nodes, every accepted run has a repetition-free chain, and such a chain visits any vertex at most `O.size` times (`accepts_bounded_visits`) |
+| [PrefixMatching.lean](Subtail/PrefixMatching.lean), [FirstReturnGraph.lean](Subtail/FirstReturnGraph.lean) | Literal KMP maximum/fallback and the exact first-return cursor and K-edge identities |
+| [FirstReturnGenerator.lean](Subtail/FirstReturnGenerator.lean), [FirstReturnColours.lean](Subtail/FirstReturnColours.lean) | First-hit iff literal first return; complete colour/mask and F/S/K0/K1 graph equality |
+| [RankQueryFirstReturn.lean](Subtail/RankQueryFirstReturn.lean) | Graph construction transferred to the actual query graph; single entrance, fresh-edge shape, and at most `O.size+1` maximal forward fresh intervals of a product-simple accepted path |
 
 Words are `List Bool`. State sets have type `Fin k`; tables are finite vectors.
 The flag condition includes both diagonal pairs and the empty suffix. A
@@ -82,12 +90,11 @@ Python checks, but is not yet formalized.
 ## What remains assumed or missing
 
 `RankQuery.lean` pins `ClosureFor`, `ClosureStatement` and `RankDecisionStatement`
-as statements only. No theorem in the repository proves them; the module is
-built as an explicit target by
-[the rank-query workflow](../.github/workflows/lean-rank-query.yml) and is not
-yet imported by `Subtail.lean`. See
-[the statement readback](../notes/2026-09-18-lean-rank-query-statement.md).
-
+as statements only. No theorem in the repository proves them. Its literal graph
+and observer semantics are now default-imported through the checked
+first-return query interface. See
+[the statement readback](../notes/2026-09-18-lean-rank-query-statement.md) and
+[the exact graph/interval handoff](../notes/2026-09-18-lean-first-return-graph.md).
 
 `finiteBudgetDecision_correct` accepts executable parameters `size`, `F`, and
 `success`. Its statement assumes:
@@ -101,13 +108,14 @@ its exact language nonemptiness test and concrete covering bound have not been
 instantiated in Lean. The new rank-route formalization does not silently
 discharge those parameters.
 
-For the current candidate, first-return successor/KMP graph identities and
-colours, finite observer/diagram syntax, both uniform preimage directions,
-quantitative repeated closure and the executable global witness bound remain
-unformalized. Arbitrary-tree semantics, normalization, and the subtype reduction
-also remain outside this Lean core. See the
-[precise milestone readback and handoff](../notes/2026-09-18-lean-rank-milestones.md).
-The proved rank bound is not a word-length or source-visit bound.
+For the current candidate, the first-return graph and bounded fresh-interval
+interface are checked. What remains is the executable marked-diagram enumerator
+and coverage proof, the shared-interval product and both uniform preimage
+directions, quantitative repeated closure, and the executable global witness
+bound. Arbitrary-tree semantics, normalization, and the subtype reduction also
+remain outside this integrated Lean core. Other agents' reserved semantic
+work is tracked separately; no unintegrated work is claimed here.
+The proved rank and interval bounds are not word-length or source-visit bounds.
 
 The current binary formalization does not claim results for every finite
 alphabet. The general statements in the research notes retain their separate
@@ -122,7 +130,8 @@ erased library proofs. No custom axiom or `sorryAx` discharges a research gap.
 The audits cover the named declarations and their transitive dependencies;
 new independent theorems must be included in the relevant audit. In the new
 milestone module, `rank`, `failureParent`, `maxNat`, `FirstMilestone` and
-`FirstReturn` have no axiom dependencies in the recorded execution.
+`FirstReturn` have no axiom dependencies in the recorded execution. The new
+`breaksAfter` and `freshIntervals` also have no axiom dependencies.
 
 The native evaluation comparisons are regression tests, separate from the
 kernel-checked theorem proofs. `leanchecker` replays declarations through

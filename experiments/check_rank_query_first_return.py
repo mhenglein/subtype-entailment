@@ -86,9 +86,9 @@ def native_counts(cases: list[tuple[int, list[int]]]) -> dict:
     lean_dir = repo / 'lean'
     source = ('import Subtail.RankQueryFirstReturn\nset_option maxRecDepth 20000\n'
               'set_option maxHeartbeats 0\nopen Subtail.RankQueryFirstReturn\n')
-    source += 'def cases : List (Nat × List Nat) := [\n'
+    source += 'def inputCases : List (Nat × List Nat) := [\n'
     source += ',\n'.join(f'({m}, [{",".join(map(str, p))}])' for m, p in cases) + '\n]\n'
-    source += ('def main : IO Unit := cases.forM fun c =>\n'
+    source += ('def main : IO Unit := inputCases.forM fun c =>\n'
                '  IO.println (toString (freshIntervals (fun n : Nat => n) c.1 c.2))\n')
     version = subprocess.run(['lake', 'env', 'lean', '--version'], cwd=lean_dir,
                              check=True, text=True, capture_output=True, timeout=60).stdout
@@ -98,7 +98,9 @@ def native_counts(cases: list[tuple[int, list[int]]]) -> dict:
         src = Path(td) / 'Counts.lean'
         src.write_text(source, encoding='utf-8')
         result = subprocess.run(['lake', 'env', 'lean', '--run', str(src)], cwd=lean_dir,
-                                check=True, text=True, capture_output=True, timeout=120)
+                                check=False, text=True, capture_output=True, timeout=120)
+        if result.returncode:
+            raise RuntimeError('Lean evaluation failed:\n' + result.stdout + '\n' + result.stderr)
     lines = result.stdout.splitlines()
     if len(lines) != len(cases) or any(not line.isdecimal() for line in lines):
         raise RuntimeError('Unexpected native output: ' + result.stdout[:2000])
