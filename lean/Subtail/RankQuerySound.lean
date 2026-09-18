@@ -1680,5 +1680,108 @@ theorem mem_allEmitted_of_piece (I : Instance k) (c : Clause k) (D : Diagram k)
   rw [List.getD_eq_getElem?_getD, List.getElem?_eq_getElem hpi, Option.getD_some]
   exact hx
 
+/-! ## Runs of the original observers on the extension: interval runs -/
+
+theorem mem_itemsAt (I : Instance k) (c : Clause k) (D : Diagram k) {g : Nat} {a : Active k}
+    (h : (g, a) ∈ (allEmitted I c D).active) : a ∈ itemsAt I c D g := by
+  unfold itemsAt
+  exact List.mem_map.mpr ⟨(g, a), List.mem_filter.mpr ⟨h, by simp⟩, rfl⟩
+
+namespace Recon
+variable {I : Instance k} {c : Clause k} {D : Diagram k} {B : Reference k}
+  {σ : Var D → Fin (prefixGraph I B).size}
+
+theorem controls_x0 (r : Recon I c D B σ) {g : Nat} (hg : g < D.groups - 1) {jdx : Nat} {a : Active k}
+    (hj : (itemsAt I c D g)[jdx]? = some a) : (r.x0 g).controls[jdx]? = some a.2.1 := by
+  rw [r.x0_controls g hg, List.getElem?_map, hj]; rfl
+
+theorem controls_x1 (r : Recon I c D B σ) {g : Nat} (hg : g < D.groups - 1) {jdx : Nat} {a : Active k}
+    (hj : (itemsAt I c D g)[jdx]? = some a) : (r.x1 g).controls[jdx]? = some a.2.2 := by
+  rw [r.x1_controls g hg, List.getElem?_map, hj]; rfl
+
+theorem pos_size (r : Recon I c D B σ) {g : Nat} (hg : g ≤ D.groups - 1) :
+    r.pos g < (prefixGraph I (extRef B r.ext)).size := by
+  show r.pos g < (extRef B r.ext).word.length + 1
+  have := r.pos_le hg
+  omega
+
+/-- Every active observation of interval `g` runs from its entering to its leaving
+control along the interval's fresh vertices. -/
+theorem interval_run (r : Recon I c D B σ) (hB : SafeReference I B) (hv : validDiagram I c D = true)
+    {g : Nat} (hg : g < D.groups - 1) {a : Active k} (ha : a ∈ itemsAt I c D g)
+    (s : Fin a.1.size) (hs : s.val = a.2.1) (t : Fin a.1.size) (ht : t.val = a.2.2) :
+    Run (prefixGraph I (extRef B r.ext)) a.1 (⟨r.pos g, r.pos_size (by omega)⟩, s)
+      (⟨r.pos (g + 1), r.pos_size (by omega)⟩, t) := by
+  have hm : 0 < B.word.length := hB.nonempty
+  have hr := (r.firstReturnExt hB hv).firstReturn
+  obtain ⟨jdx, hj⟩ := List.mem_iff_getElem?.mp ha
+  obtain ⟨o, l0, r0⟩ := a
+  have hrun := gen_forward_run I B r.ext hm hr (itemsAt I c D g) (r.gen g hg) (r.pos g)
+    (by simp only [pos]; omega)
+    (by rw [← pos_succ]; exact r.pos_le (by omega))
+    (by rw [r.label_pos (by omega), r.x0_state g hg])
+    (r.cursor_pos hm (by omega))
+    (fun i hi => ⟨r.word_pos_add hg hi, r.label_pos_add hg hi⟩)
+    (by rw [← pos_succ, r.word_pos hv (by omega), r.x1_next g hg])
+    hj s (by rw [r.controls_x0 hg hj, hs]) t (by rw [r.controls_x1 hg hj, ht])
+    (r.pos_size (by omega)) (by rw [← pos_succ]; exact r.pos_size (by omega))
+  have e : (⟨r.pos g + (r.exts g).length, by rw [← pos_succ]; exact r.pos_size (by omega)⟩ :
+      Fin (prefixGraph I (extRef B r.ext)).size) = ⟨r.pos (g + 1), r.pos_size (by omega)⟩ :=
+    Fin.ext (r.pos_succ g).symm
+  rw [e] at hrun
+  exact hrun
+
+/-! ## Forward pieces: chaining the intervals from group `i` to group `j` -/
+
+theorem forwardControls_zero (D : Diagram k) (ai pi i j : Nat) (P : Piece) :
+    (forwardControls D ai pi i j P).getD 0 0 = P.lc := rfl
+
+theorem forwardControls_length (D : Diagram k) (ai pi i j : Nat) (P : Piece) (hij : i < j) :
+    (forwardControls D ai pi i j P).length = j - i + 1 := by
+  simp [forwardControls]; omega
+
+theorem forwardControls_last (D : Diagram k) (ai pi i j : Nat) (P : Piece) (hij : i < j) :
+    (forwardControls D ai pi i j P).getD (j - i) 0 = P.rc := by
+  unfold forwardControls
+  obtain ⟨d, hd⟩ : ∃ d, j - i = d + 1 := ⟨j - i - 1, by omega⟩
+  have hlen' : ((List.range (d + 1 - 1)).map fun t => seamControl D ai pi (i + 1 + t)).length = d := by
+    simp
+  rw [hd, List.getD_eq_getElem?_getD, List.getElem?_append_right (by simp [hlen'])]
+  simp [hlen']
+
+theorem mem_forwardActive (D : Diagram k) (ai pi i j : Nat) (o : Observer k) (P : Piece) {t : Nat}
+    (ht : t < j - i) :
+    (i + t, (o, (forwardControls D ai pi i j P).getD t 0, (forwardControls D ai pi i j P).getD (t + 1) 0)) ∈
+      forwardActive D ai pi i j o P := by
+  unfold forwardActive
+  exact List.mem_map.mpr ⟨t, List.mem_range.mpr ht, rfl⟩
+
+/-- Chaining interval runs over a forward piece. -/
+theorem forward_chain (r : Recon I c D B σ) (hB : SafeReference I B) (hv : validDiagram I c D = true)
+    (o : Observer k) (cs : List Nat) {i j : Nat} (hij : i < j) (hj : j ≤ D.groups - 1)
+    (hcs : ∀ t, t ≤ j - i → cs.getD t 0 < o.size)
+    (hact : ∀ t, t < j - i → (o, cs.getD t 0, cs.getD (t + 1) 0) ∈ itemsAt I c D (i + t)) :
+    ∀ t (ht : t ≤ j - i),
+      Run (prefixGraph I (extRef B r.ext)) o (⟨r.pos i, r.pos_size (by omega)⟩, ⟨cs.getD 0 0, hcs 0 (Nat.zero_le _)⟩)
+        (⟨r.pos (i + t), r.pos_size (by omega)⟩, ⟨cs.getD t 0, hcs t ht⟩) := by
+  intro t
+  induction t with
+  | zero =>
+    intro _
+    apply Run.refl
+    -- allowed at the start of interval i: use the interval run of interval i
+    have hrun := r.interval_run hB hv (g := i) (by omega) (hact 0 (by omega))
+      ⟨cs.getD 0 0, hcs 0 (Nat.zero_le _)⟩ rfl ⟨cs.getD 1 0, hcs 1 (by omega)⟩ rfl
+    have := allowed_of_run _ _ hrun
+    simpa using this
+  | succ t ih =>
+    intro ht
+    have hrun := r.interval_run hB hv (g := i + t) (by omega) (hact t (by omega))
+      ⟨cs.getD t 0, hcs t (by omega)⟩ rfl ⟨cs.getD (t + 1) 0, hcs (t + 1) ht⟩ rfl
+    have e : i + t + 1 = i + (t + 1) := rfl
+    exact run_trans (ih (by omega)) (by simpa only [e] using hrun)
+
+end Recon
+
 end RankQuerySound
 end Subtail
