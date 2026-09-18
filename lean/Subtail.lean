@@ -7,3 +7,5 @@ import Subtail.Conditional
 import Subtail.Examples
 import Subtail.TerminalRank
 import Subtail.RankMilestones
+import Subtail.FirstReturnColours
+import Subtail.RankQueryFirstReturn

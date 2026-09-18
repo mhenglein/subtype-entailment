@@ -1,0 +1,78 @@
+name: Lean first-return graph
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  graph:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.11'
+      - uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596
+        with:
+          lake-package-directory: lean
+          build: 'true'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'false'
+      - name: Compile exact graph and query-interface proofs
+        working-directory: lean
+        run: lake build +Subtail.RankQueryFirstReturn
+      - name: Replay graph and query-interface proofs through kernel
+        working-directory: lean
+        run: lake env leanchecker Subtail.RankQueryFirstReturn
+      - name: Audit declaration dependencies
+        run: |
+          mkdir -p tmp
+          python3 - <<'PY'
+          import json, re
+          from pathlib import Path
+          groups={'FirstReturnGraph':['PrefixMatching','FirstReturnGraph','FirstReturnGenerator','FirstReturnColours'], 'RankQueryFirstReturn':['RankQueryFirstReturn']}
+          expected={}
+          for namespace, files in groups.items():
+              for name in files:
+                  source=Path('lean/Subtail/'+name+'.lean').read_text()
+                  rows=re.findall(r'^(def|theorem|abbrev) ([A-Za-z_][A-Za-z_0-9]*)',source,re.M)
+                  for kind,n in rows:
+                      full='Subtail.'+namespace+'.'+n
+                      assert full not in expected
+                      expected[full]=kind
+          assert len(expected)>=51
+          Path('tmp/graph-audit-names.json').write_text(json.dumps(expected))
+          Path('tmp/graph-axioms.lean').write_text('import Subtail.RankQueryFirstReturn\n'+''.join('#print axioms '+n+'\n' for n in expected))
+          PY
+          cd lean
+          set -o pipefail
+          lake env lean ../tmp/graph-axioms.lean | tee /tmp/graph-axioms.txt
+          cd ..
+          python3 - <<'PY'
+          import json, re
+          from pathlib import Path
+          expected=json.loads(Path('tmp/graph-audit-names.json').read_text())
+          text=Path('/tmp/graph-axioms.txt').read_text()
+          rows=re.findall(r"'(Subtail\.[^']+)' (does not depend on any axioms|depends on axioms: \[([^]]*)\])",text)
+          assert {n for n,_,_ in rows}==set(expected),text
+          for n,_,ax in rows:
+              allowed={'propext','Quot.sound'}
+              if expected[n]=='theorem': allowed.add('Classical.choice')
+              assert {x.strip() for x in ax.split(',') if x.strip()}<=allowed,(n,ax)
+          print('PASS:',len(rows),'dependency closures')
+          PY
+      - name: Literal native and unchanged candidate comparisons
+        run: |
+          python3 experiments/check_lean_first_return_graph.py --repository --lean --output /tmp/first-return-graph.json
+          python3 experiments/check_lean_first_return_graph.py --repository --lean --output /tmp/first-return-graph-replay.json
+          cmp /tmp/first-return-graph.json /tmp/first-return-graph-replay.json
+      - name: Preserve query semantics regressions
+        run: python3 experiments/check_lean_rank_query.py --lean --output /tmp/rank-query.json
+      - name: Preserve existing Lean core
+        run: python3 scripts/check_lean.py
+      - name: Preserve saved evidence and index
+        run: |
+          git diff --exit-code -- results/lean-checks.json
+          python3 scripts/research_index.py --check
