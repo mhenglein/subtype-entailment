@@ -138,8 +138,7 @@ def check(use_lean: bool = False) -> dict:
                         if label == 'F':
                             assert v <= m
                         if v > m:
-                            assert v == u + 1 or (u == n and v == m + 1):
-                                pass
+                            assert v == u + 1 or (u == n and v == m + 1)
                             if u <= m:
                                 assert u == m and v == m + 1
                             if not (u > m and v == u + 1):
