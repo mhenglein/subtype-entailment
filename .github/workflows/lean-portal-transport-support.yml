@@ -1,0 +1,42 @@
+name: Lean portal transport support
+on:
+  push:
+    branches:
+      - lean/portal-transport-support-2026-09-18
+permissions:
+  contents: read
+jobs:
+  portal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596
+        with:
+          lake-package-directory: lean
+          build: 'false'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'false'
+      - name: Compile portal helper module
+        working-directory: lean
+        run: lake build +Subtail.RankQueryPortalTransport
+      - name: Kernel replay
+        working-directory: lean
+        run: lake env leanchecker Subtail.RankQueryPortalTransport
+      - name: Reject unfinished proof placeholders
+        run: "! grep -R -nE '\\bsorry\\b|sorryAx|axiom ' lean/Subtail/RankQueryPortalTransport.lean"
+      - name: Audit theorem dependencies
+        run: |
+          cat > /tmp/portal-axioms.lean <<'EOF'
+          import Subtail.RankQueryPortalTransport
+          #print axioms Subtail.RankQueryPortalTransport.portalMove_mem
+          #print axioms Subtail.RankQueryPortalTransport.portalTest_facts
+          #print axioms Subtail.RankQueryPortalTransport.portalTest_step
+          #print axioms Subtail.RankQueryPortalTransport.portalTest_run
+          #print axioms Subtail.RankQueryPortalTransport.portalMove_step
+          #print axioms Subtail.RankQueryPortalTransport.portalMove_run
+          EOF
+          cd lean
+          lake env lean /tmp/portal-axioms.lean | tee /tmp/portal-axioms.txt
+          ! grep -E 'sorryAx|Classical.choice' /tmp/portal-axioms.txt
