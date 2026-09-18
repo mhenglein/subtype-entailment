@@ -1,0 +1,107 @@
+{
+  "base_commit": "91911abb786349d2d4d4a37f5ebc20ef4995fdad",
+  "branch": "lean/diagram-enumeration-2026-09-18",
+  "checked_commit": "fb5032ceaace969aea7cbf5fc0a286f5e333f6cd",
+  "checked_tree": "91e0257105a4955c1a7fb327b74d2086d93f7809",
+  "classical_choice_in_definitions": false,
+  "compile": "PASS",
+  "conditional_endpoints": [
+    "forward_of_coverage",
+    "preimage_iff_of_coverage"
+  ],
+  "custom_or_unfinished_axioms": false,
+  "declaration_counts_by_kind": {
+    "abbrev": 1,
+    "def": 20,
+    "structure": 1,
+    "theorem": 29
+  },
+  "draft_failures": [
+    {
+      "commit": "5ac1223493e613df9c9427ad04c6d9b2cc62fbda",
+      "kind": "compile notation and unavailable List monad instances",
+      "run": 35395625702
+    },
+    {
+      "commit": "fb82bfa1928ae1e83215e41366f4d8f12324c209",
+      "kind": "compile incomplete broad simplifier proofs",
+      "run": 35395896108
+    },
+    {
+      "commit": "b585088adffa8d1c1948dbef5e7ada3870e0cd39",
+      "kind": "compile unreduced record projections in arithmetic",
+      "run": 35396265924
+    },
+    {
+      "commit": "6375746bfc0f89fcb1cbf37169cd61fdbf9d7af0",
+      "kind": "proof/kernel/audit passed; native harness END marker substring collision",
+      "run": 35396832766
+    }
+  ],
+  "earlier_core": "scripts/check_lean.py PASS; results/lean-checks.json unchanged",
+  "execution_location": "GitHub Actions; local execution was Python-only",
+  "full_repository_ci_claimed": false,
+  "independent_human_review": false,
+  "job": 105768033700,
+  "kernel_replay": "PASS (bundled leanchecker)",
+  "local_lean_build": false,
+  "native_census": {
+    "complete_cases": 70,
+    "diagram_cases": 12,
+    "diagram_counts": [
+      0,
+      0,
+      144,
+      144,
+      432,
+      1008,
+      1152,
+      1152,
+      3024,
+      6048,
+      720,
+      144
+    ],
+    "diagram_records": 13968,
+    "expected_corpus_sha256": "1d29464ccd405f818ba4f6c8b990dbc9de3fd5977b1d955ca901fc0e71ad46c4",
+    "independent_oracle": "Python cartesian products plus closed-form cardinalities",
+    "native_lean": true,
+    "record_comparisons": 17435,
+    "scope": "Exact finite syntax enumeration; not semantic coverage or unrestricted decision",
+    "status": "PASS"
+  },
+  "native_evaluation_axiom": false,
+  "native_replays": 2,
+  "not_established": [
+    "actual extraction of bounded diagrams from every safe first-return extension",
+    "global compiler weight bound",
+    "unrestricted entailment decision",
+    "completeness of the Python iter_diagrams enumerator"
+  ],
+  "other_sessions_proofs_changed": false,
+  "proof_code_first_checked_commit": "6375746bfc0f89fcb1cbf37169cd61fdbf9d7af0",
+  "public_named_declaration_audits": 51,
+  "python_hash_seeds": [
+    17,
+    91
+  ],
+  "remaining_hypothesis": "DiagramCoverage I budget for a concrete computable clause budget",
+  "scope": "Exact bounded syntax enumeration and inherited reverse soundness; not full semantic coverage or C080",
+  "source_blobs": {
+    ".github/workflows/lean-rank-enumeration.yml": "93d75ec86cd54b10b14b1c41ddf7256987c0811a",
+    "experiments/check_rank_enumeration.py": "35133c77d354431bc7c9864298f74e5d663905ea",
+    "lean/Subtail/RankQueryEnumeration.lean": "a4e6349919c0cca9670dce7465ba2105bbcdde7f",
+    "lean/Subtail/RankQueryEnumerationAudit.lean": "1c1734f39d3043f8d9d4f7effdec834a992f355a"
+  },
+  "status": "PASS",
+  "toolchain": "leanprover/lean4:v4.33.1",
+  "unconditional_endpoints": [
+    "mem_diagrams",
+    "mem_validDiagrams",
+    "mem_preimageClause",
+    "sat_preimageClause_iff",
+    "preimage_sound"
+  ],
+  "workflow_conclusion": "success",
+  "workflow_run": 35397001335
+}
