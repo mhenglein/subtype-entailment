@@ -6,20 +6,20 @@ open RankQuery
 
 /-! ## Finite families of observations, without a hidden-state quantifier swap -/
 
-def mapNode {A M : Observer k} (G : Graph k) (f : Fin M.size -> Fin A.size)
-    (x : Node G M) : Node G A := (x.1,f x.2)
+def mapNode (G : Graph k) {m n : Nat} (f : Fin m -> Fin n)
+    (x : Fin G.size × Fin m) : Fin G.size × Fin n := (x.1,f x.2)
 
-def mapTrace {A M : Observer k} (G : Graph k) (f : Fin M.size -> Fin A.size)
-    (ts : List (Label × Node G M)) : List (Label × Node G A) :=
+def mapTrace (G : Graph k) {m n : Nat} (f : Fin m -> Fin n)
+    (ts : List (Label × (Fin G.size × Fin m))) : List (Label × (Fin G.size × Fin n)) :=
   ts.map fun t => (t.1,mapNode G f t.2)
 
 theorem mapTrace_id (G : Graph k) (A : Observer k) (ts : List (Label × Node G A)) :
     mapTrace G (fun q => q) ts = ts := by
   simp [mapTrace,mapNode]
 
-theorem mapTrace_comp {A M N : Observer k} (G : Graph k)
-    (f : Fin M.size -> Fin A.size) (g : Fin N.size -> Fin M.size)
-    (ts : List (Label × Node G N)) :
+theorem mapTrace_comp (G : Graph k) {a m n : Nat}
+    (f : Fin m -> Fin a) (g : Fin n -> Fin m)
+    (ts : List (Label × (Fin G.size × Fin n))) :
     mapTrace G f (mapTrace G g ts) = mapTrace G (fun q => f (g q)) ts := by
   simp [mapTrace,mapNode,List.map_map]
 
@@ -113,9 +113,9 @@ theorem realizes_extend (G : Graph k) (A : Observer k) (M : Bundle A)
     obtain ⟨j',vs,hj',hproj,htr⟩ := trace_synchronize_complete hr a b hv' i' hi'
     refine ⟨i',?_,j',?_,vs,?_,?_,?_,htr⟩
     · apply (sync_initial M.machine V' i').mpr
-      simpa [hi'] using And.intro hi ha
+      simpa [hi',V',pullObservation] using And.intro hi ha
     · apply (sync_final M.machine V' j').mpr
-      simpa [hj'] using And.intro hj hb
+      simpa [hj',V',pullObservation] using And.intro hj hb
     · change M.projection (pairAt M.machine V' i').1 = x.2
       simpa [hi'] using hix
     · change M.projection (pairAt M.machine V' j').1 = y.2
