@@ -22,12 +22,14 @@ start and end vertex positions. -/
 abbrev Segment := Nat × Nat
 
 /-- Both physical endpoints of every segment. -/
-def segmentEnds (xs : List Segment) : List Nat :=
-  xs.flatMap fun x => [x.1, x.2]
+def segmentEnds : List Segment → List Nat
+  | [] => []
+  | x :: xs => x.1 :: x.2 :: segmentEnds xs
 
 /-- Endpoints contributed by all observer atoms. -/
-def allSegmentEnds (families : List (List Segment)) : List Nat :=
-  families.flatMap segmentEnds
+def allSegmentEnds : List (List Segment) → List Nat
+  | [] => []
+  | xs :: families => segmentEnds xs ++ allSegmentEnds families
 
 /-- Raw global marks before deduplication. -/
 def rawMarks (vars : List Nat) (root endpoint : Nat)
