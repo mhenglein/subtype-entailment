@@ -77,7 +77,7 @@ theorem failureParent_spec (w : Word) (hw : 0 < w.length) :
     simp [List.mem_filter, zero_mem, hw]
   have hm := maxNat_mem hz
   have hm' : failureParent w ∈ borderLengths w ∧ failureParent w < w.length := by
-    simpa only [List.mem_filter, decide_eq_true_eq] using hm
+    simpa only [failureParent, List.mem_filter, decide_eq_true_eq] using hm
   refine ⟨hm'.1, hm'.2, ?_⟩
   intro n hn hb
   exact le_maxNat (by simp [List.mem_filter, hn, hb])
@@ -188,12 +188,11 @@ theorem shifted_border {w : Word} {n p m : Nat}
   obtain ⟨hpb, hpw⟩ := mem_borderLengths.mp hp
   rw [hnlen] at hpb hpw
   have hp_le : p ≤ n := hpb
-  have hm_le : m ≤ n := by omega
   have he := congrArg (List.take m) hpw
-  simp only [List.take_take, Nat.min_eq_left hmp, Nat.min_eq_left hm_le,
+  simp only [List.take_take, Nat.min_eq_left hp_le, Nat.min_eq_left hmp,
     List.drop_take] at he
   have hpm : n - (n - p) = p := by omega
-  simp only [hpm, List.take_take, Nat.min_eq_left hmp] at he
+  simp only [hpm, List.take_take, Nat.min_eq_left hmp, Nat.min_eq_left hp_le] at he
   have hj : n - p + m ≤ w.length := by omega
   have hmj : m ≤ n - p + m := by omega
   apply mem_borderLengths.mpr
@@ -236,7 +235,7 @@ theorem first_milestones_parent {w : Word} {h m n : Nat}
     let j := n - failureParent (w.take n) + m
     have hmj : m < j := by dsimp [j]; omega
     have hjn : j < n := by dsimp [j]; omega
-    have hjb : j ≤ w.length := by omega
+    have hjb : j ≤ w.length := Nat.le_trans (Nat.le_of_lt hjn) hn.1
     have hborder : m ∈ borderLengths (w.take j) := shifted_border hn.1 hs.1 hmp
     have hlt := rank_lt_of_proper_border hborder
       (by simpa [List.length_take, Nat.min_eq_left hjb] using hmj)
@@ -264,7 +263,7 @@ theorem first_milestones_first_return {w : Word} {h m n : Nat}
     simpa [List.length_take, Nat.min_eq_left hn.1] using hs.2.1
   refine ⟨hmn, hs.1, ?_⟩
   intro j hmj hjn hb
-  have hjb : j ≤ w.length := by omega
+  have hjb : j ≤ w.length := Nat.le_trans (Nat.le_of_lt hjn) hn.1
   have hlt := rank_lt_of_proper_border hb
     (by simpa [List.length_take, Nat.min_eq_left hjb] using hmj)
   simp only [List.take_take, Nat.min_eq_left (Nat.le_of_lt hmj)] at hlt
@@ -285,6 +284,73 @@ theorem no_return_after_maximal_rank {w : Word} {h m : Nat}
   simp only [List.take_take, Nat.min_eq_left (Nat.le_of_lt hmj)] at hlt
   have hle := hmax j hj
   omega
+
+/-- Reversal preserves each literal border length. -/
+theorem border_reverse_of {w : Word} {n : Nat}
+    (hn : n ∈ borderLengths w) : n ∈ borderLengths w.reverse := by
+  obtain ⟨hb, he⟩ := mem_borderLengths.mp hn
+  apply mem_borderLengths.mpr
+  refine ⟨by simpa only [List.length_reverse] using hb, ?_⟩
+  have hr := congrArg List.reverse he
+  simp only [List.reverse_take, List.reverse_drop] at hr
+  have hs : w.length - (w.length - n) = n := by omega
+  simpa only [List.length_reverse, hs] using hr.symm
+
+theorem mem_borders_reverse {w : Word} {n : Nat} :
+    n ∈ borderLengths w.reverse ↔ n ∈ borderLengths w := by
+  constructor
+  · intro hn
+    simpa only [List.reverse_reverse] using border_reverse_of hn
+  · exact border_reverse_of
+
+theorem rank_reverse (w : Word) : rank w.reverse = rank w := by
+  have hp := (List.perm_ext_iff_of_nodup (borders_nodup w.reverse)
+    (borders_nodup w)).mpr (fun _ => mem_borders_reverse)
+  exact congrArg (fun n => n - 1) hp.length_eq
+
+/-- Every reversed prefix of an actual terminal accepting run has rank <= k-1.
+This connects the rank recurrence and milestones to the previously checked
+forward-suffix cardinality theorem, without changing the automaton semantics. -/
+theorem reversed_prefix_rank_le (I : Instance k) (ht : TerminalFinals I)
+    {q f : Fin k} {w : Word} (hw : runFrom I q w = some f)
+    (hf : I.final.get f = true) (i : Nat) :
+    rank (w.reverse.take i) ≤ k - 1 := by
+  calc
+    rank (w.reverse.take i) = rank ((w.reverse.take i).reverse) :=
+      (rank_reverse _).symm
+    _ = rank (w.drop (w.length - i)) := by
+      simp only [List.reverse_take, List.reverse_reverse, List.length_reverse]
+    _ ≤ k - 1 := suffix_positive_border_count_le I ht hw hf _
+
+/-- Any attained threshold has a first milestone at a finite prefix position.
+The proof chooses a least position; no global bound or existence oracle occurs
+in the definitions of the executable word rank or failure parent. -/
+theorem exists_first_milestone {w : Word} {h j : Nat}
+    (hj : j ≤ w.length) (hr : h ≤ rank (w.take j)) :
+    ∃ m, FirstMilestone w h m ∧ m ≤ j := by
+  classical
+  have aux : ∀ j, j ≤ w.length → h ≤ rank (w.take j) →
+      ∃ m, FirstMilestone w h m ∧ m ≤ j := by
+    intro j
+    induction j using Nat.strong_induction_on with
+    | h j ih =>
+      intro hj hr
+      by_cases he : ∃ i, i < j ∧ h ≤ rank (w.take i)
+      · obtain ⟨i, hij, hir⟩ := he
+        obtain ⟨m, hm, hmi⟩ := ih i hij (by omega) hir
+        exact ⟨m, hm, by omega⟩
+      · refine ⟨j, ⟨hj, hr, ?_⟩, Nat.le_refl j⟩
+        intro i hij
+        by_cases hir : h ≤ rank (w.take i)
+        · exact False.elim (he ⟨i, hij, hir⟩)
+        · omega
+  exact aux j hj hr
+
+#guard failureParent ([] : Word) == 0
+#guard failureParent [false, true, false] == 1
+#guard rank [false, true, false] == 2
+#guard failureParent [false, true, false, true, false] == 3
+#guard rank [false, true, false, true, false] == 3
 
 end RankMilestones
 end Subtail
