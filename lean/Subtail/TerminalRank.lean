@@ -133,7 +133,7 @@ theorem border_count_le (I : Instance k) (ht : TerminalFinals I)
     {q f : Fin k} {w : Word} (hw : runFrom I q w = some f)
     (hf : I.final.get f = true) : (borderLengths w).length ≤ k := by
   have hn : (borderLengths w).Nodup := by
-    exact List.Pairwise.filter _ (List.nodup_range (w.length + 1))
+    exact List.Pairwise.filter _ List.nodup_range
   have hm : ((borderLengths w).map (borderState I q w)).Nodup := by
     apply nodup_map_on _ _ hn
     intro i hi j hj he
