@@ -596,7 +596,7 @@ def terminal_random_fixtures(V: Verdicts, quick: bool):
                 rho, labels = w[::-1], I.run(w)[::-1]
                 for m in range(1, len(rho)):
                     refs.append(Reference(rho[:m], labels[:m + 1]))
-        refs = sorted(set(refs), key=lambda r: (len(r.word), r.word))
+        refs = sorted(set(refs), key=lambda r: (len(r.word), r.word, r.labels))
         if not refs:
             continue
         B = rng.choice(refs[:8])
