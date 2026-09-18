@@ -33,6 +33,13 @@ jobs:
               python3 experiments/check_rank_preimage.py --output /tmp/rank-preimage.json
               cmp results/rank-preimage.json /tmp/rank-preimage.json
               git diff --exit-code
+          - name: closure-fixtures
+            python: '3.11'
+            run: |
+              python3 scripts/research_index.py --check
+              python3 experiments/check_closure_fixtures.py --quick --output /tmp/closure-fixtures.json
+              cmp results/closure-fixtures.json /tmp/closure-fixtures.json
+              git diff --exit-code
           - name: recovered-source-walks
             python: '3.13'
             run: |

@@ -371,8 +371,8 @@
       "outcome": "inconclusive",
       "owner": null,
       "updated": "2026-09-18",
-      "summary": "A candidate complete ordinary proof (C080) reduces terminal witness existence to finite rank-query preimages over first-return prefix graphs and derives an explicit computable witness bound F(k). Two separate AI-assisted audits found no gap in its stages 1-5 or in the C029/C031 bridge; no human referee; Lean covers stages 1-2 only. Earlier finite reference quotients are refuted and retained. Problem 1.7's status is unchanged.",
-      "next_step": "Obtain independent human review of the stage-4 promotion-preimage lemma (notes/2026-09-18-closure-lemma-referee-brief.md); build adversarial joint-conjunction and shared-generator fixtures against experiments/rank_preimage.py; keep Q004 and the opposing undecidability route as fallbacks if stage 4 fails.",
+      "summary": "A candidate complete ordinary proof (C080) reduces terminal witness existence to finite rank-query preimages over first-return prefix graphs and derives an explicit computable witness bound F(k). Two separate AI-assisted audits found no gap in its stages 1-5 or in the C029/C031 bridge; no human referee; Lean covers stages 1-2, pins the stage-4 Closure Lemma as a statement (A018) and proves bounded visits. Independent adversarial fixtures (joint conjunction, shared generator, two-atom unions) found no discrepancy in the compiler. Earlier finite reference quotients are refuted and retained. Problem 1.7's status is unchanged.",
+      "next_step": "Obtain independent human review of the stage-4 promotion-preimage lemma (notes/2026-09-18-closure-lemma-referee-brief.md); exhaust at least one non-trivial two-atom preimage union beyond the certificate-guided corpora; instantiate the pinned ClosureFor with an executable preimage in Lean; keep Q004 and the opposing undecidability route as fallbacks if stage 4 fails.",
       "record": "research/approaches/A017.md",
       "evidence": [
         "notes/2026-09-04-minimal-witness-structure.md",
@@ -464,7 +464,10 @@
         "experiments/check_rank_closure_review.py",
         "results/rank-preimage.json",
         "results/rank-closure-review.json",
-        "results/semantic-bridge-review.json"
+        "results/semantic-bridge-review.json",
+        "experiments/check_closure_fixtures.py",
+        "results/closure-fixtures.json",
+        "notes/2026-09-18-closure-fixtures.md"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/34"
     },

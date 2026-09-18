@@ -26,11 +26,17 @@ Evidence status, kept deliberately distinct: written candidate proof (Sept 15)
 and full symbolic compiler with the bound (Sept 17); two separate AI-assisted
 audits found no gap in stages 1–5 and in the C029/C031 bridge, both informed by
 the author's argument and neither a blind derivation, a human referee, nor Lean;
-finite differential oracles agree on every recorded corpus, but only one-atom
-preimage unions are exhausted and joint or higher-rank cases are certificate-
-guided. Lean kernel-checks stages 1–2 (`TerminalRank.lean`, `RankMilestones.lean`;
-no `sorry`, no custom axiom), and stage 3 is under active formalization on the
-branch `lean/first-return-graph-2026-09-18`. Stages 4–6 are unformalized. The
+finite differential oracles agree on every recorded corpus; one-atom preimage
+unions and one zero-length two-atom union are exhausted, while other joint or
+higher-rank cases are certificate-guided or work-capped (independent adversarial
+fixtures for joint conjunction and shared generators found no discrepancy,
+[note](notes/2026-09-18-closure-fixtures.md)). Lean kernel-checks stages 1–2
+(`TerminalRank.lean`, `RankMilestones.lean`; no `sorry`, no custom axiom), stage
+3 is under active formalization on the branch
+`lean/first-return-graph-2026-09-18`, and the stage-4 Closure Lemma is PINNED
+as an unproved statement with decidable query satisfaction and a bounded-visits
+lemma ([readback](notes/2026-09-18-lean-rank-query-statement.md)). Stages 4–6
+remain unproved in Lean. The
 generic compiled driver is resource-limited; timed UNKNOWN results are not
 negative certificates. Problem 1.7's accepted status is unchanged: CANDIDATE
 PROOF, independent human review pending.

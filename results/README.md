@@ -22,6 +22,7 @@ Additional recorded suites:
 | [period-state-form.json](period-state-form.json) | `python3 experiments/check_period_state_form.py` |
 | [single-source-census.json](single-source-census.json) | `python3 experiments/single_source_census.py 4` and `python3 experiments/single_source_census.py 5` (about ten minutes) |
 | [lean-rank-query.json](lean-rank-query.json) | `python3 experiments/check_lean_rank_query.py --lean` with Lean 4.33.1 |
+| [closure-fixtures.json](closure-fixtures.json) | `python3 experiments/check_closure_fixtures.py --quick` (about 137 s) |
 
 See [the experiment index](../experiments/README.md) for IDs, coverage, interpretations, and limitations.
 

@@ -1,0 +1,705 @@
+{
+  "counts": {
+    "brute_force_extensions": 149,
+    "certificate_diagrams_enumerated": 54,
+    "exhausted_clauses": 5256,
+    "exhausted_unions": 1,
+    "forward_certificates": 54,
+    "jointly_unsatisfiable_pairs": 12,
+    "oracle_no": 24,
+    "oracle_yes": 10,
+    "other_base_changed_length": 1,
+    "other_base_reconstructions": 1,
+    "sound_reconstructions": 59,
+    "terminal_random_fixtures": 12,
+    "weight_bound_checks": 297083,
+    "work_capped_unions": 16
+  },
+  "discrepancies": [],
+  "fixtures": [
+    {
+      "atoms": 1,
+      "base": "0",
+      "brute_force": "YES",
+      "fixture": "S-lengths (2,)",
+      "labels": [
+        0,
+        0
+      ],
+      "max_len": 6,
+      "observer_sizes": [
+        3
+      ],
+      "oracle": "YES",
+      "shortest_found": 2
+    },
+    {
+      "atoms": 1,
+      "base": "0",
+      "brute_force": "YES",
+      "fixture": "S-lengths (3,)",
+      "labels": [
+        0,
+        0
+      ],
+      "max_len": 6,
+      "observer_sizes": [
+        4
+      ],
+      "oracle": "YES",
+      "shortest_found": 3
+    },
+    {
+      "atoms": 2,
+      "base": "0",
+      "brute_force": "NONE_UP_TO_6",
+      "fixture": "S-lengths (2, 3)",
+      "labels": [
+        0,
+        0
+      ],
+      "max_len": 6,
+      "observer_sizes": [
+        3,
+        4
+      ],
+      "oracle": "NO",
+      "shortest_found": null
+    },
+    {
+      "compiled_clauses": 900,
+      "fixture": "S-lengths (2,3) joint union sample",
+      "satisfied_clauses": 0,
+      "union": "UNKNOWN_WORK"
+    },
+    {
+      "atoms": 2,
+      "base": "0",
+      "brute_force": "NONE_UP_TO_6",
+      "compiled_clauses": 48764,
+      "fixture": "two-loop ('S',)|('F', 'S', 'K1') base 0",
+      "labels": [
+        0,
+        0
+      ],
+      "max_len": 6,
+      "observer_sizes": [
+        1,
+        1
+      ],
+      "oracle": "NO",
+      "satisfied_clauses": 0,
+      "shortest_found": null,
+      "union": "UNKNOWN_WORK"
+    },
+    {
+      "atoms": 2,
+      "base": "0",
+      "brute_force": "NONE_UP_TO_6",
+      "compiled_clauses": 57690,
+      "fixture": "two-loop ('S',)|('K0',) base 0",
+      "labels": [
+        0,
+        0
+      ],
+      "max_len": 6,
+      "observer_sizes": [
+        1,
+        1
+      ],
+      "oracle": "NO",
+      "satisfied_clauses": 0,
+      "shortest_found": null,
+      "union": "UNKNOWN_WORK"
+    },
+    {
+      "atoms": 2,
+      "base": "00",
+      "brute_force": "YES",
+      "compiled_clauses": 5256,
+      "fixture": "zero-length shared endpoint",
+      "labels": [
+        0,
+        0,
+        0
+      ],
+      "max_len": 5,
+      "observer_sizes": [
+        1,
+        1
+      ],
+      "oracle": "YES",
+      "satisfied_clauses": 3,
+      "shortest_found": 3,
+      "union": "EXHAUSTED"
+    },
+    {
+      "atoms": 2,
+      "base": "0",
+      "brute_force": "NONE_UP_TO_6",
+      "compiled_clauses": 7884,
+      "fixture": "incompatible ('K1',)end->root & ('K0', 'F')end->root base 0",
+      "labels": [
+        0,
+        0
+      ],
+      "max_len": 6,
+      "observer_sizes": [
+        2,
+        3
+      ],
+      "oracle": "NO",
+      "satisfied_clauses": 0,
+      "shortest_found": null,
+      "union": "UNKNOWN_WORK"
+    },
+    {
+      "atoms": 2,
+      "base": "0",
+      "brute_force": "NONE_UP_TO_6",
+      "compiled_clauses": 9494,
+      "fixture": "incompatible ('K1',)end->root & ('F', 'S', 'F')end->root base 0",
+      "labels": [
+        0,
+        0
+      ],
+      "max_len": 6,
+      "observer_sizes": [
+        2,
+        4
+      ],
+      "oracle": "NO",
+      "satisfied_clauses": 0,
+      "shortest_found": null,
+      "union": "UNKNOWN_WORK"
+    },
+    {
+      "atoms": 2,
+      "base": "0",
+      "brute_force": "NONE_UP_TO_6",
+      "compiled_clauses": 9494,
+      "fixture": "incompatible ('K1',)end->root & ('F', 'K0', 'F')end->root base 0",
+      "labels": [
+        0,
+        0
+      ],
+      "max_len": 6,
+      "observer_sizes": [
+        2,
+        4
+      ],
+      "oracle": "NO",
+      "satisfied_clauses": 0,
+      "shortest_found": null,
+      "union": "UNKNOWN_WORK"
+    },
+    {
+      "atoms": 2,
+      "base": "0",
+      "brute_force": "NONE_UP_TO_6",
+      "compiled_clauses": 1576,
+      "fixture": "incompatible ('K1',)end->root & ('S', 'S', 'S')root->end base 0",
+      "labels": [
+        0,
+        0
+      ],
+      "max_len": 6,
+      "observer_sizes": [
+        2,
+        4
+      ],
+      "oracle": "NO",
+      "satisfied_clauses": 0,
+      "shortest_found": null,
+      "union": "UNKNOWN_WORK"
+    },
+    {
+      "atoms": 2,
+      "base": "0",
+      "brute_force": "NONE_UP_TO_6",
+      "compiled_clauses": 1560,
+      "fixture": "incompatible ('K1',)end->root & ('S', 'K1', 'S')root->end base 0",
+      "labels": [
+        0,
+        0
+      ],
+      "max_len": 6,
+      "observer_sizes": [
+        2,
+        4
+      ],
+      "oracle": "NO",
+      "satisfied_clauses": 0,
+      "shortest_found": null,
+      "union": "UNKNOWN_WORK"
+    },
+    {
+      "atoms": 2,
+      "base": "0",
+      "brute_force": "NONE_UP_TO_6",
+      "compiled_clauses": 1560,
+      "fixture": "incompatible ('K1',)end->root & ('S', 'K1', 'K0')root->end base 0",
+      "labels": [
+        0,
+        0
+      ],
+      "max_len": 6,
+      "observer_sizes": [
+        2,
+        4
+      ],
+      "oracle": "NO",
+      "satisfied_clauses": 0,
+      "shortest_found": null,
+      "union": "UNKNOWN_WORK"
+    },
+    {
+      "atoms": 2,
+      "base": "00",
+      "brute_force": "NONE_UP_TO_6",
+      "compiled_clauses": 7281,
+      "fixture": "incompatible ('K1',)end->root & ('F', 'S', 'F')end->root base 00",
+      "labels": [
+        0,
+        0,
+        0
+      ],
+      "max_len": 6,
+      "observer_sizes": [
+        2,
+        4
+      ],
+      "oracle": "NO",
+      "satisfied_clauses": 0,
+      "shortest_found": null,
+      "union": "UNKNOWN_WORK"
+    },
+    {
+      "atoms": 2,
+      "base": "00",
+      "brute_force": "NONE_UP_TO_6",
+      "compiled_clauses": 7343,
+      "fixture": "incompatible ('K1',)end->root & ('K0', 'F', 'F')end->root base 00",
+      "labels": [
+        0,
+        0,
+        0
+      ],
+      "max_len": 6,
+      "observer_sizes": [
+        2,
+        4
+      ],
+      "oracle": "NO",
+      "satisfied_clauses": 0,
+      "shortest_found": null,
+      "union": "UNKNOWN_WORK"
+    },
+    {
+      "atoms": 2,
+      "base": "00",
+      "brute_force": "NONE_UP_TO_6",
+      "compiled_clauses": 7674,
+      "fixture": "incompatible ('K1',)end->root & ('K0', 'S', 'F')end->root base 00",
+      "labels": [
+        0,
+        0,
+        0
+      ],
+      "max_len": 6,
+      "observer_sizes": [
+        2,
+        4
+      ],
+      "oracle": "NO",
+      "satisfied_clauses": 0,
+      "shortest_found": null,
+      "union": "UNKNOWN_WORK"
+    },
+    {
+      "atoms": 2,
+      "base": "00",
+      "brute_force": "NONE_UP_TO_6",
+      "compiled_clauses": 7818,
+      "fixture": "incompatible ('K1',)end->root & ('K0', 'S', 'K1')end->root base 00",
+      "labels": [
+        0,
+        0,
+        0
+      ],
+      "max_len": 6,
+      "observer_sizes": [
+        2,
+        4
+      ],
+      "oracle": "NO",
+      "satisfied_clauses": 0,
+      "shortest_found": null,
+      "union": "UNKNOWN_WORK"
+    },
+    {
+      "atoms": 2,
+      "base": "00",
+      "brute_force": "NONE_UP_TO_6",
+      "compiled_clauses": 2964,
+      "fixture": "incompatible ('F', 'K1')end->root & ('F', 'S', 'F')end->root base 00",
+      "labels": [
+        0,
+        0,
+        0
+      ],
+      "max_len": 6,
+      "observer_sizes": [
+        3,
+        4
+      ],
+      "oracle": "NO",
+      "satisfied_clauses": 0,
+      "shortest_found": null,
+      "union": "UNKNOWN_WORK"
+    },
+    {
+      "atoms": 2,
+      "base": "00",
+      "brute_force": "NONE_UP_TO_6",
+      "compiled_clauses": 2964,
+      "fixture": "incompatible ('F', 'K1')end->root & ('K0', 'F', 'F')end->root base 00",
+      "labels": [
+        0,
+        0,
+        0
+      ],
+      "max_len": 6,
+      "observer_sizes": [
+        3,
+        4
+      ],
+      "oracle": "NO",
+      "satisfied_clauses": 0,
+      "shortest_found": null,
+      "union": "UNKNOWN_WORK"
+    },
+    {
+      "atoms": 5,
+      "base": "0",
+      "brute_force": "YES",
+      "fixture": "shared origin, distinct marks",
+      "labels": [
+        0,
+        0
+      ],
+      "max_len": 7,
+      "observer_sizes": [
+        3,
+        4,
+        2,
+        2,
+        2
+      ],
+      "oracle": "YES",
+      "shortest_found": 4
+    },
+    {
+      "atoms": 1,
+      "base": "00",
+      "brute_force": "YES",
+      "compiled_clauses": 76123,
+      "fixture": "singleton wrap",
+      "labels": [
+        0,
+        0,
+        0
+      ],
+      "max_len": 5,
+      "observer_sizes": [
+        2
+      ],
+      "oracle": "YES",
+      "satisfied_clauses": 0,
+      "shortest_found": 3,
+      "union": "UNKNOWN_WORK"
+    },
+    {
+      "atoms": 2,
+      "base": "01",
+      "brute_force": "YES",
+      "compiled_clauses": 40684,
+      "fixture": "ultimate-cut return (modular 1,1)",
+      "labels": [
+        4,
+        3,
+        2
+      ],
+      "max_len": 4,
+      "observer_sizes": [
+        2,
+        5
+      ],
+      "oracle": "YES",
+      "satisfied_clauses": 1,
+      "shortest_found": 4,
+      "union": "UNKNOWN_WORK"
+    },
+    {
+      "atoms": 3,
+      "base": "0",
+      "brute_force": "YES",
+      "fixture": "seam controls",
+      "labels": [
+        0,
+        0
+      ],
+      "max_len": 6,
+      "observer_sizes": [
+        4,
+        2,
+        2
+      ],
+      "oracle": "YES",
+      "shortest_found": 3
+    },
+    {
+      "atoms": 2,
+      "base": "0",
+      "brute_force": "NONE_UP_TO_5",
+      "fixture": "terminal k=4 base=0",
+      "labels": [
+        3,
+        1
+      ],
+      "max_len": 5,
+      "observer_sizes": [
+        1,
+        1
+      ],
+      "oracle": "NO",
+      "shortest_found": null
+    },
+    {
+      "atoms": 2,
+      "base": "10000",
+      "brute_force": "NONE_UP_TO_5",
+      "fixture": "terminal k=3 base=10000",
+      "labels": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "max_len": 5,
+      "observer_sizes": [
+        2,
+        2
+      ],
+      "oracle": "NO",
+      "shortest_found": null
+    },
+    {
+      "atoms": 2,
+      "base": "1",
+      "brute_force": "YES",
+      "fixture": "terminal k=4 base=1",
+      "labels": [
+        3,
+        1
+      ],
+      "max_len": 5,
+      "observer_sizes": [
+        1,
+        1
+      ],
+      "oracle": "YES",
+      "shortest_found": 2
+    },
+    {
+      "atoms": 2,
+      "base": "0001",
+      "brute_force": "NONE_UP_TO_5",
+      "fixture": "terminal k=4 base=0001",
+      "labels": [
+        3,
+        0,
+        2,
+        1,
+        2
+      ],
+      "max_len": 5,
+      "observer_sizes": [
+        2,
+        2
+      ],
+      "oracle": "NO",
+      "shortest_found": null
+    },
+    {
+      "atoms": 2,
+      "base": "1",
+      "brute_force": "YES",
+      "fixture": "terminal k=3 base=1",
+      "labels": [
+        2,
+        0
+      ],
+      "max_len": 5,
+      "observer_sizes": [
+        1,
+        1
+      ],
+      "oracle": "YES",
+      "shortest_found": 2
+    },
+    {
+      "atoms": 2,
+      "base": "100000",
+      "brute_force": "NONE_UP_TO_5",
+      "fixture": "terminal k=4 base=100000",
+      "labels": [
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "max_len": 5,
+      "observer_sizes": [
+        2,
+        2
+      ],
+      "oracle": "NO",
+      "shortest_found": null
+    },
+    {
+      "atoms": 2,
+      "base": "01111",
+      "brute_force": "NONE_UP_TO_5",
+      "fixture": "terminal k=2 base=01111",
+      "labels": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "max_len": 5,
+      "observer_sizes": [
+        1,
+        1
+      ],
+      "oracle": "NO",
+      "shortest_found": null
+    },
+    {
+      "atoms": 2,
+      "base": "1",
+      "brute_force": "NONE_UP_TO_5",
+      "fixture": "terminal k=4 base=1",
+      "labels": [
+        3,
+        1
+      ],
+      "max_len": 5,
+      "observer_sizes": [
+        2,
+        1
+      ],
+      "oracle": "NO",
+      "shortest_found": null
+    },
+    {
+      "atoms": 2,
+      "base": "011",
+      "brute_force": "NONE_UP_TO_5",
+      "fixture": "terminal k=4 base=011",
+      "labels": [
+        3,
+        1,
+        1,
+        1
+      ],
+      "max_len": 5,
+      "observer_sizes": [
+        2,
+        1
+      ],
+      "oracle": "NO",
+      "shortest_found": null
+    },
+    {
+      "atoms": 2,
+      "base": "00100",
+      "brute_force": "NONE_UP_TO_5",
+      "fixture": "terminal k=4 base=00100",
+      "labels": [
+        3,
+        1,
+        0,
+        2,
+        2,
+        2
+      ],
+      "max_len": 5,
+      "observer_sizes": [
+        2,
+        1
+      ],
+      "oracle": "NO",
+      "shortest_found": null
+    },
+    {
+      "atoms": 2,
+      "base": "0",
+      "brute_force": "NONE_UP_TO_5",
+      "fixture": "terminal k=4 base=0",
+      "labels": [
+        3,
+        2
+      ],
+      "max_len": 5,
+      "observer_sizes": [
+        2,
+        1
+      ],
+      "oracle": "NO",
+      "shortest_found": null
+    },
+    {
+      "atoms": 2,
+      "base": "0",
+      "brute_force": "YES",
+      "fixture": "terminal k=4 base=0",
+      "labels": [
+        3,
+        2
+      ],
+      "max_len": 5,
+      "observer_sizes": [
+        2,
+        2
+      ],
+      "oracle": "YES",
+      "shortest_found": 3
+    }
+  ],
+  "full": false,
+  "implementation_blobs": {
+    "rank_frontier_oracle.py": "8c8fe96a8561ed250db16c418d43e77f384b6eb4",
+    "rank_preimage.py": "852fa7d7ba199b9d91ab24a8f7b5abf29ed8819b",
+    "rank_preimage_core.py": "fe297ab4f2252468b1734f6885765cde0d2cecb9",
+    "rank_query_graphs.py": "6fcc612e47ef65edbb7ec9ff973a528a422da8e4",
+    "rank_query_prefix.py": "135d3cb960d07dfddefd74dd255bba289a08af1b"
+  },
+  "limits": [
+    "Brute force enumerates extensions only up to max_len letters; NONE_UP_TO_n is not NO.",
+    "Unions marked EXHAUSTED were fully enumerated; UNKNOWN unions hit a work or time cap.",
+    "Finite agreement does not prove the Closure Lemma; a discrepancy would refute the implementation as written."
+  ],
+  "quick": true,
+  "seed": 2026091832,
+  "status": "PASS",
+  "work_cap": 1500000
+}

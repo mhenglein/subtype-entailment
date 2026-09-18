@@ -753,6 +753,15 @@ every four-state case; this check does not add a small-state result.
 | Evidence | [Saved result](../results/lean-rank-query.json): seed `2026091801`; 16 literal prefix graphs, 16 finishing queries and 64 query unions (88 clauses) evaluated natively in Lean agree with `literal_graph`, `rank_preimage_core.model`, `explicit_query_truth` and `finish_queries`. |
 | Status | Translation/semantics regression for the pinned stage-4a definitions; no E ID; the Closure Lemma itself is untouched. |
 
+### Adversarial Closure Lemma fixtures
+
+| Field | Record |
+|---|---|
+| Command | `python3 experiments/check_closure_fixtures.py --quick --output /tmp/closure-fixtures.json && cmp results/closure-fixtures.json /tmp/closure-fixtures.json` (about 137 s; `--full` removes the work caps and is not byte-comparable) |
+| Detail | [Fixture note](../notes/2026-09-18-closure-fixtures.md); [referee brief, points 1-2](../notes/2026-09-18-closure-lemma-referee-brief.md) |
+| Evidence | [Saved result](../results/closure-fixtures.json): seed `2026091832`, work cap 1,500,000; an independent evaluator, literal safety predicate and first-return extension enumerator judge the imported compiler: 149 brute-force extensions, 54 of 54 forward certificates, 59 sound reconstructions, one exhausted two-atom union (5,256 clauses), 16 work-capped unions, 297,083 compiled clauses within `U_k(T)`, 12 separately-satisfiable/jointly-unsatisfiable pairs with no satisfiable enumerated joint clause, oracle YES/NO 10/24 consistent with brute force; no discrepancy. |
+| Status | Bounded adversarial regression against `rank_preimage.py`; caps are UNKNOWN, never NO; no E ID; C080 remains a candidate. |
+
 ## Not yet reproducible or not yet run
 
 These items have no executed experiment ID. Do not assign them `REPRO` status
