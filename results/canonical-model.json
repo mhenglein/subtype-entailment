@@ -1,0 +1,79 @@
+{
+  "base_commit": "0e9ab725cb73719353459d319a485d39675f228d",
+  "basic_dependency_blob": "953f04e48ea6d3b737ac93471f2d3d6e42163ae5",
+  "branch": "lean/canonical-model-2026-09-18",
+  "checked_commit": "69747b91f01a20f417f1cc6d400a0d88ccd09628",
+  "classical_choice_in_definitions": false,
+  "compile": "PASS",
+  "custom_or_unfinished_axioms": false,
+  "declaration_counts_by_kind": {
+    "abbrev": 2,
+    "def": 27,
+    "inductive": 2,
+    "structure": 2,
+    "theorem": 44
+  },
+  "earlier_lean_core": "PASS; results/lean-checks.json unchanged",
+  "entire_repository_ci_claimed": false,
+  "execution_location": "GitHub Actions, not local container",
+  "independent_human_review": false,
+  "job": 105544765450,
+  "kernel_replay": "PASS (bundled leanchecker)",
+  "lean_commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+  "local_lean_run": false,
+  "original_memo_reread": false,
+  "outstanding": [
+    "compound-input naming/normalization",
+    "finite Pop/Post saturation and decidability of safety",
+    "finite summary I_C and ordered-cut correspondence",
+    "absorption and C029/C031 formal transfer",
+    "terminal query compiler correctness, termination and concrete bound",
+    "final executable composition"
+  ],
+  "public_dependency_audits": 77,
+  "scope": "Kernel-checked arbitrary-tree canonical-model semantic foundation, not an executable decision or complete stage 6",
+  "selected_axiom_reports": {
+    "CanonicalModel.closure_models_iff": [
+      "propext"
+    ],
+    "CanonicalModel.derived_sound": [],
+    "CanonicalModel.derived_take": [],
+    "CanonicalModel.not_entails_iff_canonical": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "CanonicalModel.satisfiable_iff_forced_safe": [
+      "propext",
+      "Quot.sound"
+    ],
+    "CanonicalModelAudit.spine_no_bounded_model": [
+      "propext",
+      "Quot.sound"
+    ],
+    "CanonicalModelAudit.spine_separates_at_empty": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TreeSemantics.diagram_domain_exact": [
+      "propext"
+    ],
+    "TreeSemantics.not_entails_iff_separating": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "source_blobs": {
+    ".github/workflows/lean-canonical-model.yml": "880ee5ec49b5da0d9ab2451c397fbbcc241ad781",
+    "lean/Subtail/CanonicalModel.lean": "fba9aeef95af50a8a22fd45fe7b94aeea2f67ec6",
+    "lean/Subtail/CanonicalModelAudit.lean": "e43df070680149768c9fee54f1df6689e48557a5",
+    "lean/Subtail/TreeSemantics.lean": "ead23728e922fa57c8b8c846129086f4f7aaa435"
+  },
+  "standard_axioms_only": true,
+  "status": "PASS",
+  "style_warnings": 2,
+  "toolchain": "leanprover/lean4:v4.33.1",
+  "workflow_conclusion": "success",
+  "workflow_run": 35327770505
+}
