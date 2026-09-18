@@ -15,7 +15,7 @@ def spineValuation : Valuation 2 := fun q => if q = 0 then zeroSpine else bottom
 
 theorem spine_is_model : Models spineConstraints spineValuation := by
   intro c hc
-  simp only [spineConstraints, List.mem_cons, List.mem_singleton] at hc
+  simp [spineConstraints] at hc
   rcases hc with rfl | rfl
   · simpa [Holds, spineValuation] using zeroSpine_lower
   · intro w hw
@@ -58,7 +58,8 @@ theorem empty_prefix_is_seed : pathSeeds prefixExample 0 [false] 0 [] := by
 
 theorem empty_prefix_has_consequence :
     Derived prefixExample (pathSeeds prefixExample 0 [false]) 2 [false] := by
-  exact Derived.pushLeft (by simp [prefixExample]) (Derived.seed empty_prefix_is_seed)
+  exact Derived.pushLeft (l := 0) (r := 1) (a := 2) (w := [])
+    (by simp [prefixExample]) (Derived.seed empty_prefix_is_seed)
 
 def singleWordOnly : Seeds 3 := fun q w => q = 0 ∧ w = [false]
 
