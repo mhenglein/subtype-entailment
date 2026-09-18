@@ -210,24 +210,18 @@ theorem le_closureBound (k T : Nat) (hk : 0 < k) (hT : 2 ≤ T) :
     T ≤ closureBound k T := by
   unfold closureBound
   have hpow : T ≤ T ^ (2 * T + 2) := by
-    rw [← Nat.pow_one T]
-    exact Nat.pow_le_pow_right (by omega) (by omega)
+    calc
+      T = T ^ 1 := by simp
+      _ ≤ T ^ (2 * T + 2) := Nat.pow_le_pow_right (by omega : 0 < T) (by omega)
   have hmul : T ^ (2 * T + 2) ≤ (64 * k) * T ^ (2 * T + 2) := by
     exact Nat.le_mul_of_pos_left _ (Nat.mul_pos (by decide) hk)
   exact Nat.le_trans hpow hmul
-
-/-- Every query has weight at least two by definition. -/
-theorem two_le_weight (φ : Query k) : 2 ≤ weight φ := by
-  unfold weight
-  exact Nat.le_max_left _ _
 
 /-- Every T_h in the candidate recurrence stays at least two for k>0. -/
 theorem two_le_weightBudget (k : Nat) (hk : 0 < k) : ∀ h, 2 ≤ weightBudget k h := by
   intro h
   induction h with
-  | zero =>
-    simp [weightBudget]
-    omega
+  | zero => simp [weightBudget]
   | succ h ih =>
     rw [weightBudget]
     exact Nat.le_trans ih (le_closureBound k _ hk ih)
@@ -243,7 +237,7 @@ theorem weight_promote_finish_le (I : Instance k) (pre : Query k → Query k)
   intro h
   induction h with
   | zero =>
-    simpa [weightBudget] using weight_finishQuery_le I
+    simpa [promote, weightBudget] using weight_finishQuery_le I
   | succ h ih =>
     rw [weightBudget]
     have hstep := weight_promote_succ_le I pre hclosure (finishQuery I) h
