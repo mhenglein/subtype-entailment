@@ -1783,5 +1783,398 @@ theorem forward_chain (r : Recon I c D B σ) (hB : SafeReference I B) (hv : vali
 
 end Recon
 
+/-! ## Piece runs -/
+
+theorem finOf_pos {n i : Nat} (h : i < n) : finOf n i = some ⟨i, h⟩ := by
+  simp [finOf, h]
+
+/-- Colours of old vertices in the extension graph, through `coreMap`. -/
+theorem colC_old_all (I : Instance k) (B : Reference k) (a : Bool) (p : Fin k)
+    (rest : List (Bool × Fin k)) {j : Nat} (hj : j ≤ B.word.length) :
+    colB I (extRef B ((a, p) :: rest)) j = coreMap a (colB I B j) := by
+  by_cases hjm : j = B.word.length
+  · rw [hjm]; exact colC_m I B a p rest
+  · rw [colC_old I B _ (by omega)]
+    have hend : (colB I B j).isEnd = false := by simp [colB, hjm]
+    simp [coreMap, hend]
+
+namespace Recon
+variable {I : Instance k} {c : Clause k} {D : Diagram k} {B : Reference k}
+  {σ : Var D → Fin (prefixGraph I B).size}
+
+/-- Position in the extension of a variable location. -/
+def locPos (r : Recon I c D B σ) : Loc → Nat
+  | .core x => (σ (coreVar D x)).val
+  | .fresh g => r.pos g
+
+def LocOK (D : Diagram k) : Loc → Prop
+  | .core _ => True
+  | .fresh g => g < D.groups
+
+theorem locPos_le (r : Recon I c D B σ) {l : Loc} (hl : LocOK D l) :
+    r.locPos l ≤ (extRef B r.ext).word.length := by
+  cases l with
+  | core x =>
+    have := (σ (coreVar D x)).isLt
+    change (σ (coreVar D x)).val < B.word.length + 1 at this
+    rw [extRef_length]
+    show (σ (coreVar D x)).val ≤ B.word.length + r.ext.length
+    omega
+  | fresh g => exact r.pos_le (by change g < D.groups at hl; omega)
+
+theorem locPos_size (r : Recon I c D B σ) {l : Loc} (hl : LocOK D l) :
+    r.locPos l < (prefixGraph I (extRef B r.ext)).size :=
+  Nat.lt_succ_of_le (r.locPos_le hl)
+
+theorem colC_pos (r : Recon I c D B σ) (hB : SafeReference I B) (hv : validDiagram I c D = true)
+    {g : Nat} (hg : g ≤ D.groups - 1) :
+    colB I (extRef B r.ext) (r.pos g) = fm I D g (colB I B (σ (zVar D g)).val) := by
+  have hm : 0 < B.word.length := hB.nonempty
+  have hr := (r.firstReturnExt hB hv).firstReturn
+  rw [colC_fresh I B r.ext hm hr (by simp only [pos]; omega) (r.pos_le hg), r.label_pos hg,
+    r.word_pos hv hg, r.cursor_pos hm hg]
+  rfl
+
+theorem colC_core (r : Recon I c D B σ) (j : Fin (prefixGraph I B).size) :
+    colB I (extRef B r.ext) j.val = coreMap D.firstBit (colB I B j.val) :=
+  colC_old_all I B _ _ _ (by have := j.isLt; change j.val < B.word.length + 1 at this; omega)
+
+theorem colC_end (r : Recon I c D B σ) :
+    colB I (extRef B r.ext) B.word.length = coreMap D.firstBit D.oldEnd := by
+  rw [← r.end_colour, r.end_pos]
+  exact colC_old_all I B _ _ _ (Nat.le_refl _)
+
+/-- Satisfaction of the compiled clause by `σ`, spelled out. -/
+structure Model (r : Recon I c D B σ) : Prop where
+  tests : ∀ t ∈ (compileValid I c D).tests, t.2 (colB I B (σ t.1).val) = true
+  equal : ∀ e ∈ (compileValid I c D).equal, σ e.1 = σ e.2
+  unequal : ∀ e ∈ (compileValid I c D).unequal, σ e.1 ≠ σ e.2
+  atoms : ∀ a ∈ (compileValid I c D).atoms, Accepts (prefixGraph I B) a.observer (σ a.source) (σ a.target)
+
+section Pieces
+variable (r : Recon I c D B σ)
+  {ai : Nat} (hai : ai < c.atoms.length) {pi : Nat} (hpi : pi < (piecesOf D ai).length)
+
+/-- Membership of an emitted item of this piece in the compiled clause. -/
+theorem piece_test (hM : r.Model) {t : Var D × (Colour k → Bool)}
+    (h : t ∈ (compilePiece I D ai pi (c.atoms[ai]).observer ((piecesOf D ai)[pi])).tests) :
+    t.2 (colB I B (σ t.1).val) = true :=
+  hM.tests _ (mem_tests_emitted I c D (mem_allEmitted_of_piece I c D (·.tests) tests_append rfl hai hpi h))
+
+theorem piece_equal (hM : r.Model) {e : Var D × Var D}
+    (h : e ∈ (compilePiece I D ai pi (c.atoms[ai]).observer ((piecesOf D ai)[pi])).equal) :
+    σ e.1 = σ e.2 :=
+  hM.equal _ (mem_equal_emitted I c D (mem_allEmitted_of_piece I c D (·.equal) equal_append rfl hai hpi h))
+
+theorem piece_atom (hM : r.Model) {a : Atom k (2 + D.groups + D.coreVars)}
+    (h : a ∈ (compilePiece I D ai pi (c.atoms[ai]).observer ((piecesOf D ai)[pi])).atoms) :
+    Accepts (prefixGraph I B) a.observer (σ a.source) (σ a.target) :=
+  hM.atoms _ (mem_atoms_emitted I c D (mem_allEmitted_of_piece I c D (·.atoms) atoms_append rfl hai hpi h))
+
+theorem piece_active {x : Nat × Active k}
+    (h : x ∈ (compilePiece I D ai pi (c.atoms[ai]).observer ((piecesOf D ai)[pi])).active) :
+    x ∈ (allEmitted I c D).active :=
+  mem_allEmitted_of_piece I c D (·.active) active_append rfl hai hpi h
+
+end Pieces
+
+/-- The one-step run of a portal: an edge between two positions with the observer
+moving from `lc` to `rc`, both controls allowed. -/
+theorem portal_run {G : Graph k} {o : Observer k} {u v : Fin G.size} {lc rc : Fin o.size} {l : Label}
+    (he : G.edge u l = some v) (hl : o.allows lc (G.colour u) = true)
+    (hrc : o.allows rc (G.colour v) = true) (hmv : rc ∈ o.move lc (G.colour u) l (G.colour v)) :
+    Run G o (u, lc) (v, rc) :=
+  Run.step (Run.refl hl) ⟨l, he, hmv, hrc⟩
+
+theorem portalTest_facts {P : Portal k} {c : Colour k} (h : portalTest P c = true) :
+    P.observer.allows P.src (P.left c) = true ∧ P.observer.allows P.dst (P.right c) = true ∧
+      P.dst ∈ P.observer.move P.src (P.left c) P.label (P.right c) := by
+  unfold portalTest at h
+  simp only [Bool.and_eq_true] at h
+  exact ⟨h.1.1, h.1.2, List.contains_iff_mem.mp h.2⟩
+
+end Recon
+
+/-! ## Piece runs by kind -/
+
+namespace Recon
+variable {I : Instance k} {c : Clause k} {D : Diagram k} {B : Reference k}
+  {σ : Var D → Fin (prefixGraph I B).size}
+
+theorem pos_zero (r : Recon I c D B σ) : r.pos 0 = B.word.length + 1 := by
+  simp [pos, pre]
+
+theorem word_first (r : Recon I c D B σ) :
+    (extRef B r.ext).word[B.word.length]? = some D.firstBit := by
+  have := extRef_getElem? B r.ext 0
+  simpa [ext_eq] using this
+
+/-- The entering or wrapping edge from position `u` (the old endpoint or the new
+endpoint) into the first fresh vertex `m + 1`. -/
+theorem edge_into_first (r : Recon I c D B σ) (hB : SafeReference I B) (hv : validDiagram I c D = true)
+    {u : Nat} (hu : u ≤ (extRef B r.ext).word.length) {l : Label}
+    (hcase : (u = B.word.length ∧ (l = .S ∨ l = .K D.firstBit)) ∨
+      (u = (extRef B r.ext).word.length ∧ l = .K D.firstBit)) :
+    (prefixGraph I (extRef B r.ext)).edge ⟨u, Nat.lt_succ_of_le hu⟩ l =
+      some ⟨r.pos 0, r.pos_size (Nat.zero_le _)⟩ := by
+  have hm : 0 < B.word.length := hB.nonempty
+  have hr := (r.firstReturnExt hB hv).firstReturn
+  have hmlt : B.word.length < (extRef B r.ext).word.length := by unfold FirstReturn at hr; exact hr.1
+  have key : edgeC I B r.ext u hu l = some (r.pos 0) := by
+    rw [pos_zero]
+    rcases hcase with ⟨rfl, hl | hl⟩ | ⟨rfl, hl⟩
+    · subst hl; rw [edgeC_S I B _ hm hr, if_pos hmlt]
+    · subst hl; rw [edgeC_K_m I B _ hm hr, if_pos (r.word_first)]
+    · subst hl; rw [edgeC_K_end I B _ hm hr, if_pos (r.word_first)]
+  obtain ⟨h', he⟩ := edge_of_edgeC I B r.ext hu key
+  exact he
+
+/-- The failure edge of a mark returns to its origin. -/
+theorem edge_F_mark (r : Recon I c D B σ) (hB : SafeReference I B) (hv : validDiagram I c D = true)
+    {g : Nat} (hg : g ≤ D.groups - 1) :
+    (prefixGraph I (extRef B r.ext)).edge ⟨r.pos g, r.pos_size hg⟩ .F =
+      some (castC I B r.ext (σ (zVar D g))) := by
+  have hm : 0 < B.word.length := hB.nonempty
+  have hr := (r.firstReturnExt hB hv).firstReturn
+  have key : edgeC I B r.ext (r.pos g) (r.pos_le hg) .F = some (σ (zVar D g)).val := by
+    rw [edgeC_F_fresh I B _ hm hr (by simp only [pos]; omega), r.cursor_pos hm hg]
+  obtain ⟨h', he⟩ := edge_of_edgeC I B r.ext (r.pos_le hg) key
+  exact he
+
+/-- A mismatch `K_b` edge from a mark uses the base `K_b` edge of its origin. -/
+theorem edge_K_mark (r : Recon I c D B σ) (hB : SafeReference I B) (hv : validDiagram I c D = true)
+    {g : Nat} (hg : g ≤ D.groups - 1) {b : Bool}
+    (hb : some b ≠ (if g = D.groups - 1 then some D.firstBit else nextOf D g))
+    {v : Fin (prefixGraph I B).size} (he : (prefixGraph I B).edge (σ (zVar D g)) (.K b) = some v) :
+    (prefixGraph I (extRef B r.ext)).edge ⟨r.pos g, r.pos_size hg⟩ (.K b) = some (castC I B r.ext v) := by
+  have hm : 0 < B.word.length := hB.nonempty
+  have hr := (r.firstReturnExt hB hv).firstReturn
+  have hval : advance B.word (σ (zVar D g)).val b = v.val := by
+    have := edgeB_val I B (σ (zVar D g)).isLt (.K b)
+    rw [he] at this
+    exact (Option.some.inj this).symm
+  have key : edgeC I B r.ext (r.pos g) (r.pos_le hg) (.K b) = some v.val := by
+    by_cases hlast : g = D.groups - 1
+    · have hb' : ¬ b = D.firstBit := by
+        intro hba; apply hb; simp [hlast, hba]
+      have hne : ¬ (extRef B r.ext).word[B.word.length]? = some b := by
+        rw [r.word_first]; intro h; exact hb' (Option.some.inj h).symm
+      rw [edgeC_congr I B r.ext (by rw [hlast, length_ext]) _ (Nat.le_refl _), edgeC_K_end I B _ hm hr,
+        if_neg hne, ← hval]
+      congr 2
+      rw [hlast, r.zlast, r.end_pos]
+    · have hlt : g < D.groups - 1 := by omega
+      have hne : ¬ (extRef B r.ext).word[r.pos g]? = some b := by
+        rw [r.word_pos hv hg]; intro h; apply hb; simp [hlast]; exact h.symm
+      rw [edgeC_congr I B r.ext rfl _ (Nat.le_of_lt (r.pos_lt hlt)),
+        edgeC_K_fresh I B _ hm hr (by simp only [pos]; omega) (r.pos_lt hlt), if_neg hne,
+        r.cursor_pos hm hg, hval]
+  obtain ⟨h', he'⟩ := edge_of_edgeC I B r.ext (r.pos_le hg) key
+  exact he'
+
+end Recon
+
+/-! ## The run of one piece -/
+
+namespace Recon
+variable {I : Instance k} {c : Clause k} {D : Diagram k} {B : Reference k}
+  {σ : Var D → Fin (prefixGraph I B).size}
+
+theorem all_getD_lt {cs : List Nat} {n : Nat} (h : cs.all (fun x => decide (x < n)) = true) {t : Nat}
+    (ht : t < cs.length) : cs.getD t 0 < n := by
+  rw [List.getD_eq_getElem?_getD, List.getElem?_eq_getElem ht, Option.getD_some]
+  exact of_decide_eq_true ((List.all_eq_true.mp h) _ (List.getElem_mem ht))
+
+/-- **Piece runs.**  Every valid piece of a satisfied compiled clause is realized by a
+run of the atom's observer on the extension between the piece's endpoint positions,
+from its left control to its right control. -/
+theorem piece_run (r : Recon I c D B σ) (hB : SafeReference I B) (hv : validDiagram I c D = true)
+    (hM : r.Model) {ai : Nat} (hai : ai < c.atoms.length) {pi : Nat} (hpi : pi < (piecesOf D ai).length)
+    (o : Observer k) (ho : (c.atoms[ai]).observer = o) (P : Piece) (hP : (piecesOf D ai)[pi] = P)
+    (hval : pieceValid I D ai pi o P = true) :
+    ∃ (hs : LocOK D (pieceSourceLoc P)) (ht : LocOK D (pieceTargetLoc P))
+      (hlc : P.lc < o.size) (hrc : P.rc < o.size),
+      Run (prefixGraph I (extRef B r.ext)) o
+        (⟨r.locPos (pieceSourceLoc P), r.locPos_size hs⟩, ⟨P.lc, hlc⟩)
+        (⟨r.locPos (pieceTargetLoc P), r.locPos_size ht⟩, ⟨P.rc, hrc⟩) := by
+  have hm : 0 < B.word.length := hB.nonempty
+  have hr := (r.firstReturnExt hB hv).firstReturn
+  obtain ⟨hn, -⟩ := valid_facts I c D hv
+  have htest : ∀ t ∈ (compilePiece I D ai pi o P).tests, t.2 (colB I B (σ t.1).val) = true := by
+    intro t ht; apply r.piece_test hai hpi hM; rw [ho, hP]; exact ht
+  have hequal : ∀ e ∈ (compilePiece I D ai pi o P).equal, σ e.1 = σ e.2 := by
+    intro e he; apply r.piece_equal hai hpi hM; rw [ho, hP]; exact he
+  have hatom : ∀ a ∈ (compilePiece I D ai pi o P).atoms,
+      Accepts (prefixGraph I B) a.observer (σ a.source) (σ a.target) := by
+    intro a ha; apply r.piece_atom hai hpi hM; rw [ho, hP]; exact ha
+  have hactive : ∀ x ∈ (compilePiece I D ai pi o P).active, x ∈ (allEmitted I c D).active := by
+    intro x hx; apply piece_active hai hpi; rw [ho, hP]; exact hx
+  obtain ⟨kind, src, tgt, lc, rc, label⟩ := P
+  cases kind with
+  | core =>
+    simp only [pieceValid, Bool.and_eq_true, decide_eq_true_eq] at hval
+    obtain ⟨⟨hlc, hrc⟩, -⟩ := hval
+    simp only [compilePiece, finOf_pos hlc, finOf_pos hrc] at hatom
+    have hacc := hatom _ (List.mem_singleton.mpr rfl)
+    obtain ⟨q, hq, p', hp', hrun⟩ := hacc
+    have hq' : q = ⟨lc, hlc⟩ := List.mem_singleton.mp hq
+    have hp'' : p' = ⟨rc, hrc⟩ := List.mem_singleton.mp hp'
+    subst hq' hp''
+    refine ⟨trivial, trivial, hlc, hrc, ?_⟩
+    simp only [pieceSourceLoc, pieceTargetLoc, locPos]
+    exact coreObs_run_transport I B D.firstBit (markState D 0) (r.pre (D.groups - 1)) hm hr o
+      ⟨lc, hlc⟩ ⟨rc, hrc⟩ hrun
+  | forward =>
+    simp only [pieceValid, Bool.and_eq_true, beq_iff_eq, decide_eq_true_eq] at hval
+    obtain ⟨⟨hlc, hrc⟩, ⟨hst, htgt⟩, hcond⟩ := hval
+    have hsrc_ok : LocOK D (.fresh src) := by change src < D.groups; omega
+    have htgt_ok : LocOK D (.fresh tgt) := by change tgt < D.groups; omega
+    refine ⟨hsrc_ok, htgt_ok, hlc, hrc, ?_⟩
+    simp only [pieceSourceLoc, pieceTargetLoc, locPos]
+    by_cases hst' : src = tgt
+    · subst hst'
+      rw [if_pos rfl] at hcond
+      have hlr : lc = rc := beq_iff_eq.mp hcond
+      subst hlr
+      simp [compilePiece, finOf_pos hlc] at htest
+      have ht : o.allows ⟨lc, hlc⟩ (fm I D src (colB I B (σ (zVar D src)).val)) = true := by
+        simpa using htest
+      apply Run.refl
+      show o.allows ⟨lc, hlc⟩ ((prefixGraph I (extRef B r.ext)).colour ⟨r.pos src, _⟩) = true
+      rw [prefixGraph_colour, r.colC_pos hB hv (by omega)]
+      exact ht
+    · rw [if_neg hst'] at hcond
+      have hlt : src < tgt := by omega
+      simp only [compilePiece, finOf_pos hlc, finOf_pos hrc, if_neg hst'] at hactive
+      have hcslen := forwardControls_length D ai pi src tgt ⟨.forward, src, tgt, lc, rc, label⟩ hlt
+      have hcs : ∀ t, t ≤ tgt - src →
+          (forwardControls D ai pi src tgt ⟨.forward, src, tgt, lc, rc, label⟩).getD t 0 < o.size := by
+        intro t ht
+        exact all_getD_lt hcond (by rw [hcslen]; omega)
+      have hact : ∀ t, t < tgt - src →
+          (o, (forwardControls D ai pi src tgt ⟨.forward, src, tgt, lc, rc, label⟩).getD t 0,
+            (forwardControls D ai pi src tgt ⟨.forward, src, tgt, lc, rc, label⟩).getD (t + 1) 0) ∈
+            itemsAt I c D (src + t) := by
+        intro t ht
+        exact mem_itemsAt I c D (hactive _ (mem_forwardActive D ai pi src tgt o _ ht))
+      have hrun := r.forward_chain hB hv o _ hlt (by omega) hcs hact (tgt - src) (Nat.le_refl _)
+      have e1 : (⟨(forwardControls D ai pi src tgt ⟨.forward, src, tgt, lc, rc, label⟩).getD 0 0,
+          hcs 0 (Nat.zero_le _)⟩ : Fin o.size) = ⟨lc, hlc⟩ :=
+        Fin.ext (forwardControls_zero D ai pi src tgt ⟨.forward, src, tgt, lc, rc, label⟩)
+      have e2 : (⟨(forwardControls D ai pi src tgt ⟨.forward, src, tgt, lc, rc, label⟩).getD (tgt - src) 0,
+          hcs (tgt - src) (Nat.le_refl _)⟩ : Fin o.size) = ⟨rc, hrc⟩ :=
+        Fin.ext (forwardControls_last D ai pi src tgt _ hlt)
+      have hsum : src + (tgt - src) = tgt := Nat.add_sub_cancel' (Nat.le_of_lt hlt)
+      have e3 : (⟨r.pos (src + (tgt - src)), r.pos_size (by rw [hsum]; omega)⟩ :
+          Fin (prefixGraph I (extRef B r.ext)).size) =
+          ⟨r.pos tgt, r.pos_size (by omega)⟩ := Fin.ext (congrArg r.pos hsum)
+      rw [e1, e2, e3] at hrun
+      exact hrun
+  | enter =>
+    simp only [pieceValid, Bool.and_eq_true, Bool.or_eq_true, beq_iff_eq, decide_eq_true_eq] at hval
+    obtain ⟨⟨hlc, hrc⟩, ⟨htgt, hlabel⟩, hsrc⟩ := hval
+    subst htgt
+    simp only [compilePiece, finOf_pos hlc, finOf_pos hrc] at htest hequal
+    have heq := hequal _ (List.mem_singleton.mpr rfl)
+    have ht := htest _ (List.mem_singleton.mpr rfl)
+    obtain ⟨hleft, hright, hmv⟩ := portalTest_facts ht
+    have hsrc_pos : (σ (coreVar D src)).val = B.word.length := by
+      show (σ (coreVar D src)).val = B.word.length
+      rw [show σ (coreVar D src) = σ (endVar D) from heq, r.end_pos]
+    have h0 : LocOK D (.fresh 0) := by change 0 < D.groups; omega
+    refine ⟨trivial, h0, hlc, hrc, ?_⟩
+    simp only [pieceSourceLoc, pieceTargetLoc, locPos]
+    have hu : (σ (coreVar D src)).val ≤ (extRef B r.ext).word.length := by
+      rw [hsrc_pos]; exact Nat.le_of_lt (by unfold FirstReturn at hr; exact hr.1)
+    have hedge := r.edge_into_first hB hv hu (l := label) (Or.inl ⟨hsrc_pos, hlabel⟩)
+    have hcu : (prefixGraph I (extRef B r.ext)).colour ⟨(σ (coreVar D src)).val, Nat.lt_succ_of_le hu⟩ =
+        coreMap D.firstBit D.oldEnd := by
+      rw [prefixGraph_colour]
+      show colB I (extRef B r.ext) (σ (coreVar D src)).val = _
+      rw [hsrc_pos]; exact r.colC_end
+    have hcv : (prefixGraph I (extRef B r.ext)).colour ⟨r.pos 0, r.pos_size (Nat.zero_le _)⟩ =
+        fm I D 0 (colB I B (σ (zVar D 0)).val) := by
+      rw [prefixGraph_colour]; exact r.colC_pos hB hv (Nat.zero_le _)
+    exact portal_run hedge (by rw [hcu]; exact hleft) (by rw [hcv]; exact hright)
+      (by rw [hcu, hcv]; exact hmv)
+  | wrap =>
+    simp only [pieceValid, Bool.and_eq_true, beq_iff_eq, decide_eq_true_eq] at hval
+    obtain ⟨⟨hlc, hrc⟩, ⟨hsrc, htgt⟩, hlabel⟩ := hval
+    subst hsrc htgt hlabel
+    simp only [compilePiece, finOf_pos hlc, finOf_pos hrc] at htest
+    have ht := htest _ (List.mem_singleton.mpr rfl)
+    obtain ⟨hleft, hright, hmv⟩ := portalTest_facts ht
+    have hlast_ok : LocOK D (.fresh (D.groups - 1)) := by change D.groups - 1 < D.groups; omega
+    have h0 : LocOK D (.fresh 0) := by change 0 < D.groups; omega
+    refine ⟨hlast_ok, h0, hlc, hrc, ?_⟩
+    simp only [pieceSourceLoc, pieceTargetLoc, locPos]
+    have hedge := r.edge_into_first hB hv (r.pos_le (Nat.le_refl _)) (l := .K D.firstBit)
+      (Or.inr ⟨r.length_ext.symm, rfl⟩)
+    have hcu : (prefixGraph I (extRef B r.ext)).colour ⟨r.pos (D.groups - 1), r.pos_size (Nat.le_refl _)⟩ =
+        fm I D (D.groups - 1) D.oldEnd := by
+      rw [prefixGraph_colour, r.colC_pos hB hv (Nat.le_refl _), r.zlast, r.end_colour]
+    have hcv : (prefixGraph I (extRef B r.ext)).colour ⟨r.pos 0, r.pos_size (Nat.zero_le _)⟩ =
+        fm I D 0 (colB I B (σ (zVar D 0)).val) := by
+      rw [prefixGraph_colour]; exact r.colC_pos hB hv (Nat.zero_le _)
+    exact portal_run hedge (by rw [hcu]; exact hleft) (by rw [hcv]; exact hright)
+      (by rw [hcu, hcv]; exact hmv)
+  | exit =>
+    cases label with
+    | F =>
+      simp only [pieceValid, Bool.and_eq_true, decide_eq_true_eq] at hval
+      obtain ⟨⟨hlc, hrc⟩, ⟨hsrc, htgt⟩, -⟩ := hval
+      have hsrc_ok : LocOK D (.fresh src) := by change src < D.groups; omega
+      refine ⟨hsrc_ok, trivial, hlc, hrc, ?_⟩
+      simp only [pieceSourceLoc, pieceTargetLoc, locPos]
+      have hcu : (prefixGraph I (extRef B r.ext)).colour ⟨r.pos src, r.pos_size (by omega)⟩ =
+          fm I D src (colB I B (σ (zVar D src)).val) := by
+        rw [prefixGraph_colour]; exact r.colC_pos hB hv (by omega)
+      simp only [compilePiece, finOf_pos hlc, finOf_pos hrc] at htest hequal
+      have heq := hequal _ (List.mem_singleton.mpr rfl)
+      have ht := htest _ (List.mem_singleton.mpr rfl)
+      obtain ⟨hleft, hright, hmv⟩ := portalTest_facts ht
+      have hedge := r.edge_F_mark hB hv (g := src) (by omega)
+      have htv : castC I B r.ext (σ (zVar D src)) =
+          ⟨(σ (coreVar D tgt)).val, Nat.lt_succ_of_le (r.locPos_le (l := .core tgt) trivial)⟩ := by
+        apply Fin.ext
+        show (σ (zVar D src)).val = (σ (coreVar D tgt)).val
+        rw [show σ (coreVar D tgt) = σ (zVar D src) from heq]
+      rw [htv] at hedge
+      have hcv : (prefixGraph I (extRef B r.ext)).colour
+          ⟨(σ (coreVar D tgt)).val, Nat.lt_succ_of_le (r.locPos_le (l := .core tgt) trivial)⟩ =
+          coreMap D.firstBit (colB I B (σ (zVar D src)).val) := by
+        rw [prefixGraph_colour]
+        show colB I (extRef B r.ext) (σ (coreVar D tgt)).val = _
+        rw [show σ (coreVar D tgt) = σ (zVar D src) from heq]
+        exact r.colC_core (σ (zVar D src))
+      exact portal_run hedge (by rw [hcu]; exact hleft) (by rw [hcv]; exact hright)
+        (by rw [hcu, hcv]; exact hmv)
+    | S => simp [pieceValid] at hval
+    | K b =>
+      simp only [pieceValid, Bool.and_eq_true, bne_iff_ne, beq_iff_eq, decide_eq_true_eq] at hval
+      obtain ⟨⟨hlc, hrc⟩, ⟨hsrc, htgt⟩, hlabel⟩ := hval
+      have hsrc_ok : LocOK D (.fresh src) := by change src < D.groups; omega
+      refine ⟨hsrc_ok, trivial, hlc, hrc, ?_⟩
+      simp only [pieceSourceLoc, pieceTargetLoc, locPos]
+      have hcu : (prefixGraph I (extRef B r.ext)).colour ⟨r.pos src, r.pos_size (by omega)⟩ =
+          fm I D src (colB I B (σ (zVar D src)).val) := by
+        rw [prefixGraph_colour]; exact r.colC_pos hB hv (by omega)
+      simp only [compilePiece, finOf_pos hlc, finOf_pos hrc] at hatom
+      have hacc := hatom _ (List.mem_singleton.mpr rfl)
+      obtain ⟨he, hleft, hright, hsem⟩ := accepts_edgeObs hacc
+      have hedge := r.edge_K_mark hB hv (g := src) (by omega) hlabel he
+      have hcv : (prefixGraph I (extRef B r.ext)).colour
+          ⟨(σ (coreVar D tgt)).val, Nat.lt_succ_of_le (r.locPos_le (l := .core tgt) trivial)⟩ =
+          coreMap D.firstBit (colB I B (σ (coreVar D tgt)).val) := by
+        rw [prefixGraph_colour]; exact r.colC_core _
+      have hmv : (⟨rc, hrc⟩ : Fin o.size) ∈ o.move ⟨lc, hlc⟩ (fm I D src (colB I B (σ (zVar D src)).val))
+          (.K b) (coreMap D.firstBit (colB I B (σ (coreVar D tgt)).val)) := by
+        simp only [semOK, portalMove] at hsem
+        exact List.contains_iff_mem.mp hsem
+      exact portal_run hedge (by rw [hcu]; exact hleft) (by rw [hcv]; exact hright)
+        (by rw [hcu, hcv]; exact hmv)
+
+end Recon
+
 end RankQuerySound
 end Subtail
