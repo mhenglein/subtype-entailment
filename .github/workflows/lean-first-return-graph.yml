@@ -32,7 +32,7 @@ jobs:
           python3 - <<'PY'
           import re
           from pathlib import Path
-          s=Path('lean/Subtail/FirstReturnGraph.lean').read_text()
+          s='\n'.join(Path('lean/Subtail/'+n+'.lean').read_text() for n in ['PrefixMatching','FirstReturnGraph'])
           rows=re.findall(r'^(def|theorem) ([A-Za-z_][A-Za-z_0-9]*)',s,re.M)
           assert len(rows)>=20
           Path('tmp/graph-axioms.lean').write_text('import Subtail.FirstReturnGraph\n'+''.join('#print axioms Subtail.FirstReturnGraph.'+n+'\n' for _,n in rows))
@@ -44,7 +44,7 @@ jobs:
           python3 - <<'PY'
           import re
           from pathlib import Path
-          s=Path('lean/Subtail/FirstReturnGraph.lean').read_text()
+          s='\n'.join(Path('lean/Subtail/'+n+'.lean').read_text() for n in ['PrefixMatching','FirstReturnGraph'])
           expected={n:k for k,n in re.findall(r'^(def|theorem) ([A-Za-z_][A-Za-z_0-9]*)',s,re.M)}
           text=Path('/tmp/graph-axioms.txt').read_text()
           rows=re.findall(r"'Subtail\.FirstReturnGraph\.([^']+)' (does not depend on any axioms|depends on axioms: \[([^]]*)\])",text)
