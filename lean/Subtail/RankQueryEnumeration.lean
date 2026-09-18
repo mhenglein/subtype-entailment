@@ -25,12 +25,30 @@ theorem mem_exactLists (xs : List a) (n : Nat) (ys : List a) :
     ys ∈ exactLists xs n <->
       ys.length = n ∧ ∀ y ∈ ys, y ∈ xs := by
   induction n generalizing ys with
-  | zero => simp [exactLists]
+  | zero => cases ys <;> simp [exactLists]
   | succ n ih =>
     cases ys with
     | nil => simp [exactLists]
     | cons y ys =>
-      simp [exactLists, List.mem_flatMap, ih, Nat.succ_eq_add_one, and_assoc]
+      simp only [exactLists, List.mem_flatMap, List.mem_map]
+      constructor
+      . rintro ⟨x, hx, zs, hz, he⟩
+        have hxy := (List.cons.inj he).1
+        have hzys := (List.cons.inj he).2
+        subst x
+        subst zs
+        obtain ⟨ hl, ha ⟩ := (ih ys).mp hz
+        refine ⟨ by simp [hl], ?_ ⟩
+        intro v hv
+        rcases List.mem_cons.mp hv with he | hm
+        . subst v; exact hx
+        . exact ha v hm
+      . rintro ⟨ hl, ha ⟩
+        refine ⟨y, ha y (by simp), ys, ?_, rfl⟩
+        apply (ih ys).mpr
+        refine ⟨by simpa using hl, ?_⟩
+        intro v hv
+        exact ha v (by simp [hv])
 
 def boundedLists (xs : List a) (n : Nat) : List (List a) :=
   (List.range (n + 1)).flatMap (exactLists xs)
@@ -125,9 +143,17 @@ def pieces (n : Nat) : List Piece :=
 
 theorem mem_pieces (n : Nat) (p : Piece) :
     p ∈ pieces n <-> pieceBound n p := by
-  cases p with
-  | mk t s d lc rc l =>
-    simp [pieces, pieceBound, List.mem_flatMap, mem_kinds, mem_labels, and_assoc]
+  unfold pieces
+  simp only [List.mem_flatMap, List.mem_map]
+  constructor
+  . rintro ⟨t, _, s, hs, d, hd, lc, hlc, rc, hrc, l, _, he⟩
+    subst p
+    exact ⟨List.mem_range.mp hs, List.mem_range.mp hd,
+      List.mem_range.mp hlc, List.mem_range.mp hrc⟩
+  . rintro ⟨hs, hd, hlc, hrc⟩
+    exact ⟨p.kind, mem_kinds _, p.source, List.mem_range.mpr hs,
+      p.target, List.mem_range.mpr hd, p.lc, List.mem_range.mpr hlc,
+      p.rc, List.mem_range.mpr hrc, p.label, mem_labels _, rfl⟩
 
 abbrev Seam := Nat × Nat × Nat × Nat
 
@@ -142,8 +168,16 @@ def seams (n : Nat) : List Seam :=
 
 theorem mem_seams (n : Nat) (s : Seam) :
     s ∈ seams n <-> seamBound n s := by
-  rcases s with ⟨ai, pi, g, q⟩
-  simp [seams, seamBound, List.mem_flatMap, and_assoc]
+  unfold seams
+  simp only [List.mem_flatMap, List.mem_map]
+  constructor
+  . rintro ⟨ai, ha, pi, hp, g, hg, q, hq, he⟩
+    subst s
+    exact ⟨List.mem_range.mp ha, List.mem_range.mp hp,
+      List.mem_range.mp hg, List.mem_range.mp hq⟩
+  . rintro ⟨ha, hp, hg, hq⟩
+    exact ⟨s.1, List.mem_range.mpr ha, s.2.1, List.mem_range.mpr hp,
+      s.2.2.1, List.mem_range.mpr hg, s.2.2.2, List.mem_range.mpr hq, rfl⟩
 
 /-- Separate caps avoid confusing reference length with a syntax budget.
 `scalar` is an exclusive bound on piece fields and the four seam coordinates;
@@ -188,12 +222,57 @@ def diagrams (c : Clause k) (b : Limits) : List (Diagram k) :=
 the definition of `diagrams`. -/
 theorem mem_diagrams (c : Clause k) (b : Limits) (D : Diagram k) :
     D ∈ diagrams c b <-> Bounded c b D := by
-  cases D with
-  | mk ng nc loc states nxt first old paths joins =>
-    simp [diagrams, Bounded, List.mem_flatMap, mem_exactLists,
-      mem_boundedLists, mem_locations, mem_pieces, mem_seams,
-      mem_nexts, mem_bools, mem_colours, and_assoc, Nat.lt_succ_iff,
-      Nat.pos_iff_ne_zero]
+  constructor
+  . intro h
+    unfold diagrams at h
+    obtain ⟨ng, hng, h⟩ := List.mem_flatMap.mp h
+    by_cases hz : ng = 0
+    . simp [hz] at h
+    . rw [if_neg hz] at h
+      simp only [List.mem_flatMap, List.mem_map] at h
+      obtain ⟨nc, hnc, loc, hlo, states, hs, nxt, hn,
+        first, _, old, _, paths, hp, joins, hj, he⟩ := h
+      subst D
+      obtain ⟨hloLen, hloAll⟩ := (mem_exactLists _ _ _).mp hlo
+      obtain ⟨hsLen, _⟩ := (mem_exactLists _ _ _).mp hs
+      obtain ⟨hnLen, _⟩ := (mem_exactLists _ _ _).mp hn
+      obtain ⟨hpLen, hpAll⟩ := (mem_exactLists _ _ _).mp hp
+      obtain ⟨hjLen, hjAll⟩ := (mem_boundedLists _ _ _).mp hj
+      refine ⟨by omega, by have := List.mem_range.mp hng; omega,
+        by have := List.mem_range.mp hnc; omega, hloLen, ?_, hsLen, hnLen,
+        hpLen, ?_, hjLen, ?_⟩
+      . intro x hx
+        exact (mem_locations _ _ _).mp (hloAll x hx)
+      . intro ps hps
+        obtain ⟨hlen, hall⟩ := (mem_boundedLists _ _ _).mp (hpAll ps hps)
+        exact ⟨hlen, fun p hp => (mem_pieces _ _).mp (hall p hp)⟩
+      . intro x hx
+        exact (mem_seams _ _).mp (hjAll x hx)
+  . rintro ⟨hpos, hng, hnc, hloLen, hloAll, hsLen, hnLen,
+      hpLen, hpAll, hjLen, hjAll⟩
+    unfold diagrams
+    apply List.mem_flatMap.mpr
+    refine ⟨D.groups, List.mem_range.mpr (by omega), ?_⟩
+    rw [if_neg (by omega : D.groups ≠ 0)]
+    simp only [List.mem_flatMap, List.mem_map]
+    refine ⟨D.coreVars, List.mem_range.mpr (by omega),
+      D.loc, ?_, D.states, ?_, D.nextBits, ?_, D.firstBit, mem_bools _,
+      D.oldEnd, mem_colours _, D.pieces, ?_, D.seams, ?_, ?_⟩
+    . apply (mem_exactLists _ _ _).mpr
+      exact ⟨hloLen, fun x hx => (mem_locations _ _ _).mpr (hloAll x hx)⟩
+    . apply (mem_exactLists _ _ _).mpr
+      exact ⟨hsLen, by intros; simp⟩
+    . apply (mem_exactLists _ _ _).mpr
+      exact ⟨hnLen, fun x _ => mem_nexts x⟩
+    . apply (mem_exactLists _ _ _).mpr
+      refine ⟨hpLen, ?_⟩
+      intro ps hps
+      obtain ⟨hlen, hall⟩ := hpAll ps hps
+      apply (mem_boundedLists _ _ _).mpr
+      exact ⟨hlen, fun p hp => (mem_pieces _ _).mpr (hall p hp)⟩
+    . apply (mem_boundedLists _ _ _).mpr
+      exact ⟨hjLen, fun x hx => (mem_seams _ _).mpr (hjAll x hx)⟩
+    . rfl
 
 /-- Filter only by the already proved compiler's syntactic guard. -/
 def validDiagrams (I : Instance k) (c : Clause k) (b : Limits) : List (Diagram k) :=
