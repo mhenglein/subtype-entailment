@@ -68,6 +68,7 @@ latter audits every public definition/theorem in `RankMilestones.lean`.
 | [TerminalRank.lean](Subtail/TerminalRank.lean) | Terminal prefix-freeness, border-state injection and at most k-1 positive borders of accepted suffixes |
 | [RankMilestones.lean](Subtail/RankMilestones.lean) | Literal rank recurrence, reversal and actual reversed-prefix bound; exact first milestones/first returns; interior failure-target confinement |
 | [RankQuery.lean](Subtail/RankQuery.lean) | Stage 4a (not default-imported): query grammar, literal prefix graphs, executable `satCheck` with `satCheck_correct`, and the UNPROVED `ClosureStatement`/`RankDecisionStatement` pinned as `Prop`s |
+| [RankQueryPaths.lean](Subtail/RankQueryPaths.lean) | Stage 4b ingredient (not default-imported): runs are chains of nodes, every accepted run has a repetition-free chain, and such a chain visits any vertex at most `O.size` times (`accepts_bounded_visits`) |
 
 Words are `List Bool`. State sets have type `Fin k`; tables are finite vectors.
 The flag condition includes both diagonal pairs and the empty suffix. A

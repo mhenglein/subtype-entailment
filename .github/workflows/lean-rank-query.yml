@@ -2,7 +2,8 @@ name: Lean rank query statement
 
 # Stage 4a of the rank-query candidate (issue #27): the query grammar, literal
 # prefix-graph semantics, the kernel-checked decision of query satisfaction and
-# the pinned Closure Lemma statement. This workflow builds the module as an
+# the pinned Closure Lemma statement; plus the bounded-visits lemma of #28
+# (product-simple runs) in RankQueryPaths.lean. This workflow builds the module as an
 # explicit target so the import aggregator owned by the stage-3 formalizer is
 # not touched; it replays the module through the kernel, audits every public
 # declaration's axioms, and runs the Lean/Python semantics differential.
@@ -30,23 +31,32 @@ jobs:
           test: 'false'
           lint: 'false'
           use-mathlib-cache: 'false'
-      - name: Compile the rank-query module
+      - name: Compile the rank-query modules
         working-directory: lean
-        run: lake build +Subtail.RankQuery
+        run: |
+          lake build +Subtail.RankQuery
+          lake build +Subtail.RankQueryPaths
       - name: Replay declarations through the kernel
         working-directory: lean
-        run: lake env leanchecker Subtail.RankQuery
+        run: |
+          lake env leanchecker Subtail.RankQuery
+          lake env leanchecker Subtail.RankQueryPaths
       - name: Audit every public def and theorem
         run: |
           mkdir -p tmp
           python3 - <<'PY'
           from pathlib import Path
           import re
-          source = Path('lean/Subtail/RankQuery.lean').read_text()
-          rows = re.findall(r'^(?:@\[simp\] )?(def|theorem) ([A-Za-z_][A-Za-z_0-9]*)', source, re.M)
-          assert len(rows) == len(set(n for _, n in rows)) and len(rows) >= 60, len(rows)
-          assert not re.search(r'^\s*(axiom|opaque)\b', source, re.M), 'no axiom or opaque declarations'
-          Path('tmp/rankquery-axioms.lean').write_text('import Subtail.RankQuery\n' + ''.join('#print axioms Subtail.RankQuery.' + n + '\n' for _, n in rows))
+          pattern = r"^(?:@\[simp\] )?(def|theorem) ([A-Za-z_][A-Za-z_0-9?']*)"
+          lines = []
+          for module, minimum in (('RankQuery', 60), ('RankQueryPaths', 15)):
+              source = Path('lean/Subtail/' + module + '.lean').read_text()
+              rows = re.findall(pattern, source, re.M)
+              assert len(rows) == len(set(n for _, n in rows)) and len(rows) >= minimum, (module, len(rows))
+              assert not re.search(r'^\s*(axiom|opaque)\b', source, re.M), 'no axiom or opaque declarations'
+              lines.append('import Subtail.' + module)
+              lines += ['#print axioms Subtail.RankQuery.' + n for _, n in rows]
+          Path('tmp/rankquery-axioms.lean').write_text('\n'.join(lines) + '\n')
           PY
           cd lean
           set -o pipefail
@@ -55,8 +65,11 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           import re
-          source = Path('lean/Subtail/RankQuery.lean').read_text()
-          expected = dict((n, k) for k, n in re.findall(r'^(?:@\[simp\] )?(def|theorem) ([A-Za-z_][A-Za-z_0-9]*)', source, re.M))
+          pattern = r"^(?:@\[simp\] )?(def|theorem) ([A-Za-z_][A-Za-z_0-9?']*)"
+          expected = {}
+          for module in ('RankQuery', 'RankQueryPaths'):
+              source = Path('lean/Subtail/' + module + '.lean').read_text()
+              expected.update((n, k) for k, n in re.findall(pattern, source, re.M))
           text = Path('/tmp/rankquery-axioms.txt').read_text()
           rows = re.findall(r"'Subtail\.RankQuery\.([^']+)' (does not depend on any axioms|depends on axioms: \[([^]]*)\])", text)
           assert set(n for n, _, _ in rows) == set(expected), text

@@ -153,6 +153,29 @@ translation/semantics regressions; they say nothing about the Closure Lemma.
 `P("0")` (`F` reaches the root; `S`, `K0` do not; `K1` does) and the literal
 edges of `P("010")` at its endpoint.
 
+## 4b. Bounded visits (issue #28, same branch)
+
+[RankQueryPaths.lean](../lean/Subtail/RankQueryPaths.lean) proves the
+graph-independent core of the candidate's Lemma 3 in this semantics. `Chain p`
+says consecutive nodes of the list `p` are joined by `Step`; `run_iff_chain`
+identifies `Run x y` with an allowed start and a chain from `x` whose last node
+is `y`; `chain_dedup` produces, from any chain, a chain with the same first and
+last node and no repeated node (a duplicate `p = a ++ z :: (b ++ z :: c)` is cut
+to `a ++ z :: c`; induction on the length); `visits_le_of_nodup` bounds the
+number of nodes over a fixed vertex in a repetition-free list by `O.size`
+(their controls are pairwise distinct elements of `Fin O.size`). The exported
+statement is
+
+    accepts_bounded_visits : Accepts G O u w → ∀ v, ∃ q ∈ initial, ∃ p ∈ final, ∃ l,
+      Chain ((u,q) :: l) ∧ getLast? = some (w,p) ∧ Nodup ∧ (∀ n ∈ (u,q)::l, Allowed n) ∧
+      visits ((u,q) :: l) v ≤ O.size.
+
+Applied to the first fresh vertex `v = m+1` of a promoted graph, this is the
+"at most `s_i` entrances" count of the mark bound. Excursions, the old/fresh
+split and the diagram itself are NOT formalized; they need the stage-3 graph.
+All 19 declarations pass the same axiom audit (theorems use at most `propext`,
+`Quot.sound`, `Classical.choice`).
+
 ## 5. Limits and handoff
 
 * Nothing about `ClosureStatement`, `RankDecisionStatement` or `C080` is proved.
