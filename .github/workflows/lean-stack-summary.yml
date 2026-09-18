@@ -6,11 +6,13 @@ on:
     paths:
       - 'lean/Subtail/Stack*.lean'
       - 'lean/Subtail/CanonicalReachability.lean'
+      - 'experiments/check_stack_summary.py'
       - '.github/workflows/lean-stack-summary.yml'
   pull_request:
     paths:
       - 'lean/Subtail/Stack*.lean'
       - 'lean/Subtail/CanonicalReachability.lean'
+      - 'experiments/check_stack_summary.py'
       - '.github/workflows/lean-stack-summary.yml'
 permissions:
   contents: read
@@ -69,6 +71,11 @@ jobs:
               assert set(a.strip() for a in ax.split(',') if a.strip())<=allowed,(name,ax)
           print('PASS:',len(rows),'declaration dependency closures')
           PY
+      - name: Independent saturation oracle and native agreement
+        run: |
+          python3 experiments/check_stack_summary.py --lean --output /tmp/stack-summary-native.json
+          PYTHONHASHSEED=91 python3 experiments/check_stack_summary.py --lean --output /tmp/stack-summary-replay.json
+          cmp /tmp/stack-summary-native.json /tmp/stack-summary-replay.json
       - name: Preserve earlier Lean core
         run: python3 scripts/check_lean.py
       - name: Preserve tracked evidence
