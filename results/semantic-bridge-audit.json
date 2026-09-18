@@ -1,0 +1,106 @@
+{
+  "base": "35bff158f4620224f2608ba7bccf5ab770811853",
+  "bounded_query_verdicts": {
+    "ENTAILED": 1932,
+    "NOT_ENTAILED": 568
+  },
+  "counts": {
+    "all_valuations_examined": 12804,
+    "bounded_input_systems": 200,
+    "complete_arbitrary_tree_queries": 2500,
+    "exact_regular_countermodels": 32,
+    "explicit_contract_fixtures": 8,
+    "infinite_model_language_product_states": 3,
+    "no_lower_exact_queries": 2304,
+    "satisfiable_systems": 119,
+    "satisfying_valuations": 723,
+    "status_compositions": 27,
+    "unsatisfiable_systems": 81,
+    "witness_addresses_checked_against_all_models": 568
+  },
+  "dependency_blobs": {
+    "border_lab.py": "1144ae52379e0417772e79582269cacd91c5bc17",
+    "denial_bridge.py": "a38a21df533d8853aa34b3b2593d164a4a688447",
+    "infinite_extensions.py": "eda28ac44cbfe969a5aa83b2cade036b0f171fdc",
+    "safe_extensions.py": "866b04fa67fa14684e56db75ce6cd850dff82009"
+  },
+  "finite_model_oracle_completeness": "Acyclic upper bounds plus denial prove model-height bounds from each input",
+  "fixtures": [
+    {
+      "answer": {
+        "branch": "infinite",
+        "states": 2,
+        "status": "NOT_ENTAILED",
+        "word": "0"
+      },
+      "model": "X(0)=0*, X(1)=empty; no finite model",
+      "name": "infinite_spine"
+    },
+    {
+      "answer": {
+        "build": "UNSAT",
+        "status": "ENTAILED"
+      },
+      "name": "unsat_short_circuit"
+    },
+    {
+      "answer": {
+        "build": "UNKNOWN",
+        "status": "UNKNOWN"
+      },
+      "name": "summary_cap"
+    },
+    {
+      "delta": [
+        [
+          1,
+          -1
+        ],
+        [
+          -1,
+          -1
+        ]
+      ],
+      "final": [
+        0,
+        1
+      ],
+      "flags": [
+        [
+          0,
+          1
+        ]
+      ],
+      "name": "final_absorption_without_empty_columns_is_unsound",
+      "original_witness": "",
+      "terminal_result": "NO"
+    },
+    {
+      "name": "prune_before_sinks",
+      "original_final": 0,
+      "unsafe_successor": 1,
+      "word": ""
+    },
+    {
+      "correct": "NO",
+      "incorrect_word": "",
+      "name": "nonfinal_sink_not_promoted"
+    },
+    {
+      "answer": {
+        "branch": "terminal",
+        "build": "SAT",
+        "infinite": "NO_INFINITE_EXTENSION",
+        "states": 3,
+        "status": "NOT_ENTAILED",
+        "terminal": "YES",
+        "word": ""
+      },
+      "name": "terminal_only_witness"
+    }
+  ],
+  "largest_observed_summary": 7,
+  "scope": "Transfer-interface regression; no unrestricted terminal solver, no Lean proof, no new memo reread",
+  "seed": 2026091823,
+  "status": "PASS"
+}
