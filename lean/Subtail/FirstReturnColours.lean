@@ -60,6 +60,7 @@ theorem fresh_mask {w : Word} {m j : Nat}
     by_cases hje : j = w.length
     · subst j
       rw [first_return_parent hr]
+      exact Nat.le_refl m
     · exact Nat.le_of_lt (first_return_internal_parent_lt hr hmj (by omega))
   rw [hcur, mask_prefix hpm]
   exact mask_decomposition hjn (by omega) col r q
@@ -154,7 +155,7 @@ theorem surgeryColour_correct {w : Word} {m j : Nat}
   · have hjm : j ≠ m := by omega
     have hjn : j ≠ w.length := by omega
     simp only [surgeryColour, h0, if_true, literalColour,
-      mask_prefix (Nat.le_of_lt h0), List.getElem?_take, h0, if_true,
+      mask_prefix (Nat.le_of_lt h0), List.getElem?_take, if_true,
       hlen, hjm, hjn, decide_false]
   · by_cases h1 : j = m
     · subst j

@@ -57,6 +57,11 @@ jobs:
               assert {x.strip() for x in ax.split(',') if x.strip()}<=allowed,(n,ax)
           print('PASS:',len(rows),'dependency closures')
           PY
+      - name: Literal native and unchanged candidate comparisons
+        run: |
+          python3 experiments/check_lean_first_return_graph.py --repository --lean --output /tmp/first-return-graph.json
+          python3 experiments/check_lean_first_return_graph.py --repository --lean --output /tmp/first-return-graph-replay.json
+          cmp /tmp/first-return-graph.json /tmp/first-return-graph-replay.json
       - name: Preserve existing Lean core
         run: python3 scripts/check_lean.py
       - name: Preserve saved evidence and index
