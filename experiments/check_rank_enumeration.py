@@ -177,7 +177,7 @@ def main() -> None:
                 raise RuntimeError(completed.stdout+'\n'+completed.stderr)
             output=completed.stdout
         for name,_,expected in cases:
-            begin, end=f'BEGIN:{name}\n', f'END:{name}'
+            begin, end=f'BEGIN:{name}\n', f'END:{name}\n'
             if output.count(begin)!=1 or output.count(end)!=1:
                 raise AssertionError(f'missing/duplicate native marker: {name}')
             actual=json.loads(output.split(begin,1)[1].split(end,1)[0].strip())
