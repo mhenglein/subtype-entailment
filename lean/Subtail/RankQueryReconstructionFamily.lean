@@ -88,7 +88,7 @@ theorem realizes_extend (G : Graph k) (A : Observer k) (M : Bundle A)
     (V : Observation A) (x y : Node G A) (ts) :
     Realizes G A (extendBundle M V) x ts y ↔
       Realizes G A M x ts y ∧ ObservationAccepts G A V x ts y := by
-  let V' := pullObservation M.projection V
+  let V' : Observation M.machine := pullObservation (A := A) (M := M.machine) M.projection V
   constructor
   · rintro ⟨i,hi,j,hj,us,hix,hjy,ht,hr⟩
     have hinit := (sync_initial M.machine V' i).mp hi
@@ -113,9 +113,11 @@ theorem realizes_extend (G : Graph k) (A : Observer k) (M : Bundle A)
     obtain ⟨j',vs,hj',hproj,htr⟩ := trace_synchronize_complete hr a b hv' i' hi'
     refine ⟨i',?_,j',?_,vs,?_,?_,?_,htr⟩
     · apply (sync_initial M.machine V' i').mpr
-      simpa [hi',V',pullObservation] using And.intro hi ha
+      rw [hi']
+      exact ⟨hi,ha⟩
     · apply (sync_final M.machine V' j').mpr
-      simpa [hj',V',pullObservation] using And.intro hj hb
+      rw [hj']
+      exact ⟨hj,hb⟩
     · change M.projection (pairAt M.machine V' i').1 = x.2
       simpa [hi'] using hix
     · change M.projection (pairAt M.machine V' j').1 = y.2
