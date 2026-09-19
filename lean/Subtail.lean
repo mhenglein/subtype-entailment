@@ -41,3 +41,5 @@ import Subtail.PeriodicGood
 import Subtail.PeriodicMonitor
 import Subtail.PeriodicMonitorComplete
 import Subtail.InfiniteDecision
+import Subtail.ExpressionNormalization
+import Subtail.EntailmentDecision
