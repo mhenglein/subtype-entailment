@@ -5,7 +5,7 @@ on:
     paths:
       - 'lean/Subtail/ExpressionNormalization*.lean'
       - '.github/workflows/lean-expression-normalization.yml'
-      - 'experiments/check_expression_normalization.py'
+      - 'experiments/check_expression_normalization_lean.py'
   workflow_dispatch:
 
 permissions:
@@ -82,4 +82,4 @@ jobs:
           set -euo pipefail
           mkdir -p tmp
           (cd lean && lake env lean --run Subtail/ExpressionNormalizationAudit.lean) > tmp/normalization-native.jsonl
-          python3 experiments/check_expression_normalization.py --lean-output tmp/normalization-native.jsonl | tee tmp/expression-normalization-result.json
+          python3 experiments/check_expression_normalization_lean.py --lean-output tmp/normalization-native.jsonl | tee tmp/expression-normalization-result.json
