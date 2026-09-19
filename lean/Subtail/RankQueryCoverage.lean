@@ -2866,5 +2866,369 @@ theorem itemsAt_eq (g : Nat) : itemsAt I c X.D g = (X.contribs g).map (X.itemOf 
 
 end Cov
 
+/-! ## The shared-interval product run -/
+
+theorem allowsNat_of_allows {o : Observer k} {s : Fin o.size} {c : Colour k} (h : o.allows s c = true) :
+    allowsNat o s.val c = true := by
+  unfold allowsNat
+  apply List.any_eq_true.mpr
+  exact ⟨s, List.mem_finRange s, by simp [h]⟩
+
+theorem moveNat_of_mem {o : Observer k} {s r : Fin o.size} {b : Bool} {c d : Colour k}
+    (h : r ∈ o.move s c .S d ∨ r ∈ o.move s c (.K b) d) : moveNat o s.val b c d r.val = true := by
+  unfold moveNat
+  apply List.any_eq_true.mpr
+  refine ⟨s, List.mem_finRange s, ?_⟩
+  simp only [decide_true, Bool.true_and]
+  apply List.any_eq_true.mpr
+  exact ⟨r, List.mem_append.mpr h, by simp⟩
+
+theorem zipAll_map_map {α β γ : Type} {f : β → γ → Bool} {u : α → β} {v : α → γ} : ∀ {l : List α},
+    (∀ x ∈ l, f (u x) (v x) = true) → zipAll f (l.map u) (l.map v) = true := by
+  intro l
+  induction l with
+  | nil => intro _; rfl
+  | cons x l ih =>
+    intro h
+    simp only [List.map_cons, zipAll, Bool.and_eq_true]
+    exact ⟨h x (List.mem_cons_self ..), ih fun y hy => h y (List.mem_cons_of_mem _ hy)⟩
+
+theorem intervalAllows_true {I : Instance k} {items : List (Active k)} {x : IControl k} {c : Colour k}
+    (hbad : I.bad.get x.state = false) (hdiag : (I.flags.get x.state).get x.state = false)
+    (hmask : c.mask.get x.state = false) (hend : x.next.isNone = c.isEnd)
+    (hzip : zipAll (fun (a : Active k) t => allowsNat a.1 t (freshMap I x.state x.next c)) items x.controls = true) :
+    intervalAllows I items x c = true := by
+  unfold intervalAllows
+  simp [hbad, hdiag, hmask, hend, hzip]
+
+theorem intervalStep_true {I : Instance k} {items : List (Active k)} {x y : IControl k} {c d : Colour k} {b : Bool}
+    (hb : x.next = some b) (hc : c.isEnd = false) (hseen : y.seen = 1)
+    (hstep : step I y.state b = some x.state) (hbad : I.bad.get y.state = false)
+    (hdiag : (I.flags.get y.state).get y.state = false) (hmask : d.mask.get y.state = false)
+    (hend : y.next.isNone = d.isEnd) (hlen : x.controls.length = y.controls.length)
+    (hzip : zipAll (fun (a : Active k) (tt : Nat × Nat) =>
+        moveNat a.1 tt.1 b (freshMap I x.state (some b) c) (freshMap I y.state y.next d) tt.2 &&
+          allowsNat a.1 tt.2 (freshMap I y.state y.next d)) items (x.controls.zip y.controls) = true) :
+    intervalStep I items x y c (.K b) d = true := by
+  unfold intervalStep
+  rw [hb]
+  simp [hc, hseen, hstep, hbad, hdiag, hmask, hend, hlen, hzip]
+
+namespace Cov
+variable {I : Instance k} {B : Reference k} {E : Ext I B} {c : Clause k} (X : Cov I B E c)
+
+/-- The interval control at position `j` of interval `g`: actual state, next letter, the seen
+bit, and every contributing chain's control at `j`. -/
+def xI (g j : Nat) : IControl k :=
+  ⟨E.C.label j, E.C.word[j]?, if j = X.pos g then 0 else 1,
+    (X.contribs g).map fun cp => ctlAt (X.blk cp.1 (cp.2 / 2)) j⟩
+
+theorem xI_state (g j : Nat) : (X.xI g j).state = E.C.label j := rfl
+theorem xI_next (g j : Nat) : (X.xI g j).next = E.C.word[j]? := rfl
+theorem xI_controls (g j : Nat) :
+    (X.xI g j).controls = (X.contribs g).map fun cp => ctlAt (X.blk cp.1 (cp.2 / 2)) j := rfl
+
+/-- Facts about a contributing piece. -/
+theorem mem_contribs {g : Nat} {cp : Nat × Nat} (h : cp ∈ X.contribs g) :
+    cp.1 < c.atoms.length ∧ ∃ si, cp.2 = 2 * si ∧ si < X.segCount cp.1 ∧
+      isFresh B.word.length (X.blk cp.1 si) = true ∧
+      X.idx (hdPos (X.blk cp.1 si)) ≤ g ∧ g < X.idx (lastPos (X.blk cp.1 si)) := by
+  unfold contribs at h
+  obtain ⟨ai, hai, hmem⟩ := List.mem_flatMap.mp h
+  obtain ⟨pi, hpi, rfl⟩ := List.mem_map.mp hmem
+  obtain ⟨hpi', hcov⟩ := List.mem_filter.mp hpi
+  have hai' := List.mem_range.mp hai
+  have hpi'' := List.mem_range.mp hpi'
+  exact ⟨hai', X.coversPi_block hai' hpi'' hcov⟩
+
+/-- The node of a fresh block at position `j`. -/
+theorem blk_node {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai)
+    (hf : isFresh B.word.length (X.blk ai si) = true) {j : Nat} (hj1 : hdPos (X.blk ai si) ≤ j)
+    (hj2 : j ≤ lastPos (X.blk ai si)) :
+    ∃ (i : Nat) (hi : i < (X.blk ai si).length), ((X.blk ai si)[i]).1 = j ∧
+      ((X.blk ai si)[i]).2 = ctlAt (X.blk ai si) j := by
+  have hne := X.blk_ne_nil hai hsi
+  have hlen : 0 < (X.blk ai si).length := List.length_pos_iff.mpr hne
+  have hlast := X.blk_fresh_lastPos hai hsi hf
+  refine ⟨j - hdPos (X.blk ai si), by omega, ?_, ?_⟩
+  · rw [X.blk_fresh_pos hai hsi hf]; omega
+  · have := ctlAt_getElem (s := X.blk ai si) (i := j - hdPos (X.blk ai si)) (by omega)
+    rw [show hdPos (X.blk ai si) + (j - hdPos (X.blk ai si)) = j by omega] at this
+    exact this.symm
+
+theorem blk_ctl_bound {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai)
+    (hf : isFresh B.word.length (X.blk ai si) = true) {j : Nat} (hj1 : hdPos (X.blk ai si) ≤ j)
+    (hj2 : j ≤ lastPos (X.blk ai si)) : ctlAt (X.blk ai si) j < (obsAt c ai).size := by
+  obtain ⟨i, hi, -, hc⟩ := X.blk_node hai hsi hf hj1 hj2
+  rw [← hc]
+  exact X.blk_ctl_lt hai hsi (List.getElem_mem hi)
+
+theorem blk_ctl_allowed {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai)
+    (hf : isFresh B.word.length (X.blk ai si) = true) {j : Nat} (hj1 : hdPos (X.blk ai si) ≤ j)
+    (hj2 : j ≤ lastPos (X.blk ai si)) :
+    (obsAt c ai).allows ⟨ctlAt (X.blk ai si) j, X.blk_ctl_bound hai hsi hf hj1 hj2⟩ (colB I E.C j) = true := by
+  obtain ⟨i, hi, hp, hc⟩ := X.blk_node hai hsi hf hj1 hj2
+  obtain ⟨hx, hs, ha⟩ := X.blk_allowed hai hsi (List.getElem_mem hi)
+  simp only [Allowed] at ha
+  rw [colour_C] at ha
+  have e : (⟨((X.blk ai si)[i]).2, hs⟩ : Fin (obsAt c ai).size) =
+      ⟨ctlAt (X.blk ai si) j, X.blk_ctl_bound hai hsi hf hj1 hj2⟩ := Fin.ext hc
+  rw [e, hp] at ha
+  exact ha
+
+/-- Consecutive fresh nodes of a block step by `S` or the letter. -/
+theorem blk_ctl_move {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai)
+    (hf : isFresh B.word.length (X.blk ai si) = true) {j : Nat} (hj1 : hdPos (X.blk ai si) ≤ j)
+    (hj2 : j < lastPos (X.blk ai si)) {b : Bool} (hb : E.C.word[j]? = some b) :
+    moveNat (obsAt c ai) (ctlAt (X.blk ai si) j) b (colB I E.C j) (colB I E.C (j + 1))
+      (ctlAt (X.blk ai si) (j + 1)) = true := by
+  obtain ⟨i, hi, hp, hc⟩ := X.blk_node hai hsi hf hj1 (Nat.le_of_lt hj2)
+  obtain ⟨i', hi', hp', hc'⟩ := X.blk_node hai hsi hf (by omega) hj2
+  have hii' : i' = i + 1 := by
+    have h1 := X.blk_fresh_pos hai hsi hf hi
+    have h2 := X.blk_fresh_pos hai hsi hf hi'
+    omega
+  subst hii'
+  have hstep := (consec_getElem (X.blk_consec hai hsi) i hi').1
+  have hfresh : B.word.length < ((X.blk ai si)[i]).1 := by
+    rw [hp]
+    simp only [isFresh, decide_eq_true_eq] at hf
+    omega
+  obtain ⟨-, b', hb', hs, ht, hm⟩ := fresh_step_facts E (obsAt c ai) hstep hfresh (by rw [hp, hp'])
+  rw [hp] at hb'
+  have hbb : b' = b := Option.some.inj (hb'.symm.trans hb)
+  rw [hbb] at hm
+  have this : moveNat (obsAt c ai) ((X.blk ai si)[i]).2 b (colB I E.C ((X.blk ai si)[i]).1)
+      (colB I E.C ((X.blk ai si)[i + 1]).1) ((X.blk ai si)[i + 1]).2 = true := moveNat_of_mem hm
+  rw [hp, hp', hc, hc'] at this
+  exact this
+
+section Interval
+
+theorem pos_g_gt_m {g : Nat} (hg : g < X.n - 1) : B.word.length < X.pos g := X.pos_gt_m (by omega)
+
+theorem pos_g1_le_N (g : Nat) : X.pos (g + 1) ≤ E.N := X.pos_le_N _
+
+theorem pos_g_lt_pos_g1 {g : Nat} (hg : g < X.n - 1) : X.pos g < X.pos (g + 1) :=
+  X.pos_strict (Nat.lt_succ_self g) (by omega)
+
+/-- A contributing block covers the whole interval. -/
+theorem contrib_covers {g : Nat} (hg : g < X.n - 1) {cp : Nat × Nat} (hcp : cp ∈ X.contribs g) {j : Nat}
+    (hj1 : X.pos g ≤ j) (hj2 : j ≤ X.pos (g + 1)) :
+    hdPos (X.blk cp.1 (cp.2 / 2)) ≤ j ∧ j ≤ lastPos (X.blk cp.1 (cp.2 / 2)) := by
+  obtain ⟨hai, si, hcp2, hsi, hf, hg1, hg2⟩ := X.mem_contribs hcp
+  have hsi' : cp.2 / 2 = si := by omega
+  rw [hsi']
+  have hhd := X.blk_hd_mem_M hai hsi hf
+  have hlast := X.blk_last_mem_M hai hsi hf
+  constructor
+  · have := X.pos_mono hg1 (by omega)
+    rw [X.pos_idx hhd] at this
+    omega
+  · have := X.pos_mono (show g + 1 ≤ X.idx (lastPos (X.blk cp.1 si)) by omega) (X.idx_lt hlast)
+    rw [X.pos_idx hlast] at this
+    omega
+
+theorem xI_ok {g : Nat} (hg : g < X.n - 1) {j : Nat} (hj1 : X.pos g ≤ j) (hj2 : j ≤ X.pos (g + 1)) :
+    ICOK (itemsAt I c X.D g) (X.xI g j) := by
+  refine ⟨?_, ?_, ?_⟩
+  · show (if j = X.pos g then 0 else 1) < 2
+    split <;> decide
+  · rw [xI_controls, X.itemsAt_eq, List.length_map, List.length_map]
+  · intro i hi hj
+    have hi' : i < (X.contribs g).length := by
+      rw [xI_controls, List.length_map] at hi; exact hi
+    have hmem : (X.contribs g)[i] ∈ X.contribs g := List.getElem_mem hi'
+    obtain ⟨hai, si, hcp2, hsi, hf, -, -⟩ := X.mem_contribs hmem
+    obtain ⟨h1, h2⟩ := X.contrib_covers hg hmem hj1 hj2
+    have e1 : (X.xI g j).controls[i] = ctlAt (X.blk ((X.contribs g)[i]).1 (((X.contribs g)[i]).2 / 2)) j := by
+      simp only [xI_controls, List.getElem_map]
+    have e2 : (itemsAt I c X.D g)[i] = X.itemOf g ((X.contribs g)[i]) := by
+      simp only [X.itemsAt_eq, List.getElem_map]
+    rw [e1, e2]
+    unfold itemOf
+    simp only
+    have hsi' : ((X.contribs g)[i]).2 / 2 = si := by omega
+    rw [hsi'] at h1 h2 ⊢
+    exact X.blk_ctl_bound hai hsi hf h1 h2
+
+theorem xI_allows {g : Nat} (hg : g < X.n - 1) {j : Nat} (hj1 : X.pos g ≤ j) (hj2 : j ≤ X.pos (g + 1)) :
+    intervalAllows I (itemsAt I c X.D g) (X.xI g j) (colB I B (E.cur j)) = true := by
+  have hmj : B.word.length < j := Nat.lt_of_lt_of_le (X.pos_g_gt_m hg) hj1
+  have hjN : j ≤ E.N := Nat.le_trans hj2 (X.pos_g1_le_N g)
+  apply intervalAllows_true
+  · exact E.bad_false hjN
+  · exact E.diag_false hmj hjN
+  · exact E.maskB_cur_false hmj hjN
+  · rw [xI_next, Ext.colB_isEnd]
+    apply Bool.eq_iff_iff.mpr
+    rw [Option.isNone_iff_eq_none, decide_eq_true_eq, E.cur_eq_m_iff hmj hjN, List.getElem?_eq_none_iff]
+    exact ⟨fun h => Nat.le_antisymm hjN h, fun h => by rw [h]; exact Nat.le_refl _⟩
+  · rw [xI_controls, X.itemsAt_eq]
+    apply zipAll_map_map
+    intro cp hcp
+    obtain ⟨hai, si, hcp2, hsi, hf, -, -⟩ := X.mem_contribs hcp
+    obtain ⟨h1, h2⟩ := X.contrib_covers hg hcp hj1 hj2
+    have hsi' : cp.2 / 2 = si := by omega
+    rw [hsi'] at h1 h2 ⊢
+    unfold itemOf
+    simp only
+    rw [xI_state, xI_next, ← E.colC_fresh hmj hjN]
+    exact allowsNat_of_allows (X.blk_ctl_allowed hai hsi hf h1 h2)
+
+theorem xI_step {g : Nat} (hg : g < X.n - 1) {j : Nat} (hj1 : X.pos g ≤ j) (hj2 : j < X.pos (g + 1))
+    {b : Bool} (hb : E.C.word[j]? = some b) :
+    intervalStep I (itemsAt I c X.D g) (X.xI g j) (X.xI g (j + 1)) (colB I B (E.cur j)) (.K b)
+      (colB I B (E.cur (j + 1))) = true := by
+  have hmj : B.word.length < j := Nat.lt_of_lt_of_le (X.pos_g_gt_m hg) hj1
+  have hjN : j < E.N := Nat.lt_of_lt_of_le hj2 (X.pos_g1_le_N g)
+  have hj1N : j + 1 ≤ E.N := hjN
+  apply intervalStep_true
+  · exact hb
+  · rw [Ext.colB_isEnd]
+    exact decide_eq_false (Nat.ne_of_lt (E.cur_lt hmj hjN))
+  · show (if j + 1 = X.pos g then 0 else 1) = 1
+    rw [if_neg (by omega)]
+  · exact E.step_label hb
+  · exact E.bad_false hj1N
+  · exact E.diag_false (by omega) hj1N
+  · exact E.maskB_cur_false (by omega) hj1N
+  · rw [xI_next, Ext.colB_isEnd]
+    apply Bool.eq_iff_iff.mpr
+    rw [Option.isNone_iff_eq_none, decide_eq_true_eq, E.cur_eq_m_iff (by omega) hj1N,
+      List.getElem?_eq_none_iff]
+    exact ⟨fun h => Nat.le_antisymm hj1N h, fun h => by rw [h]; exact Nat.le_refl _⟩
+  · rw [xI_controls, xI_controls, List.length_map, List.length_map]
+  · rw [xI_controls, xI_controls, X.itemsAt_eq, List.zip_map']
+    apply zipAll_map_map
+    intro cp hcp
+    obtain ⟨hai, si, hcp2, hsi, hf, -, -⟩ := X.mem_contribs hcp
+    obtain ⟨h1, h2⟩ := X.contrib_covers hg hcp hj1 (Nat.le_of_lt hj2)
+    obtain ⟨h1', h2'⟩ := X.contrib_covers hg hcp (by omega) hj2
+    have hsi' : cp.2 / 2 = si := by omega
+    rw [hsi'] at h1 h2 h1' h2' ⊢
+    unfold itemOf
+    simp only [Bool.and_eq_true]
+    rw [xI_state, xI_state, xI_next, ← E.colC_fresh (by omega) hj1N]
+    have hcol : freshMap I (E.C.label j) (some b) (colB I B (E.cur j)) = colB I E.C j := by
+      rw [E.colC_fresh hmj (Nat.le_of_lt hjN), hb]
+    rw [hcol]
+    exact ⟨X.blk_ctl_move hai hsi hf h1 h2' hb, allowsNat_of_allows (X.blk_ctl_allowed hai hsi hf h1' h2')⟩
+
+/-- The interval product observer of interval `g`. -/
+abbrev IObs (g : Nat) : Observer k :=
+  intervalObs I (itemsAt I c X.D g) (markState X.D g) (nextOf X.D g) (markState X.D (g + 1)) (nextOf X.D (g + 1))
+
+/-- The product node at position `j`. -/
+def inode {g : Nat} (hg : g < X.n - 1) {j : Nat} (hj1 : X.pos g ≤ j) (hj2 : j ≤ X.pos (g + 1)) :
+    Node (prefixGraph I B) (X.IObs g) :=
+  (⟨E.cur j, Nat.lt_succ_of_le (E.cur_le (Nat.le_trans hj2 (X.pos_g1_le_N g)))⟩,
+    ⟨encodeI (itemsAt I c X.D g) (X.xI g j), encodeI_lt _ _ (X.xI_ok hg hj1 hj2)⟩)
+
+theorem inode_allowed {g : Nat} (hg : g < X.n - 1) {j : Nat} (hj1 : X.pos g ≤ j) (hj2 : j ≤ X.pos (g + 1)) :
+    Allowed (prefixGraph I B) (X.IObs g) (X.inode hg hj1 hj2) := by
+  show (X.IObs g).allows _ _ = true
+  simp only [IObs, intervalObs, inode]
+  rw [decodeI_encodeI _ _ (X.xI_ok hg hj1 hj2)]
+  exact X.xI_allows hg hj1 hj2
+
+theorem inode_step {g : Nat} (hg : g < X.n - 1) {j : Nat} (hj1 : X.pos g ≤ j) (hj2 : j < X.pos (g + 1)) :
+    Step (prefixGraph I B) (X.IObs g) (X.inode hg hj1 (Nat.le_of_lt hj2)) (X.inode hg (by omega) hj2) := by
+  have hjN : j < E.N := Nat.lt_of_lt_of_le hj2 (X.pos_g1_le_N g)
+  obtain ⟨b, hb⟩ := E.word_some hjN
+  have hmj : B.word.length ≤ j := Nat.le_of_lt (Nat.lt_of_lt_of_le (X.pos_g_gt_m hg) hj1)
+  refine ⟨.K b, ?_, ?_, X.inode_allowed hg (by omega) hj2⟩
+  · -- the base K_b edge from the cursor
+    apply fin_edge_of_map_val
+    rw [edgeB_val]
+    simp only
+    rw [E.cur_succ hmj hb]
+    rfl
+  · show _ ∈ (X.IObs g).move _ _ _ _
+    simp only [IObs, intervalObs, inode]
+    rw [decodeI_encodeI _ _ (X.xI_ok hg hj1 (Nat.le_of_lt hj2))]
+    apply List.mem_filter.mpr
+    refine ⟨List.mem_finRange _, ?_⟩
+    simp only
+    rw [decodeI_encodeI _ _ (X.xI_ok hg (by omega) hj2)]
+    exact X.xI_step hg hj1 hj2 hb
+
+theorem add_le_of_le_sub {a b t : Nat} (ht : t ≤ b - a) (hab : a ≤ b) : a + t ≤ b := by omega
+
+theorem inode_run {g : Nat} (hg : g < X.n - 1) : ∀ t (ht : t ≤ X.pos (g + 1) - X.pos g),
+    Run (prefixGraph I B) (X.IObs g) (X.inode hg (Nat.le_refl _) (Nat.le_of_lt (X.pos_g_lt_pos_g1 hg)))
+      (X.inode hg (Nat.le_add_right _ t) (add_le_of_le_sub ht (Nat.le_of_lt (X.pos_g_lt_pos_g1 hg)))) := by
+  intro t
+  induction t with
+  | zero =>
+    intro _
+    exact Run.refl (X.inode_allowed hg _ _)
+  | succ t ih =>
+    intro ht
+    have hrun := ih (by omega)
+    have hstep := X.inode_step hg (j := X.pos g + t) (Nat.le_add_right _ t) (by omega)
+    exact Run.step hrun hstep
+
+theorem inode_initial {g : Nat} (hg : g < X.n - 1) :
+    (X.inode hg (Nat.le_refl _) (Nat.le_of_lt (X.pos_g_lt_pos_g1 hg))).2 ∈ (X.IObs g).initial := by
+  simp only [IObs, intervalObs, inode]
+  apply List.mem_filter.mpr
+  refine ⟨List.mem_finRange _, ?_⟩
+  simp only
+  rw [decodeI_encodeI _ _ (X.xI_ok hg (Nat.le_refl _) (Nat.le_of_lt (X.pos_g_lt_pos_g1 hg)))]
+  simp only [Bool.and_eq_true]
+  refine ⟨⟨⟨decide_eq_true (X.markState_eq (g := g) (by omega)).symm,
+    beq_iff_eq.mpr (X.nextOf_eq (g := g) (by omega)).symm⟩, decide_eq_true ?_⟩, decide_eq_true ?_⟩
+  · show (if X.pos g = X.pos g then 0 else 1) = 0
+    rw [if_pos rfl]
+  · rw [xI_controls, X.itemsAt_eq, List.map_map]
+    rfl
+
+theorem inode_final {g : Nat} (hg : g < X.n - 1) :
+    (X.inode hg (Nat.le_of_lt (X.pos_g_lt_pos_g1 hg)) (Nat.le_refl _)).2 ∈ (X.IObs g).final := by
+  simp only [IObs, intervalObs, inode]
+  apply List.mem_filter.mpr
+  refine ⟨List.mem_finRange _, ?_⟩
+  simp only
+  rw [decodeI_encodeI _ _ (X.xI_ok hg (Nat.le_of_lt (X.pos_g_lt_pos_g1 hg)) (Nat.le_refl _))]
+  simp only [Bool.and_eq_true]
+  refine ⟨⟨⟨decide_eq_true (X.markState_eq (g := g + 1) (by omega)).symm,
+    beq_iff_eq.mpr (X.nextOf_eq (g := g + 1) (by omega)).symm⟩, decide_eq_true ?_⟩, decide_eq_true ?_⟩
+  · show (if X.pos (g + 1) = X.pos g then 0 else 1) = 1
+    rw [if_neg (Nat.ne_of_gt (X.pos_g_lt_pos_g1 hg))]
+  · rw [xI_controls, X.itemsAt_eq, List.map_map]
+    rfl
+
+/-- **Interval atoms.** Every interval atom of the compiled clause is accepted between the
+cursors of its two marks. -/
+theorem interval_accepts {g : Nat} (hg : g < X.n - 1) :
+    Accepts (prefixGraph I B) (X.IObs g) (X.σ (zVar X.D g)) (X.σ (zVar X.D (g + 1))) := by
+  have hlt := X.pos_g_lt_pos_g1 hg
+  have e1 : X.σ (zVar X.D g) = (X.inode hg (Nat.le_refl _) (Nat.le_of_lt hlt)).1 :=
+    Fin.ext (X.σ_z (by omega))
+  have e2 : X.σ (zVar X.D (g + 1)) = (X.inode hg (Nat.le_of_lt hlt) (Nat.le_refl _)).1 :=
+    Fin.ext (X.σ_z (by omega))
+  rw [e1, e2]
+  refine ⟨_, X.inode_initial hg, _, X.inode_final hg, ?_⟩
+  have hrun := X.inode_run hg (X.pos (g + 1) - X.pos g) (Nat.le_refl _)
+  have e3 : X.pos g + (X.pos (g + 1) - X.pos g) = X.pos (g + 1) := by omega
+  have e4 : X.inode hg (Nat.le_add_right _ (X.pos (g + 1) - X.pos g))
+      (add_le_of_le_sub (Nat.le_refl _) (Nat.le_of_lt hlt)) =
+      X.inode hg (Nat.le_of_lt hlt) (Nat.le_refl _) := by
+    apply Prod.ext
+    · apply Fin.ext
+      show E.cur (X.pos g + (X.pos (g + 1) - X.pos g)) = E.cur (X.pos (g + 1))
+      rw [e3]
+    · apply Fin.ext
+      show encodeI (itemsAt I c X.D g) (X.xI g (X.pos g + (X.pos (g + 1) - X.pos g))) =
+        encodeI (itemsAt I c X.D g) (X.xI g (X.pos (g + 1)))
+      rw [e3]
+  rw [e4] at hrun
+  exact hrun
+
+end Interval
+
+end Cov
+
 end RankQueryCoverage
 end Subtail
