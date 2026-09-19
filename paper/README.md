@@ -38,3 +38,25 @@ The [programme](../research/POST_C081.md) tracks the separate novelty, complexit
 performance, extension and packaging tasks. The paper does not turn the former
 C080 numerical bounds into established results. Earlier failed attempts remain
 in their original records.
+
+## Draft checkpoint verification, September 20
+
+The 22-page PDF was rendered from committed paper sources at `e794362` with
+Pandoc 3.11 and Tectonic 0.17.0. The manifest records the full source revision,
+source hashes and PDF hash; `source_files_match_render_revision` is true.
+All 22 rendered pages were visually inspected after the final contents-page
+adjustment. No missing glyph, clipped equation, overlapping text or TeX warning
+was found. This is layout validation, separate from the mathematical readback.
+
+`paper/check.py` passes for all 17 mapped results and literal examples. The
+small Lean example was freshly executed on wb-marcus, using the existing
+compiled checkout at `a7c4fbc` after comparing every core Lean source byte with
+the `c946d86` source. It printed `true` and `false` as stated above. Its temporary
+input was removed. This reused build is not a fresh whole-library replay.
+
+E053 saved-result replay, research navigation checks (13 tests), the prior-work
+source checker, the 226-record literature index and its nine tests pass.
+`CITATION.cff` validates against the official CFF 1.2.0 schema with author
+placeholders and no license field. The coordinating [programme issue](https://github.com/mhenglein/subtail/issues/53)
+records the publication head and remote CI results after publication; absent
+or pending runs are not represented here as passes.

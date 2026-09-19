@@ -1,0 +1,18 @@
+{
+  "status": "research draft; licensing pending; author placeholders",
+  "repository_revision_at_render": "e794362a179b877bde87e696f60d261267a48edf",
+  "source_files_match_render_revision": true,
+  "mathematical_source_revision": "c946d86b9e65da2877e0df42c710abbdcb5a4037",
+  "tools": {
+    "pandoc": "pandoc 3.11",
+    "tectonic": "Tectonic 0.17.0"
+  },
+  "sources": {
+    "paper/manuscript.md": "49390dc91b8b03986c5b9f627a976f36663c6e1bb73e159ad1135b56dc5a8a83",
+    "paper/header.tex": "e27575e9d3d7079b697f24f77c01a7da995613cb081233f311ddbd0e1433a136",
+    "paper/build.py": "adf789717bfd57d6a559e41bf9c0473b18520bb0cfa4f3d606721728594aec64",
+    "paper/lean-map.json": "2bb0677f810ca3139b2a2a1003ca876fa412af50507f4998344113bcd4f7da28"
+  },
+  "pdf_sha256": "8fb86da63d1cb9ed90da42163bf56c1c3118d19ba6d22d47fc0ad5d7ccc2945b",
+  "validation": "Rendering only; visual and mathematical reviews recorded separately."
+}
