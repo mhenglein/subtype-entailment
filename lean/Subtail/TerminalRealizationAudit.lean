@@ -40,7 +40,10 @@ theorem diagonal_no : ¬ Witness (lone true false true) [] :=
 theorem empty_separation : ∃ rho,
     Models (constraints (lone true false false)) rho ∧
     (rho (a (0 : Fin 1))).nodes [] ∧ ¬ (rho (v (0 : Fin 1))).nodes [] :=
-  (witness_iff_separating _ (by decide) []).mp empty_yes
+  (witness_iff_separating _ (by unfold TerminalFinal; decide) []).mp empty_yes
+
+theorem nonfinal_sink_clauses : constraints (lone false false false) =
+    ([.denial 2, .upper 0 2 2, .lower 2 2 1] : List (Constraint 3)) := by decide
 
 /-- Reversing the one flag must change the word test. -/
 def edge (backward : Bool) : Instance 2 where
@@ -61,7 +64,18 @@ theorem undefined_transition_no : ¬ Witness (edge true) [true, false] :=
 theorem reverse_flag_separation : ∃ rho,
     Models (constraints (edge true)) rho ∧
     (rho (a (0 : Fin 2))).nodes [false] ∧ ¬ (rho (v (0 : Fin 2))).nodes [false] :=
-  (witness_iff_separating _ (by decide) [false]).mp reverse_flag_yes
+  (witness_iff_separating _ (by unfold TerminalFinal; decide) [false]).mp reverse_flag_yes
+
+theorem forward_flag_no_separation : ¬ ∃ rho,
+    Models (constraints (edge false)) rho ∧
+    (rho (a (0 : Fin 2))).nodes [false] ∧ ¬ (rho (v (0 : Fin 2))).nodes [false] := by
+  intro h
+  exact forward_flag_no ((witness_iff_separating _
+    (by unfold TerminalFinal; decide) [false]).mpr h)
+
+theorem reverse_flag_clauses : constraints (edge true) =
+    ([.denial 4, .upper 0 1 4, .lower 3 4 2, .upper 1 4 4, .leq 1 2] :
+      List (Constraint 5)) := by decide
 
 /-- The source state loops on 0, and 1 exits to the accepting terminal. -/
 def spine : Instance 2 where
@@ -71,7 +85,7 @@ def spine : Instance 2 where
   final := Vector.ofFn (fun q => q.val == 1)
   flags := Vector.ofFn (fun _ => Vector.ofFn (fun _ => false))
 
-theorem spine_terminal : TerminalFinal spine := by decide
+theorem spine_terminal : TerminalFinal spine := by unfold TerminalFinal; decide
 theorem spine_witness : Witness spine [false, false, false, true] :=
   (witnessCheck_correct _ _).mp (by decide)
 theorem spine_satisfiable : Satisfiable (constraints spine) :=
