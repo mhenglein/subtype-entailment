@@ -2,6 +2,10 @@
 
 Source identities, versions and inspection levels are in [the bibliography](bibliography.md). These are selected-theorem dossiers, not claims that every proof in every source was reverified. Source keys are stable across the [register](sources.json), [failure catalogue](failure-modes.md), and [open obligations](open-obligations.md).
 
+The [September 19 primary-source review](dossiers/core-lineage-review-2026-09-19.md)
+adds fresh readbacks and corrects the NP03 version map. Earlier history remains
+visible below.
+
 ## PW-HR97 / PW-HR98 — the complexity baseline
 
 **Question:** structural versus non-structural subtype entailment, with distinct simple and recursive type settings. **Result relevant to this project:** the 1998 paper supplies the historical non-structural PSPACE-hardness lineage; the 1997 simple-type paper is a separate publication. **Mechanism to audit:** the hardness construction's use of the ambient top label. **Transfer status:** unproved for Problem 1.7 merely from this citation. Absence of constants in input equations is not absence of those constants from admissible valuations. A top-free simulation or fresh lower-bound construction is needed. Do not attach the 1997 title to the 1998 DOI.
@@ -12,11 +16,11 @@ Source identities, versions and inspection levels are in [the bibliography](bibl
 
 ## PW-NP03 — the cap/word-equation characterization
 
-**Locators:** Theorem 1; Corollaries 2 and 5 in the cited author copy. **Result:** full-signature NSSE with one covariant constructor is characterized by universality of restricted cap-set expressions; the paper relates arities at least two and finite/infinite variants and treats unary constructors separately. **Core mechanism:** cap membership exposes a shared-word equation of the form `pi nu = mu pi` with regular restrictions. **Prior-art consequence:** automata, repeated words, powers and hidden word equations were already central to NSSE. **Transfer limit:** those equivalences have hypotheses; they neither prove top-free equivalence automatically nor discharge a uniform finite scheme bound. A broad forall-exists undecidability theorem is likewise not automatically about this restricted cap syntax.
+**Locators corrected September 19:** journal author manuscript `_02`, Theorems 1/2/4, Lemma 1 and Corollaries 1–3; do not use this numbering for the TACS `_01` precursor. **Result:** full-signature NSSE with one covariant constructor is characterized by universality of restricted cap-set expressions; the paper relates arities at least two and finite/infinite variants and treats unary constructors separately. **Core mechanism:** cap membership exposes a shared-word equation of the form `pi nu = mu pi` with regular restrictions. **Prior-art consequence:** automata, repeated words, powers and hidden word equations were already central to NSSE. **Transfer limit:** those equivalences have hypotheses; they neither prove top-free equivalence automatically nor discharge a uniform finite scheme bound. A broad forall-exists undecidability theorem is likewise not automatically about this restricted cap syntax.
 
 ## PW-PRI04 — the overlooked thesis fragment
 
-**Locators:** Chapter 11, printed pp. 111–114; definition of straightness, Theorem 11.1, Lemmas 11.1–11.2. **Why relevant:** it attempts a further cap-language restriction reduced to existential word equations, making it a serious comparison for C067-style unique captures. **Audit result:** the literal uniqueness lemma has a concrete finite-language counterexample. The source, calculation, stronger sufficient hypothesis and precise limits are in the [thesis dossier](dossiers/priesnitz-2004.md). **Status:** local audit finding awaiting independent review; the chapter's final decidability theorem has not been refuted by this finding. Do not silently use the printed lemma or silently repair the whole theorem by replacing straightness with prefix-freeness.
+**Locators:** Chapter 11, printed pp. 111–114; definition of straightness, Theorem 11.1, Lemmas 11.1–11.2. **Why relevant:** it attempts a further cap-language restriction reduced to existential word equations, making it a serious comparison for C067-style unique captures. **Audit result:** the literal uniqueness lemma has a concrete finite-language counterexample. The source, calculation, stronger sufficient hypothesis and precise limits are in the [thesis dossier](dossiers/priesnitz-2004.md). **Status:** a second agent freshly read the primary pages and independently enumerated the finite example on September 19, while inheriting the prior dossier; the later proof dependencies remain unaudited; the chapter's final decidability theorem has not been refuted by this finding. Do not silently use the printed lemma or silently repair the whole theorem by replacing straightness with prefix-freeness.
 
 ## PW-SU06 — a neighboring undecidability boundary
 

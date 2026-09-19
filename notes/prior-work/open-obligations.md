@@ -15,6 +15,8 @@ These `Oxx` labels are local task keys, not new scientific C/Q claims. No task i
 | O09 | What relevant literature remains outside the inspected citation neighborhood? | Logged backward/forward citation rounds; primary screening of the named specialist leads; deduplicated accepted/rejected/inaccessible candidates. | A large hit count, unnamed 'websites searched', or a claim of exhaustive journal coverage. |
 | O10 | What can be claimed in a standalone contribution now? | One exact theorem statement, independent proof review, matched prior-art statements, necessary transfer maps and modest novelty wording. | Probability/percentage of being close, number of lemmas, or an unreviewed general proof. |
 
+| O11 | Which periodic-word theorem or finite representation helps audit C029? | Exact phase-aware statement readback of the periodic-suffix monitor, then a source-to-monitor mapping or a precise explanation why no import is needed. Keep safe cycle reachability separate from original witness existence. | Applying omega-regular emptiness before constructing an exact finite representation. |
+
 ## Discovery stopping rule
 
 After two documented rounds yield no materially relevant new leads, reassess whether an expert query or focused proof audit has higher value than more keyword search. Record the actual rounds and inaccessible sources. This pass did **not** establish that stopping condition or rule out all hidden work.
