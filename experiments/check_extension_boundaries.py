@@ -184,7 +184,7 @@ def main():
     args = parser.parse_args()
     result = run()
     text = json.dumps(result, indent=2) + "\n"
-    if args.check and json.loads(args.check.read_text()) != result:
+    if args.check and json.loads(args.check.read_text()) != json.loads(text):
         raise SystemExit("FAIL: saved boundary evidence differs")
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
