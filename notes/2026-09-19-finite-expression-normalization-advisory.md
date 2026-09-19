@@ -30,22 +30,22 @@ At the original snapshot, finite-expression normalization was explicitly listed 
 Let `Word = {0,1}*`. A type is a prefix-closed set of finite addresses labelled by product. Let T be the collection of ALL such sets, not merely finite or regular ones. Define
 
 - bottom = the empty set;
-- A x B = {epsilon} union {0w : w in A} union {1w : w in B};
+- A × B = {epsilon} union {0w : w in A} union {1w : w in B};
 - A <= B iff A is a subset of B.
 
-These are the definitions of `TreeSemantics.Tree`, `bottom`, `product`, and `Below`. The product root is always present: bottom x bottom is not bottom. No top constructor is introduced. The existence of the full infinite binary tree as a greatest semantic value is immaterial to the construction.
+These are the definitions of `TreeSemantics.Tree`, `bottom`, `product`, and `Below`. The product root is always present: bottom × bottom is not bottom. No top constructor is introduced. The existence of the full infinite binary tree as a greatest semantic value is immaterial to the construction.
 
 Fix a finite declared original variable set V, including all variables in the premises and query, and any other original variables whose identities are to be preserved. In particular, do not derive V solely from premise occurrences and accidentally omit query-only variables. For the existing Lean representation take V = Fin n.
 
 Expressions are FINITE syntax trees:
 
-    e ::= var x | bottom | e x e,   x in V.
+    e ::= var x | bottom | e × e,   x in V.
 
 For an arbitrary valuation rho : V -> T, define evaluation by recursion on expression syntax:
 
     [[x]]rho       = rho(x)
     [[bottom]]rho  = bottom
-    [[u x v]]rho   = [[u]]rho x [[v]]rho.
+    [[u × v]]rho   = [[u]]rho × [[v]]rho.
 
 Values rho(x) may be arbitrary infinite, nonregular trees. Evaluation performs no recursion through those values. A finite expression with infinite variable values is not itself required to denote a finite or regular tree.
 
@@ -73,7 +73,7 @@ Associate a representative r(o) to each occurrence:
 
     r(var x)       = the embedded original x
     r(bottom)      = b_bottom
-    r(o = u x v)   = p_o.
+    r(o = u × v)   = p_o.
 
 The bottom case is used only when B=1, so its representative always exists. Variable occurrences do not allocate new variables.
 
@@ -83,10 +83,10 @@ If B=1 emit once:
 
     b_bottom <= bottom.
 
-For every product occurrence o=(u x v), emit BOTH:
+For every product occurrence o=(u × v), emit BOTH:
 
-    p_o <= r(u) x r(v)
-    r(u) x r(v) <= p_o.
+    p_o <= r(u) × r(v)
+    r(u) × r(v) <= p_o.
 
 Their order in the output list is immaterial to semantics; postorder is a deterministic implementation choice. The second inequality is essential because it forces the root and every product node required by the children. The first is essential because it forbids extra product nodes in the proxy.
 
@@ -107,8 +107,8 @@ Let A be the list of these m inequalities and Delta = D ++ A. The output query i
 Every output clause is of one of the four existing forms:
 
     x <= y
-    x <= y x z
-    x x y <= z
+    x <= y × z
+    x × y <= z
     x <= bottom.
 
 For alpha <= beta, r(alpha) and r(beta) are precisely the embedded original indices. There is no new proxy around either query variable. Thus the variable query is preserved, not merely replaced by an unrelated equisatisfiable test.
@@ -160,7 +160,7 @@ Take any rho:V->T. Define rho_hat on the disjoint enlarged variable set by
 
     rho_hat(x)        = rho(x)                    for original x;
     rho_hat(b_bottom) = bottom                    when B=1;
-    rho_hat(p_o)      = [[u x v]]rho               for o=(u x v).
+    rho_hat(p_o)      = [[u × v]]rho               for o=(u × v).
 
 The definition is unambiguous: original and fresh names are disjoint, every product occurrence has a unique proxy, and all bottom occurrences have the same semantic value. Evaluation is already defined for each finite original subexpression without consulting the fresh values.
 
@@ -170,12 +170,12 @@ For every occurrence o,
 
 This follows directly in the variable and bottom cases, and is the defining assignment to p_o in the product case.
 
-The denial holds because rho_hat(b_bottom)=bottom. For a product occurrence o=(u x v), equation (1) gives
+The denial holds because rho_hat(b_bottom)=bottom. For a product occurrence o=(u × v), equation (1) gives
 
     rho_hat(p_o)
-      = [[u x v]]rho
-      = [[u]]rho x [[v]]rho
-      = rho_hat(r(u)) x rho_hat(r(v)).
+      = [[u × v]]rho
+      = [[u]]rho × [[v]]rho
+      = rho_hat(r(u)) × rho_hat(r(v)).
 
 Therefore both defining inclusions hold by reflexivity. Hence rho_hat models D. Importantly, this construction works before assuming any original premise: D alone restricts no original valuation.
 
@@ -187,17 +187,17 @@ For a variable x, its representative is its embedded original index. Thus eta(r(
 
 For bottom, the denial gives eta(b_bottom) subseteq empty. The reverse inclusion is automatic, so eta(b_bottom)=empty=[[bottom]]rho.
 
-For o=(u x v), both emitted constraints give
+For o=(u × v), both emitted constraints give
 
-    eta(p_o) subseteq eta(r(u)) x eta(r(v)),
-    eta(r(u)) x eta(r(v)) subseteq eta(p_o).
+    eta(p_o) subseteq eta(r(u)) × eta(r(v)),
+    eta(r(u)) × eta(r(v)) subseteq eta(p_o).
 
 Antisymmetry of inclusion gives equality. The induction hypotheses for u and v then yield
 
     eta(p_o)
-      = eta(r(u)) x eta(r(v))
-      = [[u]]rho x [[v]]rho
-      = [[u x v]]rho.
+      = eta(r(u)) × eta(r(v))
+      = [[u]]rho × [[v]]rho
+      = [[u × v]]rho.
 
 This completes the induction. It uses only finite syntax induction, inclusion antisymmetry, and the semantic definition of product.
 
@@ -233,7 +233,7 @@ For satisfiability, extension maps every original model to a normalized model, a
 
 **Inconsistent premises:** neither implication presupposes a model. If Gamma has no model, Delta has no model; conversely likewise. Both entail every query vacuously. No special unsatisfiability branch is needed in normalization.
 
-**Recursive constraints:** x x bottom <= x is allowed. The original value of x may need to be infinite. This is a constraint on a valuation, not an instruction to unfold a recursive syntax tree or reject an occurrence of x. Fresh definitions follow finite expression structure even if the overall constraint dependency graph has cycles.
+**Recursive constraints:** x × bottom <= x is allowed. The original value of x may need to be infinite. This is a constraint on a valuation, not an instruction to unfold a recursive syntax tree or reject an occurrence of x. Fresh definitions follow finite expression structure even if the overall constraint dependency graph has cycles.
 
 **Arbitrary and nonregular values:** all original valuations are included, and original values are literally unchanged by extension. No compactness, finite-model property, regular-countermodel property, decidable-membership assumption, or witness-length bound is used.
 
@@ -261,7 +261,7 @@ These are exact lengths of the specified LIST representation. Interpreting claus
 
 If S is the number of input syntax nodes, counting and accumulator-based postorder generation use O(S+m) elementary syntax operations and O(S+m) output space, treating index operations as unit-cost. This is not a claim about arbitrary-precision bit complexity, naive repeated list concatenation, or the cost of the eventual normalized decision procedure. Binary index encodings require O(log(n+P+B+1)) bits per reference; a corresponding straightforward encoding-aware bound includes that factor. A compact expression DAG should not be unfolded exponentially merely to use an occurrence count.
 
-**Unshared repetitions:** two occurrences of x x bottom may get distinct proxies. By (R), both must denote the same tree, with no extra equality clause. This avoids any need for hashing or syntactic equality in the baseline normalizer.
+**Unshared repetitions:** two occurrences of x × bottom may get distinct proxies. By (R), both must denote the same tree, with no extra equality clause. This avoids any need for hashing or syntactic equality in the baseline normalizer.
 
 **Optional sharing:** use one proxy per distinct syntactic product subexpression, or per product node in an already supplied acyclic expression DAG. Order the definitions topologically and repeat the proof in section 4.2 in that order. If there are P_shared such nodes, the counts become P_shared+B fresh variables and m+2P_shared+B clauses. Only syntax is shared; no semantic-equivalence decision is needed. Cycles in original constraints do not make this finite syntax DAG cyclic. A cyclic expression graph would be a different input language and is not silently admitted.
 
@@ -277,7 +277,7 @@ inductive Constraint (n : Nat) where
   | denial (source : Fin n)
 ```
 
-Its `Valuation n` is `Fin n -> Tree`; `Holds`, `Models`, `Satisfiable`, and `Entails` have exactly the semantics used above. Note especially that the target of `.lower` comes LAST. Product definitions emit `.upper p l r` and `.lower l r p`.
+Its `Valuation n` is `Fin n → Tree`; `Holds`, `Models`, `Satisfiable`, and `Entails` have exactly the semantics used above. Note especially that the target of `.lower` comes LAST. Product definitions emit `.upper p l r` and `.lower l r p`.
 
 A new module importing ONLY `Subtail.TreeSemantics` is sufficient for this front-end task. Do not change the existing definitions, and do not import C029 or the terminal compiler merely to prove normalization.
 
@@ -298,26 +298,20 @@ inductive Expr (n : Nat) where
   | prod (left right : Expr n)
   deriving DecidableEq, Repr
 
-def eval {n : Nat} (rho : Valuation n) : Expr n -> Tree
+def eval {n : Nat} (rho : Valuation n) : Expr n → Tree
   | .var x => rho x
   | .bot => bottom
   | .prod s t => product (eval rho s) (eval rho t)
 
-abbrev Input (n : Nat) := List (Expr n x Expr n)
-```
-
-In the actual Lean source the last line must use the type product notation, not the ASCII mathematical `x` used elsewhere in this note:
-
-```lean
-abbrev Input (n : Nat) := List (Prod (Expr n) (Expr n))
+abbrev Input (n : Nat) := List (Expr n × Expr n)
 
 def ExprModels {n : Nat}
     (Gamma : Input n) (rho : Valuation n) : Prop :=
-  forall c, c in Gamma -> Below (eval rho c.1) (eval rho c.2)
+  ∀ c ∈ Gamma, Below (eval rho c.1) (eval rho c.2)
 
 def ExprEntails {n : Nat}
     (Gamma : Input n) (s t : Expr n) : Prop :=
-  forall rho, ExprModels Gamma rho ->
+  ∀ rho, ExprModels Gamma rho →
     Below (eval rho s) (eval rho t)
 
 structure Output (n : Nat) where
@@ -338,7 +332,7 @@ def restrict {n : Nat} (k : Nat)
 end Subtail.ExpressionNormalization
 ```
 
-The two displays are explanatory fragments, not meant to be concatenated as a file. The proposed `Fin.castAdd k` old-index embedding and `Fin.natAdd n` fresh-index embedding should be checked against the PINNED Lean toolchain before implementation. Their required mathematical contracts are simply `old(x).val=x.val` and `fresh(j).val=n+j`; explicit Fin constructors with the relevant inequalities are equally suitable. Do not use modular Fin addition to allocate variables. The original advisory's external Lean-documentation pointer was not an executed compatibility check and is not offered as such here.
+The proposed `Fin.castAdd k` old-index embedding and `Fin.natAdd n` fresh-index embedding should be checked against the PINNED Lean toolchain before implementation. Their required mathematical contracts are simply `old(x).val=x.val` and `fresh(j).val=n+j`; explicit Fin constructors with the relevant inequalities are equally suitable. Do not use modular Fin addition to allocate variables. The original advisory's external Lean-documentation pointer was not an executed compatibility check and is not offered as such here.
 
 ### 6.2 Proposed theorem signatures: bodies intentionally omitted
 
@@ -369,28 +363,28 @@ theorem extend_models
 theorem restrict_models
     (Gamma : Input n) (s t : Expr n) :
     let R := normalize Gamma s t
-    forall eta : Valuation (n + R.extra),
-      Models R.constraints eta ->
+    ∀ eta : Valuation (n + R.extra),
+      Models R.constraints eta →
       ExprModels Gamma (restrict R.extra eta)
 
 theorem roots_correct
     (Gamma : Input n) (s t : Expr n) :
     let R := normalize Gamma s t
-    forall eta : Valuation (n + R.extra),
-      Models R.definitions eta ->
-      eta R.leftRoot = eval (restrict R.extra eta) s /\
+    ∀ eta : Valuation (n + R.extra),
+      Models R.definitions eta →
+      eta R.leftRoot = eval (restrict R.extra eta) s ∧
       eta R.rightRoot = eval (restrict R.extra eta) t
 
 theorem normalize_entails_iff
     (Gamma : Input n) (s t : Expr n) :
     let R := normalize Gamma s t
-    ExprEntails Gamma s t <->
+    ExprEntails Gamma s t ↔
       Entails R.constraints R.leftRoot R.rightRoot
 
 theorem variable_query_preserved
     (Gamma : Input n) (alpha beta : Fin n) :
     let R := normalize Gamma (.var alpha) (.var beta)
-    R.leftRoot = Fin.castAdd R.extra alpha /\
+    R.leftRoot = Fin.castAdd R.extra alpha ∧
     R.rightRoot = Fin.castAdd R.extra beta
 ```
 
@@ -406,72 +400,72 @@ For equality of the existing `Tree` structure, a small extensionality lemma conv
 
 Input premise:
 
-    (x x bottom) x (x x bottom) <= y.
+    (x × bottom) × (x × bottom) <= y.
 
 Allocate b,p1,p2,p3. Output:
 
     b <= bottom
-    p1 <= x x b;       x x b <= p1
-    p2 <= x x b;       x x b <= p2
-    p3 <= p1 x p2;     p1 x p2 <= p3
+    p1 <= x × b;       x × b <= p1
+    p2 <= x × b;       x × b <= p2
+    p3 <= p1 × p2;     p1 × p2 <= p3
     p3 <= y.
 
 Here P=3, B=1, m=1: four fresh variables and eight clauses. The first two subexpressions are separate occurrences but (R) forces p1=p2 semantically. The sharing variant could reuse one proxy, but sharing is not needed for correctness.
 
 ### B. Product is not bottom; an upper-only proxy is unsound
 
-Input: bottom x bottom <= bottom.
+Input: bottom × bottom <= bottom.
 
 Correct output:
 
     b <= bottom
-    p <= b x b
-    b x b <= p
+    p <= b × b
+    b × b <= p
     p <= b.
 
 This is inconsistent. The lower definition forces epsilon in p, while p<=b and the denial forbid it. Deleting the lower definition makes the all-bottom valuation satisfy the remaining constraints, turning an inconsistent input into a satisfiable one. This tests the root as well as the direction of the generated clauses.
 
 ### C. A lower-only proxy can be too large
 
-Input: x <= bottom x bottom.
+Input: x <= bottom × bottom.
 
 The erroneous output without the upper definition is
 
     b <= bottom
-    b x b <= p
+    b × b <= p
     x <= p.
 
-Set b=bottom and p=x=(bottom x bottom) x bottom. All erroneous clauses hold, but the original inequality fails at address 0. The upper definition is exactly what excludes the extra node. One-sided proxy definitions are therefore not an adequate replacement for this conservative model-bijection construction.
+Set b=bottom and p=x=(bottom × bottom) × bottom. All erroneous clauses hold, but the original inequality fails at address 0. The upper definition is exactly what excludes the extra node. One-sided proxy definitions are therefore not an adequate replacement for this conservative model-bijection construction.
 
 ### D. Fresh-name collision changes an original query
 
 Input Gamma={bottom<=x}; query b<=x, where b is an ORIGINAL variable.
 
-The query is not entailed: choose x=bottom and b=bottom x bottom. An incorrect allocator that reuses original b as the bottom proxy adds b<=bottom, making b<=x entailed. The disjoint allocation invariant excludes this. Include original names that look like generated names in a named-variable front end.
+The query is not entailed: choose x=bottom and b=bottom × bottom. An incorrect allocator that reuses original b as the bottom proxy adds b<=bottom, making b<=x entailed. The disjoint allocation invariant excludes this. Include original names that look like generated names in a named-variable front end.
 
 ### E. Infinite models must not be rejected
 
-Input Gamma={x x bottom<=x}; query x<=bottom.
+Input Gamma={x × bottom<=x}; query x<=bottom.
 
-Let X={0^j : j>=0}. This is a prefix-closed infinite product set and X x bottom = X, so it satisfies the premise and falsifies the query at epsilon.
+Let X={0^j : j>=0}. This is a prefix-closed infinite product set and X × bottom = X, so it satisfies the premise and falsifies the query at epsilon.
 
 Every model of the premise has epsilon in x; if w is in x, then 0w is in x. Thus it has 0^j for every j and cannot be a finite tree. A finite-tree-only semantics would incorrectly make the query vacuously true. The inspected TreeSemantics source already contains `zeroSpine`, `zeroSpine_lower`, and `zeroSpine_unbounded` as useful related semantic regressions. Their presence is source evidence, not a fresh execution of them in this investigation.
 
 ### F. Query definitions are not the query assumption
 
-Take empty Gamma and query bottom x bottom<=bottom.
+Take empty Gamma and query bottom × bottom<=bottom.
 
 Correct normalized premises:
 
     b <= bottom
-    p <= b x b
-    b x b <= p.
+    p <= b × b
+    b × b <= p.
 
 Query: p<=b. These premises are satisfiable, and the query is false at epsilon. Adding p<=b as a premise instead makes the system inconsistent and the entailment true. A regression should explicitly check separation at the empty address.
 
 ### G. Empty input, query-only variables, and zero original variables
 
-For empty Gamma and distinct original query variables alpha,beta, the compiler adds no variables or clauses and leaves the non-entailment alpha<=beta unchanged. Choose alpha=bottom x bottom, beta=bottom. If alpha=beta instead, the query is entailed; include both diagonal and off-diagonal query cases. Query-only variables must be in the declared domain even when the premise list mentions no variable.
+For empty Gamma and distinct original query variables alpha,beta, the compiler adds no variables or clauses and leaves the non-entailment alpha<=beta unchanged. Choose alpha=bottom × bottom, beta=bottom. If alpha=beta instead, the query is entailed; include both diagonal and off-diagonal query cases. Query-only variables must be in the declared domain even when the premise list mentions no variable.
 
 With n=0, empty Gamma, and query bottom<=bottom, allocate only b_bottom, emit its denial, and query b_bottom<=b_bottom. This exercises Fin 0 without fabricating an original variable. P=0, B=1, m=0 gives exactly one added variable and one clause.
 
@@ -514,7 +508,7 @@ Suggested claims-record scope: model-preserving normalization of FINITE syntax i
 - Proposed Lean implementation: NOT IMPLEMENTED / NOT COMPILED.
 - Adversarial fixtures: mathematical expected outcomes supplied; NOT EXECUTED.
 - Lean build, kernel replay, axiom audit, Python suite, full repository/index checks: NOT RUN by this contribution unless a later PR handoff records a separately identified actual run.
-- GitHub publication and readback details: to be recorded in the associated PR / #31 handoff using the resulting immutable commit SHA, rather than self-referencing an unknown commit in this initial file.
+- GitHub publication and readback details: to be recorded in the associated PR / #31 handoff using the resulting immutable commit SHA, rather than self-referencing an unknown commit in this file.
 - Scope: one new note only; no shared-file, C029, toolchain, proof-interface, or main changes. Main integration and canonical-ledger synchronization remain serialized through #37.
 
 The reusable conclusion is exact: finite syntax normalization is a conservative definitional extension over the existing arbitrary-tree semantics. Its ordinary proof is complete here; the remaining normalization work is implementation and formal verification of that construction, not an unresolved semantic implication.
