@@ -1,0 +1,67 @@
+name: Expression normalization
+
+on:
+  pull_request:
+    paths:
+      - 'lean/Subtail/ExpressionNormalization*.lean'
+      - '.github/workflows/lean-expression-normalization.yml'
+      - 'experiments/check_expression_normalization.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: expression-normalization-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  normalization:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.11'
+      - uses: actions/cache@v6.1.0
+        with:
+          path: ~/.elan
+          key: elan-${{ runner.os }}-${{ hashFiles('lean/lean-toolchain') }}
+      - uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596
+        with:
+          lake-package-directory: lean
+          build: 'false'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'false'
+      - name: Build only the normalization dependency closure
+        working-directory: lean
+        run: lake build +Subtail.ExpressionNormalization
+      - name: Independent kernel replay
+        working-directory: lean
+        run: lake env leanchecker Subtail.ExpressionNormalization
+      - name: Reject unfinished declarations
+        run: "! grep -nE '\\bsorry\\b|sorryAx|^axiom |native_decide' lean/Subtail/ExpressionNormalization.lean"
+      - name: Audit theorem and runtime dependency closures
+        run: |
+          mkdir -p tmp
+          python3 - <<'PY'
+          import pathlib, re
+          source = pathlib.Path('lean/Subtail/ExpressionNormalization.lean').read_text()
+          names = re.findall(r'^(?:def|theorem|structure|inductive|abbrev)\s+([\w.]+)', source, re.M)
+          out = ['import Subtail.ExpressionNormalization']
+          out += ['#print axioms Subtail.ExpressionNormalization.' + name for name in names]
+          pathlib.Path('tmp/expression-normalization-axioms.lean').write_text('\n'.join(out) + '\n')
+          print('Named declaration count:', len(names))
+          PY
+          cd lean
+          lake env lean ../tmp/expression-normalization-axioms.lean | tee ../tmp/expression-normalization-axioms.txt
+          python3 - <<'PY'
+          import pathlib, re
+          text = pathlib.Path('../tmp/expression-normalization-axioms.txt').read_text()
+          for group in re.findall(r'depends on axioms:\s*\[([^\]]*)\]', text):
+              found = {x.strip() for x in group.split(',') if x.strip()}
+              assert found <= {'propext', 'Quot.sound', 'Classical.choice'}, found
+          assert 'sorryAx' not in text and 'error:' not in text
+          PY
