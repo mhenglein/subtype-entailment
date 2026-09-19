@@ -1956,6 +1956,11 @@ theorem locOf_eq {v : Nat} (hv : v < c.vars) :
     Option.map_some, Option.getD_some, List.getElem_finRange]
   rfl
 
+theorem locOf_fin (v : Fin c.vars) :
+    locOf X.D v.val = if B.word.length < (X.τ v).val then Loc.fresh (X.idx (X.τ v).val)
+      else Loc.core v.val := by
+  rw [X.locOf_eq v.isLt]
+
 /-! ### The assignment -/
 
 theorem σ_val (v : Var X.D) : (X.σ v).val = X.sigmaVal v.val := rfl
@@ -3699,6 +3704,534 @@ theorem pieceOK_all {ai pi : Nat} (hai : ai < c.atoms.length) (hpi : pi < (X.pie
     · by_cases hy : B.word.length < (hdN (X.blk ai (si + 1))).1
       · exact X.pieceOK_wrap hai hsi hx hy
       · exact X.pieceOK_exit hai hsi hx hy
+
+end Cov
+
+/-! ## Atom validity -/
+
+namespace Cov
+variable {I : Instance k} {B : Reference k} {E : Ext I B} {c : Clause k} (X : Cov I B E c)
+
+theorem pieceSourceLoc_mk (kd : PieceKind) (src tgt lc rc : Nat) (l : Label) :
+    pieceSourceLoc ⟨kd, src, tgt, lc, rc, l⟩ =
+      match kd with
+      | .core => Loc.core src
+      | .enter => Loc.core src
+      | _ => Loc.fresh src := rfl
+
+theorem pieceTargetLoc_mk (kd : PieceKind) (src tgt lc rc : Nat) (l : Label) :
+    pieceTargetLoc ⟨kd, src, tgt, lc, rc, l⟩ =
+      match kd with
+      | .core => Loc.core tgt
+      | .exit => Loc.core tgt
+      | _ => Loc.fresh tgt := rfl
+
+/-- Seam between a block piece and the following transition. -/
+theorem seam_block_trans {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si + 1 < X.segCount ai) :
+    pieceTargetLoc (X.blockPiece ai si (X.blk ai si)) =
+        pieceSourceLoc (X.transPiece ai si (X.blk ai si) (X.blk ai (si + 1))) ∧
+      (X.blockPiece ai si (X.blk ai si)).rc = (X.transPiece ai si (X.blk ai si) (X.blk ai (si + 1))).lc := by
+  have hsi' := Nat.lt_of_succ_lt hsi
+  have hne := X.blk_ne_nil hai hsi'
+  have hlink := X.blk_link hai hsi
+  by_cases hx : (lastN (X.blk ai si)).1 ≤ B.word.length
+  · -- an old block followed by an entrance
+    have hold : ¬ isFresh B.word.length (X.blk ai si) = true := by
+      intro hf
+      have := (X.blk_fresh_iff_last hai hsi').mp hf
+      omega
+    rw [X.blockPiece_old hold, X.transPiece_enter hx]
+    exact ⟨rfl, lastCtl_lastN hne⟩
+  · have hf : isFresh B.word.length (X.blk ai si) = true :=
+      (X.blk_fresh_iff_last hai hsi').mpr (Nat.lt_of_not_le hx)
+    rw [X.blockPiece_fresh hf]
+    by_cases hy : B.word.length < (hdN (X.blk ai (si + 1))).1
+    · -- a wrap
+      obtain ⟨hxN, -, -, -⟩ := wrap_facts E (obsAt c ai) hlink (Nat.lt_of_not_le hx) hy
+      rw [X.transPiece_wrap hx hy]
+      refine ⟨?_, lastCtl_lastN hne⟩
+      show Loc.fresh (X.idx (lastPos (X.blk ai si))) = Loc.fresh (X.n - 1)
+      rw [lastPos_lastN hne, hxN, X.idx_N]
+    · -- an exit
+      rw [X.transPiece_exit hx hy]
+      refine ⟨?_, lastCtl_lastN hne⟩
+      show Loc.fresh (X.idx (lastPos (X.blk ai si))) = Loc.fresh (X.idx (lastN (X.blk ai si)).1)
+      rw [lastPos_lastN hne]
+
+/-- Seam between a transition and the following block piece. -/
+theorem seam_trans_block {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si + 1 < X.segCount ai) :
+    pieceTargetLoc (X.transPiece ai si (X.blk ai si) (X.blk ai (si + 1))) =
+        pieceSourceLoc (X.blockPiece ai (si + 1) (X.blk ai (si + 1))) ∧
+      (X.transPiece ai si (X.blk ai si) (X.blk ai (si + 1))).rc =
+        (X.blockPiece ai (si + 1) (X.blk ai (si + 1))).lc := by
+  have hlink := X.blk_link hai hsi
+  by_cases hx : (lastN (X.blk ai si)).1 ≤ B.word.length
+  · -- an entrance into a fresh block starting at m+1
+    obtain ⟨-, hym, -, -⟩ := enter_facts E (obsAt c ai) hlink hx
+    have hf : isFresh B.word.length (X.blk ai (si + 1)) = true :=
+      (X.blk_fresh_iff_hd (ai := ai) (si := si + 1)).mpr (by omega)
+    rw [X.transPiece_enter hx, X.blockPiece_fresh hf]
+    refine ⟨?_, (hdCtl_hdN _).symm⟩
+    show Loc.fresh 0 = Loc.fresh (X.idx (hdPos (X.blk ai (si + 1))))
+    rw [hdPos_hdN, hym, X.idx_m1]
+  · by_cases hy : B.word.length < (hdN (X.blk ai (si + 1))).1
+    · -- a wrap into a fresh block starting at m+1
+      obtain ⟨-, hym, -, -⟩ := wrap_facts E (obsAt c ai) hlink (Nat.lt_of_not_le hx) hy
+      have hf : isFresh B.word.length (X.blk ai (si + 1)) = true :=
+        (X.blk_fresh_iff_hd (ai := ai) (si := si + 1)).mpr hy
+      rw [X.transPiece_wrap hx hy, X.blockPiece_fresh hf]
+      refine ⟨?_, (hdCtl_hdN _).symm⟩
+      show Loc.fresh 0 = Loc.fresh (X.idx (hdPos (X.blk ai (si + 1))))
+      rw [hdPos_hdN, hym, X.idx_m1]
+    · -- an exit into an old block
+      have hold : ¬ isFresh B.word.length (X.blk ai (si + 1)) = true := by
+        intro hf
+        exact hy ((X.blk_fresh_iff_hd (ai := ai) (si := si + 1)).mp hf)
+      rw [X.transPiece_exit hx hy, X.blockPiece_old hold]
+      exact ⟨rfl, (hdCtl_hdN _).symm⟩
+
+/-- The seam condition of consecutive pieces. -/
+theorem seam_all {ai : Nat} (hai : ai < c.atoms.length) :
+    ((X.pieces ai).zip (X.pieces ai).tail).all (fun x =>
+      match x with
+      | (l, r) => pieceTargetLoc l == pieceSourceLoc r && l.rc == r.lc) = true := by
+  apply List.all_eq_true.mpr
+  intro x hx
+  obtain ⟨i, hi, rfl⟩ := List.getElem_of_mem hx
+  have hi' : i + 1 < (X.pieces ai).length := by
+    simp only [List.length_zip, List.length_tail] at hi; omega
+  rw [List.getElem_zip, List.getElem_tail]
+  simp only [Bool.and_eq_true, beq_iff_eq]
+  have hlen := X.pieces_length ai
+  have e1 : (X.pieces ai)[i] = (X.pieces ai).getD i default := by
+    rw [List.getD_eq_getElem?_getD, List.getElem?_eq_getElem]; rfl
+  have e2 : (X.pieces ai)[i + 1] = (X.pieces ai).getD (i + 1) default := by
+    rw [List.getD_eq_getElem?_getD, List.getElem?_eq_getElem]; rfl
+  rw [e1, e2]
+  rw [hlen] at hi'
+  rcases pi_cases (Nat.lt_of_succ_lt hi') with ⟨si, rfl, hsi⟩ | ⟨si, rfl, hsi⟩
+  · have hsi' : si + 1 < X.segCount ai := by omega
+    rw [X.pieces_getD_even hsi, X.pieces_getD_odd hsi']
+    exact X.seam_block_trans hai hsi'
+  · rw [X.pieces_getD_odd hsi, show 2 * si + 1 + 1 = 2 * (si + 1) by omega, X.pieces_getD_even (by omega)]
+    exact X.seam_trans_block hai hsi
+
+/-- The first piece starts at the atom's source location. -/
+theorem first_source {ai : Nat} (hai : ai < c.atoms.length) :
+    pieceSourceLoc (X.blockPiece ai 0 (X.blk ai 0)) = locOf X.D (c.atoms[ai]).source.val := by
+  obtain ⟨q, -, hq⟩ := X.hdN_zero hai
+  have hsi := X.segCount_pos hai
+  rw [X.locOf_eq (c.atoms[ai]).source.isLt]
+  by_cases hf : isFresh B.word.length (X.blk ai 0) = true
+  · have hfresh : B.word.length < (X.τ (c.atoms[ai]).source).val := by
+      have := (X.blk_fresh_iff_hd (ai := ai) (si := 0)).mp hf
+      rw [hq] at this; exact this
+    rw [X.blockPiece_fresh hf, if_pos hfresh]
+    show Loc.fresh (X.idx (hdPos (X.blk ai 0))) = _
+    rw [hdPos_hdN, hq]
+  · have hold : ¬ B.word.length < (X.τ (c.atoms[ai]).source).val := by
+      intro h
+      apply hf
+      apply (X.blk_fresh_iff_hd (ai := ai) (si := 0)).mpr
+      rw [hq]; exact h
+    rw [X.blockPiece_old hf, if_neg hold]
+    show Loc.core (X.headIdx ai 0) = _
+    unfold headIdx
+    rw [if_pos rfl, srcAt_eq hai]
+
+/-- The last piece ends at the atom's target location. -/
+theorem last_target {ai : Nat} (hai : ai < c.atoms.length) :
+    pieceTargetLoc (X.blockPiece ai (X.segCount ai - 1) (X.blk ai (X.segCount ai - 1))) =
+      locOf X.D (c.atoms[ai]).target.val := by
+  obtain ⟨p, -, hp⟩ := X.lastN_last hai
+  have hpos := X.segCount_pos hai
+  have hsi : X.segCount ai - 1 < X.segCount ai := by omega
+  have hne := X.blk_ne_nil hai hsi
+  rw [X.locOf_eq (c.atoms[ai]).target.isLt]
+  by_cases hf : isFresh B.word.length (X.blk ai (X.segCount ai - 1)) = true
+  · have hfresh : B.word.length < (X.τ (c.atoms[ai]).target).val := by
+      have := (X.blk_fresh_iff_last hai hsi).mp hf
+      rw [hp] at this; exact this
+    rw [X.blockPiece_fresh hf, if_pos hfresh]
+    show Loc.fresh (X.idx (lastPos (X.blk ai (X.segCount ai - 1)))) = _
+    rw [lastPos_lastN hne, hp]
+  · have hold : ¬ B.word.length < (X.τ (c.atoms[ai]).target).val := by
+      intro h
+      apply hf
+      apply (X.blk_fresh_iff_last hai hsi).mpr
+      rw [hp]; exact h
+    rw [X.blockPiece_old hf, if_neg hold]
+    show Loc.core (X.lastIdx ai (X.segCount ai - 1)) = _
+    unfold lastIdx
+    rw [if_pos rfl, tgtAt_eq hai]
+
+/-- Every atom's piece list is valid. -/
+theorem atomValid_all {ai : Nat} (hai : ai < c.atoms.length) :
+    atomValid I c X.D ai (c.atoms[ai]) (piecesOf X.D ai) = true := by
+  rw [X.piecesOf_eq hai]
+  unfold atomValid
+  rw [X.pieces_head? hai, X.pieces_getLast? hai]
+  simp only [Bool.and_eq_true, beq_iff_eq]
+  obtain ⟨q, hq, hqe⟩ := X.hdN_zero hai
+  obtain ⟨p, hp, hpe⟩ := X.lastN_last hai
+  have hpos := X.segCount_pos hai
+  have hne0 := X.blk_ne_nil hai hpos
+  have hnel := X.blk_ne_nil (si := X.segCount ai - 1) hai (by omega)
+  refine ⟨⟨⟨⟨⟨X.first_source hai, X.last_target hai⟩, ?_⟩, ?_⟩, X.seam_all hai⟩, ?_⟩
+  · -- the initial control
+    have key : ∀ o' (h : obsAt c ai = o'), ∃ q' ∈ o'.initial, q'.val = q.val := by
+      intro o' h; subst h; exact ⟨q, hq, rfl⟩
+    obtain ⟨q', hq', hqv⟩ := key _ (obsAt_eq hai)
+    apply List.any_eq_true.mpr
+    refine ⟨q', hq', ?_⟩
+    apply beq_iff_eq.mpr
+    have hlc : (X.blockPiece ai 0 (X.blk ai 0)).lc = hdCtl (X.blk ai 0) := by
+      unfold blockPiece; split <;> rfl
+    rw [hlc, hdCtl_hdN, hqe, hqv]
+  · -- the final control
+    have key : ∀ o' (h : obsAt c ai = o'), ∃ p' ∈ o'.final, p'.val = p.val := by
+      intro o' h; subst h; exact ⟨p, hp, rfl⟩
+    obtain ⟨p', hp', hpv⟩ := key _ (obsAt_eq hai)
+    apply List.any_eq_true.mpr
+    refine ⟨p', hp', ?_⟩
+    apply beq_iff_eq.mpr
+    have hrc : (X.blockPiece ai (X.segCount ai - 1) (X.blk ai (X.segCount ai - 1))).rc =
+        lastCtl (X.blk ai (X.segCount ai - 1)) := by
+      unfold blockPiece; split <;> rfl
+    rw [hrc, lastCtl_lastN hnel, hpe, hpv]
+  · -- every piece is valid
+    apply List.all_eq_true.mpr
+    intro pi hpi
+    have hpi' := List.mem_range.mp hpi
+    have := (X.pieceOK_all hai hpi').valid
+    rw [obsAt_eq hai] at this
+    exact this
+
+end Cov
+
+/-! ## The diagram is valid -/
+
+namespace Cov
+variable {I : Instance k} {B : Reference k} {E : Ext I B} {c : Clause k} (X : Cov I B E c)
+
+theorem M_getLast? : X.M.getLast? = some E.N := by
+  have hne : X.M ≠ [] := List.ne_nil_of_length_pos X.n_pos
+  rw [getLast?_eq_getD hne]
+  show some (X.pos (X.n - 1)) = some E.N
+  rw [X.pos_last]
+
+theorem valid : validDiagram I c X.D = true := by
+  unfold validDiagram
+  simp only [Bool.and_eq_true, beq_iff_eq, decide_eq_true_eq, Bool.not_eq_true']
+  refine ⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨X.n_pos, ?_⟩, ?_⟩, ?_⟩, ?_⟩, ?_⟩, ?_⟩, ?_⟩, ?_⟩, ?_⟩, ?_⟩, ?_⟩, ?_⟩, ?_⟩, ?_⟩, ?_⟩, ?_⟩
+  · show (X.M.map E.C.label).length = X.n
+    rw [List.length_map]; rfl
+  · show (X.M.map fun p => E.C.word[p]?).length = X.n
+    rw [List.length_map]; rfl
+  · show X.loc.length = c.vars
+    unfold loc; rw [List.length_map, List.length_finRange]
+  · show ((List.range c.atoms.length).map X.pieces).length = c.atoms.length
+    rw [List.length_map, List.length_range]
+  · show (X.M.map fun p => E.C.word[p]?).getLast? = some none
+    rw [List.getLast?_map, X.M_getLast?, Option.map_some, E.word_none]
+  · show ((X.M.map fun p => E.C.word[p]?).take (X.n - 1)).all Option.isSome = true
+    apply List.all_eq_true.mpr
+    intro x hx
+    obtain ⟨j, hj, rfl⟩ := List.mem_take_iff_getElem.mp hx
+    rw [List.getElem_map]
+    have hjn : j < X.n - 1 := by
+      rw [List.length_map] at hj
+      exact Nat.lt_of_lt_of_le hj (Nat.min_le_left _ _)
+    have hjn' : j < X.n := by omega
+    have hlt : X.M[j] < E.N := by
+      have h := X.pos_lt_N hjn
+      rw [X.pos_eq hjn'] at h
+      exact h
+    exact (E.word_isSome_iff _).mpr hlt
+  · show (colB I B B.word.length).isEnd = true
+    exact Ext.colB_m_isEnd
+  · show (colB I B B.word.length).root = false
+    exact Ext.colB_m_root E.hm
+  · show (colB I B B.word.length).next = none
+    exact Ext.colB_m_next
+  · show step I (markState X.D 0) E.a = some (colB I B B.word.length).state
+    rw [X.markState_eq X.n_pos, X.pos_zero, E.step_label E.word_m, Ext.colB_state, E.label_le (Nat.le_refl _)]
+  · rw [X.markState_eq X.n_pos, X.pos_zero]
+    exact E.bad_false E.m_lt_N
+  · rw [X.markState_eq X.n_pos, X.pos_zero]
+    exact E.diag_false (Nat.lt_succ_self _) E.m_lt_N
+  · apply List.all_eq_true.mpr
+    intro vt hvt
+    obtain ⟨v, t⟩ := vt
+    simp only
+    rw [X.locOf_eq v.isLt]
+    by_cases hv : B.word.length < (X.τ v).val
+    · rw [if_pos hv]
+      exact decide_eq_true (X.idx_lt (X.var_mem_M hv))
+    · rw [if_neg hv]
+      exact decide_eq_true (Nat.lt_of_lt_of_le v.isLt X.vars_le_coreVars)
+  · -- equalities
+    unfold pairsValid
+    apply List.all_eq_true.mpr
+    intro xy hxy
+    obtain ⟨x, y⟩ := xy
+    have heq := X.equal (x, y) hxy
+    simp only at heq
+    simp only
+    rw [X.locOf_eq x.isLt, X.locOf_eq y.isLt]
+    by_cases hx : B.word.length < (X.τ x).val
+    · have hy : B.word.length < (X.τ y).val := by rw [← heq]; exact hx
+      rw [if_pos hx, if_pos hy]
+      simp only [Bool.and_eq_true, decide_eq_true_eq, bne_iff_ne, ne_eq, Bool.not_eq_false, beq_iff_eq]
+      exact ⟨⟨X.idx_lt (X.var_mem_M hx), X.idx_lt (X.var_mem_M hy)⟩, by rw [heq]⟩
+    · have hy : ¬ B.word.length < (X.τ y).val := by rw [← heq]; exact hx
+      rw [if_neg hx, if_neg hy]
+      simp only [Bool.and_eq_true, decide_eq_true_eq]
+      exact ⟨Nat.lt_of_lt_of_le x.isLt X.vars_le_coreVars, Nat.lt_of_lt_of_le y.isLt X.vars_le_coreVars⟩
+  · -- disequalities
+    unfold pairsValid
+    apply List.all_eq_true.mpr
+    intro xy hxy
+    obtain ⟨x, y⟩ := xy
+    have hne := X.unequal (x, y) hxy
+    simp only at hne
+    simp only
+    rw [X.locOf_eq x.isLt, X.locOf_eq y.isLt]
+    by_cases hx : B.word.length < (X.τ x).val
+    · by_cases hy : B.word.length < (X.τ y).val
+      · rw [if_pos hx, if_pos hy]
+        simp only [Bool.and_eq_true, decide_eq_true_eq, bne_iff_ne, ne_eq, Bool.not_eq_true, beq_eq_false_iff_ne]
+        refine ⟨⟨X.idx_lt (X.var_mem_M hx), X.idx_lt (X.var_mem_M hy)⟩, ?_⟩
+        intro hidx
+        apply hne
+        exact Fin.ext (X.idx_inj (X.var_mem_M hx) (X.var_mem_M hy) hidx)
+      · rw [if_pos hx, if_neg hy]
+    · by_cases hy : B.word.length < (X.τ y).val
+      · rw [if_neg hx, if_pos hy]
+      · rw [if_neg hx, if_neg hy]
+        simp only [Bool.and_eq_true, decide_eq_true_eq]
+        exact ⟨Nat.lt_of_lt_of_le x.isLt X.vars_le_coreVars, Nat.lt_of_lt_of_le y.isLt X.vars_le_coreVars⟩
+  · -- atoms
+    apply List.all_eq_true.mpr
+    intro ai hai
+    have hai' := List.mem_range.mp hai
+    simp only [List.getElem?_eq_getElem hai']
+    exact X.atomValid_all hai'
+
+/-! ### Membership in the compiled clause, by cases -/
+
+section CompiledCases
+variable (I : Instance k) (c : Clause k) (D : Diagram k)
+
+theorem tests_cases {t : Var D × (Colour k → Bool)} (ht : t ∈ (compileValid I c D).tests) :
+    t = (endVar D, fun col => decide (col = D.oldEnd)) ∨
+      (∃ j, j < D.groups - 1 ∧ t = (zVar D j, fun (col : Colour k) => !col.isEnd)) ∨
+      (∃ v t', (v, t') ∈ c.tests ∧ t = queryTest I D v.val t') ∨
+      t ∈ (allEmitted I c D).tests := by
+  unfold compileValid at ht
+  simp only [List.mem_cons, List.mem_append, List.mem_map] at ht
+  rcases ht with ((h | ⟨j, hj, rfl⟩) | ⟨⟨v, t'⟩, hvt, rfl⟩) | h
+  · exact Or.inl h
+  · exact Or.inr (Or.inl ⟨j, List.mem_range.mp hj, rfl⟩)
+  · exact Or.inr (Or.inr (Or.inl ⟨v, t', hvt, rfl⟩))
+  · exact Or.inr (Or.inr (Or.inr h))
+
+theorem equal_cases {e : Var D × Var D} (he : e ∈ (compileValid I c D).equal) :
+    e = (zVar D (D.groups - 1), endVar D) ∨ e ∈ corePairs D c.equal ∨ e ∈ (allEmitted I c D).equal := by
+  unfold compileValid at he
+  simp only [List.mem_cons, List.mem_append] at he
+  rcases he with (h | h) | h
+  · exact Or.inl h
+  · exact Or.inr (Or.inl h)
+  · exact Or.inr (Or.inr h)
+
+theorem unequal_cases {e : Var D × Var D} (he : e ∈ (compileValid I c D).unequal) :
+    e ∈ corePairs D c.unequal := he
+
+theorem atoms_cases {a : Atom k (2 + D.groups + D.coreVars)} (ha : a ∈ (compileValid I c D).atoms) :
+    a = ⟨oneEdge .F, endVar D, initVar D⟩ ∨
+      a = ⟨edgeObs (.K D.firstBit) (fun _ => true)
+        (fun col => !col.mask.get (markState D 0) && (col.isEnd == decide (D.groups = 1))) none,
+        initVar D, zVar D 0⟩ ∨
+      a ∈ (allEmitted I c D).atoms ∨ ∃ g, g < D.groups - 1 ∧ a = intervalAtom I c D g := by
+  unfold compileValid baseAtoms at ha
+  simp only [List.mem_append, List.mem_cons, List.mem_map, List.not_mem_nil, or_false] at ha
+  rcases ha with ((h | h) | h) | ⟨g, hg, rfl⟩
+  · exact Or.inl h
+  · exact Or.inr (Or.inl h)
+  · exact Or.inr (Or.inr (Or.inl h))
+  · exact Or.inr (Or.inr (Or.inr ⟨g, List.mem_range.mp hg, rfl⟩))
+
+end CompiledCases
+
+/-! ## The compiled clause is satisfied -/
+
+/-- Everything emitted by the clause comes from some piece. -/
+theorem allEmitted_proj {β : Type} (f : Emitted X.D → List β)
+    (hf : ∀ e g, f (appendEmitted e g) = f e ++ f g) (hf0 : f {} = []) :
+    f (allEmitted I c X.D) = (List.range c.atoms.length).flatMap fun ai =>
+      (List.range (X.pieces ai).length).flatMap fun pi =>
+        f (compilePiece I X.D ai pi (obsAt c ai) ((X.pieces ai).getD pi default)) := by
+  unfold allEmitted
+  rw [foldl_appendEmitted_proj _ hf, List.map_map, ← List.flatMap_def, hf0, List.nil_append]
+  apply flatMap_congr_left
+  intro ai hai
+  have hai' : ai < c.atoms.length := List.mem_range.mp hai
+  simp only [Function.comp, List.getElem?_eq_getElem hai']
+  unfold compileAtom
+  rw [foldl_appendEmitted_proj _ hf, List.map_map, ← List.flatMap_def, hf0, List.nil_append,
+    X.piecesOf_eq hai', obsAt_eq hai']
+  rfl
+
+theorem mem_allEmitted_proj {β : Type} (f : Emitted X.D → List β)
+    (hf : ∀ e g, f (appendEmitted e g) = f e ++ f g) (hf0 : f {} = []) {x : β}
+    (hx : x ∈ f (allEmitted I c X.D)) :
+    ∃ ai, ai < c.atoms.length ∧ ∃ pi, pi < (X.pieces ai).length ∧
+      x ∈ f (compilePiece I X.D ai pi (obsAt c ai) ((X.pieces ai).getD pi default)) := by
+  rw [X.allEmitted_proj f hf hf0] at hx
+  obtain ⟨ai, hai, hx⟩ := List.mem_flatMap.mp hx
+  obtain ⟨pi, hpi, hx⟩ := List.mem_flatMap.mp hx
+  exact ⟨ai, List.mem_range.mp hai, pi, List.mem_range.mp hpi, hx⟩
+
+theorem σ_end_fin : X.σ (endVar X.D) = ⟨B.word.length, Nat.lt_succ_self _⟩ := Fin.ext X.σ_end
+
+/-- The right test of the first-emission atom. -/
+theorem first_emission_test :
+    (!(colB I B (E.cur (B.word.length + 1))).mask.get (markState X.D 0) &&
+      ((colB I B (E.cur (B.word.length + 1))).isEnd == decide (X.D.groups = 1))) = true := by
+  rw [X.markState_eq X.n_pos, X.pos_zero]
+  simp only [Bool.and_eq_true, Bool.not_eq_true', beq_iff_eq]
+  refine ⟨E.maskB_cur_false (Nat.lt_succ_self _) E.m_lt_N, ?_⟩
+  rw [Ext.colB_isEnd]
+  apply decide_eq_decide.mpr
+  rw [E.cur_eq_m_iff (Nat.lt_succ_self _) E.m_lt_N, D_groups, X.n_eq_one_iff]
+  exact ⟨fun h => h.symm, fun h => h.symm⟩
+
+theorem sat : SatClause (prefixGraph I B) (compileValid I c X.D) := by
+  refine ⟨X.σ, ?_, ?_, ?_, ?_⟩
+  · -- tests
+    intro t ht
+    rw [prefixGraph_colour]
+    rcases tests_cases I c X.D ht with rfl | ⟨j, hj', rfl⟩ | ⟨v, t', hvt, rfl⟩ | ht
+    · -- the endpoint colour
+      simp only
+      rw [X.σ_end, D_oldEnd]
+      exact decide_eq_true rfl
+    · -- not End at an internal origin
+      rw [D_groups] at hj'
+      simp only
+      rw [X.σ_z (by omega), Ext.colB_isEnd, Bool.not_eq_true', decide_eq_false_iff_not]
+      exact Nat.ne_of_lt (E.cur_lt (X.pos_gt_m (by omega)) (X.pos_lt_N hj'))
+    · -- a pulled-back unary test
+      have hmodel := X.tests (v, t') hvt
+      simp only at hmodel
+      rw [prefixGraph_colour] at hmodel
+      unfold queryTest
+      rw [X.locOf_fin v]
+      by_cases hv : B.word.length < (X.τ v).val
+      · rw [if_pos hv]
+        show t' (fm I X.D (X.idx (X.τ v).val) (colB I B (X.σ (zVar X.D (X.idx (X.τ v).val))).val)) = true
+        rw [X.σ_z (X.idx_lt (X.var_mem_M hv)), X.fm_pos (X.idx_lt (X.var_mem_M hv)),
+          X.pos_idx (X.var_mem_M hv)]
+        exact hmodel
+      · rw [if_neg hv]
+        show t' (coreMap X.D.firstBit (colB I B (X.σ (coreVar X.D v.val)).val)) = true
+        rw [X.σ_core (Nat.lt_of_lt_of_le v.isLt X.vars_le_coreVars),
+          X.corePos_var v.isLt (Nat.le_of_not_lt hv), D_firstBit, ← E.colC_old (Nat.le_of_not_lt hv)]
+        exact hmodel
+    · -- an emitted test
+      obtain ⟨ai, hai, pi, hpi, ht⟩ := X.mem_allEmitted_proj (·.tests) tests_append rfl ht
+      exact (X.pieceOK_all hai hpi).tests t ht
+  · -- equalities
+    intro e he
+    rcases equal_cases I c X.D he with rfl | he | he
+    · -- the last origin is the endpoint
+      simp only
+      apply Fin.ext
+      rw [D_groups, X.σ_z (by have := X.n_pos; omega), X.pos_last, E.cur_N, X.σ_end]
+    · -- a core equality of the clause
+      unfold corePairs at he
+      obtain ⟨⟨x, y⟩, hxy, hxy'⟩ := List.mem_filterMap.mp he
+      have heq := X.equal (x, y) hxy
+      simp only at heq hxy'
+      rw [X.locOf_eq x.isLt, X.locOf_eq y.isLt] at hxy'
+      by_cases hx : B.word.length < (X.τ x).val
+      · have hy : B.word.length < (X.τ y).val := by rw [← heq]; exact hx
+        rw [if_pos hx, if_pos hy] at hxy'
+        simp at hxy'
+      · have hy : ¬ B.word.length < (X.τ y).val := by rw [← heq]; exact hx
+        rw [if_neg hx, if_neg hy] at hxy'
+        have hxy'' : (coreVar X.D x.val, coreVar X.D y.val) = e := Option.some.inj hxy'
+        subst hxy''
+        apply Fin.ext
+        simp only
+        rw [X.σ_core (Nat.lt_of_lt_of_le x.isLt X.vars_le_coreVars),
+          X.σ_core (Nat.lt_of_lt_of_le y.isLt X.vars_le_coreVars),
+          X.corePos_var x.isLt (Nat.le_of_not_lt hx), X.corePos_var y.isLt (Nat.le_of_not_lt hy), heq]
+    · -- an emitted equality
+      obtain ⟨ai, hai, pi, hpi, he⟩ := X.mem_allEmitted_proj (·.equal) equal_append rfl he
+      exact (X.pieceOK_all hai hpi).equal e he
+  · -- disequalities
+    intro e he
+    have he := unequal_cases I c X.D he
+    unfold corePairs at he
+    obtain ⟨⟨x, y⟩, hxy, hxy'⟩ := List.mem_filterMap.mp he
+    have hne := X.unequal (x, y) hxy
+    simp only at hne hxy'
+    rw [X.locOf_eq x.isLt, X.locOf_eq y.isLt] at hxy'
+    by_cases hx : B.word.length < (X.τ x).val
+    · by_cases hy : B.word.length < (X.τ y).val
+      · rw [if_pos hx, if_pos hy] at hxy'; simp at hxy'
+      · rw [if_pos hx, if_neg hy] at hxy'; simp at hxy'
+    · by_cases hy : B.word.length < (X.τ y).val
+      · rw [if_neg hx, if_pos hy] at hxy'; simp at hxy'
+      · rw [if_neg hx, if_neg hy] at hxy'
+        have hxy'' : (coreVar X.D x.val, coreVar X.D y.val) = e := Option.some.inj hxy'
+        subst hxy''
+        intro heq
+        apply hne
+        apply Fin.ext
+        have := congrArg Fin.val heq
+        simp only at this
+        rw [X.σ_core (Nat.lt_of_lt_of_le x.isLt X.vars_le_coreVars),
+          X.σ_core (Nat.lt_of_lt_of_le y.isLt X.vars_le_coreVars),
+          X.corePos_var x.isLt (Nat.le_of_not_lt hx), X.corePos_var y.isLt (Nat.le_of_not_lt hy)] at this
+        exact this
+  · -- atoms
+    intro a ha
+    rcases atoms_cases I c X.D ha with rfl | rfl | ha | ⟨g, hg', rfl⟩
+    · -- END --F--> INITIAL
+      simp only
+      apply accepts_oneEdge_of
+      rw [X.σ_end_fin]
+      show some ⟨failureParent (B.word.take B.word.length), _⟩ = some (X.σ (initVar X.D))
+      congr 1
+      apply Fin.ext
+      show failureParent (B.word.take B.word.length) = (X.σ (initVar X.D)).val
+      rw [List.take_length, X.σ_init]
+    · -- INITIAL --K_a--> z_0
+      simp only
+      have e0 : X.σ (zVar X.D 0) = ⟨E.cur (B.word.length + 1), Nat.lt_succ_of_le (E.cur_le E.m_lt_N)⟩ := by
+        apply Fin.ext
+        rw [X.σ_z X.n_pos, X.pos_zero]
+      have einit : X.σ (initVar X.D) = ⟨failureParent B.word,
+          Nat.lt_succ_of_le (by have := failureParent_take_le B.word B.word.length; simpa using this)⟩ :=
+        Fin.ext X.σ_init
+      rw [e0, einit]
+      apply accepts_edgeObs_of
+      · show (some ⟨advance B.word (failureParent B.word) E.a, Nat.lt_succ_of_le (advance_le _ _ _)⟩ :
+          Option (Fin (prefixGraph I B).size)) = some ⟨E.cur (B.word.length + 1), _⟩
+        congr 1
+        exact Fin.ext E.cur_first.symm
+      · rfl
+      · rw [prefixGraph_colour]
+        exact X.first_emission_test
+      · rfl
+    · -- an emitted atom
+      obtain ⟨ai, hai, pi, hpi, ha⟩ := X.mem_allEmitted_proj (·.atoms) atoms_append rfl ha
+      exact (X.pieceOK_all hai hpi).atoms a ha
+    · -- an interval atom
+      exact X.interval_accepts hg'
 
 end Cov
 
