@@ -42,7 +42,7 @@ theorem finish_move_iff (I : Instance k) (q0 q p : Fin k)
         have hp := (List.mem_filter.mp h).2
         simp only [Bool.and_eq_true, beq_iff_eq, Bool.not_eq_true'] at hp
         obtain ⟨⟨⟨hs, hb⟩, hf⟩, hm⟩ := hp
-        exact ⟨a, rfl, hd, hs, hb, hf, hm⟩
+        exact ⟨a, rfl, rfl, hs, hb, hf, hm⟩
   · rintro ⟨a, rfl, hd, hs, hb, hf, hm⟩
     simp only [finishObserver, hd, Bool.false_eq_true, if_false]
     apply List.mem_filter.mpr
@@ -96,7 +96,7 @@ theorem finish_step_facts (I : Instance k) {q0 : Fin k}
 theorem finish_allowed_iff (I : Instance k) (q0 : Fin k)
     (G : Graph k) (x : Node G (finishObserver I q0)) :
     Allowed G (finishObserver I q0) x ↔ (G.colour x.1).isEnd = false := by
-  exact Bool.not_eq_true'
+  simp only [Allowed, finishObserver, Bool.not_eq_true']
 
 /-- The target of a run is allowed; Step's existential is unpacked explicitly. -/
 theorem allowed_target_of_run {G : Graph k} {O : Observer k}
