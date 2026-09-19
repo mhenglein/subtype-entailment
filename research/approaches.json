@@ -295,12 +295,12 @@
     {
       "id": "A013",
       "title": "Exploit restrictions shared by actual summary automata",
-      "status": "tried",
+      "status": "active",
       "outcome": "supported",
-      "owner": null,
+      "owner": "Codex Astra c029-completion-20260919",
       "updated": "2026-09-19",
       "summary": "C029 has a simpler cycle-only route. Lean checks bounded-cycle normalization with an unbounded witness prefix, the exact nonprimitive periodic-suffix criterion, and finite witness extraction under explicit safe-trace/no-conflict hypotheses. The reverse Python monitor has a reviewed ordinary proof, 567000 exact supplied-prefix comparisons and 15914 complete absorbing small-state decisions. Its full Lean invariant, graph decision and concrete cycle composition remain open.",
-      "next_step": "Prove the reverse periodic monitor language invariant and all-prefix finite reachability, connect concrete safe repeated cycles, then compose infiniteWitnessCheck correctness using InfiniteCycle and InfiniteWitness. No branching/nonpure-lasso proof or primitive-root machinery is required by this route. Next normalize finite compound syntax and assemble subtype entailment. No worker remains assigned; U/F stays separate.",
+      "next_step": "Complete the exact C029 Lean Boolean theorem: reverse-monitor language invariant, concrete periodic run connection, finite graph decision and cycle enumeration. Parent integrates two disjoint worker modules after review; normalization and U/F are excluded from this goal.",
       "record": "research/approaches/A013.md",
       "evidence": [
         "notes/2026-09-04-summary-absorption.md",
@@ -494,12 +494,12 @@
     {
       "id": "A018",
       "title": "Maintain the Lean core and verify critical obligations",
-      "status": "tried",
+      "status": "active",
       "outcome": "supported",
-      "owner": null,
+      "owner": "Codex Astra c029-completion-20260919",
       "updated": "2026-09-19",
       "summary": "C029 has a simpler cycle-only route. Lean checks bounded-cycle normalization with an unbounded witness prefix, the exact nonprimitive periodic-suffix criterion, and finite witness extraction under explicit safe-trace/no-conflict hypotheses. The reverse Python monitor has a reviewed ordinary proof, 567000 exact supplied-prefix comparisons and 15914 complete absorbing small-state decisions. Its full Lean invariant, graph decision and concrete cycle composition remain open.",
-      "next_step": "Prove the reverse periodic monitor language invariant and all-prefix finite reachability, connect concrete safe repeated cycles, then compose infiniteWitnessCheck correctness using InfiniteCycle and InfiniteWitness. No branching/nonpure-lasso proof or primitive-root machinery is required by this route. Next normalize finite compound syntax and assemble subtype entailment. No worker remains assigned; U/F stays separate.",
+      "next_step": "Complete the exact C029 Lean Boolean theorem: reverse-monitor language invariant, concrete periodic run connection, finite graph decision and cycle enumeration. Parent integrates two disjoint worker modules after review; normalization and U/F are excluded from this goal.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
