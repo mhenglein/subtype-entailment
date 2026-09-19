@@ -1,0 +1,61 @@
+{
+  "cases": 15914,
+  "corpus_sha256": "c34cfb2c9816ee690ca2664c08cb2c402c7b1a0e9e28369f6514a5e2945e3d85",
+  "counts_by_states": {
+    "1": 26,
+    "2": 15888
+  },
+  "failures": 0,
+  "graph_oracle": {
+    "graphs": 512,
+    "method": "Enumerate all simple paths of length at most two on three vertices",
+    "reachability_comparisons_per_variant": 4608,
+    "seeds": 1536,
+    "variants": [
+      "enumerated-state fuel",
+      "exact numeric fuel3",
+      "larger numeric fuel4"
+    ]
+  },
+  "guard_oracle": "Positive cases have independently checked literal witnesses and safe cycles. Negative guards use forced periodic tails with a persistent flagged pair, or only terminal accepting runs.",
+  "guards": [
+    "forced-periodic-conflict",
+    "ordered-flags",
+    "necessary-prefinal-loop",
+    "terminal-only",
+    "terminal-only-exit-from-cycle",
+    "left-mismatch-cannot-repair",
+    "extend-prefix-before-cycle"
+  ],
+  "huge_fuel_fixed_point": "PASS: empty-edge one-vertex search with fuel 2^256, both acceptance values",
+  "infinite_oracle": "Literal Witness on empty/one-letter words complete by TwoState; independent positive safe-graph closure determines infinite endpoints",
+  "larger_state_existence": "Seven named guards; no general larger-state census or performance claim",
+  "scope": "Actual total Lean infiniteWitnessCheck on every encoded absorbing one/two-state binary instance; complete independent small-state oracle",
+  "source_sha256": {
+    "experiments/check_absorbing_terminal.py": "4e5d22965ab64f80d92114dddfbcd09eef5ec85c1c400cd29430cc8b89f824da",
+    "experiments/check_finishing_trace.py": "9e932c5639354bba900f305921a672f6f0e550e29e417ed0ddd312bbace83ac5",
+    "experiments/check_infinite_cycle_monitor.py": "a68de5d810d439e9f11829655ba43f2b0bfb0d283f68df22095d744e2ed76d9f",
+    "experiments/check_infinite_decision.py": "448447a52eca9d46e2c14a9737ef405a98095a8cfb232f78c1a9bf172b78a1a0",
+    "experiments/check_terminal_decision.py": "9b43e2865db9a4e889d08f7eb3e6c9864b79dbc5e8f3242ea1d8c4f60901f618",
+    "lean/Subtail/FiniteSearch.lean": "10583fb950420ccfb3ae88c906a0e3f004d72fcb8a3aac53a24b4281800a4057",
+    "lean/Subtail/InfiniteDecision.lean": "dfc0219466a939df395cfb6467f64adbf071da722b12161031b6bdb661a88e38",
+    "lean/Subtail/PeriodicGood.lean": "5f13030c1825fb396f0f288cc4a080d88810f9c08449841a913efc52486eaf9e",
+    "lean/Subtail/PeriodicMonitor.lean": "d48809a38e670c803f350e9f55af7d5b777184654ecd051b16eb97c070a68274",
+    "lean/Subtail/PeriodicRotation.lean": "ce02774c6dd7f483dbc34b574c7894335dd5340c6ddc08459c5295d1dc64c6f4",
+    "lean/Subtail/PeriodicRun.lean": "d27cdbb13b08aca5410c76e4ae438a0cebcb7b2acf223bd94a95814717815a86"
+  },
+  "status": "PASS",
+  "supplied_prefix_oracle": {
+    "accepted": 22788,
+    "assumptions": "Arbitrary partial transition, final, Bad and directed-flag tables; absorption and cycle validity are not assumed for supplied-prefix semantics",
+    "cases": 29760,
+    "corpus_sha256": "001acc3acf4f9901e09da74573bf1a71486b106a5d140d7da92dbb779063e3e0",
+    "instances": 32,
+    "method": "Actual native monitorWord versus direct suffix equality over prefix length plus period length, which is exact for each supplied ultimately periodic stream",
+    "periods": "Every binary word of length 1 through 4, including all nonprimitive periods",
+    "prefixes": "Every binary word of length 0 through 4",
+    "seed": 2026091929,
+    "states": "2 through 6"
+  },
+  "yes": 885
+}
