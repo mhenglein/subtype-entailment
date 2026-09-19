@@ -24,6 +24,10 @@ Tectonic fetches its TeX support bundle on first use and caches it. The build
 also saves the generated TeX source. Formatting dependencies do not alter the
 pinned Lean toolchain. Install them on macOS with `brew install pandoc tectonic`.
 
+After the Lean build, run `(cd lean && lake env lean --run ../paper/example.lean)`
+for a small actual call to the checked entailment Boolean. Its two outputs
+are `true` and `false`; the latter has a root countermodel.
+
 For mathematical verification, follow the exact commands and recorded revisions
 in [the C081 completion record](../notes/2026-09-19-entailment-decision.md).
 `python3 scripts/check_lean.py` runs the pinned build and kernel replay; the

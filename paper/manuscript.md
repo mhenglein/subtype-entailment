@@ -347,18 +347,22 @@ accepting run has $d(j)\le k-1$.
 
 *Proof.* Accepted words from a fixed state form a prefix-free language:
 a proper accepted prefix would leave the run at a terminal final with more
-letters to read. Along the borders of any accepted suffix, distinct border
-lengths must therefore have distinct starting states. Otherwise the equal
-states would accept two different, prefix-comparable border words. There
-are at most $k$ such labels, counting the zero border. Reversal preserves
-border lengths and turns suffixes into prefixes. Removing the zero border
-leaves at most $k-1$ positive borders. $\square$
+letters to read. Fix an accepted suffix $x$ of length $\ell$. Map each border
+length $b$, including zero and $\ell$, to the state at cut $\ell-b$ in its
+accepting run. From this state the accepted remaining word is $x[\ell-b:]=x[:b]$.
+If two distinct lengths $b<c$ had the same state, that state would accept the
+two prefix-comparable words $x[:b]$ and $x[:c]$, contradicting prefix-freeness.
+There are therefore at most $k$ border lengths. The zero border maps to the
+terminal final and contributes one of them. Reversal preserves border lengths;
+a prefix of the reversed run is the reversal of such an accepted suffix.
+Removing the zero border leaves at most $k-1$ positive borders. $\square$
 
 This bounds a nesting rank, not word length, the number of source visits, or
 the number of runs of equal symbols.
 
-For a word $R$, let $m_h$ be the first position with $d(m_h)\ge h$, when it
-exists. The first such position has rank exactly $h$, since its proper-border
+For a word $R$, apply $d$ and $\pi$ to its prefixes: $\pi(j)$ is the parent
+length of $R[:j]$. Let $m_h\le |R|$ be the first position with $d(m_h)\ge h$,
+when it exists. The first such position has rank exactly $h$, since its proper-border
 parent is an earlier position and $d=1+d\circ\pi$. In particular $m_1=1$.
 
 **Lemma P9 (milestones are first returns).** If $m_h,m_{h+1}$ exist and $h>0$,
@@ -403,6 +407,13 @@ $Q\times2^Q\times\{0,1,\mathrm{END}\}\times\{0,1\}^2$.
 A numerical position is **not** part of a colour. No inverse edge is supplied.
 
 ### 6.2 Generate one first return
+
+Fix a safe labelled reference $B$. A **safe first-return extension** preserves
+its word and all labels through position $m$, appends at least one letter,
+and has its first new complete occurrence of $B$ ending at the new endpoint.
+All old and fresh positions satisfy the reversed transition, final-root,
+Bad and border-mask safety conditions of Section 5. Old-label agreement is
+part of this definition; choosing a new label for an old position is forbidden.
 
 Let $C=B a_1\cdots a_L$, $L\ge1$, be a first-return extension, and label its
 fresh positions $v_i=m+i$. Define old-graph cursors
@@ -520,6 +531,14 @@ The compiler takes **only** $I$ and $\varphi$. It does not take $B$, its length,
 a stack-height bound, or a witness oracle. Terminality is not needed for this
 local theorem; it supplies the global rank bound later.
 
+The proof has two separate directions: extract a diagram from an actual
+satisfying extension (coverage, Section 7.7), and reconstruct one extension
+from a satisfied compiled clause (Section 7.8). Both use the concrete finite
+envelope below. This is a semantic closure theorem. It does not assert the
+additional numerical clause-weight estimate in the historical Lean predicate
+`ClosureFor`. The source map identifies the coverage construction and
+`compile_sound` separately; the labelled safety part of P10 is also used there.
+
 ### 7.2 Why finitely many diagrams cover every satisfying extension
 
 Fix a clause with $v$ variables and $a$ path atoms whose observer sizes are
@@ -528,7 +547,8 @@ choose an accepting path with no repeated vertex/control pair. Delete any
 cycle between repetitions to obtain such a path. This preserves the atom's
 endpoints and tests; its interior is not separately quantified by the clause.
 
-At the unique fresh entrance $v_1$, this path has at most $s_i$ visits. Every
+For this product-simple representative, the unique fresh entrance $v_1$ has
+at most $s_i$ visits. This is not a bound on arbitrary accepting paths. Every
 fresh excursion after the first must pass through $v_1$, either by an entrance
 from the core or by a wrap. The path may also start inside the strip. It therefore
 has at most $s_i+1$ fresh forward blocks and at most $s_i+2$ old-core blocks.
@@ -743,6 +763,50 @@ so each original observer accepts its reconstructed path. Zero-length pieces
 use their endpoint allow/control tests; a single-group wrap uses P10's genuine
 self-loop. Thus the original clause holds in $P(C)$, proving (7.1). $\square$
 
+### A complete two-observer diagram
+
+Take four original states $f,p,q,s$, initial state $s$, final state $f$, no
+Bad states or flags, and only the transitions
+
+$$\delta(p,0)=f,\qquad \delta(q,1)=p,\qquad \delta(s,0)=q.$$
+
+Use the safe reference $B=0$ with labels $(f,p)$. Its first-return extension
+$C=010$ has reversed labels $(f,p,q,s)$. The fresh positions are $v_1=2$ and
+$v_2=3$; their old-graph origins are $h_1=0$ and $h_2=1$. All masks are empty.
+
+The query has two variables $x,y$, tests that their state colours are $q,s$,
+and two path atoms from $x$ to $y$. Each observer has controls $\{0,1\}$,
+initial control 0, final control 1 and unrestricted colour allowance. The
+first has the single move $0\xrightarrow{\mathsf S}1$; the second has the
+single move $0\xrightarrow{\mathsf K_0}1$. Both hold at $x=v_1,y=v_2$.
+
+Here is every nontrivial guess of a satisfying diagram. There are two fresh
+groups, for $v_1,v_2$; $x$ belongs to group 0 and $y$ to group 1. Their state
+guesses are $(q,s)$, and their next guesses are $(0,\mathrm{END})$. The first
+emitted bit is 1. The guessed old-end colour is
+$(p,\varnothing,\mathrm{END},\mathsf{false},\mathsf{true})$.
+Each atom has one forward piece from group 0 to group 1, with observer
+controls 0 and 1. There are no internal seams, core pieces or portal pieces
+for these two paths. There are no equality or disequality constraints.
+
+Assign the base variables $e=1$, $f_0=0$, $z_0=0$, $z_1=1$. The first-emission
+conditions are $e\mathrel{\mathsf F}f_0$ and
+$f_0\mathrel{\mathsf K_1}z_0$, since $\pi(1)=0$ and $\kappa_B(0,1)=0$;
+the reverse-state check is $\delta(q,1)=p$. There is one physical interval.
+Its product observer goes from $(q,0,0,0,0)$ to
+$(s,\mathrm{END},1,1,1)$ over the single base edge
+$z_0\mathrel{\mathsf K_0}z_1$. The last two coordinates belong to the two
+different observers; the third records that a step occurred. The common
+emitted bit is 0, $\delta(s,0)=q$, and both observations permit their matching
+forward edge. The endpoint is the old end, as required by END.
+
+Reconstruction emits first 1 and then 0, obtaining exactly $C=010$ and both
+paths in that one graph. Replacing the second observer's sole label by
+$\mathsf K_1$ would remove this product transition: the first observer and
+the second cannot choose different emissions for the same physical interval.
+The literal graph and product transition of this example are checked by the
+paper's small example checker, separately from the all-input proof.
+
 ### Why sharing is indispensable
 
 Suppose two forward observations cover the same interval, one requiring the
@@ -777,6 +841,11 @@ The empty walk is allowed when $r_m=s$. This is a finite observer with $k$
 controls. Introduce an endpoint variable $e$, a variable $f$ with one
 $\mathsf F$ edge from $e$, and a final cursor variable $x$. Choose the endpoint
 state by a finite disjunction. The resulting query is $\mathrm{Finish}_I$.
+More explicitly, its clause for state $q$ conjoins the test that $e$ is the
+endpoint with state colour $q$, the one-edge atom $e\mathrel{\mathsf F}f$,
+and a continuation-observer atom from $f$ to $x$ starting with control $q$.
+Thus the observer starts at the proper-border cursor with the old endpoint's
+original control; those are two different coordinates.
 
 **Lemma P12 (finishing).** For a safe reference $B$, $P(B)\models\mathrm{Finish}_I$
 iff some safe extension ending at original state $s$ makes no further complete
@@ -822,6 +891,11 @@ two-vertex prefix graphs. Accept iff one test succeeds. For $k=1$, no
 nonempty terminal accepting word is possible: its zero and full borders
 would require two distinct states by P8. An instance with $k=0$ has no
 possible initial state.
+
+The enumerated reference has word $a$ and labels $f,p$ at positions 0 and 1.
+Its prefix graph exposes exactly those positions. Any extension of its label
+function beyond position 1 is irrelevant; thus this finite enumeration covers
+the first-letter graph of every nonempty safe reference.
 
 *Termination.* Equation (9.1) performs exactly $k-2$ finite syntactic operations
 of P11. The remaining enumeration and finite-graph query tests terminate by
@@ -901,13 +975,16 @@ at that phase, set matching false and reset the phase and buckets. If it
 matches, reject when $p$ flags a stored control in any bucket whose periodic
 rotation equals the new phase's rotation. Otherwise add $p$ to that bucket.
 Once matching is false, keep it false and keep the canonical reset data.
-Accept exactly the monitor states whose original control is $s$.
+Accept exactly the monitor states whose original control is the instance's
+initial state $s=I.\mathrm{initial}$.
 
 These are effective transitions on finite data. Undefined or unsafe original
 edges produce no monitor edge. Reachability from the seed to the accepting
 set therefore terminates by finite graph search.
 
-**Lemma P15 (monitor equivalence).** An accepting reverse path represents
+**Lemma P15 (monitor equivalence).** Fix one of the retained cycles: its word
+$c$ is nonempty, it is safe, and its base $q$ is final with empty incoming
+flag column. An accepting reverse path from its safe seed represents
 exactly a safe prefix $v$ to $q$ with no flagged equal infinite suffixes among
 its prefix cuts.
 

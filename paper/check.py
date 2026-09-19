@@ -98,6 +98,23 @@ def literal_examples():
     assert product(x, set()) == {""}
     assert product(y, set()) == {"", "0"}
     assert not product(y, set()) <= product(x, set())
+    # The two-observer diagram: derive edges from literal prefix/suffix matches.
+    reference, extended = "0", "010"
+    labels = ["f", "p", "q", "s"]
+    delta = {("p", "0"): "f", ("q", "1"): "p", ("s", "0"): "q"}
+    assert all(delta[(labels[j+1], bit)] == labels[j] for j, bit in enumerate(extended))
+    assert [j for j in range(2, 4) if extended[:j].endswith(reference)] == [3]
+    origin_first = kmp(reference, 0, "1")
+    origin_last = kmp(reference, origin_first, "0")
+    assert (origin_first, origin_last) == (0, 1)
+    assert kmp(extended, 2, "0") == 3  # K0 and successor share the same edge
+    assert kmp(extended, 2, "1") == 0
+    start, end = ("q", "0", False, 0, 0), ("s", None, True, 1, 1)
+    assert delta[(end[0], start[1])] == start[0]
+    def permits(label, bit):
+        return label == "S" or label == "K" + bit
+    assert all(permits(label, start[1]) for label in ("S", "K0"))
+    assert not all(permits(label, start[1]) for label in ("S", "K1"))
 
 
 def main():
