@@ -104,12 +104,31 @@ jobs:
               tar.addfile(info, io.BytesIO(data))
           print('workbench_bytes', archive.stat().st_size)
           PY
-      - name: Upload temporary offline workbench
+          split -b 350M /tmp/rank-weight-workbench.tar.gz /tmp/rank-weight-workbench.part-
+      - name: Upload temporary workbench part aa
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: rank-weight-workbench
-          path: /tmp/rank-weight-workbench.tar.gz
+          name: rank-weight-workbench-aa
+          path: /tmp/rank-weight-workbench.part-aa
+          compression-level: 0
+          retention-days: 1
+          if-no-files-found: error
+      - name: Upload temporary workbench part ab
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: rank-weight-workbench-ab
+          path: /tmp/rank-weight-workbench.part-ab
+          compression-level: 0
+          retention-days: 1
+          if-no-files-found: error
+      - name: Upload temporary workbench part ac
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: rank-weight-workbench-ac
+          path: /tmp/rank-weight-workbench.part-ac
           compression-level: 0
           retention-days: 1
           if-no-files-found: error
