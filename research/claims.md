@@ -996,7 +996,10 @@ withdrawn 2021 Lemma 5.5 before any methodological-independence claim
 target is stage 4: Lemma 4 and Sections 5–7 of the candidate proof, Sections
 3–5 of the closure note, now also readable as the pinned `ClosureFor`.
 Problem 1.7's accepted status is unchanged by this record; the ID exists so
-the candidate can be found, cited and reviewed.
+the candidate can be found, cited and reviewed. Owner decision 2026-09-19: no
+external human referee will be commissioned; acceptance requires the
+kernel-checked end-to-end decision theorem plus cross-session statement
+readback (#33). New work is paused by the owner as of 2026-09-19 (#34, #37).
 
 **Evidence.** [Candidate proof](../notes/2026-09-15-candidate-rank-query-decision.md),
 [closure proof and bound](../notes/2026-09-17-rank-query-closure-audit.md),

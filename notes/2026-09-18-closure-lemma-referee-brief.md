@@ -1,5 +1,9 @@
 # Referee brief: the promotion-preimage (closure) lemma of the rank-query candidate
 
+**Status 2026-09-19.** The owner decided not to commission an external human
+referee. This brief remains the statement of record for the Lean pinning in
+`lean/Subtail/RankQuery.lean` and for cross-session readback under #33.
+
 Date: 2026-09-18. Prepared by an integrator session (issue #25) from the
 existing records; no new mathematics. Purpose: give an external human referee
 one self-contained page stating exactly what must be checked, and give the
