@@ -2,7 +2,7 @@
 
 Date: 2026-09-20
 Reviewer: independent input-complexity analyst for issue #53
-Status: `READY_FOR_INTEGRATION` after a note-only derivation
+Status: `READY_FOR_INTEGRATION` after a bounded accounting revision
 
 ## Scope and evidence
 
@@ -97,10 +97,12 @@ semantics.
 
 1. Parse `(n,G,s,t)` and compute `R = naming G s t` and
    `C = normalized G s t`. Let `a = R.ref s` and `b = R.ref t`.
-2. Construct `I = summaryInstance C a b`. First tabulate `systemOf C`, the
-   balanced relation used by `StackSummary.balancedCheck`, the subset-pair
-   state list `states k`, and every transition, bad bit, final bit, and flag
-   bit of `I`, where `k = R.total`.
+2. Construct `I = summaryInstance C a b`. First tabulate `systemOf C` and its
+   finite reverse table, the subset-pair state list `states k`, and every
+   transition, bad bit, final bit, and flag bit of `I`, where `k = R.total`.
+   `balancedCheck` is evaluated on demand at each source call; this reference
+   implementation does not materialize a separate global balanced-relation
+   table. The original and reverse systems use the same on-demand envelope.
 3. Run the existing `InfiniteDecision.infiniteWitnessCheck I`. If it returns
    true, report non-entailment.
 4. Construct `J = AbsorbingTerminal.terminalize I`. Let `q` be its state count
@@ -113,7 +115,8 @@ semantics.
    cheap cases optionally placed before this complete fallback.
 
 The table construction computes the same finite objects as the checked source:
-`systemOf` is tabulated by its four constraint scans; `states` uses the exact
+`systemOf` is tabulated by its five finite constraint scans (epsilon plus the
+four directional push/pop fields); `states` uses the exact
 `StackSummary.subsets` order and the Cartesian pair construction; `encode` and
 `decode` use the same state list; `advancePair`, `advance`, and every field of
 `summaryInstance` are evaluated extensionally. Structural induction over a
@@ -134,27 +137,40 @@ finite enumeration result into the exact `Witness` predicate. Therefore the
 reference algorithm has the same Boolean answer as the checked qualitative
 composition, assuming the reviewed endpoint is integrated with this wrapper.
 
-The last implication is a proposed composition proof. Current main has the
+This mathematical correctness argument does not depend on repository
+integration. It is conditional on the reviewed statement of
+`terminal_witness_bound_iff` and on the extensional table-construction
+argument above, whether or not PR #48 or a wrapper has been merged. No new
+combined Lean declaration is claimed by this note. Current main has the
 qualitative `terminalWitnessCheck`; it does not yet contain this bounded
 enumerator or a combined theorem using `terminal_witness_bound_iff`.
 
 ## Cost model
 
-The primary count is a list-and-table cell model:
+The primary count is a cell-RAM model with an explicit source-list layer:
 
+* finite function outputs are stored in dense, constant-time indexed arrays;
+  this covers `systemOf`, its reverse, state encode/decode tables, instance
+  vectors, transitions, and flag matrices;
+* source-derived collections such as `subsets`, state lists, candidate words,
+  closure relations, and finite search lists retain list spines. A list lookup
+  costs at most the list length plus one, and those scans are charged in the
+  displayed envelopes. Thus the formulas remain safe for a direct list-based
+  evaluator, while dense arrays avoid charging a repeated scan for a table
+  lookup;
 * a list spine cell, Boolean, finite-index value, option tag, pair, and natural
   unit operation costs one unit;
-* a vector of length `r` is stored as `r` cells, and a reference list lookup
-  costs at most `r+1`; the formulas below therefore remain safe if the
-  evaluator uses lists instead of constant-time arrays;
 * a binary word of length `ell` occupies at most `ell+1` cells;
 * structural equality of an expression or table entry is charged by the
   number of fields it inspects;
-* natural exponentiation is charged by its source recursion. If the displayed
-  unit operations use binary arithmetic, each arithmetic operation on a
-  `b`-bit natural costs at most `1+b^2` bit operations. The maximum bit length
-  `b_*` of all live naturals is defined explicitly below, so no giant exponent
-  is hidden in a unit-cost symbol.
+* natural exponentiation is charged by its source recursion. The cell-RAM
+  totals below count control steps and cells; a separate bit-RAM conversion
+  accounts for the bit length of every integer payload and array address.
+
+This convention distinguishes physical list storage from indexed table
+access. It does not claim that the current lazy Lean evaluator uses these
+representations; it defines a straightforward reference implementation whose
+tables are extensionally equal to the checked functions.
 
 All bounds use generous constants. They are intended to make every loop and
 carrier visible, not to estimate practical performance.
@@ -277,12 +293,22 @@ states, each containing two subsets of at most `k` controls. Let
 ```text
 C_states(k) = 16(k+1) q,
 C_system(k,m) = 16(k+1)^3(m+1),
+C_reverse(k) = 16(k+1)^2,
 C_encode(k,q) = 16(k+1) q.
 ```
 
 `C_system` tabulates all epsilon, push, and pop entries by scanning the
-normalized constraint list. `C_encode` covers a worst-case scan of the state
-list when an `encode` operation locates a newly computed pair.
+normalized constraint list. `C_reverse` materializes the epsilon, push, and
+pop entries of `reverse (systemOf C)` by swapping the already tabulated finite
+fields; its coefficient covers all five `k` by `k` Boolean fields and their
+tags. `C_encode` covers a worst-case scan of the state list when an `encode`
+operation locates a newly computed pair.
+
+There is deliberately no separate preliminary balanced-relation table in this
+reference algorithm. Each source `balancedCheck` call enumerates its own
+`Q0(k)` candidates and is charged by `B_bal(k)`, for both the original and
+reverse systems. Materializing that relation globally would be an optional
+optimization, not an uncharged step in this bound.
 
 The exact source definition of `summaryInstance` has the following remaining
 loops:
@@ -294,8 +320,9 @@ loops:
   `C_bad(k,m,q) = q*(C_sat(k,m) + q + k*(m+C_danger(k,m)))`;
 * each final bit scans a decoded-state lookup and, for each of at most `k`
   controls, searches `k^2` possible lower-constraint endpoints and the `m`
-  constraint list, giving
-  `C_final(k,m,q) = q*(q + k^3*(m+1))`;
+  constraint list. A factor of `32` covers loop tags, option and Boolean
+  tests, finite-index comparisons, and list-spine bookkeeping, giving
+  `C_final(k,m,q) = 32*q*(q + k^3*(m+1))`;
 * each ordered flag entry scans two decoded-state lookups and at most `k^2`
   subset-membership pairs, giving
   `C_flags(k,q) = 8q^2(q+k+1)^2`;
@@ -307,7 +334,7 @@ The complete finite-summary construction is therefore bounded by the explicit
 sum
 
 ```text
-C_summary(k,m) = C_states(k) + C_system(k,m) + C_initial(k,q)
+C_summary(k,m) = C_states(k) + C_system(k,m) + C_reverse(k) + C_initial(k,q)
   + C_bad(k,m,q) + C_final(k,m,q) + C_flags(k,q) + C_trans(k,q),
 ```
 
@@ -321,14 +348,16 @@ For peak cells, use
 
 ```text
 I_cells(q) = 2q^2 + 9q + 1,
-S_summary(k,m) = 4*I_cells(q) + 16(k+1)q + S_bal(k) + 8(m+k^2+1).
+S_reverse(k) = 8(k+1)^2,
+S_summary(k,m) = 4*I_cells(q) + 16(k+1)q + S_bal(k)
+  + S_reverse(k) + 8(m+k^2+1).
 ```
 
 The first term stores the summary instance, including the dense flag matrix;
 the second stores the state list and its list spines; the third covers a live
-balanced relation enumeration; the last retains the normalized constraints
-and system table. This is a peak-safe sum rather than an attempt to exploit
-garbage collection.
+balanced relation enumeration; the fourth stores the reverse system table; the
+last retains the normalized constraints and original system table. This is a
+peak-safe sum rather than an attempt to exploit garbage collection.
 
 ## Terminalization and the reviewed terminal bound
 
@@ -489,23 +518,35 @@ S_cells(B) = S_norm(D,B) + S_summary(k,m)
 The sums are intentionally additive across phases, so they remain valid for
 an implementation that retains old tables longer than necessary. They also
 make every setup cost visible: parsing, occurrence lookup, dense constraint
-tables, the `4^k` summary carrier, the `2^(k^2)` balanced-table powerset, the
+tables, the `4^k` summary carrier, the `2^(k^2)` balanced-check powerset, the
 `q^2` flag matrix, terminalization, `Fhat` arithmetic, C029 monitor search,
 and all bounded witness words are included. `T_cells` is total recursive and
 finite for every `B`; no timeout or unproved cutoff supplies an answer.
 
-For binary arithmetic, define the explicit maximum live numeral width
+For binary arithmetic, distinguish the value ceiling from the bit width. Set
 
 ```text
-b_*(B) = 1 + max(
-  B, D, k, q, W_q, Q0(k), Fhat(q), W_F(q),
-  max_{0 <= j <= q-2} T_j, H_q, 2^(q^2)
+M_num(B) = 1 + max(
+  B, D, k, m, q, W_q, Q0(k), Fhat(q), W_F(q), H_q, 2^(q^2),
+  T_cells(B), S_cells(B),
+  max_{0 <= j <= q-2} T_j,
+  max_{0 <= j <= q-2} (6*T_j^2 + 2)
 )
 ```
 
-where the maximum over an empty index range is zero. This is a value bound;
-the corresponding bit length is `ell_*(B)=ceil(log2(b_*(B)+1))`. A fully
-binary implementation therefore satisfies the conservative bounds
+where each maximum over an empty index range is zero. `M_num` is a generous
+**value** ceiling; the corresponding integer bit width is
+`ell_*(B)=ceil(log2(M_num(B)+1))`. Every loop counter and table address is
+bounded by one of the explicit input, carrier, candidate, or recurrence terms
+in this maximum. Any remaining accumulator is bounded by `T_cells(B)`, and
+any live table address is bounded by `S_cells(B)`. Structural induction over
+the displayed `T_j` and growth recurrences covers their products and powers;
+the terminal candidate count is `W_F(q)`, while `A_q`, `C_F`, and every other
+phase counter are bounded by the corresponding total or storage envelope.
+Thus `M_num` safely bounds all numerals and addresses used by the reference
+run, without assuming that a phase's nominal parameter list contains every
+intermediate counter. A fully binary implementation therefore satisfies the
+conservative bounds
 
 ```text
 T_bits(B) <= (1 + ell_*(B)^2) * T_cells(B),
@@ -518,10 +559,36 @@ cost. The candidate-word and table terms count physical cells, so the huge
 `Fhat` and `q` effects remain explicit rather than disappearing into a unit
 cost for a natural number.
 
+If a single-tape Turing-machine cost is required, a deliberately crude
+simulation of the bit-RAM run gives
+
+```text
+T_tape(B) <= (S_bits(B) + 4*ell_*(B) + 4) * T_bits(B),
+S_tape(B) <= 2*S_bits(B) + 4*ell_*(B) + 4.
+```
+
+This scans the full encoded RAM tape for each bit operation and is included
+only to make the machine-model conversion explicit; it is not a practical
+implementation claim.
+
 This bound is deliberately far larger than the syntax size. It is a complete
 resource upper bound for the stated reference algorithm under the reviewed
 terminal theorem, not a polynomial, elementary, or practical complexity
 classification.
+
+## Updated dependency status
+
+The parent integrator reports a fresh validation checkpoint at
+`7525724b3c86b6a9dbe0a7f62b062a9b8697a97c`: the quantitative build, kernel and
+runtime audit over 87 declarations, `scripts/check_lean.py`, the final
+entailment dependency audit, and the unchanged-tracked-source check all
+passed. This is parent-reported evidence for the integrated quantitative
+source checkpoint, not a command run by this reviewer. It does not rerun the
+reference wrapper in this note, and it does not turn the wrapper or a combined
+C081 theorem into a Lean-checked declaration. The ordinary mathematical
+correctness argument above remains valid conditional on the reviewed theorem,
+independently of repository integration. The original no-build record in the
+scope section is therefore preserved.
 
 ## Status, assumptions, and next check
 
@@ -545,7 +612,8 @@ Still pending:
 * PR #48's corrected quantitative modules are not merged into current main;
 * the bounded terminal wrapper and the combined C081 theorem are not Lean
   declarations;
-* fresh combined build, kernel replay, and resource benchmark are not run;
+* a fresh combined wrapper build, kernel replay, and resource benchmark for
+  this reference algorithm are not run;
 * no exact lower bound is established or transferred here;
 * the bottom-free NP99 upper-bound transfer is a separate restricted result and
   does not turn this deliberately loose envelope into a complexity class for
