@@ -99,6 +99,23 @@ def render(tree):
     return f"({render(tree[1])} * {render(tree[2])})"
 
 
+def labelled_graph_below(nodes, left, right):
+    """Literal bottom/product/top graph order for the ambient-domain fixture."""
+    pending, seen = [(left, right)], set()
+    while pending:
+        i, j = pending.pop()
+        if (i, j) in seen:
+            continue
+        seen.add((i, j))
+        a, b = nodes[i], nodes[j]
+        if a[0] == "bottom" or b[0] == "top":
+            continue
+        if a[0] != "product" or b[0] != "product":
+            return False
+        pending.extend(zip(a[1:], b[1:]))
+    return True
+
+
 def run():
     trees = finite_trees(2)
     assert len(trees) == 38 and len(set(trees)) == 38
@@ -127,6 +144,12 @@ def run():
     spine_nodes = [None, (1, 0), (1, 0)]
     assert graph_below(spine_nodes, 2, 1)  # x * bottom <= x
     assert not graph_below(spine_nodes, 1, 0)  # x <= bottom fails
+    # A constant-free formula has different answers in the two ambient domains.
+    labelled = [("bottom",), ("product", 1, 1), ("top",), ("product", 1, 1)]
+    assert labelled_graph_below(labelled, 1, 3)
+    assert labelled_graph_below(labelled, 3, 1)  # x = x * x, x = Omega
+    assert labelled_graph_below(labelled, 1, 2)  # x <= y, y = explicit top
+    assert not labelled_graph_below(labelled, 2, 1)  # y <= x fails
     finite_no_top = finite_trees(4, False)
     finite_models = sum(finite_below(product(x, BOTTOM), x) for x in finite_no_top)
     assert len(finite_no_top) == 677 and finite_models == 0
@@ -145,6 +168,19 @@ def run():
         for right in small:
             actual = graph_below(graphs.nodes, small_images[left], small_images[right])
             assert actual == addresses(left).issubset(addresses(right))
+    # Cross-check the three-label graph predicate on every finite source pair.
+    labelled_finite, labelled_index = [], {}
+    def encode(tree):
+        if tree not in labelled_index:
+            node = (tree[0], encode(tree[1]), encode(tree[2])) if len(tree) == 3 else tree
+            labelled_index[tree] = len(labelled_finite)
+            labelled_finite.append(node)
+        return labelled_index[tree]
+    for tree in trees:
+        encode(tree)
+    for left in trees:
+        for right in trees:
+            assert labelled_graph_below(labelled_finite, encode(left), encode(right)) == finite_below(left, right)
 
     return {
         "experiment": "E053",
@@ -162,6 +198,13 @@ def run():
         },
         "top_to_bottom": {"left": render(nonbottom), "right": "top",
                           "source_below": True, "image_below": False},
+        "constant_free_ambient_domain": {
+            "premises": ["x = x * x", "x <= y"], "query": "y <= x",
+            "explicit_top_countermodel": {"nodes": labelled, "x": 1, "y": 2},
+            "premises_hold": True, "query_holds": False,
+            "top_free_validity": "ordinary all-word induction in the accompanying note; not inferred by this census",
+            "labelled_graph_finite_cross_check_pairs": len(trees)**2,
+        },
         "zero_spine": {"graph": spine_nodes, "x": 1, "bottom": 0,
                        "x_times_bottom": 2, "premise": True, "query": False,
                        "finite_depth": 4, "finite_trees": len(finite_no_top),

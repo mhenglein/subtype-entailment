@@ -3,7 +3,7 @@
   "status": "PASS",
   "meaning": "Exact literal counterexamples and bounded comparisons; no general extension theorem.",
   "base_mathematical_revision": "c946d86b9e65da2877e0df42c710abbdcb5a4037",
-  "source_sha256": "7418b52f912f8293a63088c2f40577d6ec04d2d9950cfd5346753e1676dc8982",
+  "source_sha256": "55e9584c306fe2e4dbc3ce144be165ac83cf630b7b179b2935515360a0d456c1",
   "top_to_omega": {
     "source_depth": 2,
     "trees": 38,
@@ -26,6 +26,39 @@
     "right": "top",
     "source_below": true,
     "image_below": false
+  },
+  "constant_free_ambient_domain": {
+    "premises": [
+      "x = x * x",
+      "x <= y"
+    ],
+    "query": "y <= x",
+    "explicit_top_countermodel": {
+      "nodes": [
+        [
+          "bottom"
+        ],
+        [
+          "product",
+          1,
+          1
+        ],
+        [
+          "top"
+        ],
+        [
+          "product",
+          1,
+          1
+        ]
+      ],
+      "x": 1,
+      "y": 2
+    },
+    "premises_hold": true,
+    "query_holds": false,
+    "top_free_validity": "ordinary all-word induction in the accompanying note; not inferred by this census",
+    "labelled_graph_finite_cross_check_pairs": 1444
   },
   "zero_spine": {
     "graph": [

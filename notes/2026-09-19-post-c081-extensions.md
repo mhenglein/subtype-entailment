@@ -3,7 +3,7 @@
 Date: 2026-09-19. Actor: `post-c081-20260919`.
 Base: `c946d86b9e65da2877e0df42c710abbdcb5a4037`.
 Workstreams: A010/A017/A018, programme [#53](https://github.com/mhenglein/subtail/issues/53).
-Status: **ordinary arguments and feasibility study; revised after independent readback**.
+Status: **reviewed ordinary regular-transfer proof and feasibility study**.
 No extension theorem below is presented as a new Lean theorem.
 
 ## Route outline and exact targets
@@ -207,6 +207,35 @@ a finite list of finite expressions and a universal query, with valuations
 over arbitrary trees of this enlarged signature. This is not C081's domain:
 its greatest value is the full infinite product tree Omega, with
 Omega = Omega × Omega, and no separate top label.
+
+### Even constant-free inputs can distinguish the ambient domains
+
+Consider the finite input
+
+```text
+premises: x = x × x, x <= y
+query:    y <= x.
+```
+
+Equality is shorthand for two inequalities in C081. In the top-free domain,
+x × x <= x forces every binary address into x: it forces the empty address,
+and membership of u implies membership of both 0u and 1u. Induction on word
+length gives x=Omega, the full product tree. Since x <= y and Omega is the
+greatest top-free value, y=Omega too. The query is therefore entailed.
+
+In the explicit-top domain, choose x=Omega and y=top. The equation holds
+because Omega=Omega × Omega, and Omega <= top. But top is not below Omega:
+at the root it is a top leaf rather than a product. Thus the query fails.
+Both assignments used in this comparison are regular. The input itself uses
+neither top nor bottom, and has the product-equality/variable-inequality form
+of the NP99 restriction.
+
+This refutes the identity translation between the two arbitrary/regular-tree
+entailment problems even on that constant-free syntax. It strengthens the
+warning that omitting top in the formula does not remove top from valuations.
+It does not exclude a different semantic reduction, nor transfer a lower bound
+in either direction. Over finite trees the recursive equation has no model
+in either domain, so both finite-tree entailments are vacuously true.
 
 ### Three simple encodings fail
 
