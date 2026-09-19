@@ -27,3 +27,7 @@ import Subtail.StackSummary
 import Subtail.StackReachability
 import Subtail.CanonicalReachability
 import Subtail.StackSummaryAudit
+import Subtail.SummaryBridge
+import Subtail.SummaryAutomaton
+import Subtail.AbsorbingTerminal
+import Subtail.SubtypeTerminalBridge

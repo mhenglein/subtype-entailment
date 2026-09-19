@@ -13,7 +13,7 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 MODULES = (
-    "SummaryBridge", "SummaryAutomaton",
+    "SummaryBridge", "SummaryAutomaton", "AbsorbingTerminal", "SubtypeTerminalBridge",
 )
 DECL = re.compile(r"^(?:@\[[^\n]*\]\s*)?(theorem|def|abbrev|inductive|structure)\s+([A-Za-z_][A-Za-z_0-9.']*)", re.M)
 
