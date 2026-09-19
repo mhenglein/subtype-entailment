@@ -1,5 +1,6 @@
 import Subtail.InfiniteCycle
 import Subtail.PeriodicRun
+import Subtail.PeriodicMonitor
 import Subtail.RankQueryEnumeration
 import Subtail.FiniteSearch
 
@@ -109,5 +110,64 @@ theorem infWitness_iff_good_candidate (I : Instance k) (hA : Absorbing I) :
     obtain ⟨hne,hlen,hf,hcol,hcycle⟩ :=
       (cycleCheck_correct I q c).mp ((mem_candidates I q c).mp hmem)
     exact PeriodicRun.infWitness_of_prefix_good I hA hw hcycle hne hf hgood
+
+/-- Raw finite-state cardinal bound; computing it does not enumerate the states. -/
+def monitorCapacity (k : Nat) (c : Word) : Nat :=
+  k * (c.length * (2 * ((2^k)^c.length)))
+
+theorem bucketVectors_length_le (k d : Nat) :
+    (PeriodicMonitor.bucketVectors k d).length ≤ (2^k)^d := by
+  calc
+    _ ≤ (exactLists (masks k) d).length := List.length_filterMap_le _ _
+    _ = (masks k).length^d := exactLists_length _ _
+    _ ≤ (2^k)^d := Nat.pow_le_pow_left (masks_length_le k) d
+
+theorem allStates_length_le (k : Nat) (c : Word) :
+    (PeriodicMonitor.allStates k c).length ≤ monitorCapacity k c := by
+  have hb := bucketVectors_length_le k c.length
+  have he : (PeriodicMonitor.allStates k c).length =
+      k * (c.length * (2 * (PeriodicMonitor.bucketVectors k c.length).length)) := by
+    simp [PeriodicMonitor.allStates, List.length_flatMap, sum_map_constant,
+      bools, Nat.two_mul]
+  rw [he]
+  exact Nat.mul_le_mul_left k
+    (Nat.mul_le_mul_left c.length (Nat.mul_le_mul_left 2 hb))
+
+theorem reach_iff_path (I : Instance k) (c : Word) (x y : PeriodicMonitor.State k c) :
+    FiniteSearch.Reach (PeriodicMonitor.successors I c) x y ↔
+      PeriodicMonitor.Path I c x y := by
+  constructor
+  · intro h
+    induction h with
+    | refl => exact PeriodicMonitor.Path.refl
+    | step _ hs ih => exact PeriodicMonitor.Path.step ih hs
+  · intro h
+    induction h with
+    | refl => exact FiniteSearch.Reach.refl
+    | step _ hs ih => exact FiniteSearch.Reach.step ih hs
+
+/-- Search every reverse prefix through the finite monitor graph. -/
+def prefixCheck (I : Instance k) (q : Fin k) (c : Word) : Bool :=
+  match PeriodicMonitor.seed q c with
+  | none => false
+  | some start => safeState I q &&
+      FiniteSearch.reachesAnyWithFuel (PeriodicMonitor.successors I c)
+        (monitorCapacity k c) start (PeriodicMonitor.accepts I)
+
+theorem prefixCheck_path (I : Instance k) (q : Fin k) (c : Word)
+    (start : PeriodicMonitor.State k c) (hs : PeriodicMonitor.seed q c = some start) :
+    prefixCheck I q c = true ↔ safeState I q = true ∧
+      ∃ finish, PeriodicMonitor.Path I c start finish ∧
+        PeriodicMonitor.accepts I finish = true := by
+  simp only [prefixCheck, hs, Bool.and_eq_true]
+  rw [FiniteSearch.reachesAnyWithFuel_correct (PeriodicMonitor.successors I c)
+    (PeriodicMonitor.allStates k c) PeriodicMonitor.mem_allStates
+    (monitorCapacity k c) (allStates_length_le k c)]
+  simp only [reach_iff_path]
+
+/-- Total C029 candidate decision. The semantic monitor equivalence supplies
+its correctness under strong absorption. -/
+def infiniteWitnessCheck (I : Instance k) : Bool :=
+  (candidates I).any (fun qc => prefixCheck I qc.1 qc.2)
 
 end Subtail.InfiniteDecision
