@@ -1,0 +1,53 @@
+name: C030 direct realization
+
+# This isolated job checks an opt-in module without editing the shared imports.
+on:
+  push:
+    branches: ['lean/c030-direct-20260919']
+    paths:
+      - 'lean/Subtail/TerminalRealization*.lean'
+      - '.github/workflows/lean-c030.yml'
+  pull_request:
+    paths:
+      - 'lean/Subtail/TerminalRealization*.lean'
+      - '.github/workflows/lean-c030.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: c030-direct-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  direct-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/cache@v6.1.0
+        with:
+          path: ~/.elan
+          key: elan-${{ runner.os }}-${{ hashFiles('lean/lean-toolchain') }}
+      - uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596
+        with:
+          lake-package-directory: lean
+          build: 'false'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'false'
+      - name: Compile the actual direct theorem and its audit
+        working-directory: lean
+        run: |
+          lake build +Subtail.TerminalRealizationAudit
+      - name: Independent kernel replay
+        working-directory: lean
+        run: |
+          lake env leanchecker Subtail.TerminalRealization
+          lake env leanchecker Subtail.TerminalRealizationAudit
+      - name: Check axiom dependencies and preserved independent regression
+        run: |
+          cd lean
+          lake env lean Subtail/TerminalRealizationAudit.lean
+          cd ..
+          PYTHONDONTWRITEBYTECODE=1 python3 experiments/replay_c030_independent.py --output /tmp/c030-replay.json
