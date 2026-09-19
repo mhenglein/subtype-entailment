@@ -3,16 +3,40 @@ import Subtail.ExpressionNormalization
 namespace Subtail.ExpressionNormalization
 open TreeSemantics
 
+def Expr.productCount : Expr n → Nat
+  | .var _ => 0
+  | .bot => 0
+  | .prod l r => 1 + l.productCount + r.productCount
+
+theorem pairs_length_count (e : Expr n) : e.pairs.length = e.productCount := by
+  induction e with
+  | var x => rfl
+  | bot => rfl
+  | prod l r il ir =>
+    simp only [Expr.pairs, Expr.productCount, List.length_cons, List.length_append, il, ir]
+    omega
+
+theorem forest_pairs_length (F : List (Expr n)) :
+    (F.flatMap Expr.pairs).length = (F.map Expr.productCount).sum := by
+  induction F with
+  | nil => rfl
+  | cons e F ih =>
+    simp only [List.flatMap_cons, List.length_append, pairs_length_count,
+      List.map_cons, List.sum_cons, ih]
+
 theorem flat_pairs_length (xs : List α) (f g : α → β) :
     (xs.flatMap (fun x => [f x,g x])).length = 2 * xs.length := by
   induction xs with
   | nil => rfl
-  | cons x xs ih => simp [ih, Nat.mul_add, Nat.add_comm, Nat.add_left_comm, Nat.add_assoc]
+  | cons x xs ih =>
+    simp only [List.flatMap_cons, List.length_append, List.length_cons, List.length_nil, ih]
+    omega
 
 theorem definitions_length (R : Naming n) :
     R.definitions.length = 2 * R.pairs.length + R.botUsed.toNat := by
-  cases hb : R.botUsed <;>
-    simp [Naming.definitions, hb, flat_pairs_length, Nat.add_comm]
+  unfold Naming.definitions
+  rw [List.length_append, flat_pairs_length]
+  cases hb : R.botUsed <;> simp [hb] <;> omega
 
 theorem normalized_length (G : Input n) (s t : Expr n) :
     (normalized G s t).length = G.length + 2 * (naming G s t).pairs.length +
@@ -74,8 +98,10 @@ theorem extend_restrict (R : Naming n) (hc : R.Closed) (eta : Valuation R.total)
       rw [representative_correct R eta hm _ hs.1, representative_correct R eta hm _ hs.2]
       rfl
 
+/-- Unique existence written explicitly, without an extra notation import. -/
 theorem unique_definition_extension (R : Naming n) (hc : R.Closed) (rho : Valuation n) :
-    ∃! eta, Models R.definitions eta ∧ R.restrict eta = rho := by
+    ∃ eta, (Models R.definitions eta ∧ R.restrict eta = rho) ∧
+      ∀ other, (Models R.definitions other ∧ R.restrict other = rho) → other = eta := by
   refine ⟨R.extend rho, ⟨extend_definitions R hc rho, restrict_extend R rho⟩, ?_⟩
   intro eta h
   have he := extend_restrict R hc eta h.1
@@ -104,21 +130,21 @@ theorem normalized_infinite_input_not_entails :
 theorem infinite_input_every_model_unbounded (rho : Valuation 1)
     (hm : ExprModels infiniteInput rho) (N : Nat) :
     ∃ w, (rho 0).nodes w ∧ N < w.length := by
-  have step : Below (product (rho 0) bottom) (rho 0) := hm _ (by simp [infiniteInput])
+  have step : Below (product (rho 0) bottom) (rho 0) :=
+    hm (.prod (.var 0) .bot, .var 0) (by simp [infiniteInput])
   have all : ∀ j, (rho 0).nodes (List.replicate j false) := by
     intro j
     induction j with
     | zero => exact step [] trivial
     | succ j ih =>
-      apply step
-      simpa using ih
+      simpa only [List.replicate_succ] using step (false :: List.replicate j false) ih
   exact ⟨List.replicate (N+1) false, all _, by simp⟩
 
 def impossibleInput : Input 0 := [(.prod .bot .bot, .bot)]
 
 theorem impossible_input_unsatisfiable : ¬ ∃ rho, ExprModels impossibleInput rho := by
   rintro ⟨rho, hm⟩
-  exact hm _ (by simp [impossibleInput]) [] trivial
+  exact hm (.prod .bot .bot, .bot) (by simp [impossibleInput]) [] trivial
 
 theorem normalized_impossible_unsatisfiable :
     ¬ Satisfiable (normalized impossibleInput .bot .bot) := by
@@ -166,7 +192,9 @@ def clauseJson : Constraint n → String
 def fixtureJson (f : Fixture) : String :=
   let R := naming f.premises f.left f.right
   let cs := String.intercalate "," ((normalized f.premises f.left f.right).map clauseJson)
-  s!"{{\"n\":{f.n},\"total\":{R.total},\"left\":{(R.ref f.left).val},\"right\":{(R.ref f.right).val},\"clauses\":[{cs}]}}"
+  "{\"n\":" ++ toString f.n ++ ",\"total\":" ++ toString R.total ++
+    ",\"left\":" ++ toString (R.ref f.left).val ++
+    ",\"right\":" ++ toString (R.ref f.right).val ++ ",\"clauses\":[" ++ cs ++ "]}"
 
 end Subtail.ExpressionNormalization
 
