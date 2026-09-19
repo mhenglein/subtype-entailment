@@ -50,12 +50,10 @@ lake env lean Subtail/Audit.lean
 ```
 
 The new modules are included by `Subtail.lean`. Their complete public dependency
-audits are separately enforced by
-[the foundation workflow](../.github/workflows/lean-rank-foundation.yml),
-[the milestone workflow](../.github/workflows/lean-rank-milestones.yml),
-[the query workflow](../.github/workflows/lean-rank-query.yml), and
-[the graph/interface workflow](../.github/workflows/lean-first-return-graph.yml).
-The latter audits all 65 public declarations of the four graph modules and
+audits are enforced by [the Lean workflow](../.github/workflows/lean.yml), which
+since 2026-09-19 runs the former foundation, milestone, query and
+graph/interface audits as steps of one cached build (CI diet, #37).
+Its graph/interface step audits all 65 public declarations of the four graph modules and
 `RankQueryFirstReturn.lean` at the checked revision.
 
 ## Checked statements

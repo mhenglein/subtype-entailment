@@ -22,6 +22,11 @@ on:
       - 'scripts/integrate_order_route.py'
       - '.github/workflows/guarded-order-checks.yml'
 
+# CI diet (2026-09-19, #37): one run per ref at a time; the write-back job is never cancelled mid-flight.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 permissions:
   contents: read
 
