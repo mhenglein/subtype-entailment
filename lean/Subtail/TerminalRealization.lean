@@ -72,7 +72,7 @@ theorem models_if_false (t : Bool) (c : Constraint n) (rho : Valuation n) :
 theorem models_iff_laws (I : Instance k) (rho : Valuation (2 * k + 1)) :
     Models (constraints I) rho ↔ Laws I rho := by
   simp only [constraints, models_append, models_singleton, models_fin_flat,
-    models_if_true, models_if_false, Laws]
+    models_if_true, models_if_false, Laws, and_assoc]
 
 theorem split_run (I : Instance k) {q r : Fin k} {u t : Word}
     (h : runFrom I q (u ++ t) = some r) :
@@ -80,7 +80,7 @@ theorem split_run (I : Instance k) {q r : Fin k} {u t : Word}
   rw [runFrom_append] at h
   cases hp : runFrom I q u with
   | none => simp [hp] at h
-  | some p => exact ⟨p, hp, by simpa [hp] using h⟩
+  | some p => exact ⟨p, rfl, by simpa [hp] using h⟩
 
 theorem nonfinal_of_nonempty_run (I : Instance k) (ht : TerminalFinal I)
     {q r : Fin k} {u : Word} (hne : u ≠ [])
@@ -250,7 +250,7 @@ theorem baseline_models (I : Instance k) (ht : TerminalFinal I) :
             (child v (step I q c))).nodes u := by
           cases c <;> exact hu
         cases hs : step I q c with
-        | none => simpa [child, hs, bottom] using hc
+        | none => simp [child, hs, bottom] at hc
         | some p =>
           have hp : baseNodes I p u := by simpa [child, hs, baseTree] using hc
           rcases hp with ⟨r, hr, hf⟩
