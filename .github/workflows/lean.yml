@@ -23,6 +23,7 @@ on:
       - 'scripts/check_rank_decision.py'
       - 'scripts/check_subtype_summary.py'
       - 'scripts/check_infinite_witness.py'
+      - 'scripts/check_entailment_decision.py'
       - 'experiments/**'
       - 'results/**'
       - '.github/workflows/lean.yml'
@@ -33,6 +34,7 @@ on:
       - 'scripts/check_rank_decision.py'
       - 'scripts/check_subtype_summary.py'
       - 'scripts/check_infinite_witness.py'
+      - 'scripts/check_entailment_decision.py'
       - 'experiments/**'
       - 'results/**'
       - '.github/workflows/lean.yml'
@@ -88,6 +90,7 @@ jobs:
           lake build +Subtail.RankQueryDecision
           lake build +Subtail.CanonicalModelAudit
           lake build +Subtail.StackSummaryAudit
+          lake build +Subtail.ExpressionNormalizationAudit
       - name: Replay the whole library through the kernel
         working-directory: lean
         run: |
@@ -99,6 +102,7 @@ jobs:
           lake env leanchecker Subtail.RankQueryFinishTrace
           lake env leanchecker Subtail.RankWitnessReference
           lake env leanchecker Subtail.RankQueryDecision
+          lake env leanchecker Subtail.ExpressionNormalizationAudit
       - name: Reject unfinished proof placeholders in the unwind module
         run: "! grep -R -nE '\\bsorry\\b|sorryAx|axiom ' lean/Subtail/RankQueryUnwind.lean"
       - name: Audit terminal border proof dependencies (13 declarations)
@@ -477,6 +481,31 @@ jobs:
           cmp results/infinite-cycle-monitor.json /tmp/infinite-cycle-monitor.json
           python3 experiments/check_infinite_decision.py --output /tmp/infinite-decision.json
           cmp results/infinite-decision.json /tmp/infinite-decision.json
+      - name: Normalization and full entailment dependency audits
+        run: python3 scripts/check_entailment_decision.py --output /tmp/entailment-axioms.json
+      - name: Independent native normalization and original-syntax reference checks
+        run: |
+          (cd lean && lake env lean --run Subtail/ExpressionNormalizationAudit.lean) > /tmp/normalization-native.jsonl
+          python3 experiments/check_expression_normalization_lean.py --lean-output /tmp/normalization-native.jsonl > /tmp/normalization-lean-fresh.json
+          python3 experiments/check_expression_normalization.py --output /tmp/normalization-reference-fresh.json
+          python3 - <<'PYCODE'
+          import json
+          from pathlib import Path
+          saved = json.loads(Path('results/expression-normalization-lean.json').read_text())['semantic_corpus']
+          actual = json.loads(Path('/tmp/normalization-lean-fresh.json').read_text())
+          assert actual['status'] == 'PASS'
+          assert actual['native_lean_outputs_matched'] == saved['native_lean_outputs_matched']
+          for key, value in actual['semantic_corpus'].items():
+              saved_key = 'arbitrary_extended_finite_valuations' if key == 'arbitrary_extended_valuations' else key
+              assert value == saved[saved_key], (key, value, saved[saved_key])
+          assert actual['mutation_guards'] == saved['adversarial_guards']
+          saved_ref = json.loads(Path('results/expression-normalization.json').read_text())
+          actual_ref = json.loads(Path('/tmp/normalization-reference-fresh.json').read_text())
+          # Environment metadata belongs to the recorded run; compare mathematical output and source identity.
+          for key in ('status', 'seed', 'counts', 'scope', 'source_sha256'):
+              assert actual_ref[key] == saved_ref[key], key
+          print('PASS: both distinct normalization implementations and saved corpus counts')
+          PYCODE
       - name: Earlier Lean core, axioms and Python agreement
         run: python3 scripts/check_lean.py
       - name: Verify recorded Lean evidence and research records
