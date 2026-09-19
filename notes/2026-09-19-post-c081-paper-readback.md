@@ -256,3 +256,51 @@ that NP03 cap universality is a characterization of the full-signature
 problem, not an established decision theorem, so a reduction there would not
 by itself prove decidability.
 
+## Follow-up after the exposition revision
+
+Date: 2026-09-20
+Parent revisions reviewed: manuscript/exposition revision
+[`28bbfb6`](https://github.com/mhenglein/subtail/commit/28bbfb6926ede16cf9db6af67f89c183b1348967)
+and declaration-map revision
+[`4306d4d`](https://github.com/mhenglein/subtail/commit/4306d4d1465487bd3a5acdb8cd46120adffb9578)
+
+I re-read every passage changed in response to the seven findings above and
+the current P10 map entries for `RankQueryCoverage.Ext` and
+`RankQueryCoverage.exists_ext`. The seven findings are resolved at the
+exposition level:
+
+1. P8 now gives the border-start-state map, the prefix-comparability argument,
+   the zero-border contribution, and the reversal step.
+2. P9 now states that `pi` applies to `R[:j]` and gives the milestone domain
+   `m_h <= |R|`.
+3. P10 now defines a safe first-return extension in ordinary terms, including
+   old-label agreement and all safety conditions. The map now points to the
+   labelled extension record and its existence theorem as well as the surgery
+   declarations.
+4. P11 now separates forward coverage from reverse reconstruction and states
+   that the semantic theorem uses the concrete finite budget, not `ClosureFor`'s
+   historical numerical conjunct.
+5. P11 now qualifies the `s_i+1` estimate as a product-simple path bound.
+6. P11 now contains a complete two-observer `B=0`, `C=010` example. Independently
+   reading the definitions gives origins `0,1`, first emission `1`, shared
+   interval emission `0`, and the two required moves `S` and `K0` over the same
+   base `K0` edge. The four-state reverse run and the old-end colour are
+   consistent with the literal prefix graph.
+7. P12, P14, and P15 now state the observer conjunction, one-letter graph
+   enumeration, and nonempty-cycle/initial-state hypotheses explicitly.
+
+I ran `python3 paper/check.py` at the parent checkout. It passed with
+`17 paper results, declaration/source maps and literal worked examples`; the
+checker explicitly reports that Lean build and kernel replay were not run.
+
+I found no remaining critical ordinary-proof omission in the revised P11
+passages beyond the already stated review limitation: the coverage proof is
+long and I did not independently reprove every source-level step. The paper
+now exposes the two directions, finite bounds, shared-generator invariant, and
+a concrete diagram well enough for a reader to identify the obligations. This
+follow-up does not promote C081, establish the `ClosureFor` weight bound, or
+replace an independent mathematical or kernel review.
+
+Follow-up status: `READY_FOR_INTEGRATION`. Only this existing readback note is
+being appended in the continuation; the parent paper, map, Lean, ledgers, and
+experiments remain read-only. The owned path is released after this commit.
