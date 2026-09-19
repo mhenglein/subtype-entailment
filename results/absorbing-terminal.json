@@ -1,0 +1,27 @@
+{
+  "cases": 15914,
+  "corpus_sha256": "363bcb9ad3b641161e641e721cc3e76552251531b995233c318c2ed828de7e80",
+  "counts_by_states": {
+    "1": 26,
+    "2": 15888
+  },
+  "failures": 0,
+  "fixtures": [
+    "weak-final-closure-is-insufficient",
+    "prune-before-sink-test",
+    "nonfinal-sink-stays-nonfinal",
+    "unsafe-empty-start"
+  ],
+  "infinite_branch_yes": 885,
+  "larger_state_C029_existence": "NOT TESTED; still an open formal obligation",
+  "native": "terminalize full tables and existing exact original/terminal small-state decisions",
+  "oracle": "Literal original word predicate; complete small-state existence via TwoState theorem; independent finite safe-cycle closure",
+  "original_yes": 1396,
+  "scope": "All encoded absorbing binary one/two-state instances, including every initial state, partial transition, Bad/final set and ordered flag set",
+  "source_sha256": {
+    "experiments/check_absorbing_terminal.py": "4e5d22965ab64f80d92114dddfbcd09eef5ec85c1c400cd29430cc8b89f824da",
+    "lean/Subtail/AbsorbingTerminal.lean": "596d502361547a2b01c276fd41bc1b2b004bdbe4ce0de561cd4b6bce9002bb1b"
+  },
+  "status": "PASS",
+  "terminal_yes": 515
+}

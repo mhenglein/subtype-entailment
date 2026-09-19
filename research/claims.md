@@ -445,6 +445,14 @@ identified generator consumption and a missing satisfiability guard, and
 the implementation fixes both with regressions. This is not a Lean proof of
 the complete reduction.
 
+**Separate Lean construction (2026-09-19).** `SummaryAutomaton` now proves
+exact same-word equivalence with canonical separation and arbitrary-tree
+non-entailment equivalence, and derives strong absorption for every physical
+state. It uses two summaries and an exact denial-danger predicate. This is
+not a verification of the older Python source. Pinned build, kernel,
+complete dependency audit, separate statement review and native differential
+passed; [readback](../notes/2026-09-19-subtype-summary-bridge.md).
+
 **Evidence.** [Summary construction](../experiments/summary_bridge.py),
 [summary note](../notes/2026-09-04-summary-bridge.md),
 [E013](../experiments/README.md#e013).
@@ -675,10 +683,19 @@ allowed, and every accepting state must be terminal.
 **Statement.** Terminal-final BorderAvoid and normalized Problem 1.7 have
 equivalent decidability through C030, C029, and the audited forward bridge.
 
-**Status / scope.** `WRITTEN PROOF`; this is not a complexity equivalence or a
-full converse for arbitrary BorderAvoid annotations.
+**Status / scope.** `WRITTEN PROOF` for the whole decidability equivalence;
+this is not a complexity equivalence or a full converse for arbitrary
+BorderAvoid annotations. The safe-terminal-restriction subclaim is separately
+`LEAN` (2026-09-19): `AbsorbingTerminal.c031` proves, under strong absorption,
+`(exists w, Witness I w) iff InfWitness I or exists w, Witness (terminalize I) w`.
+InfWitness contains an original witness, safe finite stem and nonempty safe
+cycle. The finite graph proof and executable terminalization use original
+finals and prune unsafe edges before the sink test. The composed subtype split
+has an exact terminal Boolean and an undecided InfWitness proposition.
+This does not formally discharge C029 or the converse C030 realization.
 
-**Record.** [Full statement and proof](../notes/2026-09-05-terminal-realization.md).
+**Record.** [Full statement and proof](../notes/2026-09-05-terminal-realization.md);
+[checked subclaim and semantic readback](../notes/2026-09-19-subtype-summary-bridge.md).
 
 <a id="c032"></a>
 
@@ -995,9 +1012,17 @@ finishing and executable boundary tests are included. This direct decision
 does not require the numerical weight contract.
 [Assembly, semantic readback and validation](../notes/2026-09-19-terminal-rank-decision.md).
 
+Also `LEAN` (2026-09-19): the explicit finite `SummaryAutomaton` instance,
+ordered-cut/forced-root/prefix-denial characterization, exact same-word
+`witness_iff_separation`, arbitrary-tree `not_entails_iff_witness`, and
+all-state strong absorption. The executable construction retains UNSAT as a
+Bad bit. [Bridge proof and independent readback](../notes/2026-09-19-subtype-summary-bridge.md).
+
 NOT Lean-checked: the clause-weight conjunct of `ClosureFor`, explicit `F(k)`,
-and the entailment decision of stage 6 (`I_C`, ordered-cut/absorption,
-C029/C031 and composition). Thus the combined C080 statement remains
+and the full entailment decision of stage 6 (C029, syntax normalization
+and final executable composition). The absorbing safe-cycle/terminal split
+of C031 is now `LEAN`, as is the composed exact normalized non-entailment split
+in `SubtypeTerminalBridge`; its infinite branch remains a proposition. Thus the combined C080 statement remains
 CANDIDATE even though its terminal decidability subclaim is checked. Two
 separate AI-assisted audits, both informed by the author's argument, found no
 gap in stages 1–5 and in the stage-6 bridge; neither is a human referee or a

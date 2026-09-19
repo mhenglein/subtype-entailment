@@ -2,7 +2,9 @@
 
 Date: 2026-09-19. A010/A018/C080, #31/#37.
 Actor: bridge-continuation-20260919. Base 9508e8c6455140012d21e0919985ec3c17144a64.
-Initial status: proof attempt; no full subtype decision yet.
+Final mathematical status: exact normalized bridge and absorbing terminal split
+are kernel-checked; no full subtype decision yet. The initial route and failed
+strengthening are preserved below.
 
 ## Finish line and unresolved implications
 
@@ -65,13 +67,14 @@ characterizations. `SummaryAutomaton` explicitly enumerates every pair of
 control subsets, defines all annotations and transitions, and proves
 `witness_iff_separation`, `not_entails_iff_witness`, and `summary_absorbs`.
 The latter quantifies over every enumerated state, including unreachable ones.
-All-word Lean compilation passed on the pinned toolchain; kernel replay,
-complete dependency audit and executable regressions are still pending.
+At this early checkpoint all-word Lean compilation had passed; kernel replay,
+complete dependency audit and executable regressions were pending. The final
+validated checkpoint below supersedes that execution status.
 
 The independent read-only reviewer checked the construction against base
 9508e8c and the ordered-cut proof source. The reviewer identified the needed
 reachable-closure boundary and confirmed arbitrary-state absorption. Final
-source readback is pending.
+source readback subsequently passed at the pinned checkpoints below.
 
 ## Ordinary mathematical readback
 
@@ -159,3 +162,126 @@ The source builds and dependency audits ran in an isolated persistent worktree,
 separate from the terminal-restriction worker's Lake cache. Main's prior four
 GitHub checks at 9508e8c were also read back as PASS; these are baseline checks,
 not evidence for the current unpublished integration tree.
+
+The rejected universal subset interpretation has a simple obstruction: let
+M have epsilon edge p->r and letter-pop edge r--a-->s. Pop_M(p,[a],s)
+holds, but direct next_M({p},a) is empty when p has no direct pop. The initial
+summary is the balanced closure of {p}, which includes r, so this does not
+refute the actual reachable-state construction. No universal-subset lemma
+was used or weakened after a claimed proof.
+
+## Next discriminating proof obligation
+
+The next target should be an executable `infiniteWitnessCheck I` with
+`Absorbing I -> (infiniteWitnessCheck I = true <-> InfWitness I)`.
+The existing ordinary C029 argument and Python `infinite_extensions.py`
+provide a proposed construction, not a supplied Lean hypothesis:
+
+1. Compute safe zero-column finals with a safe cyclic future. Preserve the
+   pre-final prefix graph. A cyclic branching certificate must keep its chosen
+   exit within the region with infinite safe futures; an exit to a terminal
+   region is insufficient for this branch.
+2. With no productive cyclic branching, enumerate finite simple stems and
+   nonempty cycles for the remaining infinite futures. A non-purely-periodic
+   lasso cannot equal an active purely periodic forbidden ray.
+3. For each pure primitive period p of length d, enumerate endpoint phases.
+   The proposed finite monitor stores the current original state, current
+   phase, d subsets of visited controls since the last periodic mismatch,
+   and a conflict bit. Prove that its acceptance condition is exactly the
+   absence of a persistent flagged periodic ray, for arbitrary pre-final loops.
+4. Prove that eliminating all finitely many active rays along the selected
+   safe lasso yields an original finite Witness and retains an infinite safe
+   continuation. Then prove completeness across the graph cases.
+
+Every monitor's state set, transition and accepting condition must be explicit.
+The Python implementation's state cap returns UNKNOWN and must not appear as
+a completeness premise or be converted to NO. This is a substantial remaining
+language invariant and global case-coverage obligation, not a small wrapper.
+Finite-expression normalization remains separate after that decision boundary.
+
+## Absorbing terminal split: ordinary readback
+
+For any finite binary Instance I, safeState excludes Bad states and diagonal
+flags. SafeRun requires a defined original run and a safe state at EVERY cut,
+including the start. Absorbing says each defined successor of an original
+final is final and has an empty incoming flag column from every state.
+
+If u is an original witness and v is a safe run from its final endpoint,
+then u++v is an original witness. For a comparison whose target cut lies in
+u, agreement after appending v implies the original agreement within u, by
+truncating the two compared suffixes to their old lengths. If the target cut
+lies strictly in v, its incoming flag column is empty by absorption. Finality
+and safety propagate along the extension. This handles new comparisons rather
+than assuming that every original agreement profile is unchanged.
+
+The effective terminalize function preserves states, initial state, Bad and
+ordered flags. It removes edges with an unsafe source or target, THEN accepts
+exactly safe ORIGINAL final states with no surviving outgoing edge. Any
+terminalized witness lifts to an original witness. Any safe original run also
+survives the pruning.
+
+Starting at an original witness endpoint, finite safe-path growth either
+reaches such a terminal sink, or produces a safe path of length at least k.
+A cut-state pigeonhole argument yields equal states at cuts i<j in the latter
+case. The intervening nonempty word is a safe cycle; the preceding prefix is
+its safe stem. Thus `AbsorbingTerminal.c031` gives exactly
+`exists Witness I <-> InfWitness I or exists Witness (terminalize I)`.
+The cycle branch explicitly retains the original witness. This bounds only
+the safe extension graph traversal, not the length of an arbitrary initial
+witness. The two branches are not mutually exclusive.
+
+The separate mathematical reviewer independently checked this argument,
+including the need for both parts of absorption, empty witnesses/stems,
+nonempty cycles, partial transitions, diagonal flags and pruning before the
+sink test. No missing hypothesis was found. Final pinned source and combined
+build validation are recorded below when completed.
+
+## Final source checkpoint and validation
+
+Parent source checkpoint: `85a9e812544e1fb055f7fc2f5f8beb157ed33a0d`.
+Summary proof source: `acf9e5bcd2465931a8a4bce485f70300e45172c9`, unchanged.
+Released absorbing-terminal source: `c46a2d1603f1544379b66892d6c1b561e70fb2f3`,
+cherry-picked unchanged with provenance at `22ca9c2`.
+The wrapper and default imports are in 85a9e81. Subsequent integration changes
+are validation records, CI and navigation; no proof or runtime definition is
+changed by them.
+
+On wb-marcus, Lean 4.33.1 and Python 3.13.14:
+
+| Command / evidence | Outcome and exact scope |
+|---|---|
+| `cd lean && lake build` | PASS, 41 jobs; all four new modules in the default import graph |
+| `cd lean && lake env leanchecker Subtail.SubtypeTerminalBridge` | PASS, combined dependency graph at 85a9e81 |
+| `python3 scripts/check_subtype_summary.py` | PASS, all 100 public declaration dependency closures; runtime definitions free of Classical.choice; no unfinished proofs, native_decide or custom axioms |
+| `python3 experiments/check_subtype_summary.py --output results/subtype-summary-bridge.json` | PASS, 1803 exact supplied-address comparisons, 42 systems; initial run at unchanged acf9e5b source, all recorded source hashes rechecked at 85a9e81 |
+| `python3 experiments/check_absorbing_terminal.py --output results/absorbing-terminal.json` | PASS, exhaustive 15914 absorbing one/two-state encodings, all terminalization table entries and exact native decisions; 1396 original YES, 515 terminal YES, 885 infinite YES; branches may overlap |
+| Independent source review | PASS, separate read-only Astra context; summary modules at acf9e5b and final AbsorbingTerminal/wrapper at 85a9e81; no mathematical or quantifier defect found |
+| `python3 scripts/check_lean.py` | PASS on the combined default import graph; full earlier core/kernel/axiom/native differential, zero failures; recorded results/lean-checks.json unchanged |
+| `python3 scripts/research_index.py --check` | PASS, 18 approaches and 152 A/C/E/Q records; rerun after final record edits |
+| `python3 scripts/test_research_index.py` | PASS, 13 navigation tests |
+| `python3 experiments/run_experiments.py` | PASS, original Python suite; results/independent-checks.json unchanged |
+| Workflow YAML/trigger and `git diff --check` | PASS; both new native regressions and the complete declaration audit added to consolidated Lean CI |
+
+The first attempt to invoke navigation tests via `python3 -m unittest
+scripts/test_research_index.py` failed because the module expects its scripts
+folder on the import path. The documented direct script command passed all
+13 tests; no test was removed or weakened.
+
+Full native summary construction above three controls and general C029
+existence checking were NOT RUN. The all-input mathematical theorems are not
+performance claims. No original analysis-2026 archive is required or awaited.
+No external human review is claimed; the independent reviewer inherited the
+route context and did not re-audit the old terminal preimage coverage proof.
+
+The combined theorem is exactly:
+
+```text
+not Entails C alpha beta
+  iff InfWitness (summaryInstance C alpha beta)
+      or terminalWitnessCheck (terminalize (summaryInstance C alpha beta)) = true
+```
+
+`InfWitness` remains Prop. C029 is NOT discharged by rewriting it into a
+classical Decidable instance. The next task must supply a total executable
+Boolean and prove this exact infinite branch, then normalize the original
+finite type syntax and compose the complete subtype decision.

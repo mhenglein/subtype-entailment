@@ -1,6 +1,6 @@
 # Research plan
 
-Updated: 2026-09-19 (terminal decision checked; subtype transfer next; historical programmes retained)
+Updated: 2026-09-19 (terminal decision and exact summary bridge checked; terminal split checked; infinite continuation next)
 
 **Goal:** decide [Problem 1.7](problem.md) for bottom and binary product over arbitrary, possibly infinite trees. No general solution is established here.
 
@@ -26,9 +26,12 @@ Current priorities, in order:
    [Proof and validation](../notes/2026-09-19-terminal-rank-decision.md).
    Empty witnesses, small-state cases and all flags are preserved. The proof
    uses at most k-2 finite preimage iterations, independently of U/F.
-2. **Subtype transfer (#31).** Discharge the effective summary-instance,
-   ordered-cut, absorption, C029/C031 and composition obligations for arbitrary,
-   possibly infinite trees. A terminal decision alone is not Problem 1.7.
+2. **Subtype transfer (#31).** The effective summary instance, exact ordered
+   cuts, prefix denials, strong absorption and absorbing terminal split are
+   now checked. Next prove the C029 infinite-continuation decision,
+   finite-expression normalization and executable composition. These preserve
+   arbitrary, possibly infinite trees; the existing terminal decision and
+   semantic reduction alone do not solve Problem 1.7.
 3. **Independent review (#33/#32).** Read exact statements and shared-generator
    semantics in a separate session and retain targeted adversarial fixtures.
    This accompanies assembly; it does not wait until all proofs are written.

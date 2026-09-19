@@ -871,3 +871,49 @@ No new E ID; validation of A018/C080's exact terminal decision subclaim.
 The all-k decision rests on the Lean theorem, not these finite comparisons.
 Native evaluation of the whole promoted query for k≥3 was NOT RUN.
 The original memo archive remains unavailable and is not an assigned task.
+
+
+## Exact subtype summary checks (2026-09-19)
+
+Validation of A010/A018 and the semantic-bridge subclaim of C080; no new E ID.
+
+- `python3 scripts/check_subtype_summary.py` audits all named public declarations
+  in the new bridge modules, including runtime dependency closures. Executable
+  definitions must not depend on Classical.choice.
+- `python3 experiments/check_subtype_summary.py` compares actual native summary
+  tables, Witness and separationCheck with independent P-automaton predecessor
+  saturation and the literal original word predicate. Seed 2026091931; 42
+  constraint systems, 1803 query-word pairs, 528 states and 10752 ordered flags.
+  Word lengths are at most three, or two in the three-control proper-prefix
+  fixture. No finite search failure is extrapolated to a general NO.
+
+[Recorded native result](../results/subtype-summary-bridge.json),
+[ordinary readback and remaining obligations](../notes/2026-09-19-subtype-summary-bridge.md).
+The all-word correctness result is the Lean theorem; neither this corpus nor
+the existence-preserving bridge alone decides Problem 1.7.
+
+
+## Absorbing safe-cycle/terminal split checks (2026-09-19)
+
+`python3 experiments/check_absorbing_terminal.py` enumerates every absorbing
+binary one/two-state instance, including all initial states, partial
+transitions, Bad/final sets and ordered flag sets. The independent Python
+oracle uses the literal original word predicate and exact finite safe-cycle
+reachability. Its length-at-most-one existence check is complete for this
+scope by the existing TwoState theorem, applied also after restricting finals
+to states that reach a safe cycle. It is not a search bound for larger inputs.
+
+The native check compares the complete terminalize tables and the existing
+exact original/terminal decision functions. Named adversarial fixtures retain
+the need for strong absorption, pruning before sink selection, rejecting
+nonfinal sinks and rejecting unsafe empty witnesses. Finite oracle validation
+is separate from the all-k `AbsorbingTerminal.c031` theorem. This does not
+implement or prove the general C029 infinite-witness decision.
+
+
+Recorded [absorbing-terminal result](../results/absorbing-terminal.json):
+15914 cases (26 with one state, 15888 with two), 1396 original YES,
+515 terminal YES, 885 infinite-branch YES, zero failures. The two YES branches
+may overlap. Both new checks run in the existing consolidated Lean workflow;
+its trigger includes the new dependency-audit script, and the default Lean
+import graph includes all four new modules.

@@ -4,7 +4,9 @@ This project now has a total executable decision for **binary BorderAvoid
 with terminal final states**, with a checked equivalence to the original
 witness definition for every state count. It also retains the general
 one/two-state result and structural lemmas. Subtype entailment over arbitrary,
-possibly infinite trees is not yet decided.
+possibly infinite trees now has an exact reduction to a witnessed safe-cycle
+branch and a decided terminal branch; the general infinite branch is not
+formally decided yet.
 
 The terminal result is `RankQueryDecision.terminalWitnessCheck_correct`;
 the [readback](../notes/2026-09-19-terminal-rank-decision.md) explains its exact
@@ -35,6 +37,9 @@ From the repository root:
 ```sh
 python3 scripts/check_lean.py
 python3 scripts/check_rank_decision.py
+python3 scripts/check_subtype_summary.py
+python3 experiments/check_subtype_summary.py
+python3 experiments/check_absorbing_terminal.py
 python3 experiments/check_terminal_decision.py
 python3 experiments/check_finishing_trace.py --lean
 python3 experiments/check_lean_rank_milestones.py --lean --output /tmp/lean-rank-milestones.json
@@ -69,6 +74,9 @@ Its graph/interface step audits all 65 public declarations of the four graph mod
 
 | File | Result |
 |---|---|
+| [AbsorbingTerminal.lean](Subtail/AbsorbingTerminal.lean) | Under strong absorption, witness existence iff a witnessed safe cycle is reachable or a witness exists in the safely pruned terminal instance |
+| [SubtypeTerminalBridge.lean](Subtail/SubtypeTerminalBridge.lean) | Exact normalized non-entailment iff InfWitness of the summary instance or the terminal decision returns true; the infinite branch is not yet decided |
+| [SummaryBridge.lean](Subtail/SummaryBridge.lean), [SummaryAutomaton.lean](Subtail/SummaryAutomaton.lean) | Exact ordered cuts and prefix-denial characterization; explicit two-summary instance; same-word separation equivalence and all-state strong absorption |
 | [RankQueryDecision.lean](Subtail/RankQueryDecision.lean) | Total executable terminal witness decision; exact original Witness equivalence; no numerical bound premise |
 | [RankWitnessReference.lean](Subtail/RankWitnessReference.lean) | Original nonempty witnesses give safe reversed references; positive prefix safety |
 | [RankQueryFinishTrace.lean](Subtail/RankQueryFinishTrace.lean) | Finish iff no-return safe completion; original witness reconstruction; maximal-rank completion |
@@ -82,13 +90,13 @@ Its graph/interface step audits all 65 public declarations of the four graph mod
 | [Audit.lean](Subtail/Audit.lean) | Dependency-axiom reports for the earlier runtime definitions and main theorems |
 | [TerminalRank.lean](Subtail/TerminalRank.lean) | Terminal prefix-freeness, border-state injection and at most k-1 positive borders of accepted suffixes |
 | [RankMilestones.lean](Subtail/RankMilestones.lean) | Literal rank recurrence, reversal and actual reversed-prefix bound; exact first milestones/first returns; interior failure-target confinement |
-| [RankQuery.lean](Subtail/RankQuery.lean) | Stage 4a: query grammar, literal prefix graphs, executable `satCheck` with `satCheck_correct`, and the UNPROVED `ClosureStatement`/`RankDecisionStatement` pinned as `Prop`s |
+| [RankQuery.lean](Subtail/RankQuery.lean) | Stage 4a: query grammar, literal prefix graphs, executable `satCheck` with `satCheck_correct`, and `ClosureStatement`/`RankDecisionStatement` pinned as `Prop`s; the latter is now instantiated by RankQueryDecision |
 | [RankQueryPaths.lean](Subtail/RankQueryPaths.lean) | Stage 4b ingredient: runs are chains of nodes, every accepted run has a repetition-free chain, and such a chain visits any vertex at most `O.size` times (`accepts_bounded_visits`) |
 | [PrefixMatching.lean](Subtail/PrefixMatching.lean), [FirstReturnGraph.lean](Subtail/FirstReturnGraph.lean) | Literal KMP maximum/fallback and the exact first-return cursor and K-edge identities |
 | [FirstReturnGenerator.lean](Subtail/FirstReturnGenerator.lean), [FirstReturnColours.lean](Subtail/FirstReturnColours.lean) | First-hit iff literal first return; complete colour/mask and F/S/K0/K1 graph equality |
 | [RankQueryFirstReturn.lean](Subtail/RankQueryFirstReturn.lean) | Graph construction transferred to the actual query graph; single entrance, fresh-edge shape, and at most `O.size+1` maximal forward fresh intervals of a product-simple accepted path |
 | [RankQueryCompiler.lean](Subtail/RankQueryCompiler.lean) | Stage 4c, executable part: fresh/core colour maps, core/slice/edge/interval observers, bounded portal `Diagram`s, `validDiagram`/`compileValid`/`compileDiagram` mirroring `rank_preimage.compile_diagram`, and `preimageOver`; differential-checked against the Python compiler |
-| [RankQuerySound.lean](Subtail/RankQuerySound.lean) | Stage 4c, reverse direction of the Closure Lemma: generator traces of the interval product, cursor identification, `extRef_firstReturn`/`extRef_safe`, `compiled_extension`, colour/edge identification of the extension graph, piece-wise reassembly (`piece_run`, `chain_run`, `atom_accepts`) and `compile_sound`/`preimage_sound`/`closure_reverse`: every base model of the compiled preimage yields a safe first-return extension modelling the query, for any diagram enumeration; the forward direction (4b) and the weight bound (5) are NOT proved |
+| [RankQuerySound.lean](Subtail/RankQuerySound.lean) | Stage 4c, reverse direction of the Closure Lemma: generator traces of the interval product, cursor identification, `extRef_firstReturn`/`extRef_safe`, `compiled_extension`, colour/edge identification of the extension graph, piece-wise reassembly (`piece_run`, `chain_run`, `atom_accepts`) and `compile_sound`/`preimage_sound`/`closure_reverse`: every base model of the compiled preimage yields a safe first-return extension modelling the query, for any diagram enumeration; the forward direction is proved separately in RankQueryCoverage; the weight bound remains open |
 | [RankQueryEnumeration.lean](Subtail/RankQueryEnumeration.lean), [RankQueryEnumerationAudit.lean](Subtail/RankQueryEnumerationAudit.lean) | Stage 4b, enumerator: finite `diagrams c b` with exact membership `mem_diagrams : D ∈ diagrams c b ↔ Bounded c b D`, the executable `preimage I budget φ`, `preimage_sound` (from `closure_reverse`) and `preimage_iff_of_coverage` conditional on `DiagramCoverage` |
 | [RankQueryCoverage.lean](Subtail/RankQueryCoverage.lean) | Stage 4b, coverage: `coverage I : DiagramCoverage I budget` for an explicit computable `budget` (chains → blocks → global marks → bounded valid diagram → joint base model), hence `closure_iff`: `Sat (prefixGraph I B) (preimage I budget φ) ↔ ∃ C, FirstReturnExt I B C ∧ Sat (prefixGraph I C) φ` for every safe `B`, the first conjunct of `ClosureFor I (preimage I budget)`; the weight conjunct (stage 5) is NOT proved |
 | [TreeSemantics.lean](Subtail/TreeSemantics.lean), [CanonicalModel.lean](Subtail/CanonicalModel.lean), [CanonicalModelAudit.lean](Subtail/CanonicalModelAudit.lean) | Stage 6 foundation: arbitrary prefix-closed path-set trees, the four normalized constraint forms, inductive propagation closure, `satisfiable_iff_forced_safe`, `not_entails_iff_canonical`, and all-length semantic regression proofs |
@@ -106,10 +114,11 @@ Python checks, but is not yet formalized.
 ## What remains assumed or missing
 
 `RankQuery.lean` pins `ClosureFor`, `ClosureStatement` and `RankDecisionStatement`
-as statements only. No theorem in the repository proves them. The first
+as statement definitions. `RankQueryDecision.rankDecisionStatement` now proves
+the last for the concrete preimage compiler without a numerical bound premise. The first
 conjunct of `ClosureFor I (preimage I budget)` (both semantic directions) is
-proved in `RankQueryCoverage.lean` (`closure_iff`); its weight conjunct and the
-two pinned statements are still open. Its literal graph
+proved in `RankQueryCoverage.lean` (`closure_iff`); its weight conjunct and
+`ClosureStatement` remain open at that stronger quantitative scope. Its literal graph
 and observer semantics are now default-imported through the checked
 first-return query interface. See
 [the statement readback](../notes/2026-09-18-lean-rank-query-statement.md) and

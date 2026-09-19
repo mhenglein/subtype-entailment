@@ -1,5 +1,57 @@
 # Subtail — current research state
 
+## September 19: normalized subtype separation splits into two exact branches
+
+For every finite normalized constraint list C, queried variables alpha,beta,
+and finite word w, `SummaryAutomaton.witness_iff_separation` proves that the
+explicit finite summary instance has original Witness w exactly when w is a
+canonical separating address. `not_entails_iff_witness` lifts this to
+non-entailment over arbitrary, possibly infinite prefix-closed trees. No
+finite-model, regular-model or word-length assumption occurs.
+
+The instance enumerates pairs B,A of control subsets. Ordered flags are
+B(left) intersect A(right); final states avoid forced roots. Bad states
+combine the exact global UNSAT check with B meeting denial-danger controls.
+The latter replaces the third safety subset while preserving every-prefix
+checks. Last-letter Pop decomposition proves exact reachable transitions;
+`summary_absorbs` proves empty-incoming-column absorption for ALL enumerated
+states, including unreachable ones.
+
+The two modules passed pinned Lean build, kernel replay, complete dependency
+audits and separate source readback. Runtime definitions have no classical
+choice. Native checks agree with an independent P-automaton oracle on 1803
+query-word pairs across 42 normalized systems, including infinite-tree,
+forced-root, diagonal, empty-word and missing-prefix cases. The tests also
+compare every table entry in 528 physical states and 10752 ordered flags.
+[Exact proof, construction, review and limits](notes/2026-09-19-subtype-summary-bridge.md),
+[regression evidence](results/subtype-summary-bridge.json).
+
+The absorbing safe-extension and finite safe-cycle/terminal-sink dichotomy
+also compile. `SubtypeTerminalBridge.not_entails_iff_infinite_or_terminal`
+combines them with the existing terminal decision:
+
+```text
+not Entails C alpha beta
+  iff InfWitness (summaryInstance C alpha beta)
+      or terminalWitnessCheck (terminalize (summaryInstance C alpha beta)) = true
+```
+
+InfWitness retains an original witness and an explicit safe finite stem plus a
+nonempty safe cycle. Terminalization removes unsafe edges BEFORE selecting
+safe ORIGINAL final sinks; Bad/flags/initial state are preserved. The combined
+default build, kernel replay, all 100 new declaration dependency
+closures and independent final source readback passed at source checkpoint
+85a9e812544e1fb055f7fc2f5f8beb157ed33a0d. The native terminalization differential
+exhausts all 15914 absorbing one/two-state encodings with no mismatch;
+[results](results/absorbing-terminal.json).
+
+**Current boundary:** the terminal branch is decidable; the infinite branch
+is still an exact proposition, not an executable decision. C029's general
+infinite-continuation decision, finite-expression normalization and final
+executable composition remain open. Problem 1.7 remains unresolved.
+The terminal backend below is already checked. C080's explicit U/F estimate
+remains a separate unresolved quantitative claim.
+
 ## September 19: terminal BorderAvoid has a checked executable decision
 
 For every finite binary instance with terminal final states, the new total
@@ -20,11 +72,11 @@ interface declarations pass dependency audits; runtime definitions use no
 [Lean theorem](lean/Subtail/RankQueryDecision.lean), and
 [reproducible small-state differential](results/terminal-decision-regressions.json).
 
-**Problem 1.7 remains open in this repository.** The next obligation is #31:
-construct the effective terminal instances for the subtype problem and prove
-the ordered-cut/absorption and C029/C031 composition for arbitrary, possibly
-infinite trees. Existing canonical-model and reachability results are inputs
-to that task. The explicit U/F formulas also remain unproved. The exhaustive
+**Problem 1.7 remains open in this repository.** The later September 19
+checkpoint above discharges the summary construction, ordered cuts, absorption
+and safe terminal split from this earlier #31 handoff. C029, syntax
+normalization and the final executable composition are the remaining subtype
+obligations. The explicit U/F formulas also remain unproved. The exhaustive
 query compiler may be impractical; the runtime differential covers all
 one/two-state terminal inputs, not a performance claim for larger instances.
 C080 remains a candidate for its stronger bound and full subtype conclusion.
@@ -87,8 +139,9 @@ I budget`, so `closure_iff` gives both directions of the semantic conjunct of `C
 only). Correction on September 19: the terminal decision schema and finishing support
 are now proved and integrated as described above. Still unproved in Lean are
 the clause-weight conjunct of `ClosureFor`, explicit `F(k)`, and the entailment
-decision of stage 6 (the effective separating-address instance `I_C`,
-absorption, C029/C031 and composition). The direct decision uses finite compiler
+decision of stage 6 (C029, syntax normalization and final composition).
+The effective instance, ordered-cut/denial semantics, absorption and safe
+terminal-split subclaim are now checked in the later September 19 entry above. The direct decision uses finite compiler
 iteration, independently of the extra quantitative clause-weight contract. A
 prior-work audit ([dossier](notes/prior-work/README.md)) found no source
 supplying C080's whole-conjunction, shared-generator closure; it records
