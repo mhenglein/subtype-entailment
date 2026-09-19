@@ -1,6 +1,6 @@
 # Research plan
 
-Updated: 2026-09-19 (terminal decision and exact summary bridge checked; terminal split checked; infinite continuation next)
+Updated: 2026-09-19 (C029 bounded-cycle reduction, periodic suffix criterion and finite extraction checked; reverse monitor next)
 
 **Goal:** decide [Problem 1.7](problem.md) for bottom and binary product over arbitrary, possibly infinite trees. No general solution is established here.
 
@@ -28,7 +28,12 @@ Current priorities, in order:
    uses at most k-2 finite preimage iterations, independently of U/F.
 2. **Subtype transfer (#31).** The effective summary instance, exact ordered
    cuts, prefix denials, strong absorption and absorbing terminal split are
-   now checked. Next prove the C029 infinite-continuation decision,
+   now checked. For C029, bounded cycles, the exact periodic suffix criterion
+   and finite extraction are also checked. Next formalize the reverse monitor
+   and its all-prefix finite reachability, then compose the concrete cycle
+   traces with those components. The [cycle-only route](../notes/2026-09-19-c029-cycle-monitor.md)
+   removes the earlier branching/nonpure-lasso case split; primitive roots are
+   unnecessary when equal rotations are tested directly. Then prove
    finite-expression normalization and executable composition. These preserve
    arbitrary, possibly infinite trees; the existing terminal decision and
    semantic reduction alone do not solve Problem 1.7.

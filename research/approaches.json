@@ -181,7 +181,7 @@
       "owner": null,
       "updated": "2026-09-19",
       "summary": "Lean checks exact arbitrary-tree normalized non-entailment equivalence with the explicit two-summary witness instance, strong all-state absorption, and the finite safe-cycle/terminal split. The composed theorem has a proved executable terminal branch and an exact InfWitness proposition. Pinned build/kernel, all 100 new declaration dependency closures, separate source reviews, 1803 supplied-address comparisons and 15914 exhaustive absorbing small-state comparisons passed. C029, finite-expression normalization and final executable entailment composition remain open.",
-      "next_step": "Prove an executable infiniteWitnessCheck correct for exact InfWitness under Absorbing: formalize productive cyclic branching, the finite primitive-period/phase monitor, and global coverage. Then connect finite-expression normalization and the full entailment procedure. See the current route outline and #31; no worker remains assigned. Explicit U/F estimates remain separate.",
+      "next_step": "Prove the reverse periodic monitor language invariant and all-prefix finite reachability, connect concrete safe repeated cycles, then compose infiniteWitnessCheck correctness using InfiniteCycle and InfiniteWitness. No branching/nonpure-lasso proof or primitive-root machinery is required by this route. Next normalize finite compound syntax and assemble subtype entailment. No worker remains assigned; U/F stays separate.",
       "record": "research/approaches/A010.md",
       "evidence": [
         "notes/2026-09-04-bridge-foundation.md",
@@ -298,9 +298,9 @@
       "status": "tried",
       "outcome": "supported",
       "owner": null,
-      "updated": "2026-09-05",
-      "summary": "The terminal branch realizes arbitrary abstract flags; a nine-variable system has a nonregular terminal separating language. Flat terminal graphs are decidable arithmetically.",
-      "next_step": "Target nonflat productive terminal components; shared B/A/D structure alone cannot exclude terminal abstract instances.",
+      "updated": "2026-09-19",
+      "summary": "C029 has a simpler cycle-only route. Lean checks bounded-cycle normalization with an unbounded witness prefix, the exact nonprimitive periodic-suffix criterion, and finite witness extraction under explicit safe-trace/no-conflict hypotheses. The reverse Python monitor has a reviewed ordinary proof, 567000 exact supplied-prefix comparisons and 15914 complete absorbing small-state decisions. Its full Lean invariant, graph decision and concrete cycle composition remain open.",
+      "next_step": "Prove the reverse periodic monitor language invariant and all-prefix finite reachability, connect concrete safe repeated cycles, then compose infiniteWitnessCheck correctness using InfiniteCycle and InfiniteWitness. No branching/nonpure-lasso proof or primitive-root machinery is required by this route. Next normalize finite compound syntax and assemble subtype entailment. No worker remains assigned; U/F stays separate.",
       "record": "research/approaches/A013.md",
       "evidence": [
         "notes/2026-09-04-summary-absorption.md",
@@ -313,9 +313,17 @@
         "results/infinite-extensions.json",
         "research/TERMINAL.md",
         "notes/2026-09-05-terminal-realization.md",
-        "results/terminal-nonregular.json"
+        "results/terminal-nonregular.json",
+        "notes/2026-09-19-c029-cycle-monitor.md",
+        "lean/Subtail/InfiniteCycle.lean",
+        "lean/Subtail/PeriodicTail.lean",
+        "lean/Subtail/InfiniteWitness.lean",
+        "experiments/infinite_cycle_monitor.py",
+        "experiments/check_infinite_cycle_monitor.py",
+        "results/infinite-cycle-monitor.json",
+        "scripts/check_infinite_witness.py"
       ],
-      "issue": null
+      "issue": "https://github.com/mhenglein/subtail/issues/31"
     },
     {
       "id": "A014",
@@ -490,8 +498,8 @@
       "outcome": "supported",
       "owner": null,
       "updated": "2026-09-19",
-      "summary": "Lean checks exact arbitrary-tree normalized non-entailment equivalence with the explicit two-summary witness instance, strong all-state absorption, and the finite safe-cycle/terminal split. The composed theorem has a proved executable terminal branch and an exact InfWitness proposition. Pinned build/kernel, all 100 new declaration dependency closures, separate source reviews, 1803 supplied-address comparisons and 15914 exhaustive absorbing small-state comparisons passed. C029, finite-expression normalization and final executable entailment composition remain open.",
-      "next_step": "Prove an executable infiniteWitnessCheck correct for exact InfWitness under Absorbing: formalize productive cyclic branching, the finite primitive-period/phase monitor, and global coverage. Then connect finite-expression normalization and the full entailment procedure. See the current route outline and #31; no worker remains assigned. Explicit U/F estimates remain separate.",
+      "summary": "C029 has a simpler cycle-only route. Lean checks bounded-cycle normalization with an unbounded witness prefix, the exact nonprimitive periodic-suffix criterion, and finite witness extraction under explicit safe-trace/no-conflict hypotheses. The reverse Python monitor has a reviewed ordinary proof, 567000 exact supplied-prefix comparisons and 15914 complete absorbing small-state decisions. Its full Lean invariant, graph decision and concrete cycle composition remain open.",
+      "next_step": "Prove the reverse periodic monitor language invariant and all-prefix finite reachability, connect concrete safe repeated cycles, then compose infiniteWitnessCheck correctness using InfiniteCycle and InfiniteWitness. No branching/nonpure-lasso proof or primitive-root machinery is required by this route. Next normalize finite compound syntax and assemble subtype entailment. No worker remains assigned; U/F stays separate.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
@@ -561,9 +569,17 @@
         "lean/Subtail/AbsorbingTerminal.lean",
         "lean/Subtail/SubtypeTerminalBridge.lean",
         "experiments/check_absorbing_terminal.py",
-        "results/absorbing-terminal.json"
+        "results/absorbing-terminal.json",
+        "notes/2026-09-19-c029-cycle-monitor.md",
+        "lean/Subtail/InfiniteCycle.lean",
+        "lean/Subtail/PeriodicTail.lean",
+        "lean/Subtail/InfiniteWitness.lean",
+        "experiments/infinite_cycle_monitor.py",
+        "experiments/check_infinite_cycle_monitor.py",
+        "results/infinite-cycle-monitor.json",
+        "scripts/check_infinite_witness.py"
       ],
-      "issue": "https://github.com/mhenglein/subtail/issues/34"
+      "issue": "https://github.com/mhenglein/subtail/issues/31"
     }
   ]
 }

@@ -659,9 +659,20 @@ infinite safe continuation is decidable, including arbitrary pre-final loops,
 using a finite periodic-suffix monitor.
 
 **Status / scope.** `WRITTEN PROOF + REPRO`; `NO_INFINITE_EXTENSION` does not
-mean unrestricted `NO`, because terminal witnesses remain possible.
+mean unrestricted `NO`, because terminal witnesses remain possible. Separate
+Lean components now prove (2026-09-19): bounded-cycle normalization with an
+unbounded witness prefix (`InfiniteCycle`); the exact eventual-period suffix
+criterion and finite horizon (`PeriodicTail`); and finite original-witness
+extraction plus safe infinite continuation, including absorption transport
+(`InfiniteWitness`). None assumes a primitive period. The simpler cycle-only
+route has a reviewed ordinary proof and independent reverse-monitor checks.
+The full executable reverse monitor, finite graph completeness and concrete
+cycle-trace composition are still unformalized. In particular no checked
+`infiniteWitnessCheck_correct` theorem exists yet.
 
-**Record.** [Full statement and proof](../notes/2026-09-04-denials-and-continuations.md).
+**Record.** [Original statement and proof](../notes/2026-09-04-denials-and-continuations.md);
+[cycle-only route, checked boundaries and remaining interfaces](../notes/2026-09-19-c029-cycle-monitor.md);
+[reproducible reverse-monitor evidence](../results/infinite-cycle-monitor.json).
 
 <a id="c030"></a>
 
@@ -693,6 +704,8 @@ cycle. The finite graph proof and executable terminalization use original
 finals and prune unsafe edges before the sink test. The composed subtype split
 has an exact terminal Boolean and an undecided InfWitness proposition.
 This does not formally discharge C029 or the converse C030 realization.
+The later C029 bounded-cycle and extraction components are recorded at
+[C029](#c029); its monitor correctness theorem is still open.
 
 **Record.** [Full statement and proof](../notes/2026-09-05-terminal-realization.md);
 [checked subclaim and semantic readback](../notes/2026-09-19-subtype-summary-bridge.md).

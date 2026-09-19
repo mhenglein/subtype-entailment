@@ -1,5 +1,42 @@
 # Subtail — current research state
 
+## September 19: C029 reduces to bounded cycles and an exact periodic-prefix test
+
+C029 now has a simpler end-to-end route. Under strong absorption,
+`InfiniteCycle.infWitness_iff_bounded_cycle` proves that an infinitely
+continuable witness can be extended to the base of a safe nonempty cycle of
+length at most k, with an empty incoming flag column. The witness prefix
+remains unbounded. Enumerating these cycles suffices for existence; the
+branching and nonpure-lasso cases of the earlier route are no longer required.
+
+`PeriodicTail` proves the exact infinite-suffix criterion without assuming a
+primitive period, and reduces eventual periodic suffix equality to a strict
+N+d comparison horizon. `InfiniteWitness` connects that criterion to the
+literal finite Witness: a safe trace, final at N and with no prohibited equal
+old suffixes, yields a witness of length 2*N+d and an InfWitness. Strong
+absorption supplies every later final and empty incoming column explicitly.
+These are compiled proof components, not a completed Boolean C029 theorem.
+
+A new reverse-reading Python monitor implements the whole ordinary route.
+It checks equivalent rotations even at different phases, preserves ordered
+flags, and searches all finite prefixes through finite graph reachability.
+The direct infinite-suffix oracle agrees on 567000 supplied-prefix/period
+cases (121650 safe cases); all 15914 absorbing one/two-state decisions agree
+with an independent complete oracle. Larger-state old/new comparisons and
+nine guards cover pre-final loops, nonprimitive periods, terminal-only exits
+and UNKNOWN caps. Finite testing does not establish the general theorem.
+
+**Exact remaining formal obligation:** implement and prove the finite reverse
+monitor's language invariant, its all-prefix finite reachability decision,
+and the concrete repeated-cycle run connection. Compose these with the checked
+bounded-cycle and extraction results to obtain
+`Absorbing I -> (infiniteWitnessCheck I = true iff InfWitness I)`.
+C029 remains WRITTEN PROOF + REPRO with these separate Lean components.
+Finite-expression normalization and final subtype decision assembly follow;
+Problem 1.7 and the independent U/F estimate remain unresolved.
+[Complete route, proof readback, validation and handoff](notes/2026-09-19-c029-cycle-monitor.md),
+[reproducible evidence](results/infinite-cycle-monitor.json).
+
 ## September 19: normalized subtype separation splits into two exact branches
 
 For every finite normalized constraint list C, queried variables alpha,beta,

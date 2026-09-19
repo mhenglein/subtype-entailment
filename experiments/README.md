@@ -917,3 +917,25 @@ Recorded [absorbing-terminal result](../results/absorbing-terminal.json):
 may overlap. Both new checks run in the existing consolidated Lean workflow;
 its trigger includes the new dependency-audit script, and the default Lean
 import graph includes all four new modules.
+
+
+## C029 bounded-cycle and reverse periodic monitor (2026-09-19)
+
+`python3 experiments/check_infinite_cycle_monitor.py` checks the new cycle-only
+algorithm against a direct infinite-suffix predicate. It covers every supplied
+prefix/period in its recorded finite corpus, including nonprimitive periods;
+all 15914 absorbing one/two-state instances use an independent complete
+small-state existence oracle. Larger random instances compare against the
+preserved old C029 implementation. Nine guards test phase aliases, ordered
+flags, reverse mismatch persistence, a necessary pre-final loop, terminal-only
+branch exits, invalid absorption and UNKNOWN caps. Every returned word passes
+two literal witness predicates. This is Python evidence; no native Lean C029
+Boolean decision is claimed. [Saved results](../results/infinite-cycle-monitor.json).
+
+`python3 scripts/check_infinite_witness.py` audits every named declaration in
+PeriodicTail, InfiniteCycle and InfiniteWitness after the pinned build. Those
+modules check cycle normalization, stream equality and finite extraction;
+they do not prove the monitor's language invariant or finite search complete.
+[Ordinary proof, exact checked boundary and next task](../notes/2026-09-19-c029-cycle-monitor.md).
+Both checks run in the consolidated Lean workflow and the three modules are
+included in the default Lean import graph.
