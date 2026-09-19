@@ -41,7 +41,7 @@ def main():
         return f"[{label}](https://github.com/mhenglein/subtail/blob/{revision}/{rel}{suffix})"
     body = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", absolute_link, body)
     # Force a separate contents page after the abstract and before Section 1.
-    body = body.replace("# 1. The theorem", "\\newpage\n\\tableofcontents\n\\newpage\n\n# 1. The theorem", 1)
+    body = body.replace("# 1. The theorem", "\\newpage\n\\begingroup\\small\n\\tableofcontents\n\\endgroup\n\\newpage\n\n# 1. The theorem", 1)
     OUT.mkdir(parents=True, exist_ok=True)
     scratch = ROOT / "tmp" / "pdfs" / "c081"
     scratch.mkdir(parents=True, exist_ok=True)
