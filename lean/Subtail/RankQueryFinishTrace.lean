@@ -30,7 +30,7 @@ theorem end_edge (I : Instance k) (B : Reference k) :
   simp only [prefixGraph, endpoint, List.take_length, parent]
 
 theorem notEnd_iff (I : Instance k) (B : Reference k) (v : Pos B) :
-    (prefixGraph I B).colour v |>.isEnd = false ↔ v.val < B.word.length := by
+    ((prefixGraph I B).colour v).isEnd = false ↔ v.val < B.word.length := by
   change decide (v.val = B.word.length) = false ↔ v.val < B.word.length
   rw [decide_eq_false_iff_not]
   have hv := v.isLt
@@ -96,7 +96,8 @@ theorem trace_of_run (I : Instance k) (B : Reference k) (q0 : Fin k)
   | @step y z _ hs ih =>
     obtain ⟨ext, ht⟩ := ih
     obtain ⟨a, he, hi, hs, hb, hd, hm⟩ := (prefix_step_iff I B q0 _ _ _ _).mp hs
-    exact ⟨ext ++ [(a,z.2)], Trace.snoc ht a he hi hs hb hd hm⟩
+    refine ⟨ext ++ ([(a, (show Fin k from z.2))] : List (Bool × Fin k)), ?_⟩
+    exact Trace.snoc ht a he hi hs hb hd hm
 
 theorem run_iff_trace (I : Instance k) (B : Reference k) (q0 q p : Fin k)
     (u v : Pos B) :
@@ -145,11 +146,14 @@ theorem finishQuery_eq (I : Instance k) :
 /-- The one-edge atom has its literal one-edge semantics in this direction. -/
 theorem one_edge_accepts (G : Graph k) (l : Label) {u v : Fin G.size}
     (he : G.edge u l = some v) : Accepts G (oneEdge l) u v := by
-  refine ⟨⟨0, by omega⟩, List.mem_cons_self ..,
-    ⟨1, by omega⟩, List.mem_cons_self .., ?_⟩
-  apply Run.step (Run.refl rfl)
+  let q0 : Fin (oneEdge l).size := ⟨0, by change (0 : Nat) < 2; omega⟩
+  let q1 : Fin (oneEdge l).size := ⟨1, by change (1 : Nat) < 2; omega⟩
+  refine ⟨q0, List.mem_cons_self .., q1, List.mem_cons_self .., ?_⟩
+  have hstart : Allowed G (oneEdge l) (u,q0) := rfl
+  refine Run.step (Run.refl hstart) ?_
   refine ⟨l, he, ?_, rfl⟩
-  simp only [oneEdge, if_pos (show (0 : Nat) = 0 ∧ l = l from ⟨rfl,rfl⟩)]
+  change q1 ∈ (if (0 : Nat) = 0 ∧ l = l then [q1] else [])
+  rw [if_pos (show (0 : Nat) = 0 ∧ l = l from ⟨rfl,rfl⟩)]
   exact List.mem_cons_self ..
 
 /-- Remove exactly the syntactic existential-variable packaging of one clause. -/
@@ -161,8 +165,8 @@ theorem finish_clause_iff (I : Instance k) (G : Graph k) (q : Fin k) :
   constructor
   · rintro ⟨σ, ht, _, _, ha⟩
     have ht0 := ht _ (List.mem_cons_self ..)
-    change (G.colour (σ ⟨0, by omega⟩)).isEnd &&
-      decide ((G.colour (σ ⟨0, by omega⟩)).state = q) = true at ht0
+    change (G.colour (σ (⟨0, by omega⟩ : Fin 3))).isEnd &&
+      decide ((G.colour (σ (⟨0, by omega⟩ : Fin 3))).state = q) = true at ht0
     obtain ⟨hend, hstate⟩ := Bool.and_eq_true.mp ht0
     have hF := RankQuerySound.accepts_oneEdge (ha _ (List.mem_cons_self ..))
     have hfinish := ha _ (List.mem_cons_of_mem _ (List.mem_cons_self ..))
@@ -173,7 +177,7 @@ theorem finish_clause_iff (I : Instance k) (G : Graph k) (q : Fin k) :
     have hep := List.mem_singleton.mp hp'
     subst q'
     subst p'
-    exact ⟨σ ⟨0,by omega⟩, σ ⟨1,by omega⟩, σ ⟨2,by omega⟩,
+    exact ⟨σ (⟨0,by omega⟩ : Fin 3), σ (⟨1,by omega⟩ : Fin 3), σ (⟨2,by omega⟩ : Fin 3),
       hend, of_decide_eq_true hstate, hF, hr⟩
   · rintro ⟨e, f, x, hend, hstate, hF, hr⟩
     let σ : Fin 3 → Fin G.size := fun i => if i.val = 0 then e else if i.val = 1 then f else x
@@ -181,17 +185,17 @@ theorem finish_clause_iff (I : Instance k) (G : Graph k) (q : Fin k) :
     · intro t ht
       have ht' := List.mem_singleton.mp ht
       subst t
-      simpa [σ, hend, hstate]
+      simp [σ, hend, hstate]
     · intro z hz
       cases hz
     · intro z hz
       cases hz
     · intro a ha
       rcases List.mem_cons.mp ha with rfl | ha
-      · change Accepts G (oneEdge .F) (σ ⟨0,by omega⟩) (σ ⟨1,by omega⟩)
+      · change Accepts G (oneEdge .F) (σ (⟨0,by omega⟩ : Fin 3)) (σ (⟨1,by omega⟩ : Fin 3))
         simpa [σ] using one_edge_accepts G .F hF
       · rcases List.mem_cons.mp ha with rfl | ha
-        · change Accepts G (finishObserver I q) (σ ⟨1,by omega⟩) (σ ⟨2,by omega⟩)
+        · change Accepts G (finishObserver I q) (σ (⟨1,by omega⟩ : Fin 3)) (σ (⟨2,by omega⟩ : Fin 3))
           refine ⟨q, List.mem_cons_self .., I.initial, List.mem_cons_self .., ?_⟩
           simpa [σ] using hr
         · cases ha
