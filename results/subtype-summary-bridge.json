@@ -1,0 +1,34 @@
+{
+  "corpus_sha256": "7bd479a3a87e1310791c12dcaf6a8379d13e9b907b1ad73b160225065207fd1a",
+  "counts": {
+    "all_state_absorption_edges": 680,
+    "constraint_systems": 42,
+    "native_booleans": 15456,
+    "ordered_flags": 10752,
+    "query_words": 1803,
+    "table_states": 528
+  },
+  "failures": 0,
+  "fixtures": [
+    "empty-and-diagonal",
+    "infinite-left-spine",
+    "forced-root-unsat",
+    "nonempty-denial",
+    "ordered-epsilon",
+    "lower-propagation",
+    "all-denied",
+    "proper-prefix-seed"
+  ],
+  "native": "summaryInstance transitions, Bad/final/ordered flag tables, witnessCheck and separationCheck",
+  "oracle": "Independent exact P-automaton predecessor saturation plus literal original word predicate",
+  "scope": "Finite differential corpus; no claim that sampled words decide arbitrary entailment",
+  "seed": 2026091931,
+  "source_sha256": {
+    "experiments/check_finishing_trace.py": "9e932c5639354bba900f305921a672f6f0e550e29e417ed0ddd312bbace83ac5",
+    "experiments/check_stack_summary.py": "a2cec595e2c4e1a6dad0958b30e5a2f38f4239170f63a43aa1ab655a52f83e71",
+    "experiments/check_subtype_summary.py": "16836509dc4cf9c8a591c84ccb3b01ced5b577ed7b3ef6b36949fe36d04a96a0",
+    "lean/Subtail/SummaryAutomaton.lean": "68832af44bc8907e99dd2889968c699245aff70d40bf5690539f3f9edd8ca37b",
+    "lean/Subtail/SummaryBridge.lean": "8c5d8038b87a1b419e9be03dee668d390260c2677e42f227622cd199dff58bd9"
+  },
+  "status": "PASS"
+}
