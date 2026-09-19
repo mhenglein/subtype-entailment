@@ -1,0 +1,98 @@
+{
+  "schema": "subtail-expression-normalization-lean-v1",
+  "status": "PASS",
+  "scope": "Finite-expression normalization only; arbitrary-tree proof, bounded implementation checks",
+  "source_checkpoint": "01e276eed795d017df656875a06da6445152db53",
+  "initial_base": "3ce7cf18899ad24a5562d4b614f738bec8bc8427",
+  "checked_main_base": "7185b15140fbc629bf1825063d1652d4feb8a43f",
+  "checked_pr_merge": "4fe5f307f83a64f369b6269327c6de0c603b3b16",
+  "pr": 49,
+  "blobs": {
+    "lean/Subtail/ExpressionNormalization.lean": "41a58630c8cad15a15d380d4032d338ca8adc8c2",
+    "lean/Subtail/ExpressionNormalizationAudit.lean": "42a7b82f3e012f644be67554f4377d5374d19a30",
+    "experiments/check_expression_normalization_lean.py": "eb46f0bb3972be35eb62f2f86b53b55b7903559b",
+    "lean/Subtail/TreeSemantics.lean": "ead23728e922fa57c8b8c846129086f4f7aaa435"
+  },
+  "path_note": "The validated checkpoint used check_expression_normalization.py; packaging preserves its blob under check_expression_normalization_lean.py to avoid PR #50's paths.",
+  "remote": {
+    "run": 35451433222,
+    "job": 105919161375,
+    "url": "https://github.com/mhenglein/subtail/actions/runs/35451433222",
+    "conclusion": "success",
+    "logs_inspected": true,
+    "environment": {
+      "os": "Ubuntu 24.04.5 x86_64",
+      "python": "3.11.16",
+      "lean": "4.33.1",
+      "lake": "5.0.0",
+      "lean_commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+      "job_timeout_minutes": 15,
+      "additional_memory_cap": null
+    },
+    "build": "PASS",
+    "kernel_replay_core": "PASS",
+    "kernel_replay_audit": "PASS",
+    "named_declarations_audited": 82,
+    "non_theorem_declarations_audited_separately": 36,
+    "observed_axioms": ["propext", "Quot.sound"],
+    "runtime_classical_choice": false,
+    "sorry_or_custom_axiom": false,
+    "native_python_comparison": "PASS",
+    "research_checks_run": 35451433242,
+    "research_checks_conclusion": "success"
+  },
+  "semantic_corpus": {
+    "fixtures": 372,
+    "native_lean_outputs_matched": 372,
+    "original_valuations": 7624,
+    "original_models": 5781,
+    "arbitrary_extended_finite_valuations": 567340,
+    "definition_models": 2855,
+    "normalized_models": 2354,
+    "exact_query_set_checks": 10479,
+    "max_added_variables": 4,
+    "max_clauses": 8,
+    "finite_values": 5,
+    "max_extended_valuations_per_case": 15625,
+    "products_truncated": false,
+    "random_seed": null,
+    "adversarial_guards": ["missing_lower", "missing_upper", "query_as_premise", "fresh_collision"],
+    "bounded_tests_are_an_arbitrary_tree_decider": false
+  },
+  "local_python": {
+    "executable": "/usr/bin/python3",
+    "version": "3.13.5",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "cpu_seconds_cap": 20,
+    "address_space_mib_cap": 256,
+    "wall_seconds_cap": 30,
+    "hash_seeds": [0, 1],
+    "both_exit_codes": [0, 0],
+    "byte_identical_results": true,
+    "checker_sha256": "010f6ff29b67fa5653fa5a93cf2505eb35ee326b547e39bf0f4a6fad99349c3e",
+    "local_lean": "NOT RUN: unavailable",
+    "prior_virtualenv_attempt": {"exit_code": -9, "cause": "unknown; not a semantic result"}
+  },
+  "infinite_regressions": {
+    "infinite_input_model": "KERNEL CHECKED",
+    "infinite_input_not_entails": "KERNEL CHECKED",
+    "normalized_infinite_input_not_entails": "KERNEL CHECKED",
+    "infinite_input_every_model_unbounded": "KERNEL CHECKED",
+    "impossible_input_unsatisfiable": "KERNEL CHECKED",
+    "normalized_impossible_unsatisfiable": "KERNEL CHECKED",
+    "advisory_nonregular_square_example": "ORDINARY MATHEMATICS, not an executed enumeration"
+  },
+  "retained_failures": [
+    {"run": 35450873856, "kind": "core proof elaboration", "fixed_without_statement_change": true},
+    {"run": 35451116142, "kind": "supplementary proof and exporter elaboration", "fixed_without_semantic_weakening": true},
+    {"run": 35451341684, "kind": "native JSON included unused-simp warning", "proof_and_kernel_steps_passed": true, "fixed_without_weakening_checker": true}
+  ],
+  "limits": {
+    "independent_cross_session_review": "PENDING",
+    "main_integration": "NOT PERFORMED",
+    "shared_import_aggregator_changed": false,
+    "full_default_build_claim": false,
+    "c029_or_full_entailment_decision_claim": false,
+    "linear_time_implementation_claim": false
+  }
+}
