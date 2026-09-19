@@ -1,0 +1,80 @@
+name: Experiments
+
+# CI diet (2026-09-19, #37): the `experiments` and `continuation-experiments`
+# jobs of the former Research checks workflow, unchanged in content, now in one
+# job (two steps) and only when experiment inputs or recorded results change.
+# Branch pushes do not run CI: open a DRAFT pull request to get CI on a branch.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'experiments/**'
+      - 'results/**'
+      - 'examples/**'
+      - '.github/workflows/experiments.yml'
+  pull_request:
+    paths:
+      - 'experiments/**'
+      - 'results/**'
+      - 'examples/**'
+      - '.github/workflows/experiments.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  experiments:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.11'
+      - name: Run reproducible experiments
+        run: |
+          python3 experiments/run_experiments.py
+          python3 experiments/check_topfree_bridge.py
+          python3 experiments/check_context_cuts.py
+          python3 experiments/search_budgets.py --replay-stored
+          python3 experiments/check_boundary_slices.py
+          python3 experiments/check_summary_bridge.py
+          python3 experiments/check_summary_bridge_audit.py
+          python3 experiments/check_minimal_structure.py
+          python3 experiments/shortest_witnesses.py
+          python3 experiments/trim_budget_example.py
+          python3 experiments/check_marker_tails.py
+          python3 experiments/check_synchronous_separators.py
+          python3 experiments/check_macro_marker_tails.py
+          python3 experiments/check_last_aligned_separators.py
+          python3 experiments/check_three_way_cut_certificate.py
+          python3 experiments/check_orbit_split_cut_certificate.py
+          python3 experiments/check_bi_residue_cut_certificate.py
+          python3 experiments/check_word_period_cut_certificate.py
+          python3 experiments/primitive_deletion_windows.py
+          python3 experiments/check_source_simple_census.py
+          python3 experiments/check_live_source_counterexample.py
+          python3 experiments/check_five_state_no_certificate.py
+      - name: Verify recorded results
+        run: git diff --exit-code -- results/independent-checks.json results/topfree-bridge.json results/context-cuts.json results/budget-search.json results/boundary-slices.json results/summary-bridge.json results/summary-bridge-audit.json results/shortest-witnesses.json results/trimmed-budget.json results/semantic-marker-tails.json results/synchronous-separators.json results/macro-marker-tails.json results/last-aligned-separators.json results/three-way-cut-certificate.json results/orbit-split-cut-certificate.json results/bi-residue-cut-certificate.json results/word-period-cut-certificate.json results/primitive-deletion-windows.json results/source-simple-four-state.json results/five-state-no-certificate.json
+      - name: Run consolidated continuation regressions
+        run: |
+          python3 experiments/check_modular_sync.py
+          python3 experiments/check_terminal_copy.py
+          python3 experiments/check_word_sync.py
+          python3 experiments/check_delimited_blocks.py
+          python3 experiments/check_marker_certificate.py
+          python3 experiments/check_target_frontier.py
+          python3 experiments/check_target_tail.py
+          python3 experiments/check_run_normalization.py
+          python3 experiments/check_run_profiles.py
+          python3 experiments/check_regular_family_orbits_canonical.py
+          python3 experiments/check_oneflag_minimum_gap.py
+          python3 experiments/check_consolidation_regressions.py
+      - name: Verify repaired continuation results
+        run: git diff --exit-code -- results/run-profiles.json results/regular-family-orbits.json results/oneflag-minimum-gap.json results/consolidation-regressions.json

@@ -1,0 +1,357 @@
+name: Lean
+
+# CI diet (2026-09-19, #37): the seven per-module Lean workflows are folded
+# into ONE job that builds the library once (with a cached .lake), replays the
+# whole library through the kernel, and then runs every per-module axiom
+# audit, native/literal regression and scripts/check_lean.py exactly as the
+# separate workflows did. Nothing checked has been removed; it now runs once
+# per commit instead of up to eight times.
+#
+# Triggers: pushes to main and pull requests, only when Lean sources, their
+# Python differential checkers or their recorded results change. Branch pushes
+# do not run this workflow: open a DRAFT pull request to get CI on a branch
+# (each push then runs once, not twice).
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'lean/**'
+      - 'scripts/check_lean.py'
+      - 'experiments/**'
+      - 'results/**'
+      - '.github/workflows/lean.yml'
+  pull_request:
+    paths:
+      - 'lean/**'
+      - 'scripts/check_lean.py'
+      - 'experiments/**'
+      - 'results/**'
+      - '.github/workflows/lean.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  lean:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.11'
+      - name: Restore the elan toolchain cache
+        uses: actions/cache@v6.1.0
+        with:
+          path: ~/.elan
+          key: elan-${{ runner.os }}-${{ hashFiles('lean/lean-toolchain') }}
+      - name: Restore the Lake build cache
+        uses: actions/cache@v6.1.0
+        with:
+          path: lean/.lake
+          key: lake-${{ runner.os }}-${{ hashFiles('lean/lean-toolchain', 'lean/lakefile.toml', 'lean/lake-manifest.json') }}-${{ hashFiles('lean/**/*.lean') }}
+          restore-keys: |
+            lake-${{ runner.os }}-${{ hashFiles('lean/lean-toolchain', 'lean/lakefile.toml', 'lean/lake-manifest.json') }}-
+      - uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596
+        with:
+          lake-package-directory: lean
+          build: 'true'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'false'
+      - name: Build every audited module explicitly (no-ops when the aggregator already built them)
+        working-directory: lean
+        run: |
+          lake build +Subtail.TerminalRank
+          lake build +Subtail.RankMilestones
+          lake build +Subtail.RankQueryFirstReturn
+          lake build +Subtail.RankQuery
+          lake build +Subtail.RankQueryPaths
+          lake build +Subtail.RankQueryCompiler
+          lake build +Subtail.RankQuerySound
+          lake build +Subtail.RankQueryUnwind
+          lake build +Subtail.CanonicalModelAudit
+          lake build +Subtail.StackSummaryAudit
+      - name: Replay the whole library through the kernel
+        working-directory: lean
+        run: |
+          lake env leanchecker Subtail
+          lake env leanchecker Subtail.RankQueryUnwind
+      - name: Reject unfinished proof placeholders in the unwind module
+        run: "! grep -R -nE '\\bsorry\\b|sorryAx|axiom ' lean/Subtail/RankQueryUnwind.lean"
+      - name: Audit terminal border proof dependencies (13 declarations)
+        run: |
+          mkdir -p tmp
+          cat > tmp/terminal-rank-axioms.lean <<'EOF'
+          import Subtail.TerminalRank
+          #print axioms Subtail.TerminalRank.cutState
+          #print axioms Subtail.TerminalRank.borderLengths
+          #print axioms Subtail.TerminalRank.borderState
+          #print axioms Subtail.TerminalRank.positiveBorderCount
+          #print axioms Subtail.TerminalRank.runFrom_terminal
+          #print axioms Subtail.TerminalRank.accepted_prefix_eq
+          #print axioms Subtail.TerminalRank.runFrom_cutState_drop
+          #print axioms Subtail.TerminalRank.agreement_distinct
+          #print axioms Subtail.TerminalRank.mem_borderLengths
+          #print axioms Subtail.TerminalRank.borderState_injective
+          #print axioms Subtail.TerminalRank.border_count_le
+          #print axioms Subtail.TerminalRank.positive_border_count_le
+          #print axioms Subtail.TerminalRank.suffix_positive_border_count_le
+          EOF
+          cd lean
+          lake env lean ../tmp/terminal-rank-axioms.lean | tee /tmp/terminal-rank-axioms.txt
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          text = Path('/tmp/terminal-rank-axioms.txt').read_text()
+          rows = re.findall(r"'Subtail\.TerminalRank\.([^']+)' (does not depend on any axioms|depends on axioms: \[([^]]*)\])", text)
+          assert len(rows) == 13, text
+          runtime = {'cutState','borderLengths','borderState','positiveBorderCount'}
+          for name, _, axioms in rows:
+              allowed = {'propext','Quot.sound'}
+              if name not in runtime: allowed.add('Classical.choice')
+              assert set(x.strip() for x in axioms.split(',') if x.strip()) <= allowed, (name,axioms)
+          print('PASS: all 13 dependency closures; no research axioms or sorryAx')
+          PY
+      - name: Audit every public declaration of RankMilestones
+        run: |
+          mkdir -p tmp
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          source = Path('lean/Subtail/RankMilestones.lean').read_text()
+          rows = re.findall(r'^(?:@\[simp\] )?(def|theorem) ([A-Za-z_][A-Za-z_0-9]*)', source, re.M)
+          assert len(rows) == 32 and len(rows) == len(set(n for _,n in rows))
+          Path('tmp/milestone-axioms.lean').write_text('import Subtail.RankMilestones\n' + ''.join('#print axioms Subtail.RankMilestones.'+n+'\n' for _,n in rows))
+          PY
+          cd lean
+          set -o pipefail
+          lake env lean ../tmp/milestone-axioms.lean | tee /tmp/milestone-axioms.txt
+          cd ..
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          source = Path('lean/Subtail/RankMilestones.lean').read_text()
+          expected = dict((n,k) for k,n in re.findall(r'^(?:@\[simp\] )?(def|theorem) ([A-Za-z_][A-Za-z_0-9]*)',source,re.M))
+          text = Path('/tmp/milestone-axioms.txt').read_text()
+          rows = re.findall(r"'Subtail\.RankMilestones\.([^']+)' (does not depend on any axioms|depends on axioms: \[([^]]*)\])",text)
+          assert set(n for n,_,_ in rows) == set(expected), text
+          for name,_,axioms in rows:
+              allowed = {'propext','Quot.sound'}
+              if expected[name] == 'theorem': allowed.add('Classical.choice')
+              assert set(a.strip() for a in axioms.split(',') if a.strip()) <= allowed, (name,axioms)
+          print('PASS:',len(rows),'complete axiom dependency closures')
+          PY
+      - name: Audit first-return graph and query-interface declarations
+        run: |
+          mkdir -p tmp
+          python3 - <<'PY'
+          import json, re
+          from pathlib import Path
+          groups={'FirstReturnGraph':['PrefixMatching','FirstReturnGraph','FirstReturnGenerator','FirstReturnColours'], 'RankQueryFirstReturn':['RankQueryFirstReturn']}
+          expected={}
+          for namespace, files in groups.items():
+              for name in files:
+                  source=Path('lean/Subtail/'+name+'.lean').read_text()
+                  rows=re.findall(r'^(def|theorem|abbrev) ([A-Za-z_][A-Za-z_0-9]*)',source,re.M)
+                  for kind,n in rows:
+                      full='Subtail.'+namespace+'.'+n
+                      assert full not in expected
+                      expected[full]=kind
+          assert len(expected)>=51
+          Path('tmp/graph-audit-names.json').write_text(json.dumps(expected))
+          Path('tmp/graph-axioms.lean').write_text('import Subtail.RankQueryFirstReturn\n'+''.join('#print axioms '+n+'\n' for n in expected))
+          PY
+          cd lean
+          set -o pipefail
+          lake env lean ../tmp/graph-axioms.lean | tee /tmp/graph-axioms.txt
+          cd ..
+          python3 - <<'PY'
+          import json, re
+          from pathlib import Path
+          expected=json.loads(Path('tmp/graph-audit-names.json').read_text())
+          text=Path('/tmp/graph-axioms.txt').read_text()
+          rows=re.findall(r"'(Subtail\.[^']+)' (does not depend on any axioms|depends on axioms: \[([^]]*)\])",text)
+          assert {n for n,_,_ in rows}==set(expected),text
+          for n,_,ax in rows:
+              allowed={'propext','Quot.sound'}
+              if expected[n]=='theorem': allowed.add('Classical.choice')
+              assert {x.strip() for x in ax.split(',') if x.strip()}<=allowed,(n,ax)
+          print('PASS:',len(rows),'dependency closures')
+          PY
+      - name: Audit every public def and theorem of the rank-query modules
+        run: |
+          mkdir -p tmp
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          pattern = r"^(?:@\[simp\] )?(def|theorem) ([A-Za-z_][A-Za-z_0-9?']*)"
+          lines = ['import Subtail.RankQuery', 'import Subtail.RankQueryPaths', 'import Subtail.RankQueryCompiler',
+                   'import Subtail.RankQuerySound']
+          for module, minimum, ns in (('RankQuery', 60, 'RankQuery'), ('RankQueryPaths', 15, 'RankQuery'),
+                                      ('RankQueryCompiler', 30, 'RankQueryCompiler'),
+                                      ('RankQuerySound', 50, 'RankQuerySound')):
+              source = Path('lean/Subtail/' + module + '.lean').read_text()
+              rows = re.findall(pattern, source, re.M)
+              assert len(rows) == len(set(n for _, n in rows)) and len(rows) >= minimum, (module, len(rows))
+              assert not re.search(r'^\s*(axiom|opaque)\b', source, re.M), 'no axiom or opaque declarations'
+              inner = False
+              for line in source.splitlines():
+                  if line.startswith('namespace Recon'): inner = True
+                  if line.startswith('end Recon'): inner = False
+                  m = re.match(pattern, line)
+                  if m:
+                      lines.append('#print axioms Subtail.' + ns + '.' + ('Recon.' if inner else '') + m.group(2))
+          Path('tmp/rankquery-axioms.lean').write_text('\n'.join(lines) + '\n')
+          PY
+          cd lean
+          set -o pipefail
+          lake env lean ../tmp/rankquery-axioms.lean | tee /tmp/rankquery-axioms.txt
+          cd ..
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          pattern = r"^(?:@\[simp\] )?(def|theorem) ([A-Za-z_][A-Za-z_0-9?']*)"
+          expected = {}
+          for module in ('RankQuery', 'RankQueryPaths', 'RankQueryCompiler', 'RankQuerySound'):
+              source = Path('lean/Subtail/' + module + '.lean').read_text()
+              expected.update((n, k) for k, n in re.findall(pattern, source, re.M))
+          text = Path('/tmp/rankquery-axioms.txt').read_text()
+          rows = re.findall(r"'Subtail\.RankQuery(?:Compiler|Sound)?\.(?:Recon\.)?([^']+)' (does not depend on any axioms|depends on axioms: \[([^]]*)\])", text)
+          assert set(n for n, _, _ in rows) == set(expected), text
+          for name, _, axioms in rows:
+              allowed = {'propext', 'Quot.sound'}
+              if expected[name] == 'theorem': allowed.add('Classical.choice')
+              assert set(a.strip() for a in axioms.split(',') if a.strip()) <= allowed, (name, axioms)
+          print('PASS:', len(rows), 'complete axiom dependency closures')
+          PY
+      - name: Audit promotion-unwind theorem dependencies
+        run: |
+          cat > /tmp/unwind-axioms.lean <<'EOF'
+          import Subtail.RankQueryUnwind
+          #print axioms Subtail.RankQueryUnwind.promotes_zero_eq
+          #print axioms Subtail.RankQueryUnwind.promotes_succ_iff
+          #print axioms Subtail.RankQueryUnwind.promotes_safe
+          #print axioms Subtail.RankQueryUnwind.sat_append
+          #print axioms Subtail.RankQueryUnwind.sat_promote_iff
+          #print axioms Subtail.RankQueryUnwind.sat_promote_of_chain
+          #print axioms Subtail.RankQueryUnwind.maxNat_append
+          #print axioms Subtail.RankQueryUnwind.weight_append
+          #print axioms Subtail.RankQueryUnwind.maxNat_le_of_forall
+          #print axioms Subtail.RankQueryUnwind.weight_pre_le
+          #print axioms Subtail.RankQueryUnwind.weight_promote_succ_le
+          #print axioms Subtail.RankQueryUnwind.weight_finishQuery_le
+          #print axioms Subtail.RankQueryUnwind.closureBound_mono
+          #print axioms Subtail.RankQueryUnwind.le_closureBound
+          #print axioms Subtail.RankQueryUnwind.two_le_weightBudget
+          #print axioms Subtail.RankQueryUnwind.weight_promote_finish_le
+          EOF
+          cd lean
+          lake env lean /tmp/unwind-axioms.lean | tee /tmp/unwind-axioms.txt
+          ! grep -E 'sorryAx|Classical.choice' /tmp/unwind-axioms.txt
+      - name: Audit canonical-model declaration dependencies
+        run: |
+          mkdir -p tmp
+          python3 - <<'PY'
+          from pathlib import Path
+          import re,json
+          rows=[]
+          for module in ('TreeSemantics','CanonicalModel','CanonicalModelAudit'):
+              source=Path('lean/Subtail/'+module+'.lean').read_text()
+              for kind,name in re.findall(r'^(?:@\[simp\] )?(def|theorem|inductive|structure|abbrev) ([A-Za-z_][A-Za-z_0-9]*)',source,re.M):
+                  rows.append((module+'.'+name,kind))
+          assert rows and len(rows)==len(set(n for n,_ in rows))
+          Path('tmp/canonical-declarations.json').write_text(json.dumps(rows))
+          Path('tmp/canonical-axioms.lean').write_text('import Subtail.CanonicalModelAudit\n'+''.join('#print axioms Subtail.'+n+'\n' for n,_ in rows))
+          PY
+          cd lean
+          set -o pipefail
+          lake env lean ../tmp/canonical-axioms.lean | tee /tmp/canonical-axioms.txt
+          cd ..
+          python3 - <<'PY'
+          from pathlib import Path
+          import re,json
+          expected=dict(json.loads(Path('tmp/canonical-declarations.json').read_text()))
+          text=Path('/tmp/canonical-axioms.txt').read_text()
+          rows=re.findall(r"'Subtail\.([^']+)' (does not depend on any axioms|depends on axioms: \[([^]]*)\])",text)
+          assert set(n for n,_,_ in rows)==set(expected),text
+          for name,_,axioms in rows:
+              allowed={'propext','Quot.sound'}
+              if expected[name]=='theorem':allowed.add('Classical.choice')
+              assert set(a.strip() for a in axioms.split(',') if a.strip())<=allowed,(name,axioms)
+          print('PASS:',len(rows),'declaration dependency closures')
+          PY
+      - name: Audit stack-summary and reachability declaration dependencies
+        run: |
+          mkdir -p tmp
+          python3 - <<'PY'
+          from pathlib import Path
+          import re,json
+          rows=[]
+          paths=sorted(Path('lean/Subtail').glob('Stack*.lean'))+[Path('lean/Subtail/CanonicalReachability.lean')]
+          for path in paths:
+              source=path.read_text()
+              for kind,name in re.findall(r'^(?:@\[simp\] )?(def|theorem|inductive|structure|abbrev) ([A-Za-z_][A-Za-z_0-9]*)',source,re.M):
+                  rows.append((path.stem+'.'+name,kind))
+          assert rows and len(rows)==len(set(n for n,_ in rows))
+          Path('tmp/stack-declarations.json').write_text(json.dumps(rows))
+          imports=''.join('import Subtail.'+m+'\n' for m in sorted(set(n.split('.')[0] for n,_ in rows)))
+          Path('tmp/stack-axioms.lean').write_text(imports+''.join('#print axioms Subtail.'+n+'\n' for n,_ in rows))
+          PY
+          cd lean
+          set -o pipefail
+          lake env lean ../tmp/stack-axioms.lean | tee /tmp/stack-axioms.txt
+          cd ..
+          python3 - <<'PY'
+          from pathlib import Path
+          import re,json
+          expected=dict(json.loads(Path('tmp/stack-declarations.json').read_text()))
+          rows=re.findall(r"'Subtail\.([^']+)' (does not depend on any axioms|depends on axioms: \[([^]]*)\])",Path('/tmp/stack-axioms.txt').read_text())
+          assert set(n for n,_,_ in rows)==set(expected)
+          for name,_,ax in rows:
+              allowed={'propext','Quot.sound'}
+              if expected[name]=='theorem':allowed.add('Classical.choice')
+              assert set(a.strip() for a in ax.split(',') if a.strip())<=allowed,(name,ax)
+          print('PASS:',len(rows),'declaration dependency closures')
+          PY
+      - name: Milestone literal regressions and native Lean agreement
+        run: |
+          python3 experiments/check_lean_rank_milestones.py --lean --output /tmp/lean-rank-milestones.json
+          cmp results/lean-rank-milestones.json /tmp/lean-rank-milestones.json
+          python3 experiments/check_lean_rank_milestones.py --lean --output /tmp/lean-rank-milestones-replay.json
+          cmp /tmp/lean-rank-milestones.json /tmp/lean-rank-milestones-replay.json
+      - name: First-return graph literal, native and unchanged-candidate comparisons
+        run: |
+          python3 experiments/check_lean_first_return_graph.py --repository --lean --output /tmp/first-return-graph.json
+          python3 experiments/check_lean_first_return_graph.py --repository --lean --output /tmp/first-return-graph-replay.json
+          cmp /tmp/first-return-graph.json /tmp/first-return-graph-replay.json
+      - name: Fresh interval count and premise regressions
+        run: |
+          python3 experiments/check_rank_query_first_return.py --lean --output /tmp/query-first-return.json --full-output /tmp/query-first-return-full.json
+          python3 experiments/check_rank_query_first_return.py --lean --output /tmp/query-first-return-replay.json --full-output /tmp/query-first-return-full-replay.json
+          cmp /tmp/query-first-return.json /tmp/query-first-return-replay.json
+          cmp /tmp/query-first-return-full.json /tmp/query-first-return-full-replay.json
+      - name: Lean/Python query-semantics differential
+        run: |
+          python3 experiments/check_lean_rank_query.py --lean --output /tmp/lean-rank-query.json
+          cmp results/lean-rank-query.json /tmp/lean-rank-query.json
+      - name: Lean/Python compiler differential
+        run: |
+          python3 experiments/check_lean_rank_compiler.py --lean --output /tmp/lean-rank-compiler.json
+          cmp results/lean-rank-compiler.json /tmp/lean-rank-compiler.json
+      - name: Independent saturation oracle and native agreement (stack summary)
+        run: |
+          python3 experiments/check_stack_summary.py --lean --output /tmp/stack-summary-native.json
+          PYTHONHASHSEED=91 python3 experiments/check_stack_summary.py --lean --output /tmp/stack-summary-replay.json
+          cmp /tmp/stack-summary-native.json /tmp/stack-summary-replay.json
+      - name: Earlier Lean core, axioms and Python agreement
+        run: python3 scripts/check_lean.py
+      - name: Verify recorded Lean evidence and research records
+        run: |
+          git diff --exit-code -- results/lean-checks.json
+          python3 scripts/research_index.py --check

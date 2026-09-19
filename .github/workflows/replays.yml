@@ -1,104 +1,112 @@
 name: Replay checks
 
-# Consolidates the read-only result-replay workflows that previously lived in
-# one file each (rank-closure-review, recovered-source-walks,
-# regular-marking-barrier, scheme-cost, semantic-bridge-review, source-capture,
-# target-anchor, target-return). Each matrix entry keeps its original commands,
-# Python version and byte-for-byte result comparison. Lean workflows and the
-# workflows with write-back jobs (guarded-order-checks, recovered-research) are
-# deliberately not folded in here.
+# Read-only result replays (rank-closure-review, closure-fixtures,
+# recovered-source-walks, regular-marking-barrier, scheme-cost,
+# semantic-bridge-review, source-capture, target-anchor, target-return).
+# CI diet (2026-09-19, #37): the nine matrix jobs became two sequential jobs
+# grouped by Python version, because each 10-30 s job was billed a full minute;
+# every command and byte-for-byte comparison is unchanged. Runs only when
+# experiment inputs or recorded results change. Branch pushes do not run CI:
+# open a DRAFT pull request to get CI on a branch.
 
 on:
   push:
+    branches: [main]
+    paths:
+      - 'experiments/**'
+      - 'results/**'
+      - 'examples/**'
+      - '.github/workflows/replays.yml'
   pull_request:
+    paths:
+      - 'experiments/**'
+      - 'results/**'
+      - 'examples/**'
+      - '.github/workflows/replays.yml'
 
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
 jobs:
-  replay:
-    name: ${{ matrix.name }}
+  replay-python-3-11:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - name: rank-closure-review
-            python: '3.11'
-            run: |
-              python3 scripts/research_index.py --check
-              python3 experiments/check_rank_closure_review.py --output /tmp/rank-closure-review.json --full-output /tmp/rank-closure-review-full.json
-              cmp results/rank-closure-review.json /tmp/rank-closure-review.json
-              python3 experiments/check_rank_preimage.py --output /tmp/rank-preimage.json
-              cmp results/rank-preimage.json /tmp/rank-preimage.json
-              git diff --exit-code
-          - name: closure-fixtures
-            python: '3.11'
-            run: |
-              python3 scripts/research_index.py --check
-              python3 experiments/check_closure_fixtures.py --quick --output /tmp/closure-fixtures.json
-              cmp results/closure-fixtures.json /tmp/closure-fixtures.json
-              git diff --exit-code
-          - name: recovered-source-walks
-            python: '3.13'
-            run: |
-              python3 scripts/research_index.py --check
-              python3 experiments/recovered_2026_09_12/reproduce.py
-              git diff --exit-code
-          - name: regular-marking-barrier
-            python: '3.11'
-            run: |
-              python3 experiments/check_regular_marking_barrier.py
-              git diff --exit-code -- results/regular-marking-barrier.json
-          - name: scheme-cost
-            python: '3.11'
-            run: |
-              python3 scripts/research_index.py --check
-              python3 experiments/scheme_cost_barrier.py --self-test --output "$RUNNER_TEMP/scheme-cost.json"
-              cmp results/scheme-cost.json "$RUNNER_TEMP/scheme-cost.json"
-              python3 experiments/check_suffix_switch.py --output "$RUNNER_TEMP/suffix-switch.json"
-              cmp results/suffix-switch.json "$RUNNER_TEMP/suffix-switch.json"
-              git diff --exit-code
-          - name: semantic-bridge-review
-            python: '3.11'
-            run: |
-              python3 scripts/research_index.py --check
-              python3 experiments/check_semantic_bridge_review.py --repository --output /tmp/semantic-bridge-review.json
-              cmp results/semantic-bridge-review.json /tmp/semantic-bridge-review.json
-              python3 experiments/check_semantic_bridge_review.py --repository --output /tmp/semantic-bridge-review-replay.json
-              cmp /tmp/semantic-bridge-review.json /tmp/semantic-bridge-review-replay.json
-              git diff --exit-code
-          - name: source-capture
-            python: '3.11'
-            run: |
-              python3 experiments/check_source_capture.py
-              git diff --exit-code -- results/source-capture.json
-          - name: target-anchor
-            python: '3.11'
-            run: |
-              python3 scripts/research_index.py --check
-              python3 experiments/check_target_anchor.py --output /tmp/target-anchor.json --full-output /tmp/target-anchor-full.json
-              cmp results/target-anchor.json /tmp/target-anchor.json
-              python3 experiments/target_anchor.py --fixture recurrent_no --certificate-output /tmp/target-anchor-no.json
-              python3 experiments/target_anchor.py --fixture recurrent_yes
-              python3 experiments/target_anchor.py --fixture modular_positive_unknown
-              git diff --exit-code
-          - name: target-return
-            python: '3.12'
-            run: |
-              python3 scripts/research_index.py --check
-              python3 experiments/check_target_return.py --output /tmp/target-return.json --full-output /tmp/target-return-full.json
-              cmp results/target-return.json /tmp/target-return.json
-              python3 experiments/target_return.py examples/target_return/legal_repeats.json
-              python3 experiments/target_return.py examples/target_return/recursive_no.json --output /tmp/target-return-no.json
-              python3 experiments/check_target_return.py --verify-instance examples/target_return/recursive_no.json --verify-certificate /tmp/target-return-no.json
-              python3 experiments/target_return.py examples/target_return/modular_unknown.json --uncapped
-              git diff --exit-code
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: actions/setup-python@v7.0.0
         with:
-          python-version: ${{ matrix.python }}
-      - name: Replay ${{ matrix.name }} and verify recorded evidence
-        run: ${{ matrix.run }}
+          python-version: '3.11'
+      - name: rank-closure-review
+        run: |
+          python3 scripts/research_index.py --check
+          python3 experiments/check_rank_closure_review.py --output /tmp/rank-closure-review.json --full-output /tmp/rank-closure-review-full.json
+          cmp results/rank-closure-review.json /tmp/rank-closure-review.json
+          python3 experiments/check_rank_preimage.py --output /tmp/rank-preimage.json
+          cmp results/rank-preimage.json /tmp/rank-preimage.json
+          git diff --exit-code
+      - name: closure-fixtures
+        run: |
+          python3 experiments/check_closure_fixtures.py --quick --output /tmp/closure-fixtures.json
+          cmp results/closure-fixtures.json /tmp/closure-fixtures.json
+          git diff --exit-code
+      - name: regular-marking-barrier
+        run: |
+          python3 experiments/check_regular_marking_barrier.py
+          git diff --exit-code -- results/regular-marking-barrier.json
+      - name: scheme-cost
+        run: |
+          python3 experiments/scheme_cost_barrier.py --self-test --output "$RUNNER_TEMP/scheme-cost.json"
+          cmp results/scheme-cost.json "$RUNNER_TEMP/scheme-cost.json"
+          python3 experiments/check_suffix_switch.py --output "$RUNNER_TEMP/suffix-switch.json"
+          cmp results/suffix-switch.json "$RUNNER_TEMP/suffix-switch.json"
+          git diff --exit-code
+      - name: semantic-bridge-review
+        run: |
+          python3 experiments/check_semantic_bridge_review.py --repository --output /tmp/semantic-bridge-review.json
+          cmp results/semantic-bridge-review.json /tmp/semantic-bridge-review.json
+          python3 experiments/check_semantic_bridge_review.py --repository --output /tmp/semantic-bridge-review-replay.json
+          cmp /tmp/semantic-bridge-review.json /tmp/semantic-bridge-review-replay.json
+          git diff --exit-code
+      - name: source-capture
+        run: |
+          python3 experiments/check_source_capture.py
+          git diff --exit-code -- results/source-capture.json
+      - name: target-anchor
+        run: |
+          python3 experiments/check_target_anchor.py --output /tmp/target-anchor.json --full-output /tmp/target-anchor-full.json
+          cmp results/target-anchor.json /tmp/target-anchor.json
+          python3 experiments/target_anchor.py --fixture recurrent_no --certificate-output /tmp/target-anchor-no.json
+          python3 experiments/target_anchor.py --fixture recurrent_yes
+          python3 experiments/target_anchor.py --fixture modular_positive_unknown
+          git diff --exit-code
+  replay-python-3-12-and-3-13:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.12'
+      - name: target-return (Python 3.12)
+        run: |
+          python3 --version
+          python3 scripts/research_index.py --check
+          python3 experiments/check_target_return.py --output /tmp/target-return.json --full-output /tmp/target-return-full.json
+          cmp results/target-return.json /tmp/target-return.json
+          python3 experiments/target_return.py examples/target_return/legal_repeats.json
+          python3 experiments/target_return.py examples/target_return/recursive_no.json --output /tmp/target-return-no.json
+          python3 experiments/check_target_return.py --verify-instance examples/target_return/recursive_no.json --verify-certificate /tmp/target-return-no.json
+          python3 experiments/target_return.py examples/target_return/modular_unknown.json --uncapped
+          git diff --exit-code
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.13'
+      - name: recovered-source-walks (Python 3.13)
+        run: |
+          python3 --version
+          python3 experiments/recovered_2026_09_12/reproduce.py
+          git diff --exit-code
