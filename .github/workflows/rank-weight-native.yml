@@ -1,0 +1,59 @@
+name: Rank weight native proofs
+
+on:
+  pull_request:
+    paths:
+      - 'lean/Subtail/RankQueryWeightCounterexample.lean'
+      - 'lean/Subtail/RankQueryWeightBound.lean'
+      - 'lean/Subtail/RankQueryLengthBound.lean'
+      - 'scripts/check_rank_weight_native.py'
+      - '.github/workflows/rank-weight-native.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rank-weight-native-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  native:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.11'
+      - name: Restore pinned toolchain
+        uses: actions/cache@v6.1.0
+        with:
+          path: ~/.elan
+          key: elan-${{ runner.os }}-${{ hashFiles('lean/lean-toolchain') }}
+      - name: Restore isolated build cache
+        uses: actions/cache@v6.1.0
+        with:
+          path: lean/.lake
+          key: rank-weight-lake-${{ runner.os }}-${{ hashFiles('lean/lean-toolchain', 'lean/lakefile.toml', 'lean/lake-manifest.json') }}-${{ hashFiles('lean/**/*.lean') }}
+          restore-keys: |
+            rank-weight-lake-${{ runner.os }}-${{ hashFiles('lean/lean-toolchain', 'lean/lakefile.toml', 'lean/lake-manifest.json') }}-
+            lake-${{ runner.os }}-${{ hashFiles('lean/lean-toolchain', 'lean/lakefile.toml', 'lean/lake-manifest.json') }}-
+      - uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596
+        with:
+          lake-package-directory: lean
+          build: 'false'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'false'
+      - name: Compile, kernel-replay and audit additive proofs
+        env:
+          RANK_WEIGHT_SOURCE_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          ulimit -v 6291456
+          ulimit -t 1200
+          python3 scripts/check_rank_weight_native.py
+      - name: Ensure tracked sources were not modified
+        run: git diff --exit-code
