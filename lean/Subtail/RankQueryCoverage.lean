@@ -4233,7 +4233,305 @@ theorem sat : SatClause (prefixGraph I B) (compileValid I c X.D) := by
     · -- an interval atom
       exact X.interval_accepts hg'
 
+/-! ## Explicit limits -/
+
 end Cov
+
+/-- Sum of the observer sizes over the atoms of a clause. -/
+def sumSizes (c : Clause k) : Nat :=
+  ((List.range c.atoms.length).map fun ai => (obsAt c ai).size).sum
+
+/-- Bound on the total number of blocks over all atoms (`K`). -/
+def blockBound (c : Clause k) : Nat := 3 * c.atoms.length + 2 * sumSizes c
+
+/-- Bound on the number of mark groups. -/
+def groupBound (c : Clause k) : Nat := 2 + c.vars + 2 * c.atoms.length + 2 * sumSizes c
+
+/-- Bound on the number of core variables. -/
+def coreBound (c : Clause k) : Nat := c.vars + c.atoms.length * blockBound c * 2
+
+/-- Exclusive bound on every piece field and seam coordinate. -/
+def scalarBound (c : Clause k) : Nat :=
+  coreBound c + groupBound c + 2 * blockBound c + c.atoms.length + sumSizes c + 1
+
+/-- The explicit computable syntax budget for which coverage is proved. -/
+def budget (c : Clause k) : Limits :=
+  { groups := groupBound c, core := coreBound c, perAtom := 2 * blockBound c,
+    seamEntries := blockBound c * groupBound c, scalar := scalarBound c }
+
+theorem size_le_sumSizes {c : Clause k} {ai : Nat} (hai : ai < c.atoms.length) :
+    (obsAt c ai).size ≤ sumSizes c :=
+  le_sum_of_mem (List.mem_map.mpr ⟨ai, List.mem_range.mpr hai, rfl⟩)
+
+theorem sum_map_affine {α : Type} (a b : Nat) (f : α → Nat) : ∀ l : List α,
+    (l.map fun x => a + b * f x).sum = l.length * a + b * (l.map f).sum := by
+  intro l
+  induction l with
+  | nil => simp
+  | cons x l ih =>
+    simp only [List.map_cons, List.sum_cons, List.length_cons, ih, Nat.add_mul, Nat.one_mul, Nat.mul_add]
+    omega
+
+theorem sum_map_le_const {α : Type} {f : α → Nat} {c : Nat} : ∀ {l : List α},
+    (∀ x ∈ l, f x ≤ c) → (l.map f).sum ≤ l.length * c := by
+  intro l
+  induction l with
+  | nil => intro _; simp
+  | cons x l ih =>
+    intro h
+    have h1 := h x (List.mem_cons_self ..)
+    have h2 := ih fun y hy => h y (List.mem_cons_of_mem _ hy)
+    simp only [List.map_cons, List.sum_cons, List.length_cons, Nat.add_mul, Nat.one_mul]
+    omega
+
+theorem sum_map_mul_right {α : Type} (f : α → Nat) (c : Nat) : ∀ l : List α,
+    (l.map fun x => f x * c).sum = (l.map f).sum * c := by
+  intro l
+  induction l with
+  | nil => simp
+  | cons x l ih => simp only [List.map_cons, List.sum_cons, ih, Nat.add_mul]
+
+theorem length_flatMap_fresh (m : Nat) : ∀ segs : List (List NNode),
+    (segs.flatMap fun s => if isFresh m s then [hdPos s, lastPos s] else []).length =
+      2 * freshCount m segs := by
+  intro segs
+  induction segs with
+  | nil => rfl
+  | cons s rest ih =>
+    rw [List.flatMap_cons, List.length_append, ih]
+    unfold freshCount
+    cases h : isFresh m s
+    · simp [h, List.filter_cons]
+    · simp [h, List.filter_cons]
+      omega
+
+/-- Every field of a valid piece is below `coreVars + groups + size + 1`. -/
+theorem pieceBound_of_valid {I : Instance k} {D : Diagram k} {ai pi : Nat} {o : Observer k} {P : Piece}
+    (h : pieceValid I D ai pi o P = true) {s : Nat} (hs : D.coreVars + D.groups + o.size < s) :
+    pieceBound s P := by
+  obtain ⟨t, src, tgt, lc, rc, l⟩ := P
+  unfold pieceBound
+  dsimp only
+  cases t <;> simp only [pieceValid, Bool.and_eq_true, decide_eq_true_eq, beq_iff_eq] at h <;> omega
+
+namespace Cov
+
+variable {I : Instance k} {B : Reference k} {E : Ext I B} {c : Clause k} (X : Cov I B E c)
+
+theorem freshCount_le {ai : Nat} (hai : ai < c.atoms.length) :
+    freshCount B.word.length (X.segs ai) ≤ 1 + (obsAt c ai).size :=
+  Nat.le_trans (freshCount_le_visits E (obsAt c ai) (X.chain_consec ai hai))
+    (Nat.add_le_add_left (X.chain_visits ai hai) 1)
+
+theorem segCount_le {ai : Nat} (hai : ai < c.atoms.length) :
+    X.segCount ai ≤ 3 + 2 * (obsAt c ai).size := by
+  have h1 := length_segments_le E (obsAt c ai) (X.chain_consec ai hai)
+  have h2 := X.freshCount_le hai
+  unfold segs at h2
+  unfold segCount segs
+  omega
+
+theorem K_le : X.K ≤ blockBound c := by
+  have h := sum_map_le_sum_map (l := List.range c.atoms.length) (f := X.segCount)
+    (g := fun ai => 3 + 2 * (obsAt c ai).size) (fun ai hai => X.segCount_le (List.mem_range.mp hai))
+  have h2 := sum_map_affine 3 2 (fun ai => (obsAt c ai).size) (List.range c.atoms.length)
+  simp only [List.length_range] at h2
+  unfold K blockBound sumSizes
+  omega
+
+theorem n_le_raw : X.n ≤ X.rawMarks.length := by
+  apply List.Nodup.length_le_of_subset
+  · exact List.Nodup.sublist List.filter_sublist List.nodup_range
+  · intro p hp
+    exact X.mem_M.mp hp
+
+theorem raw_length_le : X.rawMarks.length ≤ groupBound c := by
+  unfold rawMarks
+  rw [List.length_append, List.length_append, List.length_flatMap]
+  have h1 : ((List.finRange c.vars).filterMap
+      (fun v => if B.word.length < (X.τ v).val then some (X.τ v).val else none)).length ≤ c.vars :=
+    Nat.le_trans (List.length_filterMap_le _ _) (Nat.le_of_eq List.length_finRange)
+  have hb : ∀ ai ∈ List.range c.atoms.length,
+      ((X.segs ai).flatMap fun s => if isFresh B.word.length s then [hdPos s, lastPos s] else []).length ≤
+        2 + 2 * (obsAt c ai).size := by
+    intro ai hai
+    rw [length_flatMap_fresh]
+    have := X.freshCount_le (List.mem_range.mp hai)
+    omega
+  have h2 := sum_map_le_sum_map hb
+  have h3 := sum_map_affine 2 2 (fun ai => (obsAt c ai).size) (List.range c.atoms.length)
+  simp only [List.length_range] at h3
+  unfold groupBound sumSizes
+  simp only [List.length_cons, List.length_nil]
+  omega
+
+theorem n_le_groups : X.n ≤ groupBound c := Nat.le_trans X.n_le_raw X.raw_length_le
+
+theorem coreVars_le : X.coreVars ≤ coreBound c := by
+  unfold coreVars coreBound
+  exact Nat.add_le_add_left (Nat.mul_le_mul_right 2 (Nat.mul_le_mul_left _ X.K_le)) _
+
+theorem loc_length : X.loc.length = c.vars := by
+  unfold loc
+  rw [List.length_map, List.length_finRange]
+
+theorem loc_bound : ∀ x ∈ X.loc, locBound X.coreVars X.n x := by
+  intro x hx
+  unfold loc at hx
+  obtain ⟨v, -, rfl⟩ := List.mem_map.mp hx
+  split
+  next h => exact X.idx_lt (X.var_mem_M h)
+  next => exact Nat.lt_of_lt_of_le v.isLt X.vars_le_coreVars
+
+theorem pieces_le {ai : Nat} (hai : ai < c.atoms.length) : (X.pieces ai).length ≤ 2 * blockBound c := by
+  rw [X.pieces_length]
+  have := X.segCount_le_K hai
+  have := X.K_le
+  omega
+
+theorem scalar_gt : X.coreVars + X.n + sumSizes c < scalarBound c := by
+  have := X.n_le_groups
+  have := X.coreVars_le
+  unfold scalarBound
+  omega
+
+theorem pieces_bound : ∀ ps ∈ X.D.pieces,
+    ps.length ≤ 2 * blockBound c ∧ ∀ p ∈ ps, pieceBound (scalarBound c) p := by
+  intro ps hps
+  have hps' : ps ∈ (List.range c.atoms.length).map X.pieces := hps
+  obtain ⟨ai, hai, rfl⟩ := List.mem_map.mp hps'
+  have hai := List.mem_range.mp hai
+  refine ⟨X.pieces_le hai, ?_⟩
+  intro p hp
+  obtain ⟨pi, hpi, rfl⟩ := List.mem_iff_getElem.mp hp
+  have hok := X.pieceOK_all hai hpi
+  rw [List.getD_eq_getElem?_getD, List.getElem?_eq_getElem hpi, Option.getD_some] at hok
+  apply pieceBound_of_valid hok.valid
+  have := size_le_sumSizes hai
+  have := X.scalar_gt
+  show X.coreVars + X.n + (obsAt c ai).size < scalarBound c
+  omega
+
+theorem blockSeams_length (ai si : Nat) (s : List NNode) : (X.blockSeams ai si s).length ≤ X.n := by
+  unfold blockSeams
+  split
+  · rw [List.length_map]
+    exact Nat.le_trans (List.length_filter_le _ _) (Nat.le_of_eq List.length_range)
+  · exact Nat.zero_le _
+
+theorem seamsOf_length (ai : Nat) : (X.seamsOf ai).length ≤ X.segCount ai * X.n := by
+  unfold seamsOf
+  rw [List.length_flatMap]
+  have h := sum_map_le_const (l := List.range (X.segCount ai)) (c := X.n)
+    (f := fun si => (X.blockSeams ai si (X.blk ai si)).length) (fun si _ => X.blockSeams_length ai si _)
+  rw [List.length_range] at h
+  exact h
+
+theorem seams_length : X.seams.length ≤ blockBound c * groupBound c := by
+  unfold seams
+  rw [List.length_flatMap]
+  have h := sum_map_le_sum_map (l := List.range c.atoms.length) (f := fun ai => (X.seamsOf ai).length)
+    (g := fun ai => X.segCount ai * X.n) (fun ai _ => X.seamsOf_length ai)
+  rw [sum_map_mul_right] at h
+  have hK := X.K_le
+  have hn := X.n_le_groups
+  unfold K at hK
+  exact Nat.le_trans h (Nat.mul_le_mul hK hn)
+
+theorem seams_bound : ∀ s ∈ X.D.seams, seamBound (scalarBound c) s := by
+  intro s hs
+  obtain ⟨ai, si, g, hai, hsi, hf, hg1, hg2, hgn, rfl⟩ := X.mem_seams_iff.mp hs
+  have h1 := X.segCount_le_K hai
+  have h2 := X.K_le
+  have h3 := X.scalar_gt
+  have h5 := size_le_sumSizes hai
+  have hhd := X.blk_hd_mem_M hai hsi hf
+  have hlast := X.blk_last_mem_M hai hsi hf
+  have hlo := X.pos_mono (Nat.le_of_lt hg1) hgn
+  rw [X.pos_idx hhd] at hlo
+  have hhi := X.pos_mono (Nat.le_of_lt hg2) (X.idx_lt hlast)
+  rw [X.pos_idx hlast] at hhi
+  have h4 : ctlAt (X.blk ai si) (X.pos g) < (obsAt c ai).size := X.blk_ctl_bound hai hsi hf hlo hhi
+  have h6 := X.coreVars_le
+  have h7 := X.n_le_groups
+  unfold seamBound scalarBound
+  dsimp only
+  omega
+
+/-- The constructed diagram lies within the explicit budget. -/
+theorem bounded : Bounded c (budget c) X.D := by
+  unfold Bounded
+  refine ⟨X.n_pos, X.n_le_groups, X.coreVars_le, X.loc_length, X.loc_bound, ?_, ?_, ?_,
+    X.pieces_bound, X.seams_length, X.seams_bound⟩
+  · show (X.M.map E.C.label).length = X.M.length
+    exact List.length_map _
+  · show (X.M.map fun p => E.C.word[p]?).length = X.M.length
+    exact List.length_map _
+  · show ((List.range c.atoms.length).map X.pieces).length = c.atoms.length
+    rw [List.length_map, List.length_range]
+
+end Cov
+
+/-! ## Coverage -/
+
+/-- A bounded-visit accepting chain, in position/control coordinates. -/
+theorem chain_exists {G : Graph k} {O : Observer k} {u w : Fin G.size} (h : Accepts G O u w)
+    (entry : Fin G.size) :
+    ∃ l : List NNode, Consec (NStep G O) l ∧ (∀ x ∈ l, NAllowed G O x) ∧
+      (∃ q ∈ O.initial, l.head? = some (u.val, q.val)) ∧
+      (∃ p ∈ O.final, l.getLast? = some (w.val, p.val)) ∧ visitsN entry.val l ≤ O.size := by
+  obtain ⟨q, hq, p, hp, l, hch, hlast, -, hall, hvis⟩ := accepts_bounded_visits G O h entry
+  refine ⟨((u, q) :: l).map toN, consec_nstep_of_chain hch, ?_, ⟨q, hq, rfl⟩, ⟨p, hp, ?_⟩, ?_⟩
+  · intro x hx
+    obtain ⟨y, hy, rfl⟩ := List.mem_map.mp hx
+    exact nallowed_of_allowed (hall y hy)
+  · rw [List.getLast?_map, hlast]
+    rfl
+  · rw [visitsN_map_toN]
+    exact hvis
+
+/-- Stage 4b: every clause satisfied in a first-return extension graph has a bounded valid
+diagram whose compiled clause is satisfied in the base graph. -/
+theorem coverage (I : Instance k) : DiagramCoverage I budget := by
+  intro B C hB hC c hsat
+  obtain ⟨E, hG⟩ := exists_ext I B C hB hC
+  have hsat' : SatClause (prefixGraph I E.C) c := by
+    show SatClause (prefixGraph I (extRef B ((E.a, E.p) :: E.rest))) c
+    rw [← hG]
+    exact hsat
+  obtain ⟨τ, htests, hequal, hunequal, hatoms⟩ := hsat'
+  have hentry : B.word.length + 1 < (prefixGraph I E.C).size :=
+    Nat.succ_lt_succ E.m_lt_N
+  have hch : ∀ ai, ∃ l : List NNode, ∀ h : ai < c.atoms.length,
+      Consec (NStep (prefixGraph I E.C) (obsAt c ai)) l ∧
+      (∀ x ∈ l, NAllowed (prefixGraph I E.C) (obsAt c ai) x) ∧
+      (∃ q ∈ (obsAt c ai).initial, l.head? = some ((τ (c.atoms[ai]).source).val, q.val)) ∧
+      (∃ p ∈ (obsAt c ai).final, l.getLast? = some ((τ (c.atoms[ai]).target).val, p.val)) ∧
+      visitsN (B.word.length + 1) l ≤ (obsAt c ai).size := by
+    intro ai
+    by_cases h : ai < c.atoms.length
+    · have hacc := hatoms _ (List.getElem_mem h)
+      obtain ⟨l, hl⟩ := chain_exists hacc ⟨B.word.length + 1, hentry⟩
+      refine ⟨l, fun _ => ?_⟩
+      rw [obsAt_eq h]
+      exact hl
+    · exact ⟨[], fun h' => absurd h' h⟩
+  obtain ⟨chain, hspec⟩ := Classical.axiomOfChoice hch
+  let X : Cov I B E c :=
+    { τ := τ, tests := htests, equal := hequal, unequal := hunequal, chain := chain,
+      chain_consec := fun ai h => (hspec ai h).1,
+      chain_allowed := fun ai h => (hspec ai h).2.1,
+      chain_head := fun ai h => (hspec ai h).2.2.1,
+      chain_last := fun ai h => (hspec ai h).2.2.2.1,
+      chain_visits := fun ai h => (hspec ai h).2.2.2.2 }
+  exact ⟨X.D, X.bounded, X.valid, X.sat⟩
+
+/-- The forward Closure direction for the explicit budget: `preimage I budget φ` is satisfied
+in the base graph exactly when some first-return extension satisfies `φ`. -/
+theorem closure_iff (I : Instance k) (B : Reference k) (hB : SafeReference I B) (φ : Query k) :
+    Sat (prefixGraph I B) (preimage I budget φ) ↔
+      ∃ C, FirstReturnExt I B C ∧ Sat (prefixGraph I C) φ :=
+  preimage_iff_of_coverage I budget (coverage I) B hB φ
 
 end RankQueryCoverage
 end Subtail
