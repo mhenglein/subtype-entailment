@@ -147,7 +147,7 @@ outputs for angle 4.
 In angle 11, the remaining O4 work is the exact finite automaton for word
 existence; the direct sufficient predicate is already proved sound.
 
-Use those results to choose between structural proofs in angles 4–7 and complete certificates or saturation in angles 8–9. Keep the converse and negative-result investigation in angle 10 separate. Reproducing the original memo's sources remains [A007](approaches/A007.md); the missing files do not block the independent proposals here.
+Use those results to choose between structural proofs in angles 4–7 and complete certificates or saturation in angles 8–9. Keep the converse and negative-result investigation in angle 10 separate. [A007](approaches/A007.md) is retired by the owner's decision of 2026-09-19: assume the original sources will not arrive and make no further source requests. The original census remains unreproduced; independent proposals use their own recorded evidence.
 
 ## Eleven angles (historical programme)
 

@@ -107,12 +107,12 @@
     {
       "id": "A007",
       "title": "Reproduce the original memo's code and census",
-      "status": "blocked",
+      "status": "retired",
       "outcome": "open",
       "owner": null,
-      "updated": "2026-09-04",
-      "summary": "The original analysis-2026 folder has not been supplied.",
-      "next_step": "Import original sources unchanged, record provenance, and cross-check against the independent implementation.",
+      "updated": "2026-09-19",
+      "summary": "Retired by Marcus: assume the original analysis-2026 sources will not be supplied. The original census remains unreproduced.",
+      "next_step": "No further action or source requests are planned. Preserve the independent implementation and the historical evidence boundary.",
       "record": "research/approaches/A007.md",
       "evidence": [
         "papers/README.md",

@@ -6,4 +6,4 @@
 
 SHA-256: `c63bd113618b5cf0dad2530c09e65feca6d08fa9e9e14725cec72d62a9c8f9eb`
 
-Store original sources unchanged. Record a date, source, and checksum when adding a new version. Earlier notes and the memo's `analysis-2026` scripts are still pending.
+Store original sources unchanged. Record a date, source, and checksum when adding a new version. Earlier notes and the memo's `analysis-2026` scripts were not supplied and are no longer expected. Marcus retired the source-reproduction task on 2026-09-19; retain the historical limitation without a pending source request ([A007](../research/approaches/A007.md)).

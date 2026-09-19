@@ -2,13 +2,13 @@
 
 Problem 1.7 is open. This is the current map of approaches, including unsuccessful work.
 
-**16 tried · 1 not tried · 1 blocked · 0 active**
+**16 tried · 1 not tried · 0 blocked · 0 active · 1 retired**
 
 Read [the problem and notation](problem.md), [claims and evidence](claims.md), and [the experiment index](../experiments/README.md).
 
 Use [the research plan](PLAN.md) for the eleven proposed angles, priorities, and dependencies, including the Lean workstream.
 
-Choose a record below to see its scope, attempt history, evidence, and limitations. All unowned work is available to discuss; nobody has been assigned automatically.
+Choose a record below to see its scope, attempt history, evidence, and limitations. Retired work is retained for history and is not a standing task. Nobody has been assigned automatically.
 
 ## How to read the status
 
@@ -16,6 +16,7 @@ Choose a record below to see its scope, attempt history, evidence, and limitatio
 - **Active:** someone is currently working on it and is named as owner.
 - **Blocked:** a specific dependency prevents the next step; the record says whether any prior attempt exists.
 - **Tried:** an attempt and evidence are recorded. This does not mean the problem is solved.
+- **Retired:** no further work is planned; this does not imply an attempt ran or a result was reproduced.
 
 Outcomes are separate: **supported** applies to the stated limited claim, **refuted** to the exact failed claim, **inconclusive** to an attempt without a verdict, and **open** to unresolved work. Proof status is recorded in the claims ledger.
 
@@ -31,9 +32,7 @@ None currently.
 
 ## Blocked
 
-| ID | Approach | Finding / next step | Owner |
-|---|---|---|---|
-| A007 | [Reproduce the original memo's code and census](approaches/A007.md) · [#1](https://github.com/mhenglein/subtail/issues/1) | The original analysis-2026 folder has not been supplied. Next: Import original sources unchanged, record provenance, and cross-check against the independent implementation. | Unassigned |
+None currently.
 
 ## Tried: results and dead ends
 
@@ -55,6 +54,12 @@ None currently.
 | A016 | [Implement and audit fixed-skeleton checkability](approaches/A016.md) | Supported: Implemented exact Presburger skeleton formulas and a finite complete cover for flat terminal graphs; unbounded loop counts are retained. Next: Use the exact supplied-skeleton solver to test finite-cover hypotheses for nonflat terminal inputs. Audit any critical arithmetic transfer; add Lean formalization only for a specific uncertainty or stable dependency. A supplied-schema solver is not a complete cover, and caps remain UNKNOWN. | Unassigned |
 | A017 | [Bound essential repeated blocks](approaches/A017.md) · [#34](https://github.com/mhenglein/subtail/issues/34) | Inconclusive: A candidate complete ordinary proof (C080) reduces terminal witness existence to finite rank-query preimages over first-return prefix graphs and derives an explicit computable witness bound F(k). Two separate AI-assisted audits found no gap in its stages 1-5 or in the C029/C031 bridge; no human referee; Lean covers stages 1-3, pins the stage-4 Closure Lemma, proves its reverse half for any diagram enumeration and the conditional stage-5 unwind (A018); the forward direction, the weight bound and the stage-6 decision remain open. Independent adversarial fixtures (joint conjunction, shared generator, two-atom unions) found no discrepancy in the compiler. Earlier finite reference quotients are refuted and retained. Problem 1.7's status is unchanged. Next: Discharge ClosureFor in Lean (DiagramCoverage #28, then the weight bound and F(k) with finishing correctness #30); no external human referee is planned (owner decision 2026-09-19), so cross-session statement readback (#33) replaces it; work is paused by the owner as of 2026-09-19; exhaust at least one non-trivial two-atom preimage union beyond the certificate-guided corpora; instantiate the pinned ClosureFor with an executable preimage in Lean; compare stage 4 with the failed invariant of Schubert's withdrawn 2021 Lemma 5.5 and with the 2019 Breuvart-Penelle-Rehof restriction before any independence claim (#36); keep Q004 and the opposing undecidability route as fallbacks if stage 4 fails. | Unassigned |
 | A018 | [Maintain the Lean core and verify critical obligations](approaches/A018.md) · [#34](https://github.com/mhenglein/subtail/issues/34) | Supported: Lean kernel-checks the rank-query candidate's stages 1-3 (terminal border depth at most k-1, milestone first returns, failure-target confinement, exact coloured first-return graph surgery identified with the literal query graph); stage 4a pins the query grammar, decidable satisfaction and the Closure Lemma as an unproved Prop, with product-simple runs and the s+1 fresh-interval bound as 4b ingredients; stage 4c has an executable diagram compiler (differential-checked against compile_diagram) and the proved reverse half of ClosureFor for every diagram enumeration (closure_reverse: a base model of the compiled preimage yields a safe first-return extension modelling the query); stage 6 has a kernel-checked semantic foundation (arbitrary trees, canonical separating addresses) and total executable normalized satisfiability, but entailment is not yet decided; stage 4b (diagram coverage), the weight bound and the rest of 6 are unformalized, so ClosureFor itself is unproved. Next: Stage 4b: define the diagram enumerator in Lean mirroring iter_diagrams and prove coverage of every safe first-return extension via accepts_bounded_visits (#28), then the weight bound (#30), discharging ClosureFor I (preimageQuery I enumDiagrams) together with closure_reverse; for stage 6, bound or finitely represent the separating address (Pop/Post regularity, I_C), then absorption, C029/C031 and the composition (#31). One GitHub issue per obligation under the milestone 'Rank-query closure formalized'. | Unassigned |
+
+## Retired: no further work planned
+
+| ID | Approach | Finding / next step | Owner |
+|---|---|---|---|
+| A007 | [Reproduce the original memo's code and census](approaches/A007.md) · [#1](https://github.com/mhenglein/subtail/issues/1) | Retired by Marcus: assume the original analysis-2026 sources will not be supplied. The original census remains unreproduced. No further action or source requests are planned. Preserve the independent implementation and the historical evidence boundary. | Unassigned |
 
 ## Shared hypotheses
 
