@@ -1,0 +1,23 @@
+{
+  "revision": "064fc7306b679bf607b91e7d8de259823f200c62",
+  "verification": "independent source-transcribed fixture; no Lean build or full enumeration",
+  "input_weight": 17,
+  "limits": {
+    "groups": 33,
+    "core": 351,
+    "perAtom": 70,
+    "seamEntries": 1155,
+    "scalar": 470
+  },
+  "pieces_per_atom": 70,
+  "active_coordinates": 175,
+  "output_variables": 4,
+  "output_atoms": 3,
+  "interval_size": 1436714569561770804710950337953414859642567927047127040,
+  "output_weight": 1436714569561770804710950337953414859642567927047127052,
+  "proposed_U": 63286510177916475148846592658733814121868185920,
+  "output_greater_than_proposed_U": true,
+  "safe_base": "01",
+  "safe_first_return_extension": "0101",
+  "all_assertions_passed": true
+}
