@@ -265,3 +265,116 @@ and tooling remain explicitly open.
 
 Follow-up scope completed: only this note was changed; the path is released
 after the follow-up handoff.
+
+## Follow-up readback: constant-free ambient-domain example
+
+Parent checkpoint `66eed7d` adds the formula
+
+```text
+premises: x = x × x, x <= y
+query:    y <= x.
+```
+
+The all-word top-free argument is correct. Equality supplies both directions,
+and the direction `x × x <= x` first forces the empty address of `x`. If `u`
+is an address of `x`, then both `0u` and `1u` are addresses of `x × x`, hence
+of `x`. Induction on word length gives every binary address in `x`, so
+`x = Omega`. Since `x <= y` and `Omega` is the greatest top-free tree,
+`y = Omega` and the query holds. This is an unbounded semantic proof; it does
+not come from the finite experiment.
+
+The explicit-top countermodel is also exact. Let `x = Omega` and `y = top`.
+Both are regular; `x = x × x` and `x <= y` hold, while `y <= x` fails at the
+root because top is a leaf and `Omega` is a product. The formula contains no
+constants and can be represented in the checked C081 syntax by two inequalities
+for the equality plus `x <= y`. It therefore fits the restricted
+product-equality/variable-inequality grammar recorded for NP99. The example
+refutes identity translation between the top-free and explicit-top
+arbitrary/regular domains, but it does not establish hardness transfer or rule
+out another reduction.
+
+The finite-domain statement is separately sound. In either signature,
+`x = x × x` has no finite solution: bottom and top fail the root-label
+comparison, while a finite product solution would contain the root and both
+children of every product address, producing infinitely many distinct binary
+addresses. Thus both finite-domain entailments are vacuously true. This
+all-depth argument is independent of the bounded finite census.
+
+I replayed the updated boundary checker from `66eed7d` in a temporary
+directory and compared its output with the saved result. The replay passed with
+source hash
+`55e9584c306fe2e4dbc3ce144be165ac83cf630b7b179b2935515360a0d456c1`.
+The labelled finite-graph fixture held both premises and rejected the query;
+the independent finite cross-check covered 1,444 source pairs. Those counts
+validate the finite fixture and predicate implementation only. They do not
+replace the all-word top-free induction or prove a general ambient-domain
+reduction.
+
+Disposition: the constant-free ordinary proof and its finite labelled
+countermodel are **accepted with the scope above**. The top-free induction,
+explicit-top regular witness, finite unsatisfiability argument, and bounded
+checker evidence are distinct claims. No Lean formalization or executable
+extractor was added or required for this review. The owned note path is
+released after this handoff.
+
+## Follow-up: a fresh-`omega` reduction for the constant-free fragment
+
+A related proposal gives a sharper upper-bound comparison. Restrict the C081
+input so that neither premises nor query contain bottom. Name every variable
+and every product subexpression. For each named product `p = l × r`, add the
+NP99-style product equation `p = l × r`; translate each source inequality to
+an inequality between its names. Add a fresh variable `omega` with
+
+```text
+omega = omega × omega
+```
+
+and add `z <= omega` for every occurring variable or product name `z`. The
+result uses only product equations and variable inequalities, so it has the
+restricted NP99 syntax. Naming can share duplicate subexpressions or use one
+slot per occurrence; either choice is polynomial in the input size.
+
+The key ambient-domain lemma needs its proof stated explicitly. In the full
+bottom/top/product arbitrary-tree domain, both directions of
+`omega = omega × omega` force `omega = Omega`:
+
+* the root cannot be bottom because `omega × omega <= omega` would fail, and
+  cannot be top because `omega <= omega × omega` would fail, so it is product;
+* if a top label occurred at a nonempty address `a u`, the inequality
+  `omega <= omega × omega` would compare that top to the subtree at `u`,
+  forcing a top at `u`; stripping letters reaches a top root, a contradiction;
+* with no top labels and a product root, `omega × omega <= omega` propagates
+  product labels from every address `u` to both `0u` and `1u`. Induction gives
+  every binary address, hence `Omega`.
+
+This uses both equality directions. The first inequality alone is not enough
+in an explicit-top domain, because product can be below top. With
+`omega = Omega`, the guard lemma is exact: `z <= Omega` holds precisely when
+`z` has no top label. A top-labelled address would compare top with a product
+at that address and fail; a bottom/product-only tree has all its product
+addresses in `Omega`.
+
+The reduction is semantics-preserving over arbitrary trees. A source model
+extends by setting `omega = Omega` and interpreting each name by its finite
+product expression. Conversely, a target model satisfying the guards has
+top-free original variables; the product equations identify each name with
+the corresponding source expression by structural induction. Restricting to
+the original variables therefore gives a source model, and the translated
+query agrees in both directions. The same two maps preserve regularity:
+`Omega` is a one-node cyclic graph, and finite products of finite graph
+representations remain finite.
+
+The construction does **not** transfer to finite-tree semantics. The fresh
+equation has no finite solution in the full domain, so every target query is
+vacuously valid even when the source constant-free problem has a finite model
+or a failed query. It also excludes C081 premises involving bottom or denial
+constraints. Finally, this is an upper-bound direction (C081 fragment to the
+NP99 restricted problem); it transfers no NP99 hardness result and does not
+establish a regular-only complexity bound without a separate target theorem.
+
+Disposition: after making the root-label proof and the guard lemma explicit,
+the fresh-`omega` construction is an **accepted exact polynomial reduction for
+the constant-free arbitrary/regular fragment**. It is a different result from
+the identity-translation counterexample above and does not decide the full
+C081 comparison. No formalization or implementation was added. The owned note
+path remains released after this review.
