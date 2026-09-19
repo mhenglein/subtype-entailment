@@ -853,3 +853,21 @@ probes, no UNKNOWN; every SAT word passed both original witness predicates.
 CI oracle: backend versions and model choices can differ. UNSAT remains
 backend-trusted, and timeout/unknown is not NO. Finite checks do not prove the
 quantified theorem or completeness of the optional solver.
+
+
+## Terminal decision and finishing checks (2026-09-19)
+
+No new E ID; validation of A018/C080's exact terminal decision subclaim.
+
+| Check | Reproduction and scope |
+|---|---|
+| All new dependency closures | `python3 scripts/check_rank_decision.py` audits 88 finishing, witness, semantic-unwind and decision declarations, including runtime definitions. |
+| Whole decision for k≤2 | `python3 experiments/check_terminal_decision.py` exhausts all 12,820 binary terminal inputs with one or two states, including all partial transitions, Bad/flag/final sets and initial states. 341 YES and 12,479 NO agree with a literal predicate and native small-state check. Its finite oracle is complete by the existing TwoState theorem. |
+| Fixed-reference finishing | `python3 experiments/check_finishing_trace.py --lean` compares 180 cases with an independent all-length set-of-matches oracle: 92 YES and original witnesses, 88 fixed-reference no-return NO results. |
+
+[Decision results](../results/terminal-decision-regressions.json),
+[preserved finishing results](../results/finishing-trace-semantics.json),
+[proof and readback](../notes/2026-09-19-terminal-rank-decision.md).
+The all-k decision rests on the Lean theorem, not these finite comparisons.
+Native evaluation of the whole promoted query for k≥3 was NOT RUN.
+The original memo archive remains unavailable and is not an assigned task.

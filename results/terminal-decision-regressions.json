@@ -1,0 +1,15 @@
+{
+  "cases": 12820,
+  "corpus_sha256": "77bae1d8e1582dcfd372a59608b9dfff24298703dedf5a09f8b113c214869765",
+  "counts_by_states": {
+    "1": 20,
+    "2": 12800
+  },
+  "failures": 0,
+  "larger_state_promotion_evaluation": "NOT RUN; proof covers it, exhaustive compiler may be impractical",
+  "native": "terminalWitnessCheck and twoStateWitnessCheck both match",
+  "no": 12479,
+  "oracle": "independent literal original predicate on empty and one-letter words; complete by existing TwoState theorem",
+  "scope": "all encoded binary terminal instances with one or two states, including all initial states, partial transitions, Bad sets, ordered flags and final sets",
+  "yes": 341
+}

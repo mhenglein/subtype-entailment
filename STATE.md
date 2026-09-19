@@ -1,5 +1,34 @@
 # Subtail — current research state
 
+## September 19: terminal BorderAvoid has a checked executable decision
+
+For every finite binary instance with terminal final states, the new total
+Boolean `RankQueryDecision.terminalWitnessCheck` returns true iff there exists
+a word satisfying the original `Basic.Witness`. The proof includes Bad states,
+ordered flags, diagonals, the empty suffix and the empty witness. Both
+`terminalWitnessCheck_correct` and the concrete `rankDecisionStatement` compile
+and pass kernel replay. The algorithm enumerates finitely many one-letter
+references and applies the checked finite preimage compiler at most k-2 times.
+It does not assume the candidate clause-weight bound or its explicit F(k).
+
+The discharged obligations are original-witness reversal, safe prefix
+restriction, labelled milestone-chain coverage, maximal-rank finishing,
+semantic promotion unwind and Boolean correctness. The maximum is over all
+prefixes, not just the complete word. The executable definition and all new
+interface declarations pass dependency audits; runtime definitions use no
+`Classical.choice`. See the [proof and review readback](notes/2026-09-19-terminal-rank-decision.md),
+[Lean theorem](lean/Subtail/RankQueryDecision.lean), and
+[reproducible small-state differential](results/terminal-decision-regressions.json).
+
+**Problem 1.7 remains open in this repository.** The next obligation is #31:
+construct the effective terminal instances for the subtype problem and prove
+the ordered-cut/absorption and C029/C031 composition for arbitrary, possibly
+infinite trees. Existing canonical-model and reachability results are inputs
+to that task. The explicit U/F formulas also remain unproved. The exhaustive
+query compiler may be impractical; the runtime differential covers all
+one/two-state terminal inputs, not a performance claim for larger instances.
+C080 remains a candidate for its stronger bound and full subtype conclusion.
+
 ## September 15–18: a candidate unrestricted decision by rank-query preimages (CANDIDATE, not established)
 
 The A017 rank-query route proposes a complete ordinary proof that binary
@@ -55,15 +84,12 @@ membership and an explicit computable budget, and `coverage : DiagramCoverage
 I budget`, so `closure_iff` gives both directions of the semantic conjunct of `ClosureFor I
 (preimage I budget)` for every safe reference
 ([coverage note](notes/2026-09-19-lean-rank-coverage.md); author readback
-only). Still unproved in Lean: the clause-weight conjunct of `ClosureFor` and
-`F(k)`; the terminal decision schema connecting original witnesses, safe rank
-milestones and the finishing query; and the entailment decision of stage 6
-(a bound or finite representation for the separating address, `I_C`, absorption,
-C029/C031 and the composition). Finishing support is on the released unmerged
-branch listed in #30/#37. The next direct-decision attempt uses the finite
-compiler and executable query test, as in the candidate outline's Section 8;
-it need not first discharge the extra quantitative clause-weight contract.
-This is a proposed assembly route, not a proved decision theorem. A
+only). Correction on September 19: the terminal decision schema and finishing support
+are now proved and integrated as described above. Still unproved in Lean are
+the clause-weight conjunct of `ClosureFor`, explicit `F(k)`, and the entailment
+decision of stage 6 (the effective separating-address instance `I_C`,
+absorption, C029/C031 and composition). The direct decision uses finite compiler
+iteration, independently of the extra quantitative clause-weight contract. A
 prior-work audit ([dossier](notes/prior-work/README.md)) found no source
 supplying C080's whole-conjunction, shared-generator closure; it records
 Schubert's withdrawn 2021 PSPACE claim (Lemma 5.5) as a failed attempt whose
@@ -77,8 +103,8 @@ end-to-end decision theorem (`RankDecisionStatement` with its concrete
 compiler and the stage-6 composition) together with statement readback by
 a session other than each module's author (#33). Following the earlier pause,
 the owner resumed a bounded next-step review and workbench/Lean proof pilot on
-2026-09-19. That pilot discharged only semantic promotion unwind. Continue from
-#30 (finishing integration and terminal decision assembly), then #31; consult
+2026-09-19. That pilot discharged only semantic promotion unwind. The subsequent #30
+assembly discharged terminal decision; continue with #31; consult
 #34 and #37 for proof scope, integration and branch dispositions. No broader
 worker launch or completed full decision is implied.
 

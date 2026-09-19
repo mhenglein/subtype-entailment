@@ -1,9 +1,15 @@
 # Lean core
 
-This project checks local lemmas for **binary BorderAvoid**, decides witness
-existence for at most two states, and formalizes structural dependencies of the
-[proposed rank-query solution](../research/RANK_QUERY_COMPILER.md). There is no
-complete Lean-verified general BorderAvoid or subtype-entailment decision yet.
+This project now has a total executable decision for **binary BorderAvoid
+with terminal final states**, with a checked equivalence to the original
+witness definition for every state count. It also retains the general
+one/two-state result and structural lemmas. Subtype entailment over arbitrary,
+possibly infinite trees is not yet decided.
+
+The terminal result is `RankQueryDecision.terminalWitnessCheck_correct`;
+the [readback](../notes/2026-09-19-terminal-rank-decision.md) explains its exact
+hypotheses, finite algorithm, validation and remaining subtype bridge.
+No clause-weight or numerical witness-bound hypothesis occurs in this theorem.
 
 ## Role in the research process
 
@@ -16,7 +22,7 @@ mathematical review. Existing checks are still required for Lean changes.
 Conditional theorem hypotheses below remain open mathematics, not progress
 obtained merely by extending the formal framework. The September 18
 user-requested continuation checks the rank/first-return dependency of the
-concrete candidate; its central shared-word compiler remains unformalized.
+concrete candidate. The shared-word compiler and its semantic coverage are now checked; the explicit quantitative bound remains open.
 
 ## Build and check
 
@@ -28,6 +34,9 @@ From the repository root:
 
 ```sh
 python3 scripts/check_lean.py
+python3 scripts/check_rank_decision.py
+python3 experiments/check_terminal_decision.py
+python3 experiments/check_finishing_trace.py --lean
 python3 experiments/check_lean_rank_milestones.py --lean --output /tmp/lean-rank-milestones.json
 cmp results/lean-rank-milestones.json /tmp/lean-rank-milestones.json
 python3 experiments/check_lean_first_return_graph.py --repository --lean --output /tmp/first-return-graph.json
@@ -60,6 +69,9 @@ Its graph/interface step audits all 65 public declarations of the four graph mod
 
 | File | Result |
 |---|---|
+| [RankQueryDecision.lean](Subtail/RankQueryDecision.lean) | Total executable terminal witness decision; exact original Witness equivalence; no numerical bound premise |
+| [RankWitnessReference.lean](Subtail/RankWitnessReference.lean) | Original nonempty witnesses give safe reversed references; positive prefix safety |
+| [RankQueryFinishTrace.lean](Subtail/RankQueryFinishTrace.lean) | Finish iff no-return safe completion; original witness reconstruction; maximal-rank completion |
 | [Basic.lean](Subtail/Basic.lean) | Finite partial DFA, witness definition, executable checker, and `witnessCheck_correct` |
 | [Truncation.lean](Subtail/Truncation.lean) | Maximum repeated-suffix specification; C008, C009, and the visited-state relaxation C013 |
 | [SandwichPredicates.lean](Subtail/SandwichPredicates.lean) | Direct necessary/sufficient checks, soundness, individual lrs coverage, and reversal of the occurrence condition |

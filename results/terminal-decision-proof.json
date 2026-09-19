@@ -1,0 +1,139 @@
+{
+  "actor": "terminal-decision-20260919",
+  "axiom_audit": {
+    "declarations": 88,
+    "kinds": {
+      "abbrev": 1,
+      "def": 12,
+      "inductive": 4,
+      "theorem": 71
+    },
+    "runtime_classical_choice": false,
+    "status": "PASS",
+    "terminalWitnessCheck": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "terminalWitnessCheck_correct": {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    }
+  },
+  "base_commit": "a7c29093fcbdfc9c2a3dc58aeefc4547770542c2",
+  "build": {
+    "decision_seconds": 1.169,
+    "decision_target": "PASS",
+    "default": "PASS, 37 jobs"
+  },
+  "checks": [
+    {
+      "command": [
+        "python",
+        "scripts/check_lean.py"
+      ],
+      "name": "core",
+      "seconds": 100.272,
+      "status": "PASS"
+    },
+    {
+      "command": [
+        "python",
+        "experiments/check_terminal_decision.py",
+        "--output",
+        "results/terminal-decision-regressions.json"
+      ],
+      "name": "terminal-native",
+      "seconds": 66.656,
+      "status": "PASS"
+    },
+    {
+      "command": [
+        "python",
+        "experiments/run_experiments.py"
+      ],
+      "name": "experiments",
+      "seconds": 1.465,
+      "status": "PASS"
+    },
+    {
+      "command": [
+        "python",
+        "experiments/check_finishing_trace.py",
+        "--lean",
+        "--output",
+        "tmp/terminal-decision/finishing-replay.json",
+        "--full-output",
+        "tmp/terminal-decision/finishing-replay-full.json"
+      ],
+      "name": "finishing-replay",
+      "seconds": 24.663,
+      "status": "PASS"
+    }
+  ],
+  "date": "2026-09-19",
+  "earlier_core_record": "results/lean-checks.json unchanged",
+  "finishing_replay": "PASS: compact/full byte equality across fresh runs; saved native record unchanged",
+  "host": "wb-marcus",
+  "kernel": {
+    "Subtail": "PASS via scripts/check_lean.py",
+    "Subtail.RankQueryDecision": "PASS",
+    "decision_seconds": 1.249
+  },
+  "mcp": {
+    "file_goal_seconds": 1.627,
+    "implementation": "lean-lsp-mcp 0.30.0 through actual configured stdio session on wb-marcus",
+    "native_codex_remote_task_activation": "NOT RUN",
+    "result": "live goal inspected; one failed simplification and one valid residual-goal proof; final source compiled",
+    "two_tactic_trials_seconds": 2.434
+  },
+  "native_terminal": "results/terminal-decision-regressions.json",
+  "numerical_weight_or_witness_bound_hypothesis": false,
+  "organizational_checks": {
+    "diff_whitespace": "PASS",
+    "index": "PASS: 18 approaches, 152 records",
+    "navigation_tests": "PASS: 13 tests",
+    "terminal_native_replay": "PASS: identical compact JSON and generated Lean source after keeping scratch files in ignored tmp/",
+    "workflow_yaml": "PASS using macOS Ruby YAML; remote MCP Python has no PyYAML"
+  },
+  "proof_commit": "9b359f7d7f23e051b7d81fd1a0b8a7b6e572e8d0",
+  "python": "3.13.14",
+  "review": {
+    "actor": "finishing_review",
+    "limits": [
+      "parent context inherited",
+      "no fresh audit of the large coverage proof",
+      "source review only; checks run by parent"
+    ],
+    "proof_commit": "9b359f7d7f23e051b7d81fd1a0b8a7b6e572e8d0",
+    "scope": [
+      "released finishing modules",
+      "ordinary milestone plan",
+      "RankQueryDecision source and intended semantics",
+      "RankWitnessReference source and ordered flags",
+      "finite runtime path"
+    ],
+    "status": "No findings"
+  },
+  "scope_limit": "terminal BorderAvoid only; arbitrary-tree subtype transfer and explicit U/F formula remain open; full native k>=3 promoted enumeration NOT RUN",
+  "source_sha256": {
+    ".github/workflows/lean.yml": "14dfaba64fb23b1caf12e400f5668122ab960e5ff8e88c637b54cf5171c87d44",
+    "experiments/check_finishing_trace.py": "9e932c5639354bba900f305921a672f6f0e550e29e417ed0ddd312bbace83ac5",
+    "experiments/check_terminal_decision.py": "9b43e2865db9a4e889d08f7eb3e6c9864b79dbc5e8f3242ea1d8c4f60901f618",
+    "lean/Subtail.lean": "d4e877223864a5d9de663fca464c94efb204a1d4834d4f8083322a569e2aa4bb",
+    "lean/Subtail/RankQueryDecision.lean": "51fef747bb443d313559e57d8fb8e3c1ce68b804eb4883a7d504e2945da5bd8a",
+    "lean/Subtail/RankQueryFinishFacts.lean": "8e67cbbcf2a2710ec5307455303180fea8c0d7756969b121efab025b8f7ff2a2",
+    "lean/Subtail/RankQueryFinishTrace.lean": "93653a3ade48c9c4c628a8f05583a1deef201d412427de87ce3209a91949a258",
+    "lean/Subtail/RankQuerySemanticUnwind.lean": "2b3968f40f9b42d9bc051a0d6b11de3c80e2c3bd30351b04f579765960c9b3de",
+    "lean/Subtail/RankWitnessReference.lean": "eb5f6485995190a3a829b6de2c87e31a79f47b408c6afb77cecfc031c03d7772",
+    "scripts/check_rank_decision.py": "d78e86af8117b58a320fb5bbfd02ea1db3c20baaf0d85947b1170c83ec33bd7f"
+  },
+  "statement": "forall k (I : Instance k), TerminalFinals I -> (terminalWitnessCheck I = true iff exists w, Witness I w)",
+  "toolchain": "leanprover/lean4:v4.33.1"
+}

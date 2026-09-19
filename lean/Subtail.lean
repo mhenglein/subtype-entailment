@@ -16,6 +16,10 @@ import Subtail.RankQueryEnumeration
 import Subtail.RankQueryEnumerationAudit
 import Subtail.RankQueryCoverage
 import Subtail.RankQuerySemanticUnwind
+import Subtail.RankQueryFinishFacts
+import Subtail.RankQueryFinishTrace
+import Subtail.RankWitnessReference
+import Subtail.RankQueryDecision
 import Subtail.TreeSemantics
 import Subtail.CanonicalModel
 import Subtail.CanonicalModelAudit

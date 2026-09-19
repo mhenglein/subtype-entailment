@@ -371,8 +371,8 @@
       "outcome": "inconclusive",
       "owner": null,
       "updated": "2026-09-19",
-      "summary": "A candidate complete ordinary proof (C080) reduces terminal witness existence to finite rank-query preimages over first-return prefix graphs and derives an explicit computable witness bound F(k). Two separate AI-assisted audits found no gap in its stages 1-5 or in the C029/C031 bridge; no human referee; Lean covers stages 1-3, pins the stage-4 Closure Lemma, proves its reverse half for any diagram enumeration and the conditional stage-5 unwind (A018); the forward direction, the weight bound and the stage-6 decision remain open. Independent adversarial fixtures (joint conjunction, shared generator, two-atom unions) found no discrepancy in the compiler. Earlier finite reference quotients are refuted and retained. Problem 1.7's status is unchanged.",
-      "next_step": "Discharge ClosureFor in Lean (DiagramCoverage #28, then the weight bound and F(k) with finishing correctness #30); no external human referee is planned (owner decision 2026-09-19), so cross-session statement readback (#33) replaces it; work is paused by the owner as of 2026-09-19; exhaust at least one non-trivial two-atom preimage union beyond the certificate-guided corpora; instantiate the pinned ClosureFor with an executable preimage in Lean; compare stage 4 with the failed invariant of Schubert's withdrawn 2021 Lemma 5.5 and with the 2019 Breuvart-Penelle-Rehof restriction before any independence claim (#36); keep Q004 and the opposing undecidability route as fallbacks if stage 4 fails.",
+      "summary": "C080 now has a kernel-checked executable terminal BorderAvoid decision for every state count, via finite rank-query preimages, original-witness lifting, safe milestone chains and finishing (A018). The explicit U/F bound and arbitrary-tree subtype transfer remain candidate obligations. Earlier failed reference quotients and the written proof/audits remain preserved.",
+      "next_step": "Prove the effective terminal-instance construction and C029/C031 entailment composition for arbitrary possibly infinite trees (#31), with separate statement readback (#33). Keep the explicit clause-weight/U/F estimates as independent quantitative targets. Compare the historical candidate with relevant prior work (#36); the exact terminal backend is no longer an open decidability target.",
       "record": "research/approaches/A017.md",
       "evidence": [
         "notes/2026-09-04-minimal-witness-structure.md",
@@ -467,7 +467,9 @@
         "results/semantic-bridge-review.json",
         "experiments/check_closure_fixtures.py",
         "results/closure-fixtures.json",
-        "notes/2026-09-18-closure-fixtures.md"
+        "notes/2026-09-18-closure-fixtures.md",
+        "notes/2026-09-19-terminal-rank-decision.md",
+        "lean/Subtail/RankQueryDecision.lean"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/34"
     },
@@ -478,8 +480,8 @@
       "outcome": "supported",
       "owner": null,
       "updated": "2026-09-19",
-      "summary": "Lean kernel-checks the rank-query candidate's stages 1-3 (terminal border depth at most k-1, milestone first returns, failure-target confinement, exact coloured first-return graph surgery identified with the literal query graph); stage 4a pins the query grammar, decidable satisfaction and the Closure Lemma as an unproved Prop, with product-simple runs and the s+1 fresh-interval bound as 4b ingredients; stage 4c has an executable diagram compiler (differential-checked against compile_diagram) and the proved reverse half of ClosureFor for every diagram enumeration (closure_reverse); stage 4b has a finite diagram enumerator with exact membership, an explicit computable budget and the kernel-checked coverage theorem (coverage : DiagramCoverage I budget), so closure_iff gives both directions of the semantic conjunct of ClosureFor I (preimage I budget) for every safe reference; stage 6 has a kernel-checked semantic foundation (arbitrary trees, canonical separating addresses) and total executable normalized satisfiability, but entailment is not yet decided; the clause-weight conjunct of ClosureFor (stage 5) and the rest of 6 are unformalized, so ClosureFor, ClosureStatement and RankDecisionStatement are still unproved. The 2026-09-19 wb-marcus pilot additionally kernel-checks semantic-only promotion unwind specialized to the concrete compiler, with separate source readback; this does not require the unresolved weight conjunct.",
-      "next_step": "Stage 5 (#30): review/integrate released exact finishing semantics; prove safe milestone-chain coverage and RankDecisionStatement for the concrete preimage compiler; implement the finite one-letter safety check and compose satCheck. Use the direct finite-query route before the separate quantitative U/F bound. Cross-session readback of coverage and shared-generator semantics remains #33; the arbitrary-tree subtype reduction and decision composition remain #31. Pilot complete, all scope released at its integration handoff; no active worker assignment.",
+      "summary": "Lean kernel-checks a total executable terminal BorderAvoid decision: TerminalFinals I implies terminalWitnessCheck I = true iff an original Witness exists. All safe milestone-chain, finishing, semantic preimage and finite Boolean interfaces are assembled, without a numerical bound premise. Separate source review found no defect in the assembly and witness lifting. Stage-6 arbitrary-tree foundations and normalized satisfiability remain checked; subtype entailment composition and the explicit U/F estimates remain open.",
+      "next_step": "Use the terminal decision as the backend for the effective subtype-to-terminal-instance construction and C029/C031 composition (#31). Preserve arbitrary-tree semantics, ordered flags and absorption cases. Scope for this completed terminal investigation is released at #30/#37 handoff; no next worker is assigned.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
@@ -528,7 +530,18 @@
         "lean/Subtail/RankQuerySemanticUnwind.lean",
         "scripts/lean_semantic_pilot.py",
         "notes/2026-09-19-wb-semantic-pilot.md",
-        "results/wb-semantic-pilot.json"
+        "results/wb-semantic-pilot.json",
+        "lean/Subtail/RankQueryFinishFacts.lean",
+        "lean/Subtail/RankQueryFinishTrace.lean",
+        "lean/Subtail/RankWitnessReference.lean",
+        "lean/Subtail/RankQueryDecision.lean",
+        "notes/2026-09-19-terminal-rank-decision.md",
+        "scripts/check_rank_decision.py",
+        "experiments/check_finishing_trace.py",
+        "experiments/check_terminal_decision.py",
+        "results/finishing-trace-semantics.json",
+        "results/terminal-decision-regressions.json",
+        "results/terminal-decision-proof.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/34"
     }

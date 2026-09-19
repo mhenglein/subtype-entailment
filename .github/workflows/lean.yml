@@ -20,6 +20,7 @@ on:
     paths:
       - 'lean/**'
       - 'scripts/check_lean.py'
+      - 'scripts/check_rank_decision.py'
       - 'experiments/**'
       - 'results/**'
       - '.github/workflows/lean.yml'
@@ -27,6 +28,7 @@ on:
     paths:
       - 'lean/**'
       - 'scripts/check_lean.py'
+      - 'scripts/check_rank_decision.py'
       - 'experiments/**'
       - 'results/**'
       - '.github/workflows/lean.yml'
@@ -79,6 +81,7 @@ jobs:
           lake build +Subtail.RankQueryUnwind
           lake build +Subtail.RankQueryEnumerationAudit
           lake build +Subtail.RankQueryCoverage
+          lake build +Subtail.RankQueryDecision
           lake build +Subtail.CanonicalModelAudit
           lake build +Subtail.StackSummaryAudit
       - name: Replay the whole library through the kernel
@@ -88,6 +91,10 @@ jobs:
           lake env leanchecker Subtail.RankQueryUnwind
           lake env leanchecker Subtail.RankQueryEnumerationAudit
           lake env leanchecker Subtail.RankQueryCoverage
+          lake env leanchecker Subtail.RankQueryFinishFacts
+          lake env leanchecker Subtail.RankQueryFinishTrace
+          lake env leanchecker Subtail.RankWitnessReference
+          lake env leanchecker Subtail.RankQueryDecision
       - name: Reject unfinished proof placeholders in the unwind module
         run: "! grep -R -nE '\\bsorry\\b|sorryAx|axiom ' lean/Subtail/RankQueryUnwind.lean"
       - name: Audit terminal border proof dependencies (13 declarations)
@@ -331,6 +338,8 @@ jobs:
           assert 'sorryAx' not in text
           print('PASS:', len(rows), 'coverage declaration dependency closures')
           PY
+      - name: Audit finishing, witness, semantic unwind and terminal decision dependencies
+        run: python3 scripts/check_rank_decision.py --output tmp/rank-decision-axioms.json
       - name: Audit canonical-model declaration dependencies
         run: |
           mkdir -p tmp
@@ -431,6 +440,23 @@ jobs:
           python3 experiments/check_stack_summary.py --lean --output /tmp/stack-summary-native.json
           PYTHONHASHSEED=91 python3 experiments/check_stack_summary.py --lean --output /tmp/stack-summary-replay.json
           cmp /tmp/stack-summary-native.json /tmp/stack-summary-replay.json
+      - name: Independent all-length fixed-reference finishing oracle and native replay
+        run: |
+          python3 experiments/check_finishing_trace.py --lean --output /tmp/finishing.json --full-output /tmp/finishing-full.json
+          PYTHONHASHSEED=91 python3 experiments/check_finishing_trace.py --lean --output /tmp/finishing-replay.json --full-output /tmp/finishing-full-replay.json
+          cmp /tmp/finishing.json /tmp/finishing-replay.json
+          cmp /tmp/finishing-full.json /tmp/finishing-full-replay.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          saved = json.loads(Path('results/finishing-trace-semantics.json').read_text())
+          actual = json.loads(Path('/tmp/finishing.json').read_text())
+          assert actual == saved['native'], (actual, saved['native'])
+          PY
+      - name: Exhaustive one/two-state terminal decision differential
+        run: |
+          python3 experiments/check_terminal_decision.py --output /tmp/terminal-decision.json
+          cmp results/terminal-decision-regressions.json /tmp/terminal-decision.json
       - name: Earlier Lean core, axioms and Python agreement
         run: python3 scripts/check_lean.py
       - name: Verify recorded Lean evidence and research records

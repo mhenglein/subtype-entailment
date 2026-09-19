@@ -1,6 +1,6 @@
 # Research plan
 
-Updated: 2026-09-19 (direct-decision assembly after semantic-only unwind; historical programmes retained)
+Updated: 2026-09-19 (terminal decision checked; subtype transfer next; historical programmes retained)
 
 **Goal:** decide [Problem 1.7](problem.md) for bottom and binary product over arbitrary, possibly infinite trees. No general solution is established here.
 
@@ -21,13 +21,11 @@ semantic promotion unwind for the concrete compiler without the extra weight
 hypothesis ([result and tooling evidence](../notes/2026-09-19-wb-semantic-pilot.md)).
 Current priorities, in order:
 
-1. **Direct terminal decision (#30).** Review and integrate the released exact
-   finishing interface, construct safe milestone chains from original witnesses,
-   and prove `TerminalFinals I -> RankDecisionStatement I (preimage I budget)`.
-   Implement the finite one-letter safety check and combine it with `satCheck`.
-   Preserve empty witnesses and small-state cases. The existing end-to-end
-   outline's Section 8 gives termination by finite compiler iteration; this
-   attempt does not wait for the separate quantitative `U_k`/`F(k)` bound.
+1. **Terminal decision (#30) completed.** The finite Boolean check is proved
+   equivalent to original witness existence under terminal final states.
+   [Proof and validation](../notes/2026-09-19-terminal-rank-decision.md).
+   Empty witnesses, small-state cases and all flags are preserved. The proof
+   uses at most k-2 finite preimage iterations, independently of U/F.
 2. **Subtype transfer (#31).** Discharge the effective summary-instance,
    ordered-cut, absorption, C029/C031 and composition obligations for arbitrary,
    possibly infinite trees. A terminal decision alone is not Problem 1.7.

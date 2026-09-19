@@ -986,12 +986,19 @@ Lean-checked (2026-09-19): the stage-4b enumerator and `coverage :
 DiagramCoverage I budget`, hence `closure_iff`, both directions of the semantic conjunct of
 `ClosureFor I (preimage I budget)` for every safe reference
 ([RankQueryCoverage.lean](../lean/Subtail/RankQueryCoverage.lean), author
-readback only). NOT Lean-checked: the clause-weight conjunct of `ClosureFor`
-and `F(k)`; the full terminal decision schema (safe milestone chains, finishing
-and executable boundary tests); and the entailment decision of stage 6
-(separating-address bound, `I_C`, absorption, C029/C031, composition).
-Semantic unwind alone proves none of these. The direct finite-query decision
-route can be attempted separately from the quantitative bound. Two
+readback only). On September 19 the full terminal decision subclaim is also
+`LEAN`: `RankQueryDecision.terminalWitnessCheck_correct` proves
+`TerminalFinals I -> (terminalWitnessCheck I = true ↔ ∃ w, Witness I w)`.
+`rankDecisionStatement` instantiates the pinned schema with
+`preimage I RankQueryCoverage.budget`. Witness reversal, safe milestone chains,
+finishing and executable boundary tests are included. This direct decision
+does not require the numerical weight contract.
+[Assembly, semantic readback and validation](../notes/2026-09-19-terminal-rank-decision.md).
+
+NOT Lean-checked: the clause-weight conjunct of `ClosureFor`, explicit `F(k)`,
+and the entailment decision of stage 6 (`I_C`, ordered-cut/absorption,
+C029/C031 and composition). Thus the combined C080 statement remains
+CANDIDATE even though its terminal decidability subclaim is checked. Two
 separate AI-assisted audits, both informed by the author's argument, found no
 gap in stages 1–5 and in the stage-6 bridge; neither is a human referee or a
 blind derivation. Independent adversarial fixtures found no compiler
@@ -1010,8 +1017,9 @@ the candidate can be found, cited and reviewed. Owner decision 2026-09-19: no
 external human referee will be commissioned; acceptance requires the
 kernel-checked end-to-end decision theorem plus cross-session statement
 readback (#33). After the earlier pause, the owner resumed a bounded workbench
-and proof pilot on 2026-09-19 (#30, #37). Its result is the semantic-only unwind;
-C080, F(k), Q004 and Problem 1.7 retain their prior unresolved status.
+and proof pilot on 2026-09-19 (#30, #37). Its first result was semantic-only unwind; the subsequent #30 assembly proves
+terminal decision. C080's stronger bound and subtype conclusion, F(k), Q004
+and Problem 1.7 remain unresolved.
 
 **Evidence.** [Candidate proof](../notes/2026-09-15-candidate-rank-query-decision.md),
 [closure proof and bound](../notes/2026-09-17-rank-query-closure-audit.md),
