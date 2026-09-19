@@ -20,6 +20,9 @@ jobs:
   native:
     runs-on: ubuntu-latest
     timeout-minutes: 25
+    env:
+      LEAN_NUM_THREADS: '1'
+      LEAN_STACK_SIZE_KB: '32768'
     steps:
       - uses: actions/checkout@v7.0.1
         with:
@@ -47,12 +50,13 @@ jobs:
           test: 'false'
           lint: 'false'
           use-mathlib-cache: 'false'
+          use-github-cache: 'false'
       - name: Compile, kernel-replay and audit additive proofs
         env:
           RANK_WEIGHT_SOURCE_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           set -euo pipefail
-          ulimit -v 6291456
+          ulimit -v 16777216
           ulimit -t 1200
           python3 scripts/check_rank_weight_native.py
       - name: Ensure tracked sources were not modified
