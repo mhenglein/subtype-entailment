@@ -1036,5 +1036,1003 @@ theorem length_segments_le {xs : List NNode} (hc : Consec (NStep (prefixGraph I 
 
 end Counting
 
+/-! ## Ordered marks -/
+
+/-- The positions of `raw` up to `N`, in increasing order and without repetition. -/
+def marksOf (N : Nat) (raw : List Nat) : List Nat :=
+  (List.range (N + 1)).filter fun j => decide (j ∈ raw)
+
+theorem mem_marksOf {N : Nat} {raw : List Nat} {j : Nat} : j ∈ marksOf N raw ↔ j ≤ N ∧ j ∈ raw := by
+  simp [marksOf, List.mem_filter, List.mem_range, Nat.lt_succ_iff]
+
+theorem marksOf_pairwise (N : Nat) (raw : List Nat) : (marksOf N raw).Pairwise (· < ·) :=
+  List.Pairwise.filter _ List.pairwise_lt_range
+
+theorem marksOf_nodup (N : Nat) (raw : List Nat) : (marksOf N raw).Nodup :=
+  List.Pairwise.filter _ List.nodup_range
+
+theorem marksOf_lt {N : Nat} {raw : List Nat} {i j : Nat} (hi : i < (marksOf N raw).length)
+    (hj : j < (marksOf N raw).length) (hij : i < j) : (marksOf N raw)[i] < (marksOf N raw)[j] :=
+  List.pairwise_iff_getElem.mp (marksOf_pairwise N raw) i j hi hj hij
+
+theorem marksOf_le {N : Nat} {raw : List Nat} {i j : Nat} (hi : i < (marksOf N raw).length)
+    (hj : j < (marksOf N raw).length) (hij : i ≤ j) : (marksOf N raw)[i] ≤ (marksOf N raw)[j] := by
+  rcases Nat.lt_or_eq_of_le hij with h | h
+  · exact Nat.le_of_lt (marksOf_lt hi hj h)
+  · subst h; exact Nat.le_refl _
+
+theorem marksOf_getElem_le {N : Nat} {raw : List Nat} {i : Nat} (hi : i < (marksOf N raw).length) :
+    (marksOf N raw)[i] ≤ N :=
+  (mem_marksOf.mp (List.getElem_mem hi)).1
+
+theorem marksOf_getElem_mem {N : Nat} {raw : List Nat} {i : Nat} (hi : i < (marksOf N raw).length) :
+    (marksOf N raw)[i] ∈ raw :=
+  (mem_marksOf.mp (List.getElem_mem hi)).2
+
+theorem marksOf_length_le (N : Nat) (raw : List Nat) : (marksOf N raw).length ≤ raw.length :=
+  (marksOf_nodup N raw).length_le_of_subset fun j hj => (mem_marksOf.mp hj).2
+
+/-- Group index of a mark. -/
+def idxM (M : List Nat) (p : Nat) : Nat := M.idxOf p
+
+theorem idxM_lt {M : List Nat} {p : Nat} (h : p ∈ M) : idxM M p < M.length :=
+  List.idxOf_lt_length_iff.mpr h
+
+theorem getElem_idxM {M : List Nat} {p : Nat} (h : p ∈ M) : M[idxM M p]'(idxM_lt h) = p :=
+  List.getElem_idxOf _
+
+theorem idxM_mono {N : Nat} {raw : List Nat} {p q : Nat} (hp : p ∈ marksOf N raw)
+    (hq : q ∈ marksOf N raw) (hpq : p < q) : idxM (marksOf N raw) p < idxM (marksOf N raw) q := by
+  apply Classical.byContradiction
+  intro hnot
+  have hle : idxM (marksOf N raw) q ≤ idxM (marksOf N raw) p := Nat.le_of_not_lt hnot
+  have := marksOf_le (idxM_lt hq) (idxM_lt hp) hle
+  rw [getElem_idxM hq, getElem_idxM hp] at this
+  omega
+
+theorem idxM_injective {N : Nat} {raw : List Nat} {p q : Nat} (hp : p ∈ marksOf N raw)
+    (hq : q ∈ marksOf N raw) (h : idxM (marksOf N raw) p = idxM (marksOf N raw) q) : p = q := by
+  have h1 : (marksOf N raw)[idxM (marksOf N raw) p]? = some p := by
+    rw [List.getElem?_eq_getElem (idxM_lt hp), getElem_idxM hp]
+  rw [h, List.getElem?_eq_getElem (idxM_lt hq), getElem_idxM hq] at h1
+  exact (Option.some.inj h1).symm
+
+theorem idxM_getElem {N : Nat} {raw : List Nat} {i : Nat} (hi : i < (marksOf N raw).length) :
+    idxM (marksOf N raw) ((marksOf N raw)[i]) = i := by
+  have hmem := List.getElem_mem hi
+  have h := getElem_idxM hmem
+  rcases Nat.lt_trichotomy (idxM (marksOf N raw) (marksOf N raw)[i]) i with hlt | heq | hgt
+  · have := marksOf_lt (idxM_lt hmem) hi hlt
+    rw [h] at this
+    exact absurd this (Nat.lt_irrefl _)
+  · exact heq
+  · have := marksOf_lt hi (idxM_lt hmem) hgt
+    rw [h] at this
+    exact absurd this (Nat.lt_irrefl _)
+
+theorem idxM_le_of_le {N : Nat} {raw : List Nat} {p q : Nat} (hp : p ∈ marksOf N raw)
+    (hq : q ∈ marksOf N raw) (hpq : p ≤ q) : idxM (marksOf N raw) p ≤ idxM (marksOf N raw) q := by
+  rcases Nat.lt_or_eq_of_le hpq with h | h
+  · exact Nat.le_of_lt (idxM_mono hp hq h)
+  · subst h; exact Nat.le_refl _
+
+/-- The least mark is first. -/
+theorem idxM_min {N : Nat} {raw : List Nat} {p : Nat} (hp : p ∈ marksOf N raw)
+    (hmin : ∀ q ∈ marksOf N raw, p ≤ q) : idxM (marksOf N raw) p = 0 := by
+  apply Classical.byContradiction
+  intro hne
+  have hpos : 0 < idxM (marksOf N raw) p := Nat.pos_of_ne_zero hne
+  have hlen : 0 < (marksOf N raw).length := Nat.lt_of_lt_of_le hpos (Nat.le_of_lt (idxM_lt hp))
+  have h1 := marksOf_lt hlen (idxM_lt hp) hpos
+  rw [getElem_idxM hp] at h1
+  have h2 := hmin _ (List.getElem_mem hlen)
+  omega
+
+/-- The greatest mark is last. -/
+theorem idxM_max {N : Nat} {raw : List Nat} {p : Nat} (hp : p ∈ marksOf N raw)
+    (hmax : ∀ q ∈ marksOf N raw, q ≤ p) : idxM (marksOf N raw) p = (marksOf N raw).length - 1 := by
+  have hlt := idxM_lt hp
+  apply Classical.byContradiction
+  intro hne
+  have hlt' : idxM (marksOf N raw) p < (marksOf N raw).length - 1 := by omega
+  have h1 := marksOf_lt hlt (by omega) hlt'
+  rw [getElem_idxM hp] at h1
+  have h2 := hmax _ (List.getElem_mem (by omega : (marksOf N raw).length - 1 < (marksOf N raw).length))
+  omega
+
+/-! ## The mixed-radix encoder -/
+
+/-- Inverse of `digits` on in-range digit lists. -/
+def encode : List Nat → List Nat → Nat
+  | [], _ => 0
+  | _ :: _, [] => 0
+  | s :: ss, d :: ds => d * prodList ss + encode ss ds
+
+theorem prodList_pos : ∀ {sizes : List Nat}, (∀ s ∈ sizes, 0 < s) → 0 < prodList sizes := by
+  intro sizes
+  induction sizes with
+  | nil => intro _; simp [prodList]
+  | cons s ss ih =>
+    intro h
+    simp only [prodList]
+    exact Nat.mul_pos (h s (List.mem_cons_self ..)) (ih fun t ht => h t (List.mem_cons_of_mem _ ht))
+
+theorem encode_lt : ∀ {sizes ds : List Nat}, (∀ s ∈ sizes, 0 < s) → ds.length = sizes.length →
+    (∀ i (hi : i < ds.length) (hs : i < sizes.length), ds[i] < sizes[i]) → encode sizes ds < prodList sizes := by
+  intro sizes
+  induction sizes with
+  | nil => intro ds _ _ _; simp [encode, prodList]
+  | cons s ss ih =>
+    intro ds hpos hlen hb
+    cases ds with
+    | nil => simp at hlen
+    | cons d ds =>
+      have hP : 0 < prodList ss := prodList_pos fun t ht => hpos t (List.mem_cons_of_mem _ ht)
+      have hd : d < s := hb 0 (by simp) (by simp)
+      have he : encode ss ds < prodList ss := ih (fun t ht => hpos t (List.mem_cons_of_mem _ ht))
+        (by simpa using hlen) (fun i hi hs => hb (i + 1) (by simpa using hi) (by simpa using hs))
+      simp only [encode, prodList]
+      have : d * prodList ss + encode ss ds < (d + 1) * prodList ss := by
+        rw [Nat.succ_mul]; omega
+      exact Nat.lt_of_lt_of_le this (Nat.mul_le_mul_right _ hd)
+
+theorem digits_encode : ∀ {sizes ds : List Nat}, (∀ s ∈ sizes, 0 < s) → ds.length = sizes.length →
+    (∀ i (hi : i < ds.length) (hs : i < sizes.length), ds[i] < sizes[i]) → digits sizes (encode sizes ds) = ds := by
+  intro sizes
+  induction sizes with
+  | nil => intro ds _ hlen _; cases ds with | nil => rfl | cons _ _ => simp at hlen
+  | cons s ss ih =>
+    intro ds hpos hlen hb
+    cases ds with
+    | nil => simp at hlen
+    | cons d ds =>
+      have hpos' : ∀ t ∈ ss, 0 < t := fun t ht => hpos t (List.mem_cons_of_mem _ ht)
+      have hP : 0 < prodList ss := prodList_pos hpos'
+      have hd : d < s := hb 0 (by simp) (by simp)
+      have hlen' : ds.length = ss.length := by simpa using hlen
+      have hb' : ∀ i (hi : i < ds.length) (hs : i < ss.length), ds[i] < ss[i] :=
+        fun i hi hs => hb (i + 1) (by simpa using hi) (by simpa using hs)
+      have he : encode ss ds < prodList ss := encode_lt hpos' hlen' hb'
+      simp only [encode, digits]
+      have h1 : (d * prodList ss + encode ss ds) / prodList ss = d := by
+        rw [Nat.mul_comm, Nat.mul_add_div hP, Nat.div_eq_of_lt he, Nat.add_zero]
+      have h2 : (d * prodList ss + encode ss ds) % prodList ss = encode ss ds := by
+        rw [Nat.mul_comm, Nat.mul_add_mod, Nat.mod_eq_of_lt he]
+      rw [h1, h2, Nat.mod_eq_of_lt hd, ih hpos' hlen' hb']
+
+theorem stateOf_val (q : Fin k) : stateOf k q.val = some q := by
+  unfold stateOf
+  cases hf : (List.finRange k).find? (fun p => decide (p.val = q.val)) with
+  | none =>
+    have := (List.find?_eq_none.mp hf) q (List.mem_finRange q)
+    simp at this
+  | some r =>
+    have hr := List.find?_some hf
+    simp only [decide_eq_true_eq] at hr
+    rw [Fin.ext hr]
+
+theorem nextOfIdx_idxOfNext (n : Option Bool) : nextOfIdx (idxOfNext n) = some n := by
+  cases n with
+  | none => rfl
+  | some b => cases b <;> rfl
+
+theorem idxOfNext_lt (n : Option Bool) : idxOfNext n < 3 := by
+  cases n with
+  | none => decide
+  | some b => cases b <;> decide
+
+/-- Encoded interval control. -/
+def encodeI (items : List (Active k)) (x : IControl k) : Nat :=
+  encode (intervalSizes k items) (x.state.val :: idxOfNext x.next :: x.seen :: x.controls)
+
+/-- Well-formed interval controls: seen bit, and one in-range control per item. -/
+def ICOK (items : List (Active k)) (x : IControl k) : Prop :=
+  x.seen < 2 ∧ x.controls.length = items.length ∧
+    ∀ i (hi : i < x.controls.length) (hj : i < items.length), x.controls[i] < (items[i]).1.size
+
+theorem intervalSizes_pos (items : List (Active k)) (x : IControl k) (hx : ICOK items x) :
+    ∀ s ∈ intervalSizes k items, 0 < s := by
+  intro s hs
+  simp only [intervalSizes, List.mem_cons, List.mem_map] at hs
+  rcases hs with rfl | rfl | rfl | ⟨a, ha, rfl⟩
+  · exact Nat.lt_of_le_of_lt (Nat.zero_le _) x.state.isLt
+  · decide
+  · decide
+  · obtain ⟨i, hi, rfl⟩ := List.getElem_of_mem ha
+    have := hx.2.2 i (by rw [hx.2.1]; exact hi) hi
+    omega
+
+theorem encodeI_digits (items : List (Active k)) (x : IControl k) (hx : ICOK items x) :
+    digits (intervalSizes k items) (encodeI items x) =
+      x.state.val :: idxOfNext x.next :: x.seen :: x.controls := by
+  apply digits_encode (intervalSizes_pos items x hx)
+  · simp [intervalSizes, hx.2.1]
+  · intro i hi hs
+    match i with
+    | 0 => exact x.state.isLt
+    | 1 => exact idxOfNext_lt _
+    | 2 => exact hx.1
+    | i + 3 =>
+      simp only [List.getElem_cons_succ, intervalSizes, List.getElem_map]
+      exact hx.2.2 i (by simpa using hi) (by simpa [intervalSizes] using hs)
+
+theorem encodeI_lt (items : List (Active k)) (x : IControl k) (hx : ICOK items x) :
+    encodeI items x < intervalSize k items := by
+  apply encode_lt (intervalSizes_pos items x hx)
+  · simp [intervalSizes, hx.2.1]
+  · intro i hi hs
+    match i with
+    | 0 => exact x.state.isLt
+    | 1 => exact idxOfNext_lt _
+    | 2 => exact hx.1
+    | i + 3 =>
+      simp only [List.getElem_cons_succ, intervalSizes, List.getElem_map]
+      exact hx.2.2 i (by simpa using hi) (by simpa [intervalSizes] using hs)
+
+theorem decodeI_encodeI (items : List (Active k)) (x : IControl k) (hx : ICOK items x) :
+    decodeI items (encodeI items x) = some x := by
+  unfold decodeI
+  rw [encodeI_digits items x hx]
+  simp only [stateOf_val, nextOfIdx_idxOfNext]
+  rfl
+
+/-! ## Sums -/
+
+theorem le_sum_of_mem : ∀ {l : List Nat} {x : Nat}, x ∈ l → x ≤ l.sum := by
+  intro l
+  induction l with
+  | nil => intro x h; simp at h
+  | cons y l ih =>
+    intro x h
+    rcases List.mem_cons.mp h with rfl | h
+    · simp
+    · have := ih h; simp; omega
+
+theorem sum_map_le_sum_map {α : Type} {f g : α → Nat} : ∀ {l : List α}, (∀ x ∈ l, f x ≤ g x) →
+    (l.map f).sum ≤ (l.map g).sum := by
+  intro l
+  induction l with
+  | nil => intro _; simp
+  | cons y l ih =>
+    intro h
+    simp only [List.map_cons, List.sum_cons]
+    have := ih fun x hx => h x (List.mem_cons_of_mem _ hx)
+    have := h y (List.mem_cons_self ..)
+    omega
+
+/-! ## The step label between two nodes -/
+
+/-- A labelled step between `Nat` nodes. -/
+def NStepL (G : Graph k) (O : Observer k) (x y : NNode) (l : Label) : Prop :=
+  ∃ (hx : x.1 < G.size) (hy : y.1 < G.size) (hs : x.2 < O.size) (ht : y.2 < O.size),
+    G.edge ⟨x.1, hx⟩ l = some ⟨y.1, hy⟩ ∧
+      (⟨y.2, ht⟩ : Fin O.size) ∈ O.move ⟨x.2, hs⟩ (G.colour ⟨x.1, hx⟩) l (G.colour ⟨y.1, hy⟩)
+
+def labelOK (G : Graph k) (O : Observer k) (x y : NNode) (l : Label) : Bool :=
+  if hx : x.1 < G.size then
+    if hy : y.1 < G.size then
+      if hs : x.2 < O.size then
+        if ht : y.2 < O.size then
+          decide (G.edge ⟨x.1, hx⟩ l = some ⟨y.1, hy⟩) &&
+            decide ((⟨y.2, ht⟩ : Fin O.size) ∈ O.move ⟨x.2, hs⟩ (G.colour ⟨x.1, hx⟩) l (G.colour ⟨y.1, hy⟩))
+        else false
+      else false
+    else false
+  else false
+
+theorem labelOK_iff {G : Graph k} {O : Observer k} {x y : NNode} {l : Label} :
+    labelOK G O x y l = true ↔ NStepL G O x y l := by
+  unfold labelOK NStepL
+  by_cases hx : x.1 < G.size
+  · by_cases hy : y.1 < G.size
+    · by_cases hs : x.2 < O.size
+      · by_cases ht : y.2 < O.size
+        · simp only [dif_pos hx, dif_pos hy, dif_pos hs, dif_pos ht, Bool.and_eq_true, decide_eq_true_eq]
+          constructor
+          · rintro ⟨h1, h2⟩; exact ⟨hx, hy, hs, ht, h1, h2⟩
+          · rintro ⟨_, _, _, _, h1, h2⟩; exact ⟨h1, h2⟩
+        · simp only [dif_pos hx, dif_pos hy, dif_pos hs, dif_neg ht, Bool.false_eq_true, false_iff]
+          rintro ⟨_, _, _, ht', -⟩; exact ht ht'
+      · simp only [dif_pos hx, dif_pos hy, dif_neg hs, Bool.false_eq_true, false_iff]
+        rintro ⟨_, _, hs', -⟩; exact hs hs'
+    · simp only [dif_pos hx, dif_neg hy, Bool.false_eq_true, false_iff]
+      rintro ⟨_, hy', -⟩; exact hy hy'
+  · simp only [dif_neg hx, Bool.false_eq_true, false_iff]
+    rintro ⟨hx', -⟩; exact hx hx'
+
+def allLabels : List Label := [.F, .S, .K false, .K true]
+
+theorem mem_allLabels (l : Label) : l ∈ allLabels := by
+  cases l with
+  | F => simp [allLabels]
+  | S => simp [allLabels]
+  | K b => cases b <;> simp [allLabels]
+
+/-- A label realising the step from `x` to `y` (`F` if there is none). -/
+def stepLabel (G : Graph k) (O : Observer k) (x y : NNode) : Label :=
+  (allLabels.find? (labelOK G O x y)).getD .F
+
+theorem nstepL_of_nstep {G : Graph k} {O : Observer k} {x y : NNode} (h : NStep G O x y) :
+    ∃ l, NStepL G O x y l := by
+  obtain ⟨hx, hy, hs, ht, l, he, hm, -⟩ := h
+  exact ⟨l, hx, hy, hs, ht, he, hm⟩
+
+theorem stepLabel_spec {G : Graph k} {O : Observer k} {x y : NNode} (h : NStep G O x y) :
+    NStepL G O x y (stepLabel G O x y) := by
+  obtain ⟨l, hl⟩ := nstepL_of_nstep h
+  unfold stepLabel
+  cases hf : allLabels.find? (labelOK G O x y) with
+  | none =>
+    have := (List.find?_eq_none.mp hf) l (mem_allLabels l)
+    exact absurd (labelOK_iff.mpr hl) this
+  | some l' =>
+    exact labelOK_iff.mp (List.find?_some hf)
+
+theorem stepLabel_eq {G : Graph k} {O : Observer k} {x y : NNode} (h : NStep G O x y) {l₀ : Label}
+    (huniq : ∀ l, NStepL G O x y l → l = l₀) : stepLabel G O x y = l₀ :=
+  huniq _ (stepLabel_spec h)
+
+/-! ## The coverage data: a model of the clause on the extension with one chain per atom -/
+
+/-- Observer, source and target of atom `ai` (defaults for out-of-range indices). -/
+def obsAt (c : Clause k) (ai : Nat) : Observer k :=
+  match c.atoms[ai]? with
+  | some atm => atm.observer
+  | none => oneEdge .F
+
+def srcAt (c : Clause k) (ai : Nat) : Nat :=
+  match c.atoms[ai]? with
+  | some atm => atm.source.val
+  | none => 0
+
+def tgtAt (c : Clause k) (ai : Nat) : Nat :=
+  match c.atoms[ai]? with
+  | some atm => atm.target.val
+  | none => 0
+
+theorem obsAt_eq {c : Clause k} {ai : Nat} (h : ai < c.atoms.length) :
+    obsAt c ai = (c.atoms[ai]).observer := by
+  simp [obsAt, List.getElem?_eq_getElem h]
+
+theorem srcAt_eq {c : Clause k} {ai : Nat} (h : ai < c.atoms.length) :
+    srcAt c ai = (c.atoms[ai]).source.val := by
+  simp [srcAt, List.getElem?_eq_getElem h]
+
+theorem tgtAt_eq {c : Clause k} {ai : Nat} (h : ai < c.atoms.length) :
+    tgtAt c ai = (c.atoms[ai]).target.val := by
+  simp [tgtAt, List.getElem?_eq_getElem h]
+
+/-- A model `τ` of the clause on the extension graph together with a product-simple
+chain for every atom. -/
+structure Cov (I : Instance k) (B : Reference k) (E : Ext I B) (c : Clause k) where
+  τ : Fin c.vars → Fin (prefixGraph I E.C).size
+  tests : ∀ t ∈ c.tests, t.2 ((prefixGraph I E.C).colour (τ t.1)) = true
+  equal : ∀ e ∈ c.equal, τ e.1 = τ e.2
+  unequal : ∀ e ∈ c.unequal, τ e.1 ≠ τ e.2
+  chain : Nat → List NNode
+  chain_consec : ∀ ai, ai < c.atoms.length →
+    Consec (NStep (prefixGraph I E.C) (obsAt c ai)) (chain ai)
+  chain_allowed : ∀ ai, ai < c.atoms.length → ∀ x ∈ chain ai, NAllowed (prefixGraph I E.C) (obsAt c ai) x
+  chain_head : ∀ ai (h : ai < c.atoms.length), ∃ q ∈ (obsAt c ai).initial,
+    (chain ai).head? = some ((τ (c.atoms[ai]).source).val, q.val)
+  chain_last : ∀ ai (h : ai < c.atoms.length), ∃ p ∈ (obsAt c ai).final,
+    (chain ai).getLast? = some ((τ (c.atoms[ai]).target).val, p.val)
+  chain_visits : ∀ ai, ai < c.atoms.length →
+    visitsN (B.word.length + 1) (chain ai) ≤ (obsAt c ai).size
+
+namespace Cov
+variable {I : Instance k} {B : Reference k} {E : Ext I B} {c : Clause k} (X : Cov I B E c)
+
+/-! ### Blocks -/
+
+def segs (ai : Nat) : List (List NNode) := segments B.word.length (X.chain ai)
+
+def segCount (ai : Nat) : Nat := (X.segs ai).length
+
+def blk (ai si : Nat) : List NNode := (X.segs ai).getD si []
+
+/-- A uniform upper bound on the block counts, used for the core-variable layout. -/
+def K : Nat := ((List.range c.atoms.length).map X.segCount).sum
+
+/-! ### Marks -/
+
+/-- All positions that must become marks: the first fresh vertex, the endpoint, the
+fresh variable positions, and both endpoints of every fresh block. -/
+def rawMarks : List Nat :=
+  [B.word.length + 1, E.N] ++
+    (List.finRange c.vars).filterMap (fun v => if B.word.length < (X.τ v).val then some (X.τ v).val else none) ++
+    (List.range c.atoms.length).flatMap fun ai =>
+      (X.segs ai).flatMap fun s => if isFresh B.word.length s then [hdPos s, lastPos s] else []
+
+def M : List Nat := marksOf E.N X.rawMarks
+
+/-- Number of mark groups. -/
+def n : Nat := X.M.length
+
+/-- Group index of a mark position. -/
+def idx (p : Nat) : Nat := idxM X.M p
+
+/-- Position of group `g`. -/
+def pos (g : Nat) : Nat := X.M.getD g 0
+
+/-! ### Core variables -/
+
+def cix (ai si side : Nat) : Nat := c.vars + (ai * X.K + si) * 2 + side
+
+def coreVars : Nat := c.vars + c.atoms.length * X.K * 2
+
+/-- Core index of the head of block `si` of atom `ai` (the atom's source for the first block). -/
+def headIdx (ai si : Nat) : Nat := if si = 0 then srcAt c ai else X.cix ai si 0
+
+/-- Core index of the last node of block `si` (the atom's target for the last block). -/
+def lastIdx (ai si : Nat) : Nat := if si = X.segCount ai - 1 then tgtAt c ai else X.cix ai si 1
+
+/-! ### Pieces -/
+
+def lastN (s : List NNode) : NNode := (s.getLast?).getD (0, 0)
+
+def blockPiece (ai si : Nat) (s : List NNode) : Piece :=
+  if isFresh B.word.length s then
+    ⟨.forward, X.idx (hdPos s), X.idx (lastPos s), hdCtl s, lastCtl s, .F⟩
+  else ⟨.core, X.headIdx ai si, X.lastIdx ai si, hdCtl s, lastCtl s, .F⟩
+
+def transPiece (ai si : Nat) (s t : List NNode) : Piece :=
+  let x := lastN s
+  let y := hdN t
+  if x.1 ≤ B.word.length then
+    ⟨.enter, X.lastIdx ai si, 0, x.2, y.2, stepLabel (prefixGraph I E.C) (obsAt c ai) x y⟩
+  else if B.word.length < y.1 then
+    ⟨.wrap, X.n - 1, 0, x.2, y.2, .K E.a⟩
+  else
+    ⟨.exit, X.idx x.1, X.headIdx ai (si + 1), x.2, y.2, stepLabel (prefixGraph I E.C) (obsAt c ai) x y⟩
+
+def buildPieces (ai : Nat) : Nat → List (List NNode) → List Piece
+  | _, [] => []
+  | si, [s] => [X.blockPiece ai si s]
+  | si, s :: t :: rest => X.blockPiece ai si s :: X.transPiece ai si s t :: buildPieces ai (si + 1) (t :: rest)
+
+def pieces (ai : Nat) : List Piece := X.buildPieces ai 0 (X.segs ai)
+
+/-! ### Seams -/
+
+def blockSeams (ai si : Nat) (s : List NNode) : List (Nat × Nat × Nat × Nat) :=
+  if isFresh B.word.length s then
+    ((List.range X.n).filter fun g => decide (X.idx (hdPos s) < g ∧ g < X.idx (lastPos s))).map
+      fun g => (ai, 2 * si, g, ctlAt s (X.pos g))
+  else []
+
+def seamsOf (ai : Nat) : List (Nat × Nat × Nat × Nat) :=
+  (List.range (X.segCount ai)).flatMap fun si => X.blockSeams ai si (X.blk ai si)
+
+def seams : List (Nat × Nat × Nat × Nat) := (List.range c.atoms.length).flatMap X.seamsOf
+
+/-! ### The diagram -/
+
+def loc : List Loc :=
+  (List.finRange c.vars).map fun v =>
+    if B.word.length < (X.τ v).val then Loc.fresh (X.idx (X.τ v).val) else Loc.core v.val
+
+def D : Diagram k where
+  groups := X.n
+  coreVars := X.coreVars
+  loc := X.loc
+  states := X.M.map E.C.label
+  nextBits := X.M.map fun p => E.C.word[p]?
+  firstBit := E.a
+  oldEnd := colB I B B.word.length
+  pieces := (List.range c.atoms.length).map X.pieces
+  seams := X.seams
+
+/-! ### The base assignment -/
+
+/-- Base position of core variable `x`. -/
+def corePos (x : Nat) : Nat :=
+  if h : x < c.vars then min (X.τ ⟨x, h⟩).val B.word.length
+  else
+    let r := x - c.vars
+    let ai := r / (X.K * 2)
+    let si := (r % (X.K * 2)) / 2
+    let side := r % 2
+    min (if side = 0 then hdPos (X.blk ai si) else lastPos (X.blk ai si)) B.word.length
+
+theorem corePos_le (x : Nat) : X.corePos x ≤ B.word.length := by
+  unfold corePos
+  split
+  · exact Nat.min_le_right _ _
+  · exact Nat.min_le_right _ _
+
+/-- Value of the base assignment at variable index `v`. -/
+def sigmaVal (v : Nat) : Nat :=
+  if v = 0 then B.word.length
+  else if v = 1 then failureParent B.word
+  else if v < 2 + X.n then E.cur (X.pos (v - 2))
+  else X.corePos (v - 2 - X.n)
+
+theorem pos_le_N (g : Nat) : X.pos g ≤ E.N := by
+  unfold pos
+  rw [List.getD_eq_getElem?_getD]
+  cases h : X.M[g]? with
+  | none => exact Nat.zero_le _
+  | some p => exact (mem_marksOf.mp (List.mem_of_getElem? h)).1
+
+theorem sigmaVal_le (v : Nat) : X.sigmaVal v ≤ B.word.length := by
+  unfold sigmaVal
+  split
+  · exact Nat.le_refl _
+  · split
+    · have := failureParent_take_le B.word B.word.length
+      simpa using this
+    · split
+      · exact E.cur_le (X.pos_le_N _)
+      · exact X.corePos_le _
+
+/-- The base assignment on the compiled clause's variables. -/
+def σ : Var X.D → Fin (prefixGraph I B).size :=
+  fun v => ⟨X.sigmaVal v.val, Nat.lt_succ_of_le (X.sigmaVal_le v.val)⟩
+
+end Cov
+
+namespace Cov
+variable {I : Instance k} {B : Reference k} {E : Ext I B} {c : Clause k} (X : Cov I B E c)
+
+/-! ### Basic block facts -/
+
+theorem blocks_segs {ai : Nat} (hai : ai < c.atoms.length) :
+    Blocks (InBlock E (obsAt c ai)) (Link E (obsAt c ai)) (X.segs ai) :=
+  segments_blocks B.word.length (X.chain_consec ai hai)
+
+theorem segs_flatten (ai : Nat) : (X.segs ai).flatten = X.chain ai := segments_flatten _ _
+
+theorem blk_eq {ai si : Nat} (hsi : si < X.segCount ai) : X.blk ai si = (X.segs ai)[si] := by
+  unfold blk
+  rw [List.getD_eq_getElem?_getD, List.getElem?_eq_getElem hsi, Option.getD_some]
+
+theorem blk_mem {ai si : Nat} (hsi : si < X.segCount ai) : X.blk ai si ∈ X.segs ai := by
+  rw [X.blk_eq hsi]; exact List.getElem_mem hsi
+
+theorem blk_ne_nil {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai) :
+    X.blk ai si ≠ [] :=
+  blocks_mem_ne_nil (X.blocks_segs hai) _ (X.blk_mem hsi)
+
+theorem blk_consec {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai) :
+    Consec (InBlock E (obsAt c ai)) (X.blk ai si) :=
+  blocks_mem_consec (X.blocks_segs hai) _ (X.blk_mem hsi)
+
+theorem blk_sub_chain {ai si : Nat} (hsi : si < X.segCount ai) {x : NNode} (hx : x ∈ X.blk ai si) :
+    x ∈ X.chain ai := by
+  rw [← X.segs_flatten ai]
+  exact List.mem_flatten.mpr ⟨_, X.blk_mem hsi, hx⟩
+
+theorem blk_allowed {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai) {x : NNode}
+    (hx : x ∈ X.blk ai si) : NAllowed (prefixGraph I E.C) (obsAt c ai) x :=
+  X.chain_allowed ai hai x (X.blk_sub_chain hsi hx)
+
+theorem blk_pos_le {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai) {x : NNode}
+    (hx : x ∈ X.blk ai si) : x.1 ≤ E.N := by
+  have := (nallowed_bounds (X.blk_allowed hai hsi hx)).1
+  change x.1 < E.N + 1 at this
+  omega
+
+theorem blk_ctl_lt {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai) {x : NNode}
+    (hx : x ∈ X.blk ai si) : x.2 < (obsAt c ai).size :=
+  (nallowed_bounds (X.blk_allowed hai hsi hx)).2
+
+theorem blk_old {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai)
+    (hf : ¬ isFresh B.word.length (X.blk ai si) = true) : ∀ x ∈ X.blk ai si, x.1 ≤ B.word.length := by
+  apply consec_compat_old (X.blk_consec hai hsi)
+  simpa [isFresh] using hf
+
+theorem blk_fresh_pos {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai)
+    (hf : isFresh B.word.length (X.blk ai si) = true) {i : Nat} (hi : i < (X.blk ai si).length) :
+    ((X.blk ai si)[i]).1 = hdPos (X.blk ai si) + i :=
+  consec_compat_fresh (X.blk_consec hai hsi) (by simpa [isFresh] using hf) i hi
+
+theorem blk_fresh_lastPos {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai)
+    (hf : isFresh B.word.length (X.blk ai si) = true) :
+    lastPos (X.blk ai si) = hdPos (X.blk ai si) + ((X.blk ai si).length - 1) :=
+  fresh_block_lastPos (X.blk_ne_nil hai hsi) (X.blk_consec hai hsi) (by simpa [isFresh] using hf)
+
+theorem hdN_mem {s : List NNode} (hne : s ≠ []) : hdN s ∈ s := by
+  cases s with
+  | nil => exact absurd rfl hne
+  | cons x s => exact List.mem_cons_self ..
+
+theorem lastN_mem {s : List NNode} (hne : s ≠ []) : lastN s ∈ s := by
+  unfold lastN
+  rw [List.getLast?_eq_some_getLast hne]
+  exact List.getLast_mem hne
+
+theorem head?_eq_hdN {s : List NNode} (hne : s ≠ []) : s.head? = some (hdN s) := by
+  cases s with
+  | nil => exact absurd rfl hne
+  | cons x s => rfl
+
+theorem getLast?_eq_lastN {s : List NNode} (hne : s ≠ []) : s.getLast? = some (lastN s) := by
+  unfold lastN
+  rw [List.getLast?_eq_some_getLast hne]
+  rfl
+
+theorem hdPos_hdN (s : List NNode) : hdPos s = (hdN s).1 := by
+  cases s with
+  | nil => rfl
+  | cons x s => rfl
+
+theorem hdCtl_hdN (s : List NNode) : hdCtl s = (hdN s).2 := by
+  cases s with
+  | nil => rfl
+  | cons x s => rfl
+
+theorem lastPos_lastN {s : List NNode} (hne : s ≠ []) : lastPos s = (lastN s).1 := by
+  rw [lastPos, getLast?_eq_lastN hne]; rfl
+
+theorem lastCtl_lastN {s : List NNode} (hne : s ≠ []) : lastCtl s = (lastN s).2 := by
+  rw [lastCtl, getLast?_eq_lastN hne]; rfl
+
+/-- The link between consecutive blocks, by index. -/
+theorem blocks_link_idx {R Q : NNode → NNode → Prop} : ∀ {segs : List (List NNode)},
+    Blocks R Q segs → ∀ si (h : si + 1 < segs.length), Q (lastN segs[si]) (hdN segs[si + 1]) := by
+  intro segs
+  induction segs with
+  | nil => intro _ si h; simp at h
+  | cons s rest ih =>
+    intro hb si h
+    cases rest with
+    | nil => simp at h
+    | cons t rest =>
+      cases si with
+      | zero =>
+        have hs := blocks_head_ne_nil hb
+        have ht := blocks_head_ne_nil (blocks_tail hb)
+        exact blocks_link hb (getLast?_eq_lastN hs) (head?_eq_hdN ht)
+      | succ si =>
+        exact ih (blocks_tail hb) si (by simpa using h)
+
+theorem blk_link {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si + 1 < X.segCount ai) :
+    Link E (obsAt c ai) (lastN (X.blk ai si)) (hdN (X.blk ai (si + 1))) := by
+  rw [X.blk_eq (Nat.lt_of_succ_lt hsi), X.blk_eq hsi]
+  exact blocks_link_idx (X.blocks_segs hai) si hsi
+
+theorem segCount_pos {ai : Nat} (hai : ai < c.atoms.length) : 0 < X.segCount ai := by
+  obtain ⟨q, -, hq⟩ := X.chain_head ai hai
+  have hne : X.chain ai ≠ [] := by
+    intro h; rw [h] at hq; simp at hq
+  unfold segCount segs
+  apply List.length_pos_iff.mpr
+  intro h
+  exact hne ((segments_eq_nil_iff _ _).mp h)
+
+theorem blk_zero_head {ai : Nat} (hai : ai < c.atoms.length) :
+    (X.blk ai 0).head? = (X.chain ai).head? := by
+  have hpos := X.segCount_pos hai
+  rw [← X.segs_flatten ai]
+  cases hs : X.segs ai with
+  | nil => unfold segCount at hpos; rw [hs] at hpos; simp at hpos
+  | cons s rest =>
+    have hne : s ≠ [] := by
+      have := X.blocks_segs hai; rw [hs] at this; exact blocks_head_ne_nil this
+    rw [flatten_head? hne]
+    show ((X.segs ai).getD 0 []).head? = s.head?
+    rw [hs]; rfl
+
+theorem blk_last_last {ai : Nat} (hai : ai < c.atoms.length) :
+    (X.blk ai (X.segCount ai - 1)).getLast? = (X.chain ai).getLast? := by
+  have hpos := X.segCount_pos hai
+  have hlen : (X.segs ai).length = X.segCount ai := rfl
+  rw [← X.segs_flatten ai]
+  have hne := blocks_mem_ne_nil (X.blocks_segs hai)
+  rw [flatten_getLast? hne (s := X.blk ai (X.segCount ai - 1))]
+  rw [X.blk_eq (by omega), List.getLast?_eq_getElem?, List.getElem?_eq_getElem (by omega)]
+  rfl
+
+/-! ### Marks -/
+
+theorem m1_mem_raw : B.word.length + 1 ∈ X.rawMarks := by simp [rawMarks]
+
+theorem N_mem_raw : E.N ∈ X.rawMarks := by simp [rawMarks]
+
+theorem var_mem_raw {v : Fin c.vars} (hv : B.word.length < (X.τ v).val) : (X.τ v).val ∈ X.rawMarks := by
+  simp only [rawMarks, List.append_assoc, List.mem_append, List.mem_cons, List.mem_filterMap]
+  right; left
+  exact ⟨v, List.mem_finRange v, by simp [hv]⟩
+
+theorem blk_hd_mem_raw {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai)
+    (hf : isFresh B.word.length (X.blk ai si) = true) : hdPos (X.blk ai si) ∈ X.rawMarks := by
+  simp only [rawMarks, List.append_assoc, List.mem_append, List.mem_cons, List.mem_flatMap]
+  right; right
+  exact ⟨ai, List.mem_range.mpr hai, X.blk ai si, X.blk_mem hsi, by simp [hf]⟩
+
+theorem blk_last_mem_raw {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai)
+    (hf : isFresh B.word.length (X.blk ai si) = true) : lastPos (X.blk ai si) ∈ X.rawMarks := by
+  simp only [rawMarks, List.append_assoc, List.mem_append, List.mem_cons, List.mem_flatMap]
+  right; right
+  exact ⟨ai, List.mem_range.mpr hai, X.blk ai si, X.blk_mem hsi, by simp [hf]⟩
+
+theorem raw_gt_m : ∀ p ∈ X.rawMarks, B.word.length < p := by
+  intro p hp
+  simp only [rawMarks, List.append_assoc, List.mem_append, List.mem_cons, List.not_mem_nil, or_false,
+    List.mem_filterMap, List.mem_flatMap, List.mem_range] at hp
+  rcases hp with (rfl | rfl) | ⟨v, -, hv⟩ | ⟨ai, hai, s, hs, hps⟩
+  · omega
+  · exact E.m_lt_N
+  · split at hv
+    · rename_i h; simp only [Option.some.injEq] at hv; omega
+    · simp at hv
+  · split at hps
+    · rename_i hf
+      obtain ⟨si, hsi, hse⟩ := List.getElem_of_mem hs
+      have hsi' : si < X.segCount ai := hsi
+      have hb : X.blk ai si = s := (X.blk_eq hsi').trans hse
+      subst hb
+      simp only [isFresh, decide_eq_true_eq] at hf
+      simp only [List.mem_cons, List.mem_singleton] at hps
+      rcases hps with rfl | rfl | h
+      · exact hf
+      · rw [X.blk_fresh_lastPos hai hsi' (by simpa [isFresh] using hf)]; omega
+      · simp at h
+    · simp at hps
+
+theorem raw_le_N : ∀ p ∈ X.rawMarks, p ≤ E.N := by
+  intro p hp
+  simp only [rawMarks, List.append_assoc, List.mem_append, List.mem_cons, List.not_mem_nil, or_false,
+    List.mem_filterMap, List.mem_flatMap, List.mem_range] at hp
+  rcases hp with (rfl | rfl) | ⟨v, -, hv⟩ | ⟨ai, hai, s, hs, hps⟩
+  · exact E.m_lt_N
+  · exact Nat.le_refl _
+  · split at hv
+    · simp only [Option.some.injEq] at hv
+      rw [← hv]
+      have := (X.τ v).isLt
+      change (X.τ v).val < E.N + 1 at this
+      omega
+    · simp at hv
+  · split at hps
+    · rename_i hf
+      obtain ⟨si, hsi, hse⟩ := List.getElem_of_mem hs
+      have hsi' : si < X.segCount ai := hsi
+      have hb : X.blk ai si = s := (X.blk_eq hsi').trans hse
+      subst hb
+      have hne := X.blk_ne_nil hai hsi'
+      simp only [List.mem_cons, List.mem_singleton] at hps
+      rcases hps with rfl | rfl | h
+      · rw [hdPos_hdN]; exact X.blk_pos_le hai hsi' (hdN_mem hne)
+      · rw [lastPos_lastN hne]; exact X.blk_pos_le hai hsi' (lastN_mem hne)
+      · simp at h
+    · simp at hps
+
+theorem mem_M {p : Nat} : p ∈ X.M ↔ p ∈ X.rawMarks := by
+  unfold M
+  rw [mem_marksOf]
+  constructor
+  · exact fun h => h.2
+  · exact fun h => ⟨X.raw_le_N p h, h⟩
+
+theorem M_gt_m {p : Nat} (hp : p ∈ X.M) : B.word.length < p := X.raw_gt_m p (X.mem_M.mp hp)
+
+theorem M_le_N {p : Nat} (hp : p ∈ X.M) : p ≤ E.N := X.raw_le_N p (X.mem_M.mp hp)
+
+theorem m1_mem_M : B.word.length + 1 ∈ X.M := X.mem_M.mpr X.m1_mem_raw
+
+theorem N_mem_M : E.N ∈ X.M := X.mem_M.mpr X.N_mem_raw
+
+theorem n_pos : 0 < X.n := List.length_pos_of_mem X.m1_mem_M
+
+theorem idx_lt {p : Nat} (hp : p ∈ X.M) : X.idx p < X.n := idxM_lt hp
+
+theorem pos_idx {p : Nat} (hp : p ∈ X.M) : X.pos (X.idx p) = p := by
+  unfold pos idx
+  rw [List.getD_eq_getElem?_getD, List.getElem?_eq_getElem (idxM_lt hp), Option.getD_some]
+  exact getElem_idxM hp
+
+theorem pos_eq {g : Nat} (hg : g < X.n) : X.pos g = X.M[g] := by
+  unfold pos
+  rw [List.getD_eq_getElem?_getD, List.getElem?_eq_getElem hg, Option.getD_some]
+
+theorem pos_mem {g : Nat} (hg : g < X.n) : X.pos g ∈ X.M := by
+  rw [X.pos_eq hg]; exact List.getElem_mem hg
+
+theorem idx_pos {g : Nat} (hg : g < X.n) : X.idx (X.pos g) = g := by
+  rw [X.pos_eq hg]; exact idxM_getElem hg
+
+theorem idx_m1 : X.idx (B.word.length + 1) = 0 := by
+  apply idxM_min X.m1_mem_M
+  intro q hq
+  exact X.M_gt_m hq
+
+theorem idx_N : X.idx E.N = X.n - 1 := by
+  apply idxM_max X.N_mem_M
+  intro q hq
+  exact X.M_le_N hq
+
+theorem pos_zero : X.pos 0 = B.word.length + 1 := by
+  have := X.pos_idx X.m1_mem_M
+  rw [X.idx_m1] at this
+  exact this
+
+theorem pos_last : X.pos (X.n - 1) = E.N := by
+  have := X.pos_idx X.N_mem_M
+  rw [X.idx_N] at this
+  exact this
+
+theorem pos_gt_m {g : Nat} (hg : g < X.n) : B.word.length < X.pos g := X.M_gt_m (X.pos_mem hg)
+
+theorem pos_strict {g h : Nat} (hgh : g < h) (hh : h < X.n) : X.pos g < X.pos h := by
+  rw [X.pos_eq (Nat.lt_trans hgh hh), X.pos_eq hh]
+  exact marksOf_lt _ _ hgh
+
+theorem pos_mono {g h : Nat} (hgh : g ≤ h) (hh : h < X.n) : X.pos g ≤ X.pos h := by
+  rcases Nat.lt_or_eq_of_le hgh with h' | h'
+  · exact Nat.le_of_lt (X.pos_strict h' hh)
+  · subst h'; exact Nat.le_refl _
+
+theorem pos_lt_N {g : Nat} (hg : g < X.n - 1) : X.pos g < E.N := by
+  have := X.pos_strict hg (by have := X.n_pos; omega)
+  rw [X.pos_last] at this
+  exact this
+
+theorem idx_mono {p q : Nat} (hp : p ∈ X.M) (hq : q ∈ X.M) (hpq : p < q) : X.idx p < X.idx q :=
+  idxM_mono hp hq hpq
+
+theorem idx_le {p q : Nat} (hp : p ∈ X.M) (hq : q ∈ X.M) (hpq : p ≤ q) : X.idx p ≤ X.idx q :=
+  idxM_le_of_le hp hq hpq
+
+theorem idx_inj {p q : Nat} (hp : p ∈ X.M) (hq : q ∈ X.M) (h : X.idx p = X.idx q) : p = q :=
+  idxM_injective hp hq h
+
+theorem n_eq_one_iff : X.n = 1 ↔ E.N = B.word.length + 1 := by
+  constructor
+  · intro h
+    have h1 := X.pos_zero
+    have h2 := X.pos_last
+    rw [h] at h2
+    simp only [Nat.sub_self] at h2
+    rw [h1] at h2
+    exact h2.symm
+  · intro h
+    have hidx := X.idx_N
+    rw [h, X.idx_m1] at hidx
+    have := X.n_pos
+    omega
+
+theorem var_mem_M {v : Fin c.vars} (hv : B.word.length < (X.τ v).val) : (X.τ v).val ∈ X.M :=
+  X.mem_M.mpr (X.var_mem_raw hv)
+
+theorem blk_hd_mem_M {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai)
+    (hf : isFresh B.word.length (X.blk ai si) = true) : hdPos (X.blk ai si) ∈ X.M :=
+  X.mem_M.mpr (X.blk_hd_mem_raw hai hsi hf)
+
+theorem blk_last_mem_M {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai)
+    (hf : isFresh B.word.length (X.blk ai si) = true) : lastPos (X.blk ai si) ∈ X.M :=
+  X.mem_M.mpr (X.blk_last_mem_raw hai hsi hf)
+
+/-! ### Diagram fields -/
+
+theorem D_groups : X.D.groups = X.n := rfl
+
+theorem D_coreVars : X.D.coreVars = X.coreVars := rfl
+
+theorem D_firstBit : X.D.firstBit = E.a := rfl
+
+theorem D_oldEnd : X.D.oldEnd = colB I B B.word.length := rfl
+
+theorem markState_eq {g : Nat} (hg : g < X.n) : markState X.D g = E.C.label (X.pos g) := by
+  unfold markState
+  show (X.M.map E.C.label).getD g _ = _
+  rw [List.getD_eq_getElem?_getD, List.getElem?_map, List.getElem?_eq_getElem hg, Option.map_some,
+    Option.getD_some, X.pos_eq hg]
+
+theorem nextOf_eq {g : Nat} (hg : g < X.n) : nextOf X.D g = E.C.word[X.pos g]? := by
+  unfold nextOf
+  show (X.M.map fun p => E.C.word[p]?).getD g none = _
+  rw [List.getD_eq_getElem?_getD, List.getElem?_map, List.getElem?_eq_getElem hg, Option.map_some,
+    Option.getD_some, X.pos_eq hg]
+
+theorem fm_eq {g : Nat} (hg : g < X.n) (col : Colour k) :
+    fm I X.D g col = freshMap I (E.C.label (X.pos g)) (E.C.word[X.pos g]?) col := by
+  unfold fm
+  rw [X.markState_eq hg, X.nextOf_eq hg]
+
+/-- The compiler's fresh colour map at a mark, read at the cursor, is the mark's colour. -/
+theorem fm_pos {g : Nat} (hg : g < X.n) :
+    fm I X.D g (colB I B (E.cur (X.pos g))) = colB I E.C (X.pos g) := by
+  rw [X.fm_eq hg, E.colC_fresh (X.pos_gt_m hg) (X.pos_le_N g)]
+
+theorem piecesOf_eq {ai : Nat} (hai : ai < c.atoms.length) : piecesOf X.D ai = X.pieces ai := by
+  unfold piecesOf
+  show ((List.range c.atoms.length).map X.pieces).getD ai [] = _
+  rw [List.getD_eq_getElem?_getD, List.getElem?_map, List.getElem?_eq_getElem (by simpa using hai),
+    Option.map_some, Option.getD_some, List.getElem_range]
+
+theorem locOf_eq {v : Nat} (hv : v < c.vars) :
+    locOf X.D v = if B.word.length < (X.τ ⟨v, hv⟩).val then Loc.fresh (X.idx (X.τ ⟨v, hv⟩).val)
+      else Loc.core v := by
+  unfold locOf
+  show X.loc.getD v _ = _
+  unfold loc
+  rw [List.getD_eq_getElem?_getD, List.getElem?_map, List.getElem?_eq_getElem (by simpa using hv),
+    Option.map_some, Option.getD_some, List.getElem_finRange]
+  rfl
+
+/-! ### The assignment -/
+
+theorem σ_val (v : Var X.D) : (X.σ v).val = X.sigmaVal v.val := rfl
+
+theorem σ_end : (X.σ (endVar X.D)).val = B.word.length := rfl
+
+theorem σ_init : (X.σ (initVar X.D)).val = failureParent B.word := rfl
+
+theorem σ_z {g : Nat} (hg : g < X.n) : (X.σ (zVar X.D g)).val = E.cur (X.pos g) := by
+  rw [σ_val, zVar, dif_pos (show g < X.D.groups from hg)]
+  show X.sigmaVal (2 + g) = E.cur (X.pos g)
+  unfold sigmaVal
+  rw [if_neg (by omega), if_neg (by omega), if_pos (show 2 + g < 2 + X.n by omega),
+    show 2 + g - 2 = g by omega]
+
+theorem σ_core {x : Nat} (hx : x < X.coreVars) : (X.σ (coreVar X.D x)).val = X.corePos x := by
+  rw [σ_val, coreVar, dif_pos (show x < X.D.coreVars from hx)]
+  show X.sigmaVal (2 + X.n + x) = X.corePos x
+  unfold sigmaVal
+  rw [if_neg (by omega), if_neg (by omega), if_neg (show ¬ (2 + X.n + x < 2 + X.n) by omega),
+    show 2 + X.n + x - 2 - X.n = x by omega]
+
+theorem corePos_var {v : Nat} (hv : v < c.vars) (hold : (X.τ ⟨v, hv⟩).val ≤ B.word.length) :
+    X.corePos v = (X.τ ⟨v, hv⟩).val := by
+  unfold corePos
+  rw [dif_pos hv]
+  exact Nat.min_eq_left hold
+
+theorem segCount_le_K {ai : Nat} (hai : ai < c.atoms.length) : X.segCount ai ≤ X.K := by
+  unfold K
+  apply le_sum_of_mem
+  exact List.mem_map.mpr ⟨ai, List.mem_range.mpr hai, rfl⟩
+
+theorem cix_decode {ai si side : Nat} (hsi : si < X.K) (hside : side < 2) :
+    (X.cix ai si side - c.vars) / (X.K * 2) = ai ∧
+      ((X.cix ai si side - c.vars) % (X.K * 2)) / 2 = si ∧ (X.cix ai si side - c.vars) % 2 = side := by
+  have hK : 0 < X.K := by omega
+  have e : X.K * 2 * ai = ai * X.K * 2 := by
+    rw [Nat.mul_comm X.K 2, Nat.mul_assoc, Nat.mul_comm X.K ai, Nat.mul_comm 2 (ai * X.K)]
+  have e3 : X.K * ai = ai * X.K := Nat.mul_comm _ _
+  have hr : X.cix ai si side - c.vars = (si * 2 + side) + (X.K * 2) * ai := by
+    unfold cix
+    omega
+  have hlt : si * 2 + side < X.K * 2 := by omega
+  refine ⟨?_, ?_, ?_⟩
+  · rw [hr, Nat.add_mul_div_left _ _ (by omega), Nat.div_eq_of_lt hlt, Nat.zero_add]
+  · rw [hr, Nat.add_mul_mod_self_left, Nat.mod_eq_of_lt hlt, show si * 2 + side = side + 2 * si by omega,
+      Nat.add_mul_div_left _ _ (by decide : 0 < 2), Nat.div_eq_of_lt hside, Nat.zero_add]
+  · rw [hr, show si * 2 + side + X.K * 2 * ai = side + 2 * (si + X.K * ai) by omega,
+      Nat.add_mul_mod_self_left, Nat.mod_eq_of_lt hside]
+
+theorem corePos_cix_hd {ai si : Nat} (hsi : si < X.K) :
+    X.corePos (X.cix ai si 0) = min (hdPos (X.blk ai si)) B.word.length := by
+  have hge : ¬ X.cix ai si 0 < c.vars := by unfold cix; omega
+  obtain ⟨h1, h2, h3⟩ := X.cix_decode (ai := ai) hsi (by decide : 0 < 2)
+  unfold corePos
+  rw [dif_neg hge]
+  simp only [h1, h2, h3]
+  rfl
+
+theorem corePos_cix_last {ai si : Nat} (hsi : si < X.K) :
+    X.corePos (X.cix ai si 1) = min (lastPos (X.blk ai si)) B.word.length := by
+  have hge : ¬ X.cix ai si 1 < c.vars := by unfold cix; omega
+  obtain ⟨h1, h2, h3⟩ := X.cix_decode (ai := ai) hsi (by decide : 1 < 2)
+  unfold corePos
+  rw [dif_neg hge]
+  simp only [h1, h2, h3]
+  rfl
+
+theorem cix_lt {ai si side : Nat} (hai : ai < c.atoms.length) (hsi : si < X.K) (hside : side < 2) :
+    X.cix ai si side < X.coreVars := by
+  unfold cix coreVars
+  have h1 : (ai * X.K + si) * 2 + side < (ai * X.K + X.K) * 2 := by omega
+  have h2 : (ai * X.K + X.K) * 2 = (ai + 1) * X.K * 2 := by rw [Nat.succ_mul]
+  have h3 : (ai + 1) * X.K * 2 ≤ c.atoms.length * X.K * 2 :=
+    Nat.mul_le_mul_right _ (Nat.mul_le_mul_right _ hai)
+  omega
+
+theorem vars_le_coreVars : c.vars ≤ X.coreVars := by unfold coreVars; omega
+
+end Cov
+
 end RankQueryCoverage
 end Subtail
