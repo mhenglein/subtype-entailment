@@ -241,4 +241,33 @@ theorem reachesAny_correct (all : List α) (hAll : ∀ a, a ∈ all)
   · rintro ⟨y, hy, ha⟩
     exact ⟨y, (mem_reachable_iff succ all hAll).mpr hy, ha⟩
 
+/-- A cardinal bound can be computed without materializing all states. Its
+completeness proof still refers to the explicit finite enumeration. -/
+def reachesAnyWithFuel (fuel : Nat) (x : α) (accept : α → Bool) : Bool :=
+  (saturate succ fuel [x]).any accept
+
+theorem reachesAnyWithFuel_correct (all : List α) (hAll : ∀ a, a ∈ all)
+    (fuel : Nat) (hFuel : all.length ≤ fuel) (x : α) (accept : α → Bool) :
+    reachesAnyWithFuel succ fuel x accept = true ↔
+      ∃ y, Reach succ x y ∧ accept y = true := by
+  have hc : IsClosed succ (iter succ fuel [x]) := by
+    rcases closed_or_grow succ (v := [x]) fuel with hc | hg
+    · exact hc
+    · have hn := nodup_iter succ (v := [x]) (by simp) fuel
+      have hle := hn.length_le_of_subset (l₂ := all) (fun y _ => hAll y)
+      simp only [List.length_singleton] at hg
+      omega
+  simp only [reachesAnyWithFuel, saturate_eq_iter, List.any_eq_true]
+  constructor
+  · rintro ⟨y, hy, ha⟩
+    refine ⟨y, ?_, ha⟩
+    apply run_of_mem_iter succ fuel [x] _ y hy
+    intro z hz
+    have hz' : z = x := List.mem_singleton.mp hz
+    subst z
+    exact Reach.refl
+  · rintro ⟨y, hy, ha⟩
+    refine ⟨y, mem_of_run_closed succ hc ?_ hy, ha⟩
+    exact subset_iter succ fuel x (by simp)
+
 end Subtail.FiniteSearch
