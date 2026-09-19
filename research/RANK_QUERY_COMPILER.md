@@ -1,5 +1,14 @@
 # Rank-query compiler and proposed unrestricted witness bound
 
+**September 20 correction.** The old universal weight estimate
+`64*k*T^(2*T+2)` is false for the concrete enumerator: a checked terminal
+five-state counterexample emits a larger clause. The semantic compiler and
+qualitative C081 decision remain checked. C082 proves the separate replacement
+`64*k*T^(6*T^2+2)` and the resulting Fhat witness bound. The original F by itself
+and a smaller existential compiler are not refuted. Earlier unqualified size
+arguments and reviews below are superseded at precisely that point; the text
+is preserved as history. [Exact correction and dependency audit](../notes/2026-09-20-post-c081-quantitative-integration.md).
+
 Date: 2026-09-17. Base main: `afbb2954bb984998db3ecac252b5e2e23f62341a`.
 
 **PROPOSED COMPLETE PROOF; INDEPENDENT REVIEW PENDING; NOT LEAN-CHECKED.**

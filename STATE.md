@@ -1,5 +1,27 @@
 # Subtail — current research state
 
+## September 20: corrected quantitative theorem (C082)
+
+[C082](research/claims.md#c082) proves an explicit terminal witness bound with
+`T_0=k+10`, `T_(j+1)=64*k*T_j^(6*T_j^2+2)`, `Fhat(1)=0` and
+`Fhat(k)=2*(k+1)*product_(j=1..k-2)(T_j+2)` for k>=2. It covers the original
+Witness and needs only terminal final states. Joint interval reconstruction
+retains the shared word and every observation. Q004 now has the ordinary
+explicit source-visit bound Fhat(k)+1.
+
+A checked five-state counterexample **refutes the old universal concrete
+compiler weight estimate** `64*k*T^(2*T+2)`. The original F alone and an
+existential smaller compiler remain open. The earlier favourable size audits
+are corrected at their entry points; their semantic results are kept separate.
+C081's qualitative decision does not depend on the false size estimate.
+
+[Independent source readback](notes/2026-09-20-c080-quantitative-independent-readback.md)
+and [fresh combined build, kernel and runtime checks](notes/2026-09-20-post-c081-quantitative-integration.md)
+pass at 7525724. The optional new modules leave the original core definitions
+and paper source pins unchanged. This does not establish practical runtime or
+a complexity class. Full original-input accounting and a proved performance
+improvement are active under #53.
+
 ## September 20: ordinary paper and post-C081 review checkpoint
 
 The [ordinary mathematical paper](paper/manuscript.md) now gives the complete
@@ -28,10 +50,9 @@ old product-root propagation rule. No decision or undecidability result for
 that extension is claimed.
 
 The [complexity note](notes/2026-09-19-c081-complexity-review.md) records a
-conditional alternative witness-enumeration route using the unintegrated
-corrected quantitative branch. The [independent accounting readback](notes/2026-09-20-post-c081-cost-readback.md)
-repairs omitted construction and storage costs. Complete original-input costs,
-quantitative integration and exact lower-bound transfers remain open. Its
+alternative witness-enumeration route whose quantitative dependency is now
+supplied by C082 above. The [independent accounting readback](notes/2026-09-20-post-c081-cost-readback.md)
+repairs omitted construction and storage costs. Complete original-input costs and exact lower-bound transfers remain open. Its
 superseded draft estimates are not established bounds. The current executable's performance
 is unchanged, including the 13 diagnostic timeouts. A useful interface and
 proved optimizations are still required.

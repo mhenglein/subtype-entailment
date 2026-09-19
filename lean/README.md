@@ -11,7 +11,9 @@ summary instance and its two branches: `InfiniteDecision.infiniteWitnessCheck`
 and `RankQueryDecision.terminalWitnessCheck`. Their hypotheses are proved for
 the constructed instances. The runtime is total but can be very expensive;
 external test caps mean UNKNOWN and are not answers from the formal algorithm.
-C080's explicit quantitative U/F estimates are separate open claims.
+The original C080 concrete weight estimate is refuted; its original F alone
+remains open. [C082](../research/claims.md#c082) proves a larger sufficient
+weight and terminal witness bound in optional modules.
 
 ## Role in the research process
 
@@ -24,7 +26,7 @@ mathematical review. Existing checks are still required for Lean changes.
 Conditional theorem hypotheses below remain open mathematics, not progress
 obtained merely by extending the formal framework. The September 18
 user-requested continuation checks the rank/first-return dependency of the
-concrete candidate. The shared-word compiler and its semantic coverage are now checked; the explicit quantitative bound remains open.
+concrete candidate. The shared-word compiler, semantic coverage and corrected C082 quantitative bound are now checked.
 
 ## Build and check
 
@@ -37,6 +39,7 @@ From the repository root:
 ```sh
 python3 scripts/check_lean.py
 python3 scripts/check_entailment_decision.py
+python3 scripts/check_rank_weight_native.py
 python3 experiments/check_entailment_decision.py
 python3 scripts/check_rank_decision.py
 python3 scripts/check_subtype_summary.py
@@ -67,7 +70,10 @@ lake env leanchecker --verbose Subtail
 lake env lean Subtail/Audit.lean
 ```
 
-The new modules are included by `Subtail.lean`. Their complete public dependency
+The qualitative core modules are included by `Subtail.lean`. The three C082
+quantitative modules are optional imports; `check_rank_weight_native.py`
+builds, kernel-replays and audits them explicitly. Their check runs inside the
+same cached Lean job, with a small audit artifact. Complete public dependency
 audits are enforced by [the Lean workflow](../.github/workflows/lean.yml), which
 since 2026-09-19 runs the former foundation, milestone, query and
 graph/interface audits as steps of one cached build (CI diet, #37).
@@ -81,6 +87,8 @@ Its graph/interface step audits all 65 public declarations of the four graph mod
 | [AbsorbingTerminal.lean](Subtail/AbsorbingTerminal.lean) | Under strong absorption, witness existence iff a witnessed safe cycle is reachable or a witness exists in the safely pruned terminal instance |
 | [SubtypeTerminalBridge.lean](Subtail/SubtypeTerminalBridge.lean) | Exact normalized non-entailment iff InfWitness of the summary instance or the terminal decision returns true; both branch Booleans are composed in EntailmentDecision |
 | [SummaryBridge.lean](Subtail/SummaryBridge.lean), [SummaryAutomaton.lean](Subtail/SummaryAutomaton.lean) | Exact ordered cuts and prefix-denial characterization; explicit two-summary instance; same-word separation equivalence and all-state strong absorption |
+| [RankQueryWeightCounterexample.lean](Subtail/RankQueryWeightCounterexample.lean) | Terminal five-state counterexample to the old universal concrete `ClosureFor` weight conjunct |
+| [RankQueryWeightBound.lean](Subtail/RankQueryWeightBound.lean), [RankQueryLengthBound.lean](Subtail/RankQueryLengthBound.lean) | C082: corrected whole-conjunction weight bound, joint bounded reconstruction and original terminal witness length equivalence |
 | [RankQueryDecision.lean](Subtail/RankQueryDecision.lean) | Total executable terminal witness decision; exact original Witness equivalence; no numerical bound premise |
 | [RankWitnessReference.lean](Subtail/RankWitnessReference.lean) | Original nonempty witnesses give safe reversed references; positive prefix safety |
 | [RankQueryFinishTrace.lean](Subtail/RankQueryFinishTrace.lean) | Finish iff no-return safe completion; original witness reconstruction; maximal-rank completion |
@@ -100,9 +108,9 @@ Its graph/interface step audits all 65 public declarations of the four graph mod
 | [FirstReturnGenerator.lean](Subtail/FirstReturnGenerator.lean), [FirstReturnColours.lean](Subtail/FirstReturnColours.lean) | First-hit iff literal first return; complete colour/mask and F/S/K0/K1 graph equality |
 | [RankQueryFirstReturn.lean](Subtail/RankQueryFirstReturn.lean) | Graph construction transferred to the actual query graph; single entrance, fresh-edge shape, and at most `O.size+1` maximal forward fresh intervals of a product-simple accepted path |
 | [RankQueryCompiler.lean](Subtail/RankQueryCompiler.lean) | Stage 4c, executable part: fresh/core colour maps, core/slice/edge/interval observers, bounded portal `Diagram`s, `validDiagram`/`compileValid`/`compileDiagram` mirroring `rank_preimage.compile_diagram`, and `preimageOver`; differential-checked against the Python compiler |
-| [RankQuerySound.lean](Subtail/RankQuerySound.lean) | Stage 4c, reverse direction of the Closure Lemma: generator traces of the interval product, cursor identification, `extRef_firstReturn`/`extRef_safe`, `compiled_extension`, colour/edge identification of the extension graph, piece-wise reassembly (`piece_run`, `chain_run`, `atom_accepts`) and `compile_sound`/`preimage_sound`/`closure_reverse`: every base model of the compiled preimage yields a safe first-return extension modelling the query, for any diagram enumeration; the forward direction is proved separately in RankQueryCoverage; the weight bound remains open |
+| [RankQuerySound.lean](Subtail/RankQuerySound.lean) | Stage 4c, reverse direction of the Closure Lemma: generator traces of the interval product, cursor identification, `extRef_firstReturn`/`extRef_safe`, `compiled_extension`, colour/edge identification of the extension graph, piece-wise reassembly (`piece_run`, `chain_run`, `atom_accepts`) and `compile_sound`/`preimage_sound`/`closure_reverse`: every base model of the compiled preimage yields a safe first-return extension modelling the query, for any diagram enumeration; the forward direction is proved separately in RankQueryCoverage; the original weight contract is refuted; C082 supplies a separate corrected bound |
 | [RankQueryEnumeration.lean](Subtail/RankQueryEnumeration.lean), [RankQueryEnumerationAudit.lean](Subtail/RankQueryEnumerationAudit.lean) | Stage 4b, enumerator: finite `diagrams c b` with exact membership `mem_diagrams : D ∈ diagrams c b ↔ Bounded c b D`, the executable `preimage I budget φ`, `preimage_sound` (from `closure_reverse`) and `preimage_iff_of_coverage` conditional on `DiagramCoverage` |
-| [RankQueryCoverage.lean](Subtail/RankQueryCoverage.lean) | Stage 4b, coverage: `coverage I : DiagramCoverage I budget` for an explicit computable `budget` (chains → blocks → global marks → bounded valid diagram → joint base model), hence `closure_iff`: `Sat (prefixGraph I B) (preimage I budget φ) ↔ ∃ C, FirstReturnExt I B C ∧ Sat (prefixGraph I C) φ` for every safe `B`, the first conjunct of `ClosureFor I (preimage I budget)`; the weight conjunct (stage 5) is NOT proved |
+| [RankQueryCoverage.lean](Subtail/RankQueryCoverage.lean) | Stage 4b, coverage: `coverage I : DiagramCoverage I budget` for an explicit computable `budget` (chains → blocks → global marks → bounded valid diagram → joint base model), hence `closure_iff`: `Sat (prefixGraph I B) (preimage I budget φ) ↔ ∃ C, FirstReturnExt I B C ∧ Sat (prefixGraph I C) φ` for every safe `B`, the first conjunct of `ClosureFor I (preimage I budget)`; the old weight conjunct is refuted; C082 proves a different sufficient recurrence |
 | [TreeSemantics.lean](Subtail/TreeSemantics.lean), [CanonicalModel.lean](Subtail/CanonicalModel.lean), [CanonicalModelAudit.lean](Subtail/CanonicalModelAudit.lean) | Stage 6 foundation: arbitrary prefix-closed path-set trees, the four normalized constraint forms, inductive propagation closure, `satisfiable_iff_forced_safe`, `not_entails_iff_canonical`, and all-length semantic regression proofs |
 | [StackSummary.lean](Subtail/StackSummary.lean), [StackReachability.lean](Subtail/StackReachability.lean), [CanonicalReachability.lean](Subtail/CanonicalReachability.lean), [StackSummaryAudit.lean](Subtail/StackSummaryAudit.lean) | Stage 6 second layer: balanced excursions, minimum-stack normal form (`reaches_iff_normal`), executable exact reachability, `derived_iff_reaches`, total `satCheck_correct`, supplied-address `separationCheck_iff_countermodel`; supplied-address layer, composed into full entailment by EntailmentDecision |
 | [ExpressionNormalization.lean](Subtail/ExpressionNormalization.lean) | Finite expression syntax, exact fresh definitions, model extension/restriction and unconditional `normalize_entails_iff` |
@@ -123,8 +131,11 @@ Python checks, but is not yet formalized.
 as statement definitions. `RankQueryDecision.rankDecisionStatement` now proves
 the last for the concrete preimage compiler without a numerical bound premise. The first
 conjunct of `ClosureFor I (preimage I budget)` (both semantic directions) is
-proved in `RankQueryCoverage.lean` (`closure_iff`); its weight conjunct and
-`ClosureStatement` remain open at that stronger quantitative scope. Its literal graph
+proved in `RankQueryCoverage.lean` (`closure_iff`). Its old concrete weight
+conjunct is refuted by `RankQueryWeightCounterexample`; an existential smaller
+compiler in `ClosureStatement` remains open. The old conditional unwind
+lemmas remain valid under their explicit hypotheses. C082 proves a different
+sufficient weight and witness bound. Its literal graph
 and observer semantics are now default-imported through the checked
 first-return query interface. See
 [the statement readback](../notes/2026-09-18-lean-rank-query-statement.md) and
@@ -144,11 +155,10 @@ discharge those parameters.
 
 The finite marked-diagram enumerator, semantic coverage, shared-interval
 product, both preimage directions, terminal decision, arbitrary-tree summary,
-C029, normalization and final composition are now checked. The unproved
-quantitative weight estimates and explicit F are not assumptions of C081.
-The earlier rank and interval bounds are not by themselves word-length or
-source-visit bounds; Q004's computable existence bound instead follows by
-classifying all finite terminal inputs and searching only positive ones.
+C029, normalization and final composition are checked. The original U/F are
+not assumptions of C081. C082 gives a separate corrected word-length bound;
+Q004's ordinary source-visit bound is now Fhat(k)+1. Its older classification
+proof remains valid independently.
 
 The current binary formalization does not claim results for every finite
 alphabet. The general statements in the research notes retain their separate

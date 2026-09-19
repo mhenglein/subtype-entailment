@@ -11,11 +11,11 @@ silently strengthen its signature, tree domain, complexity or quantitative bound
 |---|---|---|---|
 | 1 | Ordinary mathematical paper | Full terminal preimage construction and proof, exact semantic bridge, infinite branch, termination, worked examples and checked-declaration map; independent exposition readback | Ordinary draft and follow-up exposition readback complete |
 | 1 | Focused novelty review | Primary-source theorem matrix; backward/forward citation trail; exact new/inherited/uncertain statements; recorded search limits | Focused source comparison complete; priority and exact transfers remain uncertain |
-| 2 | Complexity | Explicit effective resource bound with input encoding and algorithm identified; independent readback of quantitative proposals; lower-bound transfers proved or left conditional | Conditional backend accounting reviewed and corrected; quantitative integration and complete input costs remain |
-| 3 | Usable verified algorithm | Measured costs, at least one meaningful proved improvement, small interface, sound status handling and explanatory examples; failure evidence independently checked where supplied | Planned |
+| 2 | Complexity | Explicit effective resource bound with input encoding and algorithm identified; independent readback of quantitative proposals; lower-bound transfers proved or left conditional | C082 quantitative source reviewed and freshly checked; complete input accounting is under review |
+| 3 | Usable verified algorithm | Measured costs, at least one meaningful proved improvement, small interface, sound status handling and explanatory examples; failure evidence independently checked where supplied | Global safe-reference gate implementation and proof active; interface remains |
 | 4 | Explicit-top study | Exact problem, proof-dependency audit, tested reductions/obstructions and a feasibility conclusion with remaining obligations | Feasibility study complete; naive encodings fail, new label-aware semantics needed |
 | 4 | Other transfers | Separate arguments or counterexamples for regular/finite trees, arities, constructors and variance; standalone automata results identified | Regular-transfer ordinary proof and boundary map independently reviewed; new signature theorems remain open |
-| 5 | Reader package and checkpoint | Consistent README/paper/proof map, reproduction, issue disposition and immutable checkpoint; metadata accurately records licensing/authorship status | Reader package prepared; final publication/checkpoint readback pending |
+| 5 | Reader package and checkpoint | Consistent README/paper/proof map, reproduction, issue disposition and immutable checkpoint; metadata accurately records licensing/authorship status | Published 29cda9a, all four CI runs PASS; tag c081-research-2026-09-20 verified |
 
 Marcus chose **licensing pending** and **author/affiliation placeholders**.
 Do not add a license grant, assign human authorship, or describe the checkpoint
@@ -52,9 +52,10 @@ name. The main new writing risk is mistranslating the large preimage proof or
 its quantifiers; an independent readback is an acceptance gate.
 
 The former `ClosureFor` bundles semantic closure with a numerical bound. The
-qualitative proof uses the semantic part proved separately. The old numerical
-bound, its concrete-compiler counterexample, a replacement bound, and the
-original witness formula must remain distinct during review of #47/#48.
+qualitative proof uses the semantic part proved separately. The old universal numerical weight bound for the concrete compiler is now
+refuted. C082 records the separately proved larger bound. The original F
+alone and an existential smaller compiler remain open. Exact source/readback
+and fresh combined checks are in the [integration note](../notes/2026-09-20-post-c081-quantitative-integration.md).
 
 ## Experiments and review
 
@@ -81,7 +82,7 @@ or imply all investigations have started.
 - [Focused novelty review](../notes/prior-work/c081-review-2026-09-19.md): inherited,
   candidate-new and uncertain claims, exact signatures, backward/forward trail.
 - [Complexity investigation](../notes/2026-09-19-c081-complexity-review.md): an
-  alternative terminal enumerator conditional on the released corrected Fhat
+  alternative terminal enumerator using the corrected C082 Fhat
   theorem; [independent accounting corrections](../notes/2026-09-20-post-c081-cost-readback.md).
   Complete normalization/summary costs and lower-bound transfers remain open.
   The separate guarded NP99 reduction supplies a PSPACE upper bound only for
@@ -100,7 +101,8 @@ A small guarded example running successfully does not validate backend speed.
 The regular construction gives a route to finite countermodel output, but no
 extractor or verified optimized interface has been implemented in this checkpoint.
 
-Quantitative proposals #47/#48, direct-realization proposal #51 and preserved
+Quantitative #48 is integrated through its exact released files with the corrected
+C082 status; #47 preserves its discovery argument. Direct-realization #51 and preserved
 advisory notes #44/#45 remain separate contributions. Their open disposition is
 intentional: the paper checkpoint does not integrate, discard, or certify their
 unique content. Reconcile each exact patch and its released scope before closing

@@ -991,6 +991,16 @@ all-sequences or unrestricted solver.
 
 ### C080 — Candidate unrestricted terminal decision by rank-query preimages
 
+**September 20 correction.** The old universal clause-weight conjunct for
+`preimage I RankQueryCoverage.budget` is **REFUTED (LEAN + independent readback)**
+by `RankQueryWeightCounterexample.terminal_counterexample`. The bundle below
+is not an established quantitative theorem. The original F alone and an
+existentially chosen smaller compiler remain open. Semantic preimage closure,
+terminal decidability and C081 remain checked and do not use the false conjunct.
+The larger replacement bound is recorded separately as [C082](#c082).
+[Exact scope, provenance and dependency correction](../notes/2026-09-20-post-c081-quantitative-integration.md).
+The original proposed statement and discovery history follow.
+
 **Statement (proposed).** For every finite binary terminal instance with k
 states, witness existence is equivalent to satisfaction of a finite existential
 directed regular-path query with finite-colour guards on finitely many
@@ -1046,16 +1056,16 @@ ordered-cut/forced-root/prefix-denial characterization, exact same-word
 all-state strong absorption. The executable construction retains UNSAT as a
 Bad bit. [Bridge proof and independent readback](../notes/2026-09-19-subtype-summary-bridge.md).
 
-NOT Lean-checked in this integrated checkpoint: the clause-weight conjunct of
-`ClosureFor` and explicit `F(k)`. The later [C081](#c081) supplies the complete
-qualitative stage-6 entailment theorem, including normalization and executable
-composition, without those numerical claims. Separate unintegrated counterexample
-and replacement-bound proposals are tracked in #47/#48; this contribution does
-not validate or integrate them. The absorbing safe-cycle/terminal split
+The original clause-weight conjunct of `ClosureFor` for the concrete compiler
+is now refuted, as recorded in the correction above. The original F alone
+remains open. [C081](#c081) supplies the complete qualitative stage-6 theorem
+without those numerical claims. The reviewed PR #48 counterexample and larger
+replacement are integrated separately as [C082](#c082); PR #47 preserves the
+ordinary discovery history. The absorbing safe-cycle/terminal split
 of C031 is now `LEAN`, as is the composed exact normalized non-entailment split
 in `SubtypeTerminalBridge`. The later [C029](#c029) theorem supplies a checked
-executable decision for its infinite branch. Thus the combined C080 statement remains
-CANDIDATE even though its terminal decidability subclaim is checked. Two
+executable decision for its infinite branch. The original bundled statement is refuted at its concrete weight conjunct;
+its original F remains a candidate, while terminal decidability is checked. Two
 separate AI-assisted audits, both informed by the author's argument, found no
 gap in stages 1–5 and in the stage-6 bridge; neither is a human referee or a
 blind derivation. Independent adversarial fixtures found no compiler
@@ -1069,16 +1079,17 @@ withdrawn 2021 Lemma 5.5 before any methodological-independence claim
 ([novelty matrix](../notes/prior-work/novelty-matrix.md)). The exact review
 target is stage 4: Lemma 4 and Sections 5–7 of the candidate proof, Sections
 3–5 of the closure note, now also readable as the pinned `ClosureFor`.
-This bundled quantitative record remains a candidate; the later C081 records
-the accepted qualitative decision separately. Owner decision 2026-09-19: no
+This historical quantitative bundle is not accepted; C081 records the
+accepted qualitative decision and C082 the corrected quantitative result. Owner decision 2026-09-19: no
 external human referee will be commissioned; acceptance requires the
 kernel-checked end-to-end decision theorem plus cross-session statement
 readback (#33). After the earlier pause, the owner resumed a bounded workbench
 and proof pilot on 2026-09-19 (#30, #37). Its first result was semantic-only unwind; the subsequent #30 assembly proves
 terminal decision. The subsequent C081 completes Problem 1.7's decision.
 Q004 follows as an ordinary computability corollary of the terminal decision;
-its explicit construction and review are recorded separately. C080's stronger
-specific F(k) and clause-weight estimates remain unresolved.
+its explicit construction and review are recorded separately. C080's specific
+F(k) remains unresolved; its old universal concrete-clause weight estimate is
+refuted. C082 supplies a separate sufficient recurrence.
 
 **Evidence.** [Candidate proof](../notes/2026-09-15-candidate-rank-query-decision.md),
 [closure proof and bound](../notes/2026-09-17-rank-query-closure-audit.md),
@@ -1157,12 +1168,57 @@ separate converse certification and the unrestricted nonabsorbing abstract
 BorderAvoid problem are not proved by this theorem. Other constructors and
 finite-tree entailment are outside its semantics.
 
+<a id="c082"></a>
+
+### C082 — Corrected compiler weight and terminal witness bound
+
+**Statement.** For the unchanged concrete compiler and coverage budget, every
+emitted clause from input weight at most T has weight at most
+`Uhat_k(T)=64*k*T^(6*T^2+2)`. Put `T_0=k+10` and
+`T_(j+1)=Uhat_k(T_j)`. For every `I : Instance k` with `TerminalFinals I`,
+
+```text
+(exists w, Witness I w) iff
+(exists w, Witness I w and length(w) <= Fhat(k)),
+Fhat(1)=0,
+Fhat(k)=2*(k+1)*product_(j=1..k-2)(T_j+2) for k>=2.
+```
+
+`Witness` retains partial transitions, Bad states, ordered/diagonal flags,
+empty suffixes and the empty word. No old `ClosureFor`, SAT, supplied bound or
+restricted observer hypothesis occurs. The runtime value at k=0 is 2;
+`Instance 0` is uninhabited, so no zero-state input is omitted.
+
+**Proof and status.** `LEAN + independent source readback`. The exact endpoints
+are `RankQueryWeightBound.preimage_clause_weight_le` and
+`RankQueryLengthBound.terminal_witness_bound_iff`. The structural compiler
+bound counts the whole conjunction. Bounded joint interval reconstruction
+retains shared assignments and all observations, then promotion multiplies
+the length budget. The original qualitative decision supplies the finishing
+case; there is no circular use of this new length bound in that decision.
+
+**Evidence.** [Detailed ordinary proof/readback and fresh validation](../notes/2026-09-20-post-c081-quantitative-integration.md),
+[independent review](../notes/2026-09-20-c080-quantitative-independent-readback.md),
+[weight source](../lean/Subtail/RankQueryWeightBound.lean),
+[length source](../lean/Subtail/RankQueryLengthBound.lean),
+[old-contract counterexample](../lean/Subtail/RankQueryWeightCounterexample.lean),
+[combined build/kernel/runtime audit](../results/rank-weight-integration.json).
+All 87 new declaration audits and the unchanged default core pass at
+`7525724b3c86b6a9dbe0a7f62b062a9b8697a97c`; runtime definitions are choice-free.
+
+**Limits.** The old C080 U is not silently redefined and its original F alone
+is not refuted. This is not an original-input time bound or practical algorithm.
+Q004 obtains the ordinary explicit source-visit bound `R(k)=Fhat(k)+1` for
+k>=1, with R(0)=0; that corollary is not a new Lean declaration. No result for
+explicit top, new constructor signatures or finite-tree semantics follows.
+
 ## Explicitly unestablished
 
 The following are deliberately not accepted claims in this ledger:
 
 - a converse from arbitrary BorderAvoid annotations to top-free subtype
   constraints;
-- the specific quantitative U/F estimates or a practical complexity bound;
+- the original C080 F or a practical complexity bound (the old concrete U
+  is refuted; C082 proves a different sufficient bound);
 - PSPACE membership for Problem 1.7;
 - reproduction of the memo's original `analysis-2026` census.

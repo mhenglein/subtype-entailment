@@ -419,12 +419,12 @@
     {
       "id": "A017",
       "title": "Bound essential repeated blocks",
-      "status": "tried",
+      "status": "active",
       "outcome": "inconclusive",
-      "owner": null,
+      "owner": "post-c081-20260919 integrator (#53); scoped reviewers in issue",
       "updated": "2026-09-20",
-      "summary": "The semantic rank-query compiler yields the kernel-checked terminal decision and, via C081, complete arbitrary-tree subtype entailment. C080 remains inconclusive only for its stronger explicit U/F estimates. Q004 has an ordinary computability corollary from the terminal decision; earlier failed reference quotients and written audits remain preserved.",
-      "next_step": "Complete independent quantitative-source review and the full original-input cost argument; reconcile released #47/#48 separately from original U/F and qualitative C081. Backend accounting is corrected, but remains conditional and incomplete for full inputs.",
+      "summary": "C081 qualitative entailment remains checked. C082 adds a corrected explicit terminal witness bound and refutes the old universal concrete U contract. Independent source readback and fresh combined build, kernel and runtime checks pass; original F alone remains open.",
+      "next_step": "Publish reviewed C082 integration and finish original-input accounting and a proved executable improvement under #53. Keep original U/F, optional modules and practical performance separate.",
       "record": "research/approaches/A017.md",
       "evidence": [
         "notes/2026-09-04-minimal-witness-structure.md",
@@ -526,19 +526,24 @@
         "research/conjectures/Q004.md",
         "research/POST_C081.md",
         "notes/2026-09-19-c081-complexity-review.md",
-        "notes/2026-09-20-post-c081-cost-readback.md"
+        "notes/2026-09-20-post-c081-cost-readback.md",
+        "notes/2026-09-20-post-c081-quantitative-integration.md",
+        "notes/2026-09-20-c080-quantitative-independent-readback.md",
+        "results/rank-weight-integration.json",
+        "lean/Subtail/RankQueryWeightBound.lean",
+        "lean/Subtail/RankQueryLengthBound.lean"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/34"
     },
     {
       "id": "A018",
       "title": "Maintain the Lean core and verify critical obligations",
-      "status": "tried",
+      "status": "active",
       "outcome": "supported",
-      "owner": null,
-      "updated": "2026-09-19",
-      "summary": "C081 gives a complete Lean-checked executable entailment decision for every finite bottom/product expression input over arbitrary, possibly infinite trees. Exact normalization, the same normalized summary instance, C029 and the terminal decision compose without SAT, model-finiteness, witness-bound or caller absorption assumptions. Pinned build/kernel/runtime checks and independent semantic readback pass; native timeouts remain UNKNOWN. The implementation can be impractical.",
-      "next_step": "No new work assigned. Preserve the completed C081 proof and exact semantics; proposed follow-up is a readable end-to-end account, prior-work comparison or separately proved runtime improvements. C080 quantitative estimates and C030 converse certification remain distinct.",
+      "owner": "post-c081-20260919 integrator (#53); scoped reviewers in issue",
+      "updated": "2026-09-20",
+      "summary": "C081 qualitative entailment remains checked. C082 adds a corrected explicit terminal witness bound and refutes the old universal concrete U contract. Independent source readback and fresh combined build, kernel and runtime checks pass; original F alone remains open.",
+      "next_step": "Publish reviewed C082 integration and finish original-input accounting and a proved executable improvement under #53. Keep original U/F, optional modules and practical performance separate.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
@@ -633,7 +638,12 @@
         "notes/2026-09-19-entailment-decision-independent-readback.md",
         "scripts/check_entailment_decision.py",
         "experiments/check_entailment_decision.py",
-        "results/entailment-decision.json"
+        "results/entailment-decision.json",
+        "notes/2026-09-20-post-c081-quantitative-integration.md",
+        "notes/2026-09-20-c080-quantitative-independent-readback.md",
+        "results/rank-weight-integration.json",
+        "lean/Subtail/RankQueryWeightBound.lean",
+        "lean/Subtail/RankQueryLengthBound.lean"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/31"
     }

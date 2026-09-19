@@ -2,7 +2,7 @@
 
 Problem 1.7 has a complete Lean-checked decision theorem ([C081](claims.md#c081)). This map preserves current work, prior attempts and failures.
 
-**16 tried · 1 not tried · 0 blocked · 0 active · 1 retired**
+**14 tried · 1 not tried · 0 blocked · 2 active · 1 retired**
 
 Read [the problem and notation](problem.md), [claims and evidence](claims.md), and [the experiment index](../experiments/README.md).
 
@@ -22,7 +22,10 @@ Outcomes are separate: **supported** applies to the stated limited claim, **refu
 
 ## Active work
 
-None currently.
+| ID | Approach | Finding / next step | Owner |
+|---|---|---|---|
+| A017 | [Bound essential repeated blocks](approaches/A017.md) · [#34](https://github.com/mhenglein/subtail/issues/34) | Publish reviewed C082 integration and finish original-input accounting and a proved executable improvement under #53. Keep original U/F, optional modules and practical performance separate. | post-c081-20260919 integrator (#53); scoped reviewers in issue |
+| A018 | [Maintain the Lean core and verify critical obligations](approaches/A018.md) · [#31](https://github.com/mhenglein/subtail/issues/31) | Publish reviewed C082 integration and finish original-input accounting and a proved executable improvement under #53. Keep original U/F, optional modules and practical performance separate. | post-c081-20260919 integrator (#53); scoped reviewers in issue |
 
 ## Not tried
 
@@ -52,8 +55,6 @@ None currently.
 | A013 | [Exploit restrictions shared by actual summary automata](approaches/A013.md) · [#31](https://github.com/mhenglein/subtail/issues/31) | Supported: C081 gives a complete Lean-checked executable entailment decision for every finite bottom/product expression input over arbitrary, possibly infinite trees. Exact normalization, the same normalized summary instance, C029 and the terminal decision compose without SAT, model-finiteness, witness-bound or caller absorption assumptions. Pinned build/kernel/runtime checks and independent semantic readback pass; native timeouts remain UNKNOWN. The implementation can be impractical. Next: No new work assigned. Preserve the completed C081 proof and exact semantics; proposed follow-up is a readable end-to-end account, prior-work comparison or separately proved runtime improvements. C080 quantitative estimates and C030 converse certification remain distinct. | Unassigned |
 | A015 | [Strengthen truncation using occurrence context](approaches/A015.md) | Supported: Proved three context refinements and formalized the binary visited-state rule; strict examples and exhaustive two-state checks pass. Next: Use the visited-state summary to classify shortest witnesses resisting every admissible cut in A008. | Unassigned |
 | A016 | [Implement and audit fixed-skeleton checkability](approaches/A016.md) | Supported: Implemented exact Presburger skeleton formulas and a finite complete cover for flat terminal graphs; unbounded loop counts are retained. Next: Use the exact supplied-skeleton solver to test finite-cover hypotheses for nonflat terminal inputs. Audit any critical arithmetic transfer; add Lean formalization only for a specific uncertainty or stable dependency. A supplied-schema solver is not a complete cover, and caps remain UNKNOWN. | Unassigned |
-| A017 | [Bound essential repeated blocks](approaches/A017.md) · [#34](https://github.com/mhenglein/subtail/issues/34) | Inconclusive: The semantic rank-query compiler yields the kernel-checked terminal decision and, via C081, complete arbitrary-tree subtype entailment. C080 remains inconclusive only for its stronger explicit U/F estimates. Q004 has an ordinary computability corollary from the terminal decision; earlier failed reference quotients and written audits remain preserved. Next: Complete independent quantitative-source review and the full original-input cost argument; reconcile released #47/#48 separately from original U/F and qualitative C081. Backend accounting is corrected, but remains conditional and incomplete for full inputs. | Unassigned |
-| A018 | [Maintain the Lean core and verify critical obligations](approaches/A018.md) · [#31](https://github.com/mhenglein/subtail/issues/31) | Supported: C081 gives a complete Lean-checked executable entailment decision for every finite bottom/product expression input over arbitrary, possibly infinite trees. Exact normalization, the same normalized summary instance, C029 and the terminal decision compose without SAT, model-finiteness, witness-bound or caller absorption assumptions. Pinned build/kernel/runtime checks and independent semantic readback pass; native timeouts remain UNKNOWN. The implementation can be impractical. Next: No new work assigned. Preserve the completed C081 proof and exact semantics; proposed follow-up is a readable end-to-end account, prior-work comparison or separately proved runtime improvements. C080 quantitative estimates and C030 converse certification remain distinct. | Unassigned |
 
 ## Retired: no further work planned
 
