@@ -125,7 +125,7 @@ Let (Delta,a,c) be the output for (Gamma,s,t), and let eta|V be restriction to t
 
 **Definition theorem.** Every valuation rho:V->T, regardless of whether it satisfies Gamma, has a unique extension rho_hat satisfying D. Every eta satisfying D satisfies, for every compiled occurrence o,
 
-    eta(r(o)) = [[o]](eta|V).                       (R)
+    eta(r(o)) = [[o]]rho, where rho = eta|V.        (R)
 
 **Model theorem.** Every rho satisfying Gamma extends to rho_hat satisfying Delta, and every eta satisfying Delta restricts to eta|V satisfying Gamma. Extension and restriction are inverse bijections between the two model classes.
 
