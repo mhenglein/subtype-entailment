@@ -24,6 +24,7 @@ on:
       - 'scripts/check_subtype_summary.py'
       - 'scripts/check_infinite_witness.py'
       - 'scripts/check_entailment_decision.py'
+      - 'scripts/check_rank_weight_native.py'
       - 'experiments/**'
       - 'results/**'
       - '.github/workflows/lean.yml'
@@ -35,6 +36,7 @@ on:
       - 'scripts/check_subtype_summary.py'
       - 'scripts/check_infinite_witness.py'
       - 'scripts/check_entailment_decision.py'
+      - 'scripts/check_rank_weight_native.py'
       - 'experiments/**'
       - 'results/**'
       - '.github/workflows/lean.yml'
@@ -483,6 +485,22 @@ jobs:
           cmp results/infinite-decision.json /tmp/infinite-decision.json
       - name: Normalization and full entailment dependency audits
         run: python3 scripts/check_entailment_decision.py --output /tmp/entailment-axioms.json
+      - name: Corrected terminal weight and witness bounds
+        env:
+          LEAN_NUM_THREADS: '1'
+          LEAN_STACK_SIZE_KB: '32768'
+        run: |
+          set -euo pipefail
+          ulimit -v 16777216
+          ulimit -t 1200
+          python3 scripts/check_rank_weight_native.py
+      - name: Preserve quantitative proof audit
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: rank-weight-native-audit
+          path: tmp/rank-weight-native.json
+          retention-days: 90
+          if-no-files-found: error
       - name: Independent native normalization and original-syntax reference checks
         run: |
           (cd lean && lake env lean --run Subtail/ExpressionNormalizationAudit.lean) > /tmp/normalization-native.jsonl
