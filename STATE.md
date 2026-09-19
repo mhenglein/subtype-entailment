@@ -1,5 +1,36 @@
 # Subtail — current research state
 
+## September 19: complete checked subtype entailment decision (C081)
+
+`EntailmentDecision.entailsCheck_correct` proves that a total executable
+Boolean decides every finite expression constraint list and query over
+bottom and binary product. Entailment ranges over arbitrary, possibly infinite
+trees. There is no caller SAT, finite/regular-model, witness-bound or absorption
+hypothesis. Finite named constraint sets and variable queries embed effectively
+in this formal syntax. The same normalized summary instance feeds both checked
+branches; expression normalization preserves the original query and models.
+
+The default pinned Lean build, whole-library kernel replay, runtime dependency
+audits and independent final semantic readback pass. Both distinct normalization
+implementations have fresh regression checks. Native full-frontend tests record
+which cases execute and which exceed their resource cap; the complete algorithm
+contains no timeout. [C081](research/claims.md#c081),
+[proof, source pins and validation](notes/2026-09-19-entailment-decision.md),
+[independent review](notes/2026-09-19-entailment-decision-independent-readback.md).
+
+This completes the repository's qualitative Problem 1.7 theorem. It does not
+supply C080's specific U/F estimates, efficient execution, a complexity class
+or a novelty claim. Q004 follows as a separate ordinary corollary of the
+complete terminal decider: classify the finitely many labelled k-state inputs,
+enumerate a witness for each positive input, and take their maximum source-visit
+bound. [Construction and limits](research/conjectures/Q004.md).
+
+The next useful work is a readable end-to-end proof account, careful prior-work
+comparison and separately proved runtime improvements. No new worker or write
+scope is assigned by this status. Older entries below preserve discovery and
+failure history; statements that the overall problem was open describe their
+own checkpoints and are superseded by C081.
+
 ## September 19: C029 has a checked executable infinite-continuation decision
 
 `InfiniteDecision.infiniteWitnessCheck_correct` proves, for every finite binary
@@ -29,11 +60,10 @@ guards. These finite tests are separate from the all-state theorem.
 
 A negative C029 answer excludes infinitely continuable witnesses; terminal
 witnesses remain possible. The terminal branch and normalized semantic split
-below are already checked. **The full expression-level Problem 1.7 theorem is
-not yet assembled in this checkpoint.** Next integrate the reviewed normalization
-contributions with their combined checks, then compose the final executable
-entailment decision over arbitrary, possibly infinite trees. Separate C030
-certification and quantitative U/F work are not promoted by this result.
+below were already checked at this C029 checkpoint. The later C081 entry above
+integrates the reviewed normalization and composes the complete expression-level
+entailment decision. Separate C030 certification and quantitative U/F work are
+not promoted by either result.
 
 ## September 19: normalized subtype separation splits into two exact branches
 
@@ -80,12 +110,10 @@ closures and independent final source readback passed at source checkpoint
 exhausts all 15914 absorbing one/two-state encodings with no mismatch;
 [results](results/absorbing-terminal.json).
 
-**Current boundary:** both the terminal and infinite branches now have checked
-executable decisions; the later C029 result above supplies the infinite branch.
-Reviewed integration of finite-expression normalization and final executable
-composition remain open in this checkpoint. Problem 1.7 is not yet assembled.
-The terminal backend below is already checked. C080's explicit U/F estimate
-remains a separate unresolved quantitative claim.
+**Later completion:** C029 supplies the infinite-branch executable, and C081
+above integrates normalization and proves the unconditional full entailment
+Boolean. C080's explicit U/F estimate remains a separate unresolved quantitative
+claim; the exact normalized semantic split here is unchanged.
 
 ## September 19: terminal BorderAvoid has a checked executable decision
 
@@ -107,15 +135,12 @@ interface declarations pass dependency audits; runtime definitions use no
 [Lean theorem](lean/Subtail/RankQueryDecision.lean), and
 [reproducible small-state differential](results/terminal-decision-regressions.json).
 
-**Problem 1.7 remains open in this repository.** The later September 19
-checkpoint above discharges the summary construction, ordered cuts, absorption
-and safe terminal split from this earlier #31 handoff. C029 is also checked
-in the later completion above. Syntax normalization integration and the final
-executable composition are the remaining subtype obligations. The explicit
-U/F formulas also remain unproved. The exhaustive
-query compiler may be impractical; the runtime differential covers all
-one/two-state terminal inputs, not a performance claim for larger instances.
-C080 remains a candidate for its stronger bound and full subtype conclusion.
+**Later completion:** the September 19 C081 checkpoint above discharges the
+summary, C029, normalization and final composition obligations left by this
+terminal result. The explicit U/F formulas remain unproved. The exhaustive
+query compiler can be impractical; the runtime differential covers all
+one/two-state terminal inputs, not performance at larger sizes. C080 remains
+a candidate for its stronger quantitative bound.
 
 ## September 15–18: a candidate unrestricted decision by rank-query preimages (CANDIDATE, not established)
 
@@ -173,9 +198,9 @@ I budget`, so `closure_iff` gives both directions of the semantic conjunct of `C
 (preimage I budget)` for every safe reference
 ([coverage note](notes/2026-09-19-lean-rank-coverage.md); author readback
 only). Correction on September 19: the terminal decision schema and finishing support
-are now proved and integrated as described above. Still unproved in Lean are
-the clause-weight conjunct of `ClosureFor`, explicit `F(k)`, and the entailment
-decision of stage 6 (C029, syntax normalization and final composition).
+are now proved and integrated as described above. The later C081 also proves
+the full stage-6 entailment decision. Still unproved in this integrated Lean
+checkpoint are the clause-weight conjunct of `ClosureFor` and explicit `F(k)`.
 The effective instance, ordered-cut/denial semantics, absorption and safe
 terminal-split subclaim are now checked in the later September 19 entry above. The direct decision uses finite compiler
 iteration, independently of the extra quantitative clause-weight contract. A
@@ -490,7 +515,7 @@ This is the compressed scientific memory of the project. Read this after `resear
 
 ## Problem
 
-Decide Problem 1.7: subtype entailment over bottom and binary product for arbitrary, possibly infinite trees. **The unrestricted problem remains open.**
+Decide Problem 1.7: subtype entailment over bottom and binary product for arbitrary, possibly infinite trees. **Completed by C081 above.** The following earlier frontier remains historical.
 
 ## Latest continuation: combined tails and a regular-decoration barrier
 

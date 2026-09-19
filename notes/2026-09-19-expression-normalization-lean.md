@@ -125,7 +125,7 @@ mkdir -p tmp
 python3 experiments/check_expression_normalization_lean.py --lean-output tmp/normalization-native.jsonl
 ```
 
-The isolated [workflow](../.github/workflows/lean-expression-normalization.yml) also prints dependency closures for all 82 named declarations and separately for the 36 non-theorem declarations, checks an explicit axiom allowlist, and rejects incomplete/custom-axiom source. Anonymous small `example`s are kernel-replayed with the audit module; they are not falsely included in the named-declaration count. Standard `propext`/`Quot.sound` appear in erased indexing/extensionality proofs. Actual printed closures contain no `Classical.choice`, including the executable compiler and native exporter. Shell pipelines use `pipefail` so failed Lean invocations cannot be hidden by `tee`.
+The original isolated [workflow](https://github.com/mhenglein/subtail/blob/d85e203e0d96bb5b452c89a4b06a6cc772195320/.github/workflows/lean-expression-normalization.yml) also prints dependency closures for all 82 named declarations and separately for the 36 non-theorem declarations, checks an explicit axiom allowlist, and rejects incomplete/custom-axiom source. Anonymous small `example`s are kernel-replayed with the audit module; they are not falsely included in the named-declaration count. Standard `propext`/`Quot.sound` appear in erased indexing/extensionality proofs. Actual printed closures contain no `Classical.choice`, including the executable compiler and native exporter. Shell pipelines use `pipefail` so failed Lean invocations cannot be hidden by `tee`.
 
 Actual local Python-only replay used `/usr/bin/python3` 3.13.5 on Linux x86_64, with 20 CPU seconds, 256 MiB address-space and 30-second wall caps. Runs with `PYTHONHASHSEED=0` and `1` both passed with byte-identical JSON. The source SHA256 was `010f6ff29b67fa5653fa5a93cf2505eb35ee326b547e39bf0f4a6fad99349c3e`. No local Lean build is claimed: Lean was unavailable and local GitHub DNS resolution failed. An earlier capped virtualenv-Python attempt exited by signal 9 without diagnostics; its cause is unknown, not a semantic negative. The system-Python replays and remote Python run are the positive evidence.
 
@@ -144,3 +144,10 @@ During final readback, the separate Python implementation PR #50 was discovered 
 The contribution has only six new, disjoint paths: two Lean modules, this note, the Lean-specific Python checker/result, and one dedicated workflow. Existing TreeSemantics, main, C029 modules, toolchain, shared workflows/imports, STATE and claim/approach ledgers are unchanged by this worker. The new modules are intentionally not added to the shared import aggregator before the integrator's acknowledgment.
 
 A different session should read back the stated quantifiers, the total-ref fallback/support invariant, both product directions, duplicate-slot uniqueness, original index preservation, and the separation of query definitions from assumptions. Then the authorized integrator can merge and wire the agreed public interface into the normalized decision composition, rerunning the combined imports and synchronizing A018/claims/STATE. The reusable status is 'checked normalization on the pinned branch, independent statement readback and integration pending', NOT 'Problem 1.7 solved'. No optimization, broader worker launch, or ongoing background task is implied.
+
+Integration update (2026-09-19): the isolated workflow was folded into the
+[shared Lean workflow](../.github/workflows/lean.yml). Its build, kernel replay,
+all named dependency checks and native normalization comparisons remain
+required there, together with the final C081 checks. The historical runs above
+remain attributed to their original source and environment. Fresh combined
+validation is recorded in the [C081 completion note](2026-09-19-entailment-decision.md).

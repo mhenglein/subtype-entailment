@@ -1,6 +1,6 @@
 # Subtail
 
-Collaborative research on **Problem 1.7: subtype entailment over bottom and binary product**, with possibly infinite trees. The unrestricted problem remains open.
+Collaborative research on **Problem 1.7: subtype entailment over bottom and binary product**, with possibly infinite trees. The repository now contains a complete Lean-checked decision theorem for this problem; see [C081](research/claims.md#c081).
 
 ## Start here
 
@@ -69,13 +69,23 @@ Current approach metadata lives in `research/approaches.json`; `research/README.
 
 ## Current technical position
 
-The Lean core proves the binary witness and budget predicates, stronger truncation rules, and an exact decision for at most two automaton states. Its general finite-budget decision theorem still assumes the missing bound. Python constructs actual summary instances from normalized subtype constraints and validates regular countermodels for supplied paths.
+`Subtail.EntailmentDecision.entailsCheck_correct` proves that a total executable
+Boolean decides entailment for every finite constraint list and query built
+from variables, bottom and binary product. Valuations range over arbitrary,
+possibly infinite trees. The theorem assumes no satisfiability, finite-model,
+regular-model, witness-bound or caller-supplied absorption condition.
 
-Later work proves an exact three-state bound, a family with `B=2k-4`, actual summary absorption, and decision results for important terminal subclasses. The terminal-final branch can realize arbitrary finite abstract flags; a genuine subtype instance has a nonregular terminal separating language. Exact Presburger skeleton formulas and a complete flat-terminal cover now exist, together with a complete normalized four-state terminal census.
+The proof composes finite-expression normalization, exact summary construction,
+the absorbing infinite/terminal split, and both checked branch decisions.
+Pinned Lean build, kernel replay, runtime dependency audits and independent
+semantic readback support the result. [Complete argument and validation](notes/2026-09-19-entailment-decision.md).
+Native tests are supplementary finite evidence; the exhaustive backend can
+be impractical even for simple inputs, and test timeouts remain UNKNOWN.
 
-Since September 15 the leading route is a **candidate** rank-query decision proof with an explicit computable witness bound ([C080](research/claims.md#c080)). It is a written proof with two AI-assisted audits, not a human-refereed or Lean-verified result; Lean covers its first two stages and the third is in progress.
-
-The unrestricted problem, a general computable witness/skeleton bound, and the full formal subtype reduction remain open. The live frontier is summarized in **[STATE.md](STATE.md)**. Newer written proofs are not automatically Lean-checked; consult the [claims ledger](research/claims.md) for exact status.
+The candidate explicit `U/F` bound in [C080](research/claims.md#c080) remains
+unproved and is not needed for this decision. [STATE.md](STATE.md) separates
+the checked theorem, ordinary corollaries, performance limits and prior failed
+attempts. No complexity, novelty or human peer-review claim follows from CI.
 
 ## Run the checks
 
@@ -115,7 +125,7 @@ research/claims.md       Exact mathematical claims and evidence status
 research/conjectures/    Stable Q-ID hypotheses shared across investigations
 research/PLAN.md         Longer-horizon research programme
 experiments/             Executable checks and experiment registry
-lean/                    Checked binary word lemmas and conditional framework
+lean/                    Checked entailment decision and supporting word lemmas
 results/                 Compact reproducible outputs
 papers/                  Unchanged source documents and provenance
 notes/                   Detailed audits and chronological working analysis

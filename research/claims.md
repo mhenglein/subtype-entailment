@@ -1,15 +1,18 @@
 # Claims ledger
 
-Index updated: 2026-09-18. Original C001-C020 review: 2026-09-04.
+Index updated: 2026-09-19. Original C001-C020 review: 2026-09-04.
 Later claims retain the evidence and review scope of their linked records.
 
 This ledger gives stable IDs for claims about Problem 1.7 and its BorderAvoid
 reduction. It is the shared index for notes, experiments, and future review.
 Later continuation records are indexed in [Continued claim records](#continued-claim-records).
 
-**Problem status:** Problem 1.7 remains unsolved in this repository. No claim
-below establishes a general subtype decision procedure or reproduces the
-memo's original census. Results for named restricted classes are separate.
+**Problem status:** [C081](#c081) is the complete Lean-checked executable
+subtype entailment decision for finite bottom/product inputs over arbitrary,
+possibly infinite trees. Its build, kernel/runtime audits and independent
+semantic readback are recorded separately from finite native tests. The
+explicit quantitative C080 bound remains a candidate. The memo's original
+census has not been reproduced.
 
 ## Evidence labels
 
@@ -285,19 +288,23 @@ for the memo's sampled or SEP-derived instances.
 
 <a id="c012"></a>
 
-### C012 — The budget criterion is conditional, and the target remains open
+### C012 — The abstract budget criterion and its original open target
 
 **Claim.** Under finite effective encodings, Theorem 8.9 reduces decidability
 of abstract BorderAvoid to the existence of a computable upper bound on the
 least successful budget `B(I)`. The memo and this review do not provide that
-bound for BorderAvoid or for Problem 1.7, and no exact top-free entailment
-decision procedure is established here.
+bound for unrestricted abstract BorderAvoid. The original review also left
+Problem 1.7 open; the later [C081](#c081) now decides that subtype problem
+through a different checked finite algorithm.
 
 **Scope.** Abstract BorderAvoid instances with an effective finite encoding,
 then the narrower semantic top-free subtype problem.
 
 **Status.** `AUDIT + OPEN` — the equivalence proof was inspected, but the
-substantive bound and the top-free converse remain open.
+unrestricted abstract bound and the full top-free converse remain open. This
+status is not a remaining assumption of C081. Decidability for terminal and
+absorbing instances already implies some computable existential witness bound
+by finite-instance classification; it does not establish C080's specific F.
 
 **Evidence.** [Review](../REVIEW.md#1-what-the-problem-actually-asks);
 [proof audit](../notes/proof-audit.md#consequence-for-the-attack);
@@ -711,8 +718,9 @@ cycle. The finite graph proof and executable terminalization use original
 finals and prune unsafe edges before the sink test. The composed subtype split
 has an exact terminal Boolean and an InfWitness proposition. The later
 [C029](#c029) completion now supplies a checked executable decision for that
-infinite branch. This C031 subclaim does not itself certify the converse
-C030 realization or its budget-preservation statement.
+infinite branch. [C081](#c081) now composes those decisions and normalization
+into the full entailment Boolean. This C031 subclaim does not itself certify
+the converse C030 realization or its budget-preservation statement.
 
 **Record.** [Full statement and proof](../notes/2026-09-05-terminal-realization.md);
 [checked subclaim and semantic readback](../notes/2026-09-19-subtype-summary-bridge.md).
@@ -1038,9 +1046,12 @@ ordered-cut/forced-root/prefix-denial characterization, exact same-word
 all-state strong absorption. The executable construction retains UNSAT as a
 Bad bit. [Bridge proof and independent readback](../notes/2026-09-19-subtype-summary-bridge.md).
 
-NOT Lean-checked: the clause-weight conjunct of `ClosureFor`, explicit `F(k)`,
-and the full entailment decision of stage 6 (syntax-normalization integration
-and final executable composition). The absorbing safe-cycle/terminal split
+NOT Lean-checked in this integrated checkpoint: the clause-weight conjunct of
+`ClosureFor` and explicit `F(k)`. The later [C081](#c081) supplies the complete
+qualitative stage-6 entailment theorem, including normalization and executable
+composition, without those numerical claims. Separate unintegrated counterexample
+and replacement-bound proposals are tracked in #47/#48; this contribution does
+not validate or integrate them. The absorbing safe-cycle/terminal split
 of C031 is now `LEAN`, as is the composed exact normalized non-entailment split
 in `SubtypeTerminalBridge`. The later [C029](#c029) theorem supplies a checked
 executable decision for its infinite branch. Thus the combined C080 statement remains
@@ -1058,14 +1069,16 @@ withdrawn 2021 Lemma 5.5 before any methodological-independence claim
 ([novelty matrix](../notes/prior-work/novelty-matrix.md)). The exact review
 target is stage 4: Lemma 4 and Sections 5–7 of the candidate proof, Sections
 3–5 of the closure note, now also readable as the pinned `ClosureFor`.
-Problem 1.7's accepted status is unchanged by this record; the ID exists so
-the candidate can be found, cited and reviewed. Owner decision 2026-09-19: no
+This bundled quantitative record remains a candidate; the later C081 records
+the accepted qualitative decision separately. Owner decision 2026-09-19: no
 external human referee will be commissioned; acceptance requires the
 kernel-checked end-to-end decision theorem plus cross-session statement
 readback (#33). After the earlier pause, the owner resumed a bounded workbench
 and proof pilot on 2026-09-19 (#30, #37). Its first result was semantic-only unwind; the subsequent #30 assembly proves
-terminal decision. C080's stronger bound and subtype conclusion, F(k), Q004
-and Problem 1.7 remain unresolved.
+terminal decision. The subsequent C081 completes Problem 1.7's decision.
+Q004 follows as an ordinary computability corollary of the terminal decision;
+its explicit construction and review are recorded separately. C080's stronger
+specific F(k) and clause-weight estimates remain unresolved.
 
 **Evidence.** [Candidate proof](../notes/2026-09-15-candidate-rank-query-decision.md),
 [closure proof and bound](../notes/2026-09-17-rank-query-closure-audit.md),
@@ -1087,12 +1100,69 @@ and Problem 1.7 remain unresolved.
 Allocated 2026-09-18 by an integrator session (issue #25); the allocation is
 navigation, not a review.
 
+<a id="c081"></a>
+
+### C081 — Complete finite-expression subtype entailment decision
+
+**Statement.** For every natural n, finite input list `G : Input n` and finite
+expressions `s t : Expr n` over variables `Fin n`, bottom and covariant binary
+product, the total executable Boolean satisfies
+
+```lean
+Subtail.EntailmentDecision.entailsCheck G s t = true ↔
+  Subtail.ExpressionNormalization.ExprEntails G s t
+```
+
+`ExprEntails` quantifies over all valuations into arbitrary prefix-closed
+trees, including infinite and nonregular ones. The query is not a premise.
+No SAT, finite/regular-model, witness-bound, U/F, C030 or absorption assumption
+is required from the caller. The finite named-set/variable-query form of
+Problem 1.7 embeds in this syntax by finite indexing and listing premises.
+
+**Construction and proof.** Exact expression normalization preserves both
+model extension/restriction and query meanings. For the same normalized
+summary instance I, the Boolean is the negation of
+`infiniteWitnessCheck I || terminalWitnessCheck (terminalize I)`.
+Strong absorption of I is proved; terminalization preserves original finals
+and removes unsafe edges. C029 decides the first branch, and the checked
+terminal algorithm decides the second. Reflexivity, a listed premise,
+UNSAT-vacuity and a root countermodel are separately proved early returns.
+An unsuccessful root test invokes the complete backend; it is not an answer.
+
+**Status / scope.** `LEAN + AUDIT`, with supplementary native regressions.
+The source is pinned at `9f7d57cbd695a68dd52a69dc81b8446bd7c85d9e`.
+The default build, full kernel replay and all 91 normalization/final named
+transitive dependency closures pass; the 39 non-theorems use no classical
+choice. Independent source readback found no semantic blocker. Prior chain
+reviews and source provenance are preserved; this is not human peer review.
+
+**Ordinary consequence.** Q004 is proved by effective finite enumeration of
+labelled terminal k-state instances, complete terminal classification and
+word enumeration on each positive instance. Taking the maximum first-witness
+length plus one gives a total computable source-visit bound. This corollary
+is ordinary mathematics, not a new Lean declaration or the proposed F(k).
+
+**Evidence.** [Executable and theorem](../lean/Subtail/EntailmentDecision.lean),
+[complete proof and exact validation record](../notes/2026-09-19-entailment-decision.md),
+[independent semantic readback](../notes/2026-09-19-entailment-decision-independent-readback.md),
+[normalization model transfer](../lean/Subtail/ExpressionNormalization.lean),
+[dependency audit](../scripts/check_entailment_decision.py),
+[E052 native coverage and limits](../experiments/README.md#e052),
+[Q004 corollary](conjectures/Q004.md).
+
+**Limits.** Native test caps remain UNKNOWN; they are not cutoffs in the
+formal algorithm. The exhaustive backend is not a practical solver, and no
+complexity or novelty claim is made. C080's quantitative estimates, C030's
+separate converse certification and the unrestricted nonabsorbing abstract
+BorderAvoid problem are not proved by this theorem. Other constructors and
+finite-tree entailment are outside its semantics.
+
 ## Explicitly unestablished
 
 The following are deliberately not accepted claims in this ledger:
 
 - a converse from arbitrary BorderAvoid annotations to top-free subtype
   constraints;
-- a computable bound on `B(I)` for SEP-derived instances;
-- decidability, undecidability, or PSPACE membership for Problem 1.7;
+- the specific quantitative U/F estimates or a practical complexity bound;
+- PSPACE membership for Problem 1.7;
 - reproduction of the memo's original `analysis-2026` census.

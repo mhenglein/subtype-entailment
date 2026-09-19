@@ -137,7 +137,7 @@ def render(data):
     rows = data["approaches"]
     counts = {status: sum(r["status"] == status for r in rows) for status in STATUSES}
     lines = ["# Research tracker", "",
-             "Problem 1.7 is open. This is the current map of approaches, including unsuccessful work.", "",
+             "Problem 1.7 has a complete Lean-checked decision theorem ([C081](claims.md#c081)). This map preserves current work, prior attempts and failures.", "",
              f"**{counts['tried']} tried · {counts['untried']} not tried · {counts['blocked']} blocked · {counts['active']} active · {counts['retired']} retired**", "",
              "Read [the problem and notation](problem.md), [claims and evidence](claims.md), and [the experiment index](../experiments/README.md).", "",
              "Use [the research plan](PLAN.md) for the eleven proposed angles, priorities, and dependencies, including the Lean workstream.", "",

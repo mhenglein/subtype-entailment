@@ -1,20 +1,17 @@
 # Lean core
 
-This project now has a total executable decision for **binary BorderAvoid
-with terminal final states**, with a checked equivalence to the original
-witness definition for every state count. It also retains the general
-one/two-state result and structural lemmas. Subtype entailment over arbitrary,
-possibly infinite trees now has an exact reduction to a witnessed safe-cycle
-branch and a decided terminal branch. C029 now also has the checked total
-`InfiniteDecision.infiniteWitnessCheck`; its theorem has only the existing
-strong Absorbing hypothesis. Both branches are decided. Reviewed syntax
-normalization integration and the final expression-level composition remain
-separate obligations. See the [C029 completion readback](../notes/2026-09-19-c029-completion.md).
+The complete executable `EntailmentDecision.entailsCheck` decides finite
+bottom/product expression constraints and queries over arbitrary, possibly
+infinite trees. `entailsCheck_correct` has no caller satisfiability, regularity,
+witness-bound or absorption hypothesis. [C081 proof and validation](../notes/2026-09-19-entailment-decision.md),
+[independent semantic readback](../notes/2026-09-19-entailment-decision-independent-readback.md).
 
-The terminal result is `RankQueryDecision.terminalWitnessCheck_correct`;
-the [readback](../notes/2026-09-19-terminal-rank-decision.md) explains its exact
-hypotheses, finite algorithm, validation and remaining subtype bridge.
-No clause-weight or numerical witness-bound hypothesis occurs in this theorem.
+The proof composes exact finite-expression normalization, the finite absorbing
+summary instance and its two branches: `InfiniteDecision.infiniteWitnessCheck`
+and `RankQueryDecision.terminalWitnessCheck`. Their hypotheses are proved for
+the constructed instances. The runtime is total but can be very expensive;
+external test caps mean UNKNOWN and are not answers from the formal algorithm.
+C080's explicit quantitative U/F estimates are separate open claims.
 
 ## Role in the research process
 
@@ -39,6 +36,8 @@ From the repository root:
 
 ```sh
 python3 scripts/check_lean.py
+python3 scripts/check_entailment_decision.py
+python3 experiments/check_entailment_decision.py
 python3 scripts/check_rank_decision.py
 python3 scripts/check_subtype_summary.py
 python3 scripts/check_infinite_witness.py
@@ -80,7 +79,7 @@ Its graph/interface step audits all 65 public declarations of the four graph mod
 | File | Result |
 |---|---|
 | [AbsorbingTerminal.lean](Subtail/AbsorbingTerminal.lean) | Under strong absorption, witness existence iff a witnessed safe cycle is reachable or a witness exists in the safely pruned terminal instance |
-| [SubtypeTerminalBridge.lean](Subtail/SubtypeTerminalBridge.lean) | Exact normalized non-entailment iff InfWitness of the summary instance or the terminal decision returns true; the infinite branch is not yet decided |
+| [SubtypeTerminalBridge.lean](Subtail/SubtypeTerminalBridge.lean) | Exact normalized non-entailment iff InfWitness of the summary instance or the terminal decision returns true; both branch Booleans are composed in EntailmentDecision |
 | [SummaryBridge.lean](Subtail/SummaryBridge.lean), [SummaryAutomaton.lean](Subtail/SummaryAutomaton.lean) | Exact ordered cuts and prefix-denial characterization; explicit two-summary instance; same-word separation equivalence and all-state strong absorption |
 | [RankQueryDecision.lean](Subtail/RankQueryDecision.lean) | Total executable terminal witness decision; exact original Witness equivalence; no numerical bound premise |
 | [RankWitnessReference.lean](Subtail/RankWitnessReference.lean) | Original nonempty witnesses give safe reversed references; positive prefix safety |
@@ -105,7 +104,9 @@ Its graph/interface step audits all 65 public declarations of the four graph mod
 | [RankQueryEnumeration.lean](Subtail/RankQueryEnumeration.lean), [RankQueryEnumerationAudit.lean](Subtail/RankQueryEnumerationAudit.lean) | Stage 4b, enumerator: finite `diagrams c b` with exact membership `mem_diagrams : D ∈ diagrams c b ↔ Bounded c b D`, the executable `preimage I budget φ`, `preimage_sound` (from `closure_reverse`) and `preimage_iff_of_coverage` conditional on `DiagramCoverage` |
 | [RankQueryCoverage.lean](Subtail/RankQueryCoverage.lean) | Stage 4b, coverage: `coverage I : DiagramCoverage I budget` for an explicit computable `budget` (chains → blocks → global marks → bounded valid diagram → joint base model), hence `closure_iff`: `Sat (prefixGraph I B) (preimage I budget φ) ↔ ∃ C, FirstReturnExt I B C ∧ Sat (prefixGraph I C) φ` for every safe `B`, the first conjunct of `ClosureFor I (preimage I budget)`; the weight conjunct (stage 5) is NOT proved |
 | [TreeSemantics.lean](Subtail/TreeSemantics.lean), [CanonicalModel.lean](Subtail/CanonicalModel.lean), [CanonicalModelAudit.lean](Subtail/CanonicalModelAudit.lean) | Stage 6 foundation: arbitrary prefix-closed path-set trees, the four normalized constraint forms, inductive propagation closure, `satisfiable_iff_forced_safe`, `not_entails_iff_canonical`, and all-length semantic regression proofs |
-| [StackSummary.lean](Subtail/StackSummary.lean), [StackReachability.lean](Subtail/StackReachability.lean), [CanonicalReachability.lean](Subtail/CanonicalReachability.lean), [StackSummaryAudit.lean](Subtail/StackSummaryAudit.lean) | Stage 6 second layer: balanced excursions, minimum-stack normal form (`reaches_iff_normal`), executable exact reachability, `derived_iff_reaches`, total `satCheck_correct`, supplied-address `separationCheck_iff_countermodel`; entailment NOT decided |
+| [StackSummary.lean](Subtail/StackSummary.lean), [StackReachability.lean](Subtail/StackReachability.lean), [CanonicalReachability.lean](Subtail/CanonicalReachability.lean), [StackSummaryAudit.lean](Subtail/StackSummaryAudit.lean) | Stage 6 second layer: balanced excursions, minimum-stack normal form (`reaches_iff_normal`), executable exact reachability, `derived_iff_reaches`, total `satCheck_correct`, supplied-address `separationCheck_iff_countermodel`; supplied-address layer, composed into full entailment by EntailmentDecision |
+| [ExpressionNormalization.lean](Subtail/ExpressionNormalization.lean) | Finite expression syntax, exact fresh definitions, model extension/restriction and unconditional `normalize_entails_iff` |
+| [EntailmentDecision.lean](Subtail/EntailmentDecision.lean) | Total raw and guarded normalized Booleans; complete `entailsCheck_correct` over arbitrary trees, with no caller assumptions |
 
 Words are `List Bool`. State sets have type `Fin k`; tables are finite vectors.
 The flag condition includes both diagonal pairs and the empty suffix. A
@@ -141,14 +142,13 @@ its exact language nonemptiness test and concrete covering bound have not been
 instantiated in Lean. The new rank-route formalization does not silently
 discharge those parameters.
 
-For the current candidate, the first-return graph and bounded fresh-interval
-interface are checked. What remains is the executable marked-diagram enumerator
-and coverage proof, the shared-interval product and both uniform preimage
-directions, quantitative repeated closure, and the executable global witness
-bound. Arbitrary-tree semantics, normalization, and the subtype reduction also
-remain outside this integrated Lean core. Other agents' reserved semantic
-work is tracked separately; no unintegrated work is claimed here.
-The proved rank and interval bounds are not word-length or source-visit bounds.
+The finite marked-diagram enumerator, semantic coverage, shared-interval
+product, both preimage directions, terminal decision, arbitrary-tree summary,
+C029, normalization and final composition are now checked. The unproved
+quantitative weight estimates and explicit F are not assumptions of C081.
+The earlier rank and interval bounds are not by themselves word-length or
+source-visit bounds; Q004's computable existence bound instead follows by
+classifying all finite terminal inputs and searching only positive ones.
 
 The current binary formalization does not claim results for every finite
 alphabet. The general statements in the research notes retain their separate

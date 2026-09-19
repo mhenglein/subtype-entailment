@@ -1,51 +1,43 @@
 # Research plan
 
-Updated: 2026-09-19 (C029 executable infinite-continuation decision checked; normalization integration and final composition next)
+Updated: 2026-09-19 (C081 complete qualitative entailment theorem checked)
 
-**Goal:** decide [Problem 1.7](problem.md) for bottom and binary product over arbitrary, possibly infinite trees. No general solution is established here.
+**Completed goal:** decide [Problem 1.7](problem.md) for bottom and binary
+product over arbitrary, possibly infinite trees. [C081](claims.md#c081) gives
+the total executable Boolean and unconditional correctness theorem. Source
+pins, review and validation are in the [completion record](../notes/2026-09-19-entailment-decision.md).
+The formal semantics and performance limits remain explicit.
 
-Current priorities appear first. The original eleven-angle programme is
-preserved below as history, not as the current order of work. Execution status,
-owners, evidence, and exact next steps live in the [research tracker](README.md).
-Dated approach records distinguish proposed handoffs from executed attempts.
+## Current position and next useful work
 
-## Latest mathematical continuation: rank-query candidate (2026-09-15 to 18)
+The terminal rank-query decision, exact subtype summary, absorbing branch
+split, C029 infinite-continuation decision, finite-expression normalization
+and final executable composition are all checked. The runtime definitions use
+no classical choice. Cross-session semantic readbacks accompany the chain;
+no external human referee was commissioned. Native tests supplement the proof
+and retain UNKNOWN for timeouts. The exhaustive implementation is not a
+practical solver.
 
-[C080](claims.md#c080) records a CANDIDATE complete ordinary proof of
-decidability by finite query preimages over first-return prefix graphs, with
-an explicit computable witness bound; see the top entry of [STATE.md](../STATE.md).
-It supersedes the source-capture outline below as the current end-to-end route
-without promoting Problem 1.7's status. Stage-4b semantic closure is now on
-main. The owner resumed a bounded workbench/Lean pilot on 2026-09-19; it proved
-semantic promotion unwind for the concrete compiler without the extra weight
-hypothesis ([result and tooling evidence](../notes/2026-09-19-wb-semantic-pilot.md)).
-Current priorities, in order:
+1. **Explain the complete argument.** Prepare a readable mathematical account
+   with exact finite constructions and semantic transfers, preserving the
+   existing proof notes and failed attempts as provenance.
+2. **Compare prior work before claiming novelty or complexity.** Use the
+   existing dossier and exact hypotheses. A checked repository theorem does
+   not establish that the result is new or yields any particular complexity.
+3. **Improve execution under proof.** Profile small inputs and add useful
+   exact shortcuts or better finite representations with correctness proofs.
+   Keep backend timeouts separate from Boolean answers. The native E052 record
+   identifies the initial performance limitations.
+4. **Keep stronger claims separate.** C080's particular U/F estimates remain
+   unproved here. Q004's bare computable-bound existence follows by finite
+   classification and witness search; that does not prove those formulas or
+   supply an efficient bound. C030's converse certification is independent of
+   the completed qualitative decision.
 
-1. **Terminal decision (#30) completed.** The finite Boolean check is proved
-   equivalent to original witness existence under terminal final states.
-   [Proof and validation](../notes/2026-09-19-terminal-rank-decision.md).
-   Empty witnesses, small-state cases and all flags are preserved. The proof
-   uses at most k-2 finite preimage iterations, independently of U/F.
-2. **Subtype transfer (#31).** The effective summary instance, exact ordered
-   cuts, prefix denials, strong absorption and terminal split are checked.
-   C029 now has a [complete executable theorem](../notes/2026-09-19-c029-completion.md):
-   bounded cycles, actual periodic traces, both reverse-monitor language
-   directions and all-prefix finite search compose to infiniteWitnessCheck
-   correctness. Next integrate the released expression-normalization
-   contributions (#49/#50 and independent readback #52), preserving their
-   arbitrary-tree model-transfer contract. Then define the final total Boolean
-   and prove its entailment equivalence using the normalized summary split and
-   both checked branch decisions. No U/F formula is needed for these decisions.
-   Final composition remains an explicit obligation, not an inferred theorem.
-3. **Independent review (#33/#32).** Read exact statements and shared-generator
-   semantics in a separate session and retain targeted adversarial fixtures.
-   This accompanies assembly; it does not wait until all proofs are written.
-   The owner decided not to commission an external human referee.
-
-Keep `ClosureFor`'s weight conjunct and explicit `F(k)` as unresolved quantitative
-targets; the pilot neither proves nor refutes them. Consult #34 and #37 for exact
-ownership before launching work. No new worker assignments follow from this
-plan. Q004 and the opposing-route tasks remain alternatives if assembly fails.
+These are proposals, not launched work or reservations. Consult #34/#37 and
+current issue scopes before taking one. The original research programme below
+is preserved as history; its older open-problem status and opposing-route
+suggestions are superseded for the exact C081 semantics, not for extensions.
 
 ## Earlier mathematical continuation: single-source capture (2026-09-09)
 

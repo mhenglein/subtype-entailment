@@ -1,0 +1,562 @@
+{
+  "cases": 38,
+  "corpus_sha256": "2d50862dff0f6f8ff9338f8e154dd574f3715766b276a2a0abe12858c9a91ad0",
+  "coverage": {
+    "categories": [
+      "backend",
+      "guard",
+      "infinite"
+    ],
+    "completed_by_entrypoint": {
+      "frontend": 17,
+      "normalized": 5,
+      "raw": 3
+    },
+    "frontend": 26,
+    "independent_answers": "Elementary order laws, explicit root/child finite-tree countermodels, and regular zeroSpine witness; no second Boolean implementation.",
+    "normalized_guarded_backend": 5,
+    "path_boundary": "Entry points are observed; successful guarded calls do not certify raw branch execution. Only kind=raw directly invokes the two-branch backend. Tags identify fixture groups, not a runtime trace.",
+    "raw_normalized_backend": 7
+  },
+  "fail": 0,
+  "limits": {
+    "compile_error_boundary": "NOT RUN and nonzero checker exit; overall NOT RUN unless a mismatch is observed",
+    "execution": "one fresh Lean process group per fixture, sequentially; entire group killed and reaped on timeout",
+    "per_fixture_timeout_seconds": 20.0,
+    "timeout_boundary": "UNKNOWN, never a negative answer"
+  },
+  "not_run": 0,
+  "pass": 25,
+  "phase": "all",
+  "rows": [
+    {
+      "actual": true,
+      "expected": true,
+      "justification": "Every tree is below itself; no premise is needed.",
+      "kind": "frontend",
+      "name": "empty-reflexive",
+      "reason": "reflexivity",
+      "returncode": 0,
+      "seconds": 2.818,
+      "status": "PASS",
+      "tags": [
+        "guard"
+      ]
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "justification": "Set v0 to the root-only tree product(bottom,bottom), v1 to bottom, and use the empty address.",
+      "kind": "frontend",
+      "name": "empty-variable-cross",
+      "reason": "root-bottom-countermodel",
+      "returncode": 0,
+      "seconds": 0.366,
+      "status": "PASS",
+      "tags": [
+        "guard"
+      ]
+    },
+    {
+      "expected": true,
+      "justification": "Bottom has no product nodes, so bottom is below every tree.",
+      "kind": "frontend",
+      "name": "empty-bottom-left",
+      "reason": "bottom-left",
+      "seconds": 20.033,
+      "status": "UNKNOWN",
+      "stderr": "",
+      "stdout": "",
+      "tags": [
+        "guard"
+      ],
+      "timeout_seconds": 20.0
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "justification": "Set v0 to the root-only tree product(bottom,bottom); it has the empty node and bottom does not.",
+      "kind": "frontend",
+      "name": "empty-variable-bottom",
+      "reason": "root-bottom-countermodel",
+      "returncode": 0,
+      "seconds": 0.398,
+      "status": "PASS",
+      "tags": [
+        "guard"
+      ]
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "justification": "Set v0 to the root-only tree. product(v0,bottom) has the false-left child while v0 does not.",
+      "kind": "frontend",
+      "name": "empty-product-left",
+      "reason": "product-child-countermodel",
+      "returncode": 0,
+      "seconds": 0.478,
+      "status": "PASS",
+      "tags": []
+    },
+    {
+      "actual": true,
+      "expected": true,
+      "justification": "The queried inequality is exactly the listed premise.",
+      "kind": "frontend",
+      "name": "premise-forward",
+      "reason": "premise",
+      "returncode": 0,
+      "seconds": 0.371,
+      "status": "PASS",
+      "tags": [
+        "guard"
+      ]
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "justification": "Set v0 to bottom and v1 to the root-only tree. The premise holds, but v1 is not below v0 at the empty address.",
+      "kind": "frontend",
+      "name": "premise-reverse",
+      "reason": "premise-reverse-countermodel",
+      "returncode": 0,
+      "seconds": 0.369,
+      "status": "PASS",
+      "tags": [
+        "guard"
+      ]
+    },
+    {
+      "expected": true,
+      "justification": "Both listed premises compose by transitivity; the queried pair is not itself a premise.",
+      "kind": "frontend",
+      "name": "transitive-query-not-premise",
+      "reason": "transitivity",
+      "seconds": 20.158,
+      "status": "UNKNOWN",
+      "stderr": "",
+      "stdout": "",
+      "tags": [],
+      "timeout_seconds": 20.0
+    },
+    {
+      "expected": true,
+      "justification": "Product is covariant in both arguments, and bottom is below itself; apply product_mono to the premise.",
+      "kind": "frontend",
+      "name": "product-monotone",
+      "reason": "product-monotonicity",
+      "seconds": 20.031,
+      "status": "UNKNOWN",
+      "stderr": "",
+      "stdout": "",
+      "tags": [],
+      "timeout_seconds": 20.0
+    },
+    {
+      "expected": false,
+      "justification": "Set v0 to bottom and v1 to the root-only tree. The premise holds, while the queried products differ at the left child.",
+      "kind": "frontend",
+      "name": "product-monotone-reverse",
+      "reason": "product-reverse-countermodel",
+      "seconds": 20.033,
+      "status": "UNKNOWN",
+      "stderr": "",
+      "stdout": "",
+      "tags": [],
+      "timeout_seconds": 20.0
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "justification": "The query-only v2 is root-only, v0 is bottom, and v1 is root-only; the premise holds but the query fails at the empty address.",
+      "kind": "frontend",
+      "name": "query-only-source",
+      "reason": "query-only-variable-countermodel",
+      "returncode": 0,
+      "seconds": 0.406,
+      "status": "PASS",
+      "tags": []
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "justification": "Set v0 and v1 to the root-only tree and query-only v2 to bottom; the premise holds but the query fails at the empty address.",
+      "kind": "frontend",
+      "name": "query-only-target",
+      "reason": "query-only-variable-countermodel",
+      "returncode": 0,
+      "seconds": 0.378,
+      "status": "PASS",
+      "tags": []
+    },
+    {
+      "actual": true,
+      "expected": true,
+      "justification": "With zero original variables, bottom is still below itself.",
+      "kind": "frontend",
+      "name": "zero-vars-empty-reflexive",
+      "reason": "reflexivity",
+      "returncode": 0,
+      "seconds": 0.365,
+      "status": "PASS",
+      "tags": [
+        "guard"
+      ]
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "justification": "The product has its root node by definition while bottom has no nodes; there are no valuations to restrict this result.",
+      "kind": "frontend",
+      "name": "zero-vars-product-bottom",
+      "reason": "product-root-countermodel",
+      "returncode": 0,
+      "seconds": 0.37,
+      "status": "PASS",
+      "tags": []
+    },
+    {
+      "actual": true,
+      "expected": true,
+      "justification": "The only premise is impossible because product(bottom,bottom) contains its root and bottom does not; entailment is vacuous.",
+      "kind": "frontend",
+      "name": "unsat-zero-variable-query",
+      "reason": "unsatisfiable-premises",
+      "returncode": 0,
+      "seconds": 0.366,
+      "status": "PASS",
+      "tags": [
+        "guard"
+      ]
+    },
+    {
+      "actual": true,
+      "expected": true,
+      "justification": "The same variable-free impossible premise has no model, so the unrelated query v0 <= bottom is vacuously entailed.",
+      "kind": "frontend",
+      "name": "unsat-query-variable",
+      "reason": "unsatisfiable-premises",
+      "returncode": 0,
+      "seconds": 0.459,
+      "status": "PASS",
+      "tags": [
+        "guard"
+      ]
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "justification": "Set v0 to the root-only tree. bottom <= v0 holds, but v0 <= bottom fails at the empty address.",
+      "kind": "frontend",
+      "name": "bottom-premise-reverse",
+      "reason": "root-bottom-countermodel",
+      "returncode": 0,
+      "seconds": 0.369,
+      "status": "PASS",
+      "tags": []
+    },
+    {
+      "expected": true,
+      "justification": "Bottom is below every product tree, independently of v0.",
+      "kind": "frontend",
+      "name": "bottom-to-product",
+      "reason": "bottom-left",
+      "seconds": 20.057,
+      "status": "UNKNOWN",
+      "stderr": "",
+      "stdout": "",
+      "tags": [],
+      "timeout_seconds": 20.0
+    },
+    {
+      "actual": true,
+      "expected": true,
+      "justification": "The same product occurs on both sides of a premise and in the query; reflexivity is independent of slot allocation.",
+      "kind": "frontend",
+      "name": "duplicate-product-reflexive",
+      "reason": "duplicate-reflexivity",
+      "returncode": 0,
+      "seconds": 0.419,
+      "status": "PASS",
+      "tags": []
+    },
+    {
+      "expected": false,
+      "justification": "Set v0=bottom, v1=bottom, and v2 to product(root-only,bottom). The premise holds at every address, but v2 has a false-left child absent from product(v0,v1).",
+      "kind": "frontend",
+      "name": "duplicate-product-reverse",
+      "reason": "duplicate-product-countermodel",
+      "seconds": 20.035,
+      "status": "UNKNOWN",
+      "stderr": "",
+      "stdout": "",
+      "tags": [],
+      "timeout_seconds": 20.0
+    },
+    {
+      "actual": true,
+      "expected": true,
+      "justification": "A nested product expression is repeated exactly; reflexivity remains valid with duplicate product occurrences.",
+      "kind": "frontend",
+      "name": "nested-duplicate-reflexive",
+      "reason": "duplicate-reflexivity",
+      "returncode": 0,
+      "seconds": 0.395,
+      "status": "PASS",
+      "tags": []
+    },
+    {
+      "expected": true,
+      "justification": "Apply the premise twice and product covariance; the duplicated variable children are intentional.",
+      "kind": "frontend",
+      "name": "duplicate-product-derived",
+      "reason": "product-monotonicity",
+      "seconds": 20.019,
+      "status": "UNKNOWN",
+      "stderr": "",
+      "stdout": "",
+      "tags": [],
+      "timeout_seconds": 20.0
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "justification": "The regular zeroSpine tree satisfies product(zeroSpine,bottom) <= zeroSpine and has the empty node, so it refutes zeroSpine <= bottom. The premise also forces arbitrarily long false spines in every model.",
+      "kind": "frontend",
+      "name": "necessarily-infinite-zero-spine",
+      "reason": "regular-infinite-countermodel",
+      "returncode": 0,
+      "seconds": 0.491,
+      "status": "PASS",
+      "tags": [
+        "infinite"
+      ]
+    },
+    {
+      "actual": true,
+      "expected": true,
+      "justification": "The queried inequality is the premise, even though its models include the regular infinite zeroSpine model.",
+      "kind": "frontend",
+      "name": "necessarily-infinite-premise",
+      "reason": "premise",
+      "returncode": 0,
+      "seconds": 0.376,
+      "status": "PASS",
+      "tags": [
+        "infinite"
+      ]
+    },
+    {
+      "expected": false,
+      "justification": "This repeats the product from the premise in the reversed query; the explicit root-plus-left-child v2 countermodel separates the directions.",
+      "kind": "frontend",
+      "name": "query-not-premise-reverse-product",
+      "reason": "duplicate-product-countermodel",
+      "seconds": 20.039,
+      "status": "UNKNOWN",
+      "stderr": "",
+      "stdout": "",
+      "tags": [],
+      "timeout_seconds": 20.0
+    },
+    {
+      "expected": false,
+      "justification": "Set v0 to root-only and v1 to bottom. The two products disagree at the first child address.",
+      "kind": "frontend",
+      "name": "empty-product-swap",
+      "reason": "product-swap-countermodel",
+      "seconds": 20.018,
+      "status": "UNKNOWN",
+      "stderr": "",
+      "stdout": "",
+      "tags": [],
+      "timeout_seconds": 20.0
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "justification": "The normalized variable instance has the root-only/bottom countermodel at the empty address.",
+      "kind": "raw",
+      "name": "raw-empty-cross",
+      "reason": "root-bottom-countermodel",
+      "returncode": 0,
+      "seconds": 9.45,
+      "status": "PASS",
+      "tags": [
+        "backend"
+      ]
+    },
+    {
+      "expected": true,
+      "justification": "The variable inequality is explicitly present in the normalized premise list.",
+      "kind": "raw",
+      "name": "raw-premise-forward",
+      "reason": "premise",
+      "seconds": 20.031,
+      "status": "UNKNOWN",
+      "stderr": "",
+      "stdout": "",
+      "tags": [
+        "backend"
+      ],
+      "timeout_seconds": 20.0
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "justification": "The root-only/bottom valuation satisfies 0 <= 1 but refutes 1 <= 0 at the empty address.",
+      "kind": "raw",
+      "name": "raw-premise-reverse",
+      "reason": "premise-reverse-countermodel",
+      "returncode": 0,
+      "seconds": 9.515,
+      "status": "PASS",
+      "tags": [
+        "backend"
+      ]
+    },
+    {
+      "expected": true,
+      "justification": "The raw two-branch backend must preserve reflexivity without a frontend guard.",
+      "kind": "raw",
+      "name": "raw-reflexive",
+      "reason": "reflexivity",
+      "seconds": 20.159,
+      "status": "UNKNOWN",
+      "stderr": "",
+      "stdout": "",
+      "tags": [
+        "backend"
+      ],
+      "timeout_seconds": 20.0
+    },
+    {
+      "expected": true,
+      "justification": "Denial forces v0 below bottom, while lower requires product(v0,v0) below v0; these conflict at the product root, but reflexivity remains true.",
+      "kind": "raw",
+      "name": "raw-unsat-denial-lower",
+      "reason": "reflexivity-under-unsat",
+      "seconds": 20.104,
+      "status": "UNKNOWN",
+      "stderr": "",
+      "stdout": "",
+      "tags": [
+        "backend"
+      ],
+      "timeout_seconds": 20.0
+    },
+    {
+      "expected": true,
+      "justification": "The two listed inequalities establish both directions; query the reverse one without a frontend guard.",
+      "kind": "raw",
+      "name": "raw-equality-both-directions",
+      "reason": "two-premise-equality",
+      "seconds": 20.026,
+      "status": "UNKNOWN",
+      "stderr": "",
+      "stdout": "",
+      "tags": [
+        "backend"
+      ],
+      "timeout_seconds": 20.0
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "justification": "Take v1=root-only and v0=product(v1,v1). The upper premise holds by equality, but v0 has a child absent from v1.",
+      "kind": "raw",
+      "name": "raw-upper-only",
+      "reason": "upper-countermodel",
+      "returncode": 0,
+      "seconds": 9.607,
+      "status": "PASS",
+      "tags": [
+        "backend"
+      ]
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "justification": "The normalized fast path sees a root-only/bottom countermodel at the empty address.",
+      "kind": "normalized",
+      "name": "normalized-empty-cross",
+      "reason": "root-bottom-countermodel",
+      "returncode": 0,
+      "seconds": 0.417,
+      "status": "PASS",
+      "tags": [
+        "backend"
+      ]
+    },
+    {
+      "actual": true,
+      "expected": true,
+      "justification": "The queried normalized leq clause is explicitly present.",
+      "kind": "normalized",
+      "name": "normalized-premise-forward",
+      "reason": "premise",
+      "returncode": 0,
+      "seconds": 0.388,
+      "status": "PASS",
+      "tags": [
+        "backend"
+      ]
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "justification": "A root-only/bottom valuation satisfies the premise and refutes the reversed query.",
+      "kind": "normalized",
+      "name": "normalized-premise-reverse",
+      "reason": "premise-reverse-countermodel",
+      "returncode": 0,
+      "seconds": 0.372,
+      "status": "PASS",
+      "tags": [
+        "backend"
+      ]
+    },
+    {
+      "actual": true,
+      "expected": true,
+      "justification": "This calls the guarded normalized entry point directly, so its reflexivity guard returns true.",
+      "kind": "normalized",
+      "name": "normalized-reflexive",
+      "reason": "reflexivity",
+      "returncode": 0,
+      "seconds": 0.401,
+      "status": "PASS",
+      "tags": [
+        "backend"
+      ]
+    },
+    {
+      "actual": true,
+      "expected": true,
+      "justification": "The normalized constraints are contradictory at the product root; reflexivity remains valid.",
+      "kind": "normalized",
+      "name": "normalized-unsat-denial-lower",
+      "reason": "reflexivity-under-unsat",
+      "returncode": 0,
+      "seconds": 0.379,
+      "status": "PASS",
+      "tags": [
+        "backend"
+      ]
+    }
+  ],
+  "source_revision": "e867092e32e368eac34065b97cc6871f3b60bc73",
+  "source_sha256": {
+    "experiments/check_entailment_decision.py": "78262d84da6b5c1bc0cc446895a461720a9d5b3038953f4a5678a10ba450f1f0",
+    "lean/Subtail/AbsorbingTerminal.lean": "596d502361547a2b01c276fd41bc1b2b004bdbe4ce0de561cd4b6bce9002bb1b",
+    "lean/Subtail/EntailmentDecision.lean": "a899b12e1d2b968053a0062a1600c9d368fe5c16f1ba3b74aef591b311088f59",
+    "lean/Subtail/ExpressionNormalization.lean": "6e69fa21ebf0a0ffa65f78c976eb6681a85e9c9778cf96e57d16fb86b1285b82",
+    "lean/Subtail/InfiniteDecision.lean": "d9679db4b52062a707f74c4a7198137f608660930e3f4a2d868ab4efac40228d",
+    "lean/Subtail/RankQueryDecision.lean": "51fef747bb443d313559e57d8fb8e3c1ce68b804eb4883a7d504e2945da5bd8a",
+    "lean/Subtail/SubtypeTerminalBridge.lean": "4a6fb1e783fdf052c1ac61bfd24aae9dbc5d1c441961e41d7cd02f434d57b751",
+    "lean/Subtail/SummaryAutomaton.lean": "68832af44bc8907e99dd2889968c699245aff70d40bf5690539f3f9edd8ca37b",
+    "lean/Subtail/TreeSemantics.lean": "8b08b74d08bac48454f99f0241eb066ef6b218334641f284bc26423957a78f2e"
+  },
+  "status": "UNKNOWN",
+  "unknown": 13
+}

@@ -48,5 +48,7 @@ When a conjecture is proved or refuted, preserve the file and update its status.
 ## Source-visit target
 
 [Q004](Q004.md) records the computable existential source-visit bound isolated
-by C067/C068. It is OPEN, not inferred from finite searches or the single-source
-normal form. The generated research tracker lists the current Q statuses.
+by C067/C068. It is now PROVED as an ordinary computability corollary of the
+checked complete terminal decision: finite instance classification followed by
+witness enumeration. It is not inferred from finite test cases and does not
+establish C080's explicit F. The generated tracker lists current Q statuses.

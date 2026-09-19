@@ -506,6 +506,23 @@ jobs:
               assert actual_ref[key] == saved_ref[key], key
           print('PASS: both distinct normalization implementations and saved corpus counts')
           PYCODE
+      - name: Full-expression native smoke checks
+        run: |
+          python3 experiments/check_entailment_decision.py --phase smoke --strict --output /tmp/entailment-smoke.json
+          python3 - <<'PYCODE'
+          import json
+          from pathlib import Path
+          saved = json.loads(Path('results/entailment-decision.json').read_text())
+          actual = json.loads(Path('/tmp/entailment-smoke.json').read_text())
+          assert actual['status'] == 'PASS'
+          assert actual['source_sha256'] == saved['source_sha256']
+          expected = {row['name']: row for row in saved['rows']}
+          for row in actual['rows']:
+              old = expected[row['name']]
+              assert old['status'] == 'PASS'
+              assert (row['expected'], row['actual']) == (old['expected'], old['actual'])
+          print('PASS: completed native smoke answers and exact source identities')
+          PYCODE
       - name: Earlier Lean core, axioms and Python agreement
         run: python3 scripts/check_lean.py
       - name: Verify recorded Lean evidence and research records

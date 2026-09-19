@@ -1,6 +1,6 @@
 # Problem and notation
 
-**Goal:** decide Problem 1.7 of [the August 31 memo](../papers/sep-topfree.pdf). No general decision procedure is established in this repository.
+**Result:** [C081](claims.md#c081) gives a Lean-checked executable decision for Problem 1.7 of [the August 31 memo](../papers/sep-topfree.pdf). The exact scope and semantic contract remain below.
 
 Given a finite constraint set C and variables alpha, beta, decide whether every type assignment satisfying C also satisfies alpha <= beta.
 
@@ -31,6 +31,20 @@ The overloaded B symbols have different roles: condition B in Theorem 2.6 is not
 
 ## Known dependency chain
 
-Top-free non-entailment reduces to prefix-reach avoidance with regular side conditions, then to flagged-border avoidance. A decision procedure for the latter would solve the former. The full converse preserving arbitrary regular side conditions has not been supplied.
+Finite expression constraints and queries normalize with exact model extension
+and restriction. Normalized non-entailment is equivalent to an original witness
+in an effectively constructed absorbing summary instance. C031 splits witness
+existence into the C029 infinite-continuation branch and a terminal branch;
+both now have checked total Booleans. Their negated disjunction, followed by
+normalization, gives the unconditional C081 entailment theorem.
+
+The formal input is a finite list over `Expr (Fin n)`. A finite named constraint
+set and variable query embed by choosing finite variable indices and listing
+the constraints; repetitions do not change their universal interpretation.
+This is an effective input encoding, not a theorem about a text/JSON parser.
+The tree semantics use arbitrary prefix-closed product-node sets and retain
+the memo's bottom/product domain. [Independent final semantic readback](../notes/2026-09-19-entailment-decision-independent-readback.md).
+The full converse preserving arbitrary abstract BorderAvoid annotations is a
+separate statement and is not assumed by this solution.
 
 Use [the claims ledger](claims.md) for exact statements and evidence, [the research tracker](README.md) for execution status, and [the initial review](../REVIEW.md) for the detailed derivations.

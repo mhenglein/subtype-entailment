@@ -16,11 +16,12 @@ and prints the same JSON. The implementation uses only the Python standard
 library. See [border_lab.py](border_lab.py) for the executable predicates and
 the finite reverse-reading automaton.
 
-The current GitHub Actions workflow covers the pre-continuation E001-E015
-commands, including the separate checks listed below E008. It does not run
-E016-E028 or the additional unnumbered checks at the end of this index. Run
-each later command separately when its record says the executable and result
-are present.
+The original experiment workflow covers the pre-continuation core. The
+consolidated [Lean workflow](../.github/workflows/lean.yml) also runs the newer
+kernel, dependency and native regression checks named in its steps, including
+normalization and full entailment. This index is larger than CI; a registered
+command is not automatically run by a workflow. Check the exact trigger and
+step before claiming automatic coverage.
 
 ## Result rules
 
@@ -769,7 +770,7 @@ every four-state case; this check does not add a small-state result.
 | Command | `python3 experiments/check_semantic_bridge_audit.py --output /tmp/semantic-bridge-audit.json && cmp results/semantic-bridge-audit.json /tmp/semantic-bridge-audit.json`; `python3 experiments/check_stack_summary.py --lean --output /tmp/finite-propagation.json && cmp results/finite-propagation.json /tmp/finite-propagation.json` (Lean 4.33.1) |
 | Detail | [Bridge audit contracts](../notes/2026-09-18-semantic-bridge-audit.md); [canonical model](../notes/2026-09-18-canonical-model-formalization.md); [finite propagation](../notes/2026-09-18-finite-propagation-formalization.md) |
 | Evidence | [semantic-bridge-audit.json](../results/semantic-bridge-audit.json): restricted-input integration oracles and guards for the C029/C031 composition. [finite-propagation.json](../results/finite-propagation.json): seed `2026091831`; 68 systems, 14,256 reachability, 1,488 control-reachability and 176 balanced comparisons against an independent saturation oracle, 8,050 complete monotone cross-checks, 32 `satCheck` and 896 supplied-address `separationCheck` comparisons of the compiled Lean Booleans. |
-| Status | Regressions for kernel-checked executable definitions; entailment itself is not decided (the separating address remains an explicit existential); no E ID; C080 unchanged. |
+| Status | Regressions for kernel-checked executable definitions; this earlier layer leaves the separating address existential; C081 later composes it into full entailment; no E ID; C080 unchanged. |
 
 ### Lean diagram compiler differential (stage 4c)
 
@@ -974,3 +975,73 @@ The preceding dated component-only entry is historical. Its open monitor,
 finite-search and concrete-trace obligations are discharged by this result;
 its original evidence is unchanged. Terminal witnesses remain a separate
 branch; the full expression-level entailment checker is not claimed here.
+
+## Full-input normalization checks (2026-09-19, A010/A018/C081)
+
+The two implementations and their evidence remain distinct:
+
+```sh
+(cd lean && lake env lean --run Subtail/ExpressionNormalizationAudit.lean) > /tmp/normalization-native.jsonl
+python3 experiments/check_expression_normalization_lean.py --lean-output /tmp/normalization-native.jsonl
+python3 experiments/check_expression_normalization.py --output /tmp/normalization-reference.json
+python3 scripts/check_entailment_decision.py
+```
+
+The Lean normalizer's 372 actual outputs agree with an independent literal
+syntax/finite-tree checker. Its semantic corpus covers 567340 extended finite
+valuations, 7624 original valuations and 10479 exact query comparisons, plus
+mutation guards. [Source](check_expression_normalization_lean.py),
+[saved evidence](../results/expression-normalization-lean.json).
+
+The distinct Python reference uses a different allocation order. Its saved
+seeded/exhaustive corpus includes 1352 exhaustive and 250 seeded syntax inputs,
+10600 original extensions, 115340 normalized valuations, 38936 address checks,
+10000 nested-product stress, 14 malformed inputs, nine adversarial groups and
+three CLI roundtrips. [Source](check_expression_normalization.py),
+[saved evidence](../results/expression-normalization.json).
+These are finite checks; the arbitrary-tree model-transfer theorem is the
+separate Lean proof. Fresh combined-tree runs and saved-count comparisons
+passed on wb-marcus; historical environment metadata is preserved.
+
+The full-input dependency audit checks all 91 named declaration closures in
+ExpressionNormalization, its native audit, and EntailmentDecision, including
+39 non-theorems with no classical choice. The default import graph contains
+the semantic normalizer and final decision; the native audit executable is
+built and kernel-replayed separately. The consolidated Lean workflow runs
+both normalization suites and this audit when its dependency paths change.
+[Exact pins, proof and review](../notes/2026-09-19-entailment-decision.md).
+
+<a id="e052"></a>
+
+### E052 — Full-expression native entailment regressions
+
+**Command.** `python3 experiments/check_entailment_decision.py`.
+
+**Scope.** Execute the actual Lean full-input Boolean or its normalized/raw
+entry points on a small independently justified corpus. Expected positive
+answers come from exact logical arguments; negative answers have explicit
+models. The checker does not treat the absence of a bounded finite model as
+proof of universal entailment. Individual processes have a 20-second cap;
+timeouts are UNKNOWN, not negative Boolean answers.
+
+**Evidence.** [Checker](check_entailment_decision.py),
+[saved result](../results/entailment-decision.json),
+[complete theorem and validation boundary](../notes/2026-09-19-entailment-decision.md).
+The saved record states actual path coverage and incomplete cases. A successful
+fast guard is not reported as exercising the raw finite-enumeration backend.
+The existing branch-specific native suites remain separate evidence.
+
+**Executed result (Mac, Lean 4.33.1, checker e867092).** Of 38 attempted cases,
+25 completed and agreed: 17 full-expression calls, five guarded normalized
+calls and three direct raw-backend calls. Thirteen timed out at 20 seconds,
+with zero disagreements or unexecuted cases. The full report is therefore
+`UNKNOWN`, not a complete native PASS. All completed direct raw calls returned
+false; none of the raw positive-answer probes completed within the cap. The
+separate terminal and C029 suites still supply their own complete small-state
+differentials.
+
+The 17 full-expression smoke cases also replayed with `--phase smoke --strict`
+and no timeout; CI runs this strict subset and checks saved answers and exact
+source identities. The full diagnostic command remains available; no CI pass
+is claimed for its timed-out cases. Every timed-out process group is killed
+and reaped. No further native process remains after a completed run.
