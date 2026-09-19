@@ -70,6 +70,21 @@ jobs:
               assert used <= allowed, (name, used, allowed)
           print('PASS:', len(rows), 'named declaration dependency closures; standard axioms only.')
           PY
+      - name: Independent all-length fixed-reference oracle and native replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 experiments/check_finishing_trace.py --lean --output /tmp/finishing.json --full-output /tmp/finishing-full.json
+          PYTHONHASHSEED=91 python3 experiments/check_finishing_trace.py --lean --output /tmp/finishing-replay.json --full-output /tmp/finishing-full-replay.json
+          cmp /tmp/finishing.json /tmp/finishing-replay.json
+          cmp /tmp/finishing-full.json /tmp/finishing-full-replay.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          saved = json.loads(Path('results/finishing-trace-semantics.json').read_text())
+          actual = json.loads(Path('/tmp/finishing.json').read_text())
+          assert actual == saved['native'], (actual, saved['native'])
+          PY
       - name: Preserve existing Lean core and recorded evidence
         run: |
           python3 scripts/check_lean.py

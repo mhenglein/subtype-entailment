@@ -1,0 +1,93 @@
+{
+  "base_commit": "a4e9dfcdcf41abf9c14f4e7c2977e9cb530b5c74",
+  "branch": "lean/finish-query-facts-2026-09-18",
+  "checker_blob": "5117a73ba850bff6602b21fe471281dfe90f2b5a",
+  "dependency_blobs": {
+    "lean/Subtail/Basic.lean": "953f04e48ea6d3b737ac93471f2d3d6e42163ae5",
+    "lean/Subtail/FirstReturnColours.lean": "3c815aedac62a33c2fef2dc6562c053f1a34e4b2",
+    "lean/Subtail/FirstReturnGenerator.lean": "2487ae28006a6aa51d8b3879a0f727664e815b19",
+    "lean/Subtail/FirstReturnGraph.lean": "0034bcd4141c73e486437917830cc1e70ced203b",
+    "lean/Subtail/PrefixMatching.lean": "a2f0f64b19f33e56ab3ff94e90eb9ceb462baaf6",
+    "lean/Subtail/RankMilestones.lean": "8cefde96f871d0f9c1389529e520f8e77742fabb",
+    "lean/Subtail/RankQuery.lean": "6ee81d85c058a8f17342e4c341f8227e3a963731",
+    "lean/Subtail/RankQueryFirstReturn.lean": "9d5ce4ecb458d46038f3c657ce29ddfa57388737",
+    "lean/Subtail/RankQueryPaths.lean": "dcb660f82365049092a6505603b451f222f5cc44",
+    "lean/Subtail/TerminalRank.lean": "8333123477230f5fd88edc0f7f6cda9ff1ee2619"
+  },
+  "lean_commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+  "lean_version": "4.33.1",
+  "limits": [
+    "Exact fixed-reference finishing, not arbitrary completion from every safe reference.",
+    "No semantic diagram coverage, compiler weight bound, final F(k), RankDecisionStatement or full subtype decision is proved here.",
+    "Not an independent human review of the candidate proof.",
+    "Latest inspected remote attempt b8da467 failed before executing any steps; underlying cause not established. Local kernel validation is separate."
+  ],
+  "native": {
+    "corpus_sha256": "8a618d57e04f8a784482d3d902bb219ac74db75a47d0264d700a95d333d7bff5",
+    "counts": {
+      "cases": 180,
+      "completely_explored_oracle_states": 113,
+      "native_query_comparisons": 180,
+      "native_witness_checks": 92,
+      "oracle_no": 88,
+      "oracle_yes": 92,
+      "positive_witness_reconstructions": 92,
+      "safe_references": 179
+    },
+    "limits": [
+      "NO is complete only for this fixed-reference no-return finishing question.",
+      "Finite input corpus does not prove general completeness; Lean theorems do.",
+      "No compiler coverage, global witness bound or subtype decision is established."
+    ],
+    "mode": "native Lean + independent oracle",
+    "required_return_regression": {
+      "accepted_completion_exists": true,
+      "accepted_word": "010",
+      "base": "0",
+      "base_labels": [
+        3,
+        2
+      ],
+      "finish": false
+    },
+    "seed": 2026091830,
+    "status": "PASS"
+  },
+  "proof_commit": "fa4f1b07076a6fc977ec9ee0420b9da9b6ec1909",
+  "proof_endpoints": [
+    "finish_check_correct",
+    "safe_reference_witness",
+    "trace_safe_reference",
+    "finish_implies_witness",
+    "finish_iff_no_return_completion",
+    "maximal_rank_completion_finishes"
+  ],
+  "python_version": "3.13.5",
+  "repairs": [
+    "Unpack existential Step explicitly; unfold move condition before list membership; explicit finite types and Boolean parentheses.",
+    "Retain original fixed-reference semantics; replace the earlier chat overstatement by literal no-return completion.",
+    "Apply the existing repository standard-axiom policy instead of rejecting standard propext."
+  ],
+  "source_blobs": {
+    "lean/Subtail/RankQueryFinishFacts.lean": "ce60c7f6a697b7e6df4f35e534a41c679a958665",
+    "lean/Subtail/RankQueryFinishTrace.lean": "d3444ca3efd906260b5b2f6eb350bc06f4c1a778"
+  },
+  "status": "PASS_LOCAL_KERNEL_AND_NATIVE",
+  "validation": {
+    "axiom_policy": "propext and Quot.sound; Classical.choice permitted in theorems only",
+    "classical_choice_in_runtime_definitions": false,
+    "clean_target_build": "Subtail.RankQueryFinishTrace",
+    "deterministic_native_replay": true,
+    "full_repository_suite": false,
+    "kernel_replays": [
+      "Subtail.RankQueryFinishFacts",
+      "Subtail.RankQueryFinishTrace"
+    ],
+    "location": "local container; recovered pinned toolchain from authorized CI artifact",
+    "named_declarations_and_constructors": 62,
+    "remote_ci_success_claimed": false,
+    "target_build_jobs": 13,
+    "theorem_declarations": 49,
+    "unfinished_custom_native_axioms": false
+  }
+}
