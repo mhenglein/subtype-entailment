@@ -380,6 +380,10 @@ theorem edge_K_N (b : Bool) :
       rw [hw]; intro h; exact hba (Option.some.inj h).symm
     simp [hba, this]
 
+theorem edge_congr {j j' : Nat} (h : j = j') (hj : j ≤ E.N) (hj' : j' ≤ E.N) (l : Label) :
+    E.edge j hj l = E.edge j' hj' l := by
+  subst h; rfl
+
 /-- Recover a `Fin`-valued edge from its position value. -/
 theorem edge_fin {j j' : Nat} (hj : j ≤ E.N) {l : Label} (h : E.edge j hj l = some j') :
     ∃ h' : j' < (prefixGraph I E.C).size,
@@ -2033,6 +2037,352 @@ theorem cix_lt {ai si side : Nat} (hai : ai < c.atoms.length) (hsi : si < X.K) (
 theorem vars_le_coreVars : c.vars ≤ X.coreVars := by unfold coreVars; omega
 
 end Cov
+
+/-! ## Semantics of old steps: transport to the base graph -/
+
+/-- Recover a `Fin`-valued edge of any graph from its position value. -/
+theorem fin_edge_of_map_val {G : Graph k} {u : Fin G.size} {l : Label} {j : Nat}
+    (h : (G.edge u l).map Fin.val = some j) (hj : j < G.size) : G.edge u l = some ⟨j, hj⟩ := by
+  cases he : G.edge u l with
+  | none => rw [he] at h; simp at h
+  | some v =>
+    rw [he] at h
+    simp only [Option.map_some, Option.some.injEq] at h
+    congr 1
+    exact Fin.ext h
+
+section Transport
+variable {I : Instance k} {B : Reference k} (E : Ext I B) (o : Observer k)
+
+/-- An old node of the extension graph, as a node of the base graph. -/
+def castB (x : NNode) (hx : x.1 ≤ B.word.length) (hs : x.2 < o.size) :
+    Node (prefixGraph I B) (coreObs o E.a) :=
+  (⟨x.1, Nat.lt_succ_of_le hx⟩, ⟨x.2, hs⟩)
+
+theorem colour_old {j : Nat} (hj : j ≤ B.word.length) (hjC : j < (prefixGraph I E.C).size) :
+    (prefixGraph I E.C).colour ⟨j, hjC⟩ =
+      coreMap E.a ((prefixGraph I B).colour ⟨j, Nat.lt_succ_of_le hj⟩) := by
+  rw [prefixGraph_colour, prefixGraph_colour]
+  exact E.colC_old hj
+
+theorem old_allowed_transport {x : NNode} (hx : x.1 ≤ B.word.length) (h : NAllowed (prefixGraph I E.C) o x) :
+    ∃ hs : x.2 < o.size, Allowed (prefixGraph I B) (coreObs o E.a) (castB E o x hx hs) := by
+  obtain ⟨hx', hs, ha⟩ := h
+  refine ⟨hs, ?_⟩
+  simp only [Allowed, coreObs, castB]
+  simp only [Allowed] at ha
+  rw [colour_old E hx hx'] at ha
+  exact ha
+
+/-- The position value of an edge of the extension graph. -/
+theorem edge_pos {x : NNode} (hx : x.1 < (prefixGraph I E.C).size) {l : Label} {v : Fin (prefixGraph I E.C).size}
+    (he : (prefixGraph I E.C).edge ⟨x.1, hx⟩ l = some v) :
+    E.edge x.1 (Nat.le_of_lt_succ hx) l = some v.val := by
+  rw [← E.edge_val (Nat.le_of_lt_succ hx) l]
+  have : (⟨x.1, hx⟩ : Fin (prefixGraph I E.C).size) = ⟨x.1, Nat.lt_succ_of_le (Nat.le_of_lt_succ hx)⟩ := rfl
+  rw [← this, he]; rfl
+
+/-- An old-to-old step of the extension graph is a step of the core observer in the base. -/
+theorem old_step_transport {x y : NNode} (hx : x.1 ≤ B.word.length) (hy : y.1 ≤ B.word.length)
+    (h : NStep (prefixGraph I E.C) o x y) :
+    ∃ (hs : x.2 < o.size) (ht : y.2 < o.size),
+      Step (prefixGraph I B) (coreObs o E.a) (castB E o x hx hs) (castB E o y hy ht) := by
+  obtain ⟨hx', hy', hs, ht, l, he, hm, ha⟩ := h
+  refine ⟨hs, ht, ?_⟩
+  have hxN : x.1 ≤ E.N := by have := E.m_lt_N; omega
+  have hval : E.edge x.1 hxN l = some y.1 := edge_pos E hx' he
+  have hB := edgeB_val I B (Nat.lt_succ_of_le hx) l
+  -- the base edge and the exclusion of the endpoint's K_a edge
+  have hedge : ¬ (x.1 = B.word.length ∧ l = .K E.a) ∧
+      (prefixGraph I B).edge ⟨x.1, Nat.lt_succ_of_le hx⟩ l = some ⟨y.1, Nat.lt_succ_of_le hy⟩ := by
+    cases l with
+    | F =>
+      refine ⟨by simp, ?_⟩
+      rw [E.edge_F_old hx hxN] at hval
+      simp only at hB
+      apply fin_edge_of_map_val
+      rw [hB]; exact hval
+    | S =>
+      refine ⟨by simp, ?_⟩
+      rw [E.edge_S hxN] at hval
+      have hlt : x.1 < E.N := by
+        apply Classical.byContradiction
+        intro hn
+        rw [if_neg hn] at hval
+        simp at hval
+      rw [if_pos hlt] at hval
+      have hy1 : x.1 + 1 = y.1 := Option.some.inj hval
+      have hxm : x.1 < B.word.length := by omega
+      simp only at hB
+      rw [if_pos hxm] at hB
+      apply fin_edge_of_map_val
+      rw [hB, hy1]
+    | K b =>
+      simp only at hB
+      by_cases hxm : x.1 = B.word.length
+      · rw [E.edge_congr hxm hxN (Nat.le_of_lt E.m_lt_N), E.edge_K_m _ b] at hval
+        have hba : ¬ b = E.a := by
+          intro hba
+          rw [if_pos hba] at hval
+          have := Option.some.inj hval
+          omega
+        rw [if_neg hba] at hval
+        refine ⟨fun h' => hba (Label.K.inj h'.2), ?_⟩
+        apply fin_edge_of_map_val
+        rw [hB, hxm]; exact hval
+      · have hxlt : x.1 < B.word.length := Nat.lt_of_le_of_ne hx hxm
+        rw [E.edge_K_old hxlt hxN b] at hval
+        refine ⟨fun h' => hxm h'.1, ?_⟩
+        apply fin_edge_of_map_val
+        rw [hB]; exact hval
+  obtain ⟨hex, heB⟩ := hedge
+  refine ⟨l, heB, ?_, ?_⟩
+  · -- the move of the core observer
+    simp only [castB, coreObs]
+    have hnot : ¬ (((prefixGraph I B).colour ⟨x.1, Nat.lt_succ_of_le hx⟩).isEnd = true ∧ l = .K E.a) := by
+      intro h'
+      apply hex
+      refine ⟨?_, h'.2⟩
+      have := h'.1
+      rw [prefixGraph_colour] at this
+      exact of_decide_eq_true this
+    rw [if_neg hnot]
+    rw [colour_old E hx hx', colour_old E hy hy'] at hm
+    exact hm
+  · obtain ⟨hs', hall⟩ := old_allowed_transport E o hy ⟨hy', ht, ha⟩
+    exact hall
+
+/-- Runs of an observer are runs of the observer with other initial/final controls. -/
+theorem run_coreObs_slice {G : Graph k} (lc rc : Fin o.size) {a : Bool} {x y : Node G (coreObs o a)}
+    (h : Run G (coreObs o a) x y) : Run G (coreObs (sliceObs o lc rc) a) x y := by
+  induction h with
+  | refl h => exact Run.refl h
+  | step _ hs ih => exact Run.step ih hs
+
+/-- An old block of the extension graph runs in the base graph under the core observer. -/
+theorem old_block_run : ∀ {s : List NNode}, Consec (NStep (prefixGraph I E.C) o) s →
+    (∀ x ∈ s, x.1 ≤ B.word.length) → (∀ x ∈ s, NAllowed (prefixGraph I E.C) o x) →
+    ∀ {x y : NNode}, s.head? = some x → s.getLast? = some y →
+    ∃ (hx : x.1 ≤ B.word.length) (hs : x.2 < o.size) (hy : y.1 ≤ B.word.length) (ht : y.2 < o.size),
+      Run (prefixGraph I B) (coreObs o E.a) (castB E o x hx hs) (castB E o y hy ht) := by
+  intro s
+  induction s with
+  | nil => intro _ _ _ x y hx; simp at hx
+  | cons z s ih =>
+    intro hc hold hall x y hx hy
+    simp only [List.head?_cons, Option.some.injEq] at hx
+    subst hx
+    have hxold := hold z (List.mem_cons_self ..)
+    obtain ⟨hs, hallx⟩ := old_allowed_transport E o hxold (hall z (List.mem_cons_self ..))
+    cases s with
+    | nil =>
+      simp at hy; subst hy
+      exact ⟨hxold, hs, hxold, hs, Run.refl hallx⟩
+    | cons z' s' =>
+      have hy' : (z' :: s').getLast? = some y := by simpa using hy
+      obtain ⟨hz, hs', hyo, ht, hrun⟩ := ih hc.2 (fun w hw => hold w (List.mem_cons_of_mem _ hw))
+        (fun w hw => hall w (List.mem_cons_of_mem _ hw)) rfl hy'
+      obtain ⟨hs'', ht'', hstep⟩ := old_step_transport E o hxold hz hc.1
+      refine ⟨hxold, hs'', hyo, ht, ?_⟩
+      exact run_prepend _ _ hallx hstep hrun
+
+end Transport
+
+/-! ## Semantics of the transitions between blocks -/
+
+section Transitions
+variable {I : Instance k} {B : Reference k} (E : Ext I B) (o : Observer k)
+
+/-- The colour of a node of the extension graph, by position. -/
+theorem colour_C {j : Nat} (hj : j < (prefixGraph I E.C).size) :
+    (prefixGraph I E.C).colour ⟨j, hj⟩ = colB I E.C j := rfl
+
+theorem nstepL_edge {x y : NNode} {l : Label} (h : NStepL (prefixGraph I E.C) o x y l) :
+    ∃ hx : x.1 ≤ E.N, E.edge x.1 hx l = some y.1 := by
+  obtain ⟨hx, hy, hs, ht, he, hm⟩ := h
+  exact ⟨Nat.le_of_lt_succ hx, edge_pos E hx he⟩
+
+theorem nstepL_move {x y : NNode} {l : Label} (h : NStepL (prefixGraph I E.C) o x y l) :
+    ∃ (hs : x.2 < o.size) (ht : y.2 < o.size),
+      (⟨y.2, ht⟩ : Fin o.size) ∈ o.move ⟨x.2, hs⟩ (colB I E.C x.1) l (colB I E.C y.1) := by
+  obtain ⟨hx, hy, hs, ht, he, hm⟩ := h
+  exact ⟨hs, ht, hm⟩
+
+theorem nstepL_bounds {x y : NNode} {l : Label} (h : NStepL (prefixGraph I E.C) o x y l) :
+    x.1 ≤ E.N ∧ y.1 ≤ E.N := by
+  obtain ⟨hx, hy, -, -, -, -⟩ := h
+  exact ⟨Nat.le_of_lt_succ hx, Nat.le_of_lt_succ hy⟩
+
+/-- The labels realising an entrance `m → m+1`. -/
+theorem enter_label {x y : NNode} {l : Label} (h : NStepL (prefixGraph I E.C) o x y l)
+    (hx : x.1 = B.word.length) (hy : y.1 = B.word.length + 1) : l = .S ∨ l = .K E.a := by
+  obtain ⟨hxN, he⟩ := nstepL_edge E o h
+  cases l with
+  | F =>
+    rw [E.edge_F_old (by omega) hxN] at he
+    have h1 := Option.some.inj he
+    have h2 := failureParent_take_le B.word x.1
+    omega
+  | S => exact Or.inl rfl
+  | K b =>
+    rw [E.edge_congr hx hxN (Nat.le_of_lt E.m_lt_N), E.edge_K_m _ b] at he
+    by_cases hba : b = E.a
+    · exact Or.inr (by rw [hba])
+    · rw [if_neg hba] at he
+      have h1 := Option.some.inj he
+      have h2 := advance_le B.word B.word.length b
+      omega
+
+/-- An old-to-fresh link is the entrance. -/
+theorem enter_facts {x y : NNode} (h : Link E o x y) (hx : x.1 ≤ B.word.length) :
+    x.1 = B.word.length ∧ y.1 = B.word.length + 1 ∧
+      (stepLabel (prefixGraph I E.C) o x y = .S ∨ stepLabel (prefixGraph I E.C) o x y = .K E.a) ∧
+      ∃ (hs : x.2 < o.size) (ht : y.2 < o.size),
+        (⟨y.2, ht⟩ : Fin o.size) ∈ o.move ⟨x.2, hs⟩ (colB I E.C B.word.length)
+          (stepLabel (prefixGraph I E.C) o x y) (colB I E.C (B.word.length + 1)) := by
+  have hc := compat_false_iff.mp h.2
+  have hyfresh : B.word.length < y.1 := by
+    apply Classical.byContradiction
+    intro hn
+    exact hc.1 ⟨hx, Nat.le_of_not_lt hn⟩
+  obtain ⟨hx', hy', hs, ht, l, he, -, -⟩ := h.1
+  obtain ⟨hxm, hym⟩ := RankQueryFirstReturn.old_to_fresh I E.C E.hm E.hr he hx hyfresh
+  have hxm' : x.1 = B.word.length := hxm
+  have hym' : y.1 = B.word.length + 1 := hym
+  have hL := stepLabel_spec h.1
+  refine ⟨hxm', hym', enter_label E o hL hxm' hym', ?_⟩
+  obtain ⟨hs', ht', hm⟩ := nstepL_move E o hL
+  rw [hxm', hym'] at hm
+  exact ⟨hs', ht', hm⟩
+
+/-- A fresh-to-fresh link is the endpoint wrap by `K a`. -/
+theorem wrap_facts {x y : NNode} (h : Link E o x y) (hx : B.word.length < x.1) (hy : B.word.length < y.1) :
+    x.1 = E.N ∧ y.1 = B.word.length + 1 ∧ stepLabel (prefixGraph I E.C) o x y = .K E.a ∧
+      ∃ (hs : x.2 < o.size) (ht : y.2 < o.size),
+        (⟨y.2, ht⟩ : Fin o.size) ∈ o.move ⟨x.2, hs⟩ (colB I E.C E.N) (.K E.a) (colB I E.C (B.word.length + 1)) := by
+  have hc := compat_false_iff.mp h.2
+  obtain ⟨hx', hy', hs, ht, l, he, -, -⟩ := h.1
+  have hshape := RankQueryFirstReturn.fresh_edge_shape I E.C E.hm E.hr he hy
+  have hxy : x.1 = E.N ∧ y.1 = B.word.length + 1 := by
+    rcases hshape with h1 | h2
+    · exact absurd ⟨hx, h1⟩ hc.2
+    · exact h2
+  obtain ⟨hxN, hym⟩ := hxy
+  have huniq : ∀ l', NStepL (prefixGraph I E.C) o x y l' → l' = .K E.a := by
+    intro l' hl'
+    obtain ⟨hxN', he'⟩ := nstepL_edge E o hl'
+    cases l' with
+    | F =>
+      rw [E.edge_F_fresh hx hxN'] at he'
+      have h1 := Option.some.inj he'
+      have h2 := E.cur_le hxN'
+      omega
+    | S =>
+      rw [E.edge_S hxN'] at he'
+      have hnot : ¬ x.1 < E.N := by omega
+      rw [if_neg hnot] at he'
+      simp at he'
+    | K b =>
+      rw [E.edge_congr hxN hxN' (Nat.le_refl _), E.edge_K_N b] at he'
+      by_cases hba : b = E.a
+      · rw [hba]
+      · rw [if_neg hba] at he'
+        have h1 := Option.some.inj he'
+        have h2 := advance_le B.word B.word.length b
+        omega
+  have hlab := stepLabel_eq h.1 huniq
+  have hL := stepLabel_spec h.1
+  refine ⟨hxN, hym, hlab, ?_⟩
+  obtain ⟨hs', ht', hm⟩ := nstepL_move E o hL
+  rw [hxN, hym, hlab] at hm
+  exact ⟨hs', ht', hm⟩
+
+/-- A fresh-to-old link exits by `F` to the cursor or by a mismatched `K b` to the base edge. -/
+theorem exit_facts {x y : NNode} (h : Link E o x y) (hx : B.word.length < x.1) (hy : y.1 ≤ B.word.length) :
+    x.1 ≤ E.N ∧
+      ((stepLabel (prefixGraph I E.C) o x y = .F ∧ y.1 = E.cur x.1) ∨
+        (∃ b, stepLabel (prefixGraph I E.C) o x y = .K b ∧ y.1 = advance B.word (E.cur x.1) b ∧
+          (x.1 < E.N → E.C.word[x.1]? ≠ some b) ∧ (x.1 = E.N → b ≠ E.a))) ∧
+      ∃ (hs : x.2 < o.size) (ht : y.2 < o.size),
+        (⟨y.2, ht⟩ : Fin o.size) ∈ o.move ⟨x.2, hs⟩ (colB I E.C x.1)
+          (stepLabel (prefixGraph I E.C) o x y) (colB I E.C y.1) := by
+  have hL := stepLabel_spec h.1
+  obtain ⟨hxN, he⟩ := nstepL_edge E o hL
+  refine ⟨hxN, ?_, nstepL_move E o hL⟩
+  generalize hl : stepLabel (prefixGraph I E.C) o x y = l at he
+  cases l with
+  | F =>
+    left
+    refine ⟨rfl, ?_⟩
+    rw [E.edge_F_fresh hx hxN] at he
+    exact (Option.some.inj he).symm
+  | S =>
+    exfalso
+    rw [E.edge_S hxN] at he
+    by_cases hlt : x.1 < E.N
+    · rw [if_pos hlt] at he
+      have := Option.some.inj he
+      omega
+    · rw [if_neg hlt] at he
+      simp at he
+  | K b =>
+    right
+    refine ⟨b, rfl, ?_⟩
+    by_cases hlt : x.1 < E.N
+    · rw [E.edge_K_fresh hx hlt b] at he
+      by_cases hw : E.C.word[x.1]? = some b
+      · rw [if_pos hw] at he
+        have := Option.some.inj he
+        omega
+      · rw [if_neg hw] at he
+        exact ⟨(Option.some.inj he).symm, fun _ => hw, fun hN => absurd hN (Nat.ne_of_lt hlt)⟩
+    · have hxN' : x.1 = E.N := by omega
+      rw [E.edge_congr hxN' hxN (Nat.le_refl _), E.edge_K_N b] at he
+      by_cases hba : b = E.a
+      · rw [if_pos hba] at he
+        have := Option.some.inj he
+        omega
+      · rw [if_neg hba] at he
+        refine ⟨?_, fun h' => absurd h' (by omega), fun _ => hba⟩
+        rw [hxN', E.cur_N]
+        exact (Option.some.inj he).symm
+
+/-- A step between consecutive fresh positions reads the letter by `S` or `K b`. -/
+theorem fresh_step_facts {x y : NNode} (h : NStep (prefixGraph I E.C) o x y) (hx : B.word.length < x.1)
+    (hy : y.1 = x.1 + 1) :
+    x.1 < E.N ∧ ∃ b, E.C.word[x.1]? = some b ∧
+      ∃ (hs : x.2 < o.size) (ht : y.2 < o.size),
+        ((⟨y.2, ht⟩ : Fin o.size) ∈ o.move ⟨x.2, hs⟩ (colB I E.C x.1) .S (colB I E.C y.1) ∨
+          (⟨y.2, ht⟩ : Fin o.size) ∈ o.move ⟨x.2, hs⟩ (colB I E.C x.1) (.K b) (colB I E.C y.1)) := by
+  obtain ⟨l, hL⟩ := nstepL_of_nstep h
+  obtain ⟨hxN, he⟩ := nstepL_edge E o hL
+  have hyN := (nstepL_bounds E o hL).2
+  have hlt : x.1 < E.N := by omega
+  obtain ⟨b, hb⟩ := E.word_some hlt
+  refine ⟨hlt, b, hb, ?_⟩
+  obtain ⟨hs, ht, hm⟩ := nstepL_move E o hL
+  refine ⟨hs, ht, ?_⟩
+  cases l with
+  | F =>
+    exfalso
+    rw [E.edge_F_fresh hx hxN] at he
+    have h1 := Option.some.inj he
+    have h2 := E.cur_le hxN
+    omega
+  | S => exact Or.inl hm
+  | K b' =>
+    rw [E.edge_K_fresh hx hlt b'] at he
+    by_cases hw : E.C.word[x.1]? = some b'
+    · rw [hw] at hb
+      have hbb : b' = b := Option.some.inj hb
+      subst hbb
+      exact Or.inr hm
+    · rw [if_neg hw] at he
+      have h1 := Option.some.inj he
+      have h2 := advance_le B.word (E.cur x.1) b'
+      omega
+
+end Transitions
 
 end RankQueryCoverage
 end Subtail
