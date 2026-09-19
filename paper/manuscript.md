@@ -1,7 +1,7 @@
 # Deciding subtype entailment for bottom and binary product over arbitrary trees
 
 **Research manuscript — draft for review.** Authors and affiliations: **[placeholders]**.
-Date: 2026-09-19. Formal source checkpoint:
+Revised: 2026-09-20. Formal source checkpoint:
 [c946d86](https://github.com/mhenglein/subtail/commit/c946d86b9e65da2877e0df42c710abbdcb5a4037) (claim C081).
 Licensing: pending the owner's decision. This draft makes no publication-priority claim.
 
@@ -1143,11 +1143,26 @@ an earlier decidability theorem.
 The [1999 restricted result](https://www.ps.uni-saarland.de/Publications/details/SubTypeEntailment:99.html)
 gives PSPACE-completeness for its product-equality and variable-inequality
 syntax. Its ambient valuations still contain top-labelled trees, although the
-restricted constraints omit constants. Applying that theorem here would need
-an explicit two-way semantic reduction satisfying its syntactic restrictions.
-None is supplied by merely observing that our constraints contain no top.
-The same missing transfer prevents importing the known full-signature hardness
-bounds as lower bounds for C081.
+restricted constraints omit constants. Identity translation already fails on
+the constant-free premises $x=x\times x$, $x\le y$ and query $y\le x$:
+top-free models force $x=y=\Omega$, whereas $x=\Omega,y=\top$ is a full-signature
+countermodel. Here $\Omega$ is the full infinite product tree.
+
+There is nevertheless an exact reduction for the input fragment **without
+bottom constants**. Name product subexpressions, add a fresh equation
+$\omega=\omega\times\omega$, and guard each name $z$ by $z\le\omega$.
+The equation forces $\omega=\Omega$; the guards exclude every top-labelled
+address. Source models extend to this target and target models restrict back,
+with the same query value. The construction has polynomial size and uses
+exactly the restricted syntax. Theorem 14 therefore supplies a PSPACE upper
+bound for this fragment over arbitrary trees. The
+[ordinary transfer proof](../notes/2026-09-19-post-c081-extensions.md)
+states both model maps and the finite-support encoding, and explains the
+regular-tree consequence. This covers no bottom literals or denial constraints,
+and the omega equation makes it unsuitable for finite-tree semantics. It also
+gives no hardness transfer and no PSPACE bound for the full P1 input or its
+reference implementation. Thus decidability of this restricted fragment should
+not be claimed as new here.
 
 Other nearby results also have distinct contracts. The Su--Aiken--Niehren--
 Priesnitz--Treinen first-order theory result uses a richer logical language;

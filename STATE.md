@@ -1,5 +1,46 @@
 # Subtail — current research state
 
+## September 20: ordinary paper and post-C081 review checkpoint
+
+The [ordinary mathematical paper](paper/manuscript.md) now gives the complete
+C081 route, with full terminal preimage coverage/reconstruction, worked
+examples, a [declaration map](paper/lean-map.md) and a
+[proof dependency map](paper/dependency-map.md). An independent source readback
+reviewed the central exposition; its seven local clarification requests were
+addressed and rechecked. [Review scope and limits](notes/2026-09-19-post-c081-paper-readback.md).
+This is an ordinary proof draft, not human peer review. The Lean source and
+qualitative theorem remain those of the C081 checkpoint below.
+
+The [focused novelty review](notes/prior-work/c081-review-2026-09-19.md)
+separates inherited address/cap/periodic methods from the candidate new
+whole-conjunction terminal construction and checked composition. A reviewed
+guarded reduction to NP99 now gives a PSPACE upper bound for inputs without
+bottom constants; that fragment's decidability is inherited. Full-C081 and
+lower-bound transfers remain unproved. The NP03 automata characterization alone
+is not an earlier general decision theorem.
+
+The [extension study](notes/2026-09-19-post-c081-extensions.md) gives an ordinary
+regular-countermodel construction, the finite-tree zero-spine distinction,
+small failures of naive explicit-top encodings, and separate arity, label
+and variance obligations. E053 checks the literal counterexamples and a bounded
+corpus; it does not prove an extension theorem. Explicit top first breaks the
+old product-root propagation rule. No decision or undecidability result for
+that extension is claimed.
+
+The [complexity note](notes/2026-09-19-c081-complexity-review.md) records a
+conditional alternative witness-enumeration route using the unintegrated
+corrected quantitative branch. The [independent accounting readback](notes/2026-09-20-post-c081-cost-readback.md)
+repairs omitted construction and storage costs. Complete original-input costs,
+quantitative integration and exact lower-bound transfers remain open. Its
+superseded draft estimates are not established bounds. The current executable's performance
+is unchanged, including the 13 diagnostic timeouts. A useful interface and
+proved optimizations are still required.
+
+[The programme](research/POST_C081.md) tracks the remaining deliverables.
+Author names and affiliations remain placeholders; licensing is owner-deferred.
+No earlier numerical bound or unintegrated proposal is promoted by this
+documentation checkpoint.
+
 ## September 19: complete checked subtype entailment decision (C081)
 
 `EntailmentDecision.entailsCheck_correct` proves that a total executable

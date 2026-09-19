@@ -1045,3 +1045,38 @@ and no timeout; CI runs this strict subset and checks saved answers and exact
 source identities. The full diagnostic command remains available; no CI pass
 is claimed for its timed-out cases. Every timed-out process group is killed
 and reaped. No further native process remains after a completed run.
+
+<a id="e053"></a>
+
+### E053 — Literal extension boundary checks
+
+**Command.** `python3 experiments/check_extension_boundaries.py --check results/extension-boundaries.json`.
+To regenerate: `python3 experiments/check_extension_boundaries.py --output results/extension-boundaries.json`.
+
+**Scope.** Compare literal finite bottom/top/product order with the finite-graph
+order after replacing explicit top by the infinite full product tree. Check
+the zero-spine countermodel, the constant-free ambient-domain countermodel
+`x=x×x, x<=y` with failed query `y<=x`, and the depth-two contravariance obstruction.
+The target graph checker uses finite pair reachability; an independent
+product-address predicate checks it on the finite top-free corpus.
+
+**Result.** PASS at checker commit `66eed7d`: 1,444 ordered pairs of 38 source
+trees through depth two, including 45 failures of order reflection and no
+preservation failure within the corpus. The full labelled graph checker also
+agrees with the independent finite order on all 1,444 pairs. The top-free graph
+order agrees with literal address inclusion on 676 additional pairs. The zero-spine
+and both contravariant orientations pass. None of 677 finite trees through
+depth four satisfies the zero-spine premise; the all-depth impossibility is
+the separate induction in the note. Results include the exact checker hash.
+The regular model `x=Omega, y=top` satisfies the constant-free premises and
+fails the query. The separate all-word induction proves top-free validity;
+that conclusion does not come from the finite census. Saved-JSON replay also
+passes after correcting tuple/list normalization in the first replay implementation.
+
+**Evidence and limits.** [Checker](check_extension_boundaries.py),
+[result](../results/extension-boundaries.json),
+[ordinary arguments and feasibility](../notes/2026-09-19-post-c081-extensions.md),
+[independent readback](../notes/2026-09-19-post-c081-extension-readback.md).
+The literal counterexamples refute specific encodings. The finite census does
+not settle extension decidability, prove an all-size preservation theorem,
+or establish the separate regular-countermodel argument.

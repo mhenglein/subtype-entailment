@@ -237,6 +237,73 @@ It does not exclude a different semantic reduction, nor transfer a lower bound
 in either direction. Over finite trees the recursive equation has no model
 in either domain, so both finite-tree entailments are vacuously true.
 
+### A guarded reduction for inputs without bottom constants
+
+The identity obstruction does not rule out a reduction. In fact a small
+guard gives an exact polynomial reduction for the **input fragment without
+bottom constants**. The source valuations still contain bottom; the restriction
+is on every premise and the query, not on the values of variables.
+
+Name each occurring source variable and each product subexpression. Add the
+product equation `p = l × r` for a product name and translate inequalities and
+the query to inequalities between their names. Add a fresh variable `omega`,
+the equation `omega = omega × omega`, and the guard `z <= omega` for every
+occurring name `z`. Only product equations and variable inequalities occur.
+Thus the result has exactly the restricted syntax in Niehren–Priesnitz 1999,
+Section 2, over the ambient signature with bottom, top and binary product.
+
+**Lemma T1 (guard).** In the full arbitrary-tree domain, the equation
+`omega = omega × omega` has the unique solution Omega, and `z <= Omega`
+holds exactly for trees with no top label.
+
+*Proof.* Both directions of the equation exclude a bottom or top root; the
+root is product and its two children equal omega. Induction along every finite
+binary word gives a product at every address, so omega=Omega. Equivalently,
+the upward inequality rules out a bottom root, the downward inequality rules
+out a top root, and comparison of product children propagates both directions.
+For the guard, Omega has a product at every address. If z has a top label at
+an address, subtype comparison with Omega fails there. If z has only bottom
+and product labels, all its product addresses are included in Omega and the
+comparison holds. This includes z=bottom and arbitrary nonregular z. QED.
+
+**Lemma T2 (exact reduction).** The source entails its query over top-free
+arbitrary trees iff the guarded target entails its named query in the full
+arbitrary-tree domain.
+
+*Proof.* A source model extends by evaluating each named finite expression
+and assigning Omega to omega. Products of top-free trees are top-free, so all
+equations and guards hold. The named query has its source value. Conversely,
+T1 makes every guarded name top-free in a target model. Structural induction
+on the finite syntax identifies every product name with its source expression.
+Restriction to original variables is therefore a source model, again with the
+same query value. These extension/restriction maps transfer countermodels in
+both directions and hence transfer entailment. For regular valuations, the
+same maps preserve regularity: Omega has a one-node graph, and finite products
+of finite graphs are finite graphs. QED.
+
+There is at most one name per syntax occurrence, one equation per product and
+one guard per name. First rename the actually occurring variables densely;
+unused names in a `Fin n` carrier do not require enumeration. The output and
+the renaming computation are polynomial in the concrete input length, including
+binary variable indices. This matters when n is encoded compactly.
+
+The [NP99 primary paper](https://www.ps.uni-saarland.de/Publications/documents/SubTypeEntailment_99.pdf),
+Theorem 14, supplies a PSPACE algorithm for its restricted arbitrary-tree
+problem. Applying T2 gives a **PSPACE upper bound for the bottom-free input
+fragment of C081**. The separate R1–R4 regular-countermodel proof gives the same
+answer, and hence the same upper bound, when source valuations are restricted
+to regular trees. This latter statement uses R1–R4, not an unstated regular-only
+version of NP99's theorem. The actual C081 implementation need not run in
+PSPACE; this is an alternative algorithm for a restricted input class.
+
+This reduction does not cover source bottom constants or normalized denial
+constraints. It also fails for finite-tree semantics because its omega
+equation has no finite solution. It is an upper-bound direction and transfers
+no hardness result. Full-C081 reduction to an earlier decidable class and
+exact lower bounds remain open comparison obligations. The ordinary proof
+was independently read back in the [extension review](2026-09-19-post-c081-extension-readback.md);
+it is not a new Lean formalization or an implemented solver.
+
 ### Three simple encodings fail
 
 **Replace top by Omega.** Extend the translation homomorphically through

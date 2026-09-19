@@ -50,7 +50,7 @@ def main():
     tex = OUT / "subtail-paper.tex"
     run(["pandoc", str(md), "--from=markdown+tex_math_dollars+raw_tex", "--standalone",
          "--to=latex", "--metadata", f"title={title}", "--metadata", "author=Author and affiliation placeholders",
-         "--metadata", "date=Research draft, 19 September 2026",
+         "--metadata", "date=Research draft, 20 September 2026",
          "--variable", "documentclass=article", "--variable", "fontsize=11pt",
          "--variable", "geometry=margin=25mm", "--variable", "colorlinks=true",
          "--variable", "urlcolor=blue", "--variable", "toc-depth=2",

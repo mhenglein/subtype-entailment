@@ -1,7 +1,7 @@
 name: Research checks
 
 # CI diet (2026-09-19, #37): this workflow now carries only the cheap
-# organization check, which must run on every change (docs included). The
+# organization and small document/literal checks, on every change (docs included). The
 # experiment suites moved to experiments.yml and the Lean job to lean.yml, both
 # path-filtered. Branch pushes do not run CI: open a DRAFT pull request to get
 # CI on a branch (each push then runs once, not twice).
@@ -31,3 +31,15 @@ jobs:
         run: python3 scripts/research_index.py --check
       - name: Test research navigation guards
         run: python3 -m unittest discover -s scripts -p 'test_research_index.py'
+      - name: Check paper declarations and literal examples
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          import subprocess
+          revision = json.loads(Path("paper/lean-map.json").read_text())["source_revision"]
+          subprocess.run(["git", "fetch", "--no-tags", "--depth=1", "origin", revision], check=True)
+          PY
+          python3 paper/check.py
+      - name: Replay extension boundary evidence
+        run: python3 experiments/check_extension_boundaries.py --check results/extension-boundaries.json

@@ -176,12 +176,12 @@
     {
       "id": "A010",
       "title": "Build the exact top-free constraint-to-automata pipeline",
-      "status": "active",
+      "status": "tried",
       "outcome": "supported",
-      "owner": "post-c081-20260919 (author/integrator; novelty delegated)",
-      "updated": "2026-09-19",
+      "owner": null,
+      "updated": "2026-09-20",
       "summary": "C081 gives a complete Lean-checked executable entailment decision for every finite bottom/product expression input over arbitrary, possibly infinite trees. Exact normalization, the same normalized summary instance, C029 and the terminal decision compose without SAT, model-finiteness, witness-bound or caller absorption assumptions. Pinned build/kernel/runtime checks and independent semantic readback pass; native timeouts remain UNKNOWN. The implementation can be impractical.",
-      "next_step": "Complete and independently review the ordinary C081 manuscript and focused literature comparison under #53; preserve exact arbitrary-tree semantics and quantitative limits.",
+      "next_step": "Under #53, profile and prove an improvement to the actual entailment entry point, then build a small interface and independently checked regular countermodel output. Preserve the reviewed paper, tentative novelty and open quantitative/signature boundaries.",
       "record": "research/approaches/A010.md",
       "evidence": [
         "notes/2026-09-04-bridge-foundation.md",
@@ -210,7 +210,16 @@
         "scripts/check_entailment_decision.py",
         "experiments/check_entailment_decision.py",
         "results/entailment-decision.json",
-        "research/POST_C081.md"
+        "research/POST_C081.md",
+        "paper/manuscript.md",
+        "paper/lean-map.md",
+        "paper/dependency-map.md",
+        "notes/2026-09-19-post-c081-paper-readback.md",
+        "notes/prior-work/c081-review-2026-09-19.md",
+        "notes/2026-09-19-post-c081-extensions.md",
+        "notes/2026-09-19-post-c081-extension-readback.md",
+        "experiments/check_extension_boundaries.py",
+        "results/extension-boundaries.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/3"
     },
@@ -410,12 +419,12 @@
     {
       "id": "A017",
       "title": "Bound essential repeated blocks",
-      "status": "active",
+      "status": "tried",
       "outcome": "inconclusive",
-      "owner": "c081-complexity-20260919 (readback; integration by post-c081-20260919)",
-      "updated": "2026-09-19",
+      "owner": null,
+      "updated": "2026-09-20",
       "summary": "The semantic rank-query compiler yields the kernel-checked terminal decision and, via C081, complete arbitrary-tree subtype entailment. C080 remains inconclusive only for its stronger explicit U/F estimates. Q004 has an ordinary computability corollary from the terminal decision; earlier failed reference quotients and written audits remain preserved.",
-      "next_step": "Review released #47/#48 statements and derive an explicit original-input resource bound for a precisely identified complete algorithm under #53; do not conflate old U/F with the replacement.",
+      "next_step": "Complete independent quantitative-source review and the full original-input cost argument; reconcile released #47/#48 separately from original U/F and qualitative C081. Backend accounting is corrected, but remains conditional and incomplete for full inputs.",
       "record": "research/approaches/A017.md",
       "evidence": [
         "notes/2026-09-04-minimal-witness-structure.md",
@@ -515,7 +524,9 @@
         "lean/Subtail/RankQueryDecision.lean",
         "notes/2026-09-19-entailment-decision.md",
         "research/conjectures/Q004.md",
-        "research/POST_C081.md"
+        "research/POST_C081.md",
+        "notes/2026-09-19-c081-complexity-review.md",
+        "notes/2026-09-20-post-c081-cost-readback.md"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/34"
     },

@@ -2,6 +2,74 @@
 
 Collaborative research on **Problem 1.7: subtype entailment over bottom and binary product**, with possibly infinite trees. The repository now contains a complete Lean-checked decision theorem for this problem; see [C081](research/claims.md#c081).
 
+## The result
+
+Given any finite list of constraints and a query built from variables, bottom
+and one covariant binary product, a total executable Boolean decides whether
+every satisfying valuation also satisfies the query. Values may be infinite
+and nonregular. No satisfiability or witness-bound assumption is supplied by
+the caller.
+
+```text
+Subtail.EntailmentDecision.entailsCheck G s t = true
+    iff every arbitrary-tree model of G satisfies s <= t.
+```
+
+Read the [ordinary mathematical paper](paper/manuscript.md), its
+[PDF](output/pdf/subtail-paper.pdf), the [proof dependency map](paper/dependency-map.md)
+and the [paper-to-Lean map](paper/lean-map.md). The terminal-decision construction
+is explained in Sections 5–9, including coverage and reconstruction of the
+whole path-query conjunction. [The source module](lean/Subtail/EntailmentDecision.lean)
+contains the final composition.
+
+**Small example.** From `x <= y`, covariance gives
+`x × bottom <= y × bottom`. The reverse query fails: set `x = bottom` and
+`y = bottom × bottom`. At address `0`, the reverse query's left side has a
+product node and its right side has bottom. The paper also gives a regular
+infinite countermodel and examples of the terminal first-return construction.
+
+**Limits.** This theorem has no explicit top constructor, multiple labelled
+constructors or contravariant function type. Finite-tree entailment is a
+different problem. The exhaustive implementation can be very slow: the saved
+38-case diagnostic completed 25 cases and timed out on 13. A timeout is
+`UNKNOWN`. Qualitative decidability does not establish the old C080 numerical
+bounds, a complexity class, or novelty. The [post-C081 programme](research/POST_C081.md)
+tracks these separate questions. Author names and affiliations are placeholders;
+licensing is pending. The paper is a research draft, not a peer-reviewed publication.
+
+## Reproduce the result
+
+The mathematical source checkpoint is
+[`c946d86`](https://github.com/mhenglein/subtail/commit/c946d86b9e65da2877e0df42c710abbdcb5a4037).
+Its [verification record](notes/2026-09-19-entailment-decision.md) names exact
+builds, kernel replay, semantic reviews and native checks. Use Lean **4.33.1**,
+selected by `lean/lean-toolchain`, and Python 3.9 or newer for the core checks.
+
+```sh
+git clone https://github.com/mhenglein/subtail.git
+cd subtail
+python3 scripts/check_lean.py
+python3 scripts/check_entailment_decision.py
+python3 experiments/check_entailment_decision.py --phase smoke --strict
+(cd lean && lake env lean --run ../paper/example.lean)
+python3 scripts/research_index.py --check
+python3 paper/check.py
+```
+
+The Lean check builds the default library and replays its proofs in the kernel.
+The [small executable example](paper/example.lean) prints `true` for a listed
+premise and `false` for its reverse query.
+The declaration audit inspects the computational dependencies as well as theorem
+axioms. The native smoke suite checks a small completed subset; it does not
+claim that all diagnostic cases run quickly. For the full performance record,
+run `python3 experiments/check_entailment_decision.py`; capped cases remain
+`UNKNOWN`. More [experiment commands](experiments/README.md) cover the separate
+proof branches and earlier investigations.
+
+The paper's source/declaration check needs only Python. Building its PDF also
+needs Pandoc 3.11 and Tectonic 0.17.0; see [paper reproduction](paper/README.md).
+PDF generation and source-link checks do not repeat Lean verification.
+
 ## Start here
 
 Read these in order when joining or resuming the project:
@@ -32,6 +100,9 @@ Other useful entry points:
 | Join the work or hand it off | [Contribution guide](CONTRIBUTING.md) |
 | Read the initial analysis | [September 4 review](REVIEW.md) |
 | Find the original memo | [Sources and provenance](papers/README.md) |
+| Read the final proof rather than discovery history | [Paper and dependency map](paper/README.md) |
+| Check what may be new | [C081 literature review](notes/prior-work/c081-review-2026-09-19.md) |
+| Check extension boundaries | [Regular/finite/top/variance study](notes/2026-09-19-post-c081-extensions.md) |
 
 ## Research operating model
 
@@ -124,6 +195,9 @@ research/approaches/     Dated attempt histories, including failures
 research/claims.md       Exact mathematical claims and evidence status
 research/conjectures/    Stable Q-ID hypotheses shared across investigations
 research/PLAN.md         Longer-horizon research programme
+research/POST_C081.md    Paper, complexity, performance and extension programme
+paper/                  Ordinary final proof, declaration maps and PDF source
+output/pdf/             Rendered paper, generated TeX and provenance manifest
 experiments/             Executable checks and experiment registry
 lean/                    Checked entailment decision and supporting word lemmas
 results/                 Compact reproducible outputs
@@ -133,5 +207,11 @@ templates/               Research-note and attempt templates
 scripts/                 Tracker generation and repository checks
 .github/                 Issue forms, PR template, and CI
 ```
+
+The paper and C081 verification record are the final-proof entry points.
+Chronological notes and approach histories preserve failed and conditional
+arguments; a historical statement is not automatically part of the final proof.
+`CITATION.cff` contains provisional metadata. No license grant is implied for
+the repository or supplied third-party papers.
 
 Keep scratch files in ignored `tmp/`. Use the [contribution guide](CONTRIBUTING.md) for the complete handoff and review workflow.

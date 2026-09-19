@@ -6,11 +6,21 @@ Base: `c946d86b9e65da2877e0df42c710abbdcb5a4037`.
 Branch: `codex/c081-complexity-20260919`.
 Owned path: this note only.
 
-Status: **Conditional branch bound; pending independent accounting review.**
-The direct terminal and C029 displays are explicit source-level envelopes under
-the stated list model and the unintegrated `QB` dependency. They must not be
-reported as an unconditional C081 runtime theorem. The historical evaluator
-accounting later in this note is superseded and is retained only for provenance.
+Status: **Conditional route; numerical displays corrected by independent review.**
+The [September 20 accounting readback](2026-09-20-post-c081-cost-readback.md)
+supersedes this note's direct terminal and C029 time/space displays. It charges
+literal bound recomputation, candidate and capacity construction, all input
+fields and monitor payloads under an explicit list/vector model. The cardinal
+formulas and the route survive review; use the corrected displays in that note.
+Neither version is an unconditional C081 runtime theorem. The original
+finite-table evaluator estimates later below are also superseded and retained
+only for provenance. Full normalization/summary costs and integration of `QB`
+remain open.
+
+Separately, the [guarded NP99 reduction](2026-09-19-post-c081-extensions.md)
+gives a PSPACE upper bound for the input fragment without bottom constants.
+That ordinary proof concerns an alternative restricted-fragment algorithm;
+it gives no bound on this C081 implementation and transfers no hardness result.
 
 ## Result and status
 

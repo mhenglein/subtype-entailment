@@ -2,6 +2,18 @@
 
 This table specifies claims to compare, not novelty scores. A theorem not found in this bounded search is **not** thereby absent from the literature. Source keys resolve in [bibliography.md](bibliography.md); scientific status resolves in the current [claims ledger](../../research/claims.md). The [agent handoff](agent-handoff.md) points to current authority; historical pauses and task lists are not current instructions. The [dated detailed review](review-2026-09-19.md) supplies source-to-obligation reading routes.
 
+**September 20 refinement.** The C081 fragment whose premises and query contain
+no bottom constants reduces in polynomial time to NP99's restricted
+arbitrary-tree problem: name products, add `omega=omega×omega`, and guard each
+name by `z<=omega`. The equation forces the full product tree and the guards
+exclude top labels. Both model-transfer directions are proved and independently
+reviewed in the [extension study](../2026-09-19-post-c081-extensions.md).
+NP99 Theorem 14 therefore supplies a PSPACE upper bound for this fragment;
+its decidability is inherited, not a candidate novelty. This does not cover
+bottom/denial constraints, finite-tree semantics or lower-bound transfer.
+Identity translation alone fails even on constant-free syntax. The full C081
+comparison and exact terminal-compiler comparison below remain open.
+
 | Claim | Closest comparison | Possible distinguishing statement | Required evidence before a novelty claim |
 |---|---|---|---|
 | C067: single-source terminal BorderAvoid | PW-NP99, PW-NP03, PW-PRI04, PW-BPR19; existential equations | One-visit normalization and terminal prefix-free capture for the stated derived-automaton class | Review the actual capture/formula-size proof; compare to repaired or alternative thesis arguments; prove the relevant source-level encoding/non-subsumption. |

@@ -1,6 +1,6 @@
 # Post-C081 programme
 
-Date: 2026-09-19. Owner: Marcus. Coordination: [#53](https://github.com/mhenglein/subtail/issues/53), integration [#37](https://github.com/mhenglein/subtail/issues/37).
+Started: 2026-09-19. Updated: 2026-09-20. Owner: Marcus. Coordination: [#53](https://github.com/mhenglein/subtail/issues/53), integration [#37](https://github.com/mhenglein/subtail/issues/37).
 Starting checkpoint: `c946d86b9e65da2877e0df42c710abbdcb5a4037`.
 
 The qualitative decision theorem C081 is complete at this checkpoint. This
@@ -9,13 +9,13 @@ silently strengthen its signature, tree domain, complexity or quantitative bound
 
 | Order | Deliverable | Acceptance criterion | Current state |
 |---|---|---|---|
-| 1 | Ordinary mathematical paper | Full terminal preimage construction and proof, exact semantic bridge, infinite branch, termination, worked examples and checked-declaration map; independent exposition readback | Drafting |
-| 1 | Focused novelty review | Primary-source theorem matrix; backward/forward citation trail; exact new/inherited/uncertain statements; recorded search limits | Active separate investigation |
-| 2 | Complexity | Explicit effective resource bound with input encoding and algorithm identified; independent readback of quantitative proposals; lower-bound transfers proved or left conditional | Active separate investigation |
+| 1 | Ordinary mathematical paper | Full terminal preimage construction and proof, exact semantic bridge, infinite branch, termination, worked examples and checked-declaration map; independent exposition readback | Ordinary draft and follow-up exposition readback complete |
+| 1 | Focused novelty review | Primary-source theorem matrix; backward/forward citation trail; exact new/inherited/uncertain statements; recorded search limits | Focused source comparison complete; priority and exact transfers remain uncertain |
+| 2 | Complexity | Explicit effective resource bound with input encoding and algorithm identified; independent readback of quantitative proposals; lower-bound transfers proved or left conditional | Conditional backend accounting reviewed and corrected; quantitative integration and complete input costs remain |
 | 3 | Usable verified algorithm | Measured costs, at least one meaningful proved improvement, small interface, sound status handling and explanatory examples; failure evidence independently checked where supplied | Planned |
-| 4 | Explicit-top study | Exact problem, proof-dependency audit, tested reductions/obstructions and a feasibility conclusion with remaining obligations | Planned |
-| 4 | Other transfers | Separate arguments or counterexamples for regular/finite trees, arities, constructors and variance; standalone automata results identified | Planned |
-| 5 | Reader package and checkpoint | Consistent README/paper/proof map, reproduction, issue disposition and immutable checkpoint; metadata accurately records licensing/authorship status | Planned |
+| 4 | Explicit-top study | Exact problem, proof-dependency audit, tested reductions/obstructions and a feasibility conclusion with remaining obligations | Feasibility study complete; naive encodings fail, new label-aware semantics needed |
+| 4 | Other transfers | Separate arguments or counterexamples for regular/finite trees, arities, constructors and variance; standalone automata results identified | Regular-transfer ordinary proof and boundary map independently reviewed; new signature theorems remain open |
+| 5 | Reader package and checkpoint | Consistent README/paper/proof map, reproduction, issue disposition and immutable checkpoint; metadata accurately records licensing/authorship status | Reader package prepared; final publication/checkpoint readback pending |
 
 Marcus chose **licensing pending** and **author/affiliation placeholders**.
 Do not add a license grant, assign human authorship, or describe the checkpoint
@@ -73,3 +73,35 @@ semantics and small falsification come before substantial new formalization.
 Execution ownership is recorded in the approach registry and concrete issue
 claims. This programme lists future deliverables; it does not reserve every path
 or imply all investigations have started.
+
+## Checkpoint evidence and next work
+
+- [Ordinary paper](../paper/manuscript.md), [source map](../paper/lean-map.md),
+  [initial and follow-up exposition readback](../notes/2026-09-19-post-c081-paper-readback.md).
+- [Focused novelty review](../notes/prior-work/c081-review-2026-09-19.md): inherited,
+  candidate-new and uncertain claims, exact signatures, backward/forward trail.
+- [Complexity investigation](../notes/2026-09-19-c081-complexity-review.md): an
+  alternative terminal enumerator conditional on the released corrected Fhat
+  theorem; [independent accounting corrections](../notes/2026-09-20-post-c081-cost-readback.md).
+  Complete normalization/summary costs and lower-bound transfers remain open.
+  The separate guarded NP99 reduction supplies a PSPACE upper bound only for
+  inputs without bottom constants; no implementation bound follows from it.
+- [Extensions](../notes/2026-09-19-post-c081-extensions.md) and
+  [readback](../notes/2026-09-19-post-c081-extension-readback.md): explicit NFA
+  construction for regular countermodels, finite/top/variance obstructions and
+  the remaining arity/label obligations. E053 is bounded evidence only.
+
+The next implementation target is a measured, proved improvement to the actual
+entailment entry point, followed by a small input/output interface. Reuse the
+E052 cases and preserve UNKNOWN on resource exhaustion. Investigate the repeated
+closed-table enumeration in `StackSummary.balancedCheck`, the eager summary
+carrier, and obvious source-level implications before choosing an optimization.
+A small guarded example running successfully does not validate backend speed.
+The regular construction gives a route to finite countermodel output, but no
+extractor or verified optimized interface has been implemented in this checkpoint.
+
+Quantitative proposals #47/#48, direct-realization proposal #51 and preserved
+advisory notes #44/#45 remain separate contributions. Their open disposition is
+intentional: the paper checkpoint does not integrate, discard, or certify their
+unique content. Reconcile each exact patch and its released scope before closing
+its issue or branch. No branch is retired by this programme update.

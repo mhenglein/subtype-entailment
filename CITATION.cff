@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: >-
+  Provisional citation metadata. Author names, affiliations and licensing are
+  pending. Cite a pinned repository commit until the release metadata is finalized.
+type: software
+title: "Subtail: deciding subtype entailment over bottom and binary product"
+authors:
+  - name: "Author names pending (placeholder)"
+repository-code: "https://github.com/mhenglein/subtail"
+url: "https://github.com/mhenglein/subtail"
+abstract: >-
+  Research repository for C081: a Lean-checked executable decision for finite
+  expression constraints over bottom and one covariant binary product, with
+  arbitrary possibly infinite trees. Includes an ordinary proof draft,
+  declaration maps, experiments and preserved research history. Licensing is
+  pending; this metadata grants no license. Novelty, quantitative bounds,
+  practical performance and extensions are separate research questions.
+keywords:
+  - subtype entailment
+  - infinite trees
+  - decidability
+  - Lean
+  - automata
