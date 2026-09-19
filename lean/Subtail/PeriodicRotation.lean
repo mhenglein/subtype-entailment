@@ -123,4 +123,54 @@ theorem sameSuffix_cons_succ_iff (w c : Word) (a : Bool) (i j : Nat) :
   have hshift (n t : Nat) : n+1+t = (n+t)+1 := by omega
   simp only [hshift, prefixStream_cons_succ]
 
+/-- Phase of the periodic reference at a supplied cut. -/
+def cutPhase (w c : Word) (hc : 0 < c.length) (i : Nat) : Fin c.length :=
+  ⟨((alignedPhase c hc w).val+i) % c.length, Nat.mod_lt _ hc⟩
+
+theorem cutPhase_zero (w c : Word) (hc : 0 < c.length) :
+    cutPhase w c hc 0 = alignedPhase c hc w := by
+  apply Fin.ext
+  simp [cutPhase, Nat.mod_eq_of_lt (alignedPhase c hc w).isLt]
+
+theorem cutPhase_cons_succ (w c : Word) (hc : 0 < c.length)
+    (a : Bool) (i : Nat) : cutPhase (a::w) c hc (i+1) = cutPhase w c hc i := by
+  apply Fin.ext
+  simp only [cutPhase, alignedPhase]
+  have heq : ((alignedPhase c hc w).val+c.length-1)%c.length+(i+1) =
+      (((alignedPhase c hc w).val+c.length-1)%c.length+1)+i := by omega
+  rw [heq]
+  calc
+    _ = (((((alignedPhase c hc w).val+c.length-1)%c.length+1)%c.length)+i%c.length)%c.length := Nat.add_mod _ _ _
+    _ = ((alignedPhase c hc w).val+i%c.length)%c.length := by rw [predecessor_succ_mod]
+    _ = ((alignedPhase c hc w).val+i)%c.length := by
+      simpa only [Nat.mod_eq_of_lt (alignedPhase c hc w).isLt] using
+        (Nat.add_mod (alignedPhase c hc w).val i c.length).symm
+
+theorem reference_at_cut (w c : Word) (hc : 0 < c.length) (i t : Nat) :
+    reference w c hc (i+t) = periodicStream c ((cutPhase w c hc i).val+t) := by
+  simp only [reference, periodicStream, cutPhase, ← Nat.add_assoc]
+  simp only [Nat.add_mod, Nat.mod_mod]
+
+theorem reference_sameSuffix_iff (w c : Word) (hc : 0 < c.length) (i j : Nat) :
+    PeriodicTail.SameSuffix (reference w c hc) i j ↔
+      ∀ t, t < c.length →
+        periodicStream c ((cutPhase w c hc i).val+t) =
+        periodicStream c ((cutPhase w c hc j).val+t) := by
+  have hne : c ≠ [] := by intro h; simp [h] at hc
+  unfold PeriodicTail.SameSuffix
+  simp only [reference_at_cut]
+  exact (periodic_rotation_iff c hne _ _).symm
+
+/-- The only new comparisons in a prepend step can be checked by whole-word
+matching and a finite comparison of reference rotations. -/
+theorem sameSuffix_zero_iff (w c : Word) (hc : 0 < c.length) {j : Nat}
+    (hj : 0 < j) :
+    PeriodicTail.SameSuffix (prefixStream w c) 0 j ↔
+      Matches w c hc ∧ ∀ t, t < c.length →
+        periodicStream c ((alignedPhase c hc w).val+t) =
+        periodicStream c ((cutPhase w c hc j).val+t) := by
+  rw [prefix_sameSuffix_iff w c hc hj, reference_sameSuffix_iff,
+    cutPhase_zero]
+  rfl
+
 end Subtail.PeriodicRotation
