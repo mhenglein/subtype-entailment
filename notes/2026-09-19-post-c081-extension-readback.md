@@ -218,3 +218,50 @@ constructors.
 
 No shared ledgers, Lean source, or parent extension files were changed in this
 review. The owned path is this new readback note only.
+
+## Follow-up readback of R1-R4
+
+Parent checkpoint `cfb46f5` expands the requested ordinary arguments into
+Lemmas R1-R4. I reread those lemmas against the checked definitions listed
+above. Under the stated C081 hypotheses, the three proof areas are now
+**discharged as ordinary mathematics**:
+
+1. **Reachability languages (R1-R2): discharged.** R1 gives both directions
+   of the word-length induction for the epsilon-NFA. Epsilon paths compose by
+   reflexivity and transitivity of `Balanced`, and each first consuming edge
+   is exactly one `Pop` step. R2 then applies the exact `Normal` factorization
+   with `take i` and `drop i`; the finite seed list is precisely the forced
+   empty seeds plus every prefix of the separating word. Fixed-suffix paths,
+   finite unions, and the effective `Pop` tests complete the regular-language
+   construction.
+2. **Graph unfolding (R3): discharged.** The subset DFA construction handles
+   epsilon closure and accepts exactly the NFA language by induction on the
+   address. Prefix closure makes every prefix of an accepted address
+   accepting, so a rejecting successor can soundly be represented by the
+   bottom node. The address induction in R3 proves both directions between
+   DFA acceptance and product-node walks, including the empty language case.
+   The finite graph therefore unfolds to exactly `D_q`.
+3. **Naming transfer (R4): discharged.** Finite graph representations are
+   closed under bottom and binary product by disjoint union plus a fresh
+   product root. Structural induction covers every finite expression used by
+   `Naming.extend`; `Naming.restrict` is projection to finitely many existing
+   roots. Together with the checked normalization equivalence, this gives
+   regularity in both directions.
+
+The remaining bridge is a short identification rather than a new idea:
+the finite seed-list predicate must be identified with `CanonicalModel.pathSeeds`,
+then `CanonicalReachability.derived_iff_reaches` identifies `D_q` with the
+canonical `Derived` language. R2 states the first identification and the
+existing declarations establish the second. I found no mathematical gap in
+R1-R4 under those declarations.
+
+This verdict is separate from implementation status. The R1-R4 argument is
+not replayed by a new Lean module, and the repository still lacks an
+executable NFA/determinization/countermodel extractor. Neither omission
+prevents accepting the ordinary proof in the paper; they prevent claiming a
+new kernel-checked theorem or a usable extractor. The older follow-up list
+above is therefore discharged at the ordinary-proof level, while formalization
+and tooling remain explicitly open.
+
+Follow-up scope completed: only this note was changed; the path is released
+after the follow-up handoff.
