@@ -57,13 +57,19 @@ def main():
          "--include-in-header", str(PAPER / "header.tex"), "--output", str(tex)])
     run(["tectonic", str(tex), "--outdir", str(OUT), "--keep-logs"])
     pdf = OUT / "subtail-paper.pdf"
+    source_paths = (PAPER / "manuscript.md", PAPER / "header.tex", PAPER / "build.py", PAPER / "lean-map.json")
+    source_matches = all(
+        run(["git", "show", f"{revision}:{p.relative_to(ROOT).as_posix()}"], capture_output=True).stdout
+        == p.read_text() for p in source_paths
+    )
     manifest = {
         "status": "research draft; licensing pending; author placeholders",
         "repository_revision_at_render": revision,
+        "source_files_match_render_revision": source_matches,
         "mathematical_source_revision": json.loads((PAPER / "lean-map.json").read_text())["source_revision"],
         "tools": {name: run([name, "--version"], capture_output=True).stdout.splitlines()[0] for name in ("pandoc", "tectonic")},
         "sources": {p.relative_to(ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
-                    for p in (PAPER / "manuscript.md", PAPER / "header.tex", PAPER / "build.py", PAPER / "lean-map.json")},
+                    for p in source_paths},
         "pdf_sha256": hashlib.sha256(pdf.read_bytes()).hexdigest(),
         "validation": "Rendering only; visual and mathematical reviews recorded separately."
     }

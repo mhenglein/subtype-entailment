@@ -1,0 +1,70 @@
+{
+  "experiment": "E053",
+  "status": "PASS",
+  "meaning": "Exact literal counterexamples and bounded comparisons; no general extension theorem.",
+  "base_mathematical_revision": "c946d86b9e65da2877e0df42c710abbdcb5a4037",
+  "source_sha256": "ffe43c2c8fb238a247d114995eead16b81804cdc392ff68a36359406a70761b8",
+  "top_to_omega": {
+    "source_depth": 2,
+    "trees": 38,
+    "pairs": 1444,
+    "counts": {
+      "both_true": 475,
+      "both_false": 924,
+      "source_true_image_false": 0,
+      "source_false_image_true": 45
+    },
+    "reflection_counterexample": {
+      "left": "top",
+      "right": "(top * top)",
+      "source_below": false,
+      "image_below": true
+    }
+  },
+  "top_to_bottom": {
+    "left": "(bottom * bottom)",
+    "right": "top",
+    "source_below": true,
+    "image_below": false
+  },
+  "zero_spine": {
+    "graph": [
+      null,
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "x": 1,
+    "bottom": 0,
+    "x_times_bottom": 2,
+    "premise": true,
+    "query": false,
+    "finite_depth": 4,
+    "finite_trees": 677,
+    "finite_models_in_census": 0
+  },
+  "contravariance": {
+    "left": "((bottom -> bottom) -> bottom)",
+    "right": "(bottom -> bottom)",
+    "below": true,
+    "branch_address_inclusion": false,
+    "reversed_below": false,
+    "reversed_inclusion": true
+  },
+  "graph_order_independent_finite_check": {
+    "trees": 26,
+    "pairs": 676,
+    "predicate": "literal product-address inclusion"
+  },
+  "unproved_by_this_check": [
+    "top-extension decidability",
+    "arbitrary-size encoding preservation",
+    "regular-countermodel theorem",
+    "generic arity or multiple constructors"
+  ]
+}

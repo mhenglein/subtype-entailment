@@ -2,7 +2,7 @@
 
 **Research manuscript — draft for review.** Authors and affiliations: **[placeholders]**.
 Date: 2026-09-19. Formal source checkpoint:
-`c946d86b9e65da2877e0df42c710abbdcb5a4037` (claim C081).
+[c946d86](https://github.com/mhenglein/subtail/commit/c946d86b9e65da2877e0df42c710abbdcb5a4037) (claim C081).
 Licensing: pending the owner's decision. This draft makes no publication-priority claim.
 
 ## Abstract
@@ -1003,8 +1003,8 @@ finite relation work, graph evaluation and the chosen machine representation.
 ## 12. Validation, provenance, and present limits
 
 The theorem and its semantics are read back at source checkpoint
-`c946d86b9e65da2877e0df42c710abbdcb5a4037`. The final decision module's source
-is unchanged from `9f7d57cbd695a68dd52a69dc81b8446bd7c85d9e`.
+[c946d86](https://github.com/mhenglein/subtail/commit/c946d86b9e65da2877e0df42c710abbdcb5a4037). The final decision module's source
+is unchanged from [9f7d57c](https://github.com/mhenglein/subtail/commit/9f7d57cbd695a68dd52a69dc81b8446bd7c85d9e).
 The [declaration map](lean-map.md) identifies the definitions and checked
 lemmas supporting P1–P17. [The dependency map](dependency-map.md) distinguishes
 this route from the larger collection of exploratory imports and earlier
