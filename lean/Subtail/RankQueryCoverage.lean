@@ -3230,5 +3230,477 @@ end Interval
 
 end Cov
 
+/-! ## Per-piece facts -/
+
+/-- Constructor for one-edge observers. -/
+theorem accepts_edgeObs_of {G : Graph k} {l : Label} {left right : Colour k → Bool} {sem : Option (Portal k)}
+    {u v : Fin G.size} (he : G.edge u l = some v) (hl : left (G.colour u) = true)
+    (hr : right (G.colour v) = true) (hsem : semOK sem (G.colour u) (G.colour v) = true) :
+    Accepts G (edgeObs l left right sem) u v := by
+  refine ⟨⟨0, by show 0 < 2; decide⟩, List.mem_singleton.mpr rfl, ⟨1, by show 1 < 2; decide⟩,
+    List.mem_singleton.mpr rfl, ?_⟩
+  apply Run.step (Run.refl (by simp [Allowed, edgeObs, hl]))
+  refine ⟨l, he, ?_, ?_⟩
+  · simp [edgeObs, hsem] <;> exact List.mem_singleton.mpr (Fin.ext rfl)
+  · simp [Allowed, edgeObs, hr]
+
+theorem accepts_oneEdge_of {G : Graph k} {l : Label} {u v : Fin G.size} (he : G.edge u l = some v) :
+    Accepts G (oneEdge l) u v := by
+  refine ⟨⟨0, by show 0 < 2; decide⟩, List.mem_singleton.mpr rfl, ⟨1, by show 1 < 2; decide⟩,
+    List.mem_singleton.mpr rfl, ?_⟩
+  apply Run.step (Run.refl (by simp [Allowed, oneEdge]))
+  refine ⟨l, he, ?_, ?_⟩
+  · simp [oneEdge] <;> exact List.mem_singleton.mpr (Fin.ext rfl)
+  · simp [Allowed, oneEdge]
+
+theorem run_cast' {G : Graph k} {O : Observer k} {x x' y y' : Node G O} (h : Run G O x y)
+    (hx : x = x') (hy : y = y') : Run G O x' y' := hx ▸ hy ▸ h
+
+theorem portalTest_of {o : Observer k} {src dst : Fin o.size} {l : Label} {left right : Colour k → Colour k}
+    {c : Colour k} (h1 : o.allows src (left c) = true) (h2 : o.allows dst (right c) = true)
+    (h3 : dst ∈ o.move src (left c) l (right c)) :
+    portalTest ⟨o, src, dst, l, left, right⟩ c = true := by
+  simp only [portalTest, Bool.and_eq_true]
+  exact ⟨⟨h1, h2⟩, List.contains_iff_mem.mpr h3⟩
+
+namespace Cov
+variable {I : Instance k} {B : Reference k} {E : Ext I B} {c : Clause k} (X : Cov I B E c)
+
+/-- Allowedness of a node, read at its colour. -/
+theorem nallowed_colB {o : Observer k} {x : NNode} (h : NAllowed (prefixGraph I E.C) o x) :
+    ∃ hs : x.2 < o.size, o.allows ⟨x.2, hs⟩ (colB I E.C x.1) = true := by
+  obtain ⟨hx, hs, ha⟩ := h
+  exact ⟨hs, ha⟩
+
+theorem headIdx_lt {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai) :
+    X.headIdx ai si < X.coreVars := by
+  unfold headIdx
+  split
+  · rw [srcAt_eq hai]
+    exact Nat.lt_of_lt_of_le (c.atoms[ai]).source.isLt X.vars_le_coreVars
+  · exact X.cix_lt hai (Nat.lt_of_lt_of_le hsi (X.segCount_le_K hai)) (by decide)
+
+theorem lastIdx_lt {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai) :
+    X.lastIdx ai si < X.coreVars := by
+  unfold lastIdx
+  split
+  · rw [tgtAt_eq hai]
+    exact Nat.lt_of_lt_of_le (c.atoms[ai]).target.isLt X.vars_le_coreVars
+  · exact X.cix_lt hai (Nat.lt_of_lt_of_le hsi (X.segCount_le_K hai)) (by decide)
+
+/-- The head of the first block is the atom's source position. -/
+theorem hdN_zero {ai : Nat} (hai : ai < c.atoms.length) :
+    ∃ q ∈ (obsAt c ai).initial, hdN (X.blk ai 0) = ((X.τ (c.atoms[ai]).source).val, q.val) := by
+  obtain ⟨q, hq, hh⟩ := X.chain_head ai hai
+  have hne := X.blk_ne_nil hai (X.segCount_pos hai)
+  rw [← X.blk_zero_head hai, head?_eq_hdN hne] at hh
+  exact ⟨q, hq, Option.some.inj hh⟩
+
+theorem lastN_last {ai : Nat} (hai : ai < c.atoms.length) :
+    ∃ p ∈ (obsAt c ai).final,
+      lastN (X.blk ai (X.segCount ai - 1)) = ((X.τ (c.atoms[ai]).target).val, p.val) := by
+  obtain ⟨p, hp, hl⟩ := X.chain_last ai hai
+  have hne := X.blk_ne_nil (si := X.segCount ai - 1) hai (by have := X.segCount_pos hai; omega)
+  rw [← X.blk_last_last hai, getLast?_eq_lastN hne] at hl
+  exact ⟨p, hp, Option.some.inj hl⟩
+
+/-- Base position of the head core variable of an old block. -/
+theorem corePos_headIdx {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai)
+    (hf : ¬ isFresh B.word.length (X.blk ai si) = true) :
+    X.corePos (X.headIdx ai si) = hdPos (X.blk ai si) := by
+  have hne := X.blk_ne_nil hai hsi
+  have hold : hdPos (X.blk ai si) ≤ B.word.length := by
+    rw [hdPos_hdN]; exact X.blk_old hai hsi hf _ (hdN_mem hne)
+  unfold headIdx
+  split
+  · rename_i h0
+    subst h0
+    obtain ⟨q, -, hq⟩ := X.hdN_zero hai
+    rw [srcAt_eq hai, X.corePos_var (c.atoms[ai]).source.isLt (by rw [hdPos_hdN, hq] at hold; exact hold),
+      hdPos_hdN, hq]
+  · rw [X.corePos_cix_hd (Nat.lt_of_lt_of_le hsi (X.segCount_le_K hai))]
+    exact Nat.min_eq_left hold
+
+theorem corePos_lastIdx {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai)
+    (hf : ¬ isFresh B.word.length (X.blk ai si) = true) :
+    X.corePos (X.lastIdx ai si) = lastPos (X.blk ai si) := by
+  have hne := X.blk_ne_nil hai hsi
+  have hold : lastPos (X.blk ai si) ≤ B.word.length := by
+    rw [lastPos_lastN hne]; exact X.blk_old hai hsi hf _ (lastN_mem hne)
+  unfold lastIdx
+  split
+  · rename_i hlast
+    subst hlast
+    obtain ⟨p, -, hp⟩ := X.lastN_last hai
+    rw [tgtAt_eq hai, X.corePos_var (c.atoms[ai]).target.isLt
+      (by rw [lastPos_lastN hne, hp] at hold; exact hold), lastPos_lastN hne, hp]
+  · rw [X.corePos_cix_last (Nat.lt_of_lt_of_le hsi (X.segCount_le_K hai))]
+    exact Nat.min_eq_left hold
+
+/-- The head core variable of an old block, as a base vertex. -/
+theorem σ_headIdx {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai)
+    (hf : ¬ isFresh B.word.length (X.blk ai si) = true) :
+    (X.σ (coreVar X.D (X.headIdx ai si))).val = hdPos (X.blk ai si) := by
+  rw [X.σ_core (X.headIdx_lt hai hsi), X.corePos_headIdx hai hsi hf]
+
+theorem σ_lastIdx {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai)
+    (hf : ¬ isFresh B.word.length (X.blk ai si) = true) :
+    (X.σ (coreVar X.D (X.lastIdx ai si))).val = lastPos (X.blk ai si) := by
+  rw [X.σ_core (X.lastIdx_lt hai hsi), X.corePos_lastIdx hai hsi hf]
+
+/-- The four properties of an emitted piece needed for the compiled clause. -/
+structure PieceOK (ai pi : Nat) (P : Piece) : Prop where
+  valid : pieceValid I X.D ai pi (obsAt c ai) P = true
+  tests : ∀ t ∈ (compilePiece I X.D ai pi (obsAt c ai) P).tests, t.2 (colB I B (X.σ t.1).val) = true
+  equal : ∀ e ∈ (compilePiece I X.D ai pi (obsAt c ai) P).equal, X.σ e.1 = X.σ e.2
+  atoms : ∀ a ∈ (compilePiece I X.D ai pi (obsAt c ai) P).atoms,
+    Accepts (prefixGraph I B) a.observer (X.σ a.source) (X.σ a.target)
+
+/-- Old block pieces. -/
+theorem pieceOK_block_old {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai)
+    (hf : ¬ isFresh B.word.length (X.blk ai si) = true) :
+    X.PieceOK ai (2 * si) (X.blockPiece ai si (X.blk ai si)) := by
+  have hne := X.blk_ne_nil hai hsi
+  have hlc : hdCtl (X.blk ai si) < (obsAt c ai).size := by
+    rw [hdCtl_hdN]; exact X.blk_ctl_lt hai hsi (hdN_mem hne)
+  have hrc : lastCtl (X.blk ai si) < (obsAt c ai).size := by
+    rw [lastCtl_lastN hne]; exact X.blk_ctl_lt hai hsi (lastN_mem hne)
+  rw [X.blockPiece_old hf]
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · simp only [pieceValid, Bool.and_eq_true, decide_eq_true_eq]
+    exact ⟨⟨hlc, hrc⟩, X.headIdx_lt hai hsi, X.lastIdx_lt hai hsi⟩
+  · intro t ht; simp [compilePiece, finOf_pos hlc, finOf_pos hrc] at ht
+  · intro e he; simp [compilePiece, finOf_pos hlc, finOf_pos hrc] at he
+  · intro a ha
+    simp only [compilePiece, finOf_pos hlc, finOf_pos hrc, List.mem_singleton] at ha
+    subst ha
+    simp only
+    -- the old block runs in the base under the core observer
+    have hold := X.blk_old hai hsi hf
+    have hall := fun x hx => X.blk_allowed hai hsi (hx : x ∈ X.blk ai si)
+    have hcons : Consec (NStep (prefixGraph I E.C) (obsAt c ai)) (X.blk ai si) :=
+      consec_mono (fun _ _ h => h.1) (X.blk_consec hai hsi)
+    obtain ⟨hx, hs, hy, ht, hrun⟩ := old_block_run E (obsAt c ai) hcons hold hall (head?_eq_hdN hne)
+      (getLast?_eq_lastN hne)
+    refine ⟨⟨hdCtl (X.blk ai si), hlc⟩, List.mem_singleton.mpr rfl, ⟨lastCtl (X.blk ai si), hrc⟩,
+      List.mem_singleton.mpr rfl, ?_⟩
+    have e1 : castB E (obsAt c ai) (hdN (X.blk ai si)) hx hs =
+        ((X.σ (coreVar X.D (X.headIdx ai si)), ⟨hdCtl (X.blk ai si), hlc⟩) :
+          Node (prefixGraph I B) (coreObs (obsAt c ai) E.a)) := by
+      apply Prod.ext
+      · apply Fin.ext
+        show (hdN (X.blk ai si)).1 = (X.σ (coreVar X.D (X.headIdx ai si))).val
+        rw [X.σ_headIdx hai hsi hf, hdPos_hdN]
+      · apply Fin.ext
+        show (hdN (X.blk ai si)).2 = hdCtl (X.blk ai si)
+        exact (hdCtl_hdN _).symm
+    have e2 : castB E (obsAt c ai) (lastN (X.blk ai si)) hy ht =
+        ((X.σ (coreVar X.D (X.lastIdx ai si)), ⟨lastCtl (X.blk ai si), hrc⟩) :
+          Node (prefixGraph I B) (coreObs (obsAt c ai) E.a)) := by
+      apply Prod.ext
+      · apply Fin.ext
+        show (lastN (X.blk ai si)).1 = (X.σ (coreVar X.D (X.lastIdx ai si))).val
+        rw [X.σ_lastIdx hai hsi hf, lastPos_lastN hne]
+      · apply Fin.ext
+        show (lastN (X.blk ai si)).2 = lastCtl (X.blk ai si)
+        exact (lastCtl_lastN hne).symm
+    exact run_cast' (run_coreObs_slice (obsAt c ai) ⟨hdCtl (X.blk ai si), hlc⟩ ⟨lastCtl (X.blk ai si), hrc⟩ hrun)
+      e1 e2
+
+/-- Fresh block pieces. -/
+theorem pieceOK_block_fresh {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai)
+    (hf : isFresh B.word.length (X.blk ai si) = true) :
+    X.PieceOK ai (2 * si) (X.blockPiece ai si (X.blk ai si)) := by
+  have hne := X.blk_ne_nil hai hsi
+  have hlc : hdCtl (X.blk ai si) < (obsAt c ai).size := by
+    rw [hdCtl_hdN]; exact X.blk_ctl_lt hai hsi (hdN_mem hne)
+  have hrc : lastCtl (X.blk ai si) < (obsAt c ai).size := by
+    rw [lastCtl_lastN hne]; exact X.blk_ctl_lt hai hsi (lastN_mem hne)
+  have hhd := X.blk_hd_mem_M hai hsi hf
+  have hlast := X.blk_last_mem_M hai hsi hf
+  have hlastpos := X.blk_fresh_lastPos hai hsi hf
+  have hle : X.idx (hdPos (X.blk ai si)) ≤ X.idx (lastPos (X.blk ai si)) :=
+    X.idx_le hhd hlast (by omega)
+  have hfresh' : B.word.length < hdPos (X.blk ai si) := by simpa [isFresh] using hf
+  have e1 := X.blockPiece_fresh (ai := ai) (si := si) hf
+  rw [e1]
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · simp only [pieceValid, Bool.and_eq_true, decide_eq_true_eq]
+    refine ⟨⟨hlc, hrc⟩, ⟨hle, X.idx_lt hlast⟩, ?_⟩
+    split
+    · rename_i hst
+      have hpos : hdPos (X.blk ai si) = lastPos (X.blk ai si) := X.idx_inj hhd hlast hst
+      have hlen1 : (X.blk ai si).length = 1 := by
+        have := List.length_pos_iff.mpr hne
+        omega
+      apply beq_iff_eq.mpr
+      rw [← ctlAt_hd hne, ← ctlAt_last hne (X.blk_consec hai hsi) hfresh', hpos]
+    · rename_i hst
+      apply List.all_eq_true.mpr
+      intro x hx
+      obtain ⟨t, ht, rfl⟩ := List.getElem_of_mem hx
+      have hlt : X.idx (hdPos (X.blk ai si)) < X.idx (lastPos (X.blk ai si)) := Nat.lt_of_le_of_ne hle hst
+      rw [RankQuerySound.Recon.forwardControls_length _ _ _ _ _ _ hlt] at ht
+      have hget : (forwardControls X.D ai (2 * si) (X.idx (hdPos (X.blk ai si))) (X.idx (lastPos (X.blk ai si)))
+          ⟨.forward, X.idx (hdPos (X.blk ai si)), X.idx (lastPos (X.blk ai si)), hdCtl (X.blk ai si),
+            lastCtl (X.blk ai si), .F⟩)[t] =
+          (forwardControls X.D ai (2 * si) (X.idx (hdPos (X.blk ai si))) (X.idx (lastPos (X.blk ai si)))
+          ⟨.forward, X.idx (hdPos (X.blk ai si)), X.idx (lastPos (X.blk ai si)), hdCtl (X.blk ai si),
+            lastCtl (X.blk ai si), .F⟩).getD t 0 := by
+        rw [List.getD_eq_getElem?_getD, List.getElem?_eq_getElem]; rfl
+      rw [hget, ← e1, X.block_forwardControls hai hsi hf (by omega), decide_eq_true_eq]
+      have hpos_le : hdPos (X.blk ai si) ≤ X.pos (X.idx (hdPos (X.blk ai si)) + t) := by
+        have := X.pos_mono (Nat.le_add_right (X.idx (hdPos (X.blk ai si))) t) (by
+          have := X.idx_lt hlast; omega)
+        rw [X.pos_idx hhd] at this; exact this
+      have hpos_ge : X.pos (X.idx (hdPos (X.blk ai si)) + t) ≤ lastPos (X.blk ai si) := by
+        have := X.pos_mono (show X.idx (hdPos (X.blk ai si)) + t ≤ X.idx (lastPos (X.blk ai si)) by omega)
+          (X.idx_lt hlast)
+        rw [X.pos_idx hlast] at this; exact this
+      exact X.blk_ctl_bound hai hsi hf hpos_le hpos_ge
+  · intro t ht
+    simp only [compilePiece, finOf_pos hlc, finOf_pos hrc] at ht
+    split at ht
+    · rename_i hst
+      rw [List.mem_singleton] at ht
+      subst ht
+      simp only
+      rw [X.σ_z (X.idx_lt hhd), X.fm_pos (X.idx_lt hhd), X.pos_idx hhd]
+      have e : (⟨hdCtl (X.blk ai si), hlc⟩ : Fin (obsAt c ai).size) =
+          ⟨ctlAt (X.blk ai si) (hdPos (X.blk ai si)), X.blk_ctl_bound hai hsi hf (Nat.le_refl _) (by omega)⟩ :=
+        Fin.ext (ctlAt_hd hne).symm
+      rw [e]
+      exact X.blk_ctl_allowed hai hsi hf (Nat.le_refl _) (by omega)
+    · simp at ht
+  · intro e he
+    simp only [compilePiece, finOf_pos hlc, finOf_pos hrc] at he
+    split at he <;> simp at he
+  · intro a ha
+    simp only [compilePiece, finOf_pos hlc, finOf_pos hrc] at ha
+    split at ha <;> simp at ha
+
+end Cov
+
+namespace Cov
+variable {I : Instance k} {B : Reference k} {E : Ext I B} {c : Clause k} (X : Cov I B E c)
+
+/-- Transition pieces: the last node of block `si` and the head of block `si + 1`. -/
+theorem trans_nodes {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si + 1 < X.segCount ai) :
+    NAllowed (prefixGraph I E.C) (obsAt c ai) (lastN (X.blk ai si)) ∧
+      NAllowed (prefixGraph I E.C) (obsAt c ai) (hdN (X.blk ai (si + 1))) := by
+  have hne1 := X.blk_ne_nil hai (Nat.lt_of_succ_lt hsi)
+  have hne2 := X.blk_ne_nil hai hsi
+  exact ⟨X.blk_allowed hai (Nat.lt_of_succ_lt hsi) (lastN_mem hne1), X.blk_allowed hai hsi (hdN_mem hne2)⟩
+
+theorem lastIdx_cix {ai si : Nat} (hsi : si + 1 < X.segCount ai) : X.lastIdx ai si = X.cix ai si 1 := by
+  unfold lastIdx
+  rw [if_neg (by omega)]
+
+theorem headIdx_cix {ai si : Nat} : X.headIdx ai (si + 1) = X.cix ai (si + 1) 0 := by
+  unfold headIdx
+  rw [if_neg (by omega)]
+
+/-- Enter pieces. -/
+theorem pieceOK_enter {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si + 1 < X.segCount ai)
+    (hx : (lastN (X.blk ai si)).1 ≤ B.word.length) :
+    X.PieceOK ai (2 * si + 1) (X.transPiece ai si (X.blk ai si) (X.blk ai (si + 1))) := by
+  have hlink := X.blk_link hai hsi
+  obtain ⟨hxm, hym, hlab, hs, ht, hmv⟩ := enter_facts E (obsAt c ai) hlink hx
+  obtain ⟨hax, hay⟩ := X.trans_nodes hai hsi
+  obtain ⟨hs', hallx⟩ := nallowed_colB hax
+  obtain ⟨ht', hally⟩ := nallowed_colB hay
+  rw [hxm] at hallx
+  rw [hym] at hally
+  have hne1 := X.blk_ne_nil hai (Nat.lt_of_succ_lt hsi)
+  have hold : ¬ isFresh B.word.length (X.blk ai si) = true := by
+    intro hf
+    have := (X.blk_fresh_iff_last hai (Nat.lt_of_succ_lt hsi)).mp hf
+    omega
+  rw [X.transPiece_enter hx]
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · simp only [pieceValid, Bool.and_eq_true, decide_eq_true_eq, Bool.or_eq_true, beq_iff_eq]
+    exact ⟨⟨hs, ht⟩, ⟨trivial, hlab⟩, X.lastIdx_lt hai (Nat.lt_of_succ_lt hsi)⟩
+  · intro t htm
+    simp only [compilePiece, finOf_pos hs, finOf_pos ht, List.mem_singleton] at htm
+    subst htm
+    simp only
+    rw [X.σ_z X.n_pos, X.pos_zero]
+    apply portalTest_of
+    · rw [D_oldEnd, D_firstBit, ← E.colC_old (Nat.le_refl _)]
+      exact hallx
+    · rw [X.fm_eq X.n_pos, X.pos_zero, ← E.colC_fresh (Nat.lt_succ_self _) E.m_lt_N]
+      exact hally
+    · rw [D_oldEnd, D_firstBit, ← E.colC_old (Nat.le_refl _), X.fm_eq X.n_pos, X.pos_zero,
+        ← E.colC_fresh (Nat.lt_succ_self _) E.m_lt_N]
+      exact hmv
+  · intro e he
+    simp only [compilePiece, finOf_pos hs, finOf_pos ht, List.mem_singleton] at he
+    subst he
+    apply Fin.ext
+    rw [X.σ_lastIdx hai (Nat.lt_of_succ_lt hsi) hold, lastPos_lastN hne1, hxm, σ_end]
+  · intro a ha
+    simp [compilePiece, finOf_pos hs, finOf_pos ht] at ha
+
+/-- Wrap pieces. -/
+theorem pieceOK_wrap {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si + 1 < X.segCount ai)
+    (hx : ¬ (lastN (X.blk ai si)).1 ≤ B.word.length) (hy : B.word.length < (hdN (X.blk ai (si + 1))).1) :
+    X.PieceOK ai (2 * si + 1) (X.transPiece ai si (X.blk ai si) (X.blk ai (si + 1))) := by
+  have hlink := X.blk_link hai hsi
+  obtain ⟨hxN, hym, hlab, hs, ht, hmv⟩ := wrap_facts E (obsAt c ai) hlink (Nat.lt_of_not_le hx) hy
+  obtain ⟨hax, hay⟩ := X.trans_nodes hai hsi
+  obtain ⟨hs', hallx⟩ := nallowed_colB hax
+  obtain ⟨ht', hally⟩ := nallowed_colB hay
+  rw [hxN] at hallx
+  rw [hym] at hally
+  rw [X.transPiece_wrap hx hy]
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · simp only [pieceValid, Bool.and_eq_true, decide_eq_true_eq, beq_iff_eq]
+    exact ⟨⟨hs, ht⟩, ⟨rfl, trivial⟩, rfl⟩
+  · intro t htm
+    simp only [compilePiece, finOf_pos hs, finOf_pos ht, List.mem_singleton] at htm
+    subst htm
+    simp only
+    rw [X.σ_z X.n_pos, X.pos_zero]
+    have hlastcol : fm I X.D (X.D.groups - 1) X.D.oldEnd = colB I E.C E.N := by
+      rw [D_groups, D_oldEnd, X.fm_eq (by have := X.n_pos; omega), X.pos_last,
+        E.colC_fresh E.m_lt_N (Nat.le_refl _), E.cur_N]
+    apply portalTest_of
+    · rw [hlastcol]; exact hallx
+    · rw [X.fm_eq X.n_pos, X.pos_zero, ← E.colC_fresh (Nat.lt_succ_self _) E.m_lt_N]
+      exact hally
+    · rw [hlastcol, X.fm_eq X.n_pos, X.pos_zero, ← E.colC_fresh (Nat.lt_succ_self _) E.m_lt_N]
+      exact hmv
+  · intro e he
+    simp [compilePiece, finOf_pos hs, finOf_pos ht] at he
+  · intro a ha
+    simp [compilePiece, finOf_pos hs, finOf_pos ht] at ha
+
+/-- Exit pieces. -/
+theorem pieceOK_exit {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si + 1 < X.segCount ai)
+    (hx : ¬ (lastN (X.blk ai si)).1 ≤ B.word.length) (hy : ¬ B.word.length < (hdN (X.blk ai (si + 1))).1) :
+    X.PieceOK ai (2 * si + 1) (X.transPiece ai si (X.blk ai si) (X.blk ai (si + 1))) := by
+  have hlink := X.blk_link hai hsi
+  have hxf : B.word.length < (lastN (X.blk ai si)).1 := Nat.lt_of_not_le hx
+  have hyo : (hdN (X.blk ai (si + 1))).1 ≤ B.word.length := Nat.le_of_not_lt hy
+  obtain ⟨hxN, hcase, hs, ht, hmv⟩ := exit_facts E (obsAt c ai) hlink hxf hyo
+  obtain ⟨hax, hay⟩ := X.trans_nodes hai hsi
+  obtain ⟨hs', hallx⟩ := nallowed_colB hax
+  obtain ⟨ht', hally⟩ := nallowed_colB hay
+  have hne1 := X.blk_ne_nil hai (Nat.lt_of_succ_lt hsi)
+  have hne2 := X.blk_ne_nil hai hsi
+  have hfresh1 : isFresh B.word.length (X.blk ai si) = true :=
+    (X.blk_fresh_iff_last hai (Nat.lt_of_succ_lt hsi)).mpr hxf
+  have hold2 : ¬ isFresh B.word.length (X.blk ai (si + 1)) = true := by
+    intro hf
+    have := (X.blk_fresh_iff_hd (ai := ai) (si := si + 1)).mp hf
+    omega
+  -- the source mark and its cursor
+  have hxmark : (lastN (X.blk ai si)).1 ∈ X.M := by
+    rw [← lastPos_lastN hne1]; exact X.blk_last_mem_M hai (Nat.lt_of_succ_lt hsi) hfresh1
+  have hgn : X.idx (lastN (X.blk ai si)).1 < X.n := X.idx_lt hxmark
+  have hposx : X.pos (X.idx (lastN (X.blk ai si)).1) = (lastN (X.blk ai si)).1 := X.pos_idx hxmark
+  have hσz : (X.σ (zVar X.D (X.idx (lastN (X.blk ai si)).1))).val = E.cur (lastN (X.blk ai si)).1 := by
+    rw [X.σ_z hgn, hposx]
+  have hcolx : fm I X.D (X.idx (lastN (X.blk ai si)).1) (colB I B (E.cur (lastN (X.blk ai si)).1)) =
+      colB I E.C (lastN (X.blk ai si)).1 := by
+    have := X.fm_pos hgn
+    rw [hposx] at this
+    exact this
+  -- the target core variable
+  have hσy : (X.σ (coreVar X.D (X.headIdx ai (si + 1)))).val = (hdN (X.blk ai (si + 1))).1 := by
+    rw [X.σ_headIdx hai hsi hold2, hdPos_hdN]
+  have hcoly : coreMap E.a (colB I B (hdN (X.blk ai (si + 1))).1) = colB I E.C (hdN (X.blk ai (si + 1))).1 :=
+    (E.colC_old hyo).symm
+  rw [X.transPiece_exit hx hy]
+  rcases hcase with ⟨hlabF, hyF⟩ | ⟨b, hlabK, hyK, hnext, hlast⟩
+  · -- an F exit
+    rw [hlabF] at hmv ⊢
+    refine ⟨?_, ?_, ?_, ?_⟩
+    · simp only [pieceValid, Bool.and_eq_true, decide_eq_true_eq]
+      exact ⟨⟨hs, ht⟩, ⟨hgn, X.headIdx_lt hai hsi⟩, trivial⟩
+    · intro t htm
+      simp only [compilePiece, finOf_pos hs, finOf_pos ht, List.mem_singleton] at htm
+      subst htm
+      simp only
+      rw [hσz]
+      apply portalTest_of
+      · rw [hcolx]; exact hallx
+      · rw [D_firstBit, ← hyF, hcoly]; exact hally
+      · rw [hcolx, D_firstBit, ← hyF, hcoly]; exact hmv
+    · intro e he
+      simp only [compilePiece, finOf_pos hs, finOf_pos ht, List.mem_singleton] at he
+      subst he
+      apply Fin.ext
+      rw [hσy, hσz, hyF]
+    · intro a ha
+      simp [compilePiece, finOf_pos hs, finOf_pos ht] at ha
+  · -- a K_b exit
+    rw [hlabK] at hmv ⊢
+    refine ⟨?_, ?_, ?_, ?_⟩
+    · simp only [pieceValid, Bool.and_eq_true, decide_eq_true_eq]
+      refine ⟨⟨hs, ht⟩, ⟨hgn, X.headIdx_lt hai hsi⟩, ?_⟩
+      apply bne_iff_ne.mpr
+      intro heq
+      split at heq
+      · rename_i hlastidx
+        have hidx : X.idx (lastN (X.blk ai si)).1 = X.n - 1 := beq_iff_eq.mp hlastidx
+        have hxN' : (lastN (X.blk ai si)).1 = E.N := by
+          rw [← hposx, hidx, X.pos_last]
+        exact hlast hxN' (Option.some.inj heq)
+      · rename_i hlastidx
+        have hidx : ¬ X.idx (lastN (X.blk ai si)).1 = X.n - 1 := by
+          intro h; apply hlastidx; exact beq_iff_eq.mpr h
+        have hxlt : (lastN (X.blk ai si)).1 < E.N := by
+          rcases Nat.lt_or_eq_of_le hxN with h | h
+          · exact h
+          · exfalso; apply hidx; rw [h]; exact X.idx_N
+        rw [X.nextOf_eq hgn, hposx] at heq
+        exact hnext hxlt heq.symm
+    · intro t htm
+      simp [compilePiece, finOf_pos hs, finOf_pos ht] at htm
+    · intro e he
+      simp [compilePiece, finOf_pos hs, finOf_pos ht] at he
+    · intro a ha
+      simp only [compilePiece, finOf_pos hs, finOf_pos ht, List.mem_singleton] at ha
+      subst ha
+      simp only
+      have e1 : X.σ (zVar X.D (X.idx (lastN (X.blk ai si)).1)) =
+          ⟨E.cur (lastN (X.blk ai si)).1, Nat.lt_succ_of_le (E.cur_le hxN)⟩ := Fin.ext hσz
+      have e2 : X.σ (coreVar X.D (X.headIdx ai (si + 1))) =
+          ⟨(hdN (X.blk ai (si + 1))).1, Nat.lt_succ_of_le hyo⟩ := Fin.ext hσy
+      rw [e1, e2]
+      apply accepts_edgeObs_of
+      · show (some ⟨advance B.word (E.cur (lastN (X.blk ai si)).1) b, Nat.lt_succ_of_le (advance_le _ _ _)⟩ :
+          Option (Fin (prefixGraph I B).size)) = some ⟨(hdN (X.blk ai (si + 1))).1, Nat.lt_succ_of_le hyo⟩
+        congr 1
+        exact Fin.ext hyK.symm
+      · rw [prefixGraph_colour]
+        show (obsAt c ai).allows _ (fm I X.D _ (colB I B (E.cur (lastN (X.blk ai si)).1))) = true
+        rw [hcolx]; exact hallx
+      · rw [prefixGraph_colour]
+        show (obsAt c ai).allows _ (coreMap X.D.firstBit (colB I B (hdN (X.blk ai (si + 1))).1)) = true
+        rw [D_firstBit, hcoly]; exact hally
+      · simp only [semOK, portalMove, prefixGraph_colour]
+        rw [hcolx, D_firstBit, hcoly]
+        exact List.contains_iff_mem.mpr hmv
+
+/-- Every piece of the atom is fine. -/
+theorem pieceOK_all {ai pi : Nat} (hai : ai < c.atoms.length) (hpi : pi < (X.pieces ai).length) :
+    X.PieceOK ai pi ((X.pieces ai).getD pi default) := by
+  rw [X.pieces_length] at hpi
+  rcases pi_cases hpi with ⟨si, rfl, hsi⟩ | ⟨si, rfl, hsi⟩
+  · rw [X.pieces_getD_even hsi]
+    by_cases hf : isFresh B.word.length (X.blk ai si) = true
+    · exact X.pieceOK_block_fresh hai hsi hf
+    · exact X.pieceOK_block_old hai hsi hf
+  · rw [X.pieces_getD_odd hsi]
+    by_cases hx : (lastN (X.blk ai si)).1 ≤ B.word.length
+    · exact X.pieceOK_enter hai hsi hx
+    · by_cases hy : B.word.length < (hdN (X.blk ai (si + 1))).1
+      · exact X.pieceOK_wrap hai hsi hx hy
+      · exact X.pieceOK_exit hai hsi hx hy
+
+end Cov
+
 end RankQueryCoverage
 end Subtail
