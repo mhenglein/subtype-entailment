@@ -36,7 +36,7 @@ theorem definitions_length (R : Naming n) :
     R.definitions.length = 2 * R.pairs.length + R.botUsed.toNat := by
   unfold Naming.definitions
   rw [List.length_append, flat_pairs_length]
-  cases hb : R.botUsed <;> simp [hb] <;> omega
+  cases R.botUsed <;> simp <;> omega
 
 theorem normalized_length (G : Input n) (s t : Expr n) :
     (normalized G s t).length = G.length + 2 * (naming G s t).pairs.length +
