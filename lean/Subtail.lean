@@ -34,3 +34,10 @@ import Subtail.SubtypeTerminalBridge
 import Subtail.PeriodicTail
 import Subtail.InfiniteCycle
 import Subtail.InfiniteWitness
+import Subtail.FiniteSearch
+import Subtail.PeriodicRun
+import Subtail.PeriodicRotation
+import Subtail.PeriodicGood
+import Subtail.PeriodicMonitor
+import Subtail.PeriodicMonitorComplete
+import Subtail.InfiniteDecision

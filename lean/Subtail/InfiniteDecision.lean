@@ -1,6 +1,6 @@
 import Subtail.InfiniteCycle
 import Subtail.PeriodicRun
-import Subtail.PeriodicMonitor
+import Subtail.PeriodicMonitorComplete
 import Subtail.RankQueryEnumeration
 import Subtail.FiniteSearch
 
@@ -165,9 +165,45 @@ theorem prefixCheck_path (I : Instance k) (q : Fin k) (c : Word)
     (monitorCapacity k c) (allStates_length_le k c)]
   simp only [reach_iff_path]
 
-/-- Total C029 candidate decision. The semantic monitor equivalence supplies
-its correctness under strong absorption. -/
+/-- Total C029 decision, correct under strong absorption. -/
 def infiniteWitnessCheck (I : Instance k) : Bool :=
   (candidates I).any (fun qc => prefixCheck I qc.1 qc.2)
+
+
+/-- The actual finite search decides the complete safe PrefixGood language. -/
+theorem prefixCheck_correct (I : Instance k) (q : Fin k) (c : Word)
+    (hc : 0 < c.length) (hq : safeState I q = true) :
+    prefixCheck I q c = true ↔
+      ∃ w, SafeRun I I.initial w q ∧ PeriodicRun.PrefixGood I w c := by
+  rw [prefixCheck_path I q c (PeriodicMonitor.seedState q c hc)
+    (PeriodicMonitor.seed_some q c hc)]
+  rw [hq]
+  simp only [true_and]
+  exact PeriodicMonitorComplete.accepted_path_iff I c hc q
+    (PeriodicMonitor.seedState q c hc) (PeriodicMonitor.seed_some q c hc) hq
+
+theorem candidate_prefixCheck_correct (I : Instance k) (q : Fin k) (c : Word)
+    (hmem : (q,c) ∈ candidates I) :
+    prefixCheck I q c = true ↔
+      ∃ w, SafeRun I I.initial w q ∧ PeriodicRun.PrefixGood I w c := by
+  obtain ⟨hne,hlen,hf,hcol,hcycle⟩ :=
+    (cycleCheck_correct I q c).mp ((mem_candidates I q c).mp hmem)
+  have hc : 0 < c.length := by cases c <;> simp_all
+  have hq : safeState I q = true :=
+    (safeCut_zero_iff I q c).mp (hcycle.2 0 (by omega))
+  exact prefixCheck_correct I q c hc hq
+
+/-- C029: a total executable decision for infinitely continuable original
+witnesses. Strong absorption is the only extra hypothesis. -/
+theorem infiniteWitnessCheck_correct (I : Instance k) (hA : Absorbing I) :
+    infiniteWitnessCheck I = true ↔ InfWitness I := by
+  rw [infWitness_iff_good_candidate I hA]
+  unfold infiniteWitnessCheck
+  rw [List.any_eq_true]
+  constructor
+  · rintro ⟨⟨q,c⟩,hmem,hcheck⟩
+    exact ⟨q,c,hmem,(candidate_prefixCheck_correct I q c hmem).mp hcheck⟩
+  · rintro ⟨q,c,hmem,hgood⟩
+    exact ⟨(q,c),hmem,(candidate_prefixCheck_correct I q c hmem).mpr hgood⟩
 
 end Subtail.InfiniteDecision

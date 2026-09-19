@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Audit the C029 bounded-cycle, periodic-tail and finite-extraction components.
+"""Audit the complete C029 executable decision and its proof dependencies.
 
 Run after the pinned Lake build. This checks complete axiom dependencies,
 including executable definitions; it does not replace a semantic review.
@@ -14,6 +14,8 @@ import subprocess
 ROOT = Path(__file__).resolve().parents[1]
 MODULES = (
     "PeriodicTail", "InfiniteCycle", "InfiniteWitness",
+    "FiniteSearch", "PeriodicRun", "PeriodicRotation", "PeriodicGood",
+    "PeriodicMonitor", "PeriodicMonitorComplete", "InfiniteDecision",
 )
 DECL = re.compile(r"^(?:@\[[^\n]*\]\s*)?(theorem|def|abbrev|inductive|structure)\s+([A-Za-z_][A-Za-z_0-9.']*)", re.M)
 

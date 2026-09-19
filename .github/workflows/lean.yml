@@ -470,11 +470,13 @@ jobs:
         run: |
           python3 experiments/check_terminal_decision.py --output /tmp/terminal-decision.json
           cmp results/terminal-decision-regressions.json /tmp/terminal-decision.json
-      - name: C029 component dependencies and independent reverse-monitor checks
+      - name: C029 complete decision dependencies and independent native checks
         run: |
           python3 scripts/check_infinite_witness.py --output /tmp/infinite-witness-axioms.json
           python3 experiments/check_infinite_cycle_monitor.py --output /tmp/infinite-cycle-monitor.json
           cmp results/infinite-cycle-monitor.json /tmp/infinite-cycle-monitor.json
+          python3 experiments/check_infinite_decision.py --output /tmp/infinite-decision.json
+          cmp results/infinite-decision.json /tmp/infinite-decision.json
       - name: Earlier Lean core, axioms and Python agreement
         run: python3 scripts/check_lean.py
       - name: Verify recorded Lean evidence and research records

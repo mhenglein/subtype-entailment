@@ -177,6 +177,7 @@ def main():
     sources = ['lean/Subtail/FiniteSearch.lean', 'lean/Subtail/InfiniteDecision.lean',
                'lean/Subtail/PeriodicRun.lean', 'lean/Subtail/PeriodicMonitor.lean',
                'lean/Subtail/PeriodicRotation.lean', 'lean/Subtail/PeriodicGood.lean',
+               'lean/Subtail/PeriodicMonitorComplete.lean',
                'experiments/check_infinite_decision.py',
                'experiments/check_absorbing_terminal.py', 'experiments/check_finishing_trace.py',
                'experiments/check_infinite_cycle_monitor.py', 'experiments/check_terminal_decision.py']
