@@ -22,6 +22,7 @@ on:
       - 'scripts/check_lean.py'
       - 'scripts/check_rank_decision.py'
       - 'scripts/check_subtype_summary.py'
+      - 'scripts/check_infinite_witness.py'
       - 'experiments/**'
       - 'results/**'
       - '.github/workflows/lean.yml'
@@ -31,6 +32,7 @@ on:
       - 'scripts/check_lean.py'
       - 'scripts/check_rank_decision.py'
       - 'scripts/check_subtype_summary.py'
+      - 'scripts/check_infinite_witness.py'
       - 'experiments/**'
       - 'results/**'
       - '.github/workflows/lean.yml'
@@ -468,6 +470,11 @@ jobs:
         run: |
           python3 experiments/check_terminal_decision.py --output /tmp/terminal-decision.json
           cmp results/terminal-decision-regressions.json /tmp/terminal-decision.json
+      - name: C029 component dependencies and independent reverse-monitor checks
+        run: |
+          python3 scripts/check_infinite_witness.py --output /tmp/infinite-witness-axioms.json
+          python3 experiments/check_infinite_cycle_monitor.py --output /tmp/infinite-cycle-monitor.json
+          cmp results/infinite-cycle-monitor.json /tmp/infinite-cycle-monitor.json
       - name: Earlier Lean core, axioms and Python agreement
         run: python3 scripts/check_lean.py
       - name: Verify recorded Lean evidence and research records

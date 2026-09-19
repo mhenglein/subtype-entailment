@@ -31,3 +31,6 @@ import Subtail.SummaryBridge
 import Subtail.SummaryAutomaton
 import Subtail.AbsorbingTerminal
 import Subtail.SubtypeTerminalBridge
+import Subtail.PeriodicTail
+import Subtail.InfiniteCycle
+import Subtail.InfiniteWitness

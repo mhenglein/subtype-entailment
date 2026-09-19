@@ -1,0 +1,65 @@
+{
+  "counts": {
+    "exhaustive_NO_INFINITE_EXTENSION": 15029,
+    "exhaustive_YES": 885,
+    "exhaustive_absorbing_1_state": 26,
+    "exhaustive_absorbing_2_state": 15888,
+    "old_new_decision_agreement": 600,
+    "random_NO_INFINITE_EXTENSION": 326,
+    "random_YES": 274,
+    "safe_monitor_accept": 120574,
+    "safe_monitor_reject": 1076,
+    "safe_supplied_prefix_periods": 121650,
+    "supplied_prefix_period_exact_oracle": 567000,
+    "targeted_guards": 9
+  },
+  "examples": [
+    {
+      "cycle": "0",
+      "cycles": 1,
+      "method": "bounded cycle and reverse periodic monitor",
+      "prefix": "",
+      "states": 1,
+      "status": "YES",
+      "target": 0,
+      "word": "0"
+    },
+    {
+      "cycle": "1",
+      "cycles": 1,
+      "method": "bounded cycle and reverse periodic monitor",
+      "prefix": "0",
+      "states": 2,
+      "status": "YES",
+      "target": 3,
+      "word": "011"
+    },
+    {
+      "cycle": "0",
+      "cycles": 1,
+      "method": "bounded cycle and reverse periodic monitor",
+      "prefix": "0",
+      "states": 4,
+      "status": "YES",
+      "target": 3,
+      "word": "000"
+    }
+  ],
+  "prefinal_loop_example": {
+    "cycle": "0",
+    "cycles": 1,
+    "method": "bounded cycle and reverse periodic monitor",
+    "prefix": "010",
+    "states": 4,
+    "status": "YES",
+    "target": 2,
+    "word": "0100000"
+  },
+  "scope": "Exact per-prefix infinite-suffix oracle; complete one/two-state decisions; finite larger-state differential evidence. General monitor and C029 correctness not yet Lean-checked.",
+  "seed": 2026091929,
+  "source_sha256": {
+    "experiments/check_infinite_cycle_monitor.py": "a68de5d810d439e9f11829655ba43f2b0bfb0d283f68df22095d744e2ed76d9f",
+    "experiments/infinite_cycle_monitor.py": "bbf6d81f8a90d440fab03581dc044eb1e5736e33ff8f940ba460ca94b25eb5b7"
+  },
+  "status": "PASS"
+}
