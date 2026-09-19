@@ -40,3 +40,33 @@ This was **not** a venue-by-venue exhaustive sweep of every volume, a complete f
 The 1997/1998, 1999/2003 and POPL/manuscript/journal versions must be deduplicated by lineage, not counted as unrelated discoveries. The 2014 TLCA status page and 2016 thesis are historical observations, not 2026 status certificates. Current arXiv withdrawal status outranks an old abstract snippet. An author-hosted slide theorem is marked as announced until a full proof is located.
 
 Primary-source URLs and locators are recorded; no downloaded paper bytes, extracted PDF pages or access tokens are committed. Where inspection is historical, the register says so. The result of this search is a stronger map of evidence and failure mechanisms, not a proof that there is no undiscovered solution or equivalent theorem.
+
+
+## Structured review continuation, 2026-09-19
+
+Repository baseline: `064fc7306b679bf607b91e7d8de259823f200c62`.
+Exact queries, source URLs, inspected locators and candidate dispositions are
+recorded with the work that used them:
+
+- [Core lineage and failed proofs](dossiers/core-lineage-review-2026-09-19.md).
+- [Word equations, borders, containment and graph queries](dossiers/adjacent-methods-review-2026-09-19.md).
+- [Periodic continuations and finite representations](dossiers/periodic-continuations-review-2026-09-19.md).
+
+These were complementary source passes, not blind independent reviews of the
+same theorem. The parent inspected critical source statements and reviewed
+worker drafts. Errors or overbroad formulations found in draft review were
+corrected before handoff; that does not certify every proof in every paper.
+
+New register entries in this pass include the HHI periodicity source, the ABF
+FDFA foundation, and a recent parameterized-periodicity lead that was screened
+out. PW-BLLS25 and the word/query papers were already in the repository:
+fresh theorem inspection is deeper evidence, not a newly discovered paper.
+The 2014 status page and its recent search-visible repackaging are historical
+context. Search snippets repeating Schubert's old abstract are not current
+proof evidence.
+
+Coverage remains bounded: no exhaustive forward-citation database export,
+no paid-index search, no author contact and no claimed search of every venue
+or dissertation. No named search round establishes the absence of an existing
+solution. The two-round stopping criterion above is a proposed workflow;
+it is not asserted to have been reached for all topic families in this pass.

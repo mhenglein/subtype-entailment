@@ -3,28 +3,347 @@
   "baseline": "df222241dc1a55ac6ee5da3cba3aedf662b3e285",
   "coverage": "bounded; selected passages and historical audits, not exhaustive or independent proof review",
   "sources": [
-    {"id":"PW-HR97","title":"The Complexity of Subtype Entailment for Simple Types","year":1997,"source_status":"published","inspection":"primary-record","url":"https://hjemmesider.diku.dk/~henglein/bib/publications/here97b.html","locator":"LICS 1997","dossier":"nsse-lineage.md"},
-    {"id":"PW-HR98","title":"Constraint Automata and the Complexity of Recursive Subtype Entailment","year":1998,"source_status":"published","inspection":"historical-audit","url":"https://doi.org/10.1007/BFb0055089","locator":"Earlier bounded literature audit; top-free transfer not supplied","dossier":"nsse-lineage.md"},
-    {"id":"PW-NP99","title":"Entailment of Non-Structural Subtype Constraints","year":1999,"source_status":"published","inspection":"historical-audit","url":"https://www.ps.uni-saarland.de/Publications/documents/SubTypeEntailment_99.pdf","locator":"Theorem 14 in author copy","dossier":"nsse-lineage.md"},
-    {"id":"PW-NP03","title":"Non-structural subtype entailment in automata theory","year":2003,"source_status":"published","inspection":"historical-audit","url":"https://doi.org/10.1016/S0890-5401(03)00140-8","locator":"Author copy: Theorem 1, Corollaries 2 and 5","dossier":"nsse-lineage.md"},
-    {"id":"PW-PRI04","title":"Subtype Satisfiability and Entailment","year":2004,"source_status":"thesis","inspection":"selected-primary-text","url":"https://d-nb.info/986396834/34","locator":"Chapter 11; printed pp.111-114; definition and Lemma 11.1 page images checked","dossier":"dossiers/priesnitz-2004.md"},
-    {"id":"PW-SU06","title":"The First-Order Theory of Subtyping Constraints","year":2006,"source_status":"published","inspection":"historical-audit","url":"https://www.ps.uni-saarland.de/Publications/details/fot%3A04.html","locator":"Manuscript Theorems 3.10 and 5.10; POPL 2002 precursor","dossier":"nsse-lineage.md"},
-    {"id":"PW-BPR19","title":"New results on the Non-Structural Subtype Entailment Problem","year":2019,"source_status":"slides","inspection":"selected-primary-text","url":"https://lipn.univ-paris13.fr/~breuvart/articles/NSSA_journee.pdf","locator":"17-page slide deck; no full archival proof located","dossier":"nsse-lineage.md"},
-    {"id":"PW-SCH21","title":"On non-structural subtype entailment","year":2021,"source_status":"withdrawn","inspection":"selected-primary-text","url":"https://arxiv.org/abs/2109.02458","locator":"v1 Definition 11, Proposition 5.4, Lemma 5.5; v2 withdrawal","dossier":"dossiers/schubert-2021.md"},
-    {"id":"PW-BORD09","title":"Detecting palindromes, patterns and borders in regular languages","year":2009,"source_status":"published","inspection":"historical-audit","url":"https://arxiv.org/abs/0711.3183","locator":"Theorem 58 via 2026-09-08 terminal-backreference audit","dossier":"adjacent-machinery.md"},
-    {"id":"PW-DGH01","title":"The Existential Theory of Equations with Rational Constraints in Free Groups is PSPACE-Complete","year":2001,"source_status":"preprint","inspection":"primary-record","url":"https://arxiv.org/abs/cs/0103018","locator":"Exact domain mapping required before an import","dossier":"adjacent-machinery.md"},
-    {"id":"PW-GAN13","title":"(Un)Decidability Results for Word Equations with Length and Regular Expression Constraints","year":2013,"source_status":"preprint","inspection":"primary-record","url":"https://arxiv.org/abs/1306.6054","locator":"Positive forall-exists boundary; not a restricted-cap theorem","dossier":"adjacent-machinery.md"},
-    {"id":"PW-KUF07","title":"A Proof of the Factorization Forest Theorem","year":2007,"source_status":"preprint","inspection":"primary-record","url":"https://arxiv.org/abs/0710.5130","locator":"Finite-semigroup morphism must already be supplied","dossier":"adjacent-machinery.md"},
-    {"id":"PW-RS14","title":"Automata with modulo counters and nondeterministic counter bounds","year":2014,"source_status":"published","inspection":"selected-primary-text","url":"https://www.kybernetika.cz/content/2014/1/66/paper.pdf","locator":"Definition 3.7; Theorems 3.9 and 3.15","dossier":"dossiers/specialist-boundaries.md"},
-    {"id":"PW-KS10","title":"Noneffective Regularity of Equality Languages and Bounded Delay Morphisms","year":2010,"source_status":"published","inspection":"selected-primary-text","url":"https://dmtcs.episciences.org/523/pdf","locator":"Theorem 5.2","dossier":"dossiers/specialist-boundaries.md"},
-    {"id":"PW-KS11","title":"The Unique Decipherability in the Monoid of Regular Languages is Undecidable","year":2011,"source_status":"published","inspection":"selected-primary-text","url":"https://amsaar.gitlab.io/articles/kasa11ibarra.pdf","locator":"Theorem 2.1","dossier":"dossiers/specialist-boundaries.md"},
-    {"id":"PW-BFR19","title":"Boundedness of Conjunctive Regular Path Queries","year":2019,"source_status":"preprint","inspection":"primary-record","url":"https://arxiv.org/abs/1904.00850","locator":"UC2RPQ boundedness; not first-return graph inverse images","dossier":"adjacent-machinery.md"},
-    {"id":"PW-TF24","title":"Languages Generated by Conjunctive Query Fragments of FC[REG]","year":2024,"source_status":"published","inspection":"selected-primary-text","url":"https://link.springer.com/article/10.1007/s00224-024-10198-4","locator":"Theorem 6; publisher authors Sam M. Thompson and Dominik D. Freydenberger","dossier":"adjacent-machinery.md"},
-    {"id":"PW-HHL25","title":"Negated String Containment Is Decidable","year":2025,"source_status":"published","inspection":"historical-audit","url":"https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.MFCS.2025.56","locator":"Record refreshed; Theorem 28 via target-anchoring note","dossier":"adjacent-machinery.md"},
-    {"id":"PW-KU26","title":"On the Complexity of the Matching Problem of Regular Expressions with Backreferences","year":2026,"source_status":"published","inspection":"selected-primary-text","url":"https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.ICALP.2026.135","locator":"Full HTML Theorem 6; fixed-expression matching","dossier":"adjacent-machinery.md"},
-    {"id":"PW-BLLS25","title":"Saturation Problems for Families of Automata","year":2025,"source_status":"published","inspection":"historical-audit","url":"https://drops.dagstuhl.de/storage/00lipics/lipics-vol334-icalp2025/html/LIPIcs.ICALP.2025.146/LIPIcs.ICALP.2025.146.html","locator":"Earlier bounded literature check; no BorderAvoid transfer","dossier":"adjacent-machinery.md"},
-    {"id":"PW-REGEX25","title":"Corrigendum: Inside the class of REGEX languages [6]","year":2025,"source_status":"corrigendum","inspection":"unresolved-lead","url":"https://doi.org/10.1142/S0129054125920017","locator":"Metadata preserved from discovery issue; full correction not retrieved","dossier":"dossiers/specialist-boundaries.md"},
-    {"id":"PW-TLCA14","title":"TLCA historical subtype-entailment open-problem entry","year":2014,"source_status":"historical-context","inspection":"historical-audit","url":"https://tlca.di.unito.it/opltlca/opltlcasu23.html","locator":"2014 status snapshot, not current-status evidence","dossier":"bibliography.md"},
-    {"id":"PW-DOL16","title":"Algebraic Subtyping","year":2016,"source_status":"thesis","inspection":"historical-audit","url":"https://www.cs.tufts.edu/~nr/cs257/archive/stephen-dolan/thesis.pdf","locator":"Earlier literature-check context; different semantics need comparison","dossier":"bibliography.md"}
-  ]
+    {
+      "id": "PW-HR97",
+      "title": "The Complexity of Subtype Entailment for Simple Types",
+      "year": 1997,
+      "source_status": "published",
+      "inspection": "primary-record",
+      "url": "https://hjemmesider.diku.dk/~henglein/bib/publications/here97b.html",
+      "locator": "LICS 1997",
+      "dossier": "nsse-lineage.md"
+    },
+    {
+      "id": "PW-HR98",
+      "title": "Constraint Automata and the Complexity of Recursive Subtype Entailment",
+      "year": 1998,
+      "source_status": "published",
+      "inspection": "historical-audit",
+      "url": "https://doi.org/10.1007/BFb0055089",
+      "locator": "Earlier bounded literature audit; top-free transfer not supplied",
+      "dossier": "nsse-lineage.md"
+    },
+    {
+      "id": "PW-NP99",
+      "title": "Entailment of Non-Structural Subtype Constraints",
+      "year": 1999,
+      "source_status": "published",
+      "inspection": "selected-primary-text",
+      "url": "https://www.ps.uni-saarland.de/Publications/documents/SubTypeEntailment_99.pdf",
+      "locator": "Section 2 restricted grammar; Propositions 1/13 and Theorem 14; finite and possibly-infinite ambient bottom/top/product trees.",
+      "dossier": "nsse-lineage.md",
+      "previous_inspection": {
+        "baseline": "df222241dc1a55ac6ee5da3cba3aedf662b3e285",
+        "inspection": "historical-audit",
+        "locator": "Theorem 14 in author copy"
+      },
+      "reviewed_at": "2026-09-19",
+      "review_record": "dossiers/core-lineage-review-2026-09-19.md"
+    },
+    {
+      "id": "PW-NP03",
+      "title": "Non-structural subtype entailment in automata theory",
+      "year": 2003,
+      "source_status": "published",
+      "inspection": "selected-primary-text",
+      "url": "https://doi.org/10.1016/S0890-5401(03)00140-8",
+      "locator": "46-page journal author manuscript _02: Section 3, Theorems 1/2/4, Lemma 1, Corollaries 1–3; separate 23-page TACS precursor _01 uses Theorems 13/34.",
+      "dossier": "nsse-lineage.md",
+      "previous_inspection": {
+        "baseline": "df222241dc1a55ac6ee5da3cba3aedf662b3e285",
+        "inspection": "historical-audit",
+        "locator": "Author copy: Theorem 1, Corollaries 2 and 5"
+      },
+      "reviewed_at": "2026-09-19",
+      "review_record": "dossiers/core-lineage-review-2026-09-19.md",
+      "primary_text_url": "https://www.ps.uni-saarland.de/Publications/documents/SubTypeEntailment_02.pdf",
+      "precursor_url": "https://www.ps.uni-saarland.de/Publications/documents/SubTypeEntailment_01.pdf"
+    },
+    {
+      "id": "PW-PRI04",
+      "title": "Subtype Satisfiability and Entailment",
+      "year": 2004,
+      "source_status": "thesis",
+      "inspection": "selected-primary-text",
+      "url": "https://d-nb.info/986396834/34",
+      "locator": "Chapter 11, printed pp.111–114 (PDF pp.125–128); fresh definition/Lemma 11.1 readback and independent enumeration of the finite split example.",
+      "dossier": "dossiers/priesnitz-2004.md",
+      "previous_inspection": {
+        "baseline": "df222241dc1a55ac6ee5da3cba3aedf662b3e285",
+        "inspection": "selected-primary-text",
+        "locator": "Chapter 11; printed pp.111-114; definition and Lemma 11.1 page images checked"
+      },
+      "reviewed_at": "2026-09-19",
+      "review_record": "dossiers/core-lineage-review-2026-09-19.md"
+    },
+    {
+      "id": "PW-SU06",
+      "title": "The First-Order Theory of Subtyping Constraints",
+      "year": 2006,
+      "source_status": "published",
+      "inspection": "historical-audit",
+      "url": "https://www.ps.uni-saarland.de/Publications/details/fot%3A04.html",
+      "locator": "Manuscript Theorems 3.10 and 5.10; POPL 2002 precursor",
+      "dossier": "nsse-lineage.md"
+    },
+    {
+      "id": "PW-BPR19",
+      "title": "New results on the Non-Structural Subtype Entailment Problem",
+      "year": 2019,
+      "source_status": "slides",
+      "inspection": "selected-primary-text",
+      "url": "https://lipn.univ-paris13.fr/~breuvart/articles/NSSA_journee.pdf",
+      "locator": "Slides 6–16 in 17-page container; restriction, finite periodic selections and return conditions; no full archival proof located in bounded search.",
+      "dossier": "nsse-lineage.md",
+      "previous_inspection": {
+        "baseline": "df222241dc1a55ac6ee5da3cba3aedf662b3e285",
+        "inspection": "selected-primary-text",
+        "locator": "17-page slide deck; no full archival proof located"
+      },
+      "reviewed_at": "2026-09-19",
+      "review_record": "dossiers/core-lineage-review-2026-09-19.md"
+    },
+    {
+      "id": "PW-SCH21",
+      "title": "On non-structural subtype entailment",
+      "year": 2021,
+      "source_status": "withdrawn",
+      "inspection": "selected-primary-text",
+      "url": "https://arxiv.org/abs/2109.02458",
+      "locator": "v1 pp.15–16, Definitions 10/11, Proposition 5.4 and Lemma 5.5; v2 withdrawal record; concrete failure fixture remains UNKNOWN.",
+      "dossier": "dossiers/schubert-2021.md",
+      "previous_inspection": {
+        "baseline": "df222241dc1a55ac6ee5da3cba3aedf662b3e285",
+        "inspection": "selected-primary-text",
+        "locator": "v1 Definition 11, Proposition 5.4, Lemma 5.5; v2 withdrawal"
+      },
+      "reviewed_at": "2026-09-19",
+      "review_record": "dossiers/core-lineage-review-2026-09-19.md"
+    },
+    {
+      "id": "PW-BORD09",
+      "title": "Detecting palindromes, patterns and borders in regular languages",
+      "year": 2009,
+      "source_status": "published",
+      "inspection": "selected-primary-text",
+      "url": "https://arxiv.org/abs/0711.3183",
+      "locator": "Author/journal copy Theorem 58 and Corollary 62; ordinary unbordered accepted words, not arbitrary coloured flags.",
+      "dossier": "adjacent-machinery.md",
+      "previous_inspection": {
+        "baseline": "df222241dc1a55ac6ee5da3cba3aedf662b3e285",
+        "inspection": "historical-audit",
+        "locator": "Theorem 58 via 2026-09-08 terminal-backreference audit"
+      },
+      "reviewed_at": "2026-09-19",
+      "review_record": "dossiers/adjacent-methods-review-2026-09-19.md"
+    },
+    {
+      "id": "PW-DGH01",
+      "title": "The Existential Theory of Equations with Rational Constraints in Free Groups is PSPACE-Complete",
+      "year": 2001,
+      "source_status": "preprint",
+      "inspection": "selected-primary-text",
+      "url": "https://arxiv.org/abs/cs/0103018",
+      "locator": "arXiv cs/0103018v1, Section 4 pp.7–8, Theorem 4; monoid involution and NFA regular constraints.",
+      "dossier": "adjacent-machinery.md",
+      "previous_inspection": {
+        "baseline": "df222241dc1a55ac6ee5da3cba3aedf662b3e285",
+        "inspection": "primary-record",
+        "locator": "Exact domain mapping required before an import"
+      },
+      "reviewed_at": "2026-09-19",
+      "review_record": "dossiers/adjacent-methods-review-2026-09-19.md"
+    },
+    {
+      "id": "PW-GAN13",
+      "title": "(Un)Decidability Results for Word Equations with Length and Regular Expression Constraints",
+      "year": 2013,
+      "source_status": "preprint",
+      "inspection": "primary-record",
+      "url": "https://arxiv.org/abs/1306.6054",
+      "locator": "Positive forall-exists boundary; not a restricted-cap theorem",
+      "dossier": "adjacent-machinery.md"
+    },
+    {
+      "id": "PW-KUF07",
+      "title": "A Proof of the Factorization Forest Theorem",
+      "year": 2007,
+      "source_status": "preprint",
+      "inspection": "primary-record",
+      "url": "https://arxiv.org/abs/0710.5130",
+      "locator": "Finite-semigroup morphism must already be supplied",
+      "dossier": "adjacent-machinery.md"
+    },
+    {
+      "id": "PW-RS14",
+      "title": "Automata with modulo counters and nondeterministic counter bounds",
+      "year": 2014,
+      "source_status": "published",
+      "inspection": "selected-primary-text",
+      "url": "https://www.kybernetika.cz/content/2014/1/66/paper.pdf",
+      "locator": "Definition 3.7; Theorems 3.9 and 3.15",
+      "dossier": "dossiers/specialist-boundaries.md"
+    },
+    {
+      "id": "PW-KS10",
+      "title": "Noneffective Regularity of Equality Languages and Bounded Delay Morphisms",
+      "year": 2010,
+      "source_status": "published",
+      "inspection": "selected-primary-text",
+      "url": "https://dmtcs.episciences.org/523/pdf",
+      "locator": "Theorem 5.2",
+      "dossier": "dossiers/specialist-boundaries.md"
+    },
+    {
+      "id": "PW-KS11",
+      "title": "The Unique Decipherability in the Monoid of Regular Languages is Undecidable",
+      "year": 2011,
+      "source_status": "published",
+      "inspection": "selected-primary-text",
+      "url": "https://amsaar.gitlab.io/articles/kasa11ibarra.pdf",
+      "locator": "Theorem 2.1",
+      "dossier": "dossiers/specialist-boundaries.md"
+    },
+    {
+      "id": "PW-BFR19",
+      "title": "Boundedness of Conjunctive Regular Path Queries",
+      "year": 2019,
+      "source_status": "preprint",
+      "inspection": "selected-primary-text",
+      "url": "https://arxiv.org/abs/1904.00850",
+      "locator": "ICALP 2019 Propositions 3/12 and Theorems 6/11; bounded expansions, distance-automaton limitedness and exact scope.",
+      "dossier": "adjacent-machinery.md",
+      "previous_inspection": {
+        "baseline": "df222241dc1a55ac6ee5da3cba3aedf662b3e285",
+        "inspection": "primary-record",
+        "locator": "UC2RPQ boundedness; not first-return graph inverse images"
+      },
+      "reviewed_at": "2026-09-19",
+      "review_record": "dossiers/adjacent-methods-review-2026-09-19.md"
+    },
+    {
+      "id": "PW-TF24",
+      "title": "Languages Generated by Conjunctive Query Fragments of FC[REG]",
+      "year": 2024,
+      "source_status": "published",
+      "inspection": "selected-primary-text",
+      "url": "https://link.springer.com/article/10.1007/s00224-024-10198-4",
+      "locator": "Theorem 6; publisher authors Sam M. Thompson and Dominik D. Freydenberger",
+      "dossier": "adjacent-machinery.md"
+    },
+    {
+      "id": "PW-HHL25",
+      "title": "Negated String Containment Is Decidable",
+      "year": 2025,
+      "source_status": "published",
+      "inspection": "selected-primary-text",
+      "url": "https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.MFCS.2025.56",
+      "locator": "MFCS 2025 Theorems 28–29, p.56:16; one negated-containment atom; chain-free extension.",
+      "dossier": "adjacent-machinery.md",
+      "previous_inspection": {
+        "baseline": "df222241dc1a55ac6ee5da3cba3aedf662b3e285",
+        "inspection": "historical-audit",
+        "locator": "Record refreshed; Theorem 28 via target-anchoring note"
+      },
+      "reviewed_at": "2026-09-19",
+      "review_record": "dossiers/adjacent-methods-review-2026-09-19.md"
+    },
+    {
+      "id": "PW-KU26",
+      "title": "On the Complexity of the Matching Problem of Regular Expressions with Backreferences",
+      "year": 2026,
+      "source_status": "published",
+      "inspection": "selected-primary-text",
+      "url": "https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.ICALP.2026.135",
+      "locator": "ICALP 2026 Theorems 6–8 and Uniformity remark; canonical form and matching complexity with expression-dependent cost.",
+      "dossier": "adjacent-machinery.md",
+      "previous_inspection": {
+        "baseline": "df222241dc1a55ac6ee5da3cba3aedf662b3e285",
+        "inspection": "selected-primary-text",
+        "locator": "Full HTML Theorem 6; fixed-expression matching"
+      },
+      "reviewed_at": "2026-09-19",
+      "review_record": "dossiers/adjacent-methods-review-2026-09-19.md"
+    },
+    {
+      "id": "PW-BLLS25",
+      "title": "Saturation Problems for Families of Automata",
+      "year": 2025,
+      "source_status": "published",
+      "inspection": "selected-primary-text",
+      "url": "https://drops.dagstuhl.de/storage/00lipics/lipics-vol334-icalp2025/html/LIPIcs.ICALP.2025.146/LIPIcs.ICALP.2025.146.html",
+      "locator": "ICALP 2025 Section 2, Theorem 1 and Theorems 8–9; selected HTML statements/proof sketches, not full proof audit.",
+      "dossier": "adjacent-machinery.md",
+      "reviewed_at": "2026-09-19",
+      "review_record": "dossiers/periodic-continuations-review-2026-09-19.md"
+    },
+    {
+      "id": "PW-REGEX25",
+      "title": "Corrigendum: Inside the class of REGEX languages [6]",
+      "year": 2025,
+      "source_status": "corrigendum",
+      "inspection": "unresolved-lead",
+      "url": "https://doi.org/10.1142/S0129054125920017",
+      "locator": "Metadata preserved from discovery issue; full correction not retrieved",
+      "dossier": "dossiers/specialist-boundaries.md"
+    },
+    {
+      "id": "PW-TLCA14",
+      "title": "TLCA historical subtype-entailment open-problem entry",
+      "year": 2014,
+      "source_status": "historical-context",
+      "inspection": "historical-audit",
+      "url": "https://tlca.di.unito.it/opltlca/opltlcasu23.html",
+      "locator": "2014 status snapshot, not current-status evidence",
+      "dossier": "bibliography.md"
+    },
+    {
+      "id": "PW-DOL16",
+      "title": "Algebraic Subtyping",
+      "year": 2016,
+      "source_status": "thesis",
+      "inspection": "historical-audit",
+      "url": "https://www.cs.tufts.edu/~nr/cs257/archive/stephen-dolan/thesis.pdf",
+      "locator": "Earlier literature-check context; different semantics need comparison",
+      "dossier": "bibliography.md"
+    },
+    {
+      "id": "PW-HHI00",
+      "title": "Periods and binary words",
+      "year": 2000,
+      "source_status": "published",
+      "inspection": "selected-primary-text",
+      "url": "https://www.csd.uwo.ca/~ilie/JCTA00.pdf",
+      "locator": "Author manuscript p.2 Lemmas 1–2; p.4 Theorem 1. Journal numbering not substituted.",
+      "dossier": "dossiers/periodic-continuations-review-2026-09-19.md",
+      "reviewed_at": "2026-09-19",
+      "review_record": "dossiers/periodic-continuations-review-2026-09-19.md"
+    },
+    {
+      "id": "PW-ABF18",
+      "title": "Families of DFAs as Acceptors of omega-Regular Languages",
+      "year": 2018,
+      "source_status": "published",
+      "inspection": "selected-primary-text",
+      "url": "https://faculty.runi.ac.il/udiboker/files/fdfa.pdf",
+      "locator": "LMCS 14(1:15), pp.1–3 introduction freshly read; Theorem 5.7 locator supplied by PW-BLLS25, body retrieval timed out.",
+      "dossier": "dossiers/periodic-continuations-review-2026-09-19.md",
+      "reviewed_at": "2026-09-19",
+      "review_record": "dossiers/periodic-continuations-review-2026-09-19.md"
+    },
+    {
+      "id": "PW-HNI26",
+      "title": "The Parameterized Periodicity Lemma",
+      "year": 2026,
+      "source_status": "preprint; accepted SPIRE 2026 according to arXiv record",
+      "inspection": "primary-record",
+      "url": "https://arxiv.org/abs/2608.21912v1",
+      "locator": "v1 abstract/metadata only; parameterized equality, not literal equality; screened out of current dependency path.",
+      "dossier": "dossiers/periodic-continuations-review-2026-09-19.md",
+      "reviewed_at": "2026-09-19",
+      "review_record": "dossiers/periodic-continuations-review-2026-09-19.md"
+    }
+  ],
+  "review_baseline": "064fc7306b679bf607b91e7d8de259823f200c62",
+  "review_date": "2026-09-19"
 }

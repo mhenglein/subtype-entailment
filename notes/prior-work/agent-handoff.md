@@ -1,8 +1,19 @@
 # Agent handoff: use the scholarship without inheriting false conclusions
 
-## Owner instruction at integration
+## Current authority and the dated review
 
-Main advanced during this documentation pass to `5e156fc67b3516c9c3955f41b2cc7940dccfd210`. Its STATE records that new proof work is **PAUSED** and that no external human referee will be commissioned. The acceptance path is the kernel-checked end-to-end decision theorem, with `ClosureFor` and stage-6 composition discharged, plus statement readback by a session other than each module's author (#33). This supersedes the earlier human-referee plan. Publication of already-requested scholarship does not resume proof work. Re-read current owner instructions before starting a listed task.
+Read current [STATE](../../STATE.md), [PLAN](../../research/PLAN.md), and issues
+[#34](https://github.com/mhenglein/subtail/issues/34) and
+[#37](https://github.com/mhenglein/subtail/issues/37) for scientific status,
+owner instructions and reservations. This file does not pause or resume work.
+The [September 19 review](review-2026-09-19.md) gives a commit-pinned relevance
+map; it must not override later canonical records.
+
+The earlier scholarship handoff was published while proof work was paused.
+That was historical context at `5e156fc`, not a current pause instruction.
+The owner-selected acceptance path recorded by the project is kernel checking
+plus nonauthor statement readback; no external human referee is commissioned.
+Verify current instructions before relying on that operational snapshot too.
 
 ## First ten minutes on an authorized resumption
 
@@ -21,11 +32,28 @@ python3 scripts/research_index.py --check
 
 These commands retrieve/check records. They do not by themselves prove C080 or certify a paper's novelty.
 
-## Scientific snapshot: what must not be rolled back by an old handoff
+## Use current declarations, not historical task lists
 
-At the original inspection base `df222241dc1a55ac6ee5da3cba3aedf662b3e285`, STATE already recorded `closure_reverse` for the executable diagram compiler. An earlier conversation described a weaker intermediate extension-existence theorem; that is not the current main endpoint. Do not tell a successor that the entire reverse implication is still missing merely because that older chat said so.
+The original scholarship pass at `df22224` and `5e156fc` preceded later
+coverage, terminal decision and summary/safe-split integration. Its old lists
+of missing implications are historical. Retrieve C080, C029 and C031, then
+follow current STATE and exact declaration readbacks. A checked subclaim does
+not establish every stronger bound or the final subtype theorem.
 
-The integration base above still leaves forward coverage, remaining clause-weight/finishing obligations, and the full semantic composition unresolved in Lean. A finite diagram enumerator has been delivered on a branch; enumeration is not coverage. The unwind results explicitly assume `ClosureFor`. Arbitrary-tree semantics and executable normalized satisfiability are not an unbounded entailment decision. C080 remains a candidate. Later main may improve this state; follow actual declarations and the ledger rather than freezing this document as authority.
+Bounded cross-corpus retrieval from the repository root:
+
+```sh
+python3 notes/prior-work/search.py --search "finite quotient" --limit 8
+python3 notes/prior-work/search.py --search "infinite continuation" --limit 12
+python3 notes/prior-work/search.py --lookup F13
+python3 notes/prior-work/search.py --lookup PW-SCH21
+python3 notes/prior-work/search.py --lookup O11
+python3 notes/prior-work/search.py --lookup C029
+```
+
+The tool reads the existing records, reports truncation and returns related
+IDs. It does not validate mathematics or search external literature. A zero
+hit count means no lexical/topic match in this local corpus.
 
 ## The useful mathematical interface
 
@@ -48,9 +76,9 @@ For C080-style graph surgery, split four tasks: reconstruct one common extension
 
 For an undecidability route, identify the missing terminal-anchor gadget and the direction of every reduction. An auxiliary automaton hardness result does not settle subtype entailment without a reverse realization. For a decidability route, give a computable cover or termination proof, not only an effective test for each proposed certificate.
 
-## Where to spend effort after authorization resumes
+## Choose a task within current authorization
 
-Choose one [open obligation](open-obligations.md), post a scoped issue claim, and define a falsifiable deliverable. Particularly valuable are a non-author reading of the thesis counterexample, an actual Schubert Lemma 5.5 counterexample, or a precise imported-theorem mapping. A broad survey alone should not be presented as a discharged proof obligation.
+Choose one [open obligation](open-obligations.md), use its [task contract](agent-tasks.md), post a scoped issue claim, and define a falsifiable deliverable. Particularly valuable are a non-author reading of the thesis counterexample, an actual Schubert Lemma 5.5 counterexample, or a precise imported-theorem mapping. A broad survey alone should not be presented as a discharged proof obligation.
 
 Keep both constructive and adversarial directions available. A useful negative result states exactly which stronger shortcut it refutes and whether a weaker existential replacement remains possible. Save the input, hypothesis and direct predicate, not only a failing optimized implementation.
 

@@ -30,6 +30,11 @@ def check(metadata_only: bool = False) -> dict[str, object]:
             raise ValueError(f"Invalid or credential-bearing URL: {sid}")
         if not metadata_only and not (root / source["dossier"]).is_file():
             raise ValueError(f"Missing dossier for {sid}")
+        if source.get("reviewed_at") and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", source["reviewed_at"]):
+            raise ValueError(f"Invalid review date for {sid}")
+        if not metadata_only and source.get("review_record"):
+            if not (root / source["review_record"]).is_file():
+                raise ValueError(f"Missing dated review for {sid}")
 
     # Two genuinely different parses, with no empty factors.
     left, right = {"0", "01"}, {"1", "11"}

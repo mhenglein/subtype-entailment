@@ -1,0 +1,256 @@
+{
+  "schema_version": 1,
+  "purpose": "Navigation relationships and proposed investigation gates; scientific statements remain in canonical records.",
+  "topics": [
+    {
+      "key": "semantic-domain",
+      "terms": [
+        "subtype",
+        "signature",
+        "top-free",
+        "bottom",
+        "normalization",
+        "trees",
+        "finite",
+        "infinite"
+      ],
+      "records": [
+        "PW-HR97",
+        "PW-HR98",
+        "PW-NP99",
+        "PW-NP03",
+        "PW-SU06",
+        "C001",
+        "C002",
+        "C017",
+        "C031",
+        "F01",
+        "F02",
+        "F03",
+        "F04",
+        "O04"
+      ],
+      "gate": "Write the source and target valuation domains before using a restriction or hardness result."
+    },
+    {
+      "key": "infinite-continuation",
+      "terms": [
+        "periodic",
+        "ray",
+        "lasso",
+        "C029",
+        "infinite",
+        "continuation",
+        "saturation",
+        "omega"
+      ],
+      "records": [
+        "PW-HHI00",
+        "PW-ABF18",
+        "PW-BLLS25",
+        "C026",
+        "C027",
+        "C028",
+        "C029",
+        "C031",
+        "F10",
+        "F12",
+        "F25",
+        "O11",
+        "F33",
+        "F34"
+      ],
+      "gate": "A reachable safe cycle is not an original witness. Name the earlier flagged comparisons retained by the monitor."
+    },
+    {
+      "key": "capture-word-equations",
+      "terms": [
+        "word",
+        "equations",
+        "capture",
+        "prefix-free",
+        "straight",
+        "single-source",
+        "bounded-source"
+      ],
+      "records": [
+        "PW-DGH01",
+        "PW-NP99",
+        "PW-PRI04",
+        "PW-BPR19",
+        "PW-GAN13",
+        "C067",
+        "C068",
+        "F07",
+        "F08",
+        "F18",
+        "F23",
+        "O01",
+        "O03",
+        "O04"
+      ],
+      "gate": "Construct a finite formula with one shared candidate and prove both directions. Specify the finite visit cover separately."
+    },
+    {
+      "key": "colored-borders",
+      "terms": [
+        "border",
+        "unbordered",
+        "colored",
+        "coloured",
+        "pumping",
+        "shortening",
+        "cut"
+      ],
+      "records": [
+        "PW-BORD09",
+        "PW-HHI00",
+        "C019",
+        "C028",
+        "C039",
+        "C044",
+        "C045",
+        "Q002",
+        "Q003",
+        "F14",
+        "F17",
+        "F24",
+        "O04"
+      ],
+      "gate": "Check acceptance, ordered endpoint states and every newly created comparison after the cut. Preserve the exact hypothesis under minimization."
+    },
+    {
+      "key": "finite-quotients",
+      "terms": [
+        "finite",
+        "quotient",
+        "transition",
+        "monoid",
+        "factorization",
+        "profile",
+        "congruence"
+      ],
+      "records": [
+        "PW-KUF07",
+        "PW-KS10",
+        "A017",
+        "Q001",
+        "F10",
+        "F12",
+        "F13",
+        "F23"
+      ],
+      "gate": "Test known collisions before building a quotient. A richer invariant needs a congruence or weaker existence-preservation proof."
+    },
+    {
+      "key": "joint-graph-preimages",
+      "terms": [
+        "joint",
+        "shared",
+        "generator",
+        "extension",
+        "graph",
+        "query",
+        "preimage",
+        "conjunction"
+      ],
+      "records": [
+        "PW-BFR19",
+        "PW-TF24",
+        "PW-SCH21",
+        "C080",
+        "F18",
+        "F19",
+        "F20",
+        "F21",
+        "F22",
+        "O02",
+        "O05"
+      ],
+      "gate": "Specify one physical extension for the whole conjunction. Compare exact graph transformations, edge directions and query languages."
+    },
+    {
+      "key": "terminal-copy-containment",
+      "terms": [
+        "terminal",
+        "anchor",
+        "copy",
+        "backreference",
+        "containment",
+        "overlap",
+        "negated"
+      ],
+      "records": [
+        "PW-KU26",
+        "PW-HHL25",
+        "PW-TF24",
+        "PW-REGEX25",
+        "C077",
+        "C079",
+        "F05",
+        "F06",
+        "F15",
+        "F16",
+        "F17",
+        "F26",
+        "O06",
+        "O07",
+        "O08"
+      ],
+      "gate": "Write the outer candidate/cut quantifiers. Fixed-word matching and single-predicate decision are different tasks from uniform containment."
+    },
+    {
+      "key": "failed-proofs",
+      "terms": [
+        "failure",
+        "withdrawn",
+        "Schubert",
+        "Priesnitz",
+        "erratum",
+        "correction",
+        "counterexample"
+      ],
+      "records": [
+        "PW-PRI04",
+        "PW-SCH21",
+        "PW-REGEX25",
+        "F07",
+        "F08",
+        "F27",
+        "F28",
+        "F29",
+        "O01",
+        "O02",
+        "O08"
+      ],
+      "gate": "State which literal lemma fails, retain every premise, and trace dependent uses before judging the final theorem."
+    },
+    {
+      "key": "novelty-and-coverage",
+      "terms": [
+        "novelty",
+        "prior",
+        "art",
+        "literature",
+        "citation",
+        "coverage",
+        "search",
+        "discovery"
+      ],
+      "records": [
+        "PW-NP03",
+        "PW-BPR19",
+        "PW-TLCA14",
+        "PW-DOL16",
+        "F30",
+        "F31",
+        "F32",
+        "O03",
+        "O04",
+        "O09",
+        "O10"
+      ],
+      "gate": "A missing hit or excluded syntax is not a novelty result. Compare semantic encodings and log uncovered citation neighborhoods."
+    }
+  ]
+}

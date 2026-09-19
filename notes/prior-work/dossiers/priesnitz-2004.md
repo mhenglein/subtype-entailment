@@ -35,4 +35,6 @@ C067's terminal capture argument should therefore be audited for the stronger pr
 
 `python3 notes/prior-work/check_scholarship.py` checks the two unequal factor pairs and a finite prefix-free comparison fixture. The finiteness argument above is mathematical reasoning, not a bounded test of the universal definition. The script does not implement the thesis's cap construction.
 
-Open: independent readback of the definition/lemma; audit the precise dependency in Lemma 11.2 and Theorem 11.1; search for errata or a later repair; compare a valid repaired fragment to C067 without assuming a novelty conclusion. Preserve any such repair alongside this counterexample rather than deleting the historical failure.
+September 19 update: a second agent read the primary definition/lemma pages and independently enumerated the finite example, with access to the earlier dossier. See the [core source review](core-lineage-review-2026-09-19.md). This is not blind whole-proof replication.
+
+Open: audit the precise dependency in Lemma 11.2 and Theorem 11.1; search for errata or a later repair; compare a valid repaired fragment to C067 without assuming a novelty conclusion. Preserve any such repair alongside this counterexample rather than deleting the historical failure.

@@ -54,6 +54,9 @@ This is an indexed inventory of known obstructions and audit hazards, **not a cl
 | F31 HAZARD | Many green checks, agreeing agents or checked local lemmas close a missing global implication. | Current [AGENTS](../../AGENTS.md), [STATE](../../STATE.md). List exact discharged obligations and review independence. | Genuine proof progress, without using activity counts as evidence. |
 | F32 HAZARD | A stale snapshot may replace active proof files or all work is saved because remote branches are clean. | Issues #36/#37 and [AGENTS](../../AGENTS.md). Compare current blobs and obtain workspace checkpoint reports. | Narrow non-forced integration of the explicitly handed-off contribution. |
 
+| F33 HAZARD | A safe reachable cycle is enough to satisfy InfWitness. | C031 and the current subtype split retain an original Witness in addition to a safe stem and cycle. | Prove a method to eliminate every earlier flagged comparison, as required by C029. |
+| F34 HAZARD | Equal infinite words permit moving a cut without checking ordered flags. | PW-BLLS25 saturation concerns representation-invariant acceptance; BorderAvoid retains distinguished finite positions and states. | An explicit phase-aware, flag-preserving representation theorem. |
+
 ## How to add a failure
 
 Give the exact statement under attack, status, all preserved hypotheses, smallest known input, independent predicate/check, source and immutable evidence reference. State what the example does **not** refute. Do not turn a universal-profile counterexample into a refutation of a weaker existential replacement statement. Link a new mathematical result through the repository's canonical C/A/E/Q process when warranted; this catalogue does not create such a result by itself.
