@@ -89,7 +89,10 @@ theorem supported_size_pos {b : Bool} {ps : List (Expr n × Expr n)}
     (e : Expr n) (h : Supports b ps e) : 0 < n + (b.toNat + ps.length) := by
   cases e with
   | var x => have hx := x.isLt; omega
-  | bot => have hb : b = true := h; simp [hb]
+  | bot =>
+    have hb : b = true := h
+    simp only [hb, Bool.toNat_true]
+    omega
   | prod l r =>
     have hp := h.1
     cases ps with
@@ -129,7 +132,7 @@ def Naming.slot (R : Naming n) (j : Fin R.pairs.length) : Fin R.total :=
 
 def Naming.botIndex (R : Naming n) : Fin R.total :=
   if hb : R.botUsed = true then
-    ⟨n, by simp [Naming.total, Naming.extra, hb]⟩
+    ⟨n, by simp only [Naming.total, Naming.extra, hb, Bool.toNat_true]; omega⟩
   else ⟨0, R.positive⟩
 
 def Naming.ref (R : Naming n) : Expr n → Fin R.total
@@ -227,7 +230,9 @@ theorem representative_correct (R : Naming n) (eta : Valuation R.total)
   | prod l r il ir =>
     simp only [Naming.ref, dif_pos h.1]
     rw [models_slot R eta hm, get_locate]
-    exact congrArg₂ product (il h.2.1) (ir h.2.2)
+    change product (eta (R.ref l)) (eta (R.ref r)) =
+      product (eval (R.restrict eta) l) (eval (R.restrict eta) r)
+    rw [il h.2.1, ir h.2.2]
 
 def Naming.Closed (R : Naming n) : Prop :=
   ∀ p ∈ R.pairs, Supports R.botUsed R.pairs p.1 ∧ Supports R.botUsed R.pairs p.2
