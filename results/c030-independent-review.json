@@ -1,0 +1,357 @@
+{
+  "status": "PASS",
+  "original_inspected_revision": "064fc7306b679bf607b91e7d8de259823f200c62",
+  "publication_base_revision": "e1e8f635f0374d5c8112c8ee25c4220fc10198be",
+  "checker_sha256": "6c35e4e518f3db0e432ca0c66b58d7164e222e5cd24b06521b34229dfe220146",
+  "source_archive_sha256": "1c34467af02c72bb941ab5594a18474f48651db997a00097bdc2b3541cc4e2bc",
+  "original_artifact_hashes_verified": true,
+  "original_artifact_sha256_manifest": {
+    "README.md": "94350e166181259cade98ee9d3ebcc5797683927339a613bab119e1df4a6d01b",
+    "check_c030_independent.py": "6c35e4e518f3db0e432ca0c66b58d7164e222e5cd24b06521b34229dfe220146",
+    "exhaustive_k1.json": "57ee0aacd656debf9b4769f770dd30f1a45c67df2c50f2e47905e43be3992697",
+    "exhaustive_k2.json": "8eb7764728e539a4c0e1e384cb0a80870324de803df0b21d90d4aee3cc21f638",
+    "fixtures.json": "7ad0d27c6ad96e1c52d5f00ecd01e898b3d0240235c6bcdf0915b70a7df574fb",
+    "random_k3_k6.json": "9559bd41e3af5859b0e50fbb33aee3a730ddfaaebafe54520e4a14d1fb488e3e",
+    "summary.json": "3417d338245ecb10378bb550274dc68529a7961250dcaa4a19e7847e529492e9",
+    "terminality_required.json": "dfb365efdb44da2bef29eaed9fc0d7e296ce2c377fceb897d053850b21448346"
+  },
+  "archived_results": {
+    "exhaustive_k1.json": {
+      "status": "PASS",
+      "revision_inspected": "064fc7306b679bf607b91e7d8de259823f200c62",
+      "suite": "k1",
+      "max_word_length": 4,
+      "counts": {
+        "instances": 20,
+        "words": 620,
+        "positive_words": 1,
+        "exact_model_checks": 620,
+        "exact_satisfiability_models": 20
+      },
+      "elapsed_seconds": 0.026,
+      "scope": "Bounded word/input corpus; exact full regular-tree model validation; not Lean",
+      "repository_imports": false,
+      "fixtures": []
+    },
+    "exhaustive_k2.json": {
+      "status": "PASS",
+      "revision_inspected": "064fc7306b679bf607b91e7d8de259823f200c62",
+      "suite": "k2",
+      "max_word_length": 3,
+      "counts": {
+        "instances": 12800,
+        "words": 192000,
+        "positive_words": 360,
+        "exact_model_checks": 192000,
+        "exact_satisfiability_models": 12800
+      },
+      "elapsed_seconds": 11.785,
+      "scope": "Bounded word/input corpus; exact full regular-tree model validation; not Lean",
+      "repository_imports": false,
+      "fixtures": []
+    },
+    "fixtures.json": {
+      "status": "PASS",
+      "revision_inspected": "064fc7306b679bf607b91e7d8de259823f200c62",
+      "suite": "fixtures",
+      "max_word_length": null,
+      "counts": {
+        "instances": 16,
+        "words": 16,
+        "positive_words": 7,
+        "exact_model_checks": 16,
+        "exact_satisfiability_models": 16
+      },
+      "elapsed_seconds": 0.002,
+      "scope": "Bounded word/input corpus; exact full regular-tree model validation; not Lean",
+      "repository_imports": false,
+      "fixtures": [
+        {
+          "name": "empty_accepts",
+          "word": "",
+          "witness": true,
+          "model_separates": true,
+          "failed_checks": []
+        },
+        {
+          "name": "empty_nonfinal",
+          "word": "",
+          "witness": false,
+          "model_separates": false,
+          "failed_checks": [
+            "beta_present"
+          ]
+        },
+        {
+          "name": "bad_initial",
+          "word": "",
+          "witness": false,
+          "model_separates": false,
+          "failed_checks": [
+            [
+              "denial",
+              0
+            ]
+          ]
+        },
+        {
+          "name": "diagonal_initial",
+          "word": "",
+          "witness": false,
+          "model_separates": false,
+          "failed_checks": [
+            "beta_present"
+          ]
+        },
+        {
+          "name": "forward_flag_blocks",
+          "word": "0",
+          "witness": false,
+          "model_separates": false,
+          "failed_checks": [
+            "beta_present"
+          ]
+        },
+        {
+          "name": "reverse_flag_does_not",
+          "word": "0",
+          "witness": true,
+          "model_separates": true,
+          "failed_checks": []
+        },
+        {
+          "name": "undefined_then_empty",
+          "word": "11",
+          "witness": false,
+          "model_separates": false,
+          "failed_checks": [
+            [
+              "upper",
+              0,
+              1,
+              4
+            ]
+          ]
+        },
+        {
+          "name": "nonaccepting_terminal",
+          "word": "0",
+          "witness": false,
+          "model_separates": false,
+          "failed_checks": [
+            "beta_present"
+          ]
+        },
+        {
+          "name": "bad_later_state",
+          "word": "0",
+          "witness": false,
+          "model_separates": false,
+          "failed_checks": [
+            [
+              "denial",
+              1
+            ]
+          ]
+        },
+        {
+          "name": "bad_proper_prefix",
+          "word": "00",
+          "witness": false,
+          "model_separates": false,
+          "failed_checks": [
+            [
+              "denial",
+              1
+            ]
+          ]
+        },
+        {
+          "name": "nonzero_start",
+          "word": "0",
+          "witness": true,
+          "model_separates": true,
+          "failed_checks": []
+        },
+        {
+          "name": "infinite_lower_tree",
+          "word": "0001",
+          "witness": true,
+          "model_separates": true,
+          "failed_checks": []
+        },
+        {
+          "name": "unreachable_bad_flagged",
+          "word": "0",
+          "witness": true,
+          "model_separates": true,
+          "failed_checks": []
+        },
+        {
+          "name": "proper_suffix_flag_blocks",
+          "word": "0101",
+          "witness": false,
+          "model_separates": false,
+          "failed_checks": [
+            "beta_present"
+          ]
+        },
+        {
+          "name": "proper_suffix_flag_avoided",
+          "word": "01001",
+          "witness": true,
+          "model_separates": true,
+          "failed_checks": []
+        },
+        {
+          "name": "multiple_returns",
+          "word": "001",
+          "witness": true,
+          "model_separates": true,
+          "failed_checks": []
+        }
+      ]
+    },
+    "random_k3_k6.json": {
+      "status": "PASS",
+      "revision_inspected": "064fc7306b679bf607b91e7d8de259823f200c62",
+      "suite": "random",
+      "max_word_length": 5,
+      "counts": {
+        "instances": 120,
+        "words": 7560,
+        "positive_words": 48,
+        "exact_model_checks": 7560,
+        "exact_satisfiability_models": 120
+      },
+      "elapsed_seconds": 0.976,
+      "scope": "Bounded word/input corpus; exact full regular-tree model validation; not Lean",
+      "repository_imports": false,
+      "fixtures": []
+    },
+    "summary.json": {
+      "revision": "064fc7306b679bf607b91e7d8de259823f200c62",
+      "status": "PASS",
+      "total_input_occurrences": 12956,
+      "total_query_words": 200196,
+      "total_exact_satisfiability_models": 12956,
+      "positive_query_words": 416,
+      "not_run": [
+        "Lean build/kernel replay",
+        "Repository E021 script",
+        "Repository budget differential"
+      ],
+      "method": "Literal word predicate versus explicit derivative-based regular-tree model. Language inclusion and prefix-closure exhaust finite derivative graphs without a depth bound.",
+      "limitation": "Finite input/word corpus. Failed candidate models alone are not all-model nonexistence certificates; the written proof supplies the universal direction."
+    },
+    "terminality_required.json": {
+      "scope": "Counterexample only after dropping the required terminal-final hypothesis",
+      "delta": [
+        [
+          1,
+          -1
+        ],
+        [
+          -1,
+          -1
+        ]
+      ],
+      "start": 0,
+      "final": [
+        0
+      ],
+      "flags": [],
+      "bad": [],
+      "word": "0",
+      "witness": false,
+      "separates_in_constructed_system": true,
+      "finite_product_address_sets": {
+        "a0": [
+          "",
+          "0"
+        ],
+        "a1": [
+          ""
+        ],
+        "v0": [],
+        "v1": [
+          ""
+        ],
+        "b": []
+      },
+      "exact_constraint_validation_errors": []
+    }
+  },
+  "publication_replay": {
+    "status": "PASS",
+    "checker_sha256": "6c35e4e518f3db0e432ca0c66b58d7164e222e5cd24b06521b34229dfe220146",
+    "inspected_source_revision": "064fc7306b679bf607b91e7d8de259823f200c62",
+    "environment": {
+      "python": "3.13.5",
+      "system": "Linux",
+      "machine": "x86_64",
+      "suite_timeout_seconds": 120,
+      "explicit_memory_limit": null,
+      "random_seed": 2026091930
+    },
+    "counts": {
+      "instances": 12956,
+      "words": 200196,
+      "positive_words": 416,
+      "exact_model_checks": 200196,
+      "exact_satisfiability_models": 12956
+    },
+    "semantic_replay_matches_archived_results": true,
+    "terminality_countermodel": {
+      "scope": "Counterexample only after dropping the required terminal-final hypothesis",
+      "delta": [
+        [
+          1,
+          -1
+        ],
+        [
+          -1,
+          -1
+        ]
+      ],
+      "start": 0,
+      "final": [
+        0
+      ],
+      "flags": [],
+      "bad": [],
+      "word": "0",
+      "witness": false,
+      "separates_in_constructed_system": true,
+      "finite_product_address_sets": {
+        "a0": [
+          "",
+          "0"
+        ],
+        "a1": [
+          ""
+        ],
+        "v0": [],
+        "v1": [
+          ""
+        ],
+        "b": []
+      },
+      "exact_constraint_validation_errors": []
+    },
+    "suite_elapsed_seconds": {
+      "fixtures.json": 0.002,
+      "exhaustive_k1.json": 0.026,
+      "exhaustive_k2.json": 12.647,
+      "random_k3_k6.json": 1.029
+    },
+    "not_run": [
+      "Lean build/kernel replay",
+      "Repository E021 script",
+      "Repository budget differential",
+      "Repository-wide navigation/index/CI checks"
+    ]
+  },
+  "evidence_limit": "Written all-word proof plus bounded independent input/word experiments. Exact regular-tree checks are not bounded-depth checks. No Lean certification, E021 replay, budget differential replay, or complexity equivalence is claimed.",
+  "replay_wrapper_sha256": "51111181fb37cc941baaa00de08c926434994786517ad857199f9d96f1b4589a"
+}
