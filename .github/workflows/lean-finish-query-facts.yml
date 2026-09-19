@@ -1,0 +1,41 @@
+name: Lean finish query facts
+on:
+  push:
+    branches:
+      - lean/finish-query-facts-2026-09-18
+permissions:
+  contents: read
+jobs:
+  finish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596
+        with:
+          lake-package-directory: lean
+          build: 'false'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'false'
+      - name: Compile
+        working-directory: lean
+        run: lake build +Subtail.RankQueryFinishFacts
+      - name: Kernel replay
+        working-directory: lean
+        run: lake env leanchecker Subtail.RankQueryFinishFacts
+      - name: Reject unfinished proof placeholders
+        run: "! grep -R -nE '\\bsorry\\b|sorryAx|axiom ' lean/Subtail/RankQueryFinishFacts.lean"
+      - name: Audit
+        run: |
+          cat > /tmp/a.lean <<'EOF'
+          import Subtail.RankQueryFinishFacts
+          #print axioms Subtail.RankQueryFinishFacts.finish_move_facts
+          #print axioms Subtail.RankQueryFinishFacts.finish_step_facts
+          #print axioms Subtail.RankQueryFinishFacts.finish_allowed_iff
+          #print axioms Subtail.RankQueryFinishFacts.allowed_target_of_run
+          #print axioms Subtail.RankQueryFinishFacts.finish_run_notEnd
+          EOF
+          cd lean
+          lake env lean /tmp/a.lean | tee /tmp/a.txt
+          ! grep -E 'sorryAx|Classical.choice|propext|Quot.sound' /tmp/a.txt
