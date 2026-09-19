@@ -11,6 +11,8 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
       - uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596
         with:
           lake-package-directory: lean
@@ -18,24 +20,59 @@ jobs:
           test: 'false'
           lint: 'false'
           use-mathlib-cache: 'false'
-      - name: Compile
+      - name: Compile finishing facts and trace equivalence
         working-directory: lean
-        run: lake build +Subtail.RankQueryFinishFacts
+        run: lake build +Subtail.RankQueryFinishTrace
       - name: Kernel replay
         working-directory: lean
-        run: lake env leanchecker Subtail.RankQueryFinishFacts
-      - name: Reject unfinished proof placeholders
-        run: "! grep -R -nE '\\bsorry\\b|sorryAx|axiom ' lean/Subtail/RankQueryFinishFacts.lean"
-      - name: Audit
         run: |
-          cat > /tmp/a.lean <<'EOF'
-          import Subtail.RankQueryFinishFacts
-          #print axioms Subtail.RankQueryFinishFacts.finish_move_facts
-          #print axioms Subtail.RankQueryFinishFacts.finish_step_facts
-          #print axioms Subtail.RankQueryFinishFacts.finish_allowed_iff
-          #print axioms Subtail.RankQueryFinishFacts.allowed_target_of_run
-          #print axioms Subtail.RankQueryFinishFacts.finish_run_notEnd
-          EOF
-          cd lean
-          lake env lean /tmp/a.lean | tee /tmp/a.txt
-          ! grep -E 'sorryAx|Classical.choice|propext|Quot.sound' /tmp/a.txt
+          lake env leanchecker Subtail.RankQueryFinishFacts
+          lake env leanchecker Subtail.RankQueryFinishTrace
+      - name: Audit all new named declarations
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, re
+          from pathlib import Path
+          modules = ['RankQueryFinishFacts', 'RankQueryFinishTrace']
+          expected = {}
+          for module in modules:
+              source = Path('lean/Subtail/' + module + '.lean').read_text()
+              assert not re.search(r'\b(sorry|sorryAx|native_decide)\b|^\s*axiom\s', source, re.M)
+              rows = re.findall(r'^(theorem|def|abbrev|inductive|structure)\s+([A-Za-z_][A-Za-z_0-9.]*)', source, re.M)
+              assert rows, module
+              for kind, name in rows:
+                  full = 'Subtail.' + module + '.' + name
+                  assert full not in expected, full
+                  expected[full] = kind
+          for name in ['nil', 'snoc', 'rec']:
+              expected['Subtail.RankQueryFinishTrace.Trace.' + name] = 'inductive'
+          Path('/tmp/finish-proof-expected.json').write_text(json.dumps(expected, sort_keys=True))
+          Path('/tmp/finish-proof-axioms.lean').write_text(
+              'import Subtail.RankQueryFinishTrace\n' +
+              ''.join('#print axioms ' + name + '\n' for name in expected))
+          PY
+          (cd lean && lake env lean /tmp/finish-proof-axioms.lean) | tee /tmp/finish-proof-axioms.txt
+          python3 - <<'PY'
+          import json, re
+          from pathlib import Path
+          expected = json.loads(Path('/tmp/finish-proof-expected.json').read_text())
+          text = Path('/tmp/finish-proof-axioms.txt').read_text()
+          rows = re.findall(r"'([^']+)' (does not depend on any axioms|depends on axioms: \[([^]]*)\])", text)
+          assert len(rows) == len(expected), (len(rows), len(expected), text)
+          assert {n for n, _, _ in rows} == set(expected), text
+          for name, _, raw in rows:
+              allowed = {'propext', 'Quot.sound'}
+              if expected[name] == 'theorem':
+                  allowed.add('Classical.choice')
+              used = {x.strip() for x in raw.split(',') if x.strip()}
+              assert used <= allowed, (name, used, allowed)
+          print('PASS:', len(rows), 'named declaration dependency closures; standard axioms only.')
+          PY
+      - name: Preserve existing Lean core and recorded evidence
+        run: |
+          python3 scripts/check_lean.py
+          git diff --exit-code -- results/lean-checks.json
+          python3 scripts/research_index.py --check
+          git diff --check
