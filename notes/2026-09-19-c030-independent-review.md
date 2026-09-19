@@ -49,12 +49,12 @@ The only extra hypothesis is
     q in Fin ==> delta(q,0) and delta(q,1) are undefined.             (T)
 
 The initial state is an element of Q, so k = |Q| >= 1; this excludes no instance
-of `Basic.Instance k`, whose `initial : Fin k` already imposes nonemptiness.
+of `Subtail.Instance k`, whose `initial : Fin k` already imposes nonemptiness.
 Other terminal states need not be accepting. No disjointness or safety
 hypothesis is imposed on Fin, Bad, G, or s.
 
 For a defined run of w, put n = |w|, q_i = delta*(s,w[:i]) and u_i = w[i:].
-`Subtail.Basic.Witness I w` is exactly:
+`Subtail.Witness I w` is exactly:
 
 1. All states q_i for 0 <= i <= n are defined and not in Bad.
 2. q_n belongs to Fin.
