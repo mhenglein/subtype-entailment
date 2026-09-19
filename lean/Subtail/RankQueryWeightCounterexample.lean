@@ -97,7 +97,11 @@ theorem diagram_bounded : Bounded input (RankQueryCoverage.budget input) diagram
     constructor
     · decide +kernel
     · intro p hp
-      have he : p = forward ∨ p = wrap := by simpa [pathPieces] using hp
+      change p ∈ (List.replicate 35 [forward, wrap]).flatten at hp
+      obtain ⟨xs, hxs, hpx⟩ := List.mem_flatten.mp hp
+      have he : xs = [forward, wrap] := (List.mem_replicate.mp hxs).2
+      subst xs
+      have he : p = forward ∨ p = wrap := by simpa using hpx
       rcases he with rfl | rfl <;> unfold pieceBound <;> decide +kernel
   · intro s hs
     simp [diagram] at hs

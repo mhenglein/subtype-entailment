@@ -3,9 +3,13 @@ name: Rank weight native proofs
 on:
   pull_request:
     paths:
-      - 'lean/Subtail/RankQueryWeightCounterexample.lean'
-      - 'lean/Subtail/RankQueryWeightBound.lean'
-      - 'lean/Subtail/RankQueryLengthBound.lean'
+      - 'lean/**'
+      - 'scripts/check_rank_weight_native.py'
+      - '.github/workflows/rank-weight-native.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'lean/**'
       - 'scripts/check_rank_weight_native.py'
       - '.github/workflows/rank-weight-native.yml'
 
@@ -26,7 +30,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7.0.1
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
       - uses: actions/setup-python@v7.0.0
         with:
@@ -54,7 +58,7 @@ jobs:
           use-github-cache: 'false'
       - name: Compile, kernel-replay and audit additive proofs
         env:
-          RANK_WEIGHT_SOURCE_SHA: ${{ github.event.pull_request.head.sha }}
+          RANK_WEIGHT_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: |
           set -euo pipefail
           ulimit -v 16777216
@@ -63,72 +67,10 @@ jobs:
       - name: Ensure tracked sources were not modified
         if: always()
         run: git diff --exit-code
-      - name: Export isolated offline workbench
-        if: always()
-        run: |
-          set -euo pipefail
-          python3 - <<'PY'
-          import io, json, pathlib, subprocess, tarfile
-          root = pathlib.Path.cwd()
-          prefix = pathlib.Path(subprocess.check_output(
-              ['lake', 'env', 'lean', '--print-prefix'], cwd=root/'lean', text=True).strip())
-          allowed_bins = {'lean', 'lake', 'leanchecker'}
-          def keep(info):
-              p = pathlib.PurePosixPath(info.name)
-              if info.isdir():
-                  return info
-              if str(p).startswith('toolchain/bin/'):
-                  return info if p.name in allowed_bins else None
-              name = p.name
-              if '.olean' in name or '.so' in name or name.endswith(('.lean', '.ir')):
-                  return info
-              return None
-          archive = pathlib.Path('/tmp/rank-weight-workbench.tar.gz')
-          with tarfile.open(archive, 'w:gz', compresslevel=1) as tar:
-              for part in ['bin', 'lib', 'src']:
-                  if (prefix/part).exists():
-                      tar.add(prefix/part, arcname='toolchain/'+part, filter=keep)
-              tracked = subprocess.check_output(['git', 'archive', 'HEAD', 'lean', 'scripts/check_rank_weight_native.py'])
-              with tarfile.open(fileobj=io.BytesIO(tracked), mode='r:') as source:
-                  for item in source:
-                      payload = source.extractfile(item) if item.isfile() else None
-                      item.name = 'repo/' + item.name
-                      tar.addfile(item, payload)
-              compiled = root/'lean/.lake/build/lib/lean'
-              if compiled.exists():
-                  tar.add(compiled, arcname='repo/lean/.lake/build/lib/lean')
-              data = json.dumps({'source_sha': subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip(),
-                                 'toolchain': 'leanprover/lean4:v4.33.1',
-                                 'contents': 'pinned compiler runtime, tracked Lean sources, compiled proof dependencies; no credentials or git configuration'}).encode()
-              info = tarfile.TarInfo('provenance.json'); info.size = len(data)
-              tar.addfile(info, io.BytesIO(data))
-          print('workbench_bytes', archive.stat().st_size)
-          PY
-          split -b 350M /tmp/rank-weight-workbench.tar.gz /tmp/rank-weight-workbench.part-
-      - name: Upload temporary workbench part aa
-        if: always()
+      - name: Upload exact-source audit
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: rank-weight-workbench-aa
-          path: /tmp/rank-weight-workbench.part-aa
-          compression-level: 0
-          retention-days: 1
-          if-no-files-found: error
-      - name: Upload temporary workbench part ab
-        if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: rank-weight-workbench-ab
-          path: /tmp/rank-weight-workbench.part-ab
-          compression-level: 0
-          retention-days: 1
-          if-no-files-found: error
-      - name: Upload temporary workbench part ac
-        if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: rank-weight-workbench-ac
-          path: /tmp/rank-weight-workbench.part-ac
-          compression-level: 0
-          retention-days: 1
+          name: rank-weight-native-audit
+          path: tmp/rank-weight-native.json
+          retention-days: 90
           if-no-files-found: error

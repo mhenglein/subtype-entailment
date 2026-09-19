@@ -14,7 +14,7 @@ open RankQuery RankQueryCompiler RankQueryEnumeration
 set_option maxRecDepth 10000
 set_option maxHeartbeats 2000000
 
-variable {k : Nat}
+variable {k : Nat} {D : Diagram k}
 
 /-- Observer sizes are counted per atom occurrence, exactly as in clauseWeight. -/
 def atomSum (xs : List (Atom k v)) : Nat := (xs.map fun a => a.observer.size).sum
@@ -71,8 +71,8 @@ theorem filter_add_length_le_one (n i g : Nat) (f : Nat → α) :
         intro x hx
         obtain ⟨t, ht, rfl⟩ := List.mem_map.mp hx
         have ht' := List.mem_range.mp ht
-        simp only [decide_eq_false_iff_not]
-        omega
+        have hne : i + t ≠ g := by omega
+        simpa using hne
       simp [hnil, h]
     · simpa [h] using ih
 
@@ -101,6 +101,7 @@ theorem compilePiece_estimate (I : Instance k) (D : Diagram k) (ai pi : Nat)
     cases hr : finOf o.size P.rc with
     | none => exact estimate_blank [] [] 1
     | some rc =>
+      dsimp only
       cases hk : P.kind with
       | core =>
         constructor
@@ -109,6 +110,7 @@ theorem compilePiece_estimate (I : Instance k) (D : Diagram k) (ai pi : Nat)
         · simp [selected]
         · simp [selected]
       | forward =>
+        dsimp only
         split
         · exact estimate_blank _ [] 1
         · constructor
@@ -147,11 +149,16 @@ theorem estimate_fold (xs : List (Emitted D)) (N : Nat)
     Estimate T g (xs.length * N) (xs.foldl appendEmitted {}) := by
   simpa using estimate_fold_aux xs N hx {} 0 (estimate_blank [] [] 0)
 
+theorem estimate_fold_le (xs : List (Emitted D)) (N A : Nat)
+    (hl : xs.length ≤ A) (hx : ∀ x ∈ xs, Estimate T g N x) :
+    Estimate T g (A * N) (xs.foldl appendEmitted {}) :=
+  estimate_mono (estimate_fold xs N hx) (Nat.mul_le_mul_right N hl)
+
 theorem compileAtom_estimate (I : Instance k) (D : Diagram k) (ai : Nat)
     (o : Observer k) (ps : List Piece) (hT : 2 ≤ T) (ho : o.size ≤ T) (g : Nat) :
     Estimate T g ps.length (compileAtom I D ai o ps) := by
   unfold compileAtom
-  have h := estimate_fold
+  have h := estimate_fold (T := T) (g := g)
     ((List.range ps.length).map fun pi => compilePiece I D ai pi o (ps.getD pi default)) 1
     (by
       intro e he
@@ -172,22 +179,17 @@ theorem allEmitted_estimate (I : Instance k) (c : Clause k) (D : Diagram k)
     (hp : ∀ ps ∈ D.pieces, ps.length ≤ P) (g : Nat) :
     Estimate T g (c.atoms.length * P) (allEmitted I c D) := by
   unfold allEmitted
-  have h := estimate_fold
-    ((List.range c.atoms.length).map fun ai =>
-      match c.atoms[ai]? with
-      | some atm => compileAtom I D ai atm.observer (piecesOf D ai)
-      | none => ({} : Emitted D)) P
-    (by
-      intro e he
-      obtain ⟨ai, _, rfl⟩ := List.mem_map.mp he
-      cases ha : c.atoms[ai]? with
-      | none => exact estimate_blank [] [] P
-      | some atm =>
-        exact estimate_mono
-          (compileAtom_estimate I D ai atm.observer (piecesOf D ai)
-            hT (ho atm (List.mem_of_getElem? ha)) g)
-          (piecesOf_length_le D P hp ai))
-  simpa using h
+  apply estimate_fold_le (T := T) (g := g) (N := P) (A := c.atoms.length)
+  · simp
+  · intro e he
+    obtain ⟨ai, _, rfl⟩ := List.mem_map.mp he
+    cases ha : c.atoms[ai]? with
+    | none => exact estimate_blank [] [] P
+    | some atm =>
+      exact estimate_mono
+        (compileAtom_estimate I D ai atm.observer (piecesOf D ai)
+          hT (ho atm (List.mem_of_getElem? ha)) g)
+        (piecesOf_length_le D P hp ai)
 
 theorem prod_sizes_le (xs : List (Active k)) (h : ∀ x ∈ xs, x.1.size ≤ T) :
     prodList (xs.map fun x => x.1.size) ≤ T ^ xs.length := by
@@ -201,8 +203,9 @@ theorem prod_sizes_le (xs : List (Active k)) (h : ∀ x ∈ xs, x.1.size ≤ T) 
 theorem interval_cardinality (I : Instance k) (c : Clause k) (D : Diagram k) (g : Nat) :
     (intervalAtom I c D g).observer.size =
       6 * k * prodList ((itemsAt I c D g).map fun x => x.1.size) := by
-  simp [intervalAtom, intervalObs, intervalSize, intervalSizes, prodList,
-    Nat.mul_assoc, Nat.mul_left_comm, Nat.mul_comm]
+  change k * (3 * (2 * prodList ((itemsAt I c D g).map fun x => x.1.size))) =
+    (3 * 2) * k * prodList ((itemsAt I c D g).map fun x => x.1.size)
+  ac_rfl
 
 theorem interval_size_le (I : Instance k) (c : Clause k) (D : Diagram k)
     (hT : 2 ≤ T) (h : Estimate T g N (allEmitted I c D)) :
@@ -235,12 +238,14 @@ theorem member_le_sum {n : Nat} {xs : List Nat} (h : n ∈ xs) : n ≤ xs.sum :=
 theorem compile_atoms_length (I : Instance k) (c : Clause k) (D : Diagram k) :
     (compileValid I c D).atoms.length = 2 + (allEmitted I c D).atoms.length + (D.groups - 1) := by
   simp [compileValid, baseAtoms]
+  omega
 
 theorem compile_sum (I : Instance k) (c : Clause k) (D : Diagram k) :
     RankQuery.sumSizes (compileValid I c D) = 4 + atomSum (allEmitted I c D).atoms +
       ((List.range (D.groups - 1)).map fun g => (intervalAtom I c D g).observer.size).sum := by
   simp [compileValid, baseAtoms, RankQuery.sumSizes, atomSum, oneEdge, edgeObs,
     List.map_append, List.sum_append, List.map_map, Function.comp_def, Nat.add_assoc]
+  omega
 
 /-- A conservative sufficient replacement for the oversized syntactic envelope. -/
 def improvedBound (k T : Nat) : Nat := 64 * k * T ^ (6 * T ^ 2 + 2)
@@ -262,7 +267,7 @@ theorem compileValid_weight_le (I : Instance k) (c : Clause k) (D : Diagram k)
     calc
       M = c.atoms.length * P := rfl
       _ ≤ T * (6 * T) := Nat.mul_le_mul (by omega) hP
-      _ = 6 * T ^ 2 := by simp [Nat.pow_succ, Nat.mul_assoc, Nat.mul_comm, Nat.mul_left_comm]
+      _ = 6 * T ^ 2 := by simp [Nat.pow_succ, Nat.mul_left_comm]
   have hG : RankQueryCoverage.groupBound c ≤ 2 * T := by
     unfold RankQueryCoverage.groupBound
     rw [coverage_sum_eq]
@@ -290,7 +295,10 @@ theorem compileValid_weight_le (I : Instance k) (c : Clause k) (D : Diagram k)
       _ ≤ (2 * T) * (6 * k * T ^ (6 * T ^ 2)) :=
         Nat.mul_le_mul_right _ (by simp; omega)
       _ = 12 * k * T ^ (6 * T ^ 2 + 1) := by
-        simp [Nat.pow_succ, Nat.mul_assoc, Nat.mul_left_comm, Nat.mul_comm]
+        change (2 * T) * (6 * k * T ^ (6 * T ^ 2)) =
+          (2 * 6) * k * T ^ (6 * T ^ 2 + 1)
+        rw [Nat.pow_succ T (6 * T ^ 2)]
+        ac_rfl
   have hMT : M * T ≤ 6 * T ^ 3 := by
     calc
       M * T ≤ (6 * T ^ 2) * T := Nat.mul_le_mul_right T hM
@@ -333,5 +341,77 @@ theorem compileValid_weight_le (I : Instance k) (c : Clause k) (D : Diagram k)
     RankQuery.sumSizes (compileValid I c D)) ≤ 64 * k * T ^ (6 * T ^ 2 + 2)
   simp only [Nat.mul_assoc] at hraw ⊢
   omega
+
+/-- Monotonicity includes the empty-query weight zero. -/
+theorem improvedBound_mono (k : Nat) {a b : Nat} (hab : a <= b) :
+    improvedBound k a <= improvedBound k b := by
+  unfold improvedBound
+  apply Nat.mul_le_mul_left
+  have hbase := Nat.pow_le_pow_left hab (6 * a ^ 2 + 2)
+  by_cases hb : b = 0
+  . have ha : a = 0 := by omega
+    subst a
+    subst b
+    exact hbase
+  . have hsq := Nat.pow_le_pow_left hab 2
+    exact Nat.le_trans hbase (Nat.pow_le_pow_right (by omega) (by omega))
+
+/-- The actual list-valued preimage obeys the new pointwise weight bound. -/
+theorem preimage_clause_weight_le (I : Instance k) (phi : Query k) (out : Clause k)
+    (hout : out ∈ preimage I RankQueryCoverage.budget phi) :
+    clauseWeight out <= improvedBound k (weight phi) := by
+  obtain ⟨c, hc, hp⟩ := List.mem_flatMap.mp hout
+  obtain ⟨D, hD, hcompile⟩ :=
+    (mem_preimageClause I c (RankQueryCoverage.budget c) out).mp hp
+  unfold compileDiagram at hcompile
+  split at hcompile
+  . have he : out = compileValid I c D := (Option.some.inj hcompile).symm
+    subst out
+    apply Nat.le_trans (compileValid_weight_le I c D hD)
+    apply improvedBound_mono
+    exact RankMilestones.le_maxNat (List.mem_map.mpr ⟨c, hc, rfl⟩)
+  . contradiction
+
+theorem weight_preimage_le (I : Instance k) (phi : Query k) :
+    weight (preimage I RankQueryCoverage.budget phi) <= improvedBound k (weight phi) := by
+  apply RankQueryUnwind.maxNat_le_of_forall
+  intro n hn
+  obtain ⟨c, hc, rfl⟩ := List.mem_map.mp hn
+  exact preimage_clause_weight_le I phi c hc
+
+/-- The larger bound dominates its argument on the nonempty-instance range. -/
+theorem le_improvedBound (k T : Nat) (hk : 0 < k) (hT : 2 <= T) :
+    T <= improvedBound k T := by
+  unfold improvedBound
+  have hpow : T <= T ^ (6 * T ^ 2 + 2) := by
+    calc
+      T = T ^ 1 := by simp
+      _ <= T ^ (6 * T ^ 2 + 2) := Nat.pow_le_pow_right (by omega) (by omega)
+  exact Nat.le_trans hpow (Nat.le_mul_of_pos_left _ (Nat.mul_pos (by decide) hk))
+
+/-- A separate budget; the old conditional recurrence is not redefined. -/
+def weightBudget (k : Nat) : Nat -> Nat
+  | 0 => k + 10
+  | h + 1 => improvedBound k (weightBudget k h)
+
+theorem two_le_weightBudget (k : Nat) (hk : 0 < k) : forall h, 2 <= weightBudget k h := by
+  intro h
+  induction h with
+  | zero => simp [weightBudget]
+  | succ h ih => exact Nat.le_trans ih (le_improvedBound k _ hk ih)
+
+/-- An unconditional bound for the concrete promoted finishing query. -/
+theorem weight_promote_finish_le (I : Instance k) :
+    forall h, weight (promote (preimage I RankQueryCoverage.budget) (finishQuery I) h) <= weightBudget k h := by
+  have hk : 0 < k := Nat.lt_of_le_of_lt (Nat.zero_le I.initial.val) I.initial.isLt
+  intro h
+  induction h with
+  | zero => simpa [promote, weightBudget] using RankQueryUnwind.weight_finishQuery_le I
+  | succ h ih =>
+    rw [promote, RankQueryUnwind.weight_append, weightBudget]
+    apply Nat.max_le.mpr
+    constructor
+    . exact Nat.le_trans ih (le_improvedBound k _ hk (two_le_weightBudget k hk h))
+    . exact Nat.le_trans (weight_preimage_le I _) (improvedBound_mono k ih)
 
 end Subtail.RankQueryWeightBound
