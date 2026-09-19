@@ -1093,7 +1093,9 @@ build, kernel replay, imported-declaration/axiom audits, runtime checks excludin
 classical choice, and separate semantic readbacks. Full details, exact source
 hashes and workflow links remain in the [C081 completion record](../notes/2026-09-19-entailment-decision.md).
 Those are historical results at the stated revision, not fresh proof runs
-caused by editing this paper. This manuscript needs its own exposition review.
+caused by editing this paper. The separate [exposition readback](../notes/2026-09-19-post-c081-paper-readback.md)
+compares the central ordinary argument with those definitions. Its scope and
+remaining limits are recorded there; it is not human peer review.
 
 Native diagnostics completed 25 of 38 attempts under a 20-second per-process
 cap; 13 timed out. Those timeouts are **UNKNOWN**, never negative entailment
@@ -1119,23 +1121,57 @@ added as implicit conclusions of P1.
 
 ## 13. Related work and attribution status
 
-This manuscript currently explains the repository proof, not a completed
-priority claim. The starting memo is the unchanged August 31 source in
-[papers/sep-topfree.pdf](../papers/sep-topfree.pdf). Its propagation and
-separating-address characterization motivate the semantic route. Exact
-attribution of those ingredients against established subtype-entailment
-literature is maintained in the [comparison matrix](../notes/prior-work/novelty-matrix.md).
+The supplied August 31 memo, preserved in
+[papers/sep-topfree.pdf](../papers/sep-topfree.pdf), provides the starting problem,
+product-address semantics and separating-path characterization. Our proof
+builds on that route. The [focused C081 review](../notes/prior-work/c081-review-2026-09-19.md)
+and [comparison matrix](../notes/prior-work/novelty-matrix.md) record exact
+source statements, signatures, variance, tree domains and citation trails.
 
-The primary comparison includes the Niehren–Priesnitz automata/word-equation
-characterization, subsequent thesis and restricted-decision work, and the
-withdrawn Schubert 2021 argument. Constructor signatures, variance, quantifier
-form, and finite/regular/arbitrary tree domains must match before a theorem
-is imported or compared. Word equations, cap automata and periodic words are
-not claimed as new here. The candidate contribution to assess is the complete
-exact decision together with the specific whole-conjunction directed
-first-return preimage construction and its checked semantic composition.
+Niehren and Priesnitz's
+[2003 automata and word-equation characterization](https://www.ps.uni-saarland.de/Publications/details/SubTypeEntailment:02.html)
+is the closest established comparison. Their Theorem 1 equates non-structural
+entailment over one covariant constructor **with bottom and explicit top**
+to restricted cap universality; Theorems 2 and 4 give the automata translations.
+Their treatment includes finite, regular and arbitrary trees, and identifies
+the shared word equation behind the cap condition. This establishes prior art
+for address languages, cap automata and periodic shared words. It is a
+characterization of the decision problem, not a general decision algorithm.
+A translation into those automata alone would therefore not subsume P1 under
+an earlier decidability theorem.
 
-The dedicated C081 review supplies precise source statements and remaining
-comparison obligations. Until its findings are integrated and the manuscript
-is updated accordingly, this section is an explicit editorial task, not a
-claim that no equivalent result exists.
+The [1999 restricted result](https://www.ps.uni-saarland.de/Publications/details/SubTypeEntailment:99.html)
+gives PSPACE-completeness for its product-equality and variable-inequality
+syntax. Its ambient valuations still contain top-labelled trees, although the
+restricted constraints omit constants. Applying that theorem here would need
+an explicit two-way semantic reduction satisfying its syntactic restrictions.
+None is supplied by merely observing that our constraints contain no top.
+The same missing transfer prevents importing the known full-signature hardness
+bounds as lower bounds for C081.
+
+Other nearby results also have distinct contracts. The Su--Aiken--Niehren--
+Priesnitz--Treinen first-order theory result uses a richer logical language;
+its undecidability is not an undecidability theorem for this entailment fragment.
+The [Breuvart--Penelle--Rehof 2019 slides](https://lipn.univ-paris13.fr/~breuvart/articles/NSSA_journee.pdf)
+announce a restricted result and periodic-selection machinery, but the focused
+review did not locate an archival complete proof to import. The
+[Schubert 2021 preprint](https://arxiv.org/abs/2109.02458) was withdrawn because
+its Lemma 5.5 was formulated incorrectly; its claimed PSPACE upper bound is
+not an established predecessor theorem.
+
+The candidate contribution is consequently specific: an effective terminal
+first-return preimage construction preserving an entire conjunction through
+one shared generated word, combined with the infinite branch and exact
+normalization into a checked total decision over the bottom/product arbitrary-
+tree domain. Neither the use of automata nor periodicity is new in isolation.
+The distinction between the explicit top leaf and the full infinite product
+tree is substantive: the latter equals its own product, whereas the former
+does not. The [extension study](../notes/2026-09-19-post-c081-extensions.md)
+gives a small failure of the naive identification.
+
+This is a bounded novelty review. It follows the main backward and forward
+lineage and states its search limits; it does not establish publication priority
+or prove that no equivalent prior algorithm exists. Remaining comparisons
+include exact reductions to the restricted prior decidability results and
+verification of the slide-level announcement's full theorem. Those questions
+are separate from the correctness and termination proof above.

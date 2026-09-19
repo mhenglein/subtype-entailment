@@ -3,7 +3,7 @@
 Date: 2026-09-19. Actor: `post-c081-20260919`.
 Base: `c946d86b9e65da2877e0df42c710abbdcb5a4037`.
 Workstreams: A010/A017/A018, programme [#53](https://github.com/mhenglein/subtail/issues/53).
-Status: **ordinary arguments and feasibility study; independent review pending**.
+Status: **ordinary arguments and feasibility study; revised after independent readback**.
 No extension theorem below is presented as a new Lean theorem.
 
 ## Route outline and exact targets
@@ -56,17 +56,31 @@ For controls q,m, define the word language
 L(q,m) = {c : Pop_(W^op)(q,c,m)}.
 ```
 
-Here is an explicit finite epsilon-NFA for L(q,m). Its states are the n
+**Lemma R1 (effective Pop language).** The language L(q,m) is accepted by an
+effectively constructible finite epsilon-NFA.
+
+*Proof.* Its states are the n
 controls, alphabet {0,1}, initial state q and only accepting state m. It has
 an epsilon edge x -> y for every balanced pair E_(W^op)(x,y), and an a-labelled
 edge x -> y for every pop-a rule x -> y of W^op. A run accepts exactly when
 it consumes the whole word and reaches m, allowing epsilon moves at both ends.
 Missing labelled edges reject that run. The balanced relation is a computable
-finite table, so this construction is effective. By induction on consumed
-letters, such runs are exactly Pop derivations: balanced moves surround each
-pop and include the empty-word case. Thus L(q,m) is regular.
+finite table, so this construction is effective. For the empty word, an NFA
+path consists only of balanced edges. Reflexivity and transitivity of Balanced
+make their composite exactly a balanced pair, including a path of length zero.
+This is Pop on the empty word. Conversely each balanced pair is itself an
+epsilon edge.
 
-For a fixed seed (p,u), minimum-stack factorization gives the exact equality
+For a word av, split an accepting path at its first letter-consuming edge.
+Its preceding epsilon path is a balanced pair; that edge is a pop-a rule;
+the rest accepts v. By induction this is precisely the recursive Pop clause.
+Conversely a nonempty Pop derivation supplies those three parts, and the
+induction hypothesis supplies the remaining NFA path. This proves both
+inclusions by word-length induction. In particular epsilon closure is allowed
+at both ends, not just before the first letter. QED.
+
+**Lemma R2 (regular reachability from finite seeds).** For a fixed seed (p,u),
+minimum-stack factorization gives the exact equality
 
 ```text
 {v : (p,u) reaches (q,v)}
@@ -74,22 +88,69 @@ For a fixed seed (p,u), minimum-stack factorization gives the exact equality
       L(q,m) · {u[i:]}.
 ```
 
-Both inclusions use the displayed factorization, taking a=u[:i] and z=u[i:].
+*Proof.* Both inclusions use the displayed factorization, taking a=u[:i]
+(`take i`) and z=u[i:] (`drop i`).
 The union has finitely many terms, each effectively selected by a Pop test.
 Appending the fixed suffix u[i:] to an NFA is effective: attach a fresh path
 with those letters at its accepting state and make only the path's endpoint
 accepting. The empty suffix retains the accepting state. Taking the finite
 union over all seeds gives an effective NFA for the canonical product-node
-language D_q of each variable q. No search through all words is involved.
+language D_q of each variable q. A finite-list seed enumeration consists of
+every forced control paired with the empty word and the pairs (a,w[:i]) for
+0 <= i <= |w|. This list denotes precisely the specification `pathSeeds`;
+duplicate empty seeds do not change the union. No search through all words
+is involved. QED.
 
-The canonical theorem already proves that D_q is prefix-closed. Determinize
-its NFA. Each reachable accepting DFA state represents a product node, with
-its two outgoing transitions representing the children. Every reachable
-rejecting state represents bottom. Prefix closure ensures that a rejected
-prefix has no accepted extension, so replacing its whole residual by bottom
-is correct. This is a finite directed graph of bottom/product nodes, whose
-unfolding has product addresses exactly D_q. It is a regular tree: only
-finitely many distinct subtrees occur.
+**Lemma R3 (a prefix-closed regular language is a regular tree).** Let D be
+a prefix-closed language recognized by a finite epsilon-NFA. One can construct
+a finite bottom/product graph whose unfolding has product addresses exactly D.
+
+*Proof.* Take the finite powerset DFA. Its initial subset is the epsilon
+closure of the NFA initial set; its a-successor is the epsilon closure of all
+targets of a-labelled edges from the current subset. A subset is accepting
+iff it meets the NFA accepting set. Epsilon closure is computed by reachability
+in a finite graph. Induction on the input word shows that the subset reached
+after u consists exactly of NFA states reachable after consuming u and any
+final epsilon moves. This proves language equality, including the empty word.
+
+Define a finite tree graph to be a finite set of nodes, each labelled either
+bottom with no children or product with two designated child nodes, together
+with a root. Its unfolding has a product address u exactly when the child walk
+along u exists and ends at a product node. Include one bottom node and one
+node for each reachable accepting DFA state. The latter is labelled product;
+its a-child is its DFA successor if that successor is accepting, and bottom
+otherwise. The root is the initial DFA state if accepting, and bottom otherwise.
+
+If u belongs to D, prefix closure puts every prefix of u in D. Hence every
+state along its DFA run is accepting. Induction on |u| gives a corresponding
+child walk in the tree graph ending at a product node. Conversely any child
+walk to a product node follows the same DFA transitions, again by induction
+on |u|, and its final DFA state accepts u. The two address languages are equal.
+The construction is well-defined at rejected prefixes: prefix closure says
+that none of their extensions can be accepted. There are only finitely many
+graph nodes, so the unfolding has only finitely many distinct subtrees and
+is regular. QED.
+
+Apply R3 to each D_q. The required prefix closure is supplied by
+`CanonicalModel.derived_closed`, since the seed list is prefix-closed and
+contains all forced roots. Its denial safety and model property are those of
+the canonical separating model, not additional properties inferred from the
+regular-language construction.
+
+**Lemma R4 (regularity and fresh naming).** Exact expression naming preserves
+regularity in both model-transfer directions.
+
+*Proof.* For a finite collection of regular values, take disjoint finite graph
+representations. Bottom is a single bottom node. The product of any two values
+is represented by the disjoint union of their finite graphs with one new
+product root pointing to their two old roots. Structural induction on each
+finite expression therefore yields a finite graph for its interpretation.
+`Naming.extend` gives each fresh slot such an interpretation, so every slot
+is regular; repeated slots may share a graph or use copies. `Naming.restrict`
+only selects the original variable roots from a finite collection of regular
+values, so it preserves regularity as well. The existing normalization theorem
+proves satisfaction and query preservation for these same extension/restriction
+maps. Together these facts prove the regular model-transfer claim. QED.
 
 This construction gives a regular valuation satisfying C and separating a
 from b at the original finite word w. The reverse direction needs no
@@ -265,8 +326,11 @@ not from that census.
 
 These are bounded checks and exact literal counterexamples. They do not
 establish a general reduction, a complexity class, or any generic-arity result.
-The regular-countermodel proof needs a separate mathematical readback of its
-Pop orientation, suffix concatenation, prefix closure and normalization transfer.
-No new Lean source is needed before that review. The next decision is whether
+The [independent readback](2026-09-19-post-c081-extension-readback.md) confirmed
+the Pop orientation, suffix concatenation and boundary fixtures, and requested
+separate proofs of the NFA language, graph unfolding and regular naming steps.
+Lemmas R1-R4 above supply the expanded ordinary arguments; their follow-up
+review status is recorded in that note. No new Lean source was added.
+The next decision is whether
 the regular construction is clear enough to implement as independently checked
 countermodel output; explicit top requires a new semantic idea first.
