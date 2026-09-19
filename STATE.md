@@ -49,8 +49,9 @@ reachability and total executable normalized satisfiability
 [finite propagation](notes/2026-09-18-finite-propagation-formalization.md)).
 Still unproved in Lean, so `ClosureFor` and the decision are NOT discharged:
 stage 4b (an executable diagram enumerator and coverage of every safe
-first-return extension via `accepts_bounded_visits`; support work on global
-marks, run transport and portal transport is live on unmerged branches), the
+first-return extension via `accepts_bounded_visits`; a finite diagram enumerator is
+delivered on a branch, and the coverage proof, finishing-query semantics and
+mark/transport support are live on unmerged branches listed in #37), the
 clause-weight bound and `F(k)` with finishing-query correctness (stage 5), and
 the entailment decision of stage 6 (a bound or finite representation for the
 separating address, `I_C`, absorption, C029/C031 and the composition). A
@@ -61,7 +62,13 @@ invariant must be compared with stage 4 before any independence claim, and the
 2019 Breuvart–Penelle–Rehof 2-EXPTIME restriction as mandatory prior art for
 C067/C077. The generic compiled driver is resource-limited; timed UNKNOWN
 results are not negative certificates. Problem 1.7's accepted status is
-unchanged: CANDIDATE PROOF, independent human review pending (#33).
+unchanged: CANDIDATE PROOF. Owner decision 2026-09-19: no external human
+referee will be commissioned; the acceptance path is the kernel-checked
+end-to-end decision theorem (`RankDecisionStatement` discharged through
+`ClosureFor` and the stage-6 composition) together with statement readback by
+a session other than each module's author (#33). New work is PAUSED by the
+owner as of 2026-09-19; resume from #34 (proof obligations, in the order #28,
+#30, #31) and #37 (integration and branch dispositions).
 
 Failed attempts on the way are retained, not erased: the proposed finite
 quotient of references by endpoint, transition action, visited set and full

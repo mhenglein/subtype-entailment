@@ -370,9 +370,9 @@
       "status": "tried",
       "outcome": "inconclusive",
       "owner": null,
-      "updated": "2026-09-18",
+      "updated": "2026-09-19",
       "summary": "A candidate complete ordinary proof (C080) reduces terminal witness existence to finite rank-query preimages over first-return prefix graphs and derives an explicit computable witness bound F(k). Two separate AI-assisted audits found no gap in its stages 1-5 or in the C029/C031 bridge; no human referee; Lean covers stages 1-3, pins the stage-4 Closure Lemma, proves its reverse half for any diagram enumeration and the conditional stage-5 unwind (A018); the forward direction, the weight bound and the stage-6 decision remain open. Independent adversarial fixtures (joint conjunction, shared generator, two-atom unions) found no discrepancy in the compiler. Earlier finite reference quotients are refuted and retained. Problem 1.7's status is unchanged.",
-      "next_step": "Obtain independent human review of the stage-4 promotion-preimage lemma (notes/2026-09-18-closure-lemma-referee-brief.md); exhaust at least one non-trivial two-atom preimage union beyond the certificate-guided corpora; instantiate the pinned ClosureFor with an executable preimage in Lean; compare stage 4 with the failed invariant of Schubert's withdrawn 2021 Lemma 5.5 and with the 2019 Breuvart-Penelle-Rehof restriction before any independence claim (#36); keep Q004 and the opposing undecidability route as fallbacks if stage 4 fails.",
+      "next_step": "Discharge ClosureFor in Lean (DiagramCoverage #28, then the weight bound and F(k) with finishing correctness #30); no external human referee is planned (owner decision 2026-09-19), so cross-session statement readback (#33) replaces it; work is paused by the owner as of 2026-09-19; exhaust at least one non-trivial two-atom preimage union beyond the certificate-guided corpora; instantiate the pinned ClosureFor with an executable preimage in Lean; compare stage 4 with the failed invariant of Schubert's withdrawn 2021 Lemma 5.5 and with the 2019 Breuvart-Penelle-Rehof restriction before any independence claim (#36); keep Q004 and the opposing undecidability route as fallbacks if stage 4 fails.",
       "record": "research/approaches/A017.md",
       "evidence": [
         "notes/2026-09-04-minimal-witness-structure.md",
