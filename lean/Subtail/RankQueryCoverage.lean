@@ -2384,5 +2384,487 @@ theorem fresh_step_facts {x y : NNode} (h : NStep (prefixGraph I E.C) o x y) (hx
 
 end Transitions
 
+/-! ## Structure of the piece list -/
+
+namespace Cov
+variable {I : Instance k} {B : Reference k} {E : Ext I B} {c : Clause k} (X : Cov I B E c)
+
+theorem buildPieces_length (ai : Nat) : ∀ (si : Nat) (segs : List (List NNode)),
+    (X.buildPieces ai si segs).length = 2 * segs.length - 1 := by
+  intro si segs
+  induction segs generalizing si with
+  | nil => rfl
+  | cons s rest ih =>
+    cases rest with
+    | nil => rfl
+    | cons t rest =>
+      simp only [buildPieces, List.length_cons]
+      rw [ih (si + 1)]
+      simp only [List.length_cons]
+      omega
+
+theorem buildPieces_getD_even (ai : Nat) : ∀ (si : Nat) (segs : List (List NNode)) (t : Nat),
+    t < segs.length →
+    (X.buildPieces ai si segs).getD (2 * t) default = X.blockPiece ai (si + t) (segs.getD t []) := by
+  intro si segs t
+  induction segs generalizing si t with
+  | nil => intro h; simp at h
+  | cons s rest ih =>
+    intro ht
+    cases rest with
+    | nil =>
+      have : t = 0 := by simp at ht; omega
+      subst this
+      rfl
+    | cons t' rest =>
+      cases t with
+      | zero => rfl
+      | succ t =>
+        simp only [buildPieces]
+        rw [show 2 * (t + 1) = 2 * t + 1 + 1 by omega, List.getD_cons_succ, List.getD_cons_succ,
+          ih (si + 1) t (by simp at ht ⊢; omega), List.getD_cons_succ,
+          show si + 1 + t = si + (t + 1) by omega]
+
+theorem buildPieces_getD_odd (ai : Nat) : ∀ (si : Nat) (segs : List (List NNode)) (t : Nat),
+    t + 1 < segs.length →
+    (X.buildPieces ai si segs).getD (2 * t + 1) default =
+      X.transPiece ai (si + t) (segs.getD t []) (segs.getD (t + 1) []) := by
+  intro si segs t
+  induction segs generalizing si t with
+  | nil => intro h; simp at h
+  | cons s rest ih =>
+    intro ht
+    cases rest with
+    | nil => simp at ht
+    | cons t' rest =>
+      cases t with
+      | zero => rfl
+      | succ t =>
+        simp only [buildPieces]
+        rw [show 2 * (t + 1) + 1 = 2 * t + 1 + 1 + 1 by omega, List.getD_cons_succ, List.getD_cons_succ,
+          ih (si + 1) t (by simp at ht ⊢; omega), show si + 1 + t = si + (t + 1) by omega]
+        simp only [List.getD_cons_succ]
+
+theorem pieces_length (ai : Nat) : (X.pieces ai).length = 2 * X.segCount ai - 1 :=
+  X.buildPieces_length ai 0 _
+
+theorem pieces_getD_even {ai si : Nat} (hsi : si < X.segCount ai) :
+    (X.pieces ai).getD (2 * si) default = X.blockPiece ai si (X.blk ai si) := by
+  unfold pieces
+  rw [X.buildPieces_getD_even ai 0 _ si hsi, Nat.zero_add]
+  rfl
+
+theorem pieces_getD_odd {ai si : Nat} (hsi : si + 1 < X.segCount ai) :
+    (X.pieces ai).getD (2 * si + 1) default = X.transPiece ai si (X.blk ai si) (X.blk ai (si + 1)) := by
+  unfold pieces
+  rw [X.buildPieces_getD_odd ai 0 _ si hsi, Nat.zero_add]
+  rfl
+
+/-- Every piece index is even (a block) or odd (a transition). -/
+theorem pi_cases {sc pi : Nat} (h : pi < 2 * sc - 1) :
+    (∃ si, pi = 2 * si ∧ si < sc) ∨ (∃ si, pi = 2 * si + 1 ∧ si + 1 < sc) := by
+  have hdm := Nat.div_add_mod pi 2
+  have hr := Nat.mod_lt pi (by decide : 0 < 2)
+  rcases Nat.lt_or_ge (pi % 2) 1 with h0 | h1
+  · left; exact ⟨pi / 2, by omega, by omega⟩
+  · right; exact ⟨pi / 2, by omega, by omega⟩
+
+theorem getLast?_eq_getD {α : Type} [Inhabited α] {l : List α} (hne : l ≠ []) :
+    l.getLast? = some (l.getD (l.length - 1) default) := by
+  rw [List.getLast?_eq_getElem?, List.getD_eq_getElem?_getD]
+  have hlen : 0 < l.length := List.length_pos_iff.mpr hne
+  rw [List.getElem?_eq_getElem (by omega)]
+  rfl
+
+theorem head?_eq_getD {α : Type} [Inhabited α] {l : List α} (hne : l ≠ []) :
+    l.head? = some (l.getD 0 default) := by
+  cases l with
+  | nil => exact absurd rfl hne
+  | cons x l => rfl
+
+theorem pieces_ne_nil {ai : Nat} (hai : ai < c.atoms.length) : X.pieces ai ≠ [] := by
+  intro h
+  have := X.pieces_length ai
+  rw [h] at this
+  have := X.segCount_pos hai
+  simp at *
+  omega
+
+theorem pieces_head? {ai : Nat} (hai : ai < c.atoms.length) :
+    (X.pieces ai).head? = some (X.blockPiece ai 0 (X.blk ai 0)) := by
+  rw [head?_eq_getD (X.pieces_ne_nil hai)]
+  have := X.pieces_getD_even (ai := ai) (si := 0) (X.segCount_pos hai)
+  rw [Nat.mul_zero] at this
+  rw [this]
+
+theorem pieces_getLast? {ai : Nat} (hai : ai < c.atoms.length) :
+    (X.pieces ai).getLast? =
+      some (X.blockPiece ai (X.segCount ai - 1) (X.blk ai (X.segCount ai - 1))) := by
+  rw [getLast?_eq_getD (X.pieces_ne_nil hai), X.pieces_length]
+  have hpos := X.segCount_pos hai
+  rw [show 2 * X.segCount ai - 1 - 1 = 2 * (X.segCount ai - 1) by omega]
+  rw [X.pieces_getD_even (by omega)]
+
+/-! ### Shapes of the pieces -/
+
+theorem blockPiece_fresh {ai si : Nat} {s : List NNode} (hf : isFresh B.word.length s = true) :
+    X.blockPiece ai si s = ⟨.forward, X.idx (hdPos s), X.idx (lastPos s), hdCtl s, lastCtl s, .F⟩ := by
+  unfold blockPiece; rw [if_pos hf]
+
+theorem blockPiece_old {ai si : Nat} {s : List NNode} (hf : ¬ isFresh B.word.length s = true) :
+    X.blockPiece ai si s = ⟨.core, X.headIdx ai si, X.lastIdx ai si, hdCtl s, lastCtl s, .F⟩ := by
+  unfold blockPiece; rw [if_neg hf]
+
+theorem transPiece_enter {ai si : Nat} {s t : List NNode} (hx : (lastN s).1 ≤ B.word.length) :
+    X.transPiece ai si s t = ⟨.enter, X.lastIdx ai si, 0, (lastN s).2, (hdN t).2,
+      stepLabel (prefixGraph I E.C) (obsAt c ai) (lastN s) (hdN t)⟩ := by
+  unfold transPiece; simp only [if_pos hx]
+
+theorem transPiece_wrap {ai si : Nat} {s t : List NNode} (hx : ¬ (lastN s).1 ≤ B.word.length)
+    (hy : B.word.length < (hdN t).1) :
+    X.transPiece ai si s t = ⟨.wrap, X.n - 1, 0, (lastN s).2, (hdN t).2, .K E.a⟩ := by
+  unfold transPiece; simp only [if_neg hx, if_pos hy]
+
+theorem transPiece_exit {ai si : Nat} {s t : List NNode} (hx : ¬ (lastN s).1 ≤ B.word.length)
+    (hy : ¬ B.word.length < (hdN t).1) :
+    X.transPiece ai si s t = ⟨.exit, X.idx (lastN s).1, X.headIdx ai (si + 1), (lastN s).2, (hdN t).2,
+      stepLabel (prefixGraph I E.C) (obsAt c ai) (lastN s) (hdN t)⟩ := by
+  unfold transPiece; simp only [if_neg hx, if_neg hy]
+
+/-- Whether a block is fresh is read off its head and its last node alike. -/
+theorem blk_fresh_iff_last {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai) :
+    isFresh B.word.length (X.blk ai si) = true ↔ B.word.length < (lastN (X.blk ai si)).1 := by
+  have hne := X.blk_ne_nil hai hsi
+  constructor
+  · intro hf
+    rw [← lastPos_lastN hne, X.blk_fresh_lastPos hai hsi hf]
+    simp only [isFresh, decide_eq_true_eq] at hf
+    omega
+  · intro hl
+    apply Classical.byContradiction
+    intro hf
+    have := X.blk_old hai hsi hf _ (lastN_mem hne)
+    omega
+
+theorem blk_fresh_iff_hd {ai si : Nat} :
+    isFresh B.word.length (X.blk ai si) = true ↔ B.word.length < (hdN (X.blk ai si)).1 := by
+  rw [← hdPos_hdN]
+  simp [isFresh]
+
+theorem blk_fresh_all {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai)
+    (hf : isFresh B.word.length (X.blk ai si) = true) {x : NNode} (hx : x ∈ X.blk ai si) :
+    hdPos (X.blk ai si) ≤ x.1 := by
+  obtain ⟨i, hi, rfl⟩ := List.getElem_of_mem hx
+  rw [X.blk_fresh_pos hai hsi hf hi]
+  omega
+
+end Cov
+
+/-! ## Seam lookup -/
+
+theorem flatMap_congr_left {α β : Type} {l : List α} {f g : α → List β} (h : ∀ x ∈ l, f x = g x) :
+    l.flatMap f = l.flatMap g := by
+  rw [List.flatMap_def, List.flatMap_def, List.map_congr_left h]
+
+theorem filter_map_eq_flatMap {α β : Type} (p : α → Bool) (f : α → β) : ∀ (l : List α),
+    (l.filter p).map f = l.flatMap fun x => if p x = true then [f x] else [] := by
+  intro l
+  induction l with
+  | nil => rfl
+  | cons x l ih =>
+    by_cases hp : p x = true
+    · rw [List.filter_cons_of_pos hp, List.map_cons, List.flatMap_cons, if_pos hp, ih]; rfl
+    · rw [List.filter_cons_of_neg hp, List.flatMap_cons, if_neg hp, ih]; rfl
+
+namespace Cov
+variable {I : Instance k} {B : Reference k} {E : Ext I B} {c : Clause k} (X : Cov I B E c)
+
+theorem D_seams : X.D.seams = X.seams := rfl
+
+theorem mem_seams_iff {e : Nat × Nat × Nat × Nat} : e ∈ X.seams ↔
+    ∃ ai si g, ai < c.atoms.length ∧ si < X.segCount ai ∧ isFresh B.word.length (X.blk ai si) = true ∧
+      X.idx (hdPos (X.blk ai si)) < g ∧ g < X.idx (lastPos (X.blk ai si)) ∧ g < X.n ∧
+      e = (ai, 2 * si, g, ctlAt (X.blk ai si) (X.pos g)) := by
+  unfold seams seamsOf blockSeams
+  simp only [List.mem_flatMap, List.mem_range]
+  constructor
+  · rintro ⟨ai, hai, si, hsi, he⟩
+    split at he
+    · rename_i hf
+      obtain ⟨g, hgmem, rfl⟩ := List.mem_map.mp he
+      obtain ⟨hg, hcond⟩ := List.mem_filter.mp hgmem
+      simp only [decide_eq_true_eq] at hcond
+      exact ⟨ai, si, g, hai, hsi, hf, hcond.1, hcond.2, List.mem_range.mp hg, rfl⟩
+    · simp at he
+  · rintro ⟨ai, si, g, hai, hsi, hf, hg1, hg2, hg, rfl⟩
+    refine ⟨ai, hai, si, hsi, ?_⟩
+    rw [if_pos hf]
+    exact List.mem_map.mpr ⟨g, List.mem_filter.mpr ⟨List.mem_range.mpr hg, by simp [hg1, hg2]⟩, rfl⟩
+
+/-- The seam control of an internal mark of a fresh block is the chain's control there. -/
+theorem seamControl_eq {ai si g : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai)
+    (hf : isFresh B.word.length (X.blk ai si) = true) (hg1 : X.idx (hdPos (X.blk ai si)) < g)
+    (hg2 : g < X.idx (lastPos (X.blk ai si))) :
+    seamControl X.D ai (2 * si) g = ctlAt (X.blk ai si) (X.pos g) := by
+  have hgn : g < X.n := Nat.lt_trans hg2 (X.idx_lt (X.blk_last_mem_M hai hsi hf))
+  have hmem : (ai, 2 * si, g, ctlAt (X.blk ai si) (X.pos g)) ∈ X.seams :=
+    X.mem_seams_iff.mpr ⟨ai, si, g, hai, hsi, hf, hg1, hg2, hgn, rfl⟩
+  unfold seamControl
+  rw [D_seams]
+  cases hfind : X.seams.find? (fun s => decide (s.1 = ai ∧ s.2.1 = 2 * si ∧ s.2.2.1 = g)) with
+  | none =>
+    exfalso
+    have := (List.find?_eq_none.mp hfind) _ hmem
+    simp at this
+  | some r =>
+    have hp := List.find?_some hfind
+    simp only [decide_eq_true_eq] at hp
+    obtain ⟨ai', si', g', -, -, -, -, -, -, hr⟩ := X.mem_seams_iff.mp (List.mem_of_find?_eq_some hfind)
+    subst hr
+    simp only at hp
+    obtain ⟨h1, h2, h3⟩ := hp
+    subst h1 h3
+    have : si' = si := by omega
+    subst this
+    rfl
+
+/-- The internal entries of the forward control sequence. -/
+theorem forwardControls_getD_mid (D : Diagram k) (ai pi i j : Nat) (P : Piece) {t : Nat} (ht : 0 < t)
+    (htj : t < j - i) : (forwardControls D ai pi i j P).getD t 0 = seamControl D ai pi (i + t) := by
+  obtain ⟨t', rfl⟩ : ∃ t', t = t' + 1 := ⟨t - 1, by omega⟩
+  unfold forwardControls
+  rw [List.getD_eq_getElem?_getD, List.getElem?_append_left (by simp; omega), List.getElem?_cons_succ,
+    List.getElem?_map, List.getElem?_range (by omega)]
+  simp only [Option.map_some, Option.getD_some]
+  congr 1
+  omega
+
+theorem forwardControls_getD_zero (D : Diagram k) (ai pi i j : Nat) (P : Piece) :
+    (forwardControls D ai pi i j P).getD 0 0 = P.lc := rfl
+
+theorem forwardControls_getD_last (D : Diagram k) (ai pi i j : Nat) (P : Piece) (hij : i < j) :
+    (forwardControls D ai pi i j P).getD (j - i) 0 = P.rc := by
+  obtain ⟨d, hd⟩ : ∃ d, j - i = d + 1 := ⟨j - i - 1, by omega⟩
+  rw [hd]
+  unfold forwardControls
+  rw [List.getD_eq_getElem?_getD, List.getElem?_append_right (by simp; omega)]
+  simp only [List.length_cons, List.length_map, List.length_range]
+  rw [show d + 1 - (j - i - 1 + 1) = 0 by omega]
+  rfl
+
+/-- The forward controls of a fresh block are the chain's controls at the marks it covers. -/
+theorem block_forwardControls {ai si : Nat} (hai : ai < c.atoms.length) (hsi : si < X.segCount ai)
+    (hf : isFresh B.word.length (X.blk ai si) = true) {t : Nat}
+    (ht : t ≤ X.idx (lastPos (X.blk ai si)) - X.idx (hdPos (X.blk ai si))) :
+    (forwardControls X.D ai (2 * si) (X.idx (hdPos (X.blk ai si))) (X.idx (lastPos (X.blk ai si)))
+        (X.blockPiece ai si (X.blk ai si))).getD t 0 =
+      ctlAt (X.blk ai si) (X.pos (X.idx (hdPos (X.blk ai si)) + t)) := by
+  have hne := X.blk_ne_nil hai hsi
+  have hhd := X.blk_hd_mem_M hai hsi hf
+  have hlast := X.blk_last_mem_M hai hsi hf
+  rw [X.blockPiece_fresh hf]
+  rcases Nat.eq_zero_or_pos t with rfl | htpos
+  · rw [forwardControls_getD_zero, Nat.add_zero, X.pos_idx hhd, ctlAt_hd hne]
+  · by_cases hlt : t < X.idx (lastPos (X.blk ai si)) - X.idx (hdPos (X.blk ai si))
+    · rw [forwardControls_getD_mid _ _ _ _ _ _ htpos hlt]
+      exact X.seamControl_eq hai hsi hf (by omega) (by omega)
+    · have heq : t = X.idx (lastPos (X.blk ai si)) - X.idx (hdPos (X.blk ai si)) := by omega
+      have hij : X.idx (hdPos (X.blk ai si)) < X.idx (lastPos (X.blk ai si)) := by omega
+      rw [heq, forwardControls_getD_last _ _ _ _ _ _ hij,
+        show X.idx (hdPos (X.blk ai si)) + (X.idx (lastPos (X.blk ai si)) - X.idx (hdPos (X.blk ai si))) =
+          X.idx (lastPos (X.blk ai si)) by omega, X.pos_idx hlast]
+      exact (ctlAt_last hne (X.blk_consec hai hsi) (by simpa [isFresh] using hf)).symm
+
+theorem transPiece_kind {ai si : Nat} (s t : List NNode) :
+    (X.transPiece ai si s t).kind ≠ .forward := by
+  unfold transPiece
+  by_cases h1 : (lastN s).1 ≤ B.word.length <;> by_cases h2 : B.word.length < (hdN t).1 <;> simp [h1, h2]
+
+end Cov
+
+/-! ## The active items of an interval -/
+
+theorem active_nil (I : Instance k) (D : Diagram k) (ai pi : Nat) (o : Observer k) {P : Piece}
+    (hP : P.kind ≠ .forward) : (compilePiece I D ai pi o P).active = [] := by
+  unfold compilePiece
+  cases finOf o.size P.lc with
+  | none => rfl
+  | some lc =>
+    cases finOf o.size P.rc with
+    | none => rfl
+    | some rc =>
+      cases hk : P.kind with
+      | core => rfl
+      | forward => exact absurd hk hP
+      | enter => rfl
+      | exit => cases P.label <;> rfl
+      | wrap => rfl
+
+theorem filter_forwardActive_aux (i g : Nat) {β : Type} (f : Nat → β) : ∀ (L : Nat),
+    ((List.range L).map fun t => (i + t, f t)).filter (fun x => decide (x.1 = g)) =
+      if i ≤ g ∧ g < i + L then [(g, f (g - i))] else [] := by
+  intro L
+  induction L with
+  | zero => simp
+  | succ L ih =>
+    rw [List.range_succ, List.map_append, List.filter_append, ih]
+    have hsingle : (([(i + L, f L)] : List (Nat × β)).filter fun x => decide (x.1 = g)) =
+        if i + L = g then [(i + L, f L)] else [] := by
+      by_cases h2 : i + L = g
+      · simp [h2]
+      · simp [h2]
+    simp only [List.map_cons, List.map_nil]
+    rw [hsingle]
+    by_cases h1 : i ≤ g ∧ g < i + L
+    · have h2 : ¬ i + L = g := by omega
+      rw [if_pos h1, if_neg h2, if_pos ⟨h1.1, by omega⟩]
+      rfl
+    · rw [if_neg h1]
+      by_cases h2 : i + L = g
+      · rw [if_pos h2, if_pos ⟨by omega, by omega⟩]
+        subst h2
+        simp
+      · rw [if_neg h2, if_neg (by omega)]
+        rfl
+
+namespace Cov
+variable {I : Instance k} {B : Reference k} {E : Ext I B} {c : Clause k} (X : Cov I B E c)
+
+/-- Does piece `pi` of atom `ai` cover interval `g`? -/
+def coversPi (ai pi g : Nat) : Bool :=
+  let P := (X.pieces ai).getD pi default
+  decide (P.kind = .forward) && decide (P.source ≤ g ∧ g < P.target)
+
+/-- The contributing pieces of interval `g`, in emission order. -/
+def contribs (g : Nat) : List (Nat × Nat) :=
+  (List.range c.atoms.length).flatMap fun ai =>
+    ((List.range (X.pieces ai).length).filter fun pi => X.coversPi ai pi g).map fun pi => (ai, pi)
+
+/-- The active item of a contributing piece. -/
+def itemOf (g : Nat) (cp : Nat × Nat) : Active k :=
+  (obsAt c cp.1, ctlAt (X.blk cp.1 (cp.2 / 2)) (X.pos g), ctlAt (X.blk cp.1 (cp.2 / 2)) (X.pos (g + 1)))
+
+theorem allEmitted_active :
+    (allEmitted I c X.D).active = (List.range c.atoms.length).flatMap fun ai =>
+      (List.range (X.pieces ai).length).flatMap fun pi =>
+        (compilePiece I X.D ai pi (obsAt c ai) ((X.pieces ai).getD pi default)).active := by
+  unfold allEmitted
+  rw [foldl_appendEmitted_proj _ active_append, List.map_map, ← List.flatMap_def]
+  show [] ++ _ = _
+  rw [List.nil_append]
+  apply flatMap_congr_left
+  intro ai hai
+  have hai' : ai < c.atoms.length := List.mem_range.mp hai
+  simp only [Function.comp, List.getElem?_eq_getElem hai']
+  unfold compileAtom
+  rw [foldl_appendEmitted_proj _ active_append, List.map_map, ← List.flatMap_def]
+  show [] ++ _ = _
+  rw [List.nil_append, X.piecesOf_eq hai', obsAt_eq hai']
+  rfl
+
+/-- A covering piece is a fresh block piece. -/
+theorem coversPi_block {ai pi g : Nat} (hai : ai < c.atoms.length) (hpi : pi < (X.pieces ai).length)
+    (hc : X.coversPi ai pi g = true) :
+    ∃ si, pi = 2 * si ∧ si < X.segCount ai ∧ isFresh B.word.length (X.blk ai si) = true ∧
+      X.idx (hdPos (X.blk ai si)) ≤ g ∧ g < X.idx (lastPos (X.blk ai si)) := by
+  rw [X.pieces_length] at hpi
+  rcases pi_cases hpi with ⟨si, rfl, hsi⟩ | ⟨si, rfl, hsi⟩
+  · refine ⟨si, rfl, hsi, ?_⟩
+    unfold coversPi at hc
+    rw [X.pieces_getD_even hsi] at hc
+    simp only [Bool.and_eq_true, decide_eq_true_eq] at hc
+    by_cases hf : isFresh B.word.length (X.blk ai si) = true
+    · rw [X.blockPiece_fresh hf] at hc
+      exact ⟨hf, hc.2⟩
+    · rw [X.blockPiece_old hf] at hc
+      exact absurd hc.1 (by simp)
+  · exfalso
+    unfold coversPi at hc
+    rw [X.pieces_getD_odd hsi] at hc
+    simp only [Bool.and_eq_true, decide_eq_true_eq] at hc
+    exact X.transPiece_kind _ _ hc.1
+
+/-- The filtered active list of one piece. -/
+theorem piece_active_filter {ai pi g : Nat} (hai : ai < c.atoms.length) (hpi : pi < (X.pieces ai).length) :
+    (((compilePiece I X.D ai pi (obsAt c ai) ((X.pieces ai).getD pi default)).active.filter
+        fun x => decide (x.1 = g)).map fun x => x.2) =
+      if X.coversPi ai pi g = true then [X.itemOf g (ai, pi)] else [] := by
+  have hlen := X.pieces_length ai
+  rw [hlen] at hpi
+  rcases pi_cases hpi with ⟨si, rfl, hsi⟩ | ⟨si, rfl, hsi⟩
+  · rw [X.pieces_getD_even hsi]
+    by_cases hf : isFresh B.word.length (X.blk ai si) = true
+    · -- a fresh block piece
+      have hne := X.blk_ne_nil hai hsi
+      have hhd := X.blk_hd_mem_M hai hsi hf
+      have hlast := X.blk_last_mem_M hai hsi hf
+      have hlc : hdCtl (X.blk ai si) < (obsAt c ai).size := by
+        rw [hdCtl_hdN]; exact X.blk_ctl_lt hai hsi (hdN_mem hne)
+      have hrc : lastCtl (X.blk ai si) < (obsAt c ai).size := by
+        rw [lastCtl_lastN hne]; exact X.blk_ctl_lt hai hsi (lastN_mem hne)
+      have hcov : X.coversPi ai (2 * si) g =
+          decide (X.idx (hdPos (X.blk ai si)) ≤ g ∧ g < X.idx (lastPos (X.blk ai si))) := by
+        unfold coversPi
+        rw [X.pieces_getD_even hsi, X.blockPiece_fresh hf]
+        simp
+      rw [hcov]
+      have e1 := X.block_forwardControls hai hsi hf (t := g - X.idx (hdPos (X.blk ai si)))
+      have e2 := X.block_forwardControls hai hsi hf (t := g - X.idx (hdPos (X.blk ai si)) + 1)
+      rw [X.blockPiece_fresh hf] at e1 e2 ⊢
+      simp only [compilePiece, finOf_pos hlc, finOf_pos hrc]
+      by_cases hst : X.idx (hdPos (X.blk ai si)) = X.idx (lastPos (X.blk ai si))
+      · rw [if_pos hst]
+        simp only [List.filter_nil, List.map_nil]
+        rw [if_neg (by rw [decide_eq_true_eq]; omega)]
+      · rw [if_neg hst]
+        have hle : X.idx (hdPos (X.blk ai si)) ≤ X.idx (lastPos (X.blk ai si)) := by
+          apply X.idx_le hhd hlast
+          rw [X.blk_fresh_lastPos hai hsi hf]; omega
+        have hlt : X.idx (hdPos (X.blk ai si)) < X.idx (lastPos (X.blk ai si)) := Nat.lt_of_le_of_ne hle hst
+        unfold forwardActive
+        rw [filter_forwardActive_aux]
+        by_cases hg : X.idx (hdPos (X.blk ai si)) ≤ g ∧ g < X.idx (lastPos (X.blk ai si))
+        · rw [if_pos ⟨hg.1, by omega⟩, if_pos (by simpa using hg)]
+          simp only [List.map_cons, List.map_nil]
+          have e1' := e1 (by omega)
+          have e2' := e2 (by omega)
+          rw [show X.idx (hdPos (X.blk ai si)) + (g - X.idx (hdPos (X.blk ai si))) = g by omega] at e1'
+          rw [show X.idx (hdPos (X.blk ai si)) + (g - X.idx (hdPos (X.blk ai si)) + 1) = g + 1 by omega] at e2'
+          rw [e1', e2']
+          unfold itemOf
+          rw [show 2 * si / 2 = si by omega]
+        · rw [if_neg (by omega), if_neg (by simpa using hg)]
+          rfl
+    · -- an old block piece: no active items
+      have hcov : X.coversPi ai (2 * si) g = false := by
+        unfold coversPi
+        rw [X.pieces_getD_even hsi, X.blockPiece_old hf]
+        simp
+      rw [hcov, if_neg (by simp), active_nil _ _ _ _ _ (by rw [X.blockPiece_old hf]; simp)]
+      rfl
+  · rw [X.pieces_getD_odd hsi]
+    have hcov : X.coversPi ai (2 * si + 1) g = false := by
+      unfold coversPi
+      rw [X.pieces_getD_odd hsi]
+      simp [X.transPiece_kind]
+    rw [hcov, if_neg (by simp), active_nil _ _ _ _ _ (X.transPiece_kind _ _)]
+    rfl
+
+/-- The active items of interval `g` are the items of its contributing pieces, in order. -/
+theorem itemsAt_eq (g : Nat) : itemsAt I c X.D g = (X.contribs g).map (X.itemOf g) := by
+  unfold itemsAt contribs
+  rw [X.allEmitted_active, List.filter_flatMap, List.map_flatMap, List.map_flatMap]
+  apply flatMap_congr_left
+  intro ai hai
+  have hai' := List.mem_range.mp hai
+  rw [List.filter_flatMap, List.map_flatMap, List.map_map, filter_map_eq_flatMap]
+  apply flatMap_congr_left
+  intro pi hpi
+  have hpi' := List.mem_range.mp hpi
+  rw [X.piece_active_filter hai' hpi']
+  rfl
+
+end Cov
+
 end RankQueryCoverage
 end Subtail
