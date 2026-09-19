@@ -1,0 +1,31 @@
+{
+  "checks": {
+    "diagnostics_complete_and_clear": true,
+    "fixture_unchanged": true,
+    "goal_after": [],
+    "goal_before": [
+      "n : Nat\n\u22a2 n = n"
+    ],
+    "identity_axioms": [],
+    "invalid_trials_rejected": 1,
+    "local_tools_exposed": 18,
+    "server": "0.30.0",
+    "standalone_code_checked": true,
+    "two_state_theorem_axioms": [
+      "propext",
+      "Quot.sound"
+    ],
+    "valid_trials": 2
+  },
+  "fixture_sha256": "6ebff839cc8dc084583b52f234bb314ea362d72d07b69cf1e666c88f1519ac53",
+  "lean_version": "Lean (version 4.33.1, arm64-apple-darwin24.6.0, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
+  "packages": {
+    "lean-lsp-mcp": "0.30.0",
+    "leanclient": "0.13.2",
+    "mcp": "2.0.0"
+  },
+  "scope": "Local MCP compatibility, not new mathematical evidence",
+  "source_revision": "5e156fc67b3516c9c3955f41b2cc7940dccfd210",
+  "status": "PASS",
+  "two_state_kernel_replay": "PASS"
+}

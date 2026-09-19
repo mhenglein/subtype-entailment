@@ -136,7 +136,7 @@ Local Lean 4.33.1: `lake build +Subtail.RankQuery`, `lake env leanchecker Subtai
 runtime `Classical.choice`), `python3 scripts/check_lean.py` with
 `results/lean-checks.json` unchanged. The module is NOT added to the import
 aggregator `lean/Subtail.lean` (owned by the stage-3 formalizer); the dedicated
-[workflow](../.github/workflows/lean-rank-query.yml) builds it as an explicit
+[workflow](../.github/workflows/lean.yml) (formerly `lean-rank-query.yml`) builds it as an explicit
 target and repeats these audits on the runner.
 
 [check_lean_rank_query.py](../experiments/check_lean_rank_query.py) (seed

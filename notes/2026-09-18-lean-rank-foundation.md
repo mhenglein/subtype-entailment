@@ -62,7 +62,7 @@ lake env leanchecker Subtail.TerminalRank
 ```
 
 The axiom-audit commands are retained in
-[the dedicated workflow](../.github/workflows/lean-rank-foundation.yml).
+[the Lean workflow](../.github/workflows/lean.yml) (formerly `lean-rank-foundation.yml`, folded in on 2026-09-19).
 The module is not yet imported by `lean/Subtail.lean`; the explicit build target
 above and the new workflow check it. Integration should link this evidence from
 A018 and the Lean README without changing the proposed global theorem's status.

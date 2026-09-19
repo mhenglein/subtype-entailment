@@ -20,7 +20,12 @@ class ResearchNavigationTests(unittest.TestCase):
         self.write("experiments/README.md", '<a id="e001"></a>\n### E001 — Bounded check\n\nUNKNOWN is not NO.\n')
         self.write("research/conjectures/Q001.md", '# Q001 — Open target\n\nStatus: OPEN\n\nDepends on C001.\n')
         self.write("research/approaches/A001.md", '# A001\n\nHistorical attempt.\n')
-        self.data = {"approaches": [{"id": "A001", "record": "research/approaches/A001.md", "owner": None}]}
+        self.data = {"version": 1, "approaches": [{
+            "id": "A001", "record": "research/approaches/A001.md", "owner": None,
+            "title": "Original source reproduction", "status": "untried", "outcome": "open",
+            "updated": "2026-09-19", "summary": "No reproduction has run.",
+            "next_step": "Obtain the original sources.", "evidence": [], "issue": None,
+        }]}
 
     def write(self, relative, contents):
         target = self.root / relative
@@ -78,6 +83,27 @@ class ResearchNavigationTests(unittest.TestCase):
         self.write("research/conjectures/Q001.md", "# Q002 — Wrong target\n\nStatus: OPEN\n")
         with self.assertRaisesRegex(ValueError, "filename and heading"):
             index.research_records(self.data)
+
+    def test_retired_work_remains_findable_without_counting_as_tried_or_blocked(self):
+        row = self.data["approaches"][0]
+        row.update(status="retired", next_step="No further action is planned.")
+        records = index.research_records(self.data)  # Also selects the fixture root.
+        index.validate_registry(self.data)
+        rendered = index.render(self.data)
+        self.assertIn("0 tried · 0 not tried · 0 blocked · 0 active · 1 retired", rendered)
+        before, retired = rendered.split("## Retired: no further work planned", 1)
+        self.assertNotIn("| A001 |", before)
+        self.assertIn("| A001 |", retired)
+        self.assertIn("No reproduction has run.", retired)
+        self.assertIn("No further action is planned.", retired)
+        self.assertEqual(records["A001"]["execution"]["outcome"], "open")
+        self.assertIn("Historical attempt.", records["A001"]["content"])
+
+    def test_retired_work_cannot_keep_a_current_owner(self):
+        self.data["approaches"][0].update(status="retired", owner="worker")
+        index.research_records(self.data)
+        with self.assertRaisesRegex(ValueError, "retired work must not have a current owner"):
+            index.validate_registry(self.data)
 
 
 class CurrentClaimStatusTests(unittest.TestCase):

@@ -126,7 +126,7 @@ stage-5 `RankQueryUnwind`), `lake env leanchecker Subtail.RankQuerySound` and
 `RankQuery`, `RankQueryPaths`, `RankQueryCompiler`, `RankQuerySound`
 (theorems ⊆ {`propext`, `Quot.sound`, `Classical.choice`}; definitions use no
 `Classical.choice`), and the differential replay. The
-[workflow](../.github/workflows/lean-rank-query.yml) repeats all of this.
+[workflow](../.github/workflows/lean.yml) (formerly `lean-rank-query.yml`) repeats all of this.
 
 ## 5. Result and limitations
 

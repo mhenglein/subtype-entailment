@@ -1,30 +1,25 @@
-# Claim-by-claim novelty matrix
+# Novelty and transfer matrix
 
-**Status vocabulary:** “promising” means no subsuming theorem was found in the inspected sources. It is not a priority claim.
+This table specifies claims to compare, not novelty scores. A theorem not found in this bounded search is **not** thereby absent from the literature. Source keys resolve in [bibliography.md](bibliography.md); scientific status resolves in the current [claims ledger](../../research/claims.md). The [agent handoff](agent-handoff.md) records the current pause and owner-selected kernel/readback acceptance path; no external-human-review requirement is imposed here.
 
-| Subtail claim | Closest prior work | Material overlap | Candidate distinguishing content | Missing verification | Safe provisional wording |
-|---|---|---|---|---|---|
-| C067: all single-source binary terminal instances decidable; PSPACE upper bound | N&P 1999 decidable syntax; N&P 2003 cap equations; Breuvart et al. 2019 restriction; existential regular-constrained equations | automata reduction, cap/power equation, PSPACE existential backend | first-to-last source deletion; terminal prefix-free target capture; derived-automaton single-source class | show noncontainment from 1999/2019 source restrictions using realized examples; independently review proof and PSPACE formula size | “A decision procedure for the single-flagged-source terminal BorderAvoid class, using a one-visit normalization and constrained word equations.” |
-| C069: composite-number witness-length support/nonsemilinear support | P-automata/cap languages already non-context-free; pattern/backreference and arithmetic word-language literature | repeated blocks and nonregular length behavior | exact fixed 11-state, three-flag terminal instance with composite-index support and divisor-count multiplicity | search explicit automata-language results with composite length sets; verify what “first” could mean in the flagged-border model | “An explicit terminal flagged-border instance with exactly characterized nonsemilinear witness lengths.” |
-| C077: complete target-column decision and `k^2+k-2` witness bound | regular-language border algorithms with quadratic shortest witnesses; cap automata; Breuvart restriction | borders in automata, quadraticity, periodic tails | state-dependent ordered forbidden pairs; last occurrence of a target; terminal accepting-tail dichotomy; native finite pattern avoidance | source-level comparison with 2019 restriction; theorem-by-theorem comparison with bordered/unbordered NFA bounds | “A quadratic witness bound and decision method for the complete target-column terminal flagged-border class.” Avoid “first quadratic border bound.” |
-| C078: sparse coloring certificate | finite congruences, automata color refinement, simulations | finite abstraction and state coloring | two-stage certificate that completion of target columns preserves all and only relevant last-aligned violations without increasing state count | broader search for relation-preserving completion/coloring theorems; prove exact novelty of certificate, not generic coloring | “A checkable sufficient certificate reducing certain sparse flagged instances to C077.” |
-| C080: rank-query preimage closure and unrestricted decision candidate | N&P cap automata; word equations; graph-query boundedness/finite expansion; inverse-transduction ideas | automata graphs, regular-path queries, finite compilation, shared-word equations | same-grammar preimage under exact first-return KMP graph surgery; one shared generator per physical interval; whole-conjunction preservation; iterability with explicit weight bound | complete Lean stage 4b, weight bound and semantic transfer; human referee; exhaustive search for graph-transduction/CRPQ theorem; compare Schubert's failed invariant | “A candidate uniform preimage construction for conjunctive regular-path queries over first-return prefix-graph extensions.” Do not call it a decision theorem yet. |
-| Full Problem 1.7 decision | open lineage; Schubert withdrawn; 2019 still presents NSSE as open | exact historical problem family, though semantic top-free transfer differs | total decision for bottom + covariant binary product over arbitrary trees, if C080 and bridge close | correctness, source-level equivalence, human review, exhaustive novelty check | “Would resolve the stated top-free arbitrary-tree problem if all recorded candidate obligations are discharged.” |
+| Claim | Closest comparison | Possible distinguishing statement | Required evidence before a novelty claim |
+|---|---|---|---|
+| C067: single-source terminal BorderAvoid | PW-NP99, PW-NP03, PW-PRI04, PW-BPR19; existential equations | One-visit normalization and terminal prefix-free capture for the stated derived-automaton class | Review the actual capture/formula-size proof; compare to repaired or alternative thesis arguments; prove the relevant source-level encoding/non-subsumption. |
+| C069: nonsemilinear witness-length support | Cap/P-automata nonregularity, periodic-word and pattern-language literature | An exact fixed terminal flagged instance with characterized support and multiplicity | Check equivalent examples under other terminology. Nonregularity/non-context-freeness alone is old; nonsemilinearity does not refute decidability or a computable shortest-witness bound. |
+| C077: complete target columns; quadratic certified-class bound | PW-BORD09, including its linear ordinary-unbordered bound; PW-BPR19; PW-HHL25 | State-labeled forbidden comparisons, last-target normalization and the exact class/bound | Preserve colors under shortening; distinguish the native algorithm from a backend import; compare source-level restrictions, not the adjective 'quadratic'. |
+| C078: sparse completion certificate | Automata congruences/color refinement; C077 | A checkable sufficient certificate that column completion preserves the relevant bad language without state/length increase | Prove the claimed preservation; compare relation-sensitive completion literature. Failure of this certificate is UNKNOWN, not NO or proof that no other certificate exists. |
+| C079: source-sensitive target-return elimination | C077/C078; PW-HHL25; synchronized-return methods | Certified transport to last original targets with legal repeats and state projection | Review the return/projection hypotheses and recursive product semantics; do not replace several synchronized conditions by independent single-predicate solvers. |
+| C080: rank-query closure candidate | PW-NP03; PW-BFR19; PW-SCH21; finite-algebra tools | Same-grammar, whole-conjunction preimage under the exact directed first-return graph extension, with shared generators and effective iteration | Current ledger obligations, especially forward coverage, remaining size/finishing and semantic composition; the owner-selected kernel/readback checks; exact graph-transduction prior-art comparison. No decision-theorem promotion here. |
+| Problem 1.7 itself | Historical full-signature NSSE lineage; withdrawn attempted solution | A total decision for the stated top-free arbitrary-tree model, if all dependencies close | Prove the full reduction and bound, with exact semantic domain. Distinguish this target from a claimed resolution of every historical NSSE variant. |
 
-## Claims to avoid
+## Two corrections to the earlier comparison method
 
-- “First use of word equations/powers/borders in NSSE.”
-- “First nonregular or non-context-free NSSE witness language.”
-- “First quadratic shortest-border bound for automata.”
-- “The full first-order theory result proves Horn entailment undecidable.”
-- “The 1999 no-constants-in-constraints fragment is the same as semantic top-free Problem 1.7.”
-- “Schubert solved NSSE in PSPACE.”
-- “No prior theorem exists” based only on the bounded search.
-- “C080 is essentially finished” before forward coverage, repeated-closure bounds, semantic composition and independent review.
+**Syntactic violation is not enough.** An input using syntax excluded by an old theorem may admit an equivalent encoding inside its decidable class. A separating example is a useful lead, not a non-subsumption proof. Compare normalizations, admissible encodings and semantic domains explicitly.
 
-## Highest-value separation artifacts
+**Automaton-level novelty is not automatically subtype-level novelty.** The repository records a forward reduction to flagged-border avoidance; a general converse with arbitrary regular side conditions has not been supplied. A new result for a class of flagged automata must either be presented at that level or accompanied by the precise realization/transfer theorem needed for the subtype claim.
 
-1. A normalized top-free constraint whose derived instance is C067 but which violates the 1999 and 2019 syntactic restrictions, or a proof that such realization is impossible.
-2. The same for one nontrivial C077/C078 example with recurrent sources and targets.
-3. A line-by-line comparison of Schubert Lemma 5.5 with C080's forward/reverse closure quantifiers.
-4. A theorem search for CRPQ inverse images under graph interpretations that either supplies a reusable theorem or documents the exact mismatch.
+## Safe wording
+
+Describe the exact class, algorithm or obstruction and its evidence level. Avoid 'first use of word equations in NSSE', 'first nonregular cap language', 'first quadratic automata-border bound', 'Schubert's PSPACE theorem', 'general word equations decide this', and 'no previous result exists'. The local thesis finding refutes a literal lemma, not all prior decidability work.
+
+The unresolved obligations are [O01–O10](open-obligations.md). Closing a documentation issue, passing CI, or receiving agreement from another agent does not establish mathematical correctness or publication priority.

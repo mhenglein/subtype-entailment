@@ -1,59 +1,35 @@
-# Core non-structural subtype-entailment lineage
+# Core NSSE lineage and exact transfer boundaries
 
-**Method.** Statements below were checked against primary papers or the authors' slides and official records. “Relevance” is a transfer analysis, not a citation-count summary.
+Source identities, versions and inspection levels are in [the bibliography](bibliography.md). These are selected-theorem dossiers, not claims that every proof in every source was reverified. Source keys are stable across the [register](sources.json), [failure catalogue](failure-modes.md), and [open obligations](open-obligations.md).
 
-## Clinical comparison
+## PW-HR97 / PW-HR98 — the complexity baseline
 
-| Source | Exact established or claimed result | Model and hypotheses | Mechanism | Relevance and non-implication |
-|---|---|---|---|---|
-| Henglein–Rehof, ICALP 1998 | PSPACE hardness for non-structural subtype entailment; the historical starting lower bound. | Full non-structural model used by that paper, with ambient top and bottom; finite and recursive/infinite variants are treated. | Reduction encoding automata computations in subtype constraints. | Does not automatically establish PSPACE hardness for the semantic top-free universe. A top-free simulation or fresh reduction is required. |
-| Niehren–Priesnitz, 1999 | The restricted constraint language is PSPACE-complete for finite and possibly infinite trees (Theorem 14). | Ambient signature `{bottom, top, product}`; bottom/top remain semantic labels. The restriction excludes their syntactic occurrence in constraints. | Polynomial reduction to finite-automaton universality; P-automata explain why the unrestricted case can be nonregular. | Crucial prior art for decidable restrictions. It is not Problem 1.7: “constants absent from hypotheses” is not “top absent from the semantic type universe.” |
-| Niehren–Priesnitz, TACS 2001 / I&C 2003 | NSSE for `{bottom,f,top}`, one covariant constructor, is equivalent to universality of restricted cap-set expressions; all arities at least two and finite/possibly-infinite variants are polynomially interreducible. Unary is decidable. | Full top/bottom semantics. The constraint language is normalized but expressive for the intended NSSE problem. | Cap automata and cap languages. Membership obeys `pi in S° iff exists mu,nu (mu in S and pi nu = mu pi)`, exposing positive forall-exists regular-constrained word equations. | Strongest conceptual ancestor. Shared powers, periodicity, borders and regular-constrained equations are not novel. It does not decide the binary case or directly transfer to semantic top-free Problem 1.7. |
-| Su–Aiken–Niehren–Priesnitz–Treinen, 2002/2004 | The full first-order theory of non-structural subtyping with bottom and a binary constructor is undecidable for recursive/infinite trees (Theorem 3.10); unary-symbol theories are decidable (Theorem 5.10). | Full first-order formulas, including quantification and negation; strictly richer than Horn entailment. | PCP encoding for undecidability; tree-automata construction for the unary case. | Does not imply undecidability of positive Horn entailment or BorderAvoid. It is a boundary result and a warning against importing a richer logic. |
-| Breuvart–Penelle–Rehof, 2019 slides | A 2-EXPTIME decidable restriction is announced for product-only simple equations when `bottom×bottom` and `top×top` do not occur; an alternative assumes equations identifying top and bottom with their homogeneous products. | Full top/bottom NSSE(×), simple equations, conclusion `x<=y`, with the stated syntactic restriction. Source located is a 17-page slide deck, not a peer-reviewed full proof. | Refines the cap-language universality form; reduces universality to finitely many ultimately periodic/Büchi checks using suffix-closed saturated regular language `K`. | Mandatory comparison for C067/C077. The restriction is syntactic on source constraints, whereas Subtail subclasses are defined on derived terminal automata. Neither inclusion direction is currently proved. Treat complexity/result as “announced in slides” until a full publication is located. |
-| Schubert, arXiv:2109.02458 (2021) | Claimed PSPACE membership for finite and regular type expressions. The arXiv record explicitly says the paper was withdrawn because an error in Lemma 5.5 invalidates the further construction. | Full-signature NSSE rather than the semantic top-free fragment. The abstract's claim remains searchable, but is not an established theorem. | Proposed automata/normal-form construction downstream of Lemma 5.5. | Must be cited as a failed attempt. It neither settles Problem 1.7 nor supplies a valid upper bound. Any overlap with C080 must be checked at the failed lemma's exact invariant before asserting methodological independence. |
+**Question:** structural versus non-structural subtype entailment, with distinct simple and recursive type settings. **Result relevant to this project:** the 1998 paper supplies the historical non-structural PSPACE-hardness lineage; the 1997 simple-type paper is a separate publication. **Mechanism to audit:** the hardness construction's use of the ambient top label. **Transfer status:** unproved for Problem 1.7 merely from this citation. Absence of constants in input equations is not absence of those constants from admissible valuations. A top-free simulation or fresh lower-bound construction is needed. Do not attach the 1997 title to the 1998 DOI.
 
-## Paper-by-paper notes
+## PW-NP99 — decidable syntactic restriction
 
-### Henglein and Rehof (1998)
+**Locator:** Theorem 14 in the author-hosted paper. **Scope:** a restricted constraint syntax over an ambient bottom/top/product universe, treating finite and possibly infinite trees. **Result:** PSPACE-completeness for that restriction. **Mechanism:** finite-automaton universality for the restricted syntax; P-automata explain nonregular behavior outside it. **Transfer status:** no direct identification with semantic top-free entailment. **Comparison task:** characterize the image of this restriction under Subtail's actual reduction; do not infer that image from an automaton drawing or one syntactically nonconforming example.
 
-- **Question:** complexity of structural and non-structural subtype-constraint entailment.
-- **Contribution relevant here:** establishes the PSPACE lower-bound lineage and formulates the unresolved upper-bound problem.
-- **Transfer hazard:** Subtail's type universe removes the explicit top constructor while retaining an infinite full binary tree as a greatest element in the path-set order. This is not syntactically or semantically identical to the historical `top` label.
-- **Required audit:** isolate every use of the top label in the hardness construction and either simulate it top-free or record that the lower bound is untransferred.
+## PW-NP03 — the cap/word-equation characterization
 
-### Niehren and Priesnitz (1999)
+**Locators:** Theorem 1; Corollaries 2 and 5 in the cited author copy. **Result:** full-signature NSSE with one covariant constructor is characterized by universality of restricted cap-set expressions; the paper relates arities at least two and finite/infinite variants and treats unary constructors separately. **Core mechanism:** cap membership exposes a shared-word equation of the form `pi nu = mu pi` with regular restrictions. **Prior-art consequence:** automata, repeated words, powers and hidden word equations were already central to NSSE. **Transfer limit:** those equivalences have hypotheses; they neither prove top-free equivalence automatically nor discharge a uniform finite scheme bound. A broad forall-exists undecidability theorem is likewise not automatically about this restricted cap syntax.
 
-- **Theorem checked:** Theorem 14 states PSPACE-completeness for the restricted language over both finite and possibly infinite trees.
-- **Exact restriction:** no syntactic constraints assigning variables to bottom or top; the ambient signature still contains both constants.
-- **Important negative lesson:** P-automata accept non-context-free languages because the first special edge can choose an unbounded period. Nonregular witness phenomena therefore predate Subtail.
-- **C067/C077 comparison:** these claims restrict the derived terminal flagged-border instance, not the source syntax. A publishable novelty argument needs explicit instances satisfying the Subtail restriction but not known to arise inside the 1999 fragment, ideally with source-level realizations.
+## PW-PRI04 — the overlooked thesis fragment
 
-### Niehren and Priesnitz (2003)
+**Locators:** Chapter 11, printed pp. 111–114; definition of straightness, Theorem 11.1, Lemmas 11.1–11.2. **Why relevant:** it attempts a further cap-language restriction reduced to existential word equations, making it a serious comparison for C067-style unique captures. **Audit result:** the literal uniqueness lemma has a concrete finite-language counterexample. The source, calculation, stronger sufficient hypothesis and precise limits are in the [thesis dossier](dossiers/priesnitz-2004.md). **Status:** local audit finding awaiting independent review; the chapter's final decidability theorem has not been refuted by this finding. Do not silently use the printed lemma or silently repair the whole theorem by replacing straightness with prefix-freeness.
 
-- **Theorem checked:** Theorem 1 gives equivalence with universality of restricted cap expressions; Corollary 2 equates arities ≥2 and finite/infinite variants in their full-signature setting; Corollary 5 decides unary.
-- **Equation content:** cap membership is equivalent to `exists mu,nu: mu in S and pi nu = mu pi`.
-- **Novelty exclusion:** “translation to word equations,” “shared repeated word,” “border/power phenomenon,” and “non-context-free witness language” are not safe standalone novelty claims.
-- **Potential Subtail distinction:** terminal state-labelled forbidden ordered pairs, source/target recurrence structure, and C080's one-shared-extension query preimage are more specialized than cap universality as stated.
+## PW-SU06 — a neighboring undecidability boundary
 
-### Su et al. (2004)
+**Version:** TOPLAS 2006 extends POPL 2002; the repository's older theorem numbers refer to the extended manuscript. **Locators:** manuscript Theorems 3.10 and 5.10. **Scope/result:** undecidability of the full first-order theory with a binary constructor and bottom; a unary-symbol decidability result is also given. **Transfer limit:** full first-order formulas allow logical operations unavailable in the Horn entailment target. This is neither an undecidability proof for Problem 1.7 nor permission to insert arbitrary negations into a reduction. Keep the exact logical fragment in every citation.
 
-- **Theorem checked:** binary + bottom suffices for undecidability of the full first-order theory over recursive/infinite trees.
-- **Quantifier boundary:** the reduction uses a richer first-order language; positive Horn entailment remains separate.
-- **Safe use:** cite as evidence that nearby richer logics are undecidable and that a reduction must preserve the exact fragment.
-- **Unsafe use:** “binary non-structural subtyping is undecidable,” without the full-first-order qualifier.
+## PW-BPR19 — the later product-only restriction
 
-### Breuvart, Penelle and Rehof (2019)
+**Source:** 17-page author slide deck, not a located archival proof. **Announced result:** a 2-EXPTIME product-only restriction excluding the homogeneous products `bottom x bottom` and `top x top`, in the stated simple-equation setting. **Mechanism indicated:** cap expressions, finite periodic selections and Büchi-style checks. **Transfer status:** an important prior-art risk for C067/C077/C079, but neither direction of inclusion with Subtail's derived-automaton classes is established. **Next evidence:** locate the full write-up or obtain an author clarification, then compare precise source syntax, ambient semantics and admissible encodings. A slide statement is not upgraded to a refereed theorem here.
 
-- **Source status:** author-hosted workshop/research-day slides; no DOI or archival full paper located in this pass.
-- **Announced scope:** product-only simple equations; no hypothesis `u<=v`; conclusion `x<=y`; syntactic exclusion of `bottom×bottom` and `top×top`.
-- **Announced bound:** 2-EXPTIME.
-- **Mechanism:** a cap-language universality expression `sum_i(R_i S_i° + R_i^<=)+K`; suffix-closed/saturated `K`; constructive finite subsets of cap bases; reduction to Büchi universality.
-- **Open comparison obligation:** build source constraints realizing C067 and C077 examples and test whether the forbidden homogeneous products can be eliminated. Automaton-level orthogonality is suggestive but insufficient.
+## PW-SCH21 — withdrawn extension/pumping attempt
 
-### Schubert (2021, withdrawn)
+**Version:** v1 September 2021; v2 December 2021 withdrawal. **Locators:** Definition 11, Proposition 5.4, Lemma 5.5. **Important correction:** the relevant failed step is a coordinated extension of a solution substitution, not just a vaguely similar automata normal form. The [withdrawn-proof dossier](dossiers/schubert-2021.md) separates the claimed invariant from the later withdrawal and the still-missing concrete failure reconstruction. It provides no valid PSPACE upper bound. Its relationship to C080 is an audit question, not an established common flaw or proof of methodological independence.
 
-- **Version status:** v2 dated 2021-12-20; arXiv withdrawal notice attributes invalidity of the subsequent construction to Lemma 5.5.
-- **Evidence rule:** the abstract is not evidence for a PSPACE theorem once the record withdraws it.
-- **Clinical conclusion:** record three layers separately: the problem formulation remains relevant; any definitions/lemmas before the fault may remain usable after checking; every downstream theorem is unsupported unless reproved independently.
-- **C080 comparison requirement:** compare Lemma 5.5's failed preservation/normalization property with C080's shared-generator and whole-conjunction obligations. Similar vocabulary is not enough; the exact quantifiers and reconstructed object must be aligned.
+## Shared source-comparison contract
+
+For a claimed import or novelty distinction, supply all six items: (1) source version and theorem; (2) constructor signature and semantic tree domain; (3) permitted constraint syntax and quantifier prefix; (4) effective encoding with size bound; (5) both directions required by the intended use; (6) the conclusion actually obtained. A full-signature theorem might transfer through a suitable construction, but that construction must be proved, not presumed impossible or presumed automatic.

@@ -17,6 +17,10 @@ Read recent comments on the relevant issues, open pull requests, and current
 branch commits; a missing assignee does not mean another agent's work is free.
 Before nontrivial research, formalization, review, tooling or documentation work,
 post a scoped claim using the issue-first protocol below.
+Read the CURRENT main version of these rules and the coordinating issue even
+when resuming an older branch. A stale checkout is not authority to ignore a
+new handoff or integration restriction. Reconciliation is coordinated in #37;
+proof obligations remain in #34 and its child issues.
 
 ## Canonical records
 
@@ -53,7 +57,7 @@ Reference these IDs in issues, commits, notes, and pull requests.
 6. Validate new witnesses or counterexamples with an independent predicate/checker when possible.
 7. Record failed approaches. A dead end is reusable knowledge and must not disappear when a later repair is found.
 8. Finish every investigation with: result, evidence, confidence/status, limitations, implications, and the best next question.
-9. If the result changes the project frontier, update `STATE.md` in the same change.
+9. If the result changes the project frontier, prepare the corresponding `STATE.md` update for the same integration; coordinate the shared-file write.
 10. Do not promote a result into `Established` in `STATE.md` merely because tests pass or an issue is closed.
 
 ## Research method: discovery before verification
@@ -123,10 +127,14 @@ is not evidence that the final step is small.
 ## Collaboration model
 
 Exploration may be parallel; integration is deliberately serialized through review.
+`main` is the last reconciled, reproducible checkpoint, not a collection of the
+newest versions of every experiment.
 
-- Use GitHub issues for scoped investigations and coordination.
-- Use branches/worktrees for implementation or proof attempts.
-- For authorized updates, commit and push directly to `main` after the relevant checks. Create a pull request only when requested.
+- Use GitHub issues for scoped investigations, interface agreements and handoffs.
+- Use named branches and separate worktrees for implementation or proof attempts.
+- Research workers do not push directly to `main`. An owner-authorized integrator
+  publishes reviewed, validated changes through a PR or non-forced fast-forward
+  after the checks below. General permission to research is not an integrator lease.
 - Important new theorems, reductions, counterexamples, or completeness claims should receive independent review before being marked established.
 - If two agents disagree, preserve both arguments and resolve the disagreement with evidence rather than overwriting one path.
 
@@ -136,6 +144,31 @@ allowed paths, dependencies, resource limit, and required evidence. Serialize
 integration and writes to the shared tracker; do not share an active Lake build.
 Before integration, inspect the current diff and recheck changes affected by
 new commits. A worker's report is input for review, not proof of completion.
+
+### Single-integrator lease and shared paths
+
+Record the integrator's distinguishable session, authority, base SHA, exact
+write scope and release/handoff condition in the coordinating issue. Only one
+session may hold an overlapping integration scope. Before claiming it, read
+existing claims in the parent AND child issues; a newly created coordination
+issue does not cancel an earlier reservation. Resolve an overlap explicitly
+with the worker/coordinator, or leave that part out and continue disjoint work.
+A release of source-file ownership does not release another session's later
+integration reservation. Silence and old timestamps are not consent.
+
+During parallel work, serialize `AGENTS.md`, `STATE.md`, claims and approach
+ledgers, generated indexes, import aggregators, shared workflows and toolchain
+changes through that integrator. Workers may prepare proposed patches; they
+must not replace these files with stale whole-file snapshots. A new isolated
+workflow may be owned by its worker if explicitly named in the scope claim.
+Keep research moving on owned branches while integration is coordinated.
+
+Release the lease explicitly when stopping, blocked, completed or handing off;
+list any unresolved reservations. Never leave a stopped session appearing to
+be working in the background. A successor reads the latest issue comments,
+main and branch heads before claiming a released scope. Unresolved ownership
+requires an explicit worker/coordinator decision, not automatic takeover.
+These are operating rules, not a claim that GitHub branch protection is enabled.
 
 ### Issue-first coordination and file ownership
 
@@ -150,13 +183,14 @@ Before starting, post a claim with the following minimum information:
 ```text
 Actor/session and role:
 Related workstream and issue:
-Status: proposed / active / blocked / handed off / completed
-Base commit; branch/worktree when applicable:
+Status: ACTIVE / READY_FOR_INTEGRATION / BLOCKED / SUPERSEDED / ARCHIVE / INTEGRATED
+Base commit; branch/worktree; current pushed HEAD:
 Exact objective and deliverable:
 Owned write paths:
 Read-only / explicitly excluded paths:
 Dependencies, expected interfaces and limits:
 Validation plan:
+Local-only work: unpushed commits / staged / unstaged / untracked / stashes / not inspected
 ```
 
 Use a distinguishable session/role label even when agents share one GitHub
@@ -164,6 +198,8 @@ account. Claim only work actually being undertaken. A list of suggestions is
 not a reservation, assignment or launch of workers. Workstream execution and
 ownership remain canonical in `research/approaches.json`; issue claims refine
 concrete task/file scope and must not silently reassign that workstream.
+Use these task/branch statuses in issues; do not change a registry's schema
+merely to make its workstream status vocabulary match them.
 
 Before touching a path, theorem signature, definition, import aggregator or
 shared workflow another agent is using, obtain explicit agreement in the issue
@@ -171,6 +207,13 @@ from that worker or the coordinator. Until resolved, continue with read-only
 review or an announced disjoint task. Neither a missing assignee, an old comment,
 nor lack of a reply transfers ownership. Coordinate an explicit handoff instead
 of maintaining competing implementations of the same lemma.
+
+Actively request and agree the exact interface when another worker's lemma or
+definition is a dependency: declaration/signature, semantics, owned file,
+expected inputs/outputs and acceptance check. Cross-link producer and consumer
+issues and name the dependent commits. Post incompatibilities before rewriting
+an interface or building a competing implementation. Posting a request is not
+evidence that the other worker read, acknowledged or accepted it.
 
 For formalization support, leave the current proof author's modules and core
 interfaces untouched by default. Prefer statement readbacks, dependency audits,
@@ -206,6 +249,68 @@ not independent validation. Compare parallel work with sequential separate
 contexts by useful results surviving review per unit of effort, not output
 volume. Do not claim workers were launched or reviews performed unless they were.
 
+### Evidence-gated handoff and integration
+
+`READY_FOR_INTEGRATION` means a pushed, commit-pinned contribution with exact
+changed paths and declarations, hypotheses, validation commands/run URLs and
+outcomes, mathematical readback, remaining obligations, dependencies, and an
+explicit release or transfer of the needed write scope. It is not "the agent
+finished" or "a workflow was queued". `SUPERSEDED` and `ARCHIVE` name the
+replacement or preserved result; `INTEGRATED` names the actual main commit.
+An apparent partial replacement is not permission to discard unique work.
+
+The integrator must:
+
+1. Compare actual patches, theorem statements and file blobs with current main.
+   Ahead/behind counts alone neither prove unique content nor safe integration.
+   Prefer the smallest coherent additive contribution; preserve dependencies,
+   original commit references and failed-attempt history. Do not rewrite shared
+   history, force-push a worker branch or blanket-merge stale snapshots.
+2. Re-read ownership comments and remote heads immediately before publication.
+   Use an expected PR head or a non-forced ref update rooted in the inspected
+   main commit. If main moves, reconcile and rerun affected checks; never force
+   through the race. Do not rebase/reset another session's worktree.
+3. Validate the combined tree, not just the old source branch. For Lean, check
+   the pinned build, kernel replay, declaration dependency/axiom audit and
+   intended semantics; verify imported runtime definitions as well as proofs.
+   Check the default import graph and relevant independent regressions. Run
+   repository/index/navigation checks appropriate to the change. Inspect
+   workflow triggers: a skipped or absent check is not a passing check.
+4. Record the exact revision for every result. Distinguish PASS, FAIL, PENDING,
+   SKIPPED and NOT RUN; identify local versus remote execution. Preserve old
+   evidence as provenance rather than relabeling it as a fresh run. A partially
+   fetched checkout or lack of local Lean cannot justify claiming a full suite.
+5. Synchronize affected canonical ledgers, readbacks, indexes and the proof
+   tracker in the same integration episode. Keep conditional results conditional:
+   a pinned statement, syntactic enumeration or reverse implication does not
+   discharge forward semantic coverage, a witness bound or the final reduction.
+6. Re-read the published main head and its checks, report the exact checkpoint
+   and remaining branches, and release the integration lease. Do not equate
+   repository cleanup with completion of the scientific milestone.
+
+### Local-work preservation and branch retirement
+
+GitHub only exposes pushed objects. It does not reveal another agent's
+uncommitted files, stashes, untracked files or unpushed commits. Before claiming
+"everything is saved", obtain each relevant workspace's checkpoint report or
+explicitly state which workspaces were not inspected. An absent remote branch
+does not prove a claimed task has no local work.
+
+In an owned accessible checkout, inspect `git status --short`, staged/unstaged
+diffs, untracked files, local branches, stashes and worktrees without modifying
+them. Preserve unknown work; ask its owner to checkpoint useful changes in a
+named branch or durable patch, reviewing for secrets/generated files first.
+Do not indiscriminately commit all files. Do not use `git reset --hard`,
+`git clean -fd`, stash deletion or forced branch deletion as cleanup shortcuts.
+
+Retire a branch only after verifying its exact current HEAD, a released owner
+claim, and that every useful change is integrated or durably archived. Preserve
+scientifically useful alternatives/failures with a verified immutable reference
+and an indexed disposition explaining scope, evidence and replacement. Do not
+retire a branch other live work depends on without coordinating that dependency.
+If archive/deletion tools or permissions are unavailable, keep the branch and
+record the pending action; never claim a tag or deletion that did not occur.
+
 ## Recover context and choose work
 
 - Check `git status --short` and compare the checkout with current GitHub `main`
@@ -240,7 +345,8 @@ volume. Do not claim workers were launched or reviews performed unless they were
 
 ## Updating the research state
 
-When an investigation materially changes what is known:
+When an investigation materially changes what is known, prepare these changes
+with the contribution and coordinate shared-file writes with the integrator:
 
 1. Append the dated attempt to the relevant `Axxx` record.
 2. Update `research/approaches.json` and regenerate `research/README.md` if execution status or next steps changed.

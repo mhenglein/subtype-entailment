@@ -1,7 +1,7 @@
 """Canonical research index with supplemental research records.
 
-The historical indexer remains byte-for-byte in research_index_base.py. This
-front end adds consolidation, repair and subsequent checked-result records
+The shared parser and renderer live in research_index_base.py. This front
+end adds consolidation, repair and subsequent checked-result records
 without duplicating or renumbering the earlier monolithic ledgers.
 """
 import re

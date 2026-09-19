@@ -16,12 +16,13 @@ decidability by finite query preimages over first-return prefix graphs, with
 an explicit computable witness bound; see the top entry of [STATE.md](../STATE.md).
 It supersedes the source-capture outline below as the current end-to-end route
 without promoting Problem 1.7's status. Current priorities, in order:
-independent human review of the stage-4 promotion-preimage lemma using the
-[referee brief](../notes/2026-09-18-closure-lemma-referee-brief.md); Lean
-formalization of stages 3–6, one obligation per GitHub issue under the milestone
-"Rank-query closure formalized"; adversarial fixtures against the compiler's
-joint-conjunction and shared-generator contracts. The Q004 and opposing-route
-tasks below remain the fallback if stage 4 fails.
+(1) discharge `ClosureFor` in Lean: `DiagramCoverage` (#28), then the
+clause-weight bound, `F(k)` and finishing-query correctness (#30); (2) the
+stage-6 decision of entailment (#31); (3) cross-session statement readback and
+adversarial fixtures (#33, #32) in place of an external referee, which the
+owner decided on 2026-09-19 not to commission. New work is PAUSED by the owner
+as of 2026-09-19; resume from #34 and #37 after reading current AGENTS.md. The
+Q004 and opposing-route tasks below remain the fallback if stage 4 fails.
 
 ## Earlier mathematical continuation: single-source capture (2026-09-09)
 
@@ -146,7 +147,7 @@ outputs for angle 4.
 In angle 11, the remaining O4 work is the exact finite automaton for word
 existence; the direct sufficient predicate is already proved sound.
 
-Use those results to choose between structural proofs in angles 4–7 and complete certificates or saturation in angles 8–9. Keep the converse and negative-result investigation in angle 10 separate. Reproducing the original memo's sources remains [A007](approaches/A007.md); the missing files do not block the independent proposals here.
+Use those results to choose between structural proofs in angles 4–7 and complete certificates or saturation in angles 8–9. Keep the converse and negative-result investigation in angle 10 separate. [A007](approaches/A007.md) is retired by the owner's decision of 2026-09-19: assume the original sources will not arrive and make no further source requests. The original census remains unreproduced; independent proposals use their own recorded evidence.
 
 ## Eleven angles (historical programme)
 

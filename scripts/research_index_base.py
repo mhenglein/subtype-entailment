@@ -12,7 +12,7 @@ from urllib.parse import unquote, urlsplit
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "research/approaches.json"
 INDEX = ROOT / "research/README.md"
-STATUSES = ("active", "untried", "blocked", "tried")
+STATUSES = ("active", "untried", "blocked", "tried", "retired")
 OUTCOMES = ("open", "supported", "refuted", "inconclusive")
 
 
@@ -100,6 +100,8 @@ def validate_registry(data):
             raise ValueError(key + ": an untried approach must have an open outcome")
         if row["status"] == "active" and not row["owner"]:
             raise ValueError(key + ": active work needs an owner")
+        if row["status"] == "retired" and row["owner"] is not None:
+            raise ValueError(key + ": retired work must not have a current owner")
         if row["owner"] is not None and not isinstance(row["owner"], str):
             raise ValueError(key + ": owner must be a name or null")
         datetime.date.fromisoformat(row["updated"])
@@ -136,17 +138,18 @@ def render(data):
     counts = {status: sum(r["status"] == status for r in rows) for status in STATUSES}
     lines = ["# Research tracker", "",
              "Problem 1.7 is open. This is the current map of approaches, including unsuccessful work.", "",
-             f"**{counts['tried']} tried · {counts['untried']} not tried · {counts['blocked']} blocked · {counts['active']} active**", "",
+             f"**{counts['tried']} tried · {counts['untried']} not tried · {counts['blocked']} blocked · {counts['active']} active · {counts['retired']} retired**", "",
              "Read [the problem and notation](problem.md), [claims and evidence](claims.md), and [the experiment index](../experiments/README.md).", "",
              "Use [the research plan](PLAN.md) for the eleven proposed angles, priorities, and dependencies, including the Lean workstream.", "",
-             "Choose a record below to see its scope, attempt history, evidence, and limitations. All unowned work is available to discuss; nobody has been assigned automatically.", "",
+             "Choose a record below to see its scope, attempt history, evidence, and limitations. Retired work is retained for history and is not a standing task. Nobody has been assigned automatically.", "",
              "## How to read the status", "",
              "- **Not tried:** a proposed approach; reading a related paper does not count as trying it.",
              "- **Active:** someone is currently working on it and is named as owner.",
              "- **Blocked:** a specific dependency prevents the next step; the record says whether any prior attempt exists.",
-             "- **Tried:** an attempt and evidence are recorded. This does not mean the problem is solved.", "",
+             "- **Tried:** an attempt and evidence are recorded. This does not mean the problem is solved.",
+             "- **Retired:** no further work is planned; this does not imply an attempt ran or a result was reproduced.", "",
              "Outcomes are separate: **supported** applies to the stated limited claim, **refuted** to the exact failed claim, **inconclusive** to an attempt without a verdict, and **open** to unresolved work. Proof status is recorded in the claims ledger.", ""]
-    titles = {"active": "Active work", "untried": "Not tried", "blocked": "Blocked", "tried": "Tried: results and dead ends"}
+    titles = {"active": "Active work", "untried": "Not tried", "blocked": "Blocked", "tried": "Tried: results and dead ends", "retired": "Retired: no further work planned"}
     for status in STATUSES:
         group = [r for r in rows if r["status"] == status]
         lines += ["## " + titles[status], ""]
@@ -164,6 +167,8 @@ def render(data):
                 detail = row["outcome"].capitalize() + ": " + detail + " Next: " + row["next_step"]
             elif status == "blocked":
                 detail = row["summary"] + " Next: " + row["next_step"]
+            elif status == "retired":
+                detail = row["summary"] + " " + row["next_step"]
             path = Path(row["record"]).relative_to("research").as_posix()
             lines.append(f"| {row['id']} | [{cell(row['title'])}]({path}){discussion} | {cell(detail)} | {cell(row['owner'] or 'Unassigned')} |")
         lines.append("")
