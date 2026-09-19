@@ -47,13 +47,15 @@ the canonical least model, `not_entails_iff_canonical`, exact stack
 reachability and total executable normalized satisfiability
 ([canonical model](notes/2026-09-18-canonical-model-formalization.md),
 [finite propagation](notes/2026-09-18-finite-propagation-formalization.md)).
-Still unproved in Lean, so `ClosureFor` and the decision are NOT discharged:
-stage 4b (an executable diagram enumerator and coverage of every safe
-first-return extension via `accepts_bounded_visits`; a finite diagram enumerator is
-delivered on a branch, and the coverage proof, finishing-query semantics and
-mark/transport support are live on unmerged branches listed in #37), the
-clause-weight bound and `F(k)` with finishing-query correctness (stage 5), and
-the entailment decision of stage 6 (a bound or finite representation for the
+Stage 4b is now kernel-checked as well: a finite diagram enumerator with exact
+membership and an explicit computable budget, and `coverage : DiagramCoverage
+I budget`, so `closure_iff` gives both semantic directions of `ClosureFor I
+(preimage I budget)` for every safe reference
+([coverage note](notes/2026-09-19-lean-rank-coverage.md); author readback
+only). Still unproved in Lean, so `ClosureFor` and the decision are NOT
+discharged: the clause-weight conjunct of `ClosureFor` and `F(k)` with
+finishing-query correctness (stage 5; finishing-query support is live on an
+unmerged branch listed in #37), and the entailment decision of stage 6 (a bound or finite representation for the
 separating address, `I_C`, absorption, C029/C031 and the composition). A
 prior-work audit ([dossier](notes/prior-work/README.md)) found no source
 supplying C080's whole-conjunction, shared-generator closure; it records

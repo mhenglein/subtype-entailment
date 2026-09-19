@@ -977,11 +977,15 @@ for the conditional stage-5 unwind and `T_h` recurrence
 ([RankQueryUnwind.lean](../lean/Subtail/RankQueryUnwind.lean)), and for the
 stage-6 semantic foundation and executable normalized satisfiability
 ([CanonicalModel.lean](../lean/Subtail/CanonicalModel.lean),
-[StackReachability.lean](../lean/Subtail/StackReachability.lean)). NOT
-Lean-checked, hence `ClosureFor` and the decision remain unproved: the forward
-direction (stage 4b: executable diagram enumerator and coverage), the
-clause-weight bound and `F(k)` (stage 5), and the entailment decision of stage
-6 (separating-address bound, `I_C`, absorption, C029/C031, composition). Two
+[StackReachability.lean](../lean/Subtail/StackReachability.lean)). Also
+Lean-checked (2026-09-19): the stage-4b enumerator and `coverage :
+DiagramCoverage I budget`, hence `closure_iff`, both semantic directions of
+`ClosureFor I (preimage I budget)` for every safe reference
+([RankQueryCoverage.lean](../lean/Subtail/RankQueryCoverage.lean), author
+readback only). NOT Lean-checked, hence `ClosureFor` and the decision remain
+unproved: the clause-weight conjunct of `ClosureFor` and `F(k)` (stage 5), and
+the entailment decision of stage 6 (separating-address bound, `I_C`,
+absorption, C029/C031, composition). Two
 separate AI-assisted audits, both informed by the author's argument, found no
 gap in stages 1–5 and in the stage-6 bridge; neither is a human referee or a
 blind derivation. Independent adversarial fixtures found no compiler

@@ -77,6 +77,8 @@ Its graph/interface step audits all 65 public declarations of the four graph mod
 | [RankQueryFirstReturn.lean](Subtail/RankQueryFirstReturn.lean) | Graph construction transferred to the actual query graph; single entrance, fresh-edge shape, and at most `O.size+1` maximal forward fresh intervals of a product-simple accepted path |
 | [RankQueryCompiler.lean](Subtail/RankQueryCompiler.lean) | Stage 4c, executable part: fresh/core colour maps, core/slice/edge/interval observers, bounded portal `Diagram`s, `validDiagram`/`compileValid`/`compileDiagram` mirroring `rank_preimage.compile_diagram`, and `preimageOver`; differential-checked against the Python compiler |
 | [RankQuerySound.lean](Subtail/RankQuerySound.lean) | Stage 4c, reverse direction of the Closure Lemma: generator traces of the interval product, cursor identification, `extRef_firstReturn`/`extRef_safe`, `compiled_extension`, colour/edge identification of the extension graph, piece-wise reassembly (`piece_run`, `chain_run`, `atom_accepts`) and `compile_sound`/`preimage_sound`/`closure_reverse`: every base model of the compiled preimage yields a safe first-return extension modelling the query, for any diagram enumeration; the forward direction (4b) and the weight bound (5) are NOT proved |
+| [RankQueryEnumeration.lean](Subtail/RankQueryEnumeration.lean), [RankQueryEnumerationAudit.lean](Subtail/RankQueryEnumerationAudit.lean) | Stage 4b, enumerator: finite `diagrams c b` with exact membership `mem_diagrams : D ∈ diagrams c b ↔ Bounded c b D`, the executable `preimage I budget φ`, `preimage_sound` (from `closure_reverse`) and `preimage_iff_of_coverage` conditional on `DiagramCoverage` |
+| [RankQueryCoverage.lean](Subtail/RankQueryCoverage.lean) | Stage 4b, coverage: `coverage I : DiagramCoverage I budget` for an explicit computable `budget` (chains → blocks → global marks → bounded valid diagram → joint base model), hence `closure_iff`: `Sat (prefixGraph I B) (preimage I budget φ) ↔ ∃ C, FirstReturnExt I B C ∧ Sat (prefixGraph I C) φ` for every safe `B`, the first conjunct of `ClosureFor I (preimage I budget)`; the weight conjunct (stage 5) is NOT proved |
 | [TreeSemantics.lean](Subtail/TreeSemantics.lean), [CanonicalModel.lean](Subtail/CanonicalModel.lean), [CanonicalModelAudit.lean](Subtail/CanonicalModelAudit.lean) | Stage 6 foundation: arbitrary prefix-closed path-set trees, the four normalized constraint forms, inductive propagation closure, `satisfiable_iff_forced_safe`, `not_entails_iff_canonical`, and all-length semantic regression proofs |
 | [StackSummary.lean](Subtail/StackSummary.lean), [StackReachability.lean](Subtail/StackReachability.lean), [CanonicalReachability.lean](Subtail/CanonicalReachability.lean), [StackSummaryAudit.lean](Subtail/StackSummaryAudit.lean) | Stage 6 second layer: balanced excursions, minimum-stack normal form (`reaches_iff_normal`), executable exact reachability, `derived_iff_reaches`, total `satCheck_correct`, supplied-address `separationCheck_iff_countermodel`; entailment NOT decided |
 
@@ -92,7 +94,10 @@ Python checks, but is not yet formalized.
 ## What remains assumed or missing
 
 `RankQuery.lean` pins `ClosureFor`, `ClosureStatement` and `RankDecisionStatement`
-as statements only. No theorem in the repository proves them. Its literal graph
+as statements only. No theorem in the repository proves them. The first
+conjunct of `ClosureFor I (preimage I budget)` (both semantic directions) is
+proved in `RankQueryCoverage.lean` (`closure_iff`); its weight conjunct and the
+two pinned statements are still open. Its literal graph
 and observer semantics are now default-imported through the checked
 first-return query interface. See
 [the statement readback](../notes/2026-09-18-lean-rank-query-statement.md) and

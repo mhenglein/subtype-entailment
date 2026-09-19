@@ -3124,21 +3124,29 @@ theorem xI_step {g : Nat} (hg : g < X.n - 1) {j : Nat} (hj1 : X.pos g ≤ j) (hj
 abbrev IObs (g : Nat) : Observer k :=
   intervalObs I (itemsAt I c X.D g) (markState X.D g) (nextOf X.D g) (markState X.D (g + 1)) (nextOf X.D (g + 1))
 
-/-- The product node at position `j`. -/
-def inode {g : Nat} (hg : g < X.n - 1) {j : Nat} (hj1 : X.pos g ≤ j) (hj2 : j ≤ X.pos (g + 1)) :
-    Node (prefixGraph I B) (X.IObs g) :=
-  (⟨E.cur j, Nat.lt_succ_of_le (E.cur_le (Nat.le_trans hj2 (X.pos_g1_le_N g)))⟩,
-    ⟨encodeI (itemsAt I c X.D g) (X.xI g j), encodeI_lt _ _ (X.xI_ok hg hj1 hj2)⟩)
+/-- Bounds of the product node's two coordinates (theorems, so that the data definition below
+uses no classical reasoning). -/
+theorem inode_cur_lt {g j : Nat} (hj2 : j ≤ X.pos (g + 1)) : E.cur j < (prefixGraph I B).size :=
+  Nat.lt_succ_of_le (E.cur_le (Nat.le_trans hj2 (X.pos_g1_le_N g)))
+
+theorem inode_enc_lt {g : Nat} (hg : g < X.n - 1) {j : Nat} (hj1 : X.pos g ≤ j) (hj2 : j ≤ X.pos (g + 1)) :
+    encodeI (itemsAt I c X.D g) (X.xI g j) < (X.IObs g).size :=
+  encodeI_lt _ _ (X.xI_ok hg hj1 hj2)
+
+/-- The product node at position `j`: the cursor and the encoded interval control. -/
+def inodeAt {g j : Nat} (hc : E.cur j < (prefixGraph I B).size)
+    (hx : encodeI (itemsAt I c X.D g) (X.xI g j) < (X.IObs g).size) : Node (prefixGraph I B) (X.IObs g) :=
+  (⟨E.cur j, hc⟩, ⟨encodeI (itemsAt I c X.D g) (X.xI g j), hx⟩)
 
 theorem inode_allowed {g : Nat} (hg : g < X.n - 1) {j : Nat} (hj1 : X.pos g ≤ j) (hj2 : j ≤ X.pos (g + 1)) :
-    Allowed (prefixGraph I B) (X.IObs g) (X.inode hg hj1 hj2) := by
+    Allowed (prefixGraph I B) (X.IObs g) (X.inodeAt (X.inode_cur_lt hj2) (X.inode_enc_lt hg hj1 hj2)) := by
   show (X.IObs g).allows _ _ = true
-  simp only [IObs, intervalObs, inode]
+  simp only [IObs, intervalObs, inodeAt]
   rw [decodeI_encodeI _ _ (X.xI_ok hg hj1 hj2)]
   exact X.xI_allows hg hj1 hj2
 
 theorem inode_step {g : Nat} (hg : g < X.n - 1) {j : Nat} (hj1 : X.pos g ≤ j) (hj2 : j < X.pos (g + 1)) :
-    Step (prefixGraph I B) (X.IObs g) (X.inode hg hj1 (Nat.le_of_lt hj2)) (X.inode hg (by omega) hj2) := by
+    Step (prefixGraph I B) (X.IObs g) (X.inodeAt (X.inode_cur_lt (Nat.le_of_lt hj2)) (X.inode_enc_lt hg hj1 (Nat.le_of_lt hj2))) (X.inodeAt (X.inode_cur_lt hj2) (X.inode_enc_lt hg (by omega) hj2)) := by
   have hjN : j < E.N := Nat.lt_of_lt_of_le hj2 (X.pos_g1_le_N g)
   obtain ⟨b, hb⟩ := E.word_some hjN
   have hmj : B.word.length ≤ j := Nat.le_of_lt (Nat.lt_of_lt_of_le (X.pos_g_gt_m hg) hj1)
@@ -3150,7 +3158,7 @@ theorem inode_step {g : Nat} (hg : g < X.n - 1) {j : Nat} (hj1 : X.pos g ≤ j) 
     rw [E.cur_succ hmj hb]
     rfl
   · show _ ∈ (X.IObs g).move _ _ _ _
-    simp only [IObs, intervalObs, inode]
+    simp only [IObs, intervalObs, inodeAt]
     rw [decodeI_encodeI _ _ (X.xI_ok hg hj1 (Nat.le_of_lt hj2))]
     apply List.mem_filter.mpr
     refine ⟨List.mem_finRange _, ?_⟩
@@ -3161,13 +3169,13 @@ theorem inode_step {g : Nat} (hg : g < X.n - 1) {j : Nat} (hj1 : X.pos g ≤ j) 
 theorem add_le_of_le_sub {a b t : Nat} (ht : t ≤ b - a) (hab : a ≤ b) : a + t ≤ b := by omega
 
 theorem inode_run {g : Nat} (hg : g < X.n - 1) : ∀ t (ht : t ≤ X.pos (g + 1) - X.pos g),
-    Run (prefixGraph I B) (X.IObs g) (X.inode hg (Nat.le_refl _) (Nat.le_of_lt (X.pos_g_lt_pos_g1 hg)))
-      (X.inode hg (Nat.le_add_right _ t) (add_le_of_le_sub ht (Nat.le_of_lt (X.pos_g_lt_pos_g1 hg)))) := by
+    Run (prefixGraph I B) (X.IObs g) (X.inodeAt (X.inode_cur_lt (Nat.le_of_lt (X.pos_g_lt_pos_g1 hg))) (X.inode_enc_lt hg (Nat.le_refl _) (Nat.le_of_lt (X.pos_g_lt_pos_g1 hg))))
+      (X.inodeAt (X.inode_cur_lt (add_le_of_le_sub ht (Nat.le_of_lt (X.pos_g_lt_pos_g1 hg)))) (X.inode_enc_lt hg (Nat.le_add_right _ t) (add_le_of_le_sub ht (Nat.le_of_lt (X.pos_g_lt_pos_g1 hg))))) := by
   intro t
   induction t with
   | zero =>
     intro _
-    exact Run.refl (X.inode_allowed hg _ _)
+    exact Run.refl (X.inode_allowed hg (Nat.le_refl _) (Nat.le_of_lt (X.pos_g_lt_pos_g1 hg)))
   | succ t ih =>
     intro ht
     have hrun := ih (by omega)
@@ -3175,8 +3183,8 @@ theorem inode_run {g : Nat} (hg : g < X.n - 1) : ∀ t (ht : t ≤ X.pos (g + 1)
     exact Run.step hrun hstep
 
 theorem inode_initial {g : Nat} (hg : g < X.n - 1) :
-    (X.inode hg (Nat.le_refl _) (Nat.le_of_lt (X.pos_g_lt_pos_g1 hg))).2 ∈ (X.IObs g).initial := by
-  simp only [IObs, intervalObs, inode]
+    (X.inodeAt (X.inode_cur_lt (Nat.le_of_lt (X.pos_g_lt_pos_g1 hg))) (X.inode_enc_lt hg (Nat.le_refl _) (Nat.le_of_lt (X.pos_g_lt_pos_g1 hg)))).2 ∈ (X.IObs g).initial := by
+  simp only [IObs, intervalObs, inodeAt]
   apply List.mem_filter.mpr
   refine ⟨List.mem_finRange _, ?_⟩
   simp only
@@ -3190,8 +3198,8 @@ theorem inode_initial {g : Nat} (hg : g < X.n - 1) :
     rfl
 
 theorem inode_final {g : Nat} (hg : g < X.n - 1) :
-    (X.inode hg (Nat.le_of_lt (X.pos_g_lt_pos_g1 hg)) (Nat.le_refl _)).2 ∈ (X.IObs g).final := by
-  simp only [IObs, intervalObs, inode]
+    (X.inodeAt (X.inode_cur_lt (Nat.le_refl _)) (X.inode_enc_lt hg (Nat.le_of_lt (X.pos_g_lt_pos_g1 hg)) (Nat.le_refl _))).2 ∈ (X.IObs g).final := by
+  simp only [IObs, intervalObs, inodeAt]
   apply List.mem_filter.mpr
   refine ⟨List.mem_finRange _, ?_⟩
   simp only
@@ -3209,17 +3217,16 @@ cursors of its two marks. -/
 theorem interval_accepts {g : Nat} (hg : g < X.n - 1) :
     Accepts (prefixGraph I B) (X.IObs g) (X.σ (zVar X.D g)) (X.σ (zVar X.D (g + 1))) := by
   have hlt := X.pos_g_lt_pos_g1 hg
-  have e1 : X.σ (zVar X.D g) = (X.inode hg (Nat.le_refl _) (Nat.le_of_lt hlt)).1 :=
+  have e1 : X.σ (zVar X.D g) = (X.inodeAt (X.inode_cur_lt (Nat.le_of_lt hlt)) (X.inode_enc_lt hg (Nat.le_refl _) (Nat.le_of_lt hlt))).1 :=
     Fin.ext (X.σ_z (by omega))
-  have e2 : X.σ (zVar X.D (g + 1)) = (X.inode hg (Nat.le_of_lt hlt) (Nat.le_refl _)).1 :=
+  have e2 : X.σ (zVar X.D (g + 1)) = (X.inodeAt (X.inode_cur_lt (Nat.le_refl _)) (X.inode_enc_lt hg (Nat.le_of_lt hlt) (Nat.le_refl _))).1 :=
     Fin.ext (X.σ_z (by omega))
   rw [e1, e2]
   refine ⟨_, X.inode_initial hg, _, X.inode_final hg, ?_⟩
   have hrun := X.inode_run hg (X.pos (g + 1) - X.pos g) (Nat.le_refl _)
   have e3 : X.pos g + (X.pos (g + 1) - X.pos g) = X.pos (g + 1) := by omega
-  have e4 : X.inode hg (Nat.le_add_right _ (X.pos (g + 1) - X.pos g))
-      (add_le_of_le_sub (Nat.le_refl _) (Nat.le_of_lt hlt)) =
-      X.inode hg (Nat.le_of_lt hlt) (Nat.le_refl _) := by
+  have e4 : X.inodeAt (X.inode_cur_lt (add_le_of_le_sub (Nat.le_refl _) (Nat.le_of_lt hlt))) (X.inode_enc_lt hg (Nat.le_add_right _ (X.pos (g + 1) - X.pos g)) (add_le_of_le_sub (Nat.le_refl _) (Nat.le_of_lt hlt))) =
+      X.inodeAt (X.inode_cur_lt (Nat.le_refl _)) (X.inode_enc_lt hg (Nat.le_of_lt hlt) (Nat.le_refl _)) := by
     apply Prod.ext
     · apply Fin.ext
       show E.cur (X.pos g + (X.pos (g + 1) - X.pos g)) = E.cur (X.pos (g + 1))
@@ -4301,8 +4308,8 @@ theorem length_flatMap_fresh (m : Nat) : ∀ segs : List (List NNode),
     rw [List.flatMap_cons, List.length_append, ih]
     unfold freshCount
     cases h : isFresh m s
-    · simp [h, List.filter_cons]
-    · simp [h, List.filter_cons]
+    · simp [h]
+    · simp [h]
       omega
 
 /-- Every field of a valid piece is below `coreVars + groups + size + 1`. -/

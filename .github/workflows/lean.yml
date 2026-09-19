@@ -5,7 +5,9 @@ name: Lean
 # whole library through the kernel, and then runs every per-module axiom
 # audit, native/literal regression and scripts/check_lean.py exactly as the
 # separate workflows did. Nothing checked has been removed; it now runs once
-# per commit instead of up to eight times.
+# per commit instead of up to eight times. The stage-4b enumeration and
+# coverage modules (#28) are audited here as well; the former isolated
+# lean-rank-enumeration.yml was folded in on 2026-09-19.
 #
 # Triggers: pushes to main and pull requests, only when Lean sources, their
 # Python differential checkers or their recorded results change. Branch pushes
@@ -75,6 +77,8 @@ jobs:
           lake build +Subtail.RankQueryCompiler
           lake build +Subtail.RankQuerySound
           lake build +Subtail.RankQueryUnwind
+          lake build +Subtail.RankQueryEnumerationAudit
+          lake build +Subtail.RankQueryCoverage
           lake build +Subtail.CanonicalModelAudit
           lake build +Subtail.StackSummaryAudit
       - name: Replay the whole library through the kernel
@@ -82,6 +86,8 @@ jobs:
         run: |
           lake env leanchecker Subtail
           lake env leanchecker Subtail.RankQueryUnwind
+          lake env leanchecker Subtail.RankQueryEnumerationAudit
+          lake env leanchecker Subtail.RankQueryCoverage
       - name: Reject unfinished proof placeholders in the unwind module
         run: "! grep -R -nE '\\bsorry\\b|sorryAx|axiom ' lean/Subtail/RankQueryUnwind.lean"
       - name: Audit terminal border proof dependencies (13 declarations)
@@ -254,6 +260,77 @@ jobs:
           cd lean
           lake env lean /tmp/unwind-axioms.lean | tee /tmp/unwind-axioms.txt
           ! grep -E 'sorryAx|Classical.choice' /tmp/unwind-axioms.txt
+      - name: Audit all diagram-enumeration declaration dependencies
+        run: |
+          mkdir -p tmp
+          python3 - <<'PY'
+          from pathlib import Path
+          import re,json
+          rows=[]
+          for module in ('RankQueryEnumeration','RankQueryEnumerationAudit'):
+              source=Path('lean/Subtail/'+module+'.lean').read_text()
+              rows.extend((kind,module+'.'+name) for kind,name in re.findall(r'^(def|theorem|structure|abbrev) ([A-Za-z_][A-Za-z_0-9]*)',source,re.M))
+          assert rows and len(rows)==len(set(n for _,n in rows))
+          Path('tmp/enumeration-declarations.json').write_text(json.dumps(rows))
+          Path('tmp/enumeration-axioms.lean').write_text('import Subtail.RankQueryEnumerationAudit\n'+''.join('#print axioms Subtail.'+n+'\n' for _,n in rows))
+          PY
+          cd lean
+          set -o pipefail
+          lake env lean ../tmp/enumeration-axioms.lean | tee /tmp/enumeration-axioms.txt
+          cd ..
+          python3 - <<'PY'
+          from pathlib import Path
+          import re,json
+          expected={n:k for k,n in json.loads(Path('tmp/enumeration-declarations.json').read_text())}
+          text=Path('/tmp/enumeration-axioms.txt').read_text()
+          rows=re.findall(r"'Subtail\.([^']+)' (does not depend on any axioms|depends on axioms: \[([^]]*)\])",text)
+          assert set(n for n,_,_ in rows)==set(expected),text
+          for name,_,axioms in rows:
+              allowed={'propext','Quot.sound'}
+              if expected[name]=='theorem': allowed.add('Classical.choice')
+              assert set(a.strip() for a in axioms.split(',') if a.strip())<=allowed,(name,axioms)
+          print('PASS:',len(rows),'named declaration dependency closures')
+          PY
+      - name: Audit every declaration of the stage-4b coverage module
+        run: |
+          mkdir -p tmp
+          python3 - <<'PY'
+          from pathlib import Path
+          import re, json
+          pattern = r"^(?:@\[simp\] )?(def|theorem|abbrev|structure) ([A-Za-z_][A-Za-z_0-9?']*)"
+          source = Path('lean/Subtail/RankQueryCoverage.lean').read_text()
+          assert not re.search(r'^\s*(axiom|opaque)\b', source, re.M), 'no axiom or opaque declarations'
+          assert not re.search(r'^\s*sorry\b|:= sorry|by sorry', source, re.M), 'no sorry'
+          rows, ns = [], []
+          for line in source.splitlines():
+              m = re.match(r'^namespace (\w+)', line)
+              if m: ns.append(m.group(1)); continue
+              m = re.match(r'^end (\w+)', line)
+              if m and ns and ns[-1] == m.group(1): ns.pop(); continue
+              m = re.match(pattern, line)
+              if m: rows.append((m.group(1), '.'.join(ns[2:] + [m.group(2)])))
+          assert ns == [] and rows and len(rows) == len(set(n for _, n in rows)) and len(rows) >= 400, (ns, len(rows))
+          Path('tmp/coverage-declarations.json').write_text(json.dumps(rows))
+          Path('tmp/coverage-axioms.lean').write_text('import Subtail.RankQueryCoverage\n' + ''.join('#print axioms Subtail.RankQueryCoverage.' + n + '\n' for _, n in rows))
+          PY
+          cd lean
+          set -o pipefail
+          lake env lean ../tmp/coverage-axioms.lean | tee /tmp/coverage-axioms.txt
+          cd ..
+          python3 - <<'PY'
+          from pathlib import Path
+          import re, json
+          expected = {n: k for k, n in json.loads(Path('tmp/coverage-declarations.json').read_text())}
+          text = Path('/tmp/coverage-axioms.txt').read_text()
+          rows = re.findall(r"'Subtail\.RankQueryCoverage\.(.+?)' (does not depend on any axioms|depends on axioms: \[([^]]*)\])", text)
+          assert set(n for n, _, _ in rows) == set(expected), text
+          for name, _, axioms in rows:
+              allowed = {'propext', 'Quot.sound'}
+              if expected[name] == 'theorem': allowed.add('Classical.choice')
+              assert set(a.strip() for a in axioms.split(',') if a.strip()) <= allowed, (name, axioms)
+          assert 'sorryAx' not in text
+          print('PASS:', len(rows), 'coverage declaration dependency closures')
+          PY
       - name: Audit canonical-model declaration dependencies
         run: |
           mkdir -p tmp
@@ -344,6 +421,11 @@ jobs:
         run: |
           python3 experiments/check_lean_rank_compiler.py --lean --output /tmp/lean-rank-compiler.json
           cmp results/lean-rank-compiler.json /tmp/lean-rank-compiler.json
+      - name: Independent complete diagram-syntax census and deterministic native replay
+        run: |
+          PYTHONHASHSEED=17 python3 experiments/check_rank_enumeration.py --output /tmp/enumeration-native.json
+          PYTHONHASHSEED=91 python3 experiments/check_rank_enumeration.py --output /tmp/enumeration-native-replay.json
+          cmp /tmp/enumeration-native.json /tmp/enumeration-native-replay.json
       - name: Independent saturation oracle and native agreement (stack summary)
         run: |
           python3 experiments/check_stack_summary.py --lean --output /tmp/stack-summary-native.json

@@ -477,9 +477,9 @@
       "status": "tried",
       "outcome": "supported",
       "owner": null,
-      "updated": "2026-09-18",
-      "summary": "Lean kernel-checks the rank-query candidate's stages 1-3 (terminal border depth at most k-1, milestone first returns, failure-target confinement, exact coloured first-return graph surgery identified with the literal query graph); stage 4a pins the query grammar, decidable satisfaction and the Closure Lemma as an unproved Prop, with product-simple runs and the s+1 fresh-interval bound as 4b ingredients; stage 4c has an executable diagram compiler (differential-checked against compile_diagram) and the proved reverse half of ClosureFor for every diagram enumeration (closure_reverse: a base model of the compiled preimage yields a safe first-return extension modelling the query); stage 6 has a kernel-checked semantic foundation (arbitrary trees, canonical separating addresses) and total executable normalized satisfiability, but entailment is not yet decided; stage 4b (diagram coverage), the weight bound and the rest of 6 are unformalized, so ClosureFor itself is unproved.",
-      "next_step": "Stage 4b: define the diagram enumerator in Lean mirroring iter_diagrams and prove coverage of every safe first-return extension via accepts_bounded_visits (#28), then the weight bound (#30), discharging ClosureFor I (preimageQuery I enumDiagrams) together with closure_reverse; for stage 6, bound or finitely represent the separating address (Pop/Post regularity, I_C), then absorption, C029/C031 and the composition (#31). One GitHub issue per obligation under the milestone 'Rank-query closure formalized'.",
+      "updated": "2026-09-19",
+      "summary": "Lean kernel-checks the rank-query candidate's stages 1-3 (terminal border depth at most k-1, milestone first returns, failure-target confinement, exact coloured first-return graph surgery identified with the literal query graph); stage 4a pins the query grammar, decidable satisfaction and the Closure Lemma as an unproved Prop, with product-simple runs and the s+1 fresh-interval bound as 4b ingredients; stage 4c has an executable diagram compiler (differential-checked against compile_diagram) and the proved reverse half of ClosureFor for every diagram enumeration (closure_reverse); stage 4b has a finite diagram enumerator with exact membership, an explicit computable budget and the kernel-checked coverage theorem (coverage : DiagramCoverage I budget), so closure_iff gives both semantic directions of ClosureFor I (preimage I budget) for every safe reference; stage 6 has a kernel-checked semantic foundation (arbitrary trees, canonical separating addresses) and total executable normalized satisfiability, but entailment is not yet decided; the clause-weight conjunct of ClosureFor (stage 5) and the rest of 6 are unformalized, so ClosureFor, ClosureStatement and RankDecisionStatement are still unproved.",
+      "next_step": "Stage 5 (#30): prove the clause-weight conjunct of ClosureFor I (preimage I budget) for the enumerator's budget and compileValid, then F(k) and finishing-query correctness, discharging ClosureFor together with closure_iff; cross-session readback of DiagramCoverage/Bounded/budget/closure_iff (#33); for stage 6, bound or finitely represent the separating address (Pop/Post regularity, I_C), then absorption, C029/C031 and the composition (#31). One GitHub issue per obligation under the milestone 'Rank-query closure formalized'.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
@@ -518,7 +518,13 @@
         "lean/Subtail/RankQuerySound.lean",
         "notes/2026-09-18-lean-rank-compiler.md",
         "experiments/check_lean_rank_compiler.py",
-        "results/lean-rank-compiler.json"
+        "results/lean-rank-compiler.json",
+        "lean/Subtail/RankQueryEnumeration.lean",
+        "lean/Subtail/RankQueryCoverage.lean",
+        "notes/2026-09-18-rank-query-enumeration.md",
+        "notes/2026-09-19-lean-rank-coverage.md",
+        "experiments/check_rank_enumeration.py",
+        "results/lean-rank-enumeration.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/34"
     }
