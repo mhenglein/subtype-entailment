@@ -15,7 +15,7 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 LEAN = ROOT / "lean"
-MODULES = ["RankQueryWeightCounterexample"]
+MODULES = ["RankQueryWeightCounterexample", "RankQueryWeightBound"]
 ALLOWED = {"propext", "Quot.sound", "Classical.choice"}
 
 
@@ -40,6 +40,7 @@ def main() -> None:
               "scope": "native theorem compilation, kernel replay, transitive axiom audit",
               "modules": {}, "full_enumerator_executed": False,
               "large_observer_materialized": False}
+    run(["lake", "build", *("+Subtail." + name for name in MODULES)])
     for name in MODULES:
         path = LEAN / "Subtail" / f"{name}.lean"
         text = path.read_text()
@@ -49,7 +50,6 @@ def main() -> None:
         assert not re.search(r"\b(sorry|sorryAx|axiom|native_decide|unsafe)\b|decide\s*\+native", code)
         declarations = re.findall(r"^(?:theorem|def|abbrev)\s+([A-Za-z_][A-Za-z_0-9]*)", code, re.M)
         assert declarations
-        run(["lake", "build", "+Subtail." + name])
         run(["lake", "env", "leanchecker", "Subtail." + name], 600)
         with tempfile.TemporaryDirectory(prefix="rank-weight-audit-", dir=ROOT) as temp:
             audit = Path(temp) / "Audit.lean"

@@ -63,6 +63,7 @@ def output : Clause 5 := compileValid inst input diagram
 
 /-- The example preserves terminality; this is not the nonterminal toy. -/
 theorem terminal : TerminalRank.TerminalFinals inst := by
+  unfold TerminalRank.TerminalFinals
   decide +kernel
 
 theorem original_witness : Witness inst [true, false, true, false] := by
@@ -82,8 +83,24 @@ theorem exact_budget : RankQueryCoverage.budget input =
 
 /-- All enumeration premises are checked against the unchanged Bounded. -/
 theorem diagram_bounded : Bounded input (RankQueryCoverage.budget input) diagram := by
-  unfold Bounded
-  decide +kernel
+  rw [exact_budget]
+  refine ⟨by decide, by decide, by decide, by decide, ?_,
+    by decide, by decide, by decide, ?_, by decide, ?_⟩
+  · intro x hx
+    have he : x = .fresh 0 := by simpa [diagram] using hx
+    subst x
+    change 0 < 2
+    decide
+  · intro ps hps
+    have he : ps = pathPieces := by simpa [diagram] using hps
+    subst ps
+    constructor
+    · decide +kernel
+    · intro p hp
+      have he : p = forward ∨ p = wrap := by simpa [pathPieces] using hp
+      rcases he with rfl | rfl <;> unfold pieceBound <;> decide +kernel
+  · intro s hs
+    simp [diagram] at hs
 
 /-- All compileDiagram guards pass, including seams and endpoint controls. -/
 theorem diagram_valid : validDiagram inst input diagram = true := by
@@ -109,7 +126,7 @@ theorem output_mem : output ∈ preimage inst RankQueryCoverage.budget [input] :
   simp only [preimage, List.flatMap_cons, List.flatMap_nil, List.append_nil]
   apply (mem_preimageClause inst input (RankQueryCoverage.budget input) output).mpr
   refine ⟨diagram, diagram_bounded, ?_⟩
-  simp only [compileDiagram, diagram_valid, Bool.true_eq, if_true, output]
+  simp only [compileDiagram, diagram_valid, if_true, output]
 
 /-- A strict exact integer comparison, with no floating-point estimates. -/
 theorem exceeds_old_bound : closureBound 5 (weight [input]) < clauseWeight output := by
