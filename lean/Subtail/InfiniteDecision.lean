@@ -1,4 +1,5 @@
 import Subtail.InfiniteCycle
+import Subtail.PeriodicRun
 import Subtail.RankQueryEnumeration
 import Subtail.FiniteSearch
 
@@ -90,5 +91,23 @@ theorem mem_candidates (I : Instance k) (q : Fin k) (c : Word) :
     refine ⟨c, ?_, rfl⟩
     exact (mem_boundedLists bools k c).mpr
       ⟨(cycleCheck_correct I q c).mp h |>.2.1, fun a _ => mem_bools a⟩
+
+/-- The unbounded prefix obligation left after exact bounded-cycle enumeration. -/
+theorem infWitness_iff_good_candidate (I : Instance k) (hA : Absorbing I) :
+    InfWitness I ↔ ∃ q c, (q,c) ∈ candidates I ∧
+      ∃ w, SafeRun I I.initial w q ∧ PeriodicRun.PrefixGood I w c := by
+  constructor
+  · intro h
+    obtain ⟨w,q,c,hw,hq,hcol,hcycle,hne,hlen⟩ :=
+      (InfiniteCycle.infWitness_iff_bounded_cycle I hA).mp h
+    have hf : I.final.get q = true := by
+      simpa [finalCheck, hq] using hw.2.1
+    refine ⟨q,c,(mem_candidates I q c).mpr ?_,w,
+      PeriodicRun.witness_safeRun I hw hq, PeriodicRun.prefixGood_of_witness I hw c⟩
+    exact (cycleCheck_correct I q c).mpr ⟨hne,hlen,hf,hcol,hcycle⟩
+  · rintro ⟨q,c,hmem,w,hw,hgood⟩
+    obtain ⟨hne,hlen,hf,hcol,hcycle⟩ :=
+      (cycleCheck_correct I q c).mp ((mem_candidates I q c).mp hmem)
+    exact PeriodicRun.infWitness_of_prefix_good I hA hw hcycle hne hf hgood
 
 end Subtail.InfiniteDecision
