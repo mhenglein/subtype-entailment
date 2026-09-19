@@ -6,8 +6,9 @@ Approach: [A018](../research/approaches/A018.md). Claims and experiments:
 Base: `c946d86b9e65da2877e0df42c710abbdcb5a4037` on the isolated branch
 `codex/c081-complexity-20260919`, worktree
 `/Users/marcushenglein/Documents/ChatGPT/Subtail-c081-complexity`.
-Owned path: this new note only. No Lean source, experiment result, ledger,
-workflow, or shared-state file was changed.
+Initial profiling changed only this note. The follow-up also owns the new
+additive module `lean/Subtail/TerminalDecisionLazy.lean`; existing Lean source,
+experiment results, ledgers, workflows, and shared state remain unchanged.
 
 ## Question and current boundary
 
@@ -127,50 +128,54 @@ materialization dominated the observed failure.
 
 ## Proposed exact optimization
 
-Introduce a private candidate helper, or rewrite the terminal loop, so the
-expensive promoted query is constructed only after `safeReferenceCheck` is
-true:
+The safe gate must be global. Moving the `phi` binding inside each candidate
+would risk recomputing the large query for every safe reference. The additive
+module `Subtail.TerminalDecisionLazy` therefore defines:
 
 ```lean
-if safeReferenceCheck I (oneLetter a f p) then
-  satCheck (prefixGraph I (oneLetter a f p))
-    (promote (preimage I RankQueryCoverage.budget) (finishQuery I) (k - 2))
-else false
+def safeOneLetterExists (I : Instance k) : Bool :=
+  [false, true].any fun a =>
+    (List.finRange k).any fun f =>
+      (List.finRange k).any fun p =>
+        safeReferenceCheck I (oneLetter a f p)
+
+def terminalCandidateScan (I : Instance k) (phi : Query k) : Bool :=
+  [false, true].any fun a =>
+    (List.finRange k).any fun f => (List.finRange k).any fun p =>
+      safeReferenceCheck I (oneLetter a f p) &&
+        satCheck (prefixGraph I (oneLetter a f p)) phi
+
+def terminalWitnessCheckLazy (I : Instance k) : Bool :=
+  witnessCheck I [] ||
+    if safeOneLetterExists I then
+      terminalCandidateScan I
+        (promote (preimage I RankQueryCoverage.budget) (finishQuery I) (k - 2))
+    else false
 ```
 
-Keep the empty-word check first and preserve the same finite enumeration of
-`a`, `f`, and `p`. This is exact because all definitions are pure and Boolean
-`if`/`&&` have the same truth table. The proof interface is a local lemma for
-one candidate:
+The empty-word check stays first. If the global gate is true, `phi` is built
+once and the original candidate scan runs unchanged. If the gate is false,
+`phi` is never constructed.
 
-```lean
-(if safeReferenceCheck I B then
-    satCheck (prefixGraph I B)
-      (promote (preimage I RankQueryCoverage.budget) (finishQuery I) (k - 2))
-  else false)
-=
-  safeReferenceCheck I B &&
-    satCheck (prefixGraph I B)
-      (promote (preimage I RankQueryCoverage.budget) (finishQuery I) (k - 2))
-```
-
-A two-case proof on `safeReferenceCheck I B` establishes this lemma. List
-`any` congruence then gives equality with the current
-`terminalWitnessCheck`; the existing
-`terminalWitnessCheck_spec` and `terminalWitnessCheck_sound` proofs can be
-reused. No semantic argument about trees, terminality, or the C080 coverage
-claim is needed.
+The new theorem
+`Subtail.TerminalDecisionLazy.terminalWitnessCheckLazy_eq` proves unconditional
+Boolean equality with the unchanged `RankQueryDecision.terminalWitnessCheck`.
+The key local lemma is that a true candidate scan implies a true global gate;
+its contrapositive makes the false-gate branch false. The existing
+`terminalWitnessCheck_spec` theorem then yields
+`terminalWitnessCheckLazy_correct` by rewriting. No semantic argument about
+trees, terminality, or the C080 coverage claim is added.
 
 Let `k` be the number of summary states, `R = 2 k^2` the one-letter reference
 count, and `E(k)` the cost of materializing the promoted query. The current
-code pays `E(k)` before checking any reference. The lazy form pays only the
-cheap safe-reference tests until the first safe candidate, then pays `E(k)`
-once. When all candidates are unsafe, as in the measured raw-reflexive case,
-the cost changes from `E(k) + O(R)` to `O(R)`; the observed bounded probe
-changed from OOM to 0.692 seconds. The worst-case asymptotic cost remains
-unchanged when a safe candidate exists, and the later graph SAT call can still
-be expensive. This is therefore a targeted practical improvement, not a
-complete complexity bound or a claim that all 13 E052 cases will finish.
+code pays `E(k)` before checking any reference. The global-gated form pays an
+additional safe-reference scan and pays `E(k)` once only when at least one
+reference is safe. When all candidates are unsafe, as in the measured
+raw-reflexive case, the cost changes from `E(k) + O(R)` to `O(R)`; the
+observed bounded probe changed from OOM to 0.692 seconds. When a safe
+candidate exists, query sharing is preserved and the asymptotic query cost is
+the same, plus the extra gate scan. This is a targeted practical improvement,
+not a complete complexity bound or a claim that all 13 E052 cases will finish.
 
 ## Acceptance, limits, and next experiment
 
@@ -203,21 +208,62 @@ materialization terminates within a useful bound, and it does not improve the
 exponential `balancedCheck` table enumeration. A bounded probe cannot prove
 universal runtime behavior.
 
-No new Lean formalization was needed for this review. The disputed point is
-operational evaluation order, and the one-case equality is the appropriate
-small proof obligation if the optimization is implemented. The existing C081
-proof and arbitrary-tree semantics remain the authority.
+The initial profiling needed no new Lean formalization. This follow-up adds
+only the small Boolean equality and correctness wrapper in
+`TerminalDecisionLazy.lean`; it does not alter the existing C081 proof or
+arbitrary-tree semantics.
+
+## Correction to the earlier released cost claim
+
+The first release of this note described a per-candidate rewrite and said that
+the lazy form would build the promoted query once after the first safe
+candidate. That statement was incorrect: putting the `phi` binding inside the
+candidate body could rebuild it for every safe candidate. Its worst-case cost
+could therefore multiply by the number of safe references.
+
+The corrected implementation uses a global `safeOneLetterExists` gate. It
+scans the same finite references first, constructs `phi` once only when the
+gate is true, and then runs the original candidate scan with that shared query.
+If the gate is false, the query is not constructed. The additive theorem
+`terminalWitnessCheckLazy_eq` proves this corrected wrapper equals the unchanged
+terminal checker. The complexity statement above now refers to this global
+version: one extra gate scan, one shared `E(k)` expansion when any candidate is
+safe, and no `E(k)` expansion when none is safe. The per-candidate claim is
+superseded and must not be used.
 
 ## Handoff
 
 Result: the selected direct raw `UNKNOWN` case is dominated by eager promoted
-terminal-query construction. A safe-gated construction is an exact,
-semantics-preserving optimization with a measured 0.692-second temporary
-probe, while the existing code reaches an internal OOM after 12.527 seconds.
+terminal-query construction. The new global safe-gated wrapper is proved
+Boolean-equivalent to the original terminal checker and has the measured
+0.692-second temporary raw-reflexive probe, while the original code reaches an
+internal OOM after 12.527 seconds.
 
-Evidence remains bounded and local to Lean 4.33.1 on the checked `wb-marcus`
-source pin. The optimization is proposed only; no implementation or Lean
-source was changed in this task. The write scope is this note only and is
-released with the pushed commit. Parent integration should inspect the patch,
-recheck the exact main/source pins, and rerun the listed regressions before
-adopting it.
+Evidence remains bounded and local to Lean 4.33.1 on a fresh `wb-marcus`
+worktree from main `29cda9a`. The final module hash is
+`d6b8db9c0f36f1025f67138a22316c0cb1796a7b08e5eadc44ec94c643064c8e` on both
+checkouts. PASS checks: full pinned 53-job Lake build in the fresh worktree;
+direct compile of `TerminalDecisionLazy.lean`; bundled `leanchecker` replay;
+declaration axiom readback; and capped native probes showing
+`safeOneLetterExists=false`, `terminalWitnessCheckLazy=false` for
+raw-reflexive, and `safeOneLetterExists=true` on the existing toy instance.
+The source module and note are the only owned changes; E052 was not rerun and
+no claim is made that all diagnostic UNKNOWN cases finish. Parent integration
+should inspect both paths, rerun the listed regressions, and preserve the
+original terminal reference implementation.
+
+Reproducibility commands on the fresh worktree were:
+
+```text
+source /home/marcus/.local/share/subtail/env.sh && lake build
+lake env lean Subtail/TerminalDecisionLazy.lean
+lake env lean -o .lake/build/lib/lean/Subtail/TerminalDecisionLazy.olean \
+  Subtail/TerminalDecisionLazy.lean
+lake env leanchecker Subtail.TerminalDecisionLazy
+python3 /tmp/subtail-c081-runner-lazy.py /tmp/subtail-c081-lazy-probe.lean 30
+```
+
+The temporary runner used a new process group, `LEAN_NUM_THREADS=2`, a 16 GiB
+address-space limit, a 120-second CPU limit, and a 30-second wall limit. Its
+probe output was `raw_reflexive_safe_exists=false`,
+`raw_reflexive_lazy=false`, and `toy_safe_exists=true`.
