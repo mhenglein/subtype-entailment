@@ -1,0 +1,39 @@
+{
+  "counts": {
+    "adversarial_groups": 9,
+    "arbitrary_normalized_valuations": 115340,
+    "cli_invalid_input_checks": 1,
+    "cli_roundtrips": 3,
+    "deep_product_depth": 10000,
+    "definition_models_among_checked_valuations": 2401,
+    "exhaustive_input_systems": 1352,
+    "exhaustive_normalized_systems": 587,
+    "exhaustive_normalized_valuations": 112880,
+    "fixed_address_comparisons": 38936,
+    "invalid_inputs_rejected": 14,
+    "original_valuation_extensions": 10600,
+    "seeded_fresh_mutations": 1210,
+    "seeded_systems": 250,
+    "structural_systems": 1603
+  },
+  "environment": {
+    "machine": "x86_64",
+    "platform": "Linux",
+    "python": "3.13.5"
+  },
+  "scope": {
+    "exact_tree_semantics": "finite graph coalgebras, including infinite trees; inclusion by complete product-graph reachability",
+    "exhaustive_syntax": "n=0,1; leaves bottom/variables and one product over leaves; every query and zero/one premise",
+    "fixed_addresses": "all binary words of length <=4 on named/seeded cases",
+    "normalized_value_domain": "all assignments of bottom,unit,zeroSpine,fullTree when output variables <=4",
+    "not_claimed": "not an exhaustive arbitrary-tree theorem, unrestricted decision, or Lean proof",
+    "original_value_domain": "seven named finite/infinite regular trees",
+    "seeded": "250 finite DAG inputs; five original valuations and fresh-value mutations per input"
+  },
+  "seed": 2026091931,
+  "source_sha256": {
+    "experiments/check_expression_normalization.py": "8c665e12402c3ca46d0f8b247d6319c7ceb1938cc1bffb7214bec778a2d3a543",
+    "experiments/expression_normalization.py": "5668ce46ac3647998d44ec758157f67aac8ff273facd158016432057fc5fe922"
+  },
+  "status": "PASS"
+}
