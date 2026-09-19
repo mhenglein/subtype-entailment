@@ -35,33 +35,51 @@ jobs:
           test: 'false'
           lint: 'false'
           use-mathlib-cache: 'false'
-      - name: Build only the normalization dependency closure
+      - name: Build the normalization and audit dependency closure
         working-directory: lean
-        run: lake build +Subtail.ExpressionNormalization
+        run: lake build +Subtail.ExpressionNormalizationAudit
       - name: Independent kernel replay
         working-directory: lean
-        run: lake env leanchecker Subtail.ExpressionNormalization
-      - name: Reject unfinished declarations
-        run: "! grep -nE '\\bsorry\\b|sorryAx|^axiom |native_decide' lean/Subtail/ExpressionNormalization.lean"
-      - name: Audit theorem and runtime dependency closures
         run: |
+          lake env leanchecker Subtail.ExpressionNormalization
+          lake env leanchecker Subtail.ExpressionNormalizationAudit
+      - name: Reject unfinished declarations
+        run: "! grep -nE '\\bsorry\\b|sorryAx|^axiom |native_decide' lean/Subtail/ExpressionNormalization*.lean"
+      - name: Audit all named declarations and executable definitions
+        shell: bash
+        run: |
+          set -euo pipefail
           mkdir -p tmp
           python3 - <<'PY'
           import pathlib, re
-          source = pathlib.Path('lean/Subtail/ExpressionNormalization.lean').read_text()
-          names = re.findall(r'^(?:def|theorem|structure|inductive|abbrev)\s+([\w.]+)', source, re.M)
-          out = ['import Subtail.ExpressionNormalization']
-          out += ['#print axioms Subtail.ExpressionNormalization.' + name for name in names]
-          pathlib.Path('tmp/expression-normalization-axioms.lean').write_text('\n'.join(out) + '\n')
-          print('Named declaration count:', len(names))
+          decls = []
+          for path in sorted(pathlib.Path('lean/Subtail').glob('ExpressionNormalization*.lean')):
+              for kind, name in re.findall(r'^(def|theorem|structure|inductive|abbrev)\s+([\w.]+)', path.read_text(), re.M):
+                  full = name if name == 'main' else 'Subtail.ExpressionNormalization.' + name
+                  decls.append((kind, full))
+          for filename, names in [('all', [n for k,n in decls]), ('runtime', [n for k,n in decls if k != 'theorem'])]:
+              out = ['import Subtail.ExpressionNormalizationAudit'] + ['#print axioms ' + n for n in names]
+              pathlib.Path('tmp/normalization-' + filename + '.lean').write_text('\n'.join(out) + '\n')
+              print(filename, 'declaration count:', len(names))
           PY
           cd lean
-          lake env lean ../tmp/expression-normalization-axioms.lean | tee ../tmp/expression-normalization-axioms.txt
+          lake env lean ../tmp/normalization-all.lean | tee ../tmp/normalization-all.txt
+          lake env lean ../tmp/normalization-runtime.lean | tee ../tmp/normalization-runtime.txt
           python3 - <<'PY'
           import pathlib, re
-          text = pathlib.Path('../tmp/expression-normalization-axioms.txt').read_text()
-          for group in re.findall(r'depends on axioms:\s*\[([^\]]*)\]', text):
-              found = {x.strip() for x in group.split(',') if x.strip()}
-              assert found <= {'propext', 'Quot.sound', 'Classical.choice'}, found
-          assert 'sorryAx' not in text and 'error:' not in text
+          for filename, allowed in [('all', {'propext','Quot.sound','Classical.choice'}), ('runtime', {'propext','Quot.sound'})]:
+              text = pathlib.Path('../tmp/normalization-' + filename + '.txt').read_text()
+              for group in re.findall(r'depends on axioms:\s*\[([^\]]*)\]', text):
+                  found = {x.strip() for x in group.split(',') if x.strip()}
+                  assert found <= allowed, (filename, found)
+              assert 'sorryAx' not in text and 'error:' not in text
+              if filename == 'runtime':
+                  assert 'Classical.choice' not in text
           PY
+      - name: Compare native compiler with independent finite-set oracle
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p tmp
+          (cd lean && lake env lean --run Subtail/ExpressionNormalizationAudit.lean) > tmp/normalization-native.jsonl
+          python3 experiments/check_expression_normalization.py --lean-output tmp/normalization-native.jsonl | tee tmp/expression-normalization-result.json
