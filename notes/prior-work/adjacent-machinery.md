@@ -1,74 +1,43 @@
-# Adjacent machinery and prior-art boundaries
+# Adjacent machinery: useful tools and exact non-implications
 
-These works do not directly solve Problem 1.7. They delimit what can and cannot be claimed as new and identify imported-theorem obligations.
+Read [the bibliography](bibliography.md) for source/version/inspection evidence. The items below are possible dependencies or adversarial comparisons, **not black-box solutions to Problem 1.7**.
 
-## Regular languages and borders
+## Ordinary borders — PW-BORD09
 
-### Anderson–Loftus–Rampersad–Santean–Shallit (2008)
+The existing [terminal-backreference audit](../2026-09-08-terminal-backreference-literature-audit.md) records Theorem 58: an n-state NFA accepting an unbordered word accepts one of length at most `6n+1`. This is a stronger comparator than merely observing that ordinary border problems have quadratic phenomena. C077's possible contribution is the selected ordered endpoint relation and last-target structure, not the first short unbordered witness.
 
-- **Problem family:** whether a DFA/NFA language contains bordered or unbordered words, whether infinitely many occur, and shortest-witness size.
-- **Established relevance:** ordinary borderedness and unborderedness inside regular languages are algorithmic topics with known polynomial/quadratic witness phenomena.
-- **Difference from Subtail:** a Subtail violation is indexed by two run cuts whose endpoint states must form a selected ordered pair `G`; the compared prefix/suffix is coupled to one accepting run and terminal source/target structure. This is not merely `L(A) ∩ Bordered ≠ empty`.
-- **Safe claim boundary:** C077 must not be sold as the first quadratic bound for borders in automata. Its candidate novelty lies in the flagged, state-dependent last-target collapse and the exact `k^2+k-2` bound for that class.
+**Transfer obligation:** a shortening operation must preserve the source/target colors of the new comparison. Word equality alone does not do that. The [source-border analysis](../2026-09-05-source-border-anderson.md) records the additional target-forward-closure issue. Preserve that hypothesis instead of citing the uncolored theorem as a general colored result.
 
-## Word equations with constraints
+## Existential equations — PW-DGH01; quantifier boundary — PW-GAN13
 
-### Diekert–Gutiérrez–Hagenah (2001) and later recompression work
+Regular-constrained existential equations are relevant once a finite formula has actually been constructed. Record the group/monoid/alphabet mapping and representation size when importing the cited backend. It does not establish completeness of a chosen family of schemes, permit arbitrary arithmetic extensions, or remove a universal quantifier over cuts. General positive forall-exists validity has undecidability results in PW-GAN13; those results do not transfer to every restricted cap or terminal-copy syntax either.
 
-- **Established result used by Subtail-style reductions:** existential word equations with rational/regular constraints are decidable; the free-group/free-monoid-with-involution formulation is PSPACE-complete.
-- **What it can discharge:** satisfiability of a *supplied finite existential formula* or supplied symbolic scheme.
-- **What it cannot discharge:** existence of a complete finite family of schemes; a universal/existential alternation; or a compiler that preserves one shared extension for an entire conjunction.
-- **Audit rule for C067/C068/C071/C072/C075:** state the exact formula, variable sharing, regular constraints and size construction before importing PSPACE.
+**Acceptance test for an import:** write one complete finite formula, give all shared variables and constraints, and prove both directions of the reduction before quoting its complexity. Treat an unbounded enumeration of decidable formulas as a search procedure until a terminating coverage argument exists.
 
-### Ganesh–Minnes–Solar-Lezama–Rinard (2013)
+## One-use backreferences — PW-KU26
 
-- **Boundary:** validity for positive forall-exists word equations is undecidable in general, while certain quantifier-free solved forms with length/regular constraints are decidable.
-- **Relevance:** prevents replacing C080 or cap universality with “word equations are decidable.” Quantifier prefix and syntactic restrictions are decisive.
-- **Non-implication:** general undecidability of a richer forall-exists language does not settle the restricted cap or terminal flagged-border fragment.
+Theorem 6 supplies a finite canonical union of branches `A_i(B_i)_x C_i \\x D_i` plus a regular residual. The paper gives `O(n log^2 n)` matching for fixed expressions; do not turn a fixed-expression input-length bound into a polynomial combined-complexity claim.
 
-## Backreferences and pattern languages
+Subtail's nonoverlap bad language is anchored: the copied occurrence ends the whole candidate (`D=epsilon`). Proper overlaps also require their own bounded-power analysis. A matching algorithm for one supplied word does not decide containment of a supplied regular language in a union of bad languages. See the [older exact correspondence](../2026-09-08-terminal-backreference-literature-audit.md). This paper was already known to that audit; centralizing it is not a new discovery.
 
-- One-variable or one-use backreference formalisms can already have hard/undecidable universality variants.
-- Similarity to “choose a block and repeat it” is only a warning. A transfer requires an exact encoding preserving Subtail's terminality, shared word, allowed cuts and acceptance.
-- C069's nonsemilinear witness-length support should be framed as an exact phenomenon in a fixed flagged-border instance, not the first nonregularity/nonsemilinearity result involving repeated words.
+## A single negated containment — PW-HHL25
 
-## Factorization forests and finite algebra
+The paper decides a not-contains predicate between concatenations of shared string variables with regular constraints; its stated extension covers chain-free word equations. The earlier [target-anchor proof](../2026-09-13-target-anchoring.md), section 7, maps its proposed special case to Theorem 28 and also supplies a native algorithm.
 
-### Simon/Kufleitner factorization-forest theorems
+**Boundary:** neither arbitrary conjunctions of source-sensitive not-contains predicates nor unrestricted transducer constraints follow from the single-predicate theorem. Keep shared variables shared. This source was already in the repository before the current discovery pass.
 
-- Supply bounded-height factorizations once a finite semigroup morphism with the needed composition invariant is available.
-- Do not by themselves produce a finite border-preserving quotient.
-- Subtail's recorded collisions show that endpoint action or visited-state profiles alone lose shared-word information. Any use must first define a finite algebra whose multiplication preserves the existential witness property across newly created comparisons.
+## Factorization forests and saturation — PW-KUF07 / PW-BLLS25
 
-## Conjunctive regular path queries
+Factorization forests act on a supplied finite-semigroup morphism; they do not manufacture a finite equivalence retaining every future flagged-border comparison. Construct the semantic invariant first. The 2025 FDFA/FDWA saturation work concerns prefix/period representations and powers, roots and conjugation. The finite-cut relation `G` in BorderAvoid needs its own transfer proof. Neither family of tools justifies silently closing the proposed invariant under operations known to lose colors or shared words.
 
-### UC2RPQ boundedness and finite expansion
+## Graph-query boundedness — PW-BFR19
 
-- Query boundedness asks whether recursive regular-path atoms can be replaced by a finite union of conjunctive queries, often with very large bounds.
-- Conceptual overlap with C080: finite compilation of regular-path constraints and preservation of a conjunction.
-- Crucial differences: generic graph databases versus KMP/prefix graphs; C080 compiles across a particular first-return graph extension; physical intervals share one generated word; colors encode terminal masks and next/end data.
-- No inspected CRPQ theorem directly yields `Sat(P(B),Pre(phi)) iff exists one safe first-return C extending B with Sat(P(C),phi)`.
-- **Search obligation:** look for inverse-image closure of CRPQs under finite-state graph transductions/interpretations and for preservation under one-entry graph extensions. Until an exact theorem is mapped, CRPQ work is analogy rather than dependency.
+The cited 2019 paper studies whether a UC2RPQ is equivalent to a finite union of conjunctive queries, with ExpSpace-complete boundedness and large finite-expansion bounds. That problem is not a preimage under Subtail's first-return graph construction. An applicable import would need the exact graph transformation, permitted edge directions, shared physical intervals and output query grammar, plus an effective size bound. No such import was completed in this investigation.
 
-## FC[REG]-CQ universality
+## Concatenation queries — PW-TF24
 
-### Thompson–Freydenberger (2024)
+Theorem 6 gives a strong universality boundary for FC[REG]-CQ. The richer synchronized factor equations are an adversarial source, not a direct reduction. A computation-history error occurring in the middle cannot simply be treated as a terminal suffix-copy violation. Reversal moves the global anchor; it does not make arbitrary local comparisons available. Preserve that missing gadget explicitly on the undecidability route.
 
-- Universality/containment results for concatenation logic with regular constraints can encode invalid computations.
-- Useful adversarial source because the quantifier shape resembles containment in an existential bad-language union.
-- The formalism permits richer systems of factor equations than terminal BorderAvoid. A reduction needs a gadget using only one terminal copy structure and the exact flagged comparisons.
-- It is neither a decision procedure nor an undecidability theorem for Subtail.
+## Specialist warnings
 
-## Practical import checklist
-
-For every external theorem used in a Subtail proof, record:
-
-1. exact theorem number and version;
-2. input alphabet and empty-word conventions;
-3. variable sharing and number of occurrences;
-4. regular/rational constraint representation;
-5. quantifier prefix;
-6. complexity measure and formula-construction size;
-7. mapping from Subtail objects;
-8. conclusion obtained;
-9. any remaining coverage or termination obligation.
+[PW-RS14, PW-KS10 and PW-KS11](dossiers/specialist-boundaries.md) distinguish bounded resets from bounded reversals, regularity from effective construction, and a monoid of languages from individual word factorizations. [PW-REGEX25](dossiers/specialist-boundaries.md) is an unresolved corrigendum lead: check the actual repair before importing a characterization of regex languages. None of these boundaries alone proves an outcome for Subtail.

@@ -1,44 +1,44 @@
-# Prior-work repository for Problem 1.7
+# Prior work: agent entry point
 
-**Audit date:** 2026-09-18  
-**Coordination:** issue #36  
-**Status:** literature and translation audit only. It proves neither novelty nor correctness of any Subtail claim.
+This is the durable scholarship map for **Problem 1.7**, not a second claims ledger. It consolidates the September 18–19 literature investigation recorded in [issue #36](https://github.com/mhenglein/subtail/issues/36). The publication baseline is `df222241dc1a55ac6ee5da3cba3aedf662b3e285`. Read current [STATE](../../STATE.md) and [claims](../../research/claims.md) before relying on any scientific-status snapshot here.
 
-## Purpose
+**Scope:** semantic `{bottom, covariant binary product}` over arbitrary, possibly infinite trees. No top constructor does not mean no greatest infinite tree. Historical full-signature NSSE results need a transfer argument. See [the exact problem](../../research/problem.md).
 
-This directory is the canonical prior-work map for the semantic top-free problem in `research/problem.md` and for candidate contributions C067, C069, C077, C078 and C080. It separates four questions that are easily conflated:
+**Evidence boundary:** this is a bounded, source-linked discovery and preservation pass. It is not an exhaustive bibliography, an independent human referee report, a completed novelty audit, or a proof of the general decision procedure. Missing literature is an open coverage question, not evidence of priority.
 
-1. What theorem did the source actually prove?
-2. What signature, syntax, tree domain and logical fragment did it use?
-3. Does that theorem transfer to Subtail's `{bottom, product}` arbitrary-tree model?
-4. What novelty wording remains safe after the comparison?
+## Read in this order
 
-## Reading order
-
-- [Core NSSE lineage](nsse-lineage.md): Henglein–Rehof; Niehren–Priesnitz 1999 and 2003; Su et al.; Breuvart–Penelle–Rehof; Schubert.
-- [Adjacent machinery](adjacent-machinery.md): regular-language borders, constrained word equations, backreferences, factorization forests and regular-path queries.
-- [Claim-by-claim novelty matrix](novelty-matrix.md): closest known result, overlap, difference and open verification obligation.
-- [Bibliography and source status](bibliography.md): stable URLs, publication status and source-quality notes.
-
-The older [bounded literature check](../literature-check.md) remains a compact entry point. This directory supersedes it for depth, not for claim status.
-
-## Mandatory comparison dimensions
-
-| Dimension | Values that must be stated |
+| Need | Durable entry |
 |---|---|
-| Semantic signature | `{bottom, product}`, `{bottom, top, product}`, other |
-| Constraint syntax | whether constants occur in hypotheses; simple/flattened equations; conclusion form |
-| Tree domain | finite, regular/rational, arbitrary possibly infinite |
-| Logic | Horn entailment, full first-order theory, language universality, existential equations |
-| Result status | peer-reviewed theorem, workshop slides, preprint, withdrawn preprint |
-| Transfer | direct, conditional on a proved encoding, analogy only, or inapplicable |
-| Subtail overlap | C067, C069, C077, C078, C080, semantic bridge |
-| Residual obligation | explicit theorem or separation example still needed |
+| Start or resume proof work without repeating known mistakes | [Agent handoff](agent-handoff.md) |
+| Understand the direct historical problem lineage | [Core NSSE dossiers](nsse-lineage.md) |
+| Find potentially reusable algorithms or hardness boundaries | [Adjacent machinery](adjacent-machinery.md) |
+| Audit a proposed simplification before building on it | [Failure-mode catalogue](failure-modes.md) |
+| Compare C067/C069/C077/C078/C079/C080 with previous work | [Novelty and transfer matrix](novelty-matrix.md) |
+| Check source identity, version, status and inspection depth | [Bibliography](bibliography.md), [machine-readable register](sources.json) |
+| Inspect the newly recovered thesis issue | [Priesnitz Chapter 11 audit](dossiers/priesnitz-2004.md) |
+| Understand the withdrawn attempted solution | [Schubert dossier](dossiers/schubert-2021.md) |
+| Inspect specialist-journal results | [Kybernetika, DMTCS, Fundamenta and corrigendum dossier](dossiers/specialist-boundaries.md) |
+| See what was actually searched and what was not | [Search and coverage log](search-log.md) |
+| Select a precise next investigation | [Open obligations](open-obligations.md) |
 
-## Current bottom line
+## What changed in this preservation pass
 
-- The historical NSSE literature already contains automata/cap translations, word equations, powers and nonregular cap languages. Those ideas alone are not novel.
-- The 2019 Breuvart–Penelle–Rehof slides add a relevant 2-EXPTIME syntactic restriction and must be compared explicitly with C067/C077.
-- Ordinary border detection for regular languages already has algorithmic and quadratic-witness results. C077's possible novelty is the state-labelled forbidden-pair condition and terminal last-target collapse, not quadraticity by itself.
-- Schubert's 2021 PSPACE claim is withdrawn because an error in Lemma 5.5 invalidates the subsequent construction. It is prior attempted work, not an established upper bound.
-- No inspected source supplies C080's exact uniform preimage closure for a whole conjunction over one shared first-return generator. This is a bounded-search conclusion, not proof of priority.
+The substantive additions are a concrete counterexample to the *literal statement* of Priesnitz's Lemma 11.1, the exact location and object of Schubert's failed extension claim, and specialist results warning against bounded-reset and noneffective-regularity shortcuts. Their dossiers separate the source statement, local analysis, and what remains unproved.
+
+The 2025 negated-containment and 2026 one-use-backreference papers were already present in older Subtail notes; they are restored to this central map, **not counted as new discoveries**. The bibliography also corrects the conflated 1997/1998 Henglein–Rehof titles, guessed CRPQ authors, and publication/version dates. The ordinary-unbordered comparator includes a **linear** witness bound, not only the previously emphasized quadratic border phenomena.
+
+## Non-negotiable boundaries
+
+- A supplied existential formula being decidable does not construct a complete finite family of formulas.
+- Individually satisfiable requirements do not imply a single shared extension satisfying their conjunction.
+- A regular language existing does not imply its automaton can be effectively constructed.
+- A counterexample to a lemma does not by itself refute its paper's final theorem.
+- A syntactic example outside an old restriction does not prove non-subsumption after equivalent encodings.
+- The C080 reverse compiler result is already recorded on the inspected main. Forward coverage, the remaining quantitative/finishing work, semantic composition and independent review must not be declared complete here. The current ledger takes precedence over this snapshot.
+
+## Maintenance
+
+Use the stable `PW-*` source identifiers in this directory; they are bibliography keys, not new C/Q/A/E scientific claims. Run `python3 notes/prior-work/check_scholarship.py` after editing this directory and the repository's `python3 scripts/research_index.py --check` after organizational changes. The former checks documentation and a small finite regression, **not the mathematical correctness of cited papers or C080**.
+
+Before adding a result, record its exact version, theorem/page locator, hypotheses, quantifiers, representation/size measure, transfer to Subtail, and remaining obligation. Keep failed retrievals and unchecked leads visible. Follow current [AGENTS.md](../../AGENTS.md), including issue-first ownership and serialized integration. No downloaded paper, credential, or extracted page image is included in this directory.

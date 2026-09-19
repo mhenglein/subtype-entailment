@@ -1,32 +1,45 @@
-# Bibliography and source status
+# Bibliography and inspection register
 
-Primary and author-hosted sources inspected in the 2026-09-18 pass.
+Stable source keys are mirrored in [sources.json](sources.json). Publication status and inspection depth are separate: a published theorem may have only metadata checked in this pass; a withdrawn paper may have its failed lemma inspected closely. `TEXT` means selected primary passages, not a complete proof audit. `RECORD` means primary bibliographic record/abstract. `HISTORICAL` means a named earlier repository audit supplies the theorem locator. `LEAD` is not an imported theorem.
 
-## Core NSSE
+## Direct lineage
 
-- Fritz Henglein and Jakob Rehof. **The Complexity of Subtype Entailment for Simple Types.** ICALP 1998. [DOI](https://doi.org/10.1007/BFb0055089). Published conference paper.
-- Joachim Niehren and Tim Priesnitz. **Entailment of Non-Structural Subtype Constraints.** 1999. [Author-hosted PDF](https://www.ps.uni-saarland.de/Publications/documents/SubTypeEntailment_99.pdf), [official record](https://www.ps.uni-saarland.de/Publications/details/SubTypeEntailment%3A99.html). Published conference paper.
-- Joachim Niehren and Tim Priesnitz. **Non-structural subtype entailment in automata theory.** Information and Computation 186(2), 2003. [Author-hosted PDF](https://www.ps.uni-saarland.de/Publications/documents/SubTypeEntailment_01.pdf), [DOI](https://doi.org/10.1016/S0890-5401(03)00140-8). Peer-reviewed journal article.
-- Zhendong Su, Alexander Aiken, Joachim Niehren, Tim Priesnitz and Ralf Treinen. **The First-Order Theory of Subtyping Constraints.** [Author-hosted PDF](https://www.ps.uni-saarland.de/Publications/documents/fot_04.pdf), [official record](https://www.ps.uni-saarland.de/Publications/details/fot%3A04.html). Peer-reviewed journal/conference lineage; use the cited version's theorem numbering.
-- Flavien Breuvart, Vincent Penelle and Jakob Rehof. **New results on the Non-Structural Subtype Entailment Problem.** 2019. [Author-hosted slides](https://lipn.univ-paris13.fr/~breuvart/articles/NSSA_journee.pdf). Research-day/workshop slides; no archival full proof or DOI located in this pass.
-- Aleksy Schubert. **On non-structural subtype entailment.** arXiv:2109.02458. [arXiv record](https://arxiv.org/abs/2109.02458). Withdrawn preprint; the record states that an error in Lemma 5.5 invalidates the further construction.
+| Key | Source and primary link | Version / inspection |
+|---|---|---|
+| PW-HR97 | Fritz Henglein; Jakob Rehof. **The Complexity of Subtype Entailment for Simple Types.** LICS 1997, pp. 352–361. [Author record](https://hjemmesider.diku.dk/~henglein/bib/publications/here97b.html) | RECORD. Distinct from the next paper. |
+| PW-HR98 | Fritz Henglein; Jakob Rehof. **Constraint Automata and the Complexity of Recursive Subtype Entailment.** ICALP 1998. [Author PDF](https://hjemmesider.diku.dk/~henglein/papers/henglein1998a.pdf), [DOI](https://doi.org/10.1007/BFb0055089) | HISTORICAL: [original audit](../literature-check.md). Full ambient signature matters. |
+| PW-NP99 | Joachim Niehren; Tim Priesnitz. **Entailment of Non-Structural Subtype Constraints.** ASIAN 1999. [Author record](https://www.ps.uni-saarland.de/Publications/details/SubTypeEntailment%3A99.html), [PDF](https://www.ps.uni-saarland.de/Publications/documents/SubTypeEntailment_99.pdf) | HISTORICAL selected-text audit: Theorem 14. |
+| PW-NP03 | Joachim Niehren; Tim Priesnitz. **Non-structural subtype entailment in automata theory.** Information and Computation 186(2), 319–354 (2003); TACS 2001 precursor. [PDF](https://www.ps.uni-saarland.de/Publications/documents/SubTypeEntailment_01.pdf), [DOI](https://doi.org/10.1016/S0890-5401(03)00140-8) | HISTORICAL: Theorem 1, Corollaries 2 and 5 in the cited copy. |
+| PW-PRI04 | Tim Priesnitz. **Subtype Satisfiability and Entailment.** Saarland doctoral thesis, title-page year 2004; colloquium 1 April 2005. [National-library PDF](https://d-nb.info/986396834/34) | TEXT and page images: Chapter 11, printed pp. 111–114. Local Lemma 11.1 finding; not a blanket rejection of the thesis. |
+| PW-SU06 | Zhendong Su; Alexander Aiken; Joachim Niehren; Tim Priesnitz; Ralf Treinen. **The First-Order Theory of Subtyping Constraints.** TOPLAS 2006; extends POPL 2002. [Official record](https://www.ps.uni-saarland.de/Publications/details/fot%3A04.html), [extended manuscript](https://www.ps.uni-saarland.de/Publications/documents/fot_04.pdf) | RECORD refreshed; HISTORICAL theorem checks refer to manuscript numbering 3.10 and 5.10, not an asserted match to every publication. |
+| PW-BPR19 | Flavien Breuvart; Vincent Penelle; Jakob Rehof. **New results on the Non-Structural Subtype Entailment Problem.** 2019. [Author slides](https://lipn.univ-paris13.fr/~breuvart/articles/NSSA_journee.pdf) | TEXT: 17-page slides. No archival full proof located; announced result, not silently treated as a journal theorem. |
+| PW-SCH21 | Aleksy Schubert. **On non-structural subtype entailment.** [arXiv record](https://arxiv.org/abs/2109.02458), [v1 PDF](https://arxiv.org/pdf/2109.02458v1) | TEXT: Definition 11, Proposition 5.4, Lemma 5.5. v1 submitted 6 September 2021; v2 dated 20 December 2021 withdraws the paper. |
 
-## Automata and word combinatorics
+## Word languages, automata and query neighbors
 
-- Terry Anderson, John Loftus, Narad Rampersad, Nicolae Santean and Jeffrey Shallit. **Detecting palindromes, patterns, and borders in regular languages.** arXiv:0711.3183, LATA-era full version. [arXiv](https://arxiv.org/abs/0711.3183).
-- Volker Diekert, Claudio Gutiérrez and Christian Hagenah. **The Existential Theory of Equations with Rational Constraints in Free Groups is PSPACE-Complete.** [arXiv](https://arxiv.org/abs/cs/0103018). Peer-reviewed lineage; verify the exact free-monoid theorem used by each import.
-- Vijay Ganesh, Mia Minnes, Armando Solar-Lezama and Martin Rinard. **(Un)Decidability Results for Word Equations with Length and Regular Expression Constraints.** [arXiv](https://arxiv.org/abs/1306.6054).
-- Manfred Kufleitner. **A Proof of the Factorization Forest Theorem.** [arXiv](https://arxiv.org/abs/0710.5130).
+| Key | Source and primary link | Locator / inspection |
+|---|---|---|
+| PW-BORD09 | Terry Anderson; John Loftus; Narad Rampersad; Nicolae Santean; Jeffrey Shallit. **Detecting palindromes, patterns and borders in regular languages.** Information and Computation 207 (2009). [Full-version record](https://arxiv.org/abs/0711.3183) | RECORD refreshed; HISTORICAL Theorem 58 via [terminal-copy audit](../2026-09-08-terminal-backreference-literature-audit.md). Conference/preprint dates differ from journal year. |
+| PW-DGH01 | Volker Diekert; Claudio Gutiérrez; Christian Hagenah. **The Existential Theory of Equations with Rational Constraints in Free Groups is PSPACE-Complete.** [2001 preprint](https://arxiv.org/abs/cs/0103018) | RECORD and earlier import audit. Group/monoid-with-involution formulations require an explicit alphabet/domain mapping. |
+| PW-GAN13 | Vijay Ganesh; Mia Minnes; Armando Solar-Lezama; Martin Rinard. **(Un)Decidability Results for Word Equations with Length and Regular Expression Constraints.** [2013 preprint](https://arxiv.org/abs/1306.6054) | RECORD; quantifier boundary, not a theorem about every restricted cap language. |
+| PW-KUF07 | Manfred Kufleitner. **A Proof of the Factorization Forest Theorem.** [2007 preprint](https://arxiv.org/abs/0710.5130) | RECORD; the finite-semigroup morphism is a hypothesis, not a produced border invariant. |
+| PW-RS14 | Daniel Reidenbach; Markus L. Schmid. **Automata with modulo counters and nondeterministic counter bounds.** Kybernetika 50(1), 66–94 (2014). [Publisher](https://www.kybernetika.cz/content/2014/1/66), [PDF](https://www.kybernetika.cz/content/2014/1/66/paper.pdf), [DOI](https://doi.org/10.14736/kyb-2014-1-0066) | TEXT: Definition 3.7, Theorems 3.9 and 3.15. |
+| PW-KS10 | Juhani Karhumäki; Aleksi Saarela. **Noneffective Regularity of Equality Languages and Bounded Delay Morphisms.** DMTCS 12(4) (2010). [Publisher](https://dmtcs.episciences.org/523), [PDF](https://dmtcs.episciences.org/523/pdf), [DOI](https://doi.org/10.46298/dmtcs.523) | TEXT: Theorem 5.2. |
+| PW-KS11 | Juhani Karhumäki; Aleksi Saarela. **The Unique Decipherability in the Monoid of Regular Languages is Undecidable.** Fundamenta Informaticae 110(1–4), 197–200 (2011). [Author PDF](https://amsaar.gitlab.io/articles/kasa11ibarra.pdf), [DOI](https://doi.org/10.3233/FI-2011-537) | TEXT: Theorem 2.1; products of languages, not individual word parses. |
+| PW-BFR19 | Pablo Barceló; Diego Figueira; Miguel Romero. **Boundedness of Conjunctive Regular Path Queries.** [2019 primary preprint](https://arxiv.org/abs/1904.00850) | RECORD: UC2RPQ boundedness / finite UCQ expansion. No checked inverse-image theorem for Subtail. |
+| PW-TF24 | Sam M. Thompson; Dominik D. Freydenberger. **Languages Generated by Conjunctive Query Fragments of FC[REG].** Theory of Computing Systems 68, 1640–1682 (2024). [Publisher and full text](https://link.springer.com/article/10.1007/s00224-024-10198-4) | TEXT: Theorem 6 and language-fragment definitions; previous author placeholders removed. |
+| PW-HHL25 | Vojtěch Havlena; Michal Hečko; Lukáš Holík; Ondřej Lengál. **Negated String Containment Is Decidable.** MFCS 2025, article 56. [Publisher](https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.MFCS.2025.56), [technical report](https://arxiv.org/abs/2506.22061) | RECORD refreshed; HISTORICAL Theorem 28 via [target-anchor proof](../2026-09-13-target-anchoring.md). Already in Subtail before this discovery pass. |
+| PW-KU26 | Soh Kumabe; Yuya Uezato. **On the Complexity of the Matching Problem of Regular Expressions with Backreferences.** ICALP 2026, article 135. [Publisher](https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.ICALP.2026.135), [full HTML](https://drops.dagstuhl.de/storage/00lipics/lipics-vol374-icalp2026/html/LIPIcs.ICALP.2026.135/LIPIcs.ICALP.2026.135.html) | TEXT: Theorem 6 canonical form; fixed-expression matching result. Already in Subtail before this pass. |
+| PW-BLLS25 | Bohn; Li; Löding; Schewe. **Saturation Problems for Families of Automata.** ICALP 2025, article 146. [Publisher HTML](https://drops.dagstuhl.de/storage/00lipics/lipics-vol334-icalp2025/html/LIPIcs.ICALP.2025.146/LIPIcs.ICALP.2025.146.html) | HISTORICAL: earlier bounded literature check; saturation transfer remains unproved. Names are retained as cited surnames rather than guessed expanded names. |
+| PW-REGEX25 | Szymon Łopaciuk. **Corrigendum: Inside the class of REGEX languages [6].** International Journal of Foundations of Computer Science (2025). [DOI](https://doi.org/10.1142/S0129054125920017) | LEAD / metadata-only from the discovery record. Publisher full text was not retrieved. Do not assert the exact repair or its downstream consequences. |
 
-## Query-language neighbors
+## Historical context, not present-day status certificates
 
-- Pablo Barceló, Diego Figueira and Miguel Romero. **Boundedness of Conjunctive Regular Path Queries.** Search the definitive published version together with the later UC2RPQ boundedness work before importing any theorem; the relevant concept is finite expansion, not Subtail's graph surgery.
-- Anthony Widjaja To and Leonid Libkin / subsequent UC2RPQ literature: boundedness and finite expansions for two-way regular-path queries. [2019 arXiv search anchor](https://arxiv.org/abs/1904.00850). Verify authors/title from the record before citation in a paper.
-- Markus L. Schmid / Dominik D. Freydenberger line and Thompson–Freydenberger. **FC[REG]-CQ universality** result, Theorem 6 in the 2024 journal article. [Publisher page](https://link.springer.com/article/10.1007/s00224-024-10198-4). Adjacent hardness source, not a direct Subtail theorem.
+| Key | Source | Limit |
+|---|---|---|
+| PW-TLCA14 | [TLCA open-problem entry](https://tlca.di.unito.it/opltlca/opltlcasu23.html), Rehof's historical question | Earlier audit identifies a 2014 status snapshot. Not evidence that nothing changed by 2026. |
+| PW-DOL16 | Stephen Dolan. **Algebraic Subtyping.** Doctoral thesis (2016). [Thesis copy](https://www.cs.tufts.edu/~nr/cs257/archive/stephen-dolan/thesis.pdf) | Earlier audit records a discussion of non-structural entailment. Algebraic/extensible semantics must not be substituted for the memo's model. |
 
-## Status controls
+## Correction history
 
-- A slide deck may establish a serious prior-art risk but should not be reported as a peer-reviewed theorem.
-- A withdrawn preprint remains citable as an attempted route and failure mode, not as an established result.
-- An arXiv abstract is sufficient for bibliographic discovery, not for mapping technical hypotheses.
-- Before submission, replace search anchors with final bibliographic metadata and theorem/page references.
+The previous bibliography attached the 1997 *Simple Types* title to the 1998 ICALP DOI. Those are now separate entries. The speculative To/Libkin entry for arXiv:1904.00850 was erroneous and duplicated PW-BFR19; it is removed, not retained as an additional source. PW-SU06 distinguishes the 2004 manuscript filename from the 2006 journal publication. PW-TF24 uses the publisher's actual author name, **Sam M. Thompson**. No bibliography correction changes a mathematical claim's status.
