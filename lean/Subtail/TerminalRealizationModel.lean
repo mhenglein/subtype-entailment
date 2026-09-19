@@ -30,7 +30,7 @@ theorem witness_final_run (I : Instance k) {w : Word} (hw : Witness I w) :
   simp only [stateAt, List.take_length] at hh
   cases hr : runFrom I I.initial w with
   | none => simp [finalCheck, hr] at hh
-  | some r => exact ⟨r, hr, by simpa [finalCheck, hr] using hh⟩
+  | some r => exact ⟨r, rfl, by simpa [finalCheck, hr] using hh⟩
 
 theorem upper_next (I : Instance k) {w : Word} (hw : Witness I w)
     (q : Fin k) (c : Bool) (t : Word) (ht : upperNodes I w q (c :: t)) :
@@ -44,14 +44,15 @@ theorem upper_next (I : Instance k) {w : Word} (hw : Witness I w)
   cases hs : step I q c with
   | none => simp [runFrom, hs] at htail
   | some r =>
-    refine ⟨r, hs, x ++ [c], z, ?_, ?_⟩
-    · simpa only [List.append_assoc, List.singleton_append, List.cons_append] using he
+    refine ⟨r, rfl, x ++ [c], z, ?_, ?_⟩
+    · simpa only [List.append_assoc, List.singleton_append, List.cons_append,
+        List.nil_append] using he
     · simp [runFrom_append, hx, runFrom, hs]
 
 theorem upper_safe (I : Instance k) {w : Word} (hw : Witness I w)
     (q : Fin k) {t : Word} (ht : upperNodes I w q t) : I.bad.get q = false := by
   rcases ht with ⟨x, z, he, hx⟩
-  have hi : x.length ≤ w.length := by simp [he, List.length_append]; omega
+  have hi : x.length ≤ w.length := by simp [he, List.length_append]
   have hq : stateAt I w x.length = some q := by
     simpa [stateAt, he, List.append_assoc] using hx
   have hh := hw.1 x.length hi
@@ -147,9 +148,7 @@ theorem wordModel_models (I : Instance k) (ht : TerminalFinal I)
         have hc : (wordModel I ht w (child v (step I q c))).nodes u := by
           cases c <;> exact hu
         cases hs : step I q c with
-        | none =>
-          have hf : False := by simpa [wordModel, child, hs, bottom] using hc
-          exact False.elim hf
+        | none => simp [wordModel, child, hs, bottom] at hc
         | some r =>
           have hr : lowerNodes I w r u := by
             simpa [wordModel, child, hs, lowerTree] using hc
@@ -179,7 +178,7 @@ theorem wordModel_right (I : Instance k) (ht : TerminalFinal I)
     simp [stateAt, finalCheck, hr, hf] at hh
   · rcases hy with ⟨u, z, hu, hup⟩
     have hlenx : w.length = x.length + y.length := by simp [he]
-    have hlenu : w.length = u.length + y.length + z.length := by simp [hu]
+    have hlenu : w.length = u.length + y.length + z.length := by simp [hu, Nat.add_assoc]
     have hj : x.length ≤ w.length := by omega
     have hij : u.length ≤ x.length := by omega
     have hsi : stateAt I w u.length = some p := by

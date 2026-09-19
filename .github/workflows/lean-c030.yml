@@ -1,6 +1,6 @@
 name: C030 direct realization
 
-# This isolated job checks an opt-in module without editing the shared imports.
+# The opt-in modules do not edit another worker's shared import or CI files.
 on:
   push:
     branches: ['lean/c030-direct-20260919']
@@ -25,6 +25,8 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
       - uses: actions/cache@v6.1.0
         with:
           path: ~/.elan
@@ -36,18 +38,53 @@ jobs:
           test: 'false'
           lint: 'false'
           use-mathlib-cache: 'false'
-      - name: Compile the actual direct theorem and its audit
+      - name: Compile direct theorem and kernel-checked fixtures
         working-directory: lean
-        run: |
-          lake build +Subtail.TerminalRealizationAudit
+        run: lake build +Subtail.TerminalRealizationAudit
       - name: Independent kernel replay
         working-directory: lean
         run: |
           lake env leanchecker Subtail.TerminalRealization
+          lake env leanchecker Subtail.TerminalRealizationModel
           lake env leanchecker Subtail.TerminalRealizationAudit
-      - name: Check axiom dependencies and preserved independent regression
+      - name: Audit every new declaration dependency closure
+        working-directory: lean
         run: |
-          cd lean
-          lake env lean Subtail/TerminalRealizationAudit.lean
-          cd ..
+          python3 - <<'PY'
+          import hashlib, json, re, subprocess
+          from pathlib import Path
+          inputs = [
+              ('Subtail/TerminalRealization.lean', 'Subtail.TerminalRealization'),
+              ('Subtail/TerminalRealizationModel.lean', 'Subtail.TerminalRealization'),
+              ('Subtail/TerminalRealizationAudit.lean', 'Subtail.TerminalRealization.Audit'),
+          ]
+          names, hashes = [], {}
+          for filename, prefix in inputs:
+              source = Path(filename).read_text()
+              hashes[filename] = hashlib.sha256(source.encode()).hexdigest()
+              names += [prefix + '.' + n for n in re.findall(
+                  r'^(?:@\[[^\n]+\]\s*)?(?:def|theorem)\s+(\w+)', source, re.M)]
+          audit = Path('_C030DependencyAudit.lean')
+          audit.write_text('import Subtail.TerminalRealizationAudit\n' +
+                           '\n'.join('#print axioms ' + n for n in names) + '\n')
+          text = subprocess.check_output(['lake', 'env', 'lean', str(audit)], text=True, timeout=120)
+          print(text)
+          entries = re.findall(r"'([^']+)' (?:depends on axioms: \[([^\]]*)\]|does not depend on any axioms)", text)
+          found = {name: set(filter(None, (a.strip() for a in axioms.split(','))))
+                   for name, axioms in entries}
+          if set(found) != set(names):
+              raise SystemExit('Incomplete dependency readback: ' + repr(set(names) - set(found)))
+          allowed = {'propext', 'Quot.sound', 'Classical.choice'}
+          for name, axioms in found.items():
+              if not axioms <= allowed:
+                  raise SystemExit('Unexpected axiom in ' + name + ': ' + repr(axioms))
+          runtime = ['a', 'v', 'b', 'child', 'upperClause', 'lowerClause', 'constraints']
+          for name in runtime:
+              if 'Classical.choice' in found['Subtail.TerminalRealization.' + name]:
+                  raise SystemExit('Classical.choice in executable constructor ' + name)
+          print(json.dumps({'status': 'PASS', 'declarations': len(names),
+                            'source_sha256': hashes, 'constructor_choice_free': True}, indent=2))
+          PY
+      - name: Preserved independent exact-tree regression
+        run: |
           PYTHONDONTWRITEBYTECODE=1 python3 experiments/replay_c030_independent.py --output /tmp/c030-replay.json
