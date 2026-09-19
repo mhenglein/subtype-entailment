@@ -10,6 +10,25 @@ namespace Subtail.InfiniteDecision
 open AbsorbingTerminal RankQueryEnumeration
 variable {k : Nat}
 
+theorem sum_map_constant (xs : List α) (n : Nat) :
+    (xs.map (fun _ => n)).sum = xs.length * n := by
+  induction xs with
+  | nil => simp
+  | cons x xs ih => simp [ih, Nat.add_mul, Nat.add_comm]
+
+theorem exactLists_length (xs : List α) (n : Nat) :
+    (exactLists xs n).length = xs.length ^ n := by
+  induction n with
+  | zero => simp [exactLists]
+  | succ n ih =>
+    simp [exactLists, List.length_flatMap, ih, sum_map_constant,
+      Nat.pow_succ, Nat.mul_comm]
+
+theorem masks_length_le (k : Nat) : (masks k).length ≤ 2^k := by
+  calc
+    (masks k).length ≤ (exactLists bools k).length := List.length_filterMap_le _ _
+    _ = 2^k := by rw [exactLists_length]; rfl
+
 def safeOption (I : Instance k) : Option (Fin k) → Bool
   | none => false
   | some q => safeState I q
