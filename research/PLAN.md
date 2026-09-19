@@ -1,6 +1,6 @@
 # Research plan
 
-Updated: 2026-09-18 (navigation for the rank-query candidate; 2026-09-09 priorities and historical programme retained)
+Updated: 2026-09-19 (direct-decision assembly after semantic-only unwind; historical programmes retained)
 
 **Goal:** decide [Problem 1.7](problem.md) for bottom and binary product over arbitrary, possibly infinite trees. No general solution is established here.
 
@@ -15,14 +15,31 @@ Dated approach records distinguish proposed handoffs from executed attempts.
 decidability by finite query preimages over first-return prefix graphs, with
 an explicit computable witness bound; see the top entry of [STATE.md](../STATE.md).
 It supersedes the source-capture outline below as the current end-to-end route
-without promoting Problem 1.7's status. Current priorities, in order:
-(1) discharge `ClosureFor` in Lean: `DiagramCoverage` (#28), then the
-clause-weight bound, `F(k)` and finishing-query correctness (#30); (2) the
-stage-6 decision of entailment (#31); (3) cross-session statement readback and
-adversarial fixtures (#33, #32) in place of an external referee, which the
-owner decided on 2026-09-19 not to commission. New work is PAUSED by the owner
-as of 2026-09-19; resume from #34 and #37 after reading current AGENTS.md. The
-Q004 and opposing-route tasks below remain the fallback if stage 4 fails.
+without promoting Problem 1.7's status. Stage-4b semantic closure is now on
+main. The owner resumed a bounded workbench/Lean pilot on 2026-09-19; it proved
+semantic promotion unwind for the concrete compiler without the extra weight
+hypothesis ([result and tooling evidence](../notes/2026-09-19-wb-semantic-pilot.md)).
+Current priorities, in order:
+
+1. **Direct terminal decision (#30).** Review and integrate the released exact
+   finishing interface, construct safe milestone chains from original witnesses,
+   and prove `TerminalFinals I -> RankDecisionStatement I (preimage I budget)`.
+   Implement the finite one-letter safety check and combine it with `satCheck`.
+   Preserve empty witnesses and small-state cases. The existing end-to-end
+   outline's Section 8 gives termination by finite compiler iteration; this
+   attempt does not wait for the separate quantitative `U_k`/`F(k)` bound.
+2. **Subtype transfer (#31).** Discharge the effective summary-instance,
+   ordered-cut, absorption, C029/C031 and composition obligations for arbitrary,
+   possibly infinite trees. A terminal decision alone is not Problem 1.7.
+3. **Independent review (#33/#32).** Read exact statements and shared-generator
+   semantics in a separate session and retain targeted adversarial fixtures.
+   This accompanies assembly; it does not wait until all proofs are written.
+   The owner decided not to commission an external human referee.
+
+Keep `ClosureFor`'s weight conjunct and explicit `F(k)` as unresolved quantitative
+targets; the pilot neither proves nor refutes them. Consult #34 and #37 for exact
+ownership before launching work. No new worker assignments follow from this
+plan. Q004 and the opposing-route tasks remain alternatives if assembly fails.
 
 ## Earlier mathematical continuation: single-source capture (2026-09-09)
 

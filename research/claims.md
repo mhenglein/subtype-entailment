@@ -974,18 +974,24 @@ the Closure Lemma over any diagram enumeration (`closure_reverse` in
 [RankQuerySound.lean](../lean/Subtail/RankQuerySound.lean) with the executable
 compiler [RankQueryCompiler.lean](../lean/Subtail/RankQueryCompiler.lean)),
 for the conditional stage-5 unwind and `T_h` recurrence
-([RankQueryUnwind.lean](../lean/Subtail/RankQueryUnwind.lean)), and for the
+([RankQueryUnwind.lean](../lean/Subtail/RankQueryUnwind.lean)); also for the
+semantic-only promotion unwind and its concrete compiler corollary, which
+require no clause-weight hypothesis
+([RankQuerySemanticUnwind.lean](../lean/Subtail/RankQuerySemanticUnwind.lean),
+[workbench pilot and separate statement readback](../notes/2026-09-19-wb-semantic-pilot.md)); and for the
 stage-6 semantic foundation and executable normalized satisfiability
 ([CanonicalModel.lean](../lean/Subtail/CanonicalModel.lean),
 [StackReachability.lean](../lean/Subtail/StackReachability.lean)). Also
 Lean-checked (2026-09-19): the stage-4b enumerator and `coverage :
-DiagramCoverage I budget`, hence `closure_iff`, both semantic directions of
+DiagramCoverage I budget`, hence `closure_iff`, both directions of the semantic conjunct of
 `ClosureFor I (preimage I budget)` for every safe reference
 ([RankQueryCoverage.lean](../lean/Subtail/RankQueryCoverage.lean), author
-readback only). NOT Lean-checked, hence `ClosureFor` and the decision remain
-unproved: the clause-weight conjunct of `ClosureFor` and `F(k)` (stage 5), and
-the entailment decision of stage 6 (separating-address bound, `I_C`,
-absorption, C029/C031, composition). Two
+readback only). NOT Lean-checked: the clause-weight conjunct of `ClosureFor`
+and `F(k)`; the full terminal decision schema (safe milestone chains, finishing
+and executable boundary tests); and the entailment decision of stage 6
+(separating-address bound, `I_C`, absorption, C029/C031, composition).
+Semantic unwind alone proves none of these. The direct finite-query decision
+route can be attempted separately from the quantitative bound. Two
 separate AI-assisted audits, both informed by the author's argument, found no
 gap in stages 1–5 and in the stage-6 bridge; neither is a human referee or a
 blind derivation. Independent adversarial fixtures found no compiler
@@ -1003,7 +1009,9 @@ Problem 1.7's accepted status is unchanged by this record; the ID exists so
 the candidate can be found, cited and reviewed. Owner decision 2026-09-19: no
 external human referee will be commissioned; acceptance requires the
 kernel-checked end-to-end decision theorem plus cross-session statement
-readback (#33). New work is paused by the owner as of 2026-09-19 (#34, #37).
+readback (#33). After the earlier pause, the owner resumed a bounded workbench
+and proof pilot on 2026-09-19 (#30, #37). Its result is the semantic-only unwind;
+C080, F(k), Q004 and Problem 1.7 retain their prior unresolved status.
 
 **Evidence.** [Candidate proof](../notes/2026-09-15-candidate-rank-query-decision.md),
 [closure proof and bound](../notes/2026-09-17-rank-query-closure-audit.md),

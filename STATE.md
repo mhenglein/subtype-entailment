@@ -42,21 +42,28 @@ stage 4c, an executable diagram compiler mirroring `compile_diagram` and
 `closure_reverse`, the reverse half of `ClosureFor` for every diagram
 enumeration ([compiler note](notes/2026-09-18-lean-rank-compiler.md)); the
 conditional stage-5 unwind and the exact `T_h` weight recurrence, assuming
-`ClosureFor`; and the stage-6 foundation: arbitrary-tree path-set semantics,
+`ClosureFor`; also the semantic-only unwind specialized to the concrete compiler,
+without a query-weight hypothesis (2026-09-19,
+[checked pilot and separate statement review](notes/2026-09-19-wb-semantic-pilot.md));
+and the stage-6 foundation: arbitrary-tree path-set semantics,
 the canonical least model, `not_entails_iff_canonical`, exact stack
 reachability and total executable normalized satisfiability
 ([canonical model](notes/2026-09-18-canonical-model-formalization.md),
 [finite propagation](notes/2026-09-18-finite-propagation-formalization.md)).
 Stage 4b is now kernel-checked as well: a finite diagram enumerator with exact
 membership and an explicit computable budget, and `coverage : DiagramCoverage
-I budget`, so `closure_iff` gives both semantic directions of `ClosureFor I
+I budget`, so `closure_iff` gives both directions of the semantic conjunct of `ClosureFor I
 (preimage I budget)` for every safe reference
 ([coverage note](notes/2026-09-19-lean-rank-coverage.md); author readback
-only). Still unproved in Lean, so `ClosureFor` and the decision are NOT
-discharged: the clause-weight conjunct of `ClosureFor` and `F(k)` with
-finishing-query correctness (stage 5; finishing-query support is live on an
-unmerged branch listed in #37), and the entailment decision of stage 6 (a bound or finite representation for the
-separating address, `I_C`, absorption, C029/C031 and the composition). A
+only). Still unproved in Lean: the clause-weight conjunct of `ClosureFor` and
+`F(k)`; the terminal decision schema connecting original witnesses, safe rank
+milestones and the finishing query; and the entailment decision of stage 6
+(a bound or finite representation for the separating address, `I_C`, absorption,
+C029/C031 and the composition). Finishing support is on the released unmerged
+branch listed in #30/#37. The next direct-decision attempt uses the finite
+compiler and executable query test, as in the candidate outline's Section 8;
+it need not first discharge the extra quantitative clause-weight contract.
+This is a proposed assembly route, not a proved decision theorem. A
 prior-work audit ([dossier](notes/prior-work/README.md)) found no source
 supplying C080's whole-conjunction, shared-generator closure; it records
 Schubert's withdrawn 2021 PSPACE claim (Lemma 5.5) as a failed attempt whose
@@ -66,11 +73,14 @@ C067/C077. The generic compiled driver is resource-limited; timed UNKNOWN
 results are not negative certificates. Problem 1.7's accepted status is
 unchanged: CANDIDATE PROOF. Owner decision 2026-09-19: no external human
 referee will be commissioned; the acceptance path is the kernel-checked
-end-to-end decision theorem (`RankDecisionStatement` discharged through
-`ClosureFor` and the stage-6 composition) together with statement readback by
-a session other than each module's author (#33). New work is PAUSED by the
-owner as of 2026-09-19; resume from #34 (proof obligations, in the order #28,
-#30, #31) and #37 (integration and branch dispositions).
+end-to-end decision theorem (`RankDecisionStatement` with its concrete
+compiler and the stage-6 composition) together with statement readback by
+a session other than each module's author (#33). Following the earlier pause,
+the owner resumed a bounded next-step review and workbench/Lean proof pilot on
+2026-09-19. That pilot discharged only semantic promotion unwind. Continue from
+#30 (finishing integration and terminal decision assembly), then #31; consult
+#34 and #37 for proof scope, integration and branch dispositions. No broader
+worker launch or completed full decision is implied.
 
 Failed attempts on the way are retained, not erased: the proposed finite
 quotient of references by endpoint, transition action, visited set and full

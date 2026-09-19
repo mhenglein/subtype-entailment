@@ -478,8 +478,8 @@
       "outcome": "supported",
       "owner": null,
       "updated": "2026-09-19",
-      "summary": "Lean kernel-checks the rank-query candidate's stages 1-3 (terminal border depth at most k-1, milestone first returns, failure-target confinement, exact coloured first-return graph surgery identified with the literal query graph); stage 4a pins the query grammar, decidable satisfaction and the Closure Lemma as an unproved Prop, with product-simple runs and the s+1 fresh-interval bound as 4b ingredients; stage 4c has an executable diagram compiler (differential-checked against compile_diagram) and the proved reverse half of ClosureFor for every diagram enumeration (closure_reverse); stage 4b has a finite diagram enumerator with exact membership, an explicit computable budget and the kernel-checked coverage theorem (coverage : DiagramCoverage I budget), so closure_iff gives both semantic directions of ClosureFor I (preimage I budget) for every safe reference; stage 6 has a kernel-checked semantic foundation (arbitrary trees, canonical separating addresses) and total executable normalized satisfiability, but entailment is not yet decided; the clause-weight conjunct of ClosureFor (stage 5) and the rest of 6 are unformalized, so ClosureFor, ClosureStatement and RankDecisionStatement are still unproved.",
-      "next_step": "Stage 5 (#30): prove the clause-weight conjunct of ClosureFor I (preimage I budget) for the enumerator's budget and compileValid, then F(k) and finishing-query correctness, discharging ClosureFor together with closure_iff; cross-session readback of DiagramCoverage/Bounded/budget/closure_iff (#33); for stage 6, bound or finitely represent the separating address (Pop/Post regularity, I_C), then absorption, C029/C031 and the composition (#31). One GitHub issue per obligation under the milestone 'Rank-query closure formalized'.",
+      "summary": "Lean kernel-checks the rank-query candidate's stages 1-3 (terminal border depth at most k-1, milestone first returns, failure-target confinement, exact coloured first-return graph surgery identified with the literal query graph); stage 4a pins the query grammar, decidable satisfaction and the Closure Lemma as an unproved Prop, with product-simple runs and the s+1 fresh-interval bound as 4b ingredients; stage 4c has an executable diagram compiler (differential-checked against compile_diagram) and the proved reverse half of ClosureFor for every diagram enumeration (closure_reverse); stage 4b has a finite diagram enumerator with exact membership, an explicit computable budget and the kernel-checked coverage theorem (coverage : DiagramCoverage I budget), so closure_iff gives both directions of the semantic conjunct of ClosureFor I (preimage I budget) for every safe reference; stage 6 has a kernel-checked semantic foundation (arbitrary trees, canonical separating addresses) and total executable normalized satisfiability, but entailment is not yet decided; the clause-weight conjunct of ClosureFor (stage 5) and the rest of 6 are unformalized, so ClosureFor, ClosureStatement and RankDecisionStatement are still unproved. The 2026-09-19 wb-marcus pilot additionally kernel-checks semantic-only promotion unwind specialized to the concrete compiler, with separate source readback; this does not require the unresolved weight conjunct.",
+      "next_step": "Stage 5 (#30): review/integrate released exact finishing semantics; prove safe milestone-chain coverage and RankDecisionStatement for the concrete preimage compiler; implement the finite one-letter safety check and compose satCheck. Use the direct finite-query route before the separate quantitative U/F bound. Cross-session readback of coverage and shared-generator semantics remains #33; the arbitrary-tree subtype reduction and decision composition remain #31. Pilot complete, all scope released at its integration handoff; no active worker assignment.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
@@ -524,7 +524,11 @@
         "notes/2026-09-18-rank-query-enumeration.md",
         "notes/2026-09-19-lean-rank-coverage.md",
         "experiments/check_rank_enumeration.py",
-        "results/lean-rank-enumeration.json"
+        "results/lean-rank-enumeration.json",
+        "lean/Subtail/RankQuerySemanticUnwind.lean",
+        "scripts/lean_semantic_pilot.py",
+        "notes/2026-09-19-wb-semantic-pilot.md",
+        "results/wb-semantic-pilot.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/34"
     }

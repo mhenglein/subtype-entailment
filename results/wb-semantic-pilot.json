@@ -1,0 +1,154 @@
+{
+  "additional_checks": {
+    "combined_validation": {
+      "base_revision": "8d23842a1d7ccbd620484563a982b7b779aa0d82",
+      "checks": [
+        {
+          "command": [
+            "python",
+            "scripts/check_lean.py"
+          ],
+          "exit_code": 0,
+          "name": "lean",
+          "seconds": 105.239
+        },
+        {
+          "command": [
+            "python",
+            "scripts/research_index.py",
+            "--check"
+          ],
+          "exit_code": 0,
+          "name": "index",
+          "seconds": 0.315
+        },
+        {
+          "command": [
+            "python",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "scripts",
+            "-p",
+            "test_research_index.py"
+          ],
+          "exit_code": 0,
+          "name": "navigation",
+          "seconds": 0.165
+        },
+        {
+          "command": [
+            "git",
+            "diff",
+            "--check"
+          ],
+          "exit_code": 0,
+          "name": "diff",
+          "seconds": 0.016
+        }
+      ],
+      "module_sha256": "2b3968f40f9b42d9bc051a0d6b11de3c80e2c3bd30351b04f579765960c9b3de",
+      "status": "PASS"
+    },
+    "fresh_target_build": {
+      "base": "8d23842a1d7ccbd620484563a982b7b779aa0d82",
+      "build_jobs": 17,
+      "command": [
+        "lake",
+        "build",
+        "+Subtail.RankQuerySemanticUnwind"
+      ],
+      "exit_code": 0,
+      "module_sha256": "2b3968f40f9b42d9bc051a0d6b11de3c80e2c3bd30351b04f579765960c9b3de",
+      "scope": "Fresh isolated worktree; target plus dependencies; before default-import addition",
+      "seconds": 30.224,
+      "status": "PASS"
+    },
+    "git_commit_identity": {
+      "actual_commit_and_push": "Recorded separately in the integration handoff after execution",
+      "identity_readback": "PASS: git var GIT_AUTHOR_IDENT",
+      "initial_error": "Author identity unknown",
+      "initial_exit_code": 128,
+      "initial_status": "FAIL",
+      "repair": "Set only repository-local user.name and user.email from the existing Subtail Mac repository identity; no credential copied"
+    },
+    "host_preflight": {
+      "architecture": "aarch64",
+      "base_revision": "8d23842a1d7ccbd620484563a982b7b779aa0d82",
+      "existing_worker_worktrees": 0,
+      "github_authenticated_login": "mhenglein",
+      "host": "wb-marcus",
+      "lean": "4.33.1",
+      "original_checkout_clean": true,
+      "python": "3.13.14",
+      "source": "Parent session SSH preflight, git status/worktree list, versions and gh api user before worktree creation",
+      "uv": "0.12.17"
+    },
+    "mac_native_goal_tool": {
+      "actual_promotion_goal_returned": true,
+      "file": "lean/Subtail/RankQueryUnwind.lean",
+      "line": 92,
+      "source": "Parent session native tool response",
+      "status": "PASS",
+      "tool": "mcp__lean_lsp__lean_goal"
+    },
+    "native_remote_codex_task_activation": "NOT RUN",
+    "original_proof_sources_unchanged": true,
+    "recorded_by": "Supervising Codex Astra session wb-proof-pilot-20260919; separate from the pilot script output",
+    "ssh_disconnect": {
+      "host_reboot_tested": false,
+      "method": "Detached tmux validation observed running from a second SSH connection, then completed successfully",
+      "status": "PASS"
+    }
+  },
+  "base_revision": "8d23842a1d7ccbd620484563a982b7b779aa0d82",
+  "checks": {
+    "axioms": {
+      "sat_promote_iff": [
+        "propext",
+        "Quot.sound"
+      ],
+      "sat_promote_preimage_iff": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    "call_seconds": {
+      "lean_diagnostic_messages": 1.145,
+      "lean_goal": 0.021,
+      "lean_multi_attempt": 1.808,
+      "lean_run_code": 0.938,
+      "lean_run_code_negative_control": 0.023,
+      "verify_sat_promote_iff": 1.585,
+      "verify_sat_promote_preimage_iff": 0.05
+    },
+    "diagnostics_complete_and_clear": true,
+    "goal_after": [],
+    "goal_before": [
+      "k : Nat\nI : Instance k\n\u03c6 : Query k\nh : Nat\nB : Reference k\nhB : SafeReference I B\n\u22a2 Sat (prefixGraph I B) (promote (preimage I RankQueryCoverage.budget) \u03c6 h) \u2194\n    \u2203 n, n \u2264 h \u2227 \u2203 C, Promotes I n B C \u2227 Sat (prefixGraph I C) \u03c6"
+    ],
+    "invalid_trials_rejected": 1,
+    "local_tools_exposed": 18,
+    "pathless_trial_selected_isolated_worktree": true,
+    "server_version": "0.30.0",
+    "source_unchanged": true,
+    "valid_trials": 2,
+    "worktree_marker_removed": true,
+    "wrong_worktree_marker_rejected": true
+  },
+  "kernel_replay": "PASS",
+  "kernel_replay_seconds": 1.067,
+  "lean_version": "Lean (version 4.33.1, aarch64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
+  "module_sha256": "2b3968f40f9b42d9bc051a0d6b11de3c80e2c3bd30351b04f579765960c9b3de",
+  "packages": {
+    "lean-lsp-mcp": "0.30.0",
+    "leanclient": "0.13.2",
+    "mcp": "2.0.0"
+  },
+  "pilot_script_sha256": "63e9e1cbdc440b742a1c4dc12ddb201bfe792d29c8f89dd73fb2969e32be4c58",
+  "scope": "Remote MCP and semantic-only promotion unwind; not a decision theorem",
+  "status": "PASS",
+  "target_build_seconds": 0.166
+}

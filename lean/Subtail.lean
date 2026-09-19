@@ -15,6 +15,7 @@ import Subtail.RankQueryUnwind
 import Subtail.RankQueryEnumeration
 import Subtail.RankQueryEnumerationAudit
 import Subtail.RankQueryCoverage
+import Subtail.RankQuerySemanticUnwind
 import Subtail.TreeSemantics
 import Subtail.CanonicalModel
 import Subtail.CanonicalModelAudit
