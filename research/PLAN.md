@@ -8,36 +8,27 @@ the total executable Boolean and unconditional correctness theorem. Source
 pins, review and validation are in the [completion record](../notes/2026-09-19-entailment-decision.md).
 The formal semantics and performance limits remain explicit.
 
-## Current position and next useful work
+## Active post-C081 programme
 
-The terminal rank-query decision, exact subtype summary, absorbing branch
-split, C029 infinite-continuation decision, finite-expression normalization
-and final executable composition are all checked. The runtime definitions use
-no classical choice. Cross-session semantic readbacks accompany the chain;
-no external human referee was commissioned. Native tests supplement the proof
-and retain UNKNOWN for timeouts. The exhaustive implementation is not a
-practical solver.
+Marcus authorized a goal covering the full paper, focused novelty review,
+complexity, usable verified execution, explicit top, other transfers and an
+outside-reader checkpoint. The ordered deliverables and acceptance gates are
+in [POST_C081.md](POST_C081.md), coordinated in
+[#53](https://github.com/mhenglein/subtail/issues/53) and the single-integrator
+[#37](https://github.com/mhenglein/subtail/issues/37).
 
-1. **Explain the complete argument.** Prepare a readable mathematical account
-   with exact finite constructions and semantic transfers, preserving the
-   existing proof notes and failed attempts as provenance.
-2. **Compare prior work before claiming novelty or complexity.** Use the
-   existing dossier and exact hypotheses. A checked repository theorem does
-   not establish that the result is new or yields any particular complexity.
-3. **Improve execution under proof.** Profile small inputs and add useful
-   exact shortcuts or better finite representations with correctness proofs.
-   Keep backend timeouts separate from Boolean answers. The native E052 record
-   identifies the initial performance limitations.
-4. **Keep stronger claims separate.** C080's particular U/F estimates remain
-   unproved here. Q004's bare computable-bound existence follows by finite
-   classification and witness search; that does not prove those formulas or
-   supply an efficient bound. C030's converse certification is independent of
-   the completed qualitative decision.
+The first episode drafts the full ordinary terminal proof while separate
+contexts audit prior work and the released quantitative proposals. The checked
+qualitative theorem remains the baseline. The old C080 numerical U/F statement,
+its concrete-compiler counterexample and replacement estimates are different
+claims. No title, issue closure or passing check merges them.
 
-These are proposals, not launched work or reservations. Consult #34/#37 and
-current issue scopes before taking one. The original research programme below
-is preserved as history; its older open-problem status and opposing-route
-suggestions are superseded for the exact C081 semantics, not for extensions.
+The owner explicitly deferred licensing and requested author/affiliation
+placeholders. Research and a labelled reproducible draft can proceed; a license
+grant and publication-ready citation metadata remain deferred.
+
+The original programme below is historical. Its earlier open status is
+superseded for exact C081 semantics, not for changed constructors or tree domains.
 
 ## Earlier mathematical continuation: single-source capture (2026-09-09)
 

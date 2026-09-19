@@ -176,12 +176,12 @@
     {
       "id": "A010",
       "title": "Build the exact top-free constraint-to-automata pipeline",
-      "status": "tried",
+      "status": "active",
       "outcome": "supported",
-      "owner": null,
+      "owner": "post-c081-20260919 (author/integrator; novelty delegated)",
       "updated": "2026-09-19",
       "summary": "C081 gives a complete Lean-checked executable entailment decision for every finite bottom/product expression input over arbitrary, possibly infinite trees. Exact normalization, the same normalized summary instance, C029 and the terminal decision compose without SAT, model-finiteness, witness-bound or caller absorption assumptions. Pinned build/kernel/runtime checks and independent semantic readback pass; native timeouts remain UNKNOWN. The implementation can be impractical.",
-      "next_step": "No new work assigned. Preserve the completed C081 proof and exact semantics; proposed follow-up is a readable end-to-end account, prior-work comparison or separately proved runtime improvements. C080 quantitative estimates and C030 converse certification remain distinct.",
+      "next_step": "Complete and independently review the ordinary C081 manuscript and focused literature comparison under #53; preserve exact arbitrary-tree semantics and quantitative limits.",
       "record": "research/approaches/A010.md",
       "evidence": [
         "notes/2026-09-04-bridge-foundation.md",
@@ -209,7 +209,8 @@
         "notes/2026-09-19-entailment-decision-independent-readback.md",
         "scripts/check_entailment_decision.py",
         "experiments/check_entailment_decision.py",
-        "results/entailment-decision.json"
+        "results/entailment-decision.json",
+        "research/POST_C081.md"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/3"
     },
@@ -409,12 +410,12 @@
     {
       "id": "A017",
       "title": "Bound essential repeated blocks",
-      "status": "tried",
+      "status": "active",
       "outcome": "inconclusive",
-      "owner": null,
+      "owner": "c081-complexity-20260919 (readback; integration by post-c081-20260919)",
       "updated": "2026-09-19",
       "summary": "The semantic rank-query compiler yields the kernel-checked terminal decision and, via C081, complete arbitrary-tree subtype entailment. C080 remains inconclusive only for its stronger explicit U/F estimates. Q004 has an ordinary computability corollary from the terminal decision; earlier failed reference quotients and written audits remain preserved.",
-      "next_step": "No new assignment. The qualitative decision is complete; assess the separate U/F claim only under its own released integration scope, or pursue proof exposition and efficient representations. Do not reuse the old final-composition gap as an open task.",
+      "next_step": "Review released #47/#48 statements and derive an explicit original-input resource bound for a precisely identified complete algorithm under #53; do not conflate old U/F with the replacement.",
       "record": "research/approaches/A017.md",
       "evidence": [
         "notes/2026-09-04-minimal-witness-structure.md",
@@ -513,7 +514,8 @@
         "notes/2026-09-19-terminal-rank-decision.md",
         "lean/Subtail/RankQueryDecision.lean",
         "notes/2026-09-19-entailment-decision.md",
-        "research/conjectures/Q004.md"
+        "research/conjectures/Q004.md",
+        "research/POST_C081.md"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/34"
     },

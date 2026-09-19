@@ -1,0 +1,66 @@
+# Paper-to-Lean declaration map
+
+Generated from `lean-map.json` by `python3 paper/check.py --write`.
+
+Mathematical source checkpoint: `c946d86b9e65da2877e0df42c710abbdcb5a4037`. Links pin that revision.
+The manuscript gives ordinary proofs; this map identifies checked dependencies.
+A source/link check is not a new kernel replay or an independent mathematical review.
+
+| Paper result | Statement | Definitions and declarations |
+|---|---|---|
+| P1 | Complete finite-expression arbitrary-tree entailment | [EntailmentDecision.entailsCheck_correct](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/EntailmentDecision.lean#L86); [ExpressionNormalization.ExprEntails](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/ExpressionNormalization.lean#L28); [TreeSemantics.Tree](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/TreeSemantics.lean#L18) |
+| P2 | Exact expression naming and model transfer | [ExpressionNormalization.extend_models](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/ExpressionNormalization.lean#L305); [ExpressionNormalization.restrict_models](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/ExpressionNormalization.lean#L318); [ExpressionNormalization.normalize_entails_iff](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/ExpressionNormalization.lean#L331) |
+| P3 | Least canonical model and separating-address equivalence | [CanonicalModel.closure_models](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/CanonicalModel.lean#L101); [CanonicalModel.canonical_least](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/CanonicalModel.lean#L211); [CanonicalModel.not_entails_iff_canonical](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/CanonicalModel.lean#L219) |
+| P4 | Minimum-stack factorization and finite reachability | [StackSummary.balancedCheck_correct](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/StackSummary.lean#L120); [StackReachability.reaches_iff_normal](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/StackReachability.lean#L169); [StackReachability.reachesCheck_correct](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/StackReachability.lean#L222); [StackReachability.controlReachCheck_correct](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/StackReachability.lean#L261) |
+| P5 | Exact ordered-cut summary bridge | [SummaryBridge.prefix_reaches_iff_cut](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/SummaryBridge.lean#L41); [SummaryBridge.prefix_denial_iff](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/SummaryBridge.lean#L96); [SummaryAutomaton.witness_iff_separation](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/SummaryAutomaton.lean#L188); [SummaryAutomaton.not_entails_iff_witness](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/SummaryAutomaton.lean#L193) |
+| P6 | Strong absorption on all physical states | [SummaryAutomaton.summary_absorbs](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/SummaryAutomaton.lean#L223); [SubtypeTerminalBridge.summary_absorbing](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/SubtypeTerminalBridge.lean#L18) |
+| P7 | Safe extension and terminal/cyclic split | [AbsorbingTerminal.witness_append_safeRun](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/AbsorbingTerminal.lean#L503); [AbsorbingTerminal.terminalize](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/AbsorbingTerminal.lean#L50); [AbsorbingTerminal.c031](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/AbsorbingTerminal.lean#L773) |
+| P8 | Terminal prefix freeness and reversed-prefix rank bound | [TerminalRank.accepted_prefix_eq](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/TerminalRank.lean#L27); [TerminalRank.border_count_le](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/TerminalRank.lean#L132); [RankMilestones.reversed_prefix_rank_le](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/RankMilestones.lean#L314) |
+| P9 | First rank milestones are first returns | [RankMilestones.first_milestones_parent](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/RankMilestones.lean#L211); [RankMilestones.milestones_are_first_returns](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/RankMilestones.lean#L354) |
+| P10 | First-return generator and exact coloured graph surgery | [FirstReturnGenerator.generator_first_hit_iff](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/FirstReturnGenerator.lean#L34); [FirstReturnColours.first_return_graph_exact](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/FirstReturnColours.lean#L185); [RankQueryFirstReturn.old_to_fresh](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/RankQueryFirstReturn.lean#L163); [RankQueryFirstReturn.fresh_edge_shape](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/RankQueryFirstReturn.lean#L137) |
+| P11 | Finite whole-conjunction preimage, both directions | [RankQueryCompiler.intervalObs](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/RankQueryCompiler.lean#L181); [RankQueryCompiler.compileDiagram](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/RankQueryCompiler.lean#L482); [RankQueryEnumeration.diagrams](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/RankQueryEnumeration.lean#L208); [RankQueryEnumeration.mem_diagrams](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/RankQueryEnumeration.lean#L223); [RankQuerySound.compile_sound](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/RankQuerySound.lean#L2442); [RankQueryCoverage.budget](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/RankQueryCoverage.lean#L4265); [RankQueryCoverage.coverage](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/RankQueryCoverage.lean#L4502); [RankQueryCoverage.closure_iff](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/RankQueryCoverage.lean#L4538) |
+| P12 | Finishing without another full return | [RankQuery.finishQuery](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/RankQuery.lean#L602); [RankQueryFinishTrace.finish_iff_no_return_completion](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/RankQueryFinishTrace.lean#L683); [RankQueryFinishTrace.finish_implies_witness](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/RankQueryFinishTrace.lean#L568) |
+| P13 | Semantic unwind without a numerical weight premise | [RankQuerySemanticUnwind.sat_promote_preimage_iff](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/RankQuerySemanticUnwind.lean#L73) |
+| P14 | Unconditional terminal witness decision under terminal finals | [RankQueryDecision.milestone_chain](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/RankQueryDecision.lean#L159); [RankQueryDecision.terminalWitnessCheck](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/RankQueryDecision.lean#L38); [RankQueryDecision.terminalWitnessCheck_correct](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/RankQueryDecision.lean#L259) |
+| P15 | Finite reverse-monitor language equivalence | [PeriodicTail.eventually_sameSuffix_iff](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/PeriodicTail.lean#L61); [PeriodicMonitorComplete.accepted_path_iff](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/PeriodicMonitorComplete.lean#L196) |
+| P16 | Periodic good prefix and original finite witness | [PeriodicRun.infWitness_of_prefix_good](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/PeriodicRun.lean#L266); [PeriodicRun.prefixGood_of_witness](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/PeriodicRun.lean#L309) |
+| P17 | Infinite-continuation decision under strong absorption | [InfiniteCycle.infWitness_iff_bounded_cycle](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/InfiniteCycle.lean#L95); [InfiniteDecision.infiniteWitnessCheck](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/InfiniteDecision.lean#L169); [InfiniteDecision.infiniteWitnessCheck_correct](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/InfiniteDecision.lean#L198) |
+
+## Source identities
+
+These hashes let a reader detect source drift from the mapped checkpoint.
+
+```text
+596d502361547a2b01c276fd41bc1b2b004bdbe4ce0de561cd4b6bce9002bb1b  lean/Subtail/AbsorbingTerminal.lean
+45b777cb26c2bde47870bdb1b9f6e243e3fa6d650b26752742680a5758fcd713  lean/Subtail/CanonicalModel.lean
+a899b12e1d2b968053a0062a1600c9d368fe5c16f1ba3b74aef591b311088f59  lean/Subtail/EntailmentDecision.lean
+6e69fa21ebf0a0ffa65f78c976eb6681a85e9c9778cf96e57d16fb86b1285b82  lean/Subtail/ExpressionNormalization.lean
+848c71747fb6deff903b9ee850a8c6ecdf5f35cd79ce680c7da11c68b7909352  lean/Subtail/FirstReturnColours.lean
+d6c4266c59949785979e6f37dea7d0e93adf50e9a42ad447a7267912949bace6  lean/Subtail/FirstReturnGenerator.lean
+0a3559e3b09dc9a3a1d2ce80893fc354bd6aec7f2ab0a12b82fe9917fb4e2fb3  lean/Subtail/InfiniteCycle.lean
+d9679db4b52062a707f74c4a7198137f608660930e3f4a2d868ab4efac40228d  lean/Subtail/InfiniteDecision.lean
+ff3333943b6ca5dbf5e9920f2a3071912244cddf6098f25eededa476d3b1fc32  lean/Subtail/PeriodicMonitorComplete.lean
+d27cdbb13b08aca5410c76e4ae438a0cebcb7b2acf223bd94a95814717815a86  lean/Subtail/PeriodicRun.lean
+1243dc455f48858d1dc30e1543cdc3737e6078aa51f7cc2f761e8af67741b148  lean/Subtail/PeriodicTail.lean
+3a948deaea047bf02289869210fcc2cbf7ada1010983dee66fa8477e4832d1c6  lean/Subtail/RankMilestones.lean
+e8ef2ec585c49a593c8cee4d11e7aeb75f0284179e36b26ea21d72dd313adb41  lean/Subtail/RankQuery.lean
+1e32f44935490d7e69c8157f4ce12f763c9732b26e4cef2a7fb94518941edb2c  lean/Subtail/RankQueryCompiler.lean
+b1ccfa2fe221d355451ccfffe3d701ee46489d616e7e20d015f3e4fb2e86b49f  lean/Subtail/RankQueryCoverage.lean
+51fef747bb443d313559e57d8fb8e3c1ce68b804eb4883a7d504e2945da5bd8a  lean/Subtail/RankQueryDecision.lean
+f65f40733e4cd45c8499cf1874509b23bacfdfd9f32278b5d459d12dd7016189  lean/Subtail/RankQueryEnumeration.lean
+93653a3ade48c9c4c628a8f05583a1deef201d412427de87ce3209a91949a258  lean/Subtail/RankQueryFinishTrace.lean
+b029e89e706c0724428194ddbc7d08abd494710d29ac65fb21e1dc90d7df10e0  lean/Subtail/RankQueryFirstReturn.lean
+2b3968f40f9b42d9bc051a0d6b11de3c80e2c3bd30351b04f579765960c9b3de  lean/Subtail/RankQuerySemanticUnwind.lean
+7729268fb6f82a0c508747e774e92133f869e3038d05e6c8c1a0caf962c9cd76  lean/Subtail/RankQuerySound.lean
+c3d0efc707cbc0979e99cd26726ed2575f6c1c60e85d34e7449903bf3082ec7f  lean/Subtail/StackReachability.lean
+345b4b1719f31b3963ca5ccc50b2fc861fc19864fe891cd9fcd547121acbe1fc  lean/Subtail/StackSummary.lean
+4a6fb1e783fdf052c1ac61bfd24aae9dbc5d1c441961e41d7cd02f434d57b751  lean/Subtail/SubtypeTerminalBridge.lean
+68832af44bc8907e99dd2889968c699245aff70d40bf5690539f3f9edd8ca37b  lean/Subtail/SummaryAutomaton.lean
+8c5d8038b87a1b419e9be03dee668d390260c2677e42f227622cd199dff58bd9  lean/Subtail/SummaryBridge.lean
+3771a1a58ff7e5ddb2aa5134e08fca65a1a05d64c3a5de8487c4f7d7630b6fc2  lean/Subtail/TerminalRank.lean
+8b08b74d08bac48454f99f0241eb066ef6b218334641f284bc26423957a78f2e  lean/Subtail/TreeSemantics.lean
+```
+
+The stronger numerical conjunct of `RankQuery.ClosureFor` is deliberately
+not a premise of P11, P13, P14 or P1. A conditional theorem referring to it
+does not establish the concrete compiler's old numerical bound.
