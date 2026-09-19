@@ -180,8 +180,8 @@
       "outcome": "supported",
       "owner": null,
       "updated": "2026-09-19",
-      "summary": "Lean checks exact arbitrary-tree normalized non-entailment equivalence with the explicit two-summary witness instance, strong all-state absorption, and the finite safe-cycle/terminal split. The composed theorem has a proved executable terminal branch and an exact InfWitness proposition. Pinned build/kernel, all 100 new declaration dependency closures, separate source reviews, 1803 supplied-address comparisons and 15914 exhaustive absorbing small-state comparisons passed. C029, finite-expression normalization and final executable entailment composition remain open.",
-      "next_step": "Prove the reverse periodic monitor language invariant and all-prefix finite reachability, connect concrete safe repeated cycles, then compose infiniteWitnessCheck correctness using InfiniteCycle and InfiniteWitness. No branching/nonpure-lasso proof or primitive-root machinery is required by this route. Next normalize finite compound syntax and assemble subtype entailment. No worker remains assigned; U/F stays separate.",
+      "summary": "Lean checks exact arbitrary-tree normalized non-entailment equivalence with the explicit two-summary witness instance, strong all-state absorption, and the finite safe-cycle/terminal split. The composed theorem has a proved executable terminal branch and an exact InfWitness proposition. Pinned build/kernel, all 100 new declaration dependency closures, separate source reviews, 1803 supplied-address comparisons and 15914 exhaustive absorbing small-state comparisons passed. The later C029 completion supplies the checked infinite-branch decision. Finite-expression normalization integration and final executable entailment composition remain separate obligations.",
+      "next_step": "Integrate the released finite-expression normalization contributions and independent readback (#49/#50/#52), then assemble the final executable entailment theorem from the checked normalized split and both branch decisions. C029 is complete; no reverse-monitor proof remains open. Preserve arbitrary-tree semantics and keep quantitative U/F claims separate.",
       "record": "research/approaches/A010.md",
       "evidence": [
         "notes/2026-09-04-bridge-foundation.md",
@@ -295,12 +295,12 @@
     {
       "id": "A013",
       "title": "Exploit restrictions shared by actual summary automata",
-      "status": "active",
+      "status": "tried",
       "outcome": "supported",
-      "owner": "Codex Astra c029-completion-20260919",
+      "owner": null,
       "updated": "2026-09-19",
-      "summary": "C029 has a simpler cycle-only route. Lean checks bounded-cycle normalization with an unbounded witness prefix, the exact nonprimitive periodic-suffix criterion, and finite witness extraction under explicit safe-trace/no-conflict hypotheses. The reverse Python monitor has a reviewed ordinary proof, 567000 exact supplied-prefix comparisons and 15914 complete absorbing small-state decisions. Its full Lean invariant, graph decision and concrete cycle composition remain open.",
-      "next_step": "Complete the exact C029 Lean Boolean theorem: reverse-monitor language invariant, concrete periodic run connection, finite graph decision and cycle enumeration. Parent integrates two disjoint worker modules after review; normalization and U/F are excluded from this goal.",
+      "summary": "C029 now has a checked total executable infiniteWitnessCheck with correctness iff the original InfWitness under strong absorption, for every finite state count. Both monitor language directions, complete finite search, bounded cycles and concrete periodic trace/extraction compose without an unproved bound or reduction hypothesis. Native complete small-state and independent supplied-prefix checks pass; expression-level assembly remains separate.",
+      "next_step": "Integrate the released finite-expression normalization contributions and their independent readback with combined validation, then define and prove the final executable entailment decision using the checked normalized split and terminal/infinite branch decisions. Preserve arbitrary-tree semantics; quantitative U/F claims remain separate.",
       "record": "research/approaches/A013.md",
       "evidence": [
         "notes/2026-09-04-summary-absorption.md",
@@ -321,7 +321,17 @@
         "experiments/infinite_cycle_monitor.py",
         "experiments/check_infinite_cycle_monitor.py",
         "results/infinite-cycle-monitor.json",
-        "scripts/check_infinite_witness.py"
+        "scripts/check_infinite_witness.py",
+        "notes/2026-09-19-c029-completion.md",
+        "lean/Subtail/FiniteSearch.lean",
+        "lean/Subtail/PeriodicRun.lean",
+        "lean/Subtail/PeriodicRotation.lean",
+        "lean/Subtail/PeriodicGood.lean",
+        "lean/Subtail/PeriodicMonitor.lean",
+        "lean/Subtail/PeriodicMonitorComplete.lean",
+        "lean/Subtail/InfiniteDecision.lean",
+        "experiments/check_infinite_decision.py",
+        "results/infinite-decision.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/31"
     },
@@ -390,7 +400,7 @@
       "owner": null,
       "updated": "2026-09-19",
       "summary": "C080 now has a kernel-checked executable terminal BorderAvoid decision for every state count, via finite rank-query preimages, original-witness lifting, safe milestone chains and finishing (A018). The explicit U/F bound and arbitrary-tree subtype transfer remain candidate obligations. Earlier failed reference quotients and the written proof/audits remain preserved.",
-      "next_step": "The summary reduction, strong absorption, terminal split and terminal Boolean branch are checked in #31. The next qualitative obligation is exact C029 infinite-witness decidability, followed by finite-expression normalization and full executable composition, with separate review (#33). Explicit U/F estimates remain unresolved quantitative targets.",
+      "next_step": "The summary reduction, strong absorption, terminal split and terminal Boolean branch are checked in #31. C029 now has a checked total infinite-witness decision; the next qualitative obligations are reviewed finite-expression normalization integration and full executable composition, with separate review (#33). Explicit U/F estimates remain unresolved quantitative targets.",
       "record": "research/approaches/A017.md",
       "evidence": [
         "notes/2026-09-04-minimal-witness-structure.md",
@@ -494,12 +504,12 @@
     {
       "id": "A018",
       "title": "Maintain the Lean core and verify critical obligations",
-      "status": "active",
+      "status": "tried",
       "outcome": "supported",
-      "owner": "Codex Astra c029-completion-20260919",
+      "owner": null,
       "updated": "2026-09-19",
-      "summary": "C029 has a simpler cycle-only route. Lean checks bounded-cycle normalization with an unbounded witness prefix, the exact nonprimitive periodic-suffix criterion, and finite witness extraction under explicit safe-trace/no-conflict hypotheses. The reverse Python monitor has a reviewed ordinary proof, 567000 exact supplied-prefix comparisons and 15914 complete absorbing small-state decisions. Its full Lean invariant, graph decision and concrete cycle composition remain open.",
-      "next_step": "Complete the exact C029 Lean Boolean theorem: reverse-monitor language invariant, concrete periodic run connection, finite graph decision and cycle enumeration. Parent integrates two disjoint worker modules after review; normalization and U/F are excluded from this goal.",
+      "summary": "C029 now has a checked total executable infiniteWitnessCheck with correctness iff the original InfWitness under strong absorption, for every finite state count. Both monitor language directions, complete finite search, bounded cycles and concrete periodic trace/extraction compose without an unproved bound or reduction hypothesis. Native complete small-state and independent supplied-prefix checks pass; expression-level assembly remains separate.",
+      "next_step": "Integrate the released finite-expression normalization contributions and their independent readback with combined validation, then define and prove the final executable entailment decision using the checked normalized split and terminal/infinite branch decisions. Preserve arbitrary-tree semantics; quantitative U/F claims remain separate.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
@@ -577,7 +587,17 @@
         "experiments/infinite_cycle_monitor.py",
         "experiments/check_infinite_cycle_monitor.py",
         "results/infinite-cycle-monitor.json",
-        "scripts/check_infinite_witness.py"
+        "scripts/check_infinite_witness.py",
+        "notes/2026-09-19-c029-completion.md",
+        "lean/Subtail/FiniteSearch.lean",
+        "lean/Subtail/PeriodicRun.lean",
+        "lean/Subtail/PeriodicRotation.lean",
+        "lean/Subtail/PeriodicGood.lean",
+        "lean/Subtail/PeriodicMonitor.lean",
+        "lean/Subtail/PeriodicMonitorComplete.lean",
+        "lean/Subtail/InfiniteDecision.lean",
+        "experiments/check_infinite_decision.py",
+        "results/infinite-decision.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/31"
     }

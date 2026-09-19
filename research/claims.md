@@ -658,21 +658,28 @@ and an infinite-extension-only completeness argument for actual outputs.
 infinite safe continuation is decidable, including arbitrary pre-final loops,
 using a finite periodic-suffix monitor.
 
-**Status / scope.** `WRITTEN PROOF + REPRO`; `NO_INFINITE_EXTENSION` does not
-mean unrestricted `NO`, because terminal witnesses remain possible. Separate
-Lean components now prove (2026-09-19): bounded-cycle normalization with an
-unbounded witness prefix (`InfiniteCycle`); the exact eventual-period suffix
-criterion and finite horizon (`PeriodicTail`); and finite original-witness
-extraction plus safe infinite continuation, including absorption transport
-(`InfiniteWitness`). None assumes a primitive period. The simpler cycle-only
-route has a reviewed ordinary proof and independent reverse-monitor checks.
-The full executable reverse monitor, finite graph completeness and concrete
-cycle-trace composition are still unformalized. In particular no checked
-`infiniteWitnessCheck_correct` theorem exists yet.
+**Status / scope.** `LEAN` + independent source readback + native reproduction
+(2026-09-19). `InfiniteDecision.infiniteWitnessCheck_correct` proves for every
+`I : Instance k` that `Absorbing I` implies
+`infiniteWitnessCheck I = true iff AbsorbingTerminal.InfWitness I`.
+The total executable uses checked bounded-cycle enumeration and complete
+finite reverse-graph search; the prefix length is not bounded in advance.
+Both monitor language directions, nonprimitive rotation equality, concrete
+periodic traces and finite original-witness extraction are proved. No
+unproved witness bound or monitor/reduction hypothesis remains.
+
+The original Witness, strong absorption, Bad states, partial transitions,
+ordered/diagonal flags and empty prefix are unchanged. A false result does
+not exclude terminal witnesses. This theorem does not itself assemble the
+expression-level subtype decision or certify a quantitative U/F bound.
+Pinned build, whole-library kernel replay, declaration/runtime audits and
+independent semantic review are recorded in the completion note. Finite
+native checks are reproduction evidence, separate from the all-state proof.
 
 **Record.** [Original statement and proof](../notes/2026-09-04-denials-and-continuations.md);
-[cycle-only route, checked boundaries and remaining interfaces](../notes/2026-09-19-c029-cycle-monitor.md);
-[reproducible reverse-monitor evidence](../results/infinite-cycle-monitor.json).
+[earlier cycle-only route and failed shortcuts](../notes/2026-09-19-c029-cycle-monitor.md);
+[complete executable proof, construction and validation](../notes/2026-09-19-c029-completion.md);
+[native independent checks](../results/infinite-decision.json).
 
 <a id="c030"></a>
 
@@ -702,10 +709,10 @@ BorderAvoid annotations. The safe-terminal-restriction subclaim is separately
 InfWitness contains an original witness, safe finite stem and nonempty safe
 cycle. The finite graph proof and executable terminalization use original
 finals and prune unsafe edges before the sink test. The composed subtype split
-has an exact terminal Boolean and an undecided InfWitness proposition.
-This does not formally discharge C029 or the converse C030 realization.
-The later C029 bounded-cycle and extraction components are recorded at
-[C029](#c029); its monitor correctness theorem is still open.
+has an exact terminal Boolean and an InfWitness proposition. The later
+[C029](#c029) completion now supplies a checked executable decision for that
+infinite branch. This C031 subclaim does not itself certify the converse
+C030 realization or its budget-preservation statement.
 
 **Record.** [Full statement and proof](../notes/2026-09-05-terminal-realization.md);
 [checked subclaim and semantic readback](../notes/2026-09-19-subtype-summary-bridge.md).
@@ -1032,10 +1039,11 @@ all-state strong absorption. The executable construction retains UNSAT as a
 Bad bit. [Bridge proof and independent readback](../notes/2026-09-19-subtype-summary-bridge.md).
 
 NOT Lean-checked: the clause-weight conjunct of `ClosureFor`, explicit `F(k)`,
-and the full entailment decision of stage 6 (C029, syntax normalization
+and the full entailment decision of stage 6 (syntax-normalization integration
 and final executable composition). The absorbing safe-cycle/terminal split
 of C031 is now `LEAN`, as is the composed exact normalized non-entailment split
-in `SubtypeTerminalBridge`; its infinite branch remains a proposition. Thus the combined C080 statement remains
+in `SubtypeTerminalBridge`. The later [C029](#c029) theorem supplies a checked
+executable decision for its infinite branch. Thus the combined C080 statement remains
 CANDIDATE even though its terminal decidability subclaim is checked. Two
 separate AI-assisted audits, both informed by the author's argument, found no
 gap in stages 1–5 and in the stage-6 bridge; neither is a human referee or a

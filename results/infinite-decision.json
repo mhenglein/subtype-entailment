@@ -30,17 +30,23 @@
   "huge_fuel_fixed_point": "PASS: empty-edge one-vertex search with fuel 2^256, both acceptance values",
   "infinite_oracle": "Literal Witness on empty/one-letter words complete by TwoState; independent positive safe-graph closure determines infinite endpoints",
   "larger_state_existence": "Seven named guards; no general larger-state census or performance claim",
+  "native_execution": {
+    "batches": 17,
+    "max_rows_per_batch": 4096,
+    "mode": "Sequential fresh Lean processes; identical full corpus"
+  },
   "scope": "Actual total Lean infiniteWitnessCheck on every encoded absorbing one/two-state binary instance; complete independent small-state oracle",
   "source_sha256": {
     "experiments/check_absorbing_terminal.py": "4e5d22965ab64f80d92114dddfbcd09eef5ec85c1c400cd29430cc8b89f824da",
     "experiments/check_finishing_trace.py": "9e932c5639354bba900f305921a672f6f0e550e29e417ed0ddd312bbace83ac5",
     "experiments/check_infinite_cycle_monitor.py": "a68de5d810d439e9f11829655ba43f2b0bfb0d283f68df22095d744e2ed76d9f",
-    "experiments/check_infinite_decision.py": "448447a52eca9d46e2c14a9737ef405a98095a8cfb232f78c1a9bf172b78a1a0",
+    "experiments/check_infinite_decision.py": "ca0943148355a81923949e7adf0c422e75ef425fa95097b8ee9eb7da981dcb7a",
     "experiments/check_terminal_decision.py": "9b43e2865db9a4e889d08f7eb3e6c9864b79dbc5e8f3242ea1d8c4f60901f618",
     "lean/Subtail/FiniteSearch.lean": "10583fb950420ccfb3ae88c906a0e3f004d72fcb8a3aac53a24b4281800a4057",
-    "lean/Subtail/InfiniteDecision.lean": "dfc0219466a939df395cfb6467f64adbf071da722b12161031b6bdb661a88e38",
+    "lean/Subtail/InfiniteDecision.lean": "d9679db4b52062a707f74c4a7198137f608660930e3f4a2d868ab4efac40228d",
     "lean/Subtail/PeriodicGood.lean": "5f13030c1825fb396f0f288cc4a080d88810f9c08449841a913efc52486eaf9e",
-    "lean/Subtail/PeriodicMonitor.lean": "d48809a38e670c803f350e9f55af7d5b777184654ecd051b16eb97c070a68274",
+    "lean/Subtail/PeriodicMonitor.lean": "719ce76ea2d91c7325f733462791d4da924e38afb8ec9cbe7e4743da0402c7bb",
+    "lean/Subtail/PeriodicMonitorComplete.lean": "ff3333943b6ca5dbf5e9920f2a3071912244cddf6098f25eededa476d3b1fc32",
     "lean/Subtail/PeriodicRotation.lean": "ce02774c6dd7f483dbc34b574c7894335dd5340c6ddc08459c5295d1dc64c6f4",
     "lean/Subtail/PeriodicRun.lean": "d27cdbb13b08aca5410c76e4ae438a0cebcb7b2acf223bd94a95814717815a86"
   },

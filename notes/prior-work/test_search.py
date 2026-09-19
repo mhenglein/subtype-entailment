@@ -24,7 +24,8 @@ class RetrievalTests(unittest.TestCase):
 
     def test_canonical_claim_is_read_directly(self):
         record = self.corpus['C029']
-        self.assertIn('WRITTEN PROOF + REPRO', record['content'])
+        self.assertTrue(record['content'].startswith('### C029 '))
+        self.assertIn('**Status / scope.**', record['content'])
         self.assertIn(record['content'], (search.ROOT / record['source']).read_text())
 
     def test_topic_returns_sources_and_known_obstructions(self):

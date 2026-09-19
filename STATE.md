@@ -1,41 +1,39 @@
 # Subtail — current research state
 
-## September 19: C029 reduces to bounded cycles and an exact periodic-prefix test
+## September 19: C029 has a checked executable infinite-continuation decision
 
-C029 now has a simpler end-to-end route. Under strong absorption,
-`InfiniteCycle.infWitness_iff_bounded_cycle` proves that an infinitely
-continuable witness can be extended to the base of a safe nonempty cycle of
-length at most k, with an empty incoming flag column. The witness prefix
-remains unbounded. Enumerating these cycles suffices for existence; the
-branching and nonpure-lasso cases of the earlier route are no longer required.
+`InfiniteDecision.infiniteWitnessCheck_correct` proves, for every finite binary
+instance I under the existing strong `Absorbing I` condition:
 
-`PeriodicTail` proves the exact infinite-suffix criterion without assuming a
-primitive period, and reduces eventual periodic suffix equality to a strict
-N+d comparison horizon. `InfiniteWitness` connects that criterion to the
-literal finite Witness: a safe trace, final at N and with no prohibited equal
-old suffixes, yields a witness of length 2*N+d and an InfWitness. Strong
-absorption supplies every later final and empty incoming column explicitly.
-These are compiled proof components, not a completed Boolean C029 theorem.
+```text
+infiniteWitnessCheck I = true iff AbsorbingTerminal.InfWitness I
+```
 
-A new reverse-reading Python monitor implements the whole ordinary route.
-It checks equivalent rotations even at different phases, preserves ordered
-flags, and searches all finite prefixes through finite graph reachability.
-The direct infinite-suffix oracle agrees on 567000 supplied-prefix/period
-cases (121650 safe cases); all 15914 absorbing one/two-state decisions agree
-with an independent complete oracle. Larger-state old/new comparisons and
-nine guards cover pre-final loops, nonprimitive periods, terminal-only exits
-and UNKNOWN caps. Finite testing does not establish the general theorem.
+The total executable enumerates safe nonempty cycles of length at most k and
+searches every finite prefix through a finite reverse monitor. The witness
+prefix remains unbounded. Both directions of the monitor language theorem,
+the actual periodic run, finite witness extraction, complete graph search and
+candidate enumeration are checked. No unproved bound, monitor or reduction
+premise remains. The original Witness, directed flags, Bad states, partial
+transitions, diagonal cuts and empty prefix are unchanged. Equal rotations
+of nonprimitive periods are compared explicitly.
 
-**Exact remaining formal obligation:** implement and prove the finite reverse
-monitor's language invariant, its all-prefix finite reachability decision,
-and the concrete repeated-cycle run connection. Compose these with the checked
-bounded-cycle and extraction results to obtain
-`Absorbing I -> (infiniteWitnessCheck I = true iff InfWitness I)`.
-C029 remains WRITTEN PROOF + REPRO with these separate Lean components.
-Finite-expression normalization and final subtype decision assembly follow;
-Problem 1.7 and the independent U/F estimate remain unresolved.
-[Complete route, proof readback, validation and handoff](notes/2026-09-19-c029-cycle-monitor.md),
-[reproducible evidence](results/infinite-cycle-monitor.json).
+The combined pinned Lean build, kernel replay and complete dependency audits
+pass. Runtime definitions have no classical choice. Independent source reviews
+cover the concrete trace, periodic helpers, both monitor directions and final
+composition. The native executable agrees on all 15914 absorbing one/two-state
+instances (885 positive), 29760 supplied-prefix/period cases and seven larger
+guards. These finite tests are separate from the all-state theorem.
+[Exact construction, proof readback, checked revisions and limits](notes/2026-09-19-c029-completion.md),
+[native reproduction evidence](results/infinite-decision.json).
+
+A negative C029 answer excludes infinitely continuable witnesses; terminal
+witnesses remain possible. The terminal branch and normalized semantic split
+below are already checked. **The full expression-level Problem 1.7 theorem is
+not yet assembled in this checkpoint.** Next integrate the reviewed normalization
+contributions with their combined checks, then compose the final executable
+entailment decision over arbitrary, possibly infinite trees. Separate C030
+certification and quantitative U/F work are not promoted by this result.
 
 ## September 19: normalized subtype separation splits into two exact branches
 
@@ -82,10 +80,10 @@ closures and independent final source readback passed at source checkpoint
 exhausts all 15914 absorbing one/two-state encodings with no mismatch;
 [results](results/absorbing-terminal.json).
 
-**Current boundary:** the terminal branch is decidable; the infinite branch
-is still an exact proposition, not an executable decision. C029's general
-infinite-continuation decision, finite-expression normalization and final
-executable composition remain open. Problem 1.7 remains unresolved.
+**Current boundary:** both the terminal and infinite branches now have checked
+executable decisions; the later C029 result above supplies the infinite branch.
+Reviewed integration of finite-expression normalization and final executable
+composition remain open in this checkpoint. Problem 1.7 is not yet assembled.
 The terminal backend below is already checked. C080's explicit U/F estimate
 remains a separate unresolved quantitative claim.
 
@@ -111,9 +109,10 @@ interface declarations pass dependency audits; runtime definitions use no
 
 **Problem 1.7 remains open in this repository.** The later September 19
 checkpoint above discharges the summary construction, ordered cuts, absorption
-and safe terminal split from this earlier #31 handoff. C029, syntax
-normalization and the final executable composition are the remaining subtype
-obligations. The explicit U/F formulas also remain unproved. The exhaustive
+and safe terminal split from this earlier #31 handoff. C029 is also checked
+in the later completion above. Syntax normalization integration and the final
+executable composition are the remaining subtype obligations. The explicit
+U/F formulas also remain unproved. The exhaustive
 query compiler may be impractical; the runtime differential covers all
 one/two-state terminal inputs, not a performance claim for larger instances.
 C080 remains a candidate for its stronger bound and full subtype conclusion.

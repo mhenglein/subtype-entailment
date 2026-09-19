@@ -158,22 +158,29 @@ def main():
     guards = fixtures()
     prefixes = list(prefix_cases())
     assert len(prefixes) == 29760
-    lines = ['import Subtail.InfiniteDecision', DECODER, CHECKER]
-    lines.append('#eval checkHugeFuel')
-    lines += lean_rows('checkGraphRows', graphs)
+    # Separate Lean processes bound elaborator memory without reducing coverage.
+    batch_limit = 4096
+    batches = [('graphs', ['#eval checkHugeFuel'] + lean_rows('checkGraphRows', graphs))]
+    def add_batches(label, command, selected):
+        for offset in range(0, len(selected), batch_limit):
+            batches.append((f'{label}-{offset // batch_limit}',
+                            lean_rows(command, selected[offset:offset+batch_limit])))
     for k in (1, 2):
-        lines += lean_rows(f'checkInfiniteRows {k} (by decide)', [data for n, data in rows if n == k])
-    for _, k, data in guards:
-        lines += lean_rows(f'checkInfiniteRows {k} (by decide)', [data])
+        add_batches(f'decision-{k}', f'checkInfiniteRows {k} (by decide)',
+                    [data for n, data in rows if n == k])
+    batches.append(('guards', [line for _, k, data in guards
+                               for line in lean_rows(f'checkInfiniteRows {k} (by decide)', [data])]))
     for k in range(2, 7):
-        lines += lean_rows(f'checkPrefixRows {k} (by decide)', [data for n, data in prefixes if n == k])
-    scratch = (ROOT/'tmp/infinite-decision-checks'/(args.output.stem+'.lean')).resolve()
-    scratch.parent.mkdir(parents=True, exist_ok=True)
-    scratch.write_text('\n\n'.join(lines)+'\n')
-    proc = subprocess.run(['lake', 'env', 'lean', str(scratch)], cwd=ROOT/'lean',
-                          capture_output=True, text=True, timeout=600)
-    if proc.returncode:
-        raise RuntimeError(proc.stdout+proc.stderr)
+        add_batches(f'prefix-{k}', f'checkPrefixRows {k} (by decide)',
+                    [data for n, data in prefixes if n == k])
+    for label, commands in batches:
+        scratch = (ROOT/'tmp/infinite-decision-checks'/(args.output.stem+'-'+label+'.lean')).resolve()
+        scratch.parent.mkdir(parents=True, exist_ok=True)
+        scratch.write_text('\n\n'.join(['import Subtail.InfiniteDecision', DECODER, CHECKER] + commands)+'\n')
+        proc = subprocess.run(['lake', 'env', 'lean', str(scratch)], cwd=ROOT/'lean',
+                              capture_output=True, text=True, timeout=600)
+        if proc.returncode:
+            raise RuntimeError(label+'\n'+proc.stdout+proc.stderr)
     sources = ['lean/Subtail/FiniteSearch.lean', 'lean/Subtail/InfiniteDecision.lean',
                'lean/Subtail/PeriodicRun.lean', 'lean/Subtail/PeriodicMonitor.lean',
                'lean/Subtail/PeriodicRotation.lean', 'lean/Subtail/PeriodicGood.lean',
@@ -185,6 +192,8 @@ def main():
         'status': 'PASS', 'failures': 0,
         'scope': 'Actual total Lean infiniteWitnessCheck on every encoded absorbing one/two-state binary instance; complete independent small-state oracle',
         'cases': len(rows), 'yes': sum(data[-1] for _, data in rows),
+        'native_execution': {'batches': len(batches), 'max_rows_per_batch': batch_limit,
+                             'mode': 'Sequential fresh Lean processes; identical full corpus'},
         'counts_by_states': {str(k): sum(n == k for n, _ in rows) for k in (1, 2)},
         'graph_oracle': {'graphs': 512, 'seeds': 1536, 'reachability_comparisons_per_variant': 4608, 'variants': ['enumerated-state fuel', 'exact numeric fuel3', 'larger numeric fuel4'],
                          'method': 'Enumerate all simple paths of length at most two on three vertices'},

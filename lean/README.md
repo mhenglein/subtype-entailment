@@ -5,8 +5,11 @@ with terminal final states**, with a checked equivalence to the original
 witness definition for every state count. It also retains the general
 one/two-state result and structural lemmas. Subtype entailment over arbitrary,
 possibly infinite trees now has an exact reduction to a witnessed safe-cycle
-branch and a decided terminal branch; the general infinite branch is not
-formally decided yet.
+branch and a decided terminal branch. C029 now also has the checked total
+`InfiniteDecision.infiniteWitnessCheck`; its theorem has only the existing
+strong Absorbing hypothesis. Both branches are decided. Reviewed syntax
+normalization integration and the final expression-level composition remain
+separate obligations. See the [C029 completion readback](../notes/2026-09-19-c029-completion.md).
 
 The terminal result is `RankQueryDecision.terminalWitnessCheck_correct`;
 the [readback](../notes/2026-09-19-terminal-rank-decision.md) explains its exact
@@ -38,6 +41,8 @@ From the repository root:
 python3 scripts/check_lean.py
 python3 scripts/check_rank_decision.py
 python3 scripts/check_subtype_summary.py
+python3 scripts/check_infinite_witness.py
+python3 experiments/check_infinite_decision.py
 python3 experiments/check_subtype_summary.py
 python3 experiments/check_absorbing_terminal.py
 python3 experiments/check_terminal_decision.py

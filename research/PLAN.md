@@ -1,6 +1,6 @@
 # Research plan
 
-Updated: 2026-09-19 (C029 bounded-cycle reduction, periodic suffix criterion and finite extraction checked; reverse monitor next)
+Updated: 2026-09-19 (C029 executable infinite-continuation decision checked; normalization integration and final composition next)
 
 **Goal:** decide [Problem 1.7](problem.md) for bottom and binary product over arbitrary, possibly infinite trees. No general solution is established here.
 
@@ -27,16 +27,16 @@ Current priorities, in order:
    Empty witnesses, small-state cases and all flags are preserved. The proof
    uses at most k-2 finite preimage iterations, independently of U/F.
 2. **Subtype transfer (#31).** The effective summary instance, exact ordered
-   cuts, prefix denials, strong absorption and absorbing terminal split are
-   now checked. For C029, bounded cycles, the exact periodic suffix criterion
-   and finite extraction are also checked. Next formalize the reverse monitor
-   and its all-prefix finite reachability, then compose the concrete cycle
-   traces with those components. The [cycle-only route](../notes/2026-09-19-c029-cycle-monitor.md)
-   removes the earlier branching/nonpure-lasso case split; primitive roots are
-   unnecessary when equal rotations are tested directly. Then prove
-   finite-expression normalization and executable composition. These preserve
-   arbitrary, possibly infinite trees; the existing terminal decision and
-   semantic reduction alone do not solve Problem 1.7.
+   cuts, prefix denials, strong absorption and terminal split are checked.
+   C029 now has a [complete executable theorem](../notes/2026-09-19-c029-completion.md):
+   bounded cycles, actual periodic traces, both reverse-monitor language
+   directions and all-prefix finite search compose to infiniteWitnessCheck
+   correctness. Next integrate the released expression-normalization
+   contributions (#49/#50 and independent readback #52), preserving their
+   arbitrary-tree model-transfer contract. Then define the final total Boolean
+   and prove its entailment equivalence using the normalized summary split and
+   both checked branch decisions. No U/F formula is needed for these decisions.
+   Final composition remains an explicit obligation, not an inferred theorem.
 3. **Independent review (#33/#32).** Read exact statements and shared-generator
    semantics in a separate session and retain targeted adversarial fixtures.
    This accompanies assembly; it does not wait until all proofs are written.

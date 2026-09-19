@@ -1,5 +1,10 @@
 # C029 through bounded cycles and a reverse periodic monitor
 
+Current-status update: the monitor language equivalence, finite search and
+concrete periodic-trace obligations left open in this historical checkpoint
+are now discharged by the [complete C029 Lean decision](2026-09-19-c029-completion.md).
+The original outline, failed shortcuts and recorded evidence below are preserved.
+
 Date / author: 2026-09-19, Codex Astra c029-cycle-monitor-20260919.
 Workstreams A013/A018; C029; issues #31/#34/#37.
 Base: 064fc7306b679bf607b91e7d8de259823f200c62.

@@ -572,7 +572,7 @@ classify terminal witnesses or solve unrestricted Problem 1.7.
 | Command | `python3 experiments/check_infinite_extensions.py` |
 | Detail | [Infinite-extension proof and limits](../notes/2026-09-04-denials-and-continuations.md); [continuation record](../research/CONTINUATION.md) |
 | Evidence | [Saved result](../results/infinite-extensions.json): 1,500 abstract instances, 400 additional subtype systems, 305,010 monitor comparisons, and 502 exact small-state checks. |
-| Status | Reproducible standard-library check; written proof, not Lean-checked. |
+| Status | Original Python monitor evidence preserved; the later C029 total Lean decision and native checks are recorded below. |
 
 The theorem covers witnesses with an infinite safe continuation. A negative
 monitor result does not exclude a witness with only a finite continuation.
@@ -939,3 +939,38 @@ they do not prove the monitor's language invariant or finite search complete.
 [Ordinary proof, exact checked boundary and next task](../notes/2026-09-19-c029-cycle-monitor.md).
 Both checks run in the consolidated Lean workflow and the three modules are
 included in the default Lean import graph.
+
+
+## C029 complete native decision and monitor checks (2026-09-19, E020)
+
+`python3 experiments/check_infinite_decision.py --output results/infinite-decision.json`
+executes the actual `InfiniteDecision.infiniteWitnessCheck`, not a Python
+reimplementation. [Saved evidence](../results/infinite-decision.json) records:
+
+- All 15914 absorbing binary one/two-state encodings, with 885 YES, checked by
+  literal Witness on empty/one-letter words (complete by TwoState) and an
+  independent safe-cycle closure.
+- All 512 three-vertex graphs, 1536 seeds and 4608 reachability comparisons for
+  each of 3 fuel variants, against simple-path enumeration. A `2^256` fuel fixed-point
+  check covers both accepting and rejecting outcomes without counting down.
+- 29760 exact supplied-prefix/period checks against the direct infinite-suffix
+  predicate, with 22788 accepts. Seed 2026091929 selects 32 varied 2-6-state tables;
+  every prefix of length 0-4 and nonempty period of length 1-4 is tested,
+  including nonprimitive periods. Absorption and cycle validity are not assumed
+  for this separate monitor-language check.
+- Seven larger existence guards with independently checked positive witnesses
+  and explicit forced-tail or terminal-only negative arguments. This is not
+  an exhaustive larger-state existence census or a performance claim.
+
+`python3 scripts/check_infinite_witness.py` now audits all named declarations
+in the three earlier C029 modules plus FiniteSearch, PeriodicRun,
+PeriodicRotation, PeriodicGood, PeriodicMonitor, PeriodicMonitorComplete and
+InfiniteDecision. Every module is in the default Lean import/kernel graph.
+The consolidated Lean workflow runs the full audit and both old Python and
+new native checks, comparing deterministic outputs with the saved records.
+[Exact theorem, review and validation](../notes/2026-09-19-c029-completion.md).
+
+The preceding dated component-only entry is historical. Its open monitor,
+finite-search and concrete-trace obligations are discharged by this result;
+its original evidence is unchanged. Terminal witnesses remain a separate
+branch; the full expression-level entailment checker is not claimed here.
