@@ -4,9 +4,11 @@
 The paper states the exact arbitrary- and finite-tree bottom/product theorems, gives the
 complete terminal construction in Sections 5–9, and integrates the
 Henglein–Rehof and Niehren–Priesnitz comparisons. Section 12 gives ordinary
-proofs of a restricted PSPACE transfer and effective regular countermodels.
+proofs of a restricted PSPACE upper transfer, effective regular countermodels
+and full arbitrary/regular PSPACE hardness using Henglein–Rehof CLOSED-UNIV.
 Section 13 proves the finite-tree decision through a consuming-cycle test,
-an acyclic word bound and finite canonical replacements.
+an acyclic word bound and finite canonical replacements. Section 14 proves
+the arbitrary-tree explicit-top extension through compatible dual projections.
 
 The manuscript contains the mathematical argument. This directory and the
 research records contain source pins, audit history and reproduction details.
@@ -16,7 +18,7 @@ establish publication priority or human peer review.
 
 ## Read the proof and its correspondence
 
-- [Declaration map](lean-map.md): twenty-one numbered paper results and their
+- [Declaration map](lean-map.md): twenty-three numbered paper results and their
   exact checked definitions and declarations. Historical P-identifiers remain
   in `lean-map.json` only to interpret earlier reviews.
 - [Dependency map](dependency-map.md): the mathematical route to the decision.
@@ -31,11 +33,15 @@ establish publication priority or human peer review.
 
 The seventeen original mapped results retain mathematical source revision
 `c946d86b9e65da2877e0df42c710abbdcb5a4037`. The four finite-tree results use
-`4159c58bd3ff683d837d23b3eb4c18eef82e8d4d`. Every linked source file is compared
+`4159c58bd3ff683d837d23b3eb4c18eef82e8d4d`. The two explicit-top language lemmas use
+`0eff4818d990821fd1c08f704a2392f2d0047cf5`. Every linked source file is compared
 byte for byte with its recorded revision. Theorem 1.2 maps directly to the
 finite-expression Boolean theorem; Theorem 13.3 assembles its checked positive
-and negative semantic branches. Corollaries 11.1/13.4 and Propositions 12.1–12.2
-are ordinary proofs, not new Lean declarations. The numerical estimate (13.2)
+and negative semantic branches. Corollaries 11.1/13.4, Propositions 12.1–12.2,
+Theorem 12.3, Lemma 14.1 and Theorem 14.4
+are ordinary proofs, not new Lean declarations. The explicit-top map links
+arbitrary-language lifting/decomposition only: it does not certify the
+labelled-tree representation, finite expression compiler or final composition. The numerical estimate (13.2)
 is proved in the text; the semantic formalization uses an existential bound.
 See the [finite proof readback](../notes/2026-09-20-finite-tree-decision-readback.md)
 and [earlier extension proof record](../notes/2026-09-19-post-c081-extensions.md).
@@ -80,6 +86,8 @@ finite model. The example uses the proved cached implementation. For full formal
 `python3 scripts/check_lean.py` and the additional audits documented in the
 [C081 completion record](../notes/2026-09-19-entailment-decision.md).
 For the finite extension, also run `python3 scripts/check_finite_tree_decision.py`.
+For the explicit-top language core and both new independent corpora, run
+`python3 scripts/check_explicit_top.py`. This does not expose a native top solver.
 Historical results apply to their recorded revisions; a new PDF build does not
 repeat them. JSON handling, extraction and rooted graph finiteness retain the
 external boundaries documented in the solver notes.
@@ -110,8 +118,13 @@ separates mathematical review, source comparison and visual inspection.
 
 The [publication plan](../research/PUBLICATION_PLAN.md) separates manuscript
 review, complexity, performance and extension theorems. The exact full-input
-PSPACE comparison, formalization of the countermodel producer, explicit top
-and other signatures are separate obligations. Complete ordinary extraction
+complexity classification, formalization of the countermodel producer and
+explicit-top expression compiler, and other signatures are separate obligations.
+The PSPACE lower bound and ordinary arbitrary-tree explicit-top decision are
+now established with their exact limits in the integration record. Complete ordinary extraction
 and checked certificates are already implemented. The old proposed quantitative
 bounds retain their status in the claim ledger; no notation in this manuscript
 silently changes them. Historical release tags and receipts are preserved.
+
+[Hardness/top integration and review](../notes/2026-09-20-hardness-top-integration.md)
+records the new source pins, proof boundaries, fresh combined checks and render.

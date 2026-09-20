@@ -1,6 +1,6 @@
 # Research plan
 
-Updated: 2026-09-20 (reviewed PR reconciliation and completion issues)
+Updated: 2026-09-20 (hardness and explicit-top integration)
 
 **Completed qualitative goal:** decide [Problem 1.7](problem.md) for bottom
 and binary product over arbitrary, possibly infinite trees. [C081](claims.md#c081)
@@ -17,7 +17,11 @@ The [seven-part programme](POST_C081.md) produced an ordinary research draft,
 focused novelty review, explicit input resource account, prototype solver
 with a proved evaluation gate, extension study and reader checkpoint.
 C082 supplies a corrected quantitative bound; C083 gives an elementary NL
-lower bound. The original concrete C080 U remains refuted. [C086](claims.md#c086)
+lower bound. C087 strengthens this to PSPACE hardness for arbitrary/regular
+full bottom/product entailment; finite-tree transfer and PSPACE membership
+remain unproved. C088 proves ordinary explicit-top arbitrary-tree decidability
+with checked language lifting and at most four C081 calls.
+The original concrete C080 U remains refuted. [C086](claims.md#c086)
 now proves the original F and an existential smaller compiler, with independent
 review and fresh combined-tree validation. No practical speedup follows.
 
@@ -45,9 +49,10 @@ the consuming-cycle proof, exact finite normalization, worked examples and
 source correspondence, alongside a refreshed Henglein–Rehof/NP comparison.
 Next isolate the six-variable summary cost, then test a proved refinement of
 transition indexing or dense flags. Keep a separate family for terminal-promotion
-coverage. Arity and explicit-top results require separate proofs.
-Tight complexity and exact literature transfers
-remain open. JSON handling, extraction and graph finiteness remain Python.
+coverage. Reviewed arity contributions still await integration. The complete
+explicit-top expression compiler and native interface remain to be formalized;
+its ordinary theorem is now proved. Tight complexity and further literature
+transfers remain open. JSON handling, extraction and graph finiteness remain Python.
 
 The remaining items are proposals, not active worker assignments. Ownership and reservations
 remain in [the registry](approaches.json), [#63](https://github.com/mhenglein/subtail/issues/63)

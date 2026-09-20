@@ -3,19 +3,19 @@
 ## Active work and file ownership
 
 **Updated 20 September 2026.** The owner-authorized
-`issue69-integration-20260920` session integrates reviewed PR #78 and the
-original-F bridge from #69. [C086](research/claims.md#c086) records the smaller
-compiler's original U contract and the original terminal witness bound F.
-The old unfiltered compiler's U estimate remains refuted; C082 stays valid.
-[Exact source pins, combined-tree checks and limits](notes/2026-09-20-original-bounds-integration.md).
-The integration lease releases at the final publication readback in
-[#37](https://github.com/mhenglein/subtail/issues/37). No follow-up implementation
-is reserved by this completed scope. Read the latest issue comments before writing.
+`hardness-top-integration-20260920` session integrates the reviewed #70/#71
+contributions after the completed C086 compiler/F integration.
+[C087](research/claims.md#c087) proves PSPACE hardness for arbitrary and regular
+bottom/product entailment. [C088](research/claims.md#c088) gives a complete
+ordinary explicit-top arbitrary-tree decision reduction, with its language
+lifting core checked in Lean. [Exact validation and boundaries](notes/2026-09-20-hardness-top-integration.md).
+The final publication readback in [#37](https://github.com/mhenglein/subtail/issues/37)
+releases this integration lease. No later implementation is reserved.
 
 The [submission review](notes/2026-09-20-submission-review.md) accepted nine
-contributions within their exact scopes. Only the compiler/F pair is integrated
-here. Accepted ordinary proofs and optional modules awaiting integration do
-not become established shared claims merely because review passed.
+contributions within their exact scopes. The compiler/F pair and hardness/top
+pair are integrated here. The remaining accepted submissions still need their
+own handoff, combined validation and coordinated integration.
 
 | Issue / bounded task | Current disposition and ownership |
 |---|---|
@@ -25,8 +25,8 @@ not become established shared claims merely because review passed.
 | [#67 native terminal fixtures](https://github.com/mhenglein/subtail/issues/67#issuecomment-5751100015) | `issue67-native-followup-20260920` released all nine new paths at `3135cd075e8c`. This new native diagnostic handoff awaits review and integration; it is outside the earlier nine-submission review. Earlier E061 partial fixtures remain integrated. |
 | [#68 countermodel producer](https://github.com/mhenglein/subtail/issues/68) | Producer core at `049aa110cf13` reviewed. Continuing CI, source handoff and integration remain separate gates; certificate adapter and Python/JSON boundaries remain open. |
 | [#69 smaller compiler and F](https://github.com/mhenglein/subtail/issues/69) / [PR #78](https://github.com/mhenglein/subtail/pull/78) | C086 integrates compiler head `db0a6d3505e9` and F head `6aa7047cc6cbc`, with unchanged proof/checker blobs and continuing combined-tree CI. Coordinator accepts these exact published compiler blobs; unknown local author work is not claimed released. |
-| [#70 hardness](https://github.com/mhenglein/subtail/issues/70) | Released ordinary PSPACE lower-bound transfer at `371b97c40d53` reviewed for arbitrary/regular trees; ledger/paper integration pending. No finite-tree transfer or upper bound. |
-| [#71 explicit top](https://github.com/mhenglein/subtail/issues/71) | Released ordinary decision reduction and selective checked lifting at `0eff4818d990` reviewed; integration pending. No complete expression-level Lean implementation is claimed. |
+| [#70 hardness](https://github.com/mhenglein/subtail/issues/70) | C087 integrates the ordinary PSPACE lower bound from `371b97c40d53`, with paper proof and E063 replay. Remains open for tighter upper bounds/classification; no finite-tree transfer. |
+| [#71 explicit top](https://github.com/mhenglein/subtail/issues/71) | C088 integrates the complete ordinary arbitrary-tree decision from `0eff4818d990`, the optional checked language core and continuing CI. The theorem task is complete; expression-level formalization/JSON support remain separate proposals. |
 | [#72 arity](https://github.com/mhenglein/subtail/issues/72) | Released ordinary fixed-positive-arity reduction at `3fca2e8bf8a0` reviewed; integration pending. |
 | [#72 standalone first-return theorem](https://github.com/mhenglein/subtail/pull/77) | Released ordinary schema theorem at `910e3071eab4` reviewed; integration pending. No generic compiler implementation or generalized Lean proof. |
 | [#74 variance](https://github.com/mhenglein/subtail/pull/75) | Released ordinary characterization/obstruction at `4ed2fb67458f` reviewed; integration pending. General function-only decidability remains open. |
@@ -34,6 +34,30 @@ not become established shared claims merely because review passed.
 These are scope records, not a claim that every contributor is running.
 Shared records, imports, workflows and publication require a fresh integrator
 lease. Unknown local work, historical branches and stashes are preserved.
+
+## September 20: PSPACE hardness and explicit top (C087/C088)
+
+The Henglein–Rehof CLOSED-UNIV source now transfers to the exact bottom/product
+arbitrary and regular valuation domains by a logspace marker construction.
+Every produced system is satisfiable, and a failed automaton has one simultaneous
+regular countermodel. All target valuations are covered in the positive direction.
+The reference forces an infinite tree, so this supplies no finite-tree lower
+bound. PSPACE membership and a tight full-input complexity class remain open.
+
+For bottom/top/one covariant binary product over arbitrary labelled trees,
+compatible dual projections give a decision using at most four C081 calls,
+including inconsistent premises. Lean checks the language-level forced-top,
+universal lifting and entailment decomposition over arbitrary predicate sets.
+The labelled-tree representation, finite naming/projection compiler and complete
+expression-level composition remain ordinary mathematical proofs. The current
+JSON solver has no explicit-top syntax or endpoint.
+
+[Paper Sections 12.3 and 14](paper/manuscript.md),
+[combined validation and review](notes/2026-09-20-hardness-top-integration.md),
+[continuing audit](scripts/check_explicit_top.py). E063/E064 retain bounded
+corpus evidence separately; E064's 217 absent bounded witnesses stay UNKNOWN.
+No new performance, finite/regular top theorem, other-signature result or
+publication-priority claim follows. Original proof/core imports are unchanged.
 
 ## September 20: original terminal witness bound proved (C086)
 

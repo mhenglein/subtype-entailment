@@ -16,6 +16,11 @@ no worker, changes no workstream owner and reserves no path.
 - **C086 / #69:** the smaller compiler satisfies the original U contract, and
   the original terminal F is checked, reviewed and integrated with continuing CI.
   [Exact proof scope and evidence](../notes/2026-09-20-original-bounds-integration.md).
+- **C087 / #70:** ordinary logspace PSPACE hardness for arbitrary and regular
+  bottom/product entailment, independently reviewed; no finite-tree transfer.
+- **C088 / #71:** ordinary arbitrary-tree decision with explicit top by at most
+  four C081 calls; language lifting/decomposition checked in Lean. The full
+  expression compiler and native top interface remain separate work.
 - **C030 core:** checked satisfiability and same-word realization on `2k+1`
   variables under terminal-finality. Budget preservation remains an ordinary
   proof and reproduction result, with a separate formalization issue below.
@@ -28,7 +33,7 @@ no worker, changes no workstream owner and reserves no path.
 
 These statements retain their exact hypotheses and evidence levels. They do
 not assert publication priority, a tight complexity class, practical completion
-on every input or a theorem for top/other signatures.
+on every input, a complete formal explicit-top implementation, or other signatures.
 
 ## Finish the paper and reproducible release
 
@@ -61,8 +66,8 @@ and the issue comments; this record grants no overlapping write scope.
 | Next practical | Reduce six-variable raw summary cost | Profile first, prove refinement, retain existing regressions; target completion at unchanged caps | [#66](https://github.com/mhenglein/subtail/issues/66) |
 | Next validation | Exercise terminal promotion and shared generators | Independently justified branch-covering fixtures; exact small exhaustion, capped stress marked UNKNOWN | [#67](https://github.com/mhenglein/subtail/issues/67) |
 | Verification hardening | Check the complete countermodel producer | Executable construction and completeness proof; finite certificate boundary and JSON trust boundary stated | [#68](https://github.com/mhenglein/subtail/issues/68) |
-| Complexity | Tighten exact-semantic upper/lower bounds | Explicit encoding, tree domain and resource accounting; prove every literature transfer | [#70](https://github.com/mhenglein/subtail/issues/70) |
-| New signature | Explicit top | Complete reviewed theorem for a precise extension, decision or undecidability; a study alone is insufficient | [#71](https://github.com/mhenglein/subtail/issues/71) |
+| Complexity | Tighten the upper bound/classification after C087 PSPACE hardness | Explicit encoding, tree domain and resource accounting; prove every literature transfer | [#70](https://github.com/mhenglein/subtail/issues/70) |
+| Completed new signature | Explicit top: C088 ordinary decision and checked language core | Full ordinary theorem reviewed and integrated; complete expression-level formalization and solver exposure are separate follow-up proposals | [#71](https://github.com/mhenglein/subtail/issues/71) |
 | Other consequences | Arity, constructor labels, variance and automata results | One exact reviewed transfer/result at a time; separate semantic obligations | [#72](https://github.com/mhenglein/subtail/issues/72) |
 | Optional converse certification | Formal C030 budget preservation | Connect the exact ordinary budget statement to checked declarations and differential evidence | [#73](https://github.com/mhenglein/subtail/issues/73) |
 
@@ -102,3 +107,15 @@ calling that larger programme complete.
 The standing coordination issue #37 remains open for future leases; it is not
 an unfinished mathematical task. Historical branches/worktrees are retained.
 Unowned local changes, stashes and unpushed work were not audited or deleted.
+
+## Hardness/top integration checkpoint
+
+[Integration record](../notes/2026-09-20-hardness-top-integration.md) pins the
+new paper, source-preserving merges and combined proof/corpus checks. #70 remains
+open for the exact complexity frontier. #71's stated ordinary theorem and
+selective-formalization acceptance are complete. A future implementation should
+formalize the labelled-tree correspondence and finite projection compiler,
+compose the four C081 calls, then add explicit-top syntax and countermodel
+output. No worker or file is reserved for that follow-up. The remaining reviewed
+producer, arity and automata submissions still need serialized integration;
+#67's new native handoff requires its own review.

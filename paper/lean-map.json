@@ -427,6 +427,68 @@
           "entailsCheck_correct"
         ]
       ]
+    },
+    {
+      "id": "Lemma 14.2",
+      "statement": "Forced-top right ideals, containment and exclusion for arbitrary language families",
+      "source_revision": "0eff4818d990821fd1c08f704a2392f2d0047cf5",
+      "declarations": [
+        [
+          "ExplicitTopDualProjection",
+          "ForcedTop"
+        ],
+        [
+          "ExplicitTopDualProjection",
+          "forcedTop_suffix"
+        ],
+        [
+          "ExplicitTopDualProjection",
+          "forcedTop_in_positive"
+        ],
+        [
+          "ExplicitTopDualProjection",
+          "forcedTop_disjoint_negative"
+        ]
+      ]
+    },
+    {
+      "id": "Lemma 14.3",
+      "statement": "Compatible language projections and their paired-language SAT/entailment consequences; no labelled-tree compiler",
+      "source_revision": "0eff4818d990821fd1c08f704a2392f2d0047cf5",
+      "declarations": [
+        [
+          "ExplicitTopDualProjection",
+          "Model"
+        ],
+        [
+          "ExplicitTopDualProjection",
+          "PairedModel"
+        ],
+        [
+          "ExplicitTopDualProjection",
+          "remaining_model"
+        ],
+        [
+          "ExplicitTopDualProjection",
+          "positive_projection_surjective"
+        ],
+        [
+          "ExplicitTopDualProjection",
+          "negative_projection_surjective"
+        ],
+        [
+          "ExplicitTopDualProjection",
+          "satisfiable_iff_projections"
+        ],
+        [
+          "ExplicitTopDualProjection",
+          "entails_iff_projections"
+        ],
+        [
+          "ExplicitTopDualProjection",
+          "positive_countermodel_lift"
+        ]
+      ]
     }
   ],
   "ordinary_results": [
@@ -449,6 +511,21 @@
       "id": "Corollary 13.4",
       "statement": "Finite satisfiability is arbitrary satisfiability without consuming growth; no separate Lean finite-SAT Boolean theorem",
       "evidence": "../notes/2026-09-20-finite-tree-reduction.md"
+    },
+    {
+      "id": "Theorem 12.3",
+      "statement": "Logspace PSPACE hardness for arbitrary and regular bottom/product trees; no finite-tree transfer",
+      "evidence": "../notes/2026-09-20-hr-topfree-transfer-70.md"
+    },
+    {
+      "id": "Lemma 14.1",
+      "statement": "Bijection and order between arbitrary labelled trees and covering prefix-closed language pairs",
+      "evidence": "../notes/2026-09-20-explicit-top-dual-projection.md"
+    },
+    {
+      "id": "Theorem 14.4",
+      "statement": "Explicit-top finite-expression arbitrary-tree entailment by at most four top-free calls; full reduction is ordinary mathematics",
+      "evidence": "../notes/2026-09-20-explicit-top-dual-projection.md"
     }
   ]
 }

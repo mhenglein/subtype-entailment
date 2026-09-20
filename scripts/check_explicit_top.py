@@ -25,9 +25,25 @@ MODULE = "Subtail.ExplicitTopDualProjection"
 SOURCE = "lean/Subtail/ExplicitTopDualProjection.lean"
 
 
+def source_inventory(source: str) -> dict[str, str]:
+    # Fail closed even for unused or private declarations outside the inventory.
+    if re.search(r"\b(?:axiom|opaque|sorry|sorryAx)\b", source):
+        raise CheckFailure("Forbidden custom declaration or proof placeholder")
+    if re.findall(r"^import (.+)$", source, re.M) != ["Std"]:
+        raise CheckFailure("Imports changed: extend the source/dependency audit")
+    pairs = re.findall(r"^(?:@\[[^\]]*\]\s*)?(theorem|def|abbrev|structure|inductive)\s+([A-Za-z_][\w.]*)", source, re.M)
+    expected = {MODULE + "." + name: kind for kind, name in pairs}
+    critical = {"remaining_model", "positive_projection_surjective", "negative_projection_surjective",
+                "satisfiable_iff_projections", "entails_iff_projections", "positive_countermodel_lift"}
+    if len(pairs) != 29 or len(expected) != 29 or not critical <= {n for _, n in pairs}:
+        raise CheckFailure("The 29-declaration inventory changed: review the audit")
+    return expected
+
+
 def hashes() -> dict[str, str]:
     paths = (SOURCE, "lean/lean-toolchain", "lean/lakefile.toml", "lean/lake-manifest.json",
-             "scripts/check_explicit_top.py", "scripts/check_original_bounds.py",
+             "scripts/check_explicit_top.py", "scripts/test_check_explicit_top.py",
+             "scripts/check_original_bounds.py",
              "experiments/check_explicit_top_dual_projection.py",
              "experiments/check_hr_topfree_transfer_70.py",
              "results/explicit-top-dual-projection.json", "results/hr-topfree-transfer-70.json")
@@ -82,14 +98,7 @@ def main() -> int:
             raise CheckFailure("Use the pinned Lean 4.33.1 toolchain: " + version)
         source = (ROOT / SOURCE).read_text()
         # This isolated language core imports only the pinned standard library.
-        if re.findall(r"^import (.+)$", source, re.M) != ["Std"]:
-            raise CheckFailure("Imports changed: extend the source/dependency audit")
-        pairs = re.findall(r"^(?:@\[[^\]]*\]\s*)?(theorem|def|abbrev|structure|inductive)\s+([A-Za-z_][\w.]*)", source, re.M)
-        expected = {MODULE + "." + name: kind for kind, name in pairs}
-        critical = {"remaining_model", "positive_projection_surjective", "negative_projection_surjective",
-                    "satisfiable_iff_projections", "entails_iff_projections", "positive_countermodel_lift"}
-        if len(pairs) != 29 or len(expected) != 29 or not critical <= {n for _, n in pairs}:
-            raise CheckFailure("The 29-declaration inventory changed: review the audit")
+        expected = source_inventory(source)
         run("build", ["lake", "build", "+" + MODULE])
         run("kernel", ["lake", "env", "leanchecker", MODULE])
         audit = scratch / "axioms.lean"

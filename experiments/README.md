@@ -1462,6 +1462,59 @@ mathematical review, not from the bounded corpus.
 [compiler receipt](../results/smaller-compiler-astra.json),
 [F receipt](../results/f-only-astra.json).
 
+<a id="e063"></a>
+
+### E063 — Exact-domain Henglein–Rehof hardness transfer
+
+```sh
+python3 experiments/check_hr_topfree_transfer_70.py --output tmp/hr-topfree-transfer-70.json
+```
+
+Seed `2026092070`. The independent checker covers 4,104 exhaustive one/two-state
+epsilon-NFAs and 400 seeded cases, 33,447 premise comparisons, and 4,913
+additional graph valuations that are not restricted to the encoding's image.
+It also checks 677 finite state-value assignments against an infinite reference.
+The graph comparisons are exact for their regular unfoldings. The failed
+identity/reversed/finite-reference repairs are preserved expected counterexamples,
+not failures of the final marker reduction. The finite corpus is no all-input
+proof and yields no finite-model lower bound.
+
+[C087](../research/claims.md#c087),
+[unchanged receipt](../results/hr-topfree-transfer-70.json),
+[ordinary proof](../notes/2026-09-20-hr-topfree-transfer-70.md),
+[fresh replay and independent review](../notes/2026-09-20-hardness-top-integration.md).
+
+<a id="e064"></a>
+
+### E064 — Compatible explicit-top projections
+
+```sh
+python3 experiments/check_explicit_top_dual_projection.py --output tmp/explicit-top-dual-projection.json
+python3 scripts/test_check_explicit_top.py
+python3 scripts/check_explicit_top.py
+```
+
+Seed `2026092071`. The independent graph/tree predicates check 393 systems,
+5,156 lifted projected models, 292 same-observation-word countermodels and
+2,384 source projections. There are 1,444 finite-tree and 5,184 cyclic-graph
+order comparisons. The 217 systems without two bounded projection witnesses
+remain UNKNOWN, as do any absent bounded derivations. Limits include tree
+depth 2, enumerated graphs through 2 nodes, targeted graphs through 4 nodes,
+and direct derivation stack cap 6. No C081 backend is executed by this corpus.
+
+The last command builds and kernel-replays the optional Std-only language
+module, audits all 29 explicit declarations, and replays both E063 and E064.
+It rejects unused custom axioms/placeholders, unexpected imports and incomplete
+audit output. Main/PR Lean CI runs these checks. Semantic JSON fields match
+the unchanged author receipts; only recorded Python/platform/machine fields
+are ignored as applicable. The full C088 expression/tree reduction remains
+an ordinary proof, not a result of finite tests or a native Lean top solver.
+
+[C088](../research/claims.md#c088),
+[unchanged receipt](../results/explicit-top-dual-projection.json),
+[ordinary proof](../notes/2026-09-20-explicit-top-dual-projection.md),
+[combined validation](../notes/2026-09-20-hardness-top-integration.md).
+
 ## Reconciled supporting evidence (September 20)
 
 The original [concrete compiler-weight counterexample](check_rank_query_weight_counterexample.py)

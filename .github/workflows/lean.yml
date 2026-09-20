@@ -27,6 +27,7 @@ on:
       - 'scripts/check_rank_weight_native.py'
       - 'scripts/check_original_bounds.py'
       - 'scripts/check_explicit_top.py'
+      - 'scripts/test_check_explicit_top.py'
       - 'scripts/test_check_original_bounds.py'
       - 'scripts/check_terminal_lazy.py'
       - 'scripts/check_fast_summary.py'
@@ -61,6 +62,7 @@ on:
       - 'scripts/check_rank_weight_native.py'
       - 'scripts/check_original_bounds.py'
       - 'scripts/check_explicit_top.py'
+      - 'scripts/test_check_explicit_top.py'
       - 'scripts/test_check_original_bounds.py'
       - 'scripts/check_terminal_lazy.py'
       - 'scripts/check_fast_summary.py'
@@ -553,7 +555,9 @@ jobs:
           retention-days: 90
           if-no-files-found: error
       - name: Explicit-top language lifting and independent transfer corpora
-        run: python3 scripts/check_explicit_top.py
+        run: |
+          python3 scripts/test_check_explicit_top.py
+          python3 scripts/check_explicit_top.py
       - name: Preserve explicit-top language and hardness checks
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a

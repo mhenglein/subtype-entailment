@@ -28,6 +28,19 @@ as publication-ready. Supplied papers remain unchanged and outside any proposed
 license for original material. This owner-deferred decision does not block
 research, reproducible drafts or a labelled research checkpoint.
 
+## September 20 current update: hardness and explicit top
+
+[C087](claims.md#c087) now proves ordinary PSPACE hardness for the exact
+arbitrary/regular bottom/product problem, using a separately reviewed
+Henglein–Rehof source transfer. No finite-tree lower bound or PSPACE membership
+follows. [C088](claims.md#c088) proves ordinary arbitrary-tree entailment with
+explicit top by at most four C081 calls; its language lifting/decomposition is
+checked in Lean. The labelled-tree/expression compiler and a native top solver
+remain separate obligations. [The integration record](../notes/2026-09-20-hardness-top-integration.md)
+includes fresh combined checks and the revised paper. Earlier dated feasibility
+and proposed-transfer descriptions below remain historical evidence. No new
+worker is assigned; licensing and author placeholders stay as chosen.
+
 ## Proof route for the exposition
 
 Exact input: finitely many inequalities between finite expressions over a finite

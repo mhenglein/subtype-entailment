@@ -1,5 +1,12 @@
 # C081: extensions, transfers and small obstructions
 
+**September 20 status correction.** The naive encodings and their counterexamples
+below remain valid history. The later compatible-projection argument now proves
+ordinary arbitrary-tree explicit-top decidability as [C088](../research/claims.md#c088).
+Its language core is Lean-checked; the complete expression-level compiler is not.
+[C087](../research/claims.md#c087) separately gives arbitrary/regular PSPACE
+hardness. See the [integration record](2026-09-20-hardness-top-integration.md).
+
 Date: 2026-09-19. Actor: `post-c081-20260919`.
 Base: `c946d86b9e65da2877e0df42c710abbdcb5a4037`.
 Workstreams: A010/A017/A018, programme [#53](https://github.com/mhenglein/subtail/issues/53).

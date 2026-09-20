@@ -1,4 +1,4 @@
-# Subtype entailment for bottom and binary product: arbitrary and finite trees
+# Subtype entailment for bottom and binary product, with an explicit-top extension
 
 Authors and affiliations: **[placeholders]**.
 
@@ -26,7 +26,12 @@ not assume a numerical witness-length bound. We also decide entailment over
 finite trees. A consuming cycle in a finite reverse-pop automaton rules out
 finite models; without such a cycle, every failed query has a finite canonical
 countermodel. This dichotomy gives a second executable decision theorem,
-also formalized in Lean.
+also formalized in Lean. A separate logspace reduction from all-accepting
+automaton universality proves PSPACE-hardness over arbitrary and regular
+bottom/product trees. Finally, a dual projection reduces arbitrary-tree
+entailment with an explicit top element to at most four top-free entailment
+tests. The latter reduction has an ordinary mathematical proof and a Lean
+formalization of its language-level lifting argument.
 
 ## 1. Introduction and main result
 
@@ -73,7 +78,11 @@ of a greatest infinite product tree does not identify these two signatures.
 In particular, a lower-bound construction whose constraints mention only
 products can still use top in its valuations. The Henglein--Rehof hardness
 theorems therefore require a separate semantic transfer before they can be
-claimed as lower bounds for the exact domain studied here.
+claimed as lower bounds for the exact domain studied here. Section 12.3
+provides that transfer for arbitrary and regular bottom/product trees. It
+inherits their PSPACE-hard source problem and automata approach, and replaces
+the target construction by a binary product context that works without top.
+Their finite-tree transfer remains a separate result with different hypotheses.
 
 Niehren and Priesnitz developed the constraint-automaton approach into a
 characterization by restricted cap-automaton universality and a shared word
@@ -102,6 +111,10 @@ periodic continuations are inherited ideas. The additional construction here
 is the whole-conjunction first-return preimage of Section 7 and its bounded
 iteration in Section 9. Together with the absorbing summary and the periodic
 case, it yields a complete decision procedure for the stated domain.
+Section 14 then recovers explicit top through two language projections. Its
+key step lifts every model of either projection when the other projection is
+satisfiable. This supplies the compatibility needed for a complete reduction;
+merely replacing top by an infinite product would not do so.
 
 ### 1.2 Proof strategy
 
@@ -1305,7 +1318,8 @@ This proposition concerns inputs without bottom literals. It does not remove
 denial constraints from the full problem of Theorem 1.1. Its equation for
 $\omega$ also requires an infinite tree, so the same construction gives no
 finite-tree transfer. The upper bound is inherited from the earlier result;
-no matching PSPACE lower bound for our variable domain follows from it.
+no matching PSPACE lower bound for this constant-free fragment follows from it.
+The lower bound in Section 12.3 uses bottom literals in its premises.
 
 ### 12.2 Effective regular countermodels
 
@@ -1366,7 +1380,131 @@ which proves the converse implication for entailment. $\square$
 This extraction has no efficiency guarantee. It also does not supply a
 finite-tree countermodel: the constructed graph may have cycles.
 
-### 12.3 Scope of the contribution
+### 12.3 A PSPACE lower bound for bottom/product entailment
+
+Henglein and Rehof [@HR98, Section 4] use the PSPACE-complete problem
+CLOSED-UNIV: universality of nondeterministic finite automata in which every
+state is accepting. Their Theorem 1 concerns a richer nonstructural signature.
+Section 4 supplies this source problem over a fixed binary alphabet. We give
+a separate reduction into the exact domain of Theorem 1.1; the finite-tree
+transfer of Henglein and Rehof's Theorem 2 is not used.
+
+**Theorem 12.3.** Entailment of finite bottom/product expressions is
+PSPACE-hard under deterministic logspace reductions, both over arbitrary
+trees and over regular trees. Hardness holds with satisfiable premises,
+product depth at most two, and a query between variables.
+
+*Proof.* Let $A$ have $n$ states, $m$ transitions, initial state $q_0$ and
+alphabet $\Sigma=\{0,1\}$. Every state accepts, and epsilon transitions are
+allowed. Let $L_i$ be the words readable from state $i$. Each $L_i$ is
+prefix-closed and contains $\epsilon$.
+
+Define a product context and a coding by
+
+$$H(X,Y)=(X\times Y)\times\bot
+=\{\epsilon,0\}\cup00X\cup01Y,
+\qquad c(0)=00,\quad c(1)=01.$$
+
+Extend $c$ by concatenation, and set
+
+$$K=c(\Sigma^*)\{\epsilon,0\}.$$
+
+This regular prefix-closed language consists of the words whose positions
+$0,2,4,\ldots$ are zero whenever those positions exist. It satisfies
+$H(K,K)=K$. Moreover, $H(B,B)\subseteq B$ implies $K\subseteq B$:
+the premise supplies $\epsilon$ and $0$, and closes $B$ under prefixing by
+$00$ and $01$. Induction on the number of coded blocks proves the inclusion.
+
+Introduce variables $x_i$ for the states, and fresh variables $z,b$. Emit
+one premise for each transition:
+
+$$\begin{array}{rcll}
+x_i&\le&H(x_j,z)&\text{if }i\xrightarrow{0}j,\\
+x_i&\le&H(z,x_j)&\text{if }i\xrightarrow{1}j,\\
+x_i&\le&x_j&\text{if }i\xrightarrow{\epsilon}j.
+\end{array}$$
+
+Add $H(b,b)\le b$, call the resulting premises $C_A$, and ask whether
+$x_{q_0}\le b$. Expanding $H$ gives $n+2$ variables, $m+1$ premises and
+product depth at most two. We will prove, separately under arbitrary and
+regular semantics,
+
+$$L_{q_0}=\Sigma^*\quad\Longleftrightarrow\quad
+C_A\models x_{q_0}\le b.$$
+
+For the positive direction, take any satisfying valuation, and write
+$X_i,Z,B$ for its values. No regularity or special encoding is assumed.
+The reference premise gives $K\subseteq B$. For every run from $i$ to $j$
+reading $w$, induction over its transitions gives
+
+$$c(w)v\in X_i\quad\Longrightarrow\quad v\in X_j
+\qquad\text{for every suffix }v.$$
+
+A letter transition removes its two-bit code by the corresponding branch
+of $H$; an epsilon transition preserves the word.
+Suppose $A$ is universal but $X_{q_0}\nsubseteq K$. The first violation of
+the even-position zero condition, together with prefix closure, gives
+$c(w)1\in X_{q_0}$ for some $w$. Choose a run reading $w0$. Just before
+its last letter transition, the run implication gives $1\in X_j$ for the
+current state $j$. This contradicts the premise $X_j\subseteq H(X_\ell,Z)$,
+because no value of $H$ contains the address $1$. Thus
+$X_{q_0}\subseteq K\subseteq B$, as required for every target valuation.
+
+For the converse, suppose $v\notin L_{q_0}$. Use the simultaneous valuation
+
+$$X_i=K\cup\bigcup_{u\notin L_i}c(u)\Sigma^*,
+\qquad B=K,\qquad Z=\Sigma^*.$$
+
+Each $X_i$ is prefix-closed: prefixes within a coded word lie in $K$, and
+prefixes beyond it stay in the same cone. For an edge $i\xrightarrow{0}j$,
+we have $0L_j\subseteq L_i$. A missing word $u=0t$ at $i$ therefore has
+$t\notin L_j$, so its cone is included in $00X_j$. A missing word beginning
+with $1$ has its cone in $01Z$. The empty word is never missing. The base
+part $K$ lies in $H(X_j,Z)$ because $H(K,K)=K$. This proves the edge premise;
+the $1$-edge case is symmetric. For an epsilon edge, $L_j\subseteq L_i$,
+so every missing-word cone for $i$ is also a missing-word cone for $j$.
+The reference premise holds with equality. Finally,
+$c(v)1\in X_{q_0}\setminus K$ falsifies the query.
+
+This countervaluation is regular. For each nonempty epsilon-closed subset
+$S$ of the automaton states, use a finite graph with root $R_S$ satisfying
+
+$$R_S=H(R_{\operatorname{step}(S,0)},
+        R_{\operatorname{step}(S,1)}),$$
+
+where $\operatorname{step}$ takes the letter successors and their epsilon
+closure. Let $R_\varnothing$ be the one-node infinite product tree
+$\Sigma^*$. Expand each occurrence of $H$ into its two product nodes and
+one bottom node. Use $R_{\operatorname{cl}(\{i\})}$ for $X_i$, a finite
+graph for $K$ as $B$, and the universal product node as $Z$. Reading coded
+blocks either stays in nonempty subsets or reaches the universal node at
+a missing word. The unfolded graph therefore gives exactly the displayed
+$X_i$ at every address. There are only finitely many subsets and graph nodes.
+
+We have proved equivalence with universality under both arbitrary and regular
+semantics. The translation scans the input transitions, emits a constant-size
+premise per edge, and uses logarithmic counters for state identifiers. It is
+therefore a deterministic logspace reduction. CLOSED-UNIV is PSPACE-hard over
+the fixed binary alphabet by the source result, proving the theorem. $\square$
+
+For example, one accepting state with a $0$-loop and no $1$-transition misses
+$1$. Its premises are $x\le H(x,z)$ and $H(b,b)\le b$. Take
+
+$$X=K\cup\bigcup_{u\notin0^*}c(u)\Sigma^*,
+\qquad Z=\Sigma^*,\qquad B=K.$$
+
+A missing word starting with $0$ has a missing suffix, and one starting with
+$1$ enters the unrestricted $01Z$ branch, so $X\subseteq H(X,Z)$. The
+reference holds with equality, while $c(1)1=011$ belongs to $X$ but not $B$.
+
+Every constructed instance is satisfiable: set all $x_i$ and $z$ to bottom,
+and $b$ to $K$. But every satisfying valuation has $K\subseteq B$, so none
+has a finite model. Finite-tree entailment is consequently vacuous on these
+instances; this reduction gives no finite-tree lower bound. It also gives
+neither PSPACE membership for the full problem nor PSPACE hardness of the
+constant-free fragment in Proposition 12.1.
+
+### 12.4 Scope of the contribution
 
 The effective elimination in Theorem 7.1 supplements the automata
 characterizations reviewed above. The common generated word is not replaced by
@@ -1385,8 +1523,9 @@ use that slide presentation as a proof of the whole-conjunction preimage
 theorem established here. Schubert's proposed PSPACE
 procedure [@Schubert21] was withdrawn following an incorrectly formulated
 lemma, and is not used as a decision theorem. These comparisons delimit the
-results on which the present proof relies; they do not assert that the general
-nonstructural problem with explicit top has been resolved.
+results on which the present proof relies. Section 14 treats explicit top
+with the same single covariant binary constructor; additional constructors
+and contravariant arguments are not covered by that extension.
 The comparison concerns the stated theorems and their semantic domains;
 it establishes neither publication priority nor the impossibility of another
 reduction to an earlier decidable fragment.
@@ -1560,12 +1699,248 @@ no finite solution, so that particular reduction cannot transfer their finite
 upper bound to the present problem. The cap-automaton characterization also
 distinguishes finite from infinite trees [@NP03]; the consuming-cycle argument
 here is specific to the forced-target property of our top-free propagation
-system. No PSPACE upper or lower bound for the full finite-tree problem follows
-from these comparisons alone.
+system. Theorem 12.3 does not supply the missing finite lower bound: every
+instance in its image forces an infinite reference tree. No PSPACE upper or
+lower bound for the full finite-tree problem follows from these comparisons.
 
-## 14. Formalization and further questions
+## 14. Adding an explicit top element
 
-The decision procedure is implemented in Lean, together with a proof that its
+We now allow finite expressions over variables, bottom, explicit top, and
+one covariant binary product. A tree has a nonempty prefix-closed domain
+$D\subseteq W=\{0,1\}^*$ and labels in $\{\bot,\times,\top\}$. For
+$w\in D$, both $w0,w1$ belong to $D$ exactly when $w$ is labelled product.
+There is no finiteness, regularity or decidable-membership restriction.
+Subtyping is the greatest relation satisfying the root rule: bottom is below
+every tree, every tree is below top, and two products compare componentwise.
+In particular, the infinite all-product tree is distinct from a top leaf.
+
+### 14.1 Totalized observations and exact representation
+
+For each word $w\in W$, follow its edges while the current label is product.
+After reaching a bottom or top leaf, retain that label for the rest of the
+word. This defines a totalized observation even below an actual leaf. Put
+
+$$\begin{aligned}
+P(t)&=\{w:\text{the observation of }t\text{ at }w\text{ is product or top}\},\\
+H(t)&=\{w:\text{the observation of }t\text{ at }w\text{ is top}\},\\
+Q(t)&=W\setminus H(t).
+\end{aligned}$$
+
+**Lemma 14.1.** Trees correspond bijectively to pairs $(P,H)$ where $P$ is
+prefix-closed, $H$ is a right ideal, and $H\subseteq P$. Equivalently, they
+correspond to prefix-closed pairs $(P,Q)$ with $P\cup Q=W$. Their order is
+
+$$s\le t\quad\Longleftrightarrow\quad
+P(s)\subseteq P(t)\text{ and }H(s)\subseteq H(t)
+\quad\Longleftrightarrow\quad
+P(s)\subseteq P(t)\text{ and }Q(t)\subseteq Q(s). \tag{14.1}$$
+
+*Proof.* A non-bottom observation has no bottom prefix, so $P$ is
+prefix-closed. A top observation remains top after any suffix, so $H$ is
+a right ideal; plainly $H\subseteq P$.
+Conversely, label each word bottom outside $P$, top in $H$, and product in
+$P\setminus H$. Keep precisely the words whose proper prefixes have product
+labels. The empty word is kept, and a kept product node has both children.
+Prefix closure of $P$ makes every descendant of a bottom observation bottom;
+the right-ideal property makes every descendant of a top observation top.
+Totalization therefore recovers the prescribed pair. Pruning an original
+tree at its leaves recovers its original domain and labels, proving both
+inverse identities.
+
+On the label chain $\bot<\times<\top$, an observation is below another
+exactly when both its non-bottom bit and its top bit are at most the
+corresponding bits. The root rule propagates these inequalities to every
+finite address. Conversely, the two inclusions imply the root rule and,
+when both roots are products, the corresponding child inclusions. This
+relation is therefore a post-fixed point of the root rule, and lies in its
+greatest fixed point. The complement identity gives the $Q$ form. $\square$
+
+The constructor equations are
+
+$$\begin{array}{c|cc}
+t&P(t)&Q(t)\\\hline
+\bot&\varnothing&W\\
+\top&W&\varnothing\\
+s\times u&\{\epsilon\}\cup0P(s)\cup1P(u)&
+             \{\epsilon\}\cup0Q(s)\cup1Q(u).
+\end{array}$$
+
+For the top observations,
+$H(s\times u)=0H(s)\cup1H(u)$, with no root contribution.
+Swapping bottom and top at every actual node defines an order-reversing
+involution $d$ that preserves products and satisfies $P(d(t))=Q(t)$.
+
+### 14.2 Two finite top-free projections
+
+Name every subexpression of the premises and query. Retain one shared name
+for each original variable. For each named constant or product, add its exact
+defining equation. The resulting finite system $S$ has clauses
+
+$$x\le y,\qquad x=\bot,\qquad x=\top,\qquad x=y\times z,$$
+
+and a query $a\le b$. Equations are expressible as two inequalities by
+antisymmetry. Every original model extends by expression evaluation.
+Conversely, induction on finite expressions identifies each name with its
+expression in every normalized model. Restriction then preserves all premises
+and both query values. Thus naming preserves satisfiability and failed queries
+in both directions, including repeated occurrences of the same variable.
+
+Construct $S^+$ by preserving inequalities, bottom equations and product
+equations, replacing every top equation by $x=\omega$, and adding
+$\omega=\omega\times\omega$ for one fresh name. In the top-free domain
+this last equation has the unique solution $W$: it supplies the root and
+closes the language under prefixing by either bit, so induction gives every
+word. Here $W$ is a projection value, not an order-preserving replacement for
+the source top leaf.
+
+Define $dS$ by reversing inequalities, exchanging bottom and top equations,
+and preserving product equations. Put $S^-=(dS)^+$, with its own fresh name.
+Write $\mathcal M^+(S)$ for the families $A=(A_x)$ of prefix-closed languages
+satisfying the following conditions, indexed by the clauses of $S$ before
+applying the projection:
+
+$$\begin{array}{rcll}
+A_x&\subseteq&A_y&\text{if }x\le y,\\
+A_x&=&\varnothing&\text{if }x=\bot,\\
+A_x&=&W&\text{if }x=\top,\\
+A_x&=&\{\epsilon\}\cup0A_y\cup1A_z&\text{if }x=y\times z.
+\end{array}$$
+
+These are exactly the restrictions of top-free models of $S^+$. The negative
+families $\mathcal M^-(S)=\mathcal M^+(dS)$ satisfy reversed inclusions,
+exchanged constants, and the same product-language equations. Every labelled
+model of $S$ gives a family in each class by Lemma 14.1. The converse needs
+care: arbitrary independently chosen families need not cover $W$ pointwise,
+and so cannot simply be paired as a labelled tree.
+
+### 14.3 Forced top and universal lifting
+
+For every name $x$, let $H_x$ contain exactly the words with finite derivations
+from these rule schemes:
+
+$$\begin{array}{ll}
+x=\top:& w\in H_x\quad\text{for every }w\in W,\\
+x\le y:& w\in H_x\Longrightarrow w\in H_y,\\
+x=y\times z:& w\in H_y\Longleftrightarrow0w\in H_x,\\
+             & w\in H_z\Longleftrightarrow1w\in H_x.
+\end{array}$$
+
+Each equivalence is two inference rules. There is no bottom seed and no
+unconditional product-root seed. This inductive definition allows recurrent
+systems and arbitrarily long derivations. For finite $S$ it is a finite rule
+scheme; the algorithm below does not enumerate its possibly infinite closure.
+
+**Lemma 14.2.** Every $H_x$ is a right ideal. For every positive family
+$A\in\mathcal M^+(S)$ and every negative family $B\in\mathcal M^-(S)$,
+
+$$H_x\subseteq A_x,\qquad H_x\cap B_x=\varnothing.$$
+
+*Proof.* Append a fixed suffix to every fact in a derivation. All-word seeds
+remain seeds, inequalities preserve the word, and each product rule remains
+valid because $(iw)v=i(wv)$. Induction on the derivation proves right-ideal
+closure. For containment in $A$, the top seed is included in $A_x=W$, the
+positive inequalities propagate membership, and the positive product
+equations justify both directions of each product rule.
+For disjointness, the complement of $B$ satisfies every derivation rule.
+A source top clause makes $B_x=\varnothing$; a reversed inclusion
+$B_y\subseteq B_x$ gives $W\setminus B_x\subseteq W\setminus B_y$;
+the negative product equations give both rules after taking complements.
+Induction proves the two inclusions for all words and names. $\square$
+
+**Lemma 14.3 (compatible projections).** If $\mathcal M^-(S)$ is nonempty,
+every $A\in\mathcal M^+(S)$ has a compatible negative family $Q$ with
+$A_x\cup Q_x=W$ for every $x$. Dually, if $\mathcal M^+(S)$ is nonempty,
+every negative family has a compatible positive family. Consequently a
+covering pair exists exactly when both projection classes are nonempty.
+
+*Proof.* Choose a negative family $B$ to witness consistency, and put
+$Q_x=W\setminus H_x$. Right-ideal closure makes $Q_x$ prefix-closed, and
+$H_x\subseteq A_x$ gives coverage. We verify that $Q\in\mathcal M^-(S)$.
+The implication $H_x\subseteq H_y$ for $x\le y$ gives the required reversed
+inclusion $Q_y\subseteq Q_x$. If $x=\bot$, containment in $A_x=\varnothing$
+gives $H_x=\varnothing$ and $Q_x=W$. If $x=\top$, the seeds give $H_x=W$
+and $Q_x=\varnothing$. At a product equation, the rules identify every
+nonempty $H_x$ observation with its child observation. Also
+$\epsilon\in B_x$ by the negative product equation, so Lemma 14.2 forbids
+$\epsilon\in H_x$. Taking complements therefore gives
+
+$$Q_x=\{\epsilon\}\cup0Q_y\cup1Q_z.$$
+
+This proves compatibility for one common family across all clauses.
+The chosen $B$ need not equal $Q$, and need not itself be compatible with $A$.
+Applying the same argument to $dS$, for which $d(dS)=S$, proves the dual
+assertion. A covering pair plainly supplies both families; conversely choose
+any positive family and lift it using a negative one. $\square$
+
+By Lemma 14.1, each compatible pair gives a labelled valuation with exactly
+those $P,Q$ observations. The equations and inclusions defining the two
+projection classes are exactly the constructor equations and the two order
+inclusions in (14.1). Thus this valuation satisfies every clause of $S$.
+In particular, the negative product root above prevents an exact product
+equation from being reconstructed as a top leaf. Conversely every labelled
+model projects to a compatible pair. We obtain
+
+$$\operatorname{Sat}(S)\quad\Longleftrightarrow\quad
+\operatorname{Sat}(S^+)\text{ and }\operatorname{Sat}(S^-). \tag{14.2}$$
+
+More strongly, every positive model lifts if the negative system is
+satisfiable, and every negative model lifts if the positive system is
+satisfiable. These assertions quantify over all prefix-closed languages,
+including nonregular ones.
+
+### 14.4 Decision, counterexamples and boundary of the result
+
+**Theorem 14.4.** Entailment of finite expressions over bottom, explicit top
+and one covariant binary product is decidable over arbitrary possibly infinite
+trees. There is an effective reduction using at most four entailment calls
+in the top-free domain of Theorem 1.1, with no satisfiability promise.
+
+*Proof.* For normalized names $a,b$, the exact equivalence is
+
+$$\begin{aligned}
+S\models a\le b\quad\Longleftrightarrow\quad
+&\neg\operatorname{Sat}(S^+)\ \lor\ \neg\operatorname{Sat}(S^-)\\
+&\lor\bigl((S^+\models a\le b)\land(S^-\models b\le a)\bigr).
+\end{aligned} \tag{14.3}$$
+
+If either projection is inconsistent, (14.2) gives source inconsistency and
+vacuous entailment. Otherwise every labelled model has both projections, so
+the two projected entailments imply the source query by (14.1). Conversely,
+a positive countermodel lifts by Lemma 14.3 while preserving every $P$ set,
+and a negative countermodel lifts dually while preserving every $Q$ set.
+Either falsifies the source query. No gluing of two independently chosen
+countermodels is needed.
+
+Let $E(C,s,t)$ be the total Boolean of Theorem 1.1. The fixed inequality
+$\bot\times\bot\le\bot$ is false in every top-free valuation. Hence
+
+$$\operatorname{Unsat}(C)=E(C,\bot\times\bot,\bot)$$
+
+tests inconsistency. Evaluate the right side of (14.3) using these two
+inconsistency tests and the two projected query tests. Naming and projection
+produce finite inputs in the exact top-free signature; each call terminates.
+The infinite family $H$ is used only in the correctness proof. Naming
+preserves the original query, so this proves the full-expression result.
+$\square$
+
+For example, $\top\le\top\times\top$ is false. The positive projection
+alone gives $W\subseteq W$ and misses the failure, while the negative
+projection asks whether $\{\epsilon\}\subseteq\varnothing$ and rejects.
+The consistency tests are also necessary: $x=\top$ and $x=y\times y$ have
+no common labelled model, although their positive projection is satisfiable.
+Their negative projection forces $Q_x$ both empty and root-containing.
+Every source query is then vacuously true.
+
+A separating projected word is preserved as a totalized observation address.
+It need not be an actual node of both source trees: an actual label clash may
+occur at an earlier prefix. The argument establishes the arbitrary-tree
+decision and a language-level lifting theorem. It gives no new tight runtime
+bound, finite-tree extension, theorem for additional constructors or variance,
+or complete expression-level Lean implementation for explicit top.
+
+## 15. Formalization and further questions
+
+The top-free decision procedure is implemented in Lean, together with a proof that its
 Boolean result is equivalent to the semantic entailment definition for every
 finite input. The quantified valuations are arbitrary prefix-closed sets;
 neither regularity nor decidable membership is imposed on them. The executable
@@ -1582,12 +1957,14 @@ left to the caller. The argument then uses the same normalization and arbitrary
 entailment implementation.
 
 The accompanying artifact [@SubtailArtifact] contains the source, reproduction
-instructions, examples and a result-by-result map with twenty-one entries:
+instructions, examples and a result-by-result map with twenty-three checked
+entries and seven ordinary-proof records listed separately:
 seventeen for the lemmas and theorems supporting the arbitrary-tree decision
-in Sections 1--10, and four for the finite-tree results in Sections 1 and 13.
-Corollaries 11.1 and 13.4 and
-Propositions 12.1--12.2 are ordinary mathematical consequences proved here;
-they are identified separately from the checked declarations. The explicit
+in Sections 1--10, four for the finite-tree results in Sections 1 and 13, and
+two for the explicit-top language argument in Section 14. Corollaries 11.1
+and 13.4, Propositions 12.1--12.2, Theorem 12.3, Lemma 14.1 and Theorem 14.4
+are ordinary mathematical results proved here; they are identified separately
+from the checked declarations. The explicit
 seed-dependent estimate (13.2) is derived in the text; the formal semantic
 transfer needs the existence of a uniform bound. The correspondence map
 also distinguishes the mathematical dependencies from the larger source
@@ -1604,11 +1981,15 @@ answers, graph finiteness is checked separately at the variable roots.
 Other constructor arities, competing labels, and
 contravariant arguments likewise require separate semantic transfers.
 
-An explicit top constructor poses a particular obstruction to the present
-propagation proof: from $X\times Y\le Z$, the root of $Z$ may be top rather
-than product. The single-label Horn closure in Section 3 then ceases to express
-all model choices. Extending the decision theorem to that signature requires
-a construction that preserves those choices across repeated occurrences.
+Section 14 resolves the competing bottom/product/top labels by compatible
+projections. Lean checks Lemmas 14.2 and 14.3 over arbitrary predicate languages,
+as well as the paired-language satisfiability and entailment decomposition.
+The labelled-tree correspondence, finite expression naming and projection
+compiler, and final four-call composition remain ordinary mathematical proofs.
+They are not yet a complete expression-level Lean implementation for explicit
+top. Theorem 12.3 is likewise an ordinary reduction, not a checked complexity
+theorem. Its PSPACE lower bound leaves membership in PSPACE for the full
+bottom/product problem unresolved.
 
 ## References
 

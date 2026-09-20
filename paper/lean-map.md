@@ -3,7 +3,7 @@
 Generated from `lean-map.json` by `python3 paper/check.py --write`.
 
 Default mathematical source checkpoint: `c946d86b9e65da2877e0df42c710abbdcb5a4037`.
-Each result's links use its explicitly recorded revision; later finite-tree results retain their own pin.
+Each result's links use its explicitly recorded revision; later finite-tree and explicit-top results retain their own pins.
 The manuscript gives ordinary proofs; this map identifies checked dependencies.
 A source/link check is not a new kernel replay or an independent mathematical review.
 
@@ -30,6 +30,8 @@ A source/link check is not a new kernel replay or an independent mathematical re
 | Lemma 13.1 | No consuming reverse-pop cycle gives word length below the number of controls | [FiniteTreeDecision.growthCheck_correct](https://github.com/mhenglein/subtail/blob/4159c58bd3ff683d837d23b3eb4c18eef82e8d4d/lean/Subtail/FiniteTreeDecision.lean#L21); [FiniteTreeDecision.growthCheck_false_no_loop](https://github.com/mhenglein/subtail/blob/4159c58bd3ff683d837d23b3eb4c18eef82e8d4d/lean/Subtail/FiniteTreeDecision.lean#L39); [PopAcyclic.pop_length_lt_of_no_nonempty_loop](https://github.com/mhenglein/subtail/blob/4159c58bd3ff683d837d23b3eb4c18eef82e8d4d/lean/Subtail/PopAcyclic.lean#L65); [FiniteTreeDecision.growthCheck_false_bound](https://github.com/mhenglein/subtail/blob/4159c58bd3ff683d837d23b3eb4c18eef82e8d4d/lean/Subtail/FiniteTreeDecision.lean#L51) |
 | Lemma 13.2 | Consuming growth forces an infinite product tree in every model | [FiniteTreeDecision.push_target_forced](https://github.com/mhenglein/subtail/blob/4159c58bd3ff683d837d23b3eb4c18eef82e8d4d/lean/Subtail/FiniteTreeDecision.lean#L58); [FiniteTreeReduction.forced_reverse_pop_loop_noFiniteModel](https://github.com/mhenglein/subtail/blob/4159c58bd3ff683d837d23b3eb4c18eef82e8d4d/lean/Subtail/FiniteTreeReduction.lean#L188); [FiniteTreeDecision.growthCheck_true_noFiniteModel](https://github.com/mhenglein/subtail/blob/4159c58bd3ff683d837d23b3eb4c18eef82e8d4d/lean/Subtail/FiniteTreeDecision.lean#L68) |
 | Theorem 13.3 | Finite entailment is growth or arbitrary entailment; assembled from the checked positive and negative branches | [FiniteTreeReduction.finiteEntails_iff_entails_of_uniform_reverse_pop](https://github.com/mhenglein/subtail/blob/4159c58bd3ff683d837d23b3eb4c18eef82e8d4d/lean/Subtail/FiniteTreeReduction.lean#L351); [FiniteTreeDecision.growthCheck_false_bound](https://github.com/mhenglein/subtail/blob/4159c58bd3ff683d837d23b3eb4c18eef82e8d4d/lean/Subtail/FiniteTreeDecision.lean#L51); [FiniteTreeDecision.growthCheck_true_noFiniteModel](https://github.com/mhenglein/subtail/blob/4159c58bd3ff683d837d23b3eb4c18eef82e8d4d/lean/Subtail/FiniteTreeDecision.lean#L68); [FiniteTreeReduction.normalize_finite_entails_iff](https://github.com/mhenglein/subtail/blob/4159c58bd3ff683d837d23b3eb4c18eef82e8d4d/lean/Subtail/FiniteTreeReduction.lean#L375); [FiniteTreeDecision.entailsCheck_correct](https://github.com/mhenglein/subtail/blob/4159c58bd3ff683d837d23b3eb4c18eef82e8d4d/lean/Subtail/FiniteTreeDecision.lean#L96) |
+| Lemma 14.2 | Forced-top right ideals, containment and exclusion for arbitrary language families | [ExplicitTopDualProjection.ForcedTop](https://github.com/mhenglein/subtail/blob/0eff4818d990821fd1c08f704a2392f2d0047cf5/lean/Subtail/ExplicitTopDualProjection.lean#L61); [ExplicitTopDualProjection.forcedTop_suffix](https://github.com/mhenglein/subtail/blob/0eff4818d990821fd1c08f704a2392f2d0047cf5/lean/Subtail/ExplicitTopDualProjection.lean#L75); [ExplicitTopDualProjection.forcedTop_in_positive](https://github.com/mhenglein/subtail/blob/0eff4818d990821fd1c08f704a2392f2d0047cf5/lean/Subtail/ExplicitTopDualProjection.lean#L85); [ExplicitTopDualProjection.forcedTop_disjoint_negative](https://github.com/mhenglein/subtail/blob/0eff4818d990821fd1c08f704a2392f2d0047cf5/lean/Subtail/ExplicitTopDualProjection.lean#L95) |
+| Lemma 14.3 | Compatible language projections and their paired-language SAT/entailment consequences; no labelled-tree compiler | [ExplicitTopDualProjection.Model](https://github.com/mhenglein/subtail/blob/0eff4818d990821fd1c08f704a2392f2d0047cf5/lean/Subtail/ExplicitTopDualProjection.lean#L43); [ExplicitTopDualProjection.PairedModel](https://github.com/mhenglein/subtail/blob/0eff4818d990821fd1c08f704a2392f2d0047cf5/lean/Subtail/ExplicitTopDualProjection.lean#L56); [ExplicitTopDualProjection.remaining_model](https://github.com/mhenglein/subtail/blob/0eff4818d990821fd1c08f704a2392f2d0047cf5/lean/Subtail/ExplicitTopDualProjection.lean#L123); [ExplicitTopDualProjection.positive_projection_surjective](https://github.com/mhenglein/subtail/blob/0eff4818d990821fd1c08f704a2392f2d0047cf5/lean/Subtail/ExplicitTopDualProjection.lean#L167); [ExplicitTopDualProjection.negative_projection_surjective](https://github.com/mhenglein/subtail/blob/0eff4818d990821fd1c08f704a2392f2d0047cf5/lean/Subtail/ExplicitTopDualProjection.lean#L185); [ExplicitTopDualProjection.satisfiable_iff_projections](https://github.com/mhenglein/subtail/blob/0eff4818d990821fd1c08f704a2392f2d0047cf5/lean/Subtail/ExplicitTopDualProjection.lean#L194); [ExplicitTopDualProjection.entails_iff_projections](https://github.com/mhenglein/subtail/blob/0eff4818d990821fd1c08f704a2392f2d0047cf5/lean/Subtail/ExplicitTopDualProjection.lean#L231); [ExplicitTopDualProjection.positive_countermodel_lift](https://github.com/mhenglein/subtail/blob/0eff4818d990821fd1c08f704a2392f2d0047cf5/lean/Subtail/ExplicitTopDualProjection.lean#L253) |
 
 ## Ordinary consequences
 
@@ -41,6 +43,9 @@ These results have ordinary proofs in the manuscript; they are not new Lean decl
 | Proposition 12.1 | Guarded constant-free transfer to the NP99 PSPACE procedure | [Record](../notes/2026-09-19-post-c081-extensions.md) |
 | Proposition 12.2 | Effective regular countermodels and equivalence of arbitrary/regular entailment | [Record](../notes/2026-09-19-post-c081-extensions.md) |
 | Corollary 13.4 | Finite satisfiability is arbitrary satisfiability without consuming growth; no separate Lean finite-SAT Boolean theorem | [Record](../notes/2026-09-20-finite-tree-reduction.md) |
+| Theorem 12.3 | Logspace PSPACE hardness for arbitrary and regular bottom/product trees; no finite-tree transfer | [Record](../notes/2026-09-20-hr-topfree-transfer-70.md) |
+| Lemma 14.1 | Bijection and order between arbitrary labelled trees and covering prefix-closed language pairs | [Record](../notes/2026-09-20-explicit-top-dual-projection.md) |
+| Theorem 14.4 | Explicit-top finite-expression arbitrary-tree entailment by at most four top-free calls; full reduction is ordinary mathematics | [Record](../notes/2026-09-20-explicit-top-dual-projection.md) |
 
 ## Source identities
 
@@ -50,6 +55,7 @@ These hashes let a reader detect source drift from the mapped checkpoint.
 596d502361547a2b01c276fd41bc1b2b004bdbe4ce0de561cd4b6bce9002bb1b  lean/Subtail/AbsorbingTerminal.lean
 45b777cb26c2bde47870bdb1b9f6e243e3fa6d650b26752742680a5758fcd713  lean/Subtail/CanonicalModel.lean
 a899b12e1d2b968053a0062a1600c9d368fe5c16f1ba3b74aef591b311088f59  lean/Subtail/EntailmentDecision.lean
+bac45e1f4613e6c95035b3d24f42950f3bf3fcd98324ee25bd8515888e130993  lean/Subtail/ExplicitTopDualProjection.lean
 6e69fa21ebf0a0ffa65f78c976eb6681a85e9c9778cf96e57d16fb86b1285b82  lean/Subtail/ExpressionNormalization.lean
 b8a42b54bbfb626290dd73bdbfc2df2f1880d80af610d9cf458da24998734fd8  lean/Subtail/FiniteTreeDecision.lean
 2b6200f4f913e515bd4f863c77ab4208bef75bb192ac1dc89dfa69614eb415e4  lean/Subtail/FiniteTreeReduction.lean
@@ -88,3 +94,7 @@ Theorem 13.3 is assembled from the listed checked obstruction and bounded-transf
 branches; Theorem 1.2 maps directly to the final finite-expression Boolean theorem.
 The displayed estimate (13.2) is an ordinary derivation from the minimum-stack
 factorization and Lemma 13.1, not a separately exported numerical Lean theorem.
+
+Explicit-top Lemmas 14.2 and 14.3 map to arbitrary predicate-language statements.
+Lemma 14.1 and Theorem 14.4 remain ordinary proofs: no complete labelled-tree
+expression compiler or native explicit-top decision is claimed by this map.

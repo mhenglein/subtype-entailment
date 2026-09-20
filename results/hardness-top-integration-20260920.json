@@ -1,0 +1,882 @@
+{
+  "status": "PENDING_FINAL_VALIDATION",
+  "session": "hardness-top-integration-20260920",
+  "base_main": "d190256860a6e80b9eb2a40e2644bf8130271f53",
+  "author_heads": {
+    "hardness": "371b97c40d532f076fbe09fc640db9333734c91c",
+    "explicit_top": "0eff4818d990821fd1c08f704a2392f2d0047cf5"
+  },
+  "author_blobs": {
+    "experiments/check_hr_topfree_transfer_70.py": {
+      "source_revision": "371b97c40d532f076fbe09fc640db9333734c91c",
+      "sha256": "81e54110e789c9ef282236bec55e5fee97df194e6040a719fe5ba89533396e0a",
+      "comparison": "UNCHANGED"
+    },
+    "notes/2026-09-20-hr-topfree-transfer-70.md": {
+      "source_revision": "371b97c40d532f076fbe09fc640db9333734c91c",
+      "sha256": "42defd195743543c7e52348b12a23aa89354af2c4f6ce3f92420f1564c7b9f63",
+      "comparison": "UNCHANGED"
+    },
+    "results/hr-topfree-transfer-70.json": {
+      "source_revision": "371b97c40d532f076fbe09fc640db9333734c91c",
+      "sha256": "955cfc11197fbed16ca52079f496171d365d2733e83b4bd54c5dcb885da1c75a",
+      "comparison": "UNCHANGED"
+    },
+    "experiments/check_explicit_top_dual_projection.py": {
+      "source_revision": "0eff4818d990821fd1c08f704a2392f2d0047cf5",
+      "sha256": "c5da4fc788f3d1b33db843eb9fc205e53bb08538e5b2ac98d25bcbaa33f9e058",
+      "comparison": "UNCHANGED"
+    },
+    "lean/Subtail/ExplicitTopDualProjection.lean": {
+      "source_revision": "0eff4818d990821fd1c08f704a2392f2d0047cf5",
+      "sha256": "bac45e1f4613e6c95035b3d24f42950f3bf3fcd98324ee25bd8515888e130993",
+      "comparison": "UNCHANGED"
+    },
+    "notes/2026-09-20-explicit-top-dual-projection.md": {
+      "source_revision": "0eff4818d990821fd1c08f704a2392f2d0047cf5",
+      "sha256": "075c614ee539df193c95ef97c9c3000b3aefdb6f4c84133ffa7d4cfcd559de06",
+      "comparison": "UNCHANGED"
+    },
+    "results/explicit-top-dual-projection.json": {
+      "source_revision": "0eff4818d990821fd1c08f704a2392f2d0047cf5",
+      "sha256": "a9af0bf9bd1a2c31d1199726f0cc5b75f086f6eee5ef6f2b3ecff9aa067632c2",
+      "comparison": "UNCHANGED"
+    }
+  },
+  "integration_method": "Non-forced ancestry-preserving source merges; author proof, corpus, note and receipt bytes unchanged. Isolated top workflow replaced by continuing main/PR checks.",
+  "protected_files_unchanged": [
+    "lean/Subtail.lean",
+    "lean/Subtail/EntailmentDecision.lean",
+    "lean/Subtail/ExpressionNormalization.lean",
+    "lean/Subtail/TreeSemantics.lean",
+    "lean/lean-toolchain",
+    "lean/lakefile.toml",
+    "scripts/subtail.py"
+  ],
+  "historical_independent_review": {
+    "revision": "2ffdbd8384f5d98aa257d476c1901cfc3deddd8f",
+    "note": "notes/2026-09-20-submission-review.md",
+    "hr98_pdf_sha256": "6da53bb92428595af33d2466e71a8436cd43c41d750f75f010e909780d795d39",
+    "hr98_rendered_published_pages": [
+      621,
+      622,
+      623
+    ],
+    "scope": "Primary-source gate and independent argument readbacks reused as provenance; not relabelled fresh source browsing."
+  },
+  "mathematical_results": {
+    "C087": "Ordinary logspace PSPACE hardness for arbitrary/regular bottom-product trees; no finite-tree result or PSPACE membership.",
+    "C088": "Ordinary all-input explicit-top arbitrary-tree decision with at most four C081 calls; Lean language core only."
+  },
+  "current_review": {
+    "hardness_paper": "ACCEPT; inherited accepted argument, then independently read actual manuscript; no blind discovery claim.",
+    "explicit_top_paper": "ACCEPT; representation/order, all-model lifting, root exclusion, duality/vacuity and formalization boundary checked.",
+    "ci": "ACCEPT with repaired unused-custom-axiom/placeholder gap and five negative-control tests. Documentation already receives every-change Research checks.",
+    "paper_polish": "Explicit reduction equivalence, expanded worked example, exact HR98 finite non-transfer, clause-index wording and checked/ordinary map counts clarified."
+  },
+  "fresh_execution": {
+    "initial_combined_execution": {
+      "revision": "cdf22547a2a1dbd45ff296048e130ed4380d95de",
+      "execution": "isolated Linux aarch64 workbench checkout",
+      "initial_lake_cache": "EMPTY",
+      "checks": [
+        {
+          "name": "explicit-top-and-hardness",
+          "status": "PASS",
+          "exit_code": 0,
+          "elapsed_seconds": 5.028,
+          "timeout_seconds": 1800,
+          "command": [
+            "<python3.13.14>",
+            "scripts/check_explicit_top.py",
+            "--output",
+            "tmp/integration-validation/explicit-top-check.json"
+          ],
+          "log": "explicit-top-and-hardness.log"
+        },
+        {
+          "name": "audit-helper-regressions",
+          "status": "PASS",
+          "exit_code": 0,
+          "elapsed_seconds": 0.165,
+          "timeout_seconds": 180,
+          "command": [
+            "<python3.13.14>",
+            "scripts/test_check_original_bounds.py"
+          ],
+          "log": "audit-helper-regressions.log"
+        },
+        {
+          "name": "original-bounds",
+          "status": "PASS",
+          "exit_code": 0,
+          "elapsed_seconds": 62.306,
+          "timeout_seconds": 1800,
+          "command": [
+            "<python3.13.14>",
+            "scripts/check_original_bounds.py",
+            "--output",
+            "tmp/integration-validation/original-bounds-check.json"
+          ],
+          "log": "original-bounds.log"
+        },
+        {
+          "name": "default-core",
+          "status": "PASS",
+          "exit_code": 0,
+          "elapsed_seconds": 172.798,
+          "timeout_seconds": 1800,
+          "command": [
+            "<python3.13.14>",
+            "scripts/check_lean.py"
+          ],
+          "log": "default-core.log"
+        }
+      ]
+    },
+    "initial_explicit_top": {
+      "axioms": {
+        "Subtail.ExplicitTopDualProjection.Cover": [],
+        "Subtail.ExplicitTopDualProjection.Entails": [],
+        "Subtail.ExplicitTopDualProjection.ForcedTop": [],
+        "Subtail.ExplicitTopDualProjection.Included": [],
+        "Subtail.ExplicitTopDualProjection.Languages": [],
+        "Subtail.ExplicitTopDualProjection.Model": [],
+        "Subtail.ExplicitTopDualProjection.PairedModel": [],
+        "Subtail.ExplicitTopDualProjection.PositiveEntails": [],
+        "Subtail.ExplicitTopDualProjection.PositiveSatisfiable": [],
+        "Subtail.ExplicitTopDualProjection.PrefixClosed": [],
+        "Subtail.ExplicitTopDualProjection.Remaining": [],
+        "Subtail.ExplicitTopDualProjection.Satisfiable": [],
+        "Subtail.ExplicitTopDualProjection.System": [],
+        "Subtail.ExplicitTopDualProjection.System.dual": [],
+        "Subtail.ExplicitTopDualProjection.System.dual_dual": [],
+        "Subtail.ExplicitTopDualProjection.Word": [],
+        "Subtail.ExplicitTopDualProjection.entails_iff_of_satisfiable": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.ExplicitTopDualProjection.entails_iff_projections": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.ExplicitTopDualProjection.forcedTop_disjoint_negative": [],
+        "Subtail.ExplicitTopDualProjection.forcedTop_in_positive": [],
+        "Subtail.ExplicitTopDualProjection.forcedTop_suffix": [],
+        "Subtail.ExplicitTopDualProjection.negative_projection_surjective": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.ExplicitTopDualProjection.paired_dual_iff": [],
+        "Subtail.ExplicitTopDualProjection.positive_countermodel_lift": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.ExplicitTopDualProjection.positive_covered": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.ExplicitTopDualProjection.positive_projection_surjective": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.ExplicitTopDualProjection.remaining_closed": [],
+        "Subtail.ExplicitTopDualProjection.remaining_model": [],
+        "Subtail.ExplicitTopDualProjection.satisfiable_iff_projections": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      },
+      "commands": [
+        {
+          "command": [
+            "git",
+            "rev-parse",
+            "HEAD"
+          ],
+          "cwd": ".",
+          "elapsed_seconds": 0.004,
+          "exit_code": 0,
+          "log": "explicit-top-y8hy6pk2/git-head.log",
+          "name": "git-head",
+          "status": "PASS",
+          "wall_timeout_seconds": 900
+        },
+        {
+          "command": [
+            "git",
+            "status",
+            "--short",
+            "--untracked-files=no"
+          ],
+          "cwd": ".",
+          "elapsed_seconds": 0.115,
+          "exit_code": 0,
+          "log": "explicit-top-y8hy6pk2/git-status.log",
+          "name": "git-status",
+          "status": "PASS",
+          "wall_timeout_seconds": 900
+        },
+        {
+          "command": [
+            "lean",
+            "--version"
+          ],
+          "cwd": "lean",
+          "elapsed_seconds": 0.064,
+          "exit_code": 0,
+          "log": "explicit-top-y8hy6pk2/toolchain.log",
+          "name": "toolchain",
+          "status": "PASS",
+          "wall_timeout_seconds": 900
+        },
+        {
+          "command": [
+            "lake",
+            "build",
+            "+Subtail.ExplicitTopDualProjection"
+          ],
+          "cwd": "lean",
+          "elapsed_seconds": 1.017,
+          "exit_code": 0,
+          "log": "explicit-top-y8hy6pk2/build.log",
+          "name": "build",
+          "status": "PASS",
+          "wall_timeout_seconds": 900
+        },
+        {
+          "command": [
+            "lake",
+            "env",
+            "leanchecker",
+            "Subtail.ExplicitTopDualProjection"
+          ],
+          "cwd": "lean",
+          "elapsed_seconds": 1.118,
+          "exit_code": 0,
+          "log": "explicit-top-y8hy6pk2/kernel.log",
+          "name": "kernel",
+          "status": "PASS",
+          "wall_timeout_seconds": 900
+        },
+        {
+          "command": [
+            "lake",
+            "env",
+            "lean",
+            "<checkout>/tmp/integration-validation/explicit-top-y8hy6pk2/axioms.lean"
+          ],
+          "cwd": "lean",
+          "elapsed_seconds": 0.666,
+          "exit_code": 0,
+          "log": "explicit-top-y8hy6pk2/axioms.log",
+          "name": "axioms",
+          "status": "PASS",
+          "wall_timeout_seconds": 900
+        },
+        {
+          "command": [
+            "<python3.13.14>",
+            "experiments/check_explicit_top_dual_projection.py",
+            "--output",
+            "<checkout>/tmp/integration-validation/explicit-top-y8hy6pk2/explicit-top-dual-projection.json"
+          ],
+          "cwd": ".",
+          "elapsed_seconds": 1.067,
+          "exit_code": 0,
+          "log": "explicit-top-y8hy6pk2/top-corpus.log",
+          "name": "top-corpus",
+          "status": "PASS",
+          "wall_timeout_seconds": 900
+        },
+        {
+          "command": [
+            "<python3.13.14>",
+            "experiments/check_hr_topfree_transfer_70.py",
+            "--output",
+            "<checkout>/tmp/integration-validation/explicit-top-y8hy6pk2/hr-topfree-transfer-70.json"
+          ],
+          "cwd": ".",
+          "elapsed_seconds": 0.866,
+          "exit_code": 0,
+          "log": "explicit-top-y8hy6pk2/hardness-corpus.log",
+          "name": "hardness-corpus",
+          "status": "PASS",
+          "wall_timeout_seconds": 900
+        }
+      ],
+      "declarations": 29,
+      "finite_diagnostics": {
+        "hardness-corpus": {
+          "comparison": "MATCH_EXCEPT_ENVIRONMENT",
+          "ignored_fields": [
+            "python",
+            "platform",
+            "machine"
+          ],
+          "receipt": "explicit-top-y8hy6pk2/hr-topfree-transfer-70.json",
+          "status": "PASS"
+        },
+        "top-corpus": {
+          "comparison": "MATCH_EXCEPT_ENVIRONMENT",
+          "ignored_fields": [
+            "python",
+            "platform"
+          ],
+          "receipt": "explicit-top-y8hy6pk2/explicit-top-dual-projection.json",
+          "status": "PASS"
+        }
+      },
+      "git_head": "cdf22547a2a1dbd45ff296048e130ed4380d95de",
+      "lean_version": "Lean (version 4.33.1, aarch64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
+      "limits": [
+        "Labelled-tree identification, finite naming/projection and the four-call decision remain ordinary proofs.",
+        "This is no native explicit-top solver, parser or end-to-end Lean theorem.",
+        "Finite diagnostic corpora supply no universal model bound; capped misses remain UNKNOWN.",
+        "The hardness theorem is ordinary mathematics for arbitrary and regular trees, not finite trees."
+      ],
+      "non_theorem_definitions_choice_free": true,
+      "platform": "Linux-6.12.94-123.192.amzn2023.aarch64-aarch64-with-glibc2.43",
+      "python": "3.13.14",
+      "scope": "Check the explicit-top language core and two independent finite corpora.\n\nThe full labelled-tree/expression reduction is an ordinary theorem. This gate\ndoes not certify or expose an executable Lean explicit-top decision procedure.",
+      "source_sha256": {
+        "experiments/check_explicit_top_dual_projection.py": "c5da4fc788f3d1b33db843eb9fc205e53bb08538e5b2ac98d25bcbaa33f9e058",
+        "experiments/check_hr_topfree_transfer_70.py": "81e54110e789c9ef282236bec55e5fee97df194e6040a719fe5ba89533396e0a",
+        "lean/Subtail/ExplicitTopDualProjection.lean": "bac45e1f4613e6c95035b3d24f42950f3bf3fcd98324ee25bd8515888e130993",
+        "lean/lake-manifest.json": "7d0c22bfe200e71ceec96760909d8f9162a5d1e4b96398fa14ba8a4c013bee15",
+        "lean/lakefile.toml": "cc1765726c70b0a02e969ffa24ee5732fd6aab703ef8c71d0f0dd415a545c938",
+        "lean/lean-toolchain": "3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71",
+        "results/explicit-top-dual-projection.json": "a9af0bf9bd1a2c31d1199726f0cc5b75f086f6eee5ef6f2b3ecff9aa067632c2",
+        "results/hr-topfree-transfer-70.json": "955cfc11197fbed16ca52079f496171d365d2733e83b4bd54c5dcb885da1c75a",
+        "scripts/check_explicit_top.py": "98ab51eb92f5bbcd39a9ca8acbbceddd96042aa40d0c59715b5af02828f4e2c1",
+        "scripts/check_original_bounds.py": "68f56317b8068d17c56da31ea4bb52f0c3c1c2377e3f80714e3c55d1dcc38a6b"
+      },
+      "status": "PASS",
+      "tracked_status_before": []
+    },
+    "original_bounds": {
+      "axioms": {
+        "Subtail.FOnlyAstra.border_count_add_one_le_of_avoids": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.budget_le_next": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.budgets_lag": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.coefficient_le_fourth": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.corrected_budget_ge_seed": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.final_return_safe": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.final_return_witness": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.finishPlusObserver": [
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.finishPlusQuery": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.growth_lag": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.lag_step": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.oldGrowth": [],
+        "Subtail.FOnlyAstra.one_less_product_le_originalF": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.originalF": [],
+        "Subtail.FOnlyAstra.original_F_small": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.rank_le_of_avoids": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.shortest_no_initial_return": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.stateAt_drop_of_return": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.weight_finishPlus_le": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.witness_drop_of_return": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyCompilerBridge.coverage_small": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyCompilerBridge.oldGrowth_step": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyCompilerBridge.original_F": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyCompilerBridge.promoted_finish_original_bound": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyCompilerBridge.small_preimage_bounded": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyCompilerBridge.terminal_witness_original_bounded": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.SmallerCompilerAstra.activeBudget": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.SmallerCompilerAstra.closureFor": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.SmallerCompilerAstra.closureStatement": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.SmallerCompilerAstra.closure_iff": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.SmallerCompilerAstra.compact": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.SmallerCompilerAstra.compact_iff": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.SmallerCompilerAstra.compileValid_weight_le": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.SmallerCompilerAstra.cov_active_length": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.SmallerCompilerAstra.cov_compact": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.SmallerCompilerAstra.coverage": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.SmallerCompilerAstra.covered_count_le": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.SmallerCompilerAstra.filter_indices_length": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.SmallerCompilerAstra.forward": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.SmallerCompilerAstra.map_range_getD": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.SmallerCompilerAstra.mem_preClause": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.SmallerCompilerAstra.old_counterexample_rejected": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.SmallerCompilerAstra.preClause": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.SmallerCompilerAstra.preSmall": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.SmallerCompilerAstra.preSmall_nil": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.SmallerCompilerAstra.preimage_clause_weight_le": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.SmallerCompilerAstra.reconstruction": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.SmallerCompilerAstra.smallDiagrams": [
+          "Quot.sound",
+          "propext"
+        ]
+      },
+      "commands": [
+        {
+          "command": [
+            "git",
+            "rev-parse",
+            "HEAD"
+          ],
+          "cwd": ".",
+          "elapsed_seconds": 0.004,
+          "exit_code": 0,
+          "log": "original-bounds-nnsi7it1/git-head.log",
+          "name": "git-head",
+          "status": "PASS",
+          "wall_timeout_seconds": 900
+        },
+        {
+          "command": [
+            "git",
+            "status",
+            "--short",
+            "--untracked-files=no"
+          ],
+          "cwd": ".",
+          "elapsed_seconds": 0.114,
+          "exit_code": 0,
+          "log": "original-bounds-nnsi7it1/git-status.log",
+          "name": "git-status",
+          "status": "PASS",
+          "wall_timeout_seconds": 900
+        },
+        {
+          "command": [
+            "lean",
+            "--version"
+          ],
+          "cwd": "lean",
+          "elapsed_seconds": 0.064,
+          "exit_code": 0,
+          "log": "original-bounds-nnsi7it1/toolchain.log",
+          "name": "toolchain",
+          "status": "PASS",
+          "wall_timeout_seconds": 900
+        },
+        {
+          "command": [
+            "lake",
+            "build",
+            "+Subtail.RankQueryLengthBound",
+            "+Subtail.SmallerCompilerAstra"
+          ],
+          "cwd": "lean",
+          "elapsed_seconds": 50.367,
+          "exit_code": 0,
+          "log": "original-bounds-nnsi7it1/build-dependencies.log",
+          "name": "build-dependencies",
+          "status": "PASS",
+          "wall_timeout_seconds": 900
+        },
+        {
+          "command": [
+            "lake",
+            "env",
+            "lean",
+            "-o",
+            ".lake/build/lib/lean/FOnlyAstra.olean",
+            "FOnlyAstra.lean"
+          ],
+          "cwd": "lean",
+          "elapsed_seconds": 1.518,
+          "exit_code": 0,
+          "log": "original-bounds-nnsi7it1/compile-FOnlyAstra.log",
+          "name": "compile-FOnlyAstra",
+          "status": "PASS",
+          "wall_timeout_seconds": 900
+        },
+        {
+          "command": [
+            "lake",
+            "env",
+            "lean",
+            "-o",
+            ".lake/build/lib/lean/FOnlyCompilerBridge.olean",
+            "FOnlyCompilerBridge.lean"
+          ],
+          "cwd": "lean",
+          "elapsed_seconds": 0.816,
+          "exit_code": 0,
+          "log": "original-bounds-nnsi7it1/compile-FOnlyCompilerBridge.log",
+          "name": "compile-FOnlyCompilerBridge",
+          "status": "PASS",
+          "wall_timeout_seconds": 900
+        },
+        {
+          "command": [
+            "lake",
+            "env",
+            "leanchecker",
+            "Subtail.SmallerCompilerAstra"
+          ],
+          "cwd": "lean",
+          "elapsed_seconds": 2.822,
+          "exit_code": 0,
+          "log": "original-bounds-nnsi7it1/kernel-Subtail.SmallerCompilerAstra.log",
+          "name": "kernel-Subtail.SmallerCompilerAstra",
+          "status": "PASS",
+          "wall_timeout_seconds": 900
+        },
+        {
+          "command": [
+            "lake",
+            "env",
+            "leanchecker",
+            "FOnlyAstra"
+          ],
+          "cwd": "lean",
+          "elapsed_seconds": 1.418,
+          "exit_code": 0,
+          "log": "original-bounds-nnsi7it1/kernel-FOnlyAstra.log",
+          "name": "kernel-FOnlyAstra",
+          "status": "PASS",
+          "wall_timeout_seconds": 900
+        },
+        {
+          "command": [
+            "lake",
+            "env",
+            "leanchecker",
+            "FOnlyCompilerBridge"
+          ],
+          "cwd": "lean",
+          "elapsed_seconds": 1.117,
+          "exit_code": 0,
+          "log": "original-bounds-nnsi7it1/kernel-FOnlyCompilerBridge.log",
+          "name": "kernel-FOnlyCompilerBridge",
+          "status": "PASS",
+          "wall_timeout_seconds": 900
+        },
+        {
+          "command": [
+            "lake",
+            "env",
+            "lean",
+            "<checkout>/tmp/integration-validation/original-bounds-nnsi7it1/axioms.lean"
+          ],
+          "cwd": "lean",
+          "elapsed_seconds": 0.716,
+          "exit_code": 0,
+          "log": "original-bounds-nnsi7it1/axioms.log",
+          "name": "axioms",
+          "status": "PASS",
+          "wall_timeout_seconds": 900
+        },
+        {
+          "command": [
+            "lake",
+            "env",
+            "lean",
+            "<checkout>/tmp/integration-validation/original-bounds-nnsi7it1/native.lean"
+          ],
+          "cwd": "lean",
+          "elapsed_seconds": 0.666,
+          "exit_code": 0,
+          "log": "original-bounds-nnsi7it1/native-guards.log",
+          "name": "native-guards",
+          "status": "PASS",
+          "wall_timeout_seconds": 900
+        },
+        {
+          "command": [
+            "<python3.13.14>",
+            "experiments/check_smaller_compiler_astra.py",
+            "--output",
+            "<checkout>/tmp/integration-validation/original-bounds-nnsi7it1/compiler-standalone.json"
+          ],
+          "cwd": ".",
+          "elapsed_seconds": 0.265,
+          "exit_code": 0,
+          "log": "original-bounds-nnsi7it1/python-compiler.log",
+          "name": "python-compiler",
+          "status": "PASS",
+          "wall_timeout_seconds": 900
+        },
+        {
+          "command": [
+            "<python3.13.14>",
+            "experiments/check_smaller_compiler_astra.py",
+            "--repository",
+            "--output",
+            "<checkout>/tmp/integration-validation/original-bounds-nnsi7it1/compiler-repository.json"
+          ],
+          "cwd": ".",
+          "elapsed_seconds": 0.365,
+          "exit_code": 0,
+          "log": "original-bounds-nnsi7it1/python-compiler-repository.log",
+          "name": "python-compiler-repository",
+          "status": "PASS",
+          "wall_timeout_seconds": 900
+        },
+        {
+          "command": [
+            "<python3.13.14>",
+            "experiments/f_only_astra.py",
+            "--output",
+            "<checkout>/tmp/integration-validation/original-bounds-nnsi7it1/f-bounded.json"
+          ],
+          "cwd": ".",
+          "elapsed_seconds": 1.92,
+          "exit_code": 0,
+          "log": "original-bounds-nnsi7it1/python-f-bounded.log",
+          "name": "python-f-bounded",
+          "status": "PASS",
+          "wall_timeout_seconds": 900
+        }
+      ],
+      "declaration_counts": {
+        "FOnlyAstra": 20,
+        "FOnlyCompilerBridge": 6,
+        "Subtail.SmallerCompilerAstra": 22
+      },
+      "git_head": "cdf22547a2a1dbd45ff296048e130ed4380d95de",
+      "lean_version": "Lean (version 4.33.1, aarch64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
+      "limits": [
+        "Python searches are bounded diagnostics, not proofs of nonexistence.",
+        "This does not profile or replace the production subtype decision backend.",
+        "The older concrete compiler U counterexample remains valid."
+      ],
+      "native_guards": {
+        "output": [
+          "0",
+          "6",
+          "false",
+          "0"
+        ],
+        "status": "PASS"
+      },
+      "platform": "Linux-6.12.94-123.192.amzn2023.aarch64-aarch64-with-glibc2.43",
+      "python": "3.13.14",
+      "python_diagnostics": {
+        "compiler_saved_receipt": "MATCH",
+        "f_saved_receipt": "MATCH_EXCEPT_ENVIRONMENT_AND_TIME",
+        "f_status": "PASS_BOUNDED_CHECKS_NOT_GLOBAL_PROOF",
+        "negative_search_semantics": "UNKNOWN unless an independent all-length proof is supplied",
+        "repository_counterexample_replays": 1,
+        "status": "PASS"
+      },
+      "runtime_choice_free": true,
+      "scope": "smaller compiler U contract and original terminal witness F",
+      "source_sha256": {
+        "experiments/check_smaller_compiler_astra.py": "bf7dafe0ea0c3269261de858ee9c813d1f958cb044c0ae8fd808000d02a9741c",
+        "experiments/f_only_astra.py": "c6d90046defd3ef086a2e8039588dfb6a59fec0209737d5af1c84877c1c60f5d",
+        "lean/FOnlyAstra.lean": "3b0bf239b02eb4e953cbab72672591d418307e2491f015b375a777e9e733f610",
+        "lean/FOnlyCompilerBridge.lean": "8c49288e6f3167635ca3c56f4ed0ee9174860be6febb91e073929dc4dd364143",
+        "lean/Subtail/Basic.lean": "1a7cb0c1f7546ed2efdae96d1af9a84dc6f433531549a50f4738ed25eb64c6c6",
+        "lean/Subtail/FirstReturnColours.lean": "848c71747fb6deff903b9ee850a8c6ecdf5f35cd79ce680c7da11c68b7909352",
+        "lean/Subtail/FirstReturnGenerator.lean": "d6c4266c59949785979e6f37dea7d0e93adf50e9a42ad447a7267912949bace6",
+        "lean/Subtail/FirstReturnGraph.lean": "06d11930a30fc4034e9a8997a4b2d57f82b5f8779b87f709287502fccbde88d8",
+        "lean/Subtail/PrefixMatching.lean": "59de0b193b55765db895f0f9ceb2a4155cd4d4dcfe54fa58cb285ec0577931e4",
+        "lean/Subtail/RankMilestones.lean": "3a948deaea047bf02289869210fcc2cbf7ada1010983dee66fa8477e4832d1c6",
+        "lean/Subtail/RankQuery.lean": "e8ef2ec585c49a593c8cee4d11e7aeb75f0284179e36b26ea21d72dd313adb41",
+        "lean/Subtail/RankQueryCompiler.lean": "1e32f44935490d7e69c8157f4ce12f763c9732b26e4cef2a7fb94518941edb2c",
+        "lean/Subtail/RankQueryCoverage.lean": "b1ccfa2fe221d355451ccfffe3d701ee46489d616e7e20d015f3e4fb2e86b49f",
+        "lean/Subtail/RankQueryDecision.lean": "51fef747bb443d313559e57d8fb8e3c1ce68b804eb4883a7d504e2945da5bd8a",
+        "lean/Subtail/RankQueryEnumeration.lean": "f65f40733e4cd45c8499cf1874509b23bacfdfd9f32278b5d459d12dd7016189",
+        "lean/Subtail/RankQueryFinishFacts.lean": "8e67cbbcf2a2710ec5307455303180fea8c0d7756969b121efab025b8f7ff2a2",
+        "lean/Subtail/RankQueryFinishTrace.lean": "93653a3ade48c9c4c628a8f05583a1deef201d412427de87ce3209a91949a258",
+        "lean/Subtail/RankQueryFirstReturn.lean": "b029e89e706c0724428194ddbc7d08abd494710d29ac65fb21e1dc90d7df10e0",
+        "lean/Subtail/RankQueryLengthBound.lean": "daec0fabc8c8e8b5c9ff5b1078a110f2fddf48ef60d3cbfec04557261a794399",
+        "lean/Subtail/RankQueryPaths.lean": "d383b44afb6bb7625181fb58e1d269030fa388a477849c76b7bc7dc64172de2a",
+        "lean/Subtail/RankQuerySemanticUnwind.lean": "2b3968f40f9b42d9bc051a0d6b11de3c80e2c3bd30351b04f579765960c9b3de",
+        "lean/Subtail/RankQuerySound.lean": "7729268fb6f82a0c508747e774e92133f869e3038d05e6c8c1a0caf962c9cd76",
+        "lean/Subtail/RankQueryUnwind.lean": "c6006c46aa86de0d173711a14f8c4076fcd5723a7470664da0d87d18a70efa3e",
+        "lean/Subtail/RankQueryWeightBound.lean": "d92069dfe5de891ba9bcfe3c5599a6a5e726fd57e2995f87a3b569fa0daabe50",
+        "lean/Subtail/RankQueryWeightCounterexample.lean": "d3e2ebbe27bdc277f8080e5e75f8d8939784d670e396e52e69aac631681a68ce",
+        "lean/Subtail/RankWitnessReference.lean": "eb5f6485995190a3a829b6de2c87e31a79f47b408c6afb77cecfc031c03d7772",
+        "lean/Subtail/SmallerCompilerAstra.lean": "9d23d5922c627708bb62f6f1d68059870c4566c6ef7aa8bd6384383cfe90ce05",
+        "lean/Subtail/TerminalRank.lean": "3771a1a58ff7e5ddb2aa5134e08fca65a1a05d64c3a5de8487c4f7d7630b6fc2",
+        "lean/lake-manifest.json": "7d0c22bfe200e71ceec96760909d8f9162a5d1e4b96398fa14ba8a4c013bee15",
+        "lean/lakefile.toml": "cc1765726c70b0a02e969ffa24ee5732fd6aab703ef8c71d0f0dd415a545c938",
+        "lean/lean-toolchain": "3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71",
+        "results/f-only-astra.json": "a5664bd5c3eb9d3f36f37fadaa95c24346627bc6976deba0087f6cf11a9e6d19",
+        "results/smaller-compiler-astra.json": "b91558da2248401349442a4603d18ca07d5217b70dfa97d9a732c298075820c2",
+        "scripts/check_original_bounds.py": "68f56317b8068d17c56da31ea4bb52f0c3c1c2377e3f80714e3c55d1dcc38a6b",
+        "scripts/test_check_original_bounds.py": "67d914632cb7c239b6ddff2b8002e998cc0f20c1686b88db58977cb98c05bd25"
+      },
+      "status": "PASS",
+      "tracked_status_before": []
+    }
+  },
+  "final_explicit_top_gate": {
+    "status": "PENDING_AFTER_GUARD_CHANGE"
+  },
+  "paper": {
+    "status": "PENDING_COMMITTED_SOURCE_RENDER"
+  },
+  "organization": {
+    "status": "PENDING"
+  },
+  "limits": [
+    "No whole end-to-end explicit-top Lean theorem or JSON endpoint.",
+    "No full-input PSPACE membership, finite-tree hardness, finite/regular explicit-top extension or publication priority.",
+    "E063/E064 are finite diagnostics; 217 E064 bounded missing-model cases remain UNKNOWN.",
+    "Default core and original-bound checks ran at the recorded earlier combined revision; their source bytes remain unchanged.",
+    "Author workspaces, stashes and unpushed changes were not inspected or retired.",
+    "Final main CI status must be read from the published-head runs; paper-only changes do not rerun expensive Lean steps."
+  ]
+}

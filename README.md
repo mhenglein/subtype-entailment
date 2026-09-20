@@ -31,7 +31,8 @@ whole path-query conjunction. [The source module](lean/Subtail/EntailmentDecisio
 contains the final composition.
 The revised paper uses conventional theorem numbering and a full bibliography,
 integrates the Henglein–Rehof lineage, and gives ordinary proofs of effective
-regular countermodels and the constant-free PSPACE transfer. Source pins and
+regular countermodels, the constant-free PSPACE upper transfer and the full
+bottom/product PSPACE lower bound. Section 14 proves the explicit-top extension. Source pins and
 review records are kept in the artifact guide, outside the manuscript.
 Section 13 now gives the full finite-tree proof, including the cycle test,
 finite canonical replacements and worked differences between the two domains.
@@ -43,8 +44,9 @@ finite canonical replacements and worked differences between the two domains.
 product node and its right side has bottom. The paper also gives a regular
 infinite countermodel and examples of the terminal first-return construction.
 
-**Limits.** This theorem has no explicit top constructor, multiple labelled
-constructors or contravariant function type. Finite-tree entailment has a
+**Limits.** C081 itself has no explicit top constructor; the separate C088
+extension is described below. Multiple labelled constructors and contravariant
+function types need other arguments. Finite-tree entailment has a
 separate [unconditional checked decision](research/claims.md#c085). The complete fallback can be very slow.
 The proved implementation now completes all 38 fixed benchmark inputs,
 including all seven raw-backend probes, under the matched 20-second cap.
@@ -57,6 +59,33 @@ proved separately as [C086](research/claims.md#c086), using a smaller compiler.
 Neither result establishes a tight complexity class or novelty. The [post-C081 programme](research/POST_C081.md)
 tracks these separate questions. Author names and affiliations are placeholders;
 licensing is pending. The paper is a research draft, not a peer-reviewed publication.
+
+## Explicit top and complexity
+
+[C087](research/claims.md#c087) proves PSPACE-hardness for arbitrary and regular
+bottom/product entailment by a logspace reduction from Henglein–Rehof's
+all-accepting automaton universality problem. The premises are always
+satisfiable. The reduction forces an infinite reference tree, so it gives no
+finite-tree lower bound. PSPACE membership for the full problem remains open.
+
+[C088](research/claims.md#c088) proves arbitrary-tree entailment decidable with
+an explicit top element and the same single covariant binary product. Two
+compatible language projections reduce it to at most four C081 calls. The
+[paper](paper/manuscript.md#14-adding-an-explicit-top-element) gives the complete
+ordinary argument. Lean checks the arbitrary-language lifting and decomposition;
+the labelled-tree identification, expression compiler and final composition
+remain ordinary proofs. The current JSON solver accepts the top-free syntax only.
+
+Reproduce the selective proof audit and both independent experiment corpora:
+
+```sh
+python3 scripts/test_check_explicit_top.py
+python3 scripts/check_explicit_top.py
+```
+
+The optional module is checked explicitly in main/PR Lean CI. Paper/source-map
+checks run on every change in Research checks. Neither CI path replaces
+mathematical review of the ordinary parts. [Integration evidence and remaining work](notes/2026-09-20-hardness-top-integration.md).
 
 ## Try the solver
 
@@ -153,9 +182,11 @@ concrete C080 compiler estimate remains false: C086 uses a filtered compiler.
 The [input resource account](notes/2026-09-20-c081-input-complexity.md)
 gives a very large explicit bound for a specified reference decision algorithm,
 including normalization, summary tables, arithmetic and storage.
-[C083](research/claims.md#c083) supplies an NL lower bound by directed
-reachability. The full input-cost derivation and NL reduction are ordinary
-mathematics; the terminal witness bound is Lean-checked. These do not give a tight
+[C087](research/claims.md#c087) strengthens the arbitrary/regular lower bound
+to PSPACE hardness. [C083](research/claims.md#c083) remains the NL lower bound
+for variable-only inputs, including finite trees. The full input-cost derivation
+and lower-bound reductions are ordinary mathematics; the terminal witness
+bound is Lean-checked. These do not give a tight
 complexity class or bound the runtime of this native frontend.
 
 The earlier reader checkpoint is

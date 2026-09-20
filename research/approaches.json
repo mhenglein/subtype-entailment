@@ -178,10 +178,10 @@
       "title": "Build the exact top-free constraint-to-automata pipeline",
       "status": "active",
       "outcome": "supported",
-      "owner": "Issue-scoped contributors in STATE.md/#37; compiler/F parent integration complete",
+      "owner": "Issue-scoped contributors in STATE.md/#37; hardness/top parent integration complete",
       "updated": "2026-09-20",
-      "summary": "C081 has a proved cached raw summary with literal whole-Instance equality and unconditional endpoint correctness. E060 resolves the four/five-variable empty raw stress probes, retains 38/38 fixed and 19/19 deeper completions, and exactly checks 83 small query instances. Six-variable raw stress remains UNKNOWN; state/flag counts and signature/quantitative boundaries are unchanged.",
-      "next_step": "C086 compiler/F is reviewed and integrated with continuing CI. #66 diagnostic review is accepted; no n=6 speedup is claimed and a refinement needs a new scope. #67 native follow-up is released at 3135cd0 and awaits separate review/integration. Reviewed producer and extension submissions await separate integration. #64 acceptance and #65 technical reproduction are complete; license/authors/final release remain deferred. Read latest child/#37 claims before writing.",
+      "summary": "C081/C085 and C086 remain checked. C087 establishes ordinary arbitrary/regular PSPACE hardness; C088 establishes ordinary explicit-top arbitrary-tree decision with a checked arbitrary-language lifting core. Full explicit-top expression compilation and JSON support remain separate. Existing raw n=6 stress stays UNKNOWN.",
+      "next_step": "Hardness/top integrated with paper and continuing CI; no follow-up scope retained. Recheck #68 producer handoff then integrate its reviewed core; independently review #67 native follow-up at 3135cd0. Other accepted arity/automata/variance contributions await serialization. #70 stays open for tight complexity. License/authors/final release remain deferred; read current issue claims before writing.",
       "record": "research/approaches/A010.md",
       "evidence": [
         "notes/2026-09-04-bridge-foundation.md",
@@ -284,7 +284,17 @@
         "notes/2026-09-20-clean-reproduction.md",
         "results/clean-reproduction.json",
         "scripts/reproduce_release.py",
-        "results/issue66-execution-20260920.json"
+        "results/issue66-execution-20260920.json",
+        "notes/2026-09-20-hardness-top-integration.md",
+        "results/hardness-top-integration-20260920.json",
+        "notes/2026-09-20-hr-topfree-transfer-70.md",
+        "experiments/check_hr_topfree_transfer_70.py",
+        "results/hr-topfree-transfer-70.json",
+        "notes/2026-09-20-explicit-top-dual-projection.md",
+        "lean/Subtail/ExplicitTopDualProjection.lean",
+        "scripts/check_explicit_top.py",
+        "experiments/check_explicit_top_dual_projection.py",
+        "results/explicit-top-dual-projection.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/63"
     },
@@ -495,8 +505,8 @@
       "outcome": "supported",
       "owner": null,
       "updated": "2026-09-20",
-      "summary": "C081 qualitative decision, C082 larger bound and C086 original terminal F are checked. A filtered compiler now satisfies the original U contract; the old concrete compiler U remains refuted. No practical speedup or tight input complexity class follows. The reviewed #70 hardness transfer awaits separate integration.",
-      "next_step": "Original-F and smaller-compiler obligations are discharged by C086. Preserve the old counterexample and the larger C082 result. Integrate the separately reviewed #70 hardness contribution with exact domain limits, or claim a new quantitative question. The new #67 native handoff is released at 3135cd0 and awaits separate review/integration.",
+      "summary": "C081 qualitative decision, C082 larger bound and C086 original terminal F are checked. A filtered compiler now satisfies the original U contract; the old concrete compiler U remains refuted. No practical speedup or tight input complexity class follows. C087 now integrates the reviewed ordinary PSPACE lower bound for arbitrary/regular bottom-product trees; no finite transfer or tight class follows.",
+      "next_step": "C086 original F/smaller-compiler and C087 hardness are integrated. Preserve the old counterexample and valid C082 bound. #70 remains open for tighter upper bounds/classification, with a fresh scope required. The new #67 native handoff at 3135cd0 awaits separate review/integration.",
       "record": "research/approaches/A017.md",
       "evidence": [
         "notes/2026-09-04-minimal-witness-structure.md",
@@ -631,7 +641,12 @@
         "results/original-bounds-integration-20260920.json",
         "lean/Subtail/SmallerCompilerAstra.lean",
         "lean/FOnlyCompilerBridge.lean",
-        "scripts/check_original_bounds.py"
+        "scripts/check_original_bounds.py",
+        "notes/2026-09-20-hardness-top-integration.md",
+        "results/hardness-top-integration-20260920.json",
+        "notes/2026-09-20-hr-topfree-transfer-70.md",
+        "experiments/check_hr_topfree_transfer_70.py",
+        "results/hr-topfree-transfer-70.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/69"
     },
@@ -640,10 +655,10 @@
       "title": "Maintain the Lean core and verify critical obligations",
       "status": "active",
       "outcome": "supported",
-      "owner": "Issue-scoped contributors in STATE.md/#37; compiler/F parent integration complete",
+      "owner": "Issue-scoped contributors in STATE.md/#37; hardness/top parent integration complete",
       "updated": "2026-09-20",
-      "summary": "C081 has a proved cached raw summary with literal whole-Instance equality and unconditional endpoint correctness. E060 resolves the four/five-variable empty raw stress probes, retains 38/38 fixed and 19/19 deeper completions, and exactly checks 83 small query instances. Six-variable raw stress remains UNKNOWN; state/flag counts and signature/quantitative boundaries are unchanged.",
-      "next_step": "C086 compiler/F is reviewed and integrated with continuing CI. #66 diagnostic review is accepted; no n=6 speedup is claimed and a refinement needs a new scope. #67 native follow-up is released at 3135cd0 and awaits separate review/integration. Reviewed producer and extension submissions await separate integration. #64 acceptance and #65 technical reproduction are complete; license/authors/final release remain deferred. Read latest child/#37 claims before writing.",
+      "summary": "C081/C085 and C086 remain checked. C087 establishes ordinary arbitrary/regular PSPACE hardness; C088 establishes ordinary explicit-top arbitrary-tree decision with a checked arbitrary-language lifting core. Full explicit-top expression compilation and JSON support remain separate. Existing raw n=6 stress stays UNKNOWN.",
+      "next_step": "Hardness/top integrated with paper and continuing CI; no follow-up scope retained. Recheck #68 producer handoff then integrate its reviewed core; independently review #67 native follow-up at 3135cd0. Other accepted arity/automata/variance contributions await serialization. #70 stays open for tight complexity. License/authors/final release remain deferred; read current issue claims before writing.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
@@ -821,7 +836,17 @@
         "results/original-bounds-integration-20260920.json",
         "lean/Subtail/SmallerCompilerAstra.lean",
         "lean/FOnlyCompilerBridge.lean",
-        "scripts/check_original_bounds.py"
+        "scripts/check_original_bounds.py",
+        "notes/2026-09-20-hardness-top-integration.md",
+        "results/hardness-top-integration-20260920.json",
+        "notes/2026-09-20-hr-topfree-transfer-70.md",
+        "experiments/check_hr_topfree_transfer_70.py",
+        "results/hr-topfree-transfer-70.json",
+        "notes/2026-09-20-explicit-top-dual-projection.md",
+        "lean/Subtail/ExplicitTopDualProjection.lean",
+        "scripts/check_explicit_top.py",
+        "experiments/check_explicit_top_dual_projection.py",
+        "results/explicit-top-dual-projection.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/63"
     }

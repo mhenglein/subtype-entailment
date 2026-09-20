@@ -1294,7 +1294,8 @@ uses the same logspace-reduction convention.
 No NL membership, PSPACE-hardness, superpolynomial runtime lower bound or new
 Lean declaration is claimed. The finite/regular equivalence here concerns only
 the variable-only sublanguage; it does not transfer the general C081 theorem
-to finite-tree entailment.
+to finite-tree entailment. C087 later proves a stronger PSPACE lower bound
+for the full arbitrary/regular problem by a different construction.
 
 <a id="c084"></a>
 
@@ -1479,6 +1480,93 @@ C081's production decision, imports and semantics are unchanged. This result
 does not establish a practical runtime, an input complexity class, a tighter
 lower bound, a new constructor signature or publication priority. Python
 searches are finite diagnostics and capped failures remain UNKNOWN.
+
+<a id="c087"></a>
+
+### C087 — PSPACE hardness for arbitrary and regular bottom/product trees
+
+**Statement.** Binary all-accepting epsilon-NFA universality reduces in
+deterministic logarithmic space to finite-expression subtype entailment over
+bottom and one covariant binary product, separately under arbitrary-tree and
+regular-tree valuations. An n-state, m-edge automaton gives n+2 variables,
+m+1 premises, a variable query and product depth at most two. Every produced
+premise system is satisfiable in both domains. Thus both entailment problems
+are PSPACE-hard, with no regularity promise in the arbitrary-tree direction.
+
+**Status.** `WRITTEN PROOF + INDEPENDENT REVIEW + REPRO`; no new Lean theorem.
+Use H(X,Y)=(X*Y)*bottom, code 0 as 00 and 1 as 01, and reference
+K=c({0,1}*){epsilon,0}. The premise H(b,b)<=b forces K into every b value.
+Universality bounds every satisfying x_initial value by K, including values
+outside the proposed encoding. A missing word gives one simultaneous regular
+countervaluation for all states and a separating address c(word)1. Epsilon
+edges, empty words and logspace output are included in the proof.
+
+**Evidence.** [Ordinary reduction and preserved failed repairs](../notes/2026-09-20-hr-topfree-transfer-70.md),
+[primary-source and independent submission review](../notes/2026-09-20-submission-review.md),
+[paper Theorem 12.3](../paper/manuscript.md#123-a-pspace-lower-bound-for-bottomproduct-entailment),
+[E063 corpus](../results/hr-topfree-transfer-70.json),
+[combined integration and fresh checks](../notes/2026-09-20-hardness-top-integration.md).
+Henglein–Rehof 1998 Section 4 supplies the PSPACE-hard CLOSED-UNIV source
+problem; its source/domain audit is recorded separately from the new transfer.
+
+**Limits.** No produced input has a finite model, because b must contain the
+infinite K. This gives no finite-tree lower bound and does not import HR98's
+finite-tree construction. It does not prove PSPACE membership/completeness,
+a practical runtime bound, a lower bound for the constant-free fragment, or
+publication priority. C083 remains the valid elementary NL lower bound for
+all three domains. Finite corpus checks do not establish the all-input result.
+
+<a id="c088"></a>
+
+### C088 — Explicit-top entailment by compatible dual projections
+
+**Statement.** Finite conjunction entailment between finite expressions over
+variables, bottom, explicit top and one covariant binary product is decidable
+under all arity-consistent labelled-tree valuations, including arbitrary
+infinite and nonregular trees. After finite exact naming there is a reduction
+to at most four calls to C081. There is no satisfiability promise; inconsistent
+premises entail every query.
+
+**Status.** `WRITTEN PROOF + INDEPENDENT REVIEW + SELECTIVE LEAN + REPRO`.
+This is a complete ordinary mathematical decision reduction. Its central
+language lifting and entailment decomposition are Lean-checked; its whole
+labelled-tree/expression theorem is not an end-to-end Lean implementation.
+
+Totalized observations give P=non-bottom and H=top, with Q=complement(H).
+Trees correspond to prefix-closed P,Q covering all words. Subtyping is forward
+P inclusion and reverse Q inclusion. Positive projection replaces top by the
+unique infinite product solution omega=omega*omega. Negative projection first
+reverses inequalities and exchanges bottom/top. A least forced-top language
+has no unconditional product-root seed. If the opposite projection is
+satisfiable, **every** projected model lifts to a source model while preserving
+its entire component. This yields both SAT equivalence and the unconditional
+query decomposition, with two consistency tests and two query tests.
+
+**Checked declarations.** In `Subtail.ExplicitTopDualProjection`,
+`forcedTop_suffix`, `forcedTop_in_positive`, `forcedTop_disjoint_negative`,
+`remaining_model`, `positive_projection_surjective`,
+`negative_projection_surjective`, `satisfiable_iff_projections`,
+`entails_iff_projections` and `positive_countermodel_lift` check arbitrary
+predicate-language claims. No regularity, decidable membership, witness cap
+or caller lifting lemma is assumed. The optional module imports only Std;
+its 29 explicit declarations receive build, kernel and dependency audits.
+
+**Evidence.** [Full ordinary construction](../notes/2026-09-20-explicit-top-dual-projection.md),
+[independent submission review](../notes/2026-09-20-submission-review.md),
+[paper Section 14](../paper/manuscript.md#14-adding-an-explicit-top-element),
+[selective Lean core](../lean/Subtail/ExplicitTopDualProjection.lean),
+[continuing audit](../scripts/check_explicit_top.py),
+[E064 finite corpus](../results/explicit-top-dual-projection.json),
+[combined validation](../notes/2026-09-20-hardness-top-integration.md).
+
+**Limits.** Labelled-tree representation/order, finite naming and syntax-to-
+projection compilation, and final executable composition remain ordinary
+proofs. No native explicit-top solver, JSON parser or formal expression-level
+endpoint is delivered here. A preserved separating word is a totalized
+observation address, not necessarily an actual node in both source domains.
+The corpus's 217 systems without two bounded witnesses remain UNKNOWN.
+Finite/regular explicit-top theorems, additional constructors, other variance,
+tight complexity and publication priority require separate arguments.
 
 ## Explicitly unestablished
 

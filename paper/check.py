@@ -24,7 +24,7 @@ def render_map(data):
     lines = ["# Paper-to-Lean declaration map", "",
              "Generated from `lean-map.json` by `python3 paper/check.py --write`.", "",
              f"Default mathematical source checkpoint: `{data['source_revision']}`.",
-             "Each result's links use its explicitly recorded revision; later finite-tree results retain their own pin.",
+             "Each result's links use its explicitly recorded revision; later finite-tree and explicit-top results retain their own pins.",
              "The manuscript gives ordinary proofs; this map identifies checked dependencies.",
              "A source/link check is not a new kernel replay or an independent mathematical review.", "",
              "| Paper result | Statement | Definitions and declarations |", "|---|---|---|"]
@@ -59,6 +59,9 @@ def render_map(data):
               "branches; Theorem 1.2 maps directly to the final finite-expression Boolean theorem.",
               "The displayed estimate (13.2) is an ordinary derivation from the minimum-stack",
               "factorization and Lemma 13.1, not a separately exported numerical Lean theorem.", ""]
+    lines += ["Explicit-top Lemmas 14.2 and 14.3 map to arbitrary predicate-language statements.",
+              "Lemma 14.1 and Theorem 14.4 remain ordinary proofs: no complete labelled-tree",
+              "expression compiler or native explicit-top decision is claimed by this map.", ""]
     return "\n".join(lines)
 
 

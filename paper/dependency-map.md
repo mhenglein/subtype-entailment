@@ -68,6 +68,38 @@ satisfiability) is an ordinary consequence, not a separate checked finite-SAT
 Boolean. The bound on a seeded closure depends on the supplied seed word, so
 this graph implies no new global shortest-witness estimate.
 
+## Explicit-top decision and hardness
+
+C088's ordinary full-expression theorem is paper Theorem 14.4. The core
+language lemmas use `0eff4818d990821fd1c08f704a2392f2d0047cf5`. This optional
+Std-only module is built and audited explicitly; it is not in the default
+C081/C085 import closure.
+
+```mermaid
+flowchart TD
+  L[Arbitrary labelled bottom/product/top trees] -->|Lemma 14.1; ordinary| P[Covering prefix-closed language pairs]
+  E[Finite explicit-top expressions] -->|Exact naming and projections; ordinary| S[Positive and negative top-free systems]
+  S --> H[Least forced-top languages]
+  H -->|Lemma 14.2; Lean language core| I[Right ideals, containment and exclusion]
+  I -->|Lemma 14.3; Lean language core| U[Every projected model lifts under opposite SAT]
+  P --> V[Source SAT and query decomposition]
+  U --> V
+  S --> Q[At most four C081 calls]
+  V -->|Theorem 14.4; ordinary final composition| D[Explicit-top arbitrary-tree decision]
+  Q --> D
+```
+
+The labelled-tree identification, expression compiler and final executable
+composition are ordinary proofs, not complete Lean source interfaces. The
+forced-top family is not enumerated at runtime. Neither projection alone
+reflects source entailment; the opposite-SAT premise and vacuity gates matter.
+
+C087 is separate from this graph: HR98's binary CLOSED-UNIV source reduces
+by logspace marker coding to the bottom/product problem (Theorem 12.3). Its
+positive direction covers all valuations; its negative direction constructs
+one regular countermodel. It gives no finite-tree hardness because every
+reference model is infinite, and no full-input PSPACE upper bound.
+
 ## Reading paths
 
 For the theorem: manuscript Sections 1–4, then 11. For the central construction:
