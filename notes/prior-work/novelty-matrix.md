@@ -36,6 +36,18 @@ answers remain separate. The exact whole-conjunction preimage comparison and
 full-signature reductions remain unresolved by this bounded review. No
 publication-priority claim follows from failure to find a matching theorem.
 
+## September 20 finite-tree paper comparison
+
+[C085](../../research/claims.md#c085) now has its own theorem and full proof in
+manuscript Sections 1.3 and 13. The [dated finite review](finite-tree-comparison-2026-09-20.md)
+compares HR97 Theorems 4.7–4.8/Corollary 4.9, HR98 Theorem 2, NP99 Theorem 14,
+and NP03 Theorems 1, 2, 4/Lemma 1 against the exact finite bottom/product domain.
+NP99 treats both finite and arbitrary valuations, with top still present in
+the values. NP03 allows one covariant constructor of arity at least one.
+The HR98 author PDF was read for this review; the old C081 access limitation
+is historical. The finite consuming-cycle proof and its checked implementation
+are established in the ledger; their novelty and any PSPACE transfer are not.
+
 | Claim | Closest comparison | Possible distinguishing statement | Required evidence before a novelty claim |
 |---|---|---|---|
 | C067: single-source terminal BorderAvoid | PW-NP99, PW-NP03, PW-PRI04, PW-BPR19; existential equations | One-visit normalization and terminal prefix-free capture for the stated derived-automaton class | Review the actual capture/formula-size proof; compare to repaired or alternative thesis arguments; prove the relevant source-level encoding/non-subsumption. |
@@ -45,6 +57,7 @@ publication-priority claim follows from failure to find a matching theorem.
 | C079: source-sensitive target-return elimination | C077/C078; PW-HHL25; synchronized-return methods | Certified transport to last original targets with legal repeats and state projection | Review the return/projection hypotheses and recursive product semantics; do not replace several synchronized conditions by independent single-predicate solvers. |
 | C080: rank-query closure candidate | PW-NP03; PW-BFR19; PW-SCH21; finite-algebra tools | Same-grammar, whole-conjunction preimage under the exact directed first-return graph extension, with shared generators and effective iteration | Read the current ledger for discharged semantic/compiler subclaims. Compare the exact graph-preimage result with prior art; distinguish quantitative U/F claims and final subtype composition from the checked terminal decision. No promotion by this matrix. |
 | C081: complete finite-expression decision | PW-NP99; PW-NP03; PW-PRI04; PW-BPR19; PW-SCH21 | A total executable Boolean and kernel-checked correctness theorem for finite syntax over bottom and one covariant binary product, with arbitrary prefix-closed product-node valuations, including nonregular infinite trees; the checked summary/infinite/terminal composition is part of the candidate contribution | Candidate new relative to the inspected sources, not a priority claim. Compare the exact no-top valuation domain with full-signature bottom/top models; prove or refute a two-way semantic translation. Compare the terminal first-return/rank-query compiler with cap universality and periodic-selection results. Preserve the withdrawn status of SCH21 and slide-only status of BPR19. Keep complexity, finite-tree restrictions, and C080 U/F claims separate. See [dated C081 review](c081-review-2026-09-19.md). |
+| C085: complete finite-tree decision | HR97 Theorems 4.7–4.8/Corollary 4.9; HR98 Theorem 2; NP99 Theorem 14; NP03 Theorems 1, 2, 4/Lemma 1 | A consuming reverse-pop cycle rules out finite models; otherwise finite-seed canonical countermodels are finite. A total checked Boolean decides the original expressions over finite bottom/product valuations. | Compare the forced-target hypothesis and both model-transfer directions with the older finite results. Structural simple-type results use a different order; nonstructural comparisons allow semantic top. The infinite omega guard cannot transfer a finite upper bound. Other encodings, exact non-subsumption and priority remain open. See [dated finite review](finite-tree-comparison-2026-09-20.md). |
 | Problem 1.7 itself | Historical full-signature NSSE lineage; withdrawn attempted solution | C081 supplies the total checked decision for the exact top-free arbitrary-tree model | Compare the complete construction and semantic domain with prior work. Keep explicit numerical bounds, complexity classification and other NSSE signatures separate. The result is established in the current ledger; novelty remains a comparison question. |
 
 ## Two corrections to the earlier comparison method

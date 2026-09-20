@@ -58,8 +58,9 @@ entailment. For structural finite simple types over a nontrivial lattice of base
 types, they proved coNP-completeness; their hardness construction already
 uses a binary covariant constructor [@HR97, Theorems 4.7--4.8 and Corollary 4.9].
 They subsequently introduced constraint automata for nonstructural entailment
-and proved PSPACE-hardness for both finite and infinite trees over a signature
-with bottom, top, product and function constructors [@HR98, Section 3 and Theorems 1--2].
+and proved PSPACE-hardness for infinite trees [@HR98, Theorem 1] and finite
+trees [@HR98, Theorem 2] over a signature with bottom, top, product and function
+constructors.
 The same paper proves PSPACE-completeness for structural infinite-tree
 entailment over a lattice of constants [@HR98, Theorem 5]. These results
 established the need to distinguish
@@ -76,12 +77,15 @@ claimed as lower bounds for the exact domain studied here.
 
 Niehren and Priesnitz developed the constraint-automaton approach into a
 characterization by restricted cap-automaton universality and a shared word
-equation [@NP03, Theorems 1--4 and Lemma 1]. Their ambient signature contains
-both bottom and explicit top, and they distinguish finite, regular and
-arbitrary trees. This characterization exposes the repeated-word condition;
+equation $\pi\nu=\mu\pi$ [@NP03, Theorems 1, 2, 4 and Lemma 1]. Their ambient
+signature contains one covariant constructor of positive arity, bottom and
+explicit top, and they distinguish finite, regular and arbitrary trees.
+This characterization exposes the repeated-word condition;
 it does not by itself provide a general universality algorithm. Their earlier
 work introduces P-automata and proves PSPACE-completeness for a restricted
-syntax of product equations and variable inequalities [@NP99, Theorem 14].
+syntax of product equations and variable inequalities, over both arbitrary
+and finite bottom/product/top trees [@NP99, Theorem 14]. Bottom and top are
+excluded from that input grammar, but remain available in valuations.
 Section 12 gives an explicit
 reduction of our constant-free fragment to that decidable case.
 
@@ -1378,7 +1382,9 @@ nonstructural problem with explicit top has been resolved.
 
 Finite-tree entailment has the same syntax and subtyping order, but a smaller
 valuation domain. We continue to write $C\models\alpha\le\beta$ for arbitrary
-trees. The reduction below depends on a property of the normalized system:
+trees, and write $C\models_{\mathrm{fin}}\alpha\le\beta$ when every valuation
+of the normalized controls by finite trees that satisfies $C$ also satisfies
+the query. The reduction below depends on a property of the normalized system:
 every push targets a control whose product root is forced by a lower-product
 clause. It would fail for a pushdown system with unforced pushes.
 
@@ -1398,7 +1404,8 @@ remaining suffix. This is the recursive Pop definition of Section 3.2.
 The balanced relation is computable by finite saturation.
 
 Let $T$ be reflexive transitive reachability in this automaton after forgetting
-edge labels. Define $\operatorname{Growth}(C)$ by the finite test
+edge labels, retaining both balanced epsilon edges and letter edges. Define
+$\operatorname{Growth}(C)$ by the finite test
 
 $$\exists p,r,a\quad
 p\mathrel{\xrightarrow{a}}r\text{ in }\mathcal A_C
@@ -1416,7 +1423,7 @@ controls $q,m$ and words $w$.
 *Proof.* A nonempty accepted loop can be rotated to start at one of its letter
 edges. The rest of the loop is then a return path, satisfying (13.1).
 This remains valid when the original loop begins with balanced epsilon motion.
-More explicitly, decompose that loop as $E(p,r)$, a pop $r\xrightarrow{a}s$,
+More explicitly, decompose that loop as $E_{W^{\mathrm{op}}}(p,r)$, a pop $r\xrightarrow{a}s$,
 and $\operatorname{Pop}(s,v,p)$. Append the initial balanced motion to the
 last part; it becomes $\operatorname{Pop}(s,v,r)$, a return for the selected
 letter edge.
@@ -1478,7 +1485,8 @@ $$C\models_{\mathrm{fin}}\alpha\le\beta
 vacuously. If arbitrary entailment holds, its restriction to finite valuations
 also holds.
 
-Conversely, suppose neither disjunct holds. A countermodel to arbitrary
+For the converse, argue by contraposition. Suppose neither disjunct holds.
+A countermodel to arbitrary
 entailment has a finite separating address $w$. The finite seed set
 $S_{\alpha,w}$ of Lemma 3.1 lies inside that countermodel. Its canonical
 closure therefore avoids all denials and omits $(\beta,w)$, while containing
@@ -1511,8 +1519,9 @@ replacement for a failed query or a satisfiable constraint set.
 
 ### 13.3 Examples and scope
 
-After naming bottom in $C=\{x\times\bot\le x\}$, a reverse-pop left-letter loop
-returns to a forced root. Lemma 13.2 explains the absence of finite models seen in Section 1.
+The premise $x\times\bot\le x$ can be written in normalized form as
+$x\times b\le x$ and $b\le\bot$. A reverse-pop left-letter loop returns to
+the forced root at $x$. Lemma 13.2 explains the absence of finite models seen in Section 1.
 The query $x\le\bot$ is therefore true under finite entailment and false under
 arbitrary entailment, witnessed by the infinite left spine.
 
@@ -1530,7 +1539,7 @@ The finite result concerns the same bottom/product order as Theorem 1.1.
 It does not transfer the structural finite-type coNP theorem of Henglein and
 Rehof, nor their nonstructural finite-tree PSPACE hardness in a domain admitting
 explicit top. Those statements require their own semantic hypotheses
-[@HR97; @HR98]. Likewise, the finite-tree case of Niehren--Priesnitz's restricted
+[@HR97, Corollary 4.9; @HR98, Theorem 2]. Likewise, the finite-tree case of Niehren--Priesnitz's restricted
 entailment theorem uses the bottom/product/top valuation domain [@NP99,
 Theorem 14]. The guard $\omega=\omega\times\omega$ from Proposition 12.1 has
 no finite solution, so that particular reduction cannot transfer their finite
@@ -1559,9 +1568,10 @@ left to the caller. The argument then uses the same normalization and arbitrary
 entailment implementation.
 
 The accompanying artifact [@SubtailArtifact] contains the source, reproduction
-instructions, examples and a result-by-result map for the seventeen lemmas
-and theorems supporting the arbitrary-tree decision in Sections 1--10, and
-the finite-tree results in Sections 1 and 13. Corollaries 11.1 and 13.4 and
+instructions, examples and a result-by-result map with twenty-one entries:
+seventeen for the lemmas and theorems supporting the arbitrary-tree decision
+in Sections 1--10, and four for the finite-tree results in Sections 1 and 13.
+Corollaries 11.1 and 13.4 and
 Propositions 12.1--12.2 are ordinary mathematical consequences proved here;
 they are identified separately from the checked declarations. The explicit
 seed-dependent estimate (13.2) is derived in the text; the formal semantic
