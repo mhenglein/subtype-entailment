@@ -44,14 +44,15 @@ while preserving every path constraint in a conjunction.
 ### 1.1 Relation to previous work
 
 Henglein and Rehof established two important complexity landmarks for subtype
-entailment. For structural finite simple types over lattice-ordered base
+entailment. For structural finite simple types over a nontrivial lattice of base
 types, they proved coNP-completeness; their hardness construction already
 uses a binary covariant constructor [@HR97, Theorems 4.7--4.8 and Corollary 4.9].
 They subsequently introduced constraint automata for nonstructural entailment
-and proved PSPACE-hardness for both finite and infinite trees in a signature
-with bottom, product and explicit top [@HR98, Section 3 and Theorems 1--2].
+and proved PSPACE-hardness for both finite and infinite trees over a signature
+with bottom, top, product and function constructors [@HR98, Section 3 and Theorems 1--2].
 The same paper proves PSPACE-completeness for structural infinite-tree
-entailment [@HR98, Theorem 5]. These results established the need to distinguish
+entailment over a lattice of constants [@HR98, Theorem 5]. These results
+established the need to distinguish
 structural from nonstructural subtyping, and finite from infinite semantics,
 in both algorithms and complexity claims.
 
@@ -69,14 +70,15 @@ equation [@NP03, Theorems 1--4 and Lemma 1]. Their ambient signature contains
 both bottom and explicit top, and they distinguish finite, regular and
 arbitrary trees. This characterization exposes the repeated-word condition;
 it does not by itself provide a general universality algorithm. Their earlier
-PSPACE-completeness theorem concerns a restricted syntax of product equations
-and variable inequalities [@NP99, Theorem 14]. Section 12 gives an explicit
+work introduces P-automata and proves PSPACE-completeness for a restricted
+syntax of product equations and variable inequalities [@NP99, Theorem 14].
+Section 12 gives an explicit
 reduction of our constant-free fragment to that decidable case.
 
 The starting top-free separation characterization was developed in an
-unpublished memo [@Memo26, Problem 1.7 and Theorem 2.6], which builds on earlier
-Henglein--Rehof--Urzyczyn notes. We use its product-address semantics and
-canonical propagation route. Address languages, constraint automata and
+unpublished memo [@Memo26, Problem 1.7 and Theorem 2.6]. We use its
+product-address semantics and canonical propagation route. Address languages,
+constraint automata and
 periodic continuations are inherited ideas. The additional construction here
 is the whole-conjunction first-return preimage of Section 7 and its bounded
 iteration in Section 9. Together with the absorbing summary and the periodic
@@ -1322,9 +1324,9 @@ argument, rather than novelty claims in isolation.
 The richer first-order theories studied by Su, Aiken, Niehren, Priesnitz and
 Treinen [@SANPT06] have different logical quantifiers and cannot be identified
 with the entailment fragment here. Later work of Breuvart, Penelle and Rehof
-[@BPR19] describes periodic selections in a cap-language setting; its slide
-presentation is relevant to the lineage, but does not supply the
-whole-conjunction preimage theorem proved here. Schubert's proposed PSPACE
+[@BPR19] describes periodic selections in a cap-language setting. We do not
+use that slide presentation as a proof of the whole-conjunction preimage
+theorem established here. Schubert's proposed PSPACE
 procedure [@Schubert21] was withdrawn following an incorrectly formulated
 lemma, and is not used as a decision theorem. These comparisons delimit the
 results on which the present proof relies; they do not assert that the general

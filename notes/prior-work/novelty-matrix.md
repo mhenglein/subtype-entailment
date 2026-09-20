@@ -14,6 +14,28 @@ bottom/denial constraints, finite-tree semantics or lower-bound transfer.
 Identity translation alone fails even on constant-free syntax. The full C081
 comparison and exact terminal-compiler comparison below remain open.
 
+## September 20 standalone-paper comparison
+
+The [manuscript](../../paper/manuscript.md) now integrates this lineage in
+Sections 1.1, 2 and 12. The fresh bounded primary-source review is recorded in
+[the rewrite readback](../2026-09-20-paper-rewrite-readback.md). The following
+are inherited results, not claims of a C081 complexity classification:
+
+| Source and exact locator | Domain and result | Transfer limit |
+|---|---|---|
+| Henglein–Rehof 1997, Theorems 4.7–4.8, Corollary 4.9 | Structural finite simple types over a nontrivial base lattice; coNP completeness, hardness already with a covariant binary constructor | Different order and tree domain. |
+| Henglein–Rehof 1998, Section 3, Theorems 1–2 | Constraint automata and PSPACE hardness for nonstructural finite and possibly infinite trees; ambient signature includes bottom, explicit top, product and arrow | Product-based reductions do not erase top or otherwise restrict all valuations to C081's domain. |
+| Henglein–Rehof 1998, Theorem 5 | PSPACE completeness for structural infinite trees over a lattice of constants | Distinct from their nonstructural hardness result and from C081. |
+| Niehren–Priesnitz 1999, Theorem 14 | P-automata; PSPACE completeness for product equations and variable inequalities over finite or possibly infinite bottom/product/top values | The guarded constant-free transfer supplies one upper-bound direction; bottom literals and denials are not covered. |
+| Niehren–Priesnitz 2003, Theorems 1, 2, 4 and Lemma 1 | Cap-automata universality and shared-word characterization for one covariant constructor with bottom/top, distinguishing finite, regular and arbitrary trees | A characterization is not a general decision theorem or an automatic top-free transfer. |
+
+The paper's Proposition 12.2 also gives the existing ordinary effective
+regular-countermodel proof in full. It is not a new regular-model existence
+claim or a checked NFA-to-tree extractor. Finite-tree answers and explicit-top
+answers remain separate. The exact whole-conjunction preimage comparison and
+full-signature reductions remain unresolved by this bounded review. No
+publication-priority claim follows from failure to find a matching theorem.
+
 | Claim | Closest comparison | Possible distinguishing statement | Required evidence before a novelty claim |
 |---|---|---|---|
 | C067: single-source terminal BorderAvoid | PW-NP99, PW-NP03, PW-PRI04, PW-BPR19; existential equations | One-visit normalization and terminal prefix-free capture for the stated derived-automaton class | Review the actual capture/formula-size proof; compare to repaired or alternative thesis arguments; prove the relevant source-level encoding/non-subsumption. |
@@ -23,7 +45,7 @@ comparison and exact terminal-compiler comparison below remain open.
 | C079: source-sensitive target-return elimination | C077/C078; PW-HHL25; synchronized-return methods | Certified transport to last original targets with legal repeats and state projection | Review the return/projection hypotheses and recursive product semantics; do not replace several synchronized conditions by independent single-predicate solvers. |
 | C080: rank-query closure candidate | PW-NP03; PW-BFR19; PW-SCH21; finite-algebra tools | Same-grammar, whole-conjunction preimage under the exact directed first-return graph extension, with shared generators and effective iteration | Read the current ledger for discharged semantic/compiler subclaims. Compare the exact graph-preimage result with prior art; distinguish quantitative U/F claims and final subtype composition from the checked terminal decision. No promotion by this matrix. |
 | C081: complete finite-expression decision | PW-NP99; PW-NP03; PW-PRI04; PW-BPR19; PW-SCH21 | A total executable Boolean and kernel-checked correctness theorem for finite syntax over bottom and one covariant binary product, with arbitrary prefix-closed product-node valuations, including nonregular infinite trees; the checked summary/infinite/terminal composition is part of the candidate contribution | Candidate new relative to the inspected sources, not a priority claim. Compare the exact no-top valuation domain with full-signature bottom/top models; prove or refute a two-way semantic translation. Compare the terminal first-return/rank-query compiler with cap universality and periodic-selection results. Preserve the withdrawn status of SCH21 and slide-only status of BPR19. Keep complexity, finite-tree restrictions, and C080 U/F claims separate. See [dated C081 review](c081-review-2026-09-19.md). |
-| Problem 1.7 itself | Historical full-signature NSSE lineage; withdrawn attempted solution | A total decision for the stated top-free arbitrary-tree model, if all dependencies close | Prove the full effective reduction and decision composition, with exact semantic domain. An explicit numerical bound is a separate target when a total finite construction already suffices. Distinguish this target from a claimed resolution of every historical NSSE variant. |
+| Problem 1.7 itself | Historical full-signature NSSE lineage; withdrawn attempted solution | C081 supplies the total checked decision for the exact top-free arbitrary-tree model | Compare the complete construction and semantic domain with prior work. Keep explicit numerical bounds, complexity classification and other NSSE signatures separate. The result is established in the current ledger; novelty remains a comparison question. |
 
 ## Two corrections to the earlier comparison method
 
