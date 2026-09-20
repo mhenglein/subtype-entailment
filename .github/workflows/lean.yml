@@ -597,13 +597,33 @@ jobs:
           python3 - <<'PYCODE'
           import json
           from pathlib import Path
-          phases = json.loads(Path('tmp/entailment-prepared.json').read_text())['phases']
+          report = json.loads(Path('tmp/entailment-prepared.json').read_text())
+          assert report['fixture_identity']['sha256'] == '6920d9a1ebb39e1ae1563696e2c245f03ff57a98384d5b8691ff8bc6676aa282', 'E058 fixture change needs explicit review'
+          phases = report['phases']
           assert phases['components']['status'] == 'PASS', phases['components']['status']
+          benchmark = phases['benchmark']
+          assert benchmark['status'] in ('PASS', 'UNKNOWN'), benchmark['status']
+          assert benchmark['fixture_count'] == 38 and len(benchmark['cases']) == 38
+          assert not benchmark['failures'] and not benchmark['baseline_prepared_disagreements']
           counts = phases['benchmark']['counts_by_variant_and_kind']['prepared']
           assert counts['frontend'] == {'PASS': 26}, counts
           assert counts['normalized'] == {'PASS': 5}, counts
+          raw = [row['prepared'] for row in benchmark['cases'] if row['kind'] == 'raw']
+          assert len(raw) == 7 and all(row['status'] in ('PASS', 'UNKNOWN') and row['raw_backend_unchanged'] for row in raw), raw
           assert phases['generated']['counts']['prepared'] == {'PASS': 19}, phases['generated']['counts']
-          print('PASS: prepared components, original frontend and 19 deeper/generated cases; raw caps remain explicit')
+          # The preceding E055 step already runs EntailmentFast on this tree.
+          # Compare that result instead of launching a third copy of the baseline.
+          prior = json.loads(Path('tmp/entailment-fast.json').read_text())['phases']
+          for old_rows, new_rows, old_key in (
+              (prior['benchmark']['cases'], benchmark['cases'], 'candidate'),
+              (prior['generated']['rows'], phases['generated']['rows'], 'run')):
+              before = {row['name']: row[old_key] for row in old_rows}
+              after = {row['name']: row['prepared'] for row in new_rows}
+              assert before.keys() == after.keys()
+              for name in before:
+                  if before[name]['status'] == after[name]['status'] == 'PASS':
+                      assert before[name]['actual'] == after[name]['actual'], name
+          print('PASS: fixed E058 fixtures, prepared components, baseline agreement and all deeper cases; raw caps remain explicit')
           PYCODE
       - name: Preserve primitive-table proof and CLI evidence
         if: always()

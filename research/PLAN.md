@@ -1,6 +1,6 @@
 # Research plan
 
-Updated: 2026-09-20 (arbitrary- and finite-tree paper revision)
+Updated: 2026-09-20 (proved primitive-table solver and E058)
 
 **Completed qualitative goal:** decide [Problem 1.7](problem.md) for bottom
 and binary product over arbitrary, possibly infinite trees. [C081](claims.md#c081)
@@ -23,8 +23,10 @@ and keeps internal project notes in the artifact guide. Further mathematical
 review and exact novelty comparison remain distinct from formatting checks.
 The [proved cached solver](../notes/2026-09-20-fast-summary.md)
 now resolves all nine full-expression timeouts: E055 completes 26/26 frontend
-cases and 33/38 overall. Three deeper generated cases still time out; profile
-them before selecting the next optimization. C084 now checks regular graph
+cases and 33/38 overall. The [primitive-table refinement](../notes/2026-09-20-solver-profile-readback.md)
+now resolves the three deeper generated timeouts: E058 completes 19/19, compared
+with 16/19 for the prior fast layer under matched caps. Five unchanged raw
+probes remain UNKNOWN. C084 now checks regular graph
 certificates and has a complete ordinary extractor. C085 now has an unconditional
 executable Lean decision for finite-expression entailment: the graph classifier
 supplies a forced loop or a proved uniform reverse-pop bound. The CLI calls
@@ -32,12 +34,12 @@ that checked function. [Exact readback and evidence](../notes/2026-09-20-finite-
 The [finite paper revision](../notes/2026-09-20-finite-paper-readback.md) now gives
 the consuming-cycle proof, exact finite normalization, worked examples and
 source correspondence, alongside a refreshed Henglein–Rehof/NP comparison.
-Next profile the deeper E055 timeouts before choosing an optimization. Arity and explicit-top
+Next profile the raw terminal fallback before another optimization. Arity and explicit-top
 results require separate proofs. Tight complexity and exact literature transfers
 remain open. JSON handling, extraction and graph finiteness remain Python.
 
 The remaining items are proposals, not active worker assignments. Ownership and reservations
-remain in [the registry](approaches.json), [#59](https://github.com/mhenglein/subtail/issues/59)
+remain in [the registry](approaches.json), [#60](https://github.com/mhenglein/subtail/issues/60)
 and [#37](https://github.com/mhenglein/subtail/issues/37). The owner deferred
 licensing and requested author/affiliation placeholders. No license grant or
 publication-ready authorship is asserted.

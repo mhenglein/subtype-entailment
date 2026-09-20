@@ -1,5 +1,35 @@
 # Subtail — current research state
 
+## September 20: deeper solver timeouts resolved by proved primitive tables (E058)
+
+`EntailmentPrepared` caches the five primitive transition relations once and
+reuses them in the existing summary construction and path tests. Its Lean
+proof gives full System equality, prepared-record equality and unconditional
+equality of original-expression answers to the C081 reference. Candidate
+paths, positive reasoning and the complete fallback retain their definitions.
+The arbitrary-tree JSON endpoint now calls this proved implementation.
+[Construction and proof readback](notes/2026-09-20-solver-profile-readback.md).
+
+Matched E058 on wb-marcus retains **33/38** completed original cases, including
+**26/26** full-expression inputs. The deeper/generated suite improves from
+**16/19 to 19/19** at the same 20-second caps. The three resolved cases are the
+supplied depth-twelve component and original-expression depths six and eight.
+Five deliberately unchanged raw-backend cases remain UNKNOWN.
+[Source-pinned receipt](results/solver-profile.json).
+
+Build/kernel replay, all 24 new declaration closures (13 runtime), independent
+component checks, actual CLI/countermodel/cap checks and the default Lean core
+pass. Separate source review covers the equality, execution boundary and
+measurement harness. Phase traces are diagnostic; the benchmark retains the
+original uninstrumented invocation. The failed capture mode and partial
+preparation-only optimization are preserved as prior attempts.
+
+The finite endpoint, paper/proof pins, C080 obligations, complexity and richer
+constructor signatures are unchanged. The next performance target is the raw
+terminal fallback; formal countermodel production and explicit-top separation
+remain separate proposals. No successor is assigned. Licensing and author
+placeholders remain unchanged.
+
 ## September 20: paper now covers arbitrary and finite trees
 
 The [manuscript](paper/manuscript.md) now states both executable decision
@@ -17,8 +47,8 @@ Niehren–Priesnitz's finite top-valued domain. No full-input PSPACE or novelty
 transfer is asserted. This is an exposition and artifact improvement; Lean
 sources and solver performance are unchanged.
 
-Next profile the deeper E055 timeouts before choosing a representation change,
-or develop the separate explicit-top separation argument. Neither is assigned.
+The deeper E055 profiling and representation step is completed in the entry
+above. Explicit-top separation remains a separate proposal.
 Author placeholders and licensing remain unchanged.
 
 ## September 20: unconditional checked finite-tree decision (C085)

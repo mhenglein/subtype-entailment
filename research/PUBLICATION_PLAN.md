@@ -12,6 +12,22 @@ publication-ready paper, broadly useful solver and new signature theorems
 require further work. Implementation ownership remains in the registry and
 future scoped issue claims; this document assigns no workers or paths.
 
+## September 20 update: measured primitive-table solver improvement
+
+The E055 deeper failures were profiled before implementation. Repeated primitive
+transition predicates dominated saturation; caching only that stage exposed the
+same cost in separation. The accepted `EntailmentPrepared` layer reuses five
+finite transition matrices in both stages, with an unconditional equality proof
+to the existing C081 solver. The arbitrary-tree CLI now calls it.
+
+Matched E058 completes all 19 generated cases (previously 16), preserves all
+33 completed original cases, and retains the five raw-backend UNKNOWN outcomes.
+Actual CLI checks return finite graph countermodels and the expected paths for
+expression depths six and eight. [Proof, review and receipt](../notes/2026-09-20-solver-profile-readback.md).
+The finite endpoint, original source pins and paper are unchanged. Next profile
+the raw fallback, or formalize the separate countermodel producer; no worker is
+assigned by this plan. Explicit-top and other signatures still need new proofs.
+
 ## September 20 update: finite-tree theorem integrated into the paper
 
 The manuscript now states both arbitrary- and finite-tree decisions and gives

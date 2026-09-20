@@ -80,7 +80,12 @@ It does not optimize the separate finite-tree endpoint in this attempt.
 The opposing research question for explicit top is unaffected: this finite
 representation change supplies no new semantic reduction for competing labels.
 
-The additive implementation is `EntailmentPrepared`. The remaining gates are
-Lean equality/kernel/runtime checks, independent source readback, oracle
-regressions and a matched uninstrumented comparison. The profiler's protocol
-and metadata review is also being resolved before final receipts are accepted.
+The additive implementation is `EntailmentPrepared`. Its equality/kernel/runtime
+checks, independent source readback, oracle regressions and matched comparison
+pass. The profiler's protocol and metadata findings were repaired and tested.
+At `20e31a8`, the original corpus remains 33/38 completed, while the generated
+suite improves from 16/19 to 19/19 under the same caps. Supplied depth twelve
+takes 1.220 seconds; expression depths six and eight take 1.721 and 3.827 seconds.
+Those three baseline cases are UNKNOWN at 20 seconds, so their true completion
+times are not measured. The five unchanged raw probes remain UNKNOWN.
+[Exact readback, failed attempts, independent reviews and reproduction](2026-09-20-solver-profile-readback.md).

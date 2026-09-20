@@ -1256,3 +1256,45 @@ Finiteness of certificate roots remains a Python check.
 [readback](../notes/2026-09-20-finite-tree-decision-readback.md) record host,
 revision, source hashes, commands and independent review. This is a correctness
 and interface test, not a new E055 performance measurement or finite-SAT theorem.
+
+<a id="e058"></a>
+
+### E058 — Profile and prove primitive-table solver reuse
+
+```sh
+python3 scripts/check_prepared_summary.py --cli --output tmp/prepared-audit-cli.json
+python3 experiments/check_prepared_summary.py --components --benchmark --generated --compare-baseline --output tmp/entailment-prepared.json
+python3 experiments/profile_entailment.py --output tmp/profile-baseline.json --scratch tmp/profile-baseline
+python3 experiments/profile_entailment.py --primitive-tables --output tmp/profile-tables.json --scratch tmp/profile-tables
+python3 experiments/profile_entailment.py --prepared --output tmp/profile-prepared.json --scratch tmp/profile-prepared
+```
+
+Run serially on the same host in an isolated Lean 4.33.1 checkout. The matched
+harness preserves the original E054 38 fixtures, E055 19 generated inputs,
+`#eval` launch and per-process 20-second wall/CPU, 16 GiB Linux address-space,
+one-thread and 32768 KiB stack caps. It compares `EntailmentFast` with the new
+proved `EntailmentPrepared` endpoints. Raw fixtures use the identical terminal
+backend in both variants. A capped or interrupted process remains UNKNOWN.
+
+The independent P-automaton oracle checks 62 prepared systems, including zero
+controls, all one-state primitive patterns, both letters, reversals and sparse
+or dense cases. The actual Lean output is compared using vector lengths and
+two checksums for primitive bits, balanced relations, control paths, arbitrary
+reachability and control reachability. This is finite regression evidence,
+not a proof or a collision-free comparison of every individual bit.
+
+The all-input Lean proof is whole System equality, prepared-record equality,
+and equality of the original-expression decision. Build, kernel replay and all
+24 declaration closures are checked; all 13 runtime declarations exclude
+classical choice. Five actual JSON runs cover positive and zero-variable
+inputs, the depth-six/eight negatives with their expected countermodels and
+paths, and a cap that returns UNKNOWN with exit two.
+
+The phase profiler deliberately uses `--run` so interrupted traces survive.
+Its forced summaries add diagnostic overhead. The preparation-only ablation
+keeps uncached query predicates and is distinct from the final implementation.
+The initial `#eval` buffering failure, phase locations and partial improvement
+are retained in the [combined receipt](../results/solver-profile.json).
+[Ordinary proof and limits](../notes/2026-09-20-solver-profile.md);
+[exact readback and matched results](../notes/2026-09-20-solver-profile-readback.md).
+This does not change C080, the finite endpoint, complexity or explicit-top semantics.

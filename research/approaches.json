@@ -176,12 +176,12 @@
     {
       "id": "A010",
       "title": "Build the exact top-free constraint-to-automata pipeline",
-      "status": "active",
+      "status": "tried",
       "outcome": "supported",
-      "owner": "solver-profile-20260920 (#60)",
+      "owner": null,
       "updated": "2026-09-20",
-      "summary": "C081/C085 now have a standalone arbitrary- and finite-tree paper, with the full terminal and consuming-cycle arguments, exact multi-revision Lean correspondence, checked examples and bounded Henglein–Rehof/NP review. The unconditional finite decision is unchanged; finite SAT, novelty and quantitative limits stay separate.",
-      "next_step": "Profile deeper E055 failures on wb-marcus, then prove and measure one targeted optimization; #60 owns the scoped continuation.",
+      "summary": "C081 now has a proved primitive-table solver with exact System and whole-decision equality. E058 resolves all three deeper generated timeouts (19/19) while preserving 33/38 original completions and five raw UNKNOWN cases. C085, the paper and quantitative/signature boundaries are unchanged.",
+      "next_step": "No successor assigned. Profile the raw terminal fallback before further optimization, or formalize the separate countermodel producer; explicit top remains an independent proof question.",
       "record": "research/approaches/A010.md",
       "evidence": [
         "notes/2026-09-04-bridge-foundation.md",
@@ -257,7 +257,14 @@
         "scripts/check_finite_tree_decision.py",
         "results/finite-tree-decision.json",
         "notes/2026-09-20-finite-paper-readback.md",
-        "notes/prior-work/finite-tree-comparison-2026-09-20.md"
+        "notes/prior-work/finite-tree-comparison-2026-09-20.md",
+        "lean/Subtail/EntailmentPrepared.lean",
+        "experiments/profile_entailment.py",
+        "experiments/check_prepared_summary.py",
+        "scripts/check_prepared_summary.py",
+        "notes/2026-09-20-solver-profile.md",
+        "notes/2026-09-20-solver-profile-readback.md",
+        "results/solver-profile.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/3"
     },
@@ -585,12 +592,12 @@
     {
       "id": "A018",
       "title": "Maintain the Lean core and verify critical obligations",
-      "status": "active",
+      "status": "tried",
       "outcome": "supported",
-      "owner": "solver-profile-20260920 (#60)",
+      "owner": null,
       "updated": "2026-09-20",
-      "summary": "C081/C085 now have a standalone arbitrary- and finite-tree paper, with the full terminal and consuming-cycle arguments, exact multi-revision Lean correspondence, checked examples and bounded Henglein–Rehof/NP review. The unconditional finite decision is unchanged; finite SAT, novelty and quantitative limits stay separate.",
-      "next_step": "Profile deeper E055 failures on wb-marcus, then prove and measure one targeted optimization; #60 owns the scoped continuation.",
+      "summary": "C081 now has a proved primitive-table solver with exact System and whole-decision equality. E058 resolves all three deeper generated timeouts (19/19) while preserving 33/38 original completions and five raw UNKNOWN cases. C085, the paper and quantitative/signature boundaries are unchanged.",
+      "next_step": "No successor assigned. Profile the raw terminal fallback before further optimization, or formalize the separate countermodel producer; explicit top remains an independent proof question.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
@@ -728,7 +735,14 @@
         "scripts/check_finite_tree_decision.py",
         "results/finite-tree-decision.json",
         "notes/2026-09-20-finite-paper-readback.md",
-        "notes/prior-work/finite-tree-comparison-2026-09-20.md"
+        "notes/prior-work/finite-tree-comparison-2026-09-20.md",
+        "lean/Subtail/EntailmentPrepared.lean",
+        "experiments/profile_entailment.py",
+        "experiments/check_prepared_summary.py",
+        "scripts/check_prepared_summary.py",
+        "notes/2026-09-20-solver-profile.md",
+        "notes/2026-09-20-solver-profile-readback.md",
+        "results/solver-profile.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/31"
     }

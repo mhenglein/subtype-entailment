@@ -66,18 +66,65 @@ failure was a solver disagreement.
 
 ## Reproduction and final evidence
 
-Run in an isolated checkout using Lean 4.33.1, one Lean thread and the existing
-wb-marcus environment. The full measurement and review status will be pinned
-here after the combined-tree checks finish. No uncompleted gate is a PASS.
+The final proof/CLI audit and matched benchmark ran at
+`20e31a8829a77975e2fc10ba2aa494451b9586af` in an isolated wb-marcus checkout,
+using Lean 4.33.1 and Python 3.13.14. All executed source hashes match the
+integration candidate. [Combined source-pinned receipt](../results/solver-profile.json).
+
+| Exact generated input | Prior fast endpoint | Prepared endpoint |
+| --- | ---: | ---: |
+| Supplied separation, depth 12 (component) | UNKNOWN at 20 s | 1.220 s |
+| Nested original expressions, depth 4 | 12.550 s | 1.019 s |
+| Nested original expressions, depth 6 | UNKNOWN at 20 s | 1.721 s |
+| Nested original expressions, depth 8 | UNKNOWN at 20 s | 3.827 s |
+
+These are single-run, same-host uninstrumented wall times including Lean
+startup, after module builds. They are workload-specific measurements, not
+an asymptotic bound or an estimate of the interrupted baseline's finish time.
+The generated suite improves from 16/19 to 19/19. The original 38 fixtures
+remain 33 completed and five UNKNOWN for both variants: 26 frontend, five
+normalized and two raw cases complete. All five raw limits use the unchanged
+terminal function. There are no completed Boolean disagreements or oracle
+failures.
+
+The prepared component check passes for 62 systems. Six vector-length/two-
+checksum comparisons cover 740 primitive bits, 148 forward and 148 reverse
+balanced bits, 148 control-path bits, 12,884 arbitrary reachability bits and
+1,292 control-reachability bits. This compact differential has a checksum
+collision boundary and does not replace the all-input theorem.
+
+The fresh build, bundled `leanchecker` replay and all 24 declaration closures
+pass; none of the 13 runtime declarations uses classical choice. Five actual
+CLI checks pass, including depth-six/eight negative decisions with valid graph
+countermodels and separating paths `0^6`/`0^8`, and a cap returning UNKNOWN
+with exit two and reason `time_limit`. Graph checking and extraction remain
+Python. The default core was freshly built, kernel-replayed and differentially
+checked at `bdd3fee`; its executed source bytes are identical in the candidate.
+It reports 80 instances, 10,160 word comparisons and zero failures, plus the
+existing budget, suffix and two-state checks. Old receipts were restored
+unchanged after copying the fresh result into this experiment.
 
 ```sh
 python3 scripts/check_prepared_summary.py --cli --output tmp/prepared-audit-cli.json
+python3 experiments/check_prepared_summary.py --components --benchmark --generated --compare-baseline --output tmp/entailment-prepared.json
 python3 experiments/profile_entailment.py --output tmp/profile-baseline.json --scratch tmp/profile-baseline
 python3 experiments/profile_entailment.py --primitive-tables --output tmp/profile-tables.json --scratch tmp/profile-tables
 python3 experiments/profile_entailment.py --prepared --output tmp/profile-prepared.json --scratch tmp/profile-prepared
 PYTHONPATH=scripts python3 -m unittest scripts/test_subtail.py scripts/test_finite_trees.py scripts/test_profile_entailment.py
 python3 scripts/check_lean.py
 ```
+
+Final local checks pass: 68 focused Python tests, the 18-approach/164-record
+research index, paper source/map checks and the diff guard. The final
+[harness/CI review](https://github.com/mhenglein/subtail/issues/60#issuecomment-5748223410)
+confirmed exact fixture identity and routing, and identified missing explicit
+CI acceptance gates. The workflow now pins the fixture manifest, requires 38
+original rows and seven valid raw outcomes, and checks all completed answers
+against the existing E055 baseline step. It does not run a redundant third
+baseline. A [final read-only check](https://github.com/mhenglein/subtail/issues/60#issuecomment-5748245108) confirmed these gates and released the review scope.
+The exact workflow assertions were executed locally on the actual
+paired results represented in that prior receipt schema. This is an assertion
+check; GitHub CI status is recorded separately at publication in #60/#37.
 
 The production CLI's timeout includes build and explanation work. Matched
 benchmarks build first, then cap each fresh Lean query at 20 seconds wall and
