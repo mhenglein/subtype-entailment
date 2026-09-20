@@ -1,8 +1,9 @@
 {
   "status": "research draft; licensing pending; author placeholders",
-  "repository_revision_at_render": "caef0bca056a997250a46a52bbeee1dd1c8c59f6",
+  "repository_revision_at_render": "864634eba07ae1e1d189d0b286b0bbb5649e2430",
   "source_files_match_render_revision": true,
   "mathematical_source_revisions": [
+    "0eff4818d990821fd1c08f704a2392f2d0047cf5",
     "4159c58bd3ff683d837d23b3eb4c18eef82e8d4d",
     "c946d86b9e65da2877e0df42c710abbdcb5a4037"
   ],
@@ -11,13 +12,13 @@
     "tectonic": "Tectonic 0.17.0"
   },
   "sources": {
-    "paper/manuscript.md": "be18be1837a1ac50004202b50c4efe6930f6ac468fa622d75f65c20b44906d00",
-    "paper/header.tex": "b6a52dd6e658c7e407bb7f6ec2e38256785ad815e084f7e2bac4047ab73df849",
-    "paper/build.py": "a84580a0296855bfeaba49c3ff6bbdea2840dd65d9003af67f28f36edba29fa8",
-    "paper/lean-map.json": "c8ae2bdf0fc8d517bd94ebf35d0d6502d9da7bfba605e95f934a6e444ef09e8a",
+    "paper/manuscript.md": "42a16852c9e4ca5624447fc8029acc941108785009c90194985aa861e60cbdb0",
+    "paper/header.tex": "afa59785a02ec922dd8663368eef85596a198ef02e3607df33d8a5186029996e",
+    "paper/build.py": "086721c6d10ecb99c96437b1553221441e2311b3df465293ae738cca7577a8f6",
+    "paper/lean-map.json": "92b81823a76627a56fd8bade719312af37c83f1ba9f3240d75b9c196115a2913",
     "paper/references.bib": "7409dc3dbd7c51f69f9114a19ed9576d638637519114ab54417f830799badeb3",
     "paper/references.csl": "293d4797e0c861f8ac6def2c78b4568c5016ac44c1ce0f25dd5872e7e67e27bc"
   },
-  "pdf_sha256": "45f318d83e1c4988d67629413a969944b5eb9f487b1ecfb8a0a3604ad05da2f7",
+  "pdf_sha256": "ea883657ab59975273065088233943c9d23d8f0ddd594f8018cdc48df3e2eee5",
   "validation": "Rendering only; visual and mathematical reviews recorded separately."
 }

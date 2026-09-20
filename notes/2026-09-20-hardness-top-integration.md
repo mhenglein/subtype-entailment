@@ -112,3 +112,37 @@ No source papers, author names, license choices, earlier receipts, proof
 interfaces or production solver were changed. Author workspaces, unpushed work
 and stashes were not inspected or deleted. The final main readback in #37/#70/#71
 records publication and explicitly releases this integration lease.
+
+## Final validation and render
+
+The hardened audit and its five tests passed on the isolated workbench at
+`c6ae0657651fe3a6e64dde66a272393494d7e51d`. Its source hashes match the final
+branch. A second readback accepted the repaired gate and both canonical claims;
+one stale current novelty-matrix locator was corrected to HR98 Section 4
+(Theorem 1) and Section 4.1 (Theorem 2). The ordinary statements did not change.
+
+The paper was rendered from committed source
+`864634eba07ae1e1d189d0b286b0bbb5649e2430`, with every manifest source byte
+matching that revision. Pandoc 3.11/Tectonic 0.17.0 produced 34 pages. All pages
+were rendered and visually inspected; the new proof pages also received
+individual inspection. Text geometry is inside the page bounds with no
+replacement characters. The final build reports no missing characters or
+overfull boxes. PDF SHA-256:
+`ea883657ab59975273065088233943c9d23d8f0ddd594f8018cdc48df3e2eee5`.
+
+Two rejected layouts are preserved as working evidence: the initial font
+lacked the set-difference glyph, and the contents spilled three entries to
+a mostly empty page. The final font mapping uses the supported symbol, the
+build rejects missing glyphs/overflow, and the contents retains readable 9pt
+type on one page. These are rendering repairs, not mathematical changes.
+
+Local checks pass: 173 canonical A/C/E/Q records and links, 13 navigation tests,
+ten audit-guard tests, 23 checked paper links plus seven ordinary records, and
+26 scholarship source entries. The original experiment runner also passes
+with its saved receipt unchanged. No old experiment receipt is overwritten.
+The exact results and revisions remain separate in the machine receipt.
+
+Previous main's Lean run
+[35523500302](https://github.com/mhenglein/subtail/actions/runs/35523500302) is
+PASS. Final new-main publication/check states are recorded by the issue
+handoff after the non-forced push; they are not inferred from that earlier run.

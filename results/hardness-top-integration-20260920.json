@@ -1,5 +1,5 @@
 {
-  "status": "PENDING_FINAL_VALIDATION",
+  "status": "PASS",
   "session": "hardness-top-integration-20260920",
   "base_main": "d190256860a6e80b9eb2a40e2644bf8130271f53",
   "author_heads": {
@@ -72,7 +72,18 @@
     "hardness_paper": "ACCEPT; inherited accepted argument, then independently read actual manuscript; no blind discovery claim.",
     "explicit_top_paper": "ACCEPT; representation/order, all-model lifting, root exclusion, duality/vacuity and formalization boundary checked.",
     "ci": "ACCEPT with repaired unused-custom-axiom/placeholder gap and five negative-control tests. Documentation already receives every-change Research checks.",
-    "paper_polish": "Explicit reduction equivalence, expanded worked example, exact HR98 finite non-transfer, clause-index wording and checked/ordinary map counts clarified."
+    "paper_polish": "Explicit reduction equivalence, expanded worked example, exact HR98 finite non-transfer, clause-index wording and checked/ordinary map counts clarified.",
+    "hardened_gate_tests": {
+      "status": "PASS",
+      "count": 5,
+      "revision": "c6ae0657651fe3a6e64dde66a272393494d7e51d",
+      "execution": "isolated Linux workbench"
+    },
+    "final_scope_readback": {
+      "revision": "c6ae0657651fe3a6e64dde66a272393494d7e51d",
+      "status": "ACCEPT",
+      "correction": "Current novelty-matrix HR98 nonstructural locator corrected to Section 4/Theorem 1 and Section 4.1/Theorem 2; mathematical statements unchanged."
+    }
   },
   "fresh_execution": {
     "initial_combined_execution": {
@@ -860,16 +871,336 @@
       },
       "status": "PASS",
       "tracked_status_before": []
+    },
+    "original_experiments": {
+      "status": "PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 0.937,
+      "unchanged_saved_receipt": true,
+      "command": "python3 experiments/run_experiments.py"
     }
   },
   "final_explicit_top_gate": {
-    "status": "PENDING_AFTER_GUARD_CHANGE"
+    "axioms": {
+      "Subtail.ExplicitTopDualProjection.Cover": [],
+      "Subtail.ExplicitTopDualProjection.Entails": [],
+      "Subtail.ExplicitTopDualProjection.ForcedTop": [],
+      "Subtail.ExplicitTopDualProjection.Included": [],
+      "Subtail.ExplicitTopDualProjection.Languages": [],
+      "Subtail.ExplicitTopDualProjection.Model": [],
+      "Subtail.ExplicitTopDualProjection.PairedModel": [],
+      "Subtail.ExplicitTopDualProjection.PositiveEntails": [],
+      "Subtail.ExplicitTopDualProjection.PositiveSatisfiable": [],
+      "Subtail.ExplicitTopDualProjection.PrefixClosed": [],
+      "Subtail.ExplicitTopDualProjection.Remaining": [],
+      "Subtail.ExplicitTopDualProjection.Satisfiable": [],
+      "Subtail.ExplicitTopDualProjection.System": [],
+      "Subtail.ExplicitTopDualProjection.System.dual": [],
+      "Subtail.ExplicitTopDualProjection.System.dual_dual": [],
+      "Subtail.ExplicitTopDualProjection.Word": [],
+      "Subtail.ExplicitTopDualProjection.entails_iff_of_satisfiable": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.ExplicitTopDualProjection.entails_iff_projections": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.ExplicitTopDualProjection.forcedTop_disjoint_negative": [],
+      "Subtail.ExplicitTopDualProjection.forcedTop_in_positive": [],
+      "Subtail.ExplicitTopDualProjection.forcedTop_suffix": [],
+      "Subtail.ExplicitTopDualProjection.negative_projection_surjective": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.ExplicitTopDualProjection.paired_dual_iff": [],
+      "Subtail.ExplicitTopDualProjection.positive_countermodel_lift": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.ExplicitTopDualProjection.positive_covered": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.ExplicitTopDualProjection.positive_projection_surjective": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.ExplicitTopDualProjection.remaining_closed": [],
+      "Subtail.ExplicitTopDualProjection.remaining_model": [],
+      "Subtail.ExplicitTopDualProjection.satisfiable_iff_projections": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    "commands": [
+      {
+        "command": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.004,
+        "exit_code": 0,
+        "log": "explicit-top-b3lo8gh1/git-head.log",
+        "name": "git-head",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "git",
+          "status",
+          "--short",
+          "--untracked-files=no"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.016,
+        "exit_code": 0,
+        "log": "explicit-top-b3lo8gh1/git-status.log",
+        "name": "git-status",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "lean",
+          "--version"
+        ],
+        "cwd": "lean",
+        "elapsed_seconds": 0.115,
+        "exit_code": 0,
+        "log": "explicit-top-b3lo8gh1/toolchain.log",
+        "name": "toolchain",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "lake",
+          "build",
+          "+Subtail.ExplicitTopDualProjection"
+        ],
+        "cwd": "lean",
+        "elapsed_seconds": 0.215,
+        "exit_code": 0,
+        "log": "explicit-top-b3lo8gh1/build.log",
+        "name": "build",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "leanchecker",
+          "Subtail.ExplicitTopDualProjection"
+        ],
+        "cwd": "lean",
+        "elapsed_seconds": 1.067,
+        "exit_code": 0,
+        "log": "explicit-top-b3lo8gh1/kernel.log",
+        "name": "kernel",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "<checkout>/tmp/integration-validation/explicit-top-b3lo8gh1/axioms.lean"
+        ],
+        "cwd": "lean",
+        "elapsed_seconds": 0.717,
+        "exit_code": 0,
+        "log": "explicit-top-b3lo8gh1/axioms.log",
+        "name": "axioms",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "<python3.13.14>",
+          "experiments/check_explicit_top_dual_projection.py",
+          "--output",
+          "<checkout>/tmp/integration-validation/explicit-top-b3lo8gh1/explicit-top-dual-projection.json"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 1.067,
+        "exit_code": 0,
+        "log": "explicit-top-b3lo8gh1/top-corpus.log",
+        "name": "top-corpus",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "<python3.13.14>",
+          "experiments/check_hr_topfree_transfer_70.py",
+          "--output",
+          "<checkout>/tmp/integration-validation/explicit-top-b3lo8gh1/hr-topfree-transfer-70.json"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.866,
+        "exit_code": 0,
+        "log": "explicit-top-b3lo8gh1/hardness-corpus.log",
+        "name": "hardness-corpus",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      }
+    ],
+    "declarations": 29,
+    "finite_diagnostics": {
+      "hardness-corpus": {
+        "comparison": "MATCH_EXCEPT_ENVIRONMENT",
+        "ignored_fields": [
+          "python",
+          "platform",
+          "machine"
+        ],
+        "receipt": "explicit-top-b3lo8gh1/hr-topfree-transfer-70.json",
+        "status": "PASS"
+      },
+      "top-corpus": {
+        "comparison": "MATCH_EXCEPT_ENVIRONMENT",
+        "ignored_fields": [
+          "python",
+          "platform"
+        ],
+        "receipt": "explicit-top-b3lo8gh1/explicit-top-dual-projection.json",
+        "status": "PASS"
+      }
+    },
+    "git_head": "c6ae0657651fe3a6e64dde66a272393494d7e51d",
+    "lean_version": "Lean (version 4.33.1, aarch64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
+    "limits": [
+      "Labelled-tree identification, finite naming/projection and the four-call decision remain ordinary proofs.",
+      "This is no native explicit-top solver, parser or end-to-end Lean theorem.",
+      "Finite diagnostic corpora supply no universal model bound; capped misses remain UNKNOWN.",
+      "The hardness theorem is ordinary mathematics for arbitrary and regular trees, not finite trees."
+    ],
+    "non_theorem_definitions_choice_free": true,
+    "platform": "Linux-6.12.94-123.192.amzn2023.aarch64-aarch64-with-glibc2.43",
+    "python": "3.13.14",
+    "scope": "Check the explicit-top language core and two independent finite corpora.\n\nThe full labelled-tree/expression reduction is an ordinary theorem. This gate\ndoes not certify or expose an executable Lean explicit-top decision procedure.",
+    "source_sha256": {
+      "experiments/check_explicit_top_dual_projection.py": "c5da4fc788f3d1b33db843eb9fc205e53bb08538e5b2ac98d25bcbaa33f9e058",
+      "experiments/check_hr_topfree_transfer_70.py": "81e54110e789c9ef282236bec55e5fee97df194e6040a719fe5ba89533396e0a",
+      "lean/Subtail/ExplicitTopDualProjection.lean": "bac45e1f4613e6c95035b3d24f42950f3bf3fcd98324ee25bd8515888e130993",
+      "lean/lake-manifest.json": "7d0c22bfe200e71ceec96760909d8f9162a5d1e4b96398fa14ba8a4c013bee15",
+      "lean/lakefile.toml": "cc1765726c70b0a02e969ffa24ee5732fd6aab703ef8c71d0f0dd415a545c938",
+      "lean/lean-toolchain": "3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71",
+      "results/explicit-top-dual-projection.json": "a9af0bf9bd1a2c31d1199726f0cc5b75f086f6eee5ef6f2b3ecff9aa067632c2",
+      "results/hr-topfree-transfer-70.json": "955cfc11197fbed16ca52079f496171d365d2733e83b4bd54c5dcb885da1c75a",
+      "scripts/check_explicit_top.py": "ad5316a5d3d421b2a943cfcf8694ae71c7f011564132b94ef3570015eb83e659",
+      "scripts/check_original_bounds.py": "68f56317b8068d17c56da31ea4bb52f0c3c1c2377e3f80714e3c55d1dcc38a6b",
+      "scripts/test_check_explicit_top.py": "cf13ade9c21e047ed099320e3b2116dc85f3967eed8ace09bacb91bdf91970f2"
+    },
+    "status": "PASS",
+    "tracked_status_before": []
   },
   "paper": {
-    "status": "PENDING_COMMITTED_SOURCE_RENDER"
+    "status": "PASS",
+    "manifest": {
+      "status": "research draft; licensing pending; author placeholders",
+      "repository_revision_at_render": "864634eba07ae1e1d189d0b286b0bbb5649e2430",
+      "source_files_match_render_revision": true,
+      "mathematical_source_revisions": [
+        "0eff4818d990821fd1c08f704a2392f2d0047cf5",
+        "4159c58bd3ff683d837d23b3eb4c18eef82e8d4d",
+        "c946d86b9e65da2877e0df42c710abbdcb5a4037"
+      ],
+      "tools": {
+        "pandoc": "pandoc 3.11",
+        "tectonic": "Tectonic 0.17.0"
+      },
+      "sources": {
+        "paper/manuscript.md": "42a16852c9e4ca5624447fc8029acc941108785009c90194985aa861e60cbdb0",
+        "paper/header.tex": "afa59785a02ec922dd8663368eef85596a198ef02e3607df33d8a5186029996e",
+        "paper/build.py": "086721c6d10ecb99c96437b1553221441e2311b3df465293ae738cca7577a8f6",
+        "paper/lean-map.json": "92b81823a76627a56fd8bade719312af37c83f1ba9f3240d75b9c196115a2913",
+        "paper/references.bib": "7409dc3dbd7c51f69f9114a19ed9576d638637519114ab54417f830799badeb3",
+        "paper/references.csl": "293d4797e0c861f8ac6def2c78b4568c5016ac44c1ce0f25dd5872e7e67e27bc"
+      },
+      "pdf_sha256": "ea883657ab59975273065088233943c9d23d8f0ddd594f8018cdc48df3e2eee5",
+      "validation": "Rendering only; visual and mathematical reviews recorded separately."
+    },
+    "pages": 34,
+    "visual_inspection": "All 34 pages rendered and inspected; new proof pages additionally inspected individually. Contents, symbols, equations, bibliography and page boundaries checked.",
+    "geometry": {
+      "pages": 34,
+      "word_counts": [
+        329,
+        1715,
+        581,
+        535,
+        514,
+        539,
+        570,
+        557,
+        598,
+        663,
+        601,
+        575,
+        518,
+        622,
+        552,
+        567,
+        650,
+        617,
+        593,
+        640,
+        468,
+        558,
+        553,
+        474,
+        612,
+        513,
+        542,
+        595,
+        550,
+        452,
+        627,
+        498,
+        381,
+        259
+      ],
+      "outside_page_or_replacement_glyphs": []
+    },
+    "corrected_render_attempts": [
+      "Initial render omitted set difference glyph U+29F5 under Latin Modern Math; mapped to supported U+2216 and added a fatal missing-glyph/overflow check.",
+      "Expanded contents initially spilled three entries to a nearly empty page; kept 9pt text and tightened only its line spacing."
+    ],
+    "build_log_sha256": "a9bad49fba3ce6b686d23ffddab16d0bb89c2317e41e8c06df065cc6a9f2fe28"
   },
   "organization": {
-    "status": "PENDING"
+    "status": "PASS",
+    "revision_under_test": "864634eba07ae1e1d189d0b286b0bbb5649e2430 with final evidence and locator correction",
+    "checks": [
+      "python3 scripts/research_index.py --check",
+      "python3 -m unittest discover -s scripts -p test_research_index.py",
+      "python3 notes/prior-work/check_scholarship.py",
+      "python3 paper/check.py",
+      "python3 scripts/test_check_explicit_top.py",
+      "python3 scripts/test_check_original_bounds.py",
+      "git diff --check"
+    ],
+    "research_records": 173,
+    "navigation_tests": 13,
+    "audit_tests": 10,
+    "paper_checked_entries": 23,
+    "paper_ordinary_results": 7,
+    "scholarship_sources": 26,
+    "scope": "Organization, literal/source and audit guards only; not an additional mathematical proof."
   },
   "limits": [
     "No whole end-to-end explicit-top Lean theorem or JSON endpoint.",
@@ -878,5 +1209,12 @@
     "Default core and original-bound checks ran at the recorded earlier combined revision; their source bytes remain unchanged.",
     "Author workspaces, stashes and unpushed changes were not inspected or retired.",
     "Final main CI status must be read from the published-head runs; paper-only changes do not rerun expensive Lean steps."
-  ]
+  ],
+  "publication": {
+    "status": "RECORDED_BEFORE_PUBLICATION",
+    "previous_main": "d190256860a6e80b9eb2a40e2644bf8130271f53",
+    "previous_main_lean_run": "https://github.com/mhenglein/subtail/actions/runs/35523500302",
+    "previous_main_lean_status": "PASS",
+    "final_main_checks": "Final main SHA, hosted runs and scope release are recorded in the subsequent #37/#70/#71 issue handoff, outside this pre-publication receipt."
+  }
 }
