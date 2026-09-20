@@ -22,7 +22,7 @@ import tempfile
 import time
 
 ROOT = Path(__file__).resolve().parents[1]
-MODULE = ROOT / 'lean/Subtail/TerminalDecisionLazy.lean'
+MODULE = ROOT / 'lean/Subtail/EntailmentFast.lean'
 MARKER = 'SUBTAIL_RESULT:'
 
 
@@ -77,7 +77,7 @@ def lean_expr(e):
 def lean_source(p: Problem) -> str:
     # Only parsed integer indices and fixed syntax enter Lean source. Names do not.
     premises = ', '.join(f'({lean_expr(l)}, {lean_expr(r)})' for l, r in p.constraints)
-    return f'''import Subtail.TerminalDecisionLazy
+    return f'''import Subtail.EntailmentFast
 open Subtail.ExpressionNormalization
 set_option maxRecDepth 100000
 set_option maxHeartbeats 0
@@ -85,7 +85,7 @@ def input : Input {len(p.variables)} := [{premises}]
 def left : Expr {len(p.variables)} := {lean_expr(p.query[0])}
 def right : Expr {len(p.variables)} := {lean_expr(p.query[1])}
 #eval IO.println ("{MARKER}" ++ toString
-  (Subtail.TerminalDecisionLazy.entailsCheckLazy input left right))
+  (Subtail.EntailmentFast.entailsCheck input left right))
 '''
 
 
@@ -137,7 +137,7 @@ def run_process(command, cwd, timeout, memory_gib=16.0):
 
 
 def run_native(p: Problem, deadline, memory_gib=16.0):
-    build = run_process(['lake', 'build', '+Subtail.TerminalDecisionLazy'], ROOT / 'lean',
+    build = run_process(['lake', 'build', '+Subtail.EntailmentFast'], ROOT / 'lean',
                         deadline - time.monotonic(), memory_gib)
     if build['status'] != 'PASS':
         return {**build, 'stage': 'build'}
@@ -154,7 +154,7 @@ def run_native(p: Problem, deadline, memory_gib=16.0):
     return {'status': 'ENTAILED' if markers[0].endswith('true') else 'NOT_ENTAILED',
             'stage': 'decision', 'native_seconds': result['seconds'],
             'build_seconds': build['seconds'],
-            'basis': 'Lean TerminalDecisionLazy.entailsCheckLazy_correct',
+            'basis': 'Lean EntailmentFast.entailsCheck_correct',
             'wrapper_sha256': hashlib.sha256(MODULE.read_bytes()).hexdigest()}
 
 
