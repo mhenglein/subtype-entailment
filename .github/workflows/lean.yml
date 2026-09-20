@@ -643,12 +643,49 @@ jobs:
         run: |
           python3 scripts/check_infinite_lazy.py --cli --output tmp/infinite-lazy-audit.json
           PYTHONPATH=scripts python3 -m unittest scripts/test_profile_raw_backend.py
+      - name: Independent streamed components and all fixed raw cases
+        run: |
+          python3 experiments/check_infinite_lazy.py --components --compare-baseline --output tmp/infinite-lazy-components.json --scratch tmp/infinite-lazy-components
+          python3 experiments/check_infinite_lazy.py --raw --output tmp/infinite-lazy-raw.json --scratch tmp/infinite-lazy-raw
+          python3 - <<'PYCODE'
+          import json
+          from pathlib import Path
+          components = json.loads(Path('tmp/infinite-lazy-components.json').read_text())
+          raw = json.loads(Path('tmp/infinite-lazy-raw.json').read_text())
+          for report in (components, raw):
+              assert report['fixture_identity']['sha256'] == 'd5ed9de3af8e8b4fb5d1d088e1d7551a2e8bdc9617762c8bc0ed0057bdfbdb02', 'E059 fixture change needs explicit review'
+              assert report['status'] == 'PASS', report['status']
+          probes = components['phases']['components']
+          assert probes['status'] == 'PASS' and probes['case_count'] == 14 and len(probes['rows']) == 14
+          for row in probes['rows']:
+              assert not row.get('disagreement'), row['name']
+              before, after = row['variants']['baseline'], row['variants']['candidate']
+              assert before['status'] == after['status'] == 'PASS', row['name']
+              assert before['actual'] == after['actual'], row['name']
+          cases = raw['phases']['raw']
+          assert cases['status'] == 'PASS' and cases['fixture_count'] == 7 and len(cases['rows']) == 7
+          reference = json.loads(Path('tmp/entailment-prepared.json').read_text())['phases']['benchmark']['cases']
+          reference = {row['name']: row['prepared'] for row in reference if row['kind'] == 'raw'}
+          assert reference.keys() == {row['name'] for row in cases['rows']}
+          for row in cases['rows']:
+              after = row['variants']['candidate']
+              assert after['endpoint'] == 'Subtail.InfiniteDecisionLazy.rawNormalizedEntailsCheckLazy', row['name']
+              assert after['raw_backend_unchanged'] is False, row['name']
+              assert after['status'] == 'PASS' and after['actual'] == row['expected'], row['name']
+              before = reference[row['name']]
+              if before['status'] == 'PASS':
+                  assert before['actual'] == after['actual'], row['name']
+          print('PASS: all 14 component comparisons and seven raw cases; preceding E058 covers the other 31 original and 19 deeper inputs')
+          PYCODE
       - name: Preserve streamed decision proof and CLI evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: infinite-lazy-audit
-          path: tmp/infinite-lazy-audit.json
+          path: |
+            tmp/infinite-lazy-audit.json
+            tmp/infinite-lazy-components.json
+            tmp/infinite-lazy-raw.json
           retention-days: 90
           if-no-files-found: warn
       - name: Independent native normalization and original-syntax reference checks
