@@ -849,6 +849,11 @@ in the generator notation of Section 6.2. Fresh groups are numbered from zero.
 Its target is End exactly when $h=1$. Thus one fresh group handles the
 single-emission case directly.
 
+Throughout this construction, $z_t$ is an old matching cursor, while $q_t$
+is the state label of the corresponding fresh vertex. Equal origins at
+different physical groups do not identify those vertices or force their
+state labels to agree.
+
 For two consecutive distinct groups, all forward pieces traversing that
 physical interval are known. Split every such piece at all intermediate
 marks and retain its control at each seam. If one original path crosses an
@@ -1412,7 +1417,8 @@ remaining suffix. This is the recursive Pop definition of Section 3.2.
 The balanced relation is computable by finite saturation.
 
 Let $T$ be reflexive transitive reachability in this automaton after forgetting
-edge labels, retaining both balanced epsilon edges and letter edges. Define
+edge labels, retaining both balanced epsilon edges and letter edges. A return
+path may therefore mix balanced epsilon edges and consuming letter edges. Define
 $\operatorname{Growth}(C)$ by the finite test
 
 $$\exists p,r,a\quad
