@@ -1,0 +1,4308 @@
+{
+  "actor": "publication-sequence-20260920",
+  "author_receipt_sha256": "7621240e84ab735814944a8be6775c3f21e00dd0ce835b370977491568b8a7ee",
+  "comparisons": {
+    "cross_host_profile_event_differences": [
+      {
+        "counts": {
+          "finish_queries": {
+            "author": 1,
+            "parent": 2
+          }
+        },
+        "id": "two-promotions-positive",
+        "job": "strict"
+      },
+      {
+        "counts": {
+          "finish_queries": {
+            "author": 1,
+            "parent": 2
+          }
+        },
+        "id": "two-promotions-reversed-flag-positive",
+        "job": "strict"
+      },
+      {
+        "counts": {
+          "finish_queries": {
+            "author": 1,
+            "parent": 2
+          }
+        },
+        "id": "one-letter-positive",
+        "job": "strict"
+      },
+      {
+        "counts": {
+          "finish_queries": {
+            "author": 6,
+            "parent": 7
+          }
+        },
+        "id": "two-promotions-positive",
+        "job": "automatic"
+      },
+      {
+        "counts": {
+          "finish_queries": {
+            "author": 6,
+            "parent": 7
+          }
+        },
+        "id": "two-promotions-ordered-negative",
+        "job": "automatic"
+      }
+    ],
+    "hash_seeds": [
+      2026092067,
+      77
+    ],
+    "profile_limit": "Generator call/resumption profile events differ across the two Python/platform environments. They are not mathematical branch counts; exact returned-query depth and union counts agree.",
+    "shared_author_semantics_counts_returned_query_provenance": "PASS",
+    "strict_hash_seed_logical_rows": "PASS",
+    "within_host_excluded_fields": [
+      "command",
+      "parent_observed_wall_seconds",
+      "python_hash_seed",
+      "resources"
+    ]
+  },
+  "contribution_revision": "da74a4327579ac090846e142f7a1fb834451a7bb",
+  "date": "2026-09-20",
+  "independent_review": {
+    "actor": "publication_proof_review",
+    "body": "Read-only acceptance review of #67 at da74a4327579ac090846e142f7a1fb834451a7bb.\n\nVerdict: ACCEPTED within the contribution's explicitly limited scope. I found no substantive bug or overclaim in the S-only satisfiable-shape projection, the independent semantic boundary, or the separation between certificate replay and automatic decision. This is not acceptance of the native Lean/full-repository theorem or of automatic depth-two success.\n\nReviewed paths and lines:\n- notes/2026-09-20-issue67-independent-fixtures.md: 42-67 (independent forward/reverse predicates and complete acyclic DAG scope), 134-186 (projection steps 2-5), 188-220 (counts, UNKNOWN boundaries, and profile interpretation), 266-280 (remaining obligations).\n- experiments/issue67_independent_fixtures.py: 65-187 (independent bounded witness/safety/first-return predicates), 190-253 (independent table observer and query predicates), 256-297 (finite S-only enumeration), 360-428 (literal oracle plus two certificate-directed compiler promotions), 430-496 (complete projected union and reconstructed witnesses), 517-564 (raw union/automatic UNKNOWN handling), and 606-689 (strict/stress orchestration and receipt fields).\n- The pinned production rank_preimage.py definitions: compile_diagram, path_shapes, iter_diagrams, finish_queries, and decide (source-pinned by the harness); the relevant path-shape and portal cases agree with the note's classification.\n- The released cases.json and receipt.json were also checked for the stated 13-case scope and status fields.\n\nProjection readback: for root/end queries with no equalities or disequalities, safe nonempty bases, true table predicates, and S-only transitions, root cannot be fresh, end cannot be core, end must be LAST, and F/K portals are unavailable to S-only observers. Thus only core/enter-S/forward survives. The enumerator covers both weak FIRST/LAST orders and all finite controls, states, bits, and masks, then invokes unchanged compile_diagram. Invalid classes are rejected or unsatisfiable; they are not silently omitted as possible S-only witnesses. This proves the stated U versus U_S equivalence for that restricted scope, while correctly leaving physical exhaustion of the original iterator open.\n\nSemantic boundary: the expected answers come from the independent literal predicate over all acyclic paths/reverse continuations up to the all-state DAG bound, including diagonal and empty suffix cases. Production graph/model checks are separate cross-checks. The suite does not establish cyclic inputs, arbitrary word bounds, Lean execution, or the finite-expression C081 frontend.\n\nEvidence boundary: the forced two-promotion case is correctly labeled certificate-directed. The code performs actual compile_diagram/model/reconstruct_reference calls at both stages, replays the same intermediate reference, checks the final independent witness, and records max compiled depth 2 (harness lines 407-427). It does not claim automatic whole-terminal success. The two automatic depth-two cases and four raw unpruned unions remain UNKNOWN. The parent replay reports strict 13/13 under both seeds and all six capped diagnostics UNKNOWN; these do not promote the open automatic/native claims.\n\nThe only wording refinement I recommend is in the note at lines 210-214: replace \u201cno observed depth-two winning query\u201d with \u201cthe cap was reached after 5,784 depth-one clauses without observing a depth-two success; status remains UNKNOWN.\u201d That makes it impossible to read the profile as an exhaustive negative. The existing status fields already preserve UNKNOWN, so this is clarity only. Also retain the documented cross-host difference in finish_queries profile-resumption counters; it does not change semantic/count/provenance results.\n\nDurable reproducer commands recorded by the contribution (not rerun by this read-only review):\n```\npython3 experiments/issue67_independent_fixtures.py --output /tmp/issue67/strict.json\npython3 experiments/issue67_independent_fixtures.py --seed 77 --output /tmp/issue67/replay.json\npython3 experiments/issue67_independent_fixtures.py --mode stress --max-work 100000 --wall-seconds 20 --cpu-seconds 18 --output /tmp/issue67/stress.json\n```\nThe recorded projection counts are exact3/odd: 5280 candidates, 400 rejected, 4880 compiled, 1 satisfied; exact4/odd: 7040, 560, 6480, 0. These are counts for the finite projected union, not the original unpruned iterator.\n\nRemaining obligations are exactly those stated in the note: independent review of the ordinary projection proof, automatic native depth-two discovery, original-union completion or a new completeness result, Lean/full-repository replay, and C081 frontend execution.\n",
+    "limits": "Read-only review of the supplied argument and exact pinned sources; reviewer ran no builds or reproduction. Parent ran the full-checkout Python replay separately. Author-note pending-review/full-checkout statements are historical and superseded only at these precise scopes.",
+    "status": "ACCEPTED_WITHIN_SCOPE",
+    "url": "https://github.com/mhenglein/subtail/issues/67#issuecomment-5750568599"
+  },
+  "original_receipt_sha256": {
+    "execution": "8bddfa820e905c7440e998d44488fb2e2891122e045467139030ca82aa67f27b",
+    "replay": "ae6689e30237a561e09f392c5ccdc20309f740c5ce9aee90bfa8f2c7e7808f19",
+    "stress": "dd8ddf45de78a95e2d1bc732c0e3fcb83094e144d63f2e0ce3aa53d12b2d653a",
+    "strict": "a446e49ed55d299f71baa84a6c2e1b889e65344a464abfd86c18f9d434d348da"
+  },
+  "privacy": "Private checkout and interpreter paths are normalized; exact original receipts remain local with the hashes above.",
+  "receipts": {
+    "execution": {
+      "final_status": "",
+      "initial_clean": true,
+      "python": "3.13.14 (main, Aug  5 2026, 15:42:48) [Clang 22.1.3 ]",
+      "revision": "da74a4327579ac090846e142f7a1fb834451a7bb",
+      "steps": [
+        {
+          "command": [
+            "<python-3.13.14>",
+            "experiments/issue67_independent_fixtures.py",
+            "--output",
+            "<fresh-checkout>/tmp/issue67-parent-replay/strict.json"
+          ],
+          "elapsed_seconds": 17.460498192813247,
+          "exit_code": 0,
+          "name": "strict",
+          "receipt_sha256": "a446e49ed55d299f71baa84a6c2e1b889e65344a464abfd86c18f9d434d348da",
+          "status": "PASS",
+          "statuses": {
+            "PASS": 13
+          }
+        },
+        {
+          "command": [
+            "<python-3.13.14>",
+            "experiments/issue67_independent_fixtures.py",
+            "--seed",
+            "77",
+            "--output",
+            "<fresh-checkout>/tmp/issue67-parent-replay/replay.json"
+          ],
+          "elapsed_seconds": 15.661050636321306,
+          "exit_code": 0,
+          "name": "replay",
+          "receipt_sha256": "ae6689e30237a561e09f392c5ccdc20309f740c5ce9aee90bfa8f2c7e7808f19",
+          "status": "PASS",
+          "statuses": {
+            "PASS": 13
+          }
+        },
+        {
+          "command": [
+            "<python-3.13.14>",
+            "experiments/issue67_independent_fixtures.py",
+            "--mode",
+            "stress",
+            "--max-work",
+            "100000",
+            "--wall-seconds",
+            "20",
+            "--cpu-seconds",
+            "18",
+            "--output",
+            "<fresh-checkout>/tmp/issue67-parent-replay/stress.json"
+          ],
+          "elapsed_seconds": 23.459433471318334,
+          "exit_code": 0,
+          "name": "stress",
+          "receipt_sha256": "dd8ddf45de78a95e2d1bc732c0e3fcb83094e144d63f2e0ce3aa53d12b2d653a",
+          "status": "DIAGNOSTIC",
+          "statuses": {
+            "UNKNOWN": 6
+          }
+        }
+      ]
+    },
+    "replay": {
+      "automatic_two_promotion_success": false,
+      "command": [
+        "<python-3.13.14>",
+        "experiments/issue67_independent_fixtures.py",
+        "--seed",
+        "77",
+        "--output",
+        "<fresh-checkout>/tmp/issue67-parent-replay/replay.json"
+      ],
+      "environment": {
+        "cpu_count": 8,
+        "platform": "Linux-6.12.94-123.192.amzn2023.aarch64-aarch64-with-glibc2.43",
+        "python": "3.13.14 (main, Aug  5 2026, 15:42:48) [Clang 22.1.3 ]",
+        "rss_units": "KiB normalized; peak over the entire child process, not an allocation delta"
+      },
+      "fixtures_sha256": "701e04ef556ee0b1fea87dbf9bc792389b89dddd7497c708926212deed84a1fe",
+      "harness_sha256": "a065f6e7866ecb5dea2177fff516df981055093698f9f6fbaa9e7f6b10564097",
+      "local_checkout_head": "da74a4327579ac090846e142f7a1fb834451a7bb",
+      "mode": "strict",
+      "native_lean": "NOT_RUN",
+      "original_expression_C081_frontend": "NOT_RUN",
+      "random_search_used": false,
+      "rows": [
+        {
+          "automatic_two_promotion_decision": "NOT_ESTABLISHED",
+          "chain": [
+            {
+              "labels": [
+                3,
+                2
+              ],
+              "word": "0"
+            },
+            {
+              "labels": [
+                3,
+                2,
+                1
+              ],
+              "word": "00"
+            },
+            {
+              "labels": [
+                3,
+                2,
+                1,
+                0
+              ],
+              "word": "000"
+            }
+          ],
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "60",
+            "--cpu-seconds",
+            "55",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "strict:two-promotions-positive"
+          ],
+          "coverage": {
+            "automatic_decider_success_depths": [],
+            "compiled_depth_counts": {
+              "1": 1,
+              "2": 1
+            },
+            "interval_move_return_events": {},
+            "interval_path_results": {},
+            "max_compiled_depth": 2,
+            "profile_events": {
+              "compile_diagram": 2,
+              "extract_diagram": 2,
+              "finish_queries": 2,
+              "model": 7,
+              "reconstruct_reference": 4
+            }
+          },
+          "coverage_class": "certificate_directed_two_promotion_compiler_replay",
+          "diagrams": [
+            {
+              "first_bit": "0",
+              "groups": [
+                [
+                  "f:2",
+                  "@first",
+                  "@last"
+                ]
+              ],
+              "intermediate_controls": [],
+              "locations": [
+                [
+                  "@end",
+                  "fresh",
+                  "f:2"
+                ],
+                [
+                  "@failure",
+                  "core",
+                  "@end"
+                ],
+                [
+                  "@origin:0",
+                  "fresh",
+                  "f:2"
+                ]
+              ],
+              "next_bits": [
+                ""
+              ],
+              "old_end_colour": {
+                "end": true,
+                "forbidden": 0,
+                "next_bit": "",
+                "root": false,
+                "state": 2
+              },
+              "pieces": [
+                [
+                  {
+                    "kind": "exit",
+                    "label": "F",
+                    "left_control": 0,
+                    "right_control": 1,
+                    "source": "f:2",
+                    "target": "@end"
+                  }
+                ],
+                [
+                  {
+                    "kind": "enter",
+                    "label": "K0",
+                    "left_control": 0,
+                    "right_control": 1,
+                    "source": "@end",
+                    "target": "f:2"
+                  }
+                ],
+                [
+                  {
+                    "kind": "forward",
+                    "label": "",
+                    "left_control": 0,
+                    "right_control": 0,
+                    "source": "f:2",
+                    "target": "f:2"
+                  }
+                ]
+              ],
+              "states": [
+                1
+              ]
+            },
+            {
+              "first_bit": "0",
+              "groups": [
+                [
+                  "f:3",
+                  "@first",
+                  "@last"
+                ]
+              ],
+              "intermediate_controls": [],
+              "locations": [
+                [
+                  "e",
+                  "fresh",
+                  "f:3"
+                ],
+                [
+                  "f",
+                  "core",
+                  "@end"
+                ],
+                [
+                  "x",
+                  "core",
+                  "@end"
+                ]
+              ],
+              "next_bits": [
+                ""
+              ],
+              "old_end_colour": {
+                "end": true,
+                "forbidden": 0,
+                "next_bit": "",
+                "root": false,
+                "state": 1
+              },
+              "pieces": [
+                [
+                  {
+                    "kind": "exit",
+                    "label": "F",
+                    "left_control": 0,
+                    "right_control": 1,
+                    "source": "f:3",
+                    "target": "@end"
+                  }
+                ],
+                [
+                  {
+                    "kind": "core",
+                    "label": "",
+                    "left_control": 0,
+                    "right_control": 0,
+                    "source": "@end",
+                    "target": "@end"
+                  }
+                ]
+              ],
+              "states": [
+                0
+              ]
+            }
+          ],
+          "finishing_checks": [
+            {
+              "finish": false,
+              "reference": {
+                "labels": [
+                  3,
+                  2
+                ],
+                "word": "0"
+              }
+            },
+            {
+              "finish": false,
+              "reference": {
+                "labels": [
+                  3,
+                  2,
+                  1
+                ],
+                "word": "00"
+              }
+            },
+            {
+              "finish": true,
+              "reference": {
+                "labels": [
+                  3,
+                  2,
+                  1,
+                  0
+                ],
+                "word": "000"
+              }
+            }
+          ],
+          "id": "two-promotions-positive",
+          "input_sha256": "323675b7f6be1378b0f5966b1045aa30b9d1325815237d22f8356a644b58b2a8",
+          "job": "strict",
+          "limits": {
+            "cpu_seconds": 55,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 60.0
+          },
+          "oracle_bound": 3,
+          "oracle_details": {
+            "": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0
+                ]
+              }
+            ],
+            "0": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0,
+                  1
+                ]
+              }
+            ],
+            "00": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0,
+                  1,
+                  2
+                ]
+              }
+            ],
+            "000": [
+              true,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0,
+                  1,
+                  2,
+                  3
+                ]
+              }
+            ]
+          },
+          "oracle_witnesses": [
+            "000"
+          ],
+          "oracle_words": [
+            "",
+            "0",
+            "00",
+            "000"
+          ],
+          "overlap": {
+            "base": "00",
+            "extension": "000",
+            "occurrence_starts": [
+              0,
+              1
+            ],
+            "overlap_length": 1
+          },
+          "parent_observed_wall_seconds": 0.11727325292304158,
+          "python_hash_seed": 77,
+          "resources": {
+            "cpu_system_seconds": 0.00024900000000000096,
+            "cpu_user_seconds": 0.011790999999999996,
+            "peak_rss_kib": 25400,
+            "wall_seconds": 0.012051508761942387
+          },
+          "semantic_answer": true,
+          "semantic_minimum_promotions": 2,
+          "singleton_role_groups": [
+            [
+              [
+                "f:2",
+                "@first",
+                "@last"
+              ]
+            ],
+            [
+              [
+                "f:3",
+                "@first",
+                "@last"
+              ]
+            ]
+          ],
+          "status": "PASS"
+        },
+        {
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "60",
+            "--cpu-seconds",
+            "55",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "strict:two-promotions-ordered-negative"
+          ],
+          "coverage_class": "complete_DAG_oracle_and_original_finishing_components",
+          "finishing_checks": [
+            {
+              "finish": false,
+              "reference": {
+                "labels": [
+                  3,
+                  2
+                ],
+                "word": "0"
+              }
+            },
+            {
+              "finish": false,
+              "reference": {
+                "labels": [
+                  3,
+                  2,
+                  1
+                ],
+                "word": "00"
+              }
+            }
+          ],
+          "id": "two-promotions-ordered-negative",
+          "input_sha256": "2a7e136c833663ae603b1331283b31d247f121b286709cf6ae07485faab849cb",
+          "job": "strict",
+          "limits": {
+            "cpu_seconds": 55,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 60.0
+          },
+          "oracle_bound": 3,
+          "oracle_details": {
+            "": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0
+                ]
+              }
+            ],
+            "0": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [
+                  [
+                    0,
+                    1
+                  ]
+                ],
+                "flagged_cuts": [
+                  [
+                    0,
+                    1
+                  ]
+                ],
+                "states": [
+                  0,
+                  1
+                ]
+              }
+            ],
+            "00": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [
+                  [
+                    0,
+                    1
+                  ]
+                ],
+                "states": [
+                  0,
+                  1,
+                  2
+                ]
+              }
+            ],
+            "000": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [
+                  [
+                    0,
+                    1
+                  ]
+                ],
+                "states": [
+                  0,
+                  1,
+                  2,
+                  3
+                ]
+              }
+            ]
+          },
+          "oracle_witnesses": [],
+          "oracle_words": [
+            "",
+            "0",
+            "00",
+            "000"
+          ],
+          "parent_observed_wall_seconds": 0.10376692563295364,
+          "python_hash_seed": 77,
+          "resources": {
+            "cpu_system_seconds": 0.00019399999999999973,
+            "cpu_user_seconds": 0.0015509999999999968,
+            "peak_rss_kib": 25412,
+            "wall_seconds": 0.001753740943968296
+          },
+          "semantic_answer": false,
+          "status": "PASS"
+        },
+        {
+          "automatic_two_promotion_decision": "NOT_ESTABLISHED",
+          "chain": [
+            {
+              "labels": [
+                3,
+                2
+              ],
+              "word": "0"
+            },
+            {
+              "labels": [
+                3,
+                2,
+                1
+              ],
+              "word": "00"
+            },
+            {
+              "labels": [
+                3,
+                2,
+                1,
+                0
+              ],
+              "word": "000"
+            }
+          ],
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "60",
+            "--cpu-seconds",
+            "55",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "strict:two-promotions-reversed-flag-positive"
+          ],
+          "coverage": {
+            "automatic_decider_success_depths": [],
+            "compiled_depth_counts": {
+              "1": 1,
+              "2": 1
+            },
+            "interval_move_return_events": {},
+            "interval_path_results": {},
+            "max_compiled_depth": 2,
+            "profile_events": {
+              "compile_diagram": 2,
+              "extract_diagram": 2,
+              "finish_queries": 2,
+              "model": 7,
+              "reconstruct_reference": 4
+            }
+          },
+          "coverage_class": "certificate_directed_two_promotion_compiler_replay",
+          "diagrams": [
+            {
+              "first_bit": "0",
+              "groups": [
+                [
+                  "f:2",
+                  "@first",
+                  "@last"
+                ]
+              ],
+              "intermediate_controls": [],
+              "locations": [
+                [
+                  "@end",
+                  "fresh",
+                  "f:2"
+                ],
+                [
+                  "@failure",
+                  "core",
+                  "@end"
+                ],
+                [
+                  "@origin:0",
+                  "fresh",
+                  "f:2"
+                ]
+              ],
+              "next_bits": [
+                ""
+              ],
+              "old_end_colour": {
+                "end": true,
+                "forbidden": 0,
+                "next_bit": "",
+                "root": false,
+                "state": 2
+              },
+              "pieces": [
+                [
+                  {
+                    "kind": "exit",
+                    "label": "F",
+                    "left_control": 0,
+                    "right_control": 1,
+                    "source": "f:2",
+                    "target": "@end"
+                  }
+                ],
+                [
+                  {
+                    "kind": "enter",
+                    "label": "K0",
+                    "left_control": 0,
+                    "right_control": 1,
+                    "source": "@end",
+                    "target": "f:2"
+                  }
+                ],
+                [
+                  {
+                    "kind": "forward",
+                    "label": "",
+                    "left_control": 0,
+                    "right_control": 0,
+                    "source": "f:2",
+                    "target": "f:2"
+                  }
+                ]
+              ],
+              "states": [
+                1
+              ]
+            },
+            {
+              "first_bit": "0",
+              "groups": [
+                [
+                  "f:3",
+                  "@first",
+                  "@last"
+                ]
+              ],
+              "intermediate_controls": [],
+              "locations": [
+                [
+                  "e",
+                  "fresh",
+                  "f:3"
+                ],
+                [
+                  "f",
+                  "core",
+                  "@end"
+                ],
+                [
+                  "x",
+                  "core",
+                  "@end"
+                ]
+              ],
+              "next_bits": [
+                ""
+              ],
+              "old_end_colour": {
+                "end": true,
+                "forbidden": 0,
+                "next_bit": "",
+                "root": false,
+                "state": 1
+              },
+              "pieces": [
+                [
+                  {
+                    "kind": "exit",
+                    "label": "F",
+                    "left_control": 0,
+                    "right_control": 1,
+                    "source": "f:3",
+                    "target": "@end"
+                  }
+                ],
+                [
+                  {
+                    "kind": "core",
+                    "label": "",
+                    "left_control": 0,
+                    "right_control": 0,
+                    "source": "@end",
+                    "target": "@end"
+                  }
+                ]
+              ],
+              "states": [
+                0
+              ]
+            }
+          ],
+          "finishing_checks": [
+            {
+              "finish": false,
+              "reference": {
+                "labels": [
+                  3,
+                  2
+                ],
+                "word": "0"
+              }
+            },
+            {
+              "finish": false,
+              "reference": {
+                "labels": [
+                  3,
+                  2,
+                  1
+                ],
+                "word": "00"
+              }
+            },
+            {
+              "finish": true,
+              "reference": {
+                "labels": [
+                  3,
+                  2,
+                  1,
+                  0
+                ],
+                "word": "000"
+              }
+            }
+          ],
+          "id": "two-promotions-reversed-flag-positive",
+          "input_sha256": "080d6aa0fe13bae0b743140479c10fc014009f635333973fecd5b479a38ff60c",
+          "job": "strict",
+          "limits": {
+            "cpu_seconds": 55,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 60.0
+          },
+          "oracle_bound": 3,
+          "oracle_details": {
+            "": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0
+                ]
+              }
+            ],
+            "0": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0,
+                  1
+                ]
+              }
+            ],
+            "00": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0,
+                  1,
+                  2
+                ]
+              }
+            ],
+            "000": [
+              true,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0,
+                  1,
+                  2,
+                  3
+                ]
+              }
+            ]
+          },
+          "oracle_witnesses": [
+            "000"
+          ],
+          "oracle_words": [
+            "",
+            "0",
+            "00",
+            "000"
+          ],
+          "overlap": {
+            "base": "00",
+            "extension": "000",
+            "occurrence_starts": [
+              0,
+              1
+            ],
+            "overlap_length": 1
+          },
+          "parent_observed_wall_seconds": 0.11669832514598966,
+          "python_hash_seed": 77,
+          "resources": {
+            "cpu_system_seconds": 0.0,
+            "cpu_user_seconds": 0.011727000000000001,
+            "peak_rss_kib": 25400,
+            "wall_seconds": 0.011739253997802734
+          },
+          "semantic_answer": true,
+          "semantic_minimum_promotions": 2,
+          "singleton_role_groups": [
+            [
+              [
+                "f:2",
+                "@first",
+                "@last"
+              ]
+            ],
+            [
+              [
+                "f:3",
+                "@first",
+                "@last"
+              ]
+            ]
+          ],
+          "status": "PASS"
+        },
+        {
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "60",
+            "--cpu-seconds",
+            "55",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "strict:diagonal-negative"
+          ],
+          "coverage_class": "complete_DAG_oracle_and_original_finishing_components",
+          "finishing_checks": [
+            {
+              "finish": false,
+              "reference": {
+                "labels": [
+                  3,
+                  2
+                ],
+                "word": "0"
+              }
+            }
+          ],
+          "id": "diagonal-negative",
+          "input_sha256": "a9a96136d980cd18b704baff120c03fdbd2858f7d6701edea2f416bf670d69e5",
+          "job": "strict",
+          "limits": {
+            "cpu_seconds": 55,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 60.0
+          },
+          "oracle_bound": 3,
+          "oracle_details": {
+            "": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0
+                ]
+              }
+            ],
+            "0": [
+              false,
+              {
+                "diagonal_cuts": [
+                  [
+                    1,
+                    1
+                  ]
+                ],
+                "empty_suffix_cuts": [
+                  [
+                    1,
+                    1
+                  ]
+                ],
+                "flagged_cuts": [
+                  [
+                    1,
+                    1
+                  ]
+                ],
+                "states": [
+                  0,
+                  1
+                ]
+              }
+            ],
+            "00": [
+              false,
+              {
+                "diagonal_cuts": [
+                  [
+                    1,
+                    1
+                  ]
+                ],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [
+                  [
+                    1,
+                    1
+                  ]
+                ],
+                "states": [
+                  0,
+                  1,
+                  2
+                ]
+              }
+            ],
+            "000": [
+              false,
+              {
+                "diagonal_cuts": [
+                  [
+                    1,
+                    1
+                  ]
+                ],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [
+                  [
+                    1,
+                    1
+                  ]
+                ],
+                "states": [
+                  0,
+                  1,
+                  2,
+                  3
+                ]
+              }
+            ]
+          },
+          "oracle_witnesses": [],
+          "oracle_words": [
+            "",
+            "0",
+            "00",
+            "000"
+          ],
+          "parent_observed_wall_seconds": 0.10348719405010343,
+          "python_hash_seed": 77,
+          "resources": {
+            "cpu_system_seconds": 0.00011800000000000005,
+            "cpu_user_seconds": 0.0009470000000000034,
+            "peak_rss_kib": 25400,
+            "wall_seconds": 0.0010731159709393978
+          },
+          "semantic_answer": false,
+          "status": "PASS"
+        },
+        {
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "60",
+            "--cpu-seconds",
+            "55",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "strict:empty-suffix-negative"
+          ],
+          "coverage_class": "complete_DAG_oracle_and_original_finishing_components",
+          "finishing_checks": [
+            {
+              "finish": false,
+              "reference": {
+                "labels": [
+                  3,
+                  2
+                ],
+                "word": "0"
+              }
+            },
+            {
+              "finish": false,
+              "reference": {
+                "labels": [
+                  3,
+                  2,
+                  1
+                ],
+                "word": "00"
+              }
+            }
+          ],
+          "id": "empty-suffix-negative",
+          "input_sha256": "a5bd83a0a61034015d77c2dccffb5f4d95db39cd5e7e2216961bb1e4739ee8dc",
+          "job": "strict",
+          "limits": {
+            "cpu_seconds": 55,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 60.0
+          },
+          "oracle_bound": 3,
+          "oracle_details": {
+            "": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0
+                ]
+              }
+            ],
+            "0": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0,
+                  1
+                ]
+              }
+            ],
+            "00": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0,
+                  1,
+                  2
+                ]
+              }
+            ],
+            "000": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [
+                  [
+                    0,
+                    3
+                  ]
+                ],
+                "flagged_cuts": [
+                  [
+                    0,
+                    3
+                  ]
+                ],
+                "states": [
+                  0,
+                  1,
+                  2,
+                  3
+                ]
+              }
+            ]
+          },
+          "oracle_witnesses": [],
+          "oracle_words": [
+            "",
+            "0",
+            "00",
+            "000"
+          ],
+          "parent_observed_wall_seconds": 0.10190773522481322,
+          "python_hash_seed": 77,
+          "resources": {
+            "cpu_system_seconds": 0.00040699999999999764,
+            "cpu_user_seconds": 0.0012210000000000068,
+            "peak_rss_kib": 25400,
+            "wall_seconds": 0.0016372469253838062
+          },
+          "semantic_answer": false,
+          "status": "PASS"
+        },
+        {
+          "backend_answer": {
+            "status": "YES",
+            "word": "",
+            "work": 0
+          },
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "60",
+            "--cpu-seconds",
+            "55",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "strict:empty-word-positive"
+          ],
+          "coverage": {
+            "automatic_decider_success_depths": [],
+            "compiled_depth_counts": {},
+            "interval_move_return_events": {},
+            "interval_path_results": {},
+            "max_compiled_depth": 0,
+            "profile_events": {
+              "decide": 1
+            }
+          },
+          "coverage_class": "automatic_python_decider_boundary_or_zero_promotion",
+          "id": "empty-word-positive",
+          "input_sha256": "7019098f4a3633d23bdb8b680398e6c6ad36107b7bba3405628ba30171f9d2c0",
+          "job": "strict",
+          "limits": {
+            "cpu_seconds": 55,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 60.0
+          },
+          "oracle_bound": 0,
+          "oracle_details": {
+            "": [
+              true,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0
+                ]
+              }
+            ]
+          },
+          "oracle_witnesses": [
+            ""
+          ],
+          "oracle_words": [
+            ""
+          ],
+          "parent_observed_wall_seconds": 0.10676602087914944,
+          "python_hash_seed": 77,
+          "resources": {
+            "cpu_system_seconds": 0.0,
+            "cpu_user_seconds": 0.0007339999999999985,
+            "peak_rss_kib": 25400,
+            "wall_seconds": 0.0007415879517793655
+          },
+          "semantic_answer": true,
+          "status": "PASS"
+        },
+        {
+          "backend_answer": {
+            "reason": "No safe nonempty initial reference",
+            "status": "NO",
+            "work": 0
+          },
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "60",
+            "--cpu-seconds",
+            "55",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "strict:empty-word-diagonal-negative"
+          ],
+          "coverage": {
+            "automatic_decider_success_depths": [],
+            "compiled_depth_counts": {},
+            "interval_move_return_events": {},
+            "interval_path_results": {},
+            "max_compiled_depth": 0,
+            "profile_events": {
+              "decide": 1
+            }
+          },
+          "coverage_class": "automatic_python_decider_boundary_or_zero_promotion",
+          "id": "empty-word-diagonal-negative",
+          "input_sha256": "3b012995080a3327c94fbaa513bf6097ddd701a1003aeb19c76f5e182ad53410",
+          "job": "strict",
+          "limits": {
+            "cpu_seconds": 55,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 60.0
+          },
+          "oracle_bound": 0,
+          "oracle_details": {
+            "": [
+              false,
+              {
+                "diagonal_cuts": [
+                  [
+                    0,
+                    0
+                  ]
+                ],
+                "empty_suffix_cuts": [
+                  [
+                    0,
+                    0
+                  ]
+                ],
+                "flagged_cuts": [
+                  [
+                    0,
+                    0
+                  ]
+                ],
+                "states": [
+                  0
+                ]
+              }
+            ]
+          },
+          "oracle_witnesses": [],
+          "oracle_words": [
+            ""
+          ],
+          "parent_observed_wall_seconds": 0.10614484921097755,
+          "python_hash_seed": 77,
+          "resources": {
+            "cpu_system_seconds": 0.0,
+            "cpu_user_seconds": 0.0008539999999999937,
+            "peak_rss_kib": 25400,
+            "wall_seconds": 0.0008616670966148376
+          },
+          "semantic_answer": false,
+          "status": "PASS"
+        },
+        {
+          "backend_answer": {
+            "reason": "No safe nonempty initial reference",
+            "status": "NO",
+            "work": 0
+          },
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "60",
+            "--cpu-seconds",
+            "55",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "strict:empty-word-bad-negative"
+          ],
+          "coverage": {
+            "automatic_decider_success_depths": [],
+            "compiled_depth_counts": {},
+            "interval_move_return_events": {},
+            "interval_path_results": {},
+            "max_compiled_depth": 0,
+            "profile_events": {
+              "decide": 1
+            }
+          },
+          "coverage_class": "automatic_python_decider_boundary_or_zero_promotion",
+          "id": "empty-word-bad-negative",
+          "input_sha256": "01f576cd4c425c609cb09caf85b0516d54662e5fda28bfa3854bef051a768fee",
+          "job": "strict",
+          "limits": {
+            "cpu_seconds": 55,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 60.0
+          },
+          "oracle_bound": 0,
+          "oracle_details": {
+            "": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0
+                ]
+              }
+            ]
+          },
+          "oracle_witnesses": [],
+          "oracle_words": [
+            ""
+          ],
+          "parent_observed_wall_seconds": 0.10266227787360549,
+          "python_hash_seed": 77,
+          "resources": {
+            "cpu_system_seconds": 8.200000000000048e-05,
+            "cpu_user_seconds": 0.0006570000000000048,
+            "peak_rss_kib": 25400,
+            "wall_seconds": 0.0007471251301467419
+          },
+          "semantic_answer": false,
+          "status": "PASS"
+        },
+        {
+          "backend_answer": {
+            "status": "YES",
+            "word": "0",
+            "work": 8
+          },
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "60",
+            "--cpu-seconds",
+            "55",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "strict:one-letter-positive"
+          ],
+          "coverage": {
+            "automatic_decider_success_depths": [
+              0
+            ],
+            "compiled_depth_counts": {},
+            "interval_move_return_events": {},
+            "interval_path_results": {},
+            "max_compiled_depth": 0,
+            "profile_events": {
+              "decide": 1,
+              "finish_queries": 2,
+              "iter_rank_queries": 2,
+              "model": 1
+            }
+          },
+          "coverage_class": "automatic_python_decider_boundary_or_zero_promotion",
+          "id": "one-letter-positive",
+          "input_sha256": "5fa1e52c07e967b7f8266306a1e9718dd949638ea9a36da959390767e8c238de",
+          "job": "strict",
+          "limits": {
+            "cpu_seconds": 55,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 60.0
+          },
+          "oracle_bound": 1,
+          "oracle_details": {
+            "": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0
+                ]
+              }
+            ],
+            "0": [
+              true,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0,
+                  1
+                ]
+              }
+            ]
+          },
+          "oracle_witnesses": [
+            "0"
+          ],
+          "oracle_words": [
+            "",
+            "0"
+          ],
+          "parent_observed_wall_seconds": 0.10361907305195928,
+          "python_hash_seed": 77,
+          "resources": {
+            "cpu_system_seconds": 0.00018099999999999887,
+            "cpu_user_seconds": 0.0012709999999999944,
+            "peak_rss_kib": 25528,
+            "wall_seconds": 0.0014612260274589062
+          },
+          "semantic_answer": true,
+          "status": "PASS"
+        },
+        {
+          "all_first_returns": [
+            {
+              "labels": [
+                4,
+                3,
+                2,
+                1
+              ],
+              "word": "010"
+            },
+            {
+              "labels": [
+                4,
+                3,
+                2,
+                1,
+                0
+              ],
+              "word": "0110"
+            }
+          ],
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "60",
+            "--cpu-seconds",
+            "55",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "strict:shared-odd-length-positive"
+          ],
+          "completed_original_witnesses": [
+            "0010"
+          ],
+          "coverage": {
+            "automatic_decider_success_depths": [],
+            "compiled_depth_counts": {
+              "1": 4880
+            },
+            "interval_move_return_events": {
+              "2:empty": 54352,
+              "2:nonempty": 4160
+            },
+            "interval_path_results": {
+              "2:no": 9520,
+              "2:yes": 80
+            },
+            "max_compiled_depth": 1,
+            "profile_events": {
+              "compile_diagram": 5280,
+              "model": 4880,
+              "reconstruct_reference": 1
+            }
+          },
+          "coverage_class": "complete_S_only_satisfiable_shape_compiler_union",
+          "id": "shared-odd-length-positive",
+          "independent_singles": [
+            true,
+            true
+          ],
+          "independent_truth": {
+            "010": true,
+            "0110": false
+          },
+          "input_sha256": "99d5181c8ad04cf48aa9489a41fa75a685e054302de9d3b187bc8e9fac34c2a7",
+          "job": "strict",
+          "limits": {
+            "cpu_seconds": 55,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 60.0
+          },
+          "oracle_bound": 4,
+          "original_unpruned_enumerator_exhausted": false,
+          "parent_observed_wall_seconds": 6.093219446018338,
+          "projected_union_status": "EXHAUSTED",
+          "projection_proof": "All omitted role/order/portal/control classes have an unsatisfiable original compiled clause.",
+          "python_hash_seed": 77,
+          "reconstructed_words": [
+            "010"
+          ],
+          "resources": {
+            "cpu_system_seconds": 0.0006650000000000007,
+            "cpu_user_seconds": 5.989089000000001,
+            "peak_rss_kib": 25768,
+            "wall_seconds": 5.99083828413859
+          },
+          "satisfied_interval_observer_counts": {
+            "2": 1
+          },
+          "satisfied_mark_group_counts": {
+            "2": 1
+          },
+          "semantic_answer": true,
+          "split_generator_mutant_answer": true,
+          "status": "PASS",
+          "union_counts": {
+            "candidate_diagrams": 5280,
+            "compiled_clauses": 4880,
+            "rejected_diagrams": 400,
+            "satisfied_clauses": 1
+          }
+        },
+        {
+          "all_first_returns": [
+            {
+              "labels": [
+                4,
+                3,
+                2,
+                1
+              ],
+              "word": "010"
+            },
+            {
+              "labels": [
+                4,
+                3,
+                2,
+                1,
+                0
+              ],
+              "word": "0110"
+            }
+          ],
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "60",
+            "--cpu-seconds",
+            "55",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "strict:shared-odd-length-conflict"
+          ],
+          "completed_original_witnesses": [],
+          "coverage": {
+            "automatic_decider_success_depths": [],
+            "compiled_depth_counts": {
+              "1": 6480
+            },
+            "interval_move_return_events": {
+              "2:empty": 77664,
+              "2:nonempty": 7040
+            },
+            "interval_path_results": {
+              "2:no": 12704,
+              "2:yes": 96
+            },
+            "max_compiled_depth": 1,
+            "profile_events": {
+              "compile_diagram": 7040,
+              "model": 6480
+            }
+          },
+          "coverage_class": "complete_S_only_satisfiable_shape_compiler_union",
+          "id": "shared-odd-length-conflict",
+          "independent_singles": [
+            true,
+            true
+          ],
+          "independent_truth": {
+            "010": false,
+            "0110": false
+          },
+          "input_sha256": "c1ce1a0ee079f585fcb13b444d86b93f95ae3336b7f2631b6fd2a4c233310b24",
+          "job": "strict",
+          "limits": {
+            "cpu_seconds": 55,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 60.0
+          },
+          "oracle_bound": 4,
+          "original_unpruned_enumerator_exhausted": false,
+          "parent_observed_wall_seconds": 8.279966838192195,
+          "projected_union_status": "EXHAUSTED",
+          "projection_proof": "All omitted role/order/portal/control classes have an unsatisfiable original compiled clause.",
+          "python_hash_seed": 77,
+          "reconstructed_words": [],
+          "resources": {
+            "cpu_system_seconds": 0.009999,
+            "cpu_user_seconds": 8.163804,
+            "peak_rss_kib": 25528,
+            "wall_seconds": 8.175306665245444
+          },
+          "satisfied_interval_observer_counts": {},
+          "satisfied_mark_group_counts": {},
+          "semantic_answer": false,
+          "split_generator_mutant_answer": true,
+          "status": "PASS",
+          "union_counts": {
+            "candidate_diagrams": 7040,
+            "compiled_clauses": 6480,
+            "rejected_diagrams": 560,
+            "satisfied_clauses": 0
+          }
+        },
+        {
+          "all_first_returns": [
+            {
+              "labels": [
+                3,
+                2,
+                1,
+                0
+              ],
+              "word": "000"
+            }
+          ],
+          "assignment": {
+            "e": 3,
+            "u": 3
+          },
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "60",
+            "--cpu-seconds",
+            "55",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "strict:coincident-first-last-wrap-positive"
+          ],
+          "coverage": {
+            "automatic_decider_success_depths": [],
+            "compiled_depth_counts": {
+              "1": 1
+            },
+            "interval_move_return_events": {},
+            "interval_path_results": {},
+            "max_compiled_depth": 1,
+            "profile_events": {
+              "compile_diagram": 1,
+              "extract_diagram": 1,
+              "model": 2,
+              "reconstruct_reference": 1
+            }
+          },
+          "coverage_class": "literal_coincidence_oracle_and_compiler_certificate",
+          "diagram": {
+            "first_bit": "0",
+            "groups": [
+              [
+                "f:3",
+                "@first",
+                "@last"
+              ]
+            ],
+            "intermediate_controls": [],
+            "locations": [
+              [
+                "e",
+                "fresh",
+                "f:3"
+              ],
+              [
+                "u",
+                "fresh",
+                "f:3"
+              ]
+            ],
+            "next_bits": [
+              ""
+            ],
+            "old_end_colour": {
+              "end": true,
+              "forbidden": 0,
+              "next_bit": "",
+              "root": false,
+              "state": 1
+            },
+            "pieces": [
+              [
+                {
+                  "kind": "forward",
+                  "label": "",
+                  "left_control": 0,
+                  "right_control": 0,
+                  "source": "f:3",
+                  "target": "f:3"
+                }
+              ],
+              [
+                {
+                  "kind": "wrap",
+                  "label": "K0",
+                  "left_control": 0,
+                  "right_control": 1,
+                  "source": "f:3",
+                  "target": "f:3"
+                }
+              ]
+            ],
+            "states": [
+              0
+            ]
+          },
+          "full_union_exhausted": false,
+          "id": "coincident-first-last-wrap-positive",
+          "input_sha256": "00cf076c93709a7a08c9d21fa32d8c52d8b14c96a9b7ac1e387cdc95b06b666e",
+          "job": "strict",
+          "limits": {
+            "cpu_seconds": 55,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 60.0
+          },
+          "oracle_bound": 3,
+          "parent_observed_wall_seconds": 0.10783541109412909,
+          "python_hash_seed": 77,
+          "reconstructed": {
+            "labels": [
+              3,
+              2,
+              1,
+              0
+            ],
+            "word": "000"
+          },
+          "resources": {
+            "cpu_system_seconds": 0.0,
+            "cpu_user_seconds": 0.003818000000000002,
+            "peak_rss_kib": 25528,
+            "wall_seconds": 0.003827942069619894
+          },
+          "semantic_answer": true,
+          "status": "PASS"
+        },
+        {
+          "all_first_returns": [
+            {
+              "labels": [
+                3,
+                2,
+                1,
+                0
+              ],
+              "word": "000"
+            }
+          ],
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "60",
+            "--cpu-seconds",
+            "55",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "strict:coincident-end-disequality-negative"
+          ],
+          "coverage_class": "literal_coincidence_oracle_and_compiler_certificate",
+          "full_union_exhausted": false,
+          "id": "coincident-end-disequality-negative",
+          "input_sha256": "db50dcfc2766cc72325bebe1e992c1444dd66a770d4402202956ec127e13624e",
+          "job": "strict",
+          "limits": {
+            "cpu_seconds": 55,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 60.0
+          },
+          "oracle_bound": 3,
+          "parent_observed_wall_seconds": 0.10085832327604294,
+          "python_hash_seed": 77,
+          "resources": {
+            "cpu_system_seconds": 0.0002360000000000001,
+            "cpu_user_seconds": 0.0007089999999999944,
+            "peak_rss_kib": 25528,
+            "wall_seconds": 0.0009526759386062622
+          },
+          "semantic_answer": false,
+          "status": "PASS"
+        }
+      ],
+      "schema": 1,
+      "seed": 77,
+      "snapshot_kind": "full-checkout",
+      "source_files": {
+        "border_lab.py": {
+          "git_blob": "1144ae52379e0417772e79582269cacd91c5bc17",
+          "sha256": "61d42cc1c99f2fdbc50691ae427a77c70b4ec56021d2837187dd2eb6fb51925d"
+        },
+        "rank_preimage.py": {
+          "git_blob": "852fa7d7ba199b9d91ab24a8f7b5abf29ed8819b",
+          "sha256": "7aebb043b557c0ab2db1252c3482d83409c3245d7f6589b627ab12cb44512061"
+        },
+        "rank_preimage_core.py": {
+          "git_blob": "fe297ab4f2252468b1734f6885765cde0d2cecb9",
+          "sha256": "58d0895bbad23853b504999b4cb069e22f47e700af3df68168bdeba363156ab2"
+        },
+        "rank_query_graphs.py": {
+          "git_blob": "6fcc612e47ef65edbb7ec9ff973a528a422da8e4",
+          "sha256": "14981591f4ca734e422e105d5bbf17be576c5af67cc07a4239d10da834470f03"
+        },
+        "rank_query_prefix.py": {
+          "git_blob": "135d3cb960d07dfddefd74dd255bba289a08af1b",
+          "sha256": "d7575eb9b0a1fb923df1ab248261ada138415aab78a9d4171f3e49c399d426cf"
+        }
+      },
+      "source_revision": "19b06d4fed9da635d9b911f0e908d04e4fc4b099",
+      "status": "PASS",
+      "statuses": {
+        "PASS": 13
+      }
+    },
+    "stress": {
+      "automatic_two_promotion_success": false,
+      "command": [
+        "<python-3.13.14>",
+        "experiments/issue67_independent_fixtures.py",
+        "--mode",
+        "stress",
+        "--max-work",
+        "100000",
+        "--wall-seconds",
+        "20",
+        "--cpu-seconds",
+        "18",
+        "--output",
+        "<fresh-checkout>/tmp/issue67-parent-replay/stress.json"
+      ],
+      "environment": {
+        "cpu_count": 8,
+        "platform": "Linux-6.12.94-123.192.amzn2023.aarch64-aarch64-with-glibc2.43",
+        "python": "3.13.14 (main, Aug  5 2026, 15:42:48) [Clang 22.1.3 ]",
+        "rss_units": "KiB normalized; peak over the entire child process, not an allocation delta"
+      },
+      "fixtures_sha256": "701e04ef556ee0b1fea87dbf9bc792389b89dddd7497c708926212deed84a1fe",
+      "harness_sha256": "a065f6e7866ecb5dea2177fff516df981055093698f9f6fbaa9e7f6b10564097",
+      "local_checkout_head": "da74a4327579ac090846e142f7a1fb834451a7bb",
+      "mode": "stress",
+      "native_lean": "NOT_RUN",
+      "original_expression_C081_frontend": "NOT_RUN",
+      "random_search_used": false,
+      "rows": [
+        {
+          "backend_answer": {
+            "reason": "Exhausted",
+            "status": "UNKNOWN",
+            "work": 100001
+          },
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "20.0",
+            "--cpu-seconds",
+            "18",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "automatic:two-promotions-positive"
+          ],
+          "coverage": {
+            "automatic_decider_success_depths": [],
+            "compiled_depth_counts": {
+              "1": 5784
+            },
+            "interval_move_return_events": {
+              "0:empty": 14584,
+              "0:nonempty": 1184
+            },
+            "interval_path_results": {
+              "0:no": 3016,
+              "0:yes": 152
+            },
+            "max_compiled_depth": 1,
+            "profile_events": {
+              "compile_diagram": 6600,
+              "decide": 1,
+              "finish_queries": 7,
+              "iter_rank_queries": 5791,
+              "model": 5788,
+              "preimages": 5785
+            }
+          },
+          "coverage_class": "original_Python_whole_terminal_decider",
+          "id": "two-promotions-positive",
+          "input_sha256": "323675b7f6be1378b0f5966b1045aa30b9d1325815237d22f8356a644b58b2a8",
+          "job": "automatic",
+          "limits": {
+            "cpu_seconds": 18,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 20.0
+          },
+          "oracle_answer": true,
+          "parent_observed_wall_seconds": 6.815015056170523,
+          "python_hash_seed": 2026092067,
+          "reason": "Exhausted",
+          "resources": {
+            "cpu_system_seconds": 0.0004709999999999992,
+            "cpu_user_seconds": 6.709974,
+            "peak_rss_kib": 26232,
+            "wall_seconds": 6.711551326327026
+          },
+          "status": "UNKNOWN"
+        },
+        {
+          "backend_answer": {
+            "reason": "Exhausted",
+            "status": "UNKNOWN",
+            "work": 100001
+          },
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "20.0",
+            "--cpu-seconds",
+            "18",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "automatic:two-promotions-ordered-negative"
+          ],
+          "coverage": {
+            "automatic_decider_success_depths": [],
+            "compiled_depth_counts": {
+              "1": 5784
+            },
+            "interval_move_return_events": {
+              "0:empty": 14584,
+              "0:nonempty": 1184
+            },
+            "interval_path_results": {
+              "0:no": 3016,
+              "0:yes": 152
+            },
+            "max_compiled_depth": 1,
+            "profile_events": {
+              "compile_diagram": 6600,
+              "decide": 1,
+              "finish_queries": 7,
+              "iter_rank_queries": 5791,
+              "model": 5788,
+              "preimages": 5785
+            }
+          },
+          "coverage_class": "original_Python_whole_terminal_decider",
+          "id": "two-promotions-ordered-negative",
+          "input_sha256": "2a7e136c833663ae603b1331283b31d247f121b286709cf6ae07485faab849cb",
+          "job": "automatic",
+          "limits": {
+            "cpu_seconds": 18,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 20.0
+          },
+          "oracle_answer": false,
+          "parent_observed_wall_seconds": 6.866643893066794,
+          "python_hash_seed": 2026092067,
+          "reason": "Exhausted",
+          "resources": {
+            "cpu_system_seconds": 0.0,
+            "cpu_user_seconds": 6.760237,
+            "peak_rss_kib": 26232,
+            "wall_seconds": 6.760790322907269
+          },
+          "status": "UNKNOWN"
+        },
+        {
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "20.0",
+            "--cpu-seconds",
+            "18",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "raw:shared-odd-length-positive"
+          ],
+          "coverage_class": "original_unpruned_Python_compiler_union",
+          "full_union_exhausted": false,
+          "id": "shared-odd-length-positive",
+          "input_sha256": "99d5181c8ad04cf48aa9489a41fa75a685e054302de9d3b187bc8e9fac34c2a7",
+          "job": "raw",
+          "limits": {
+            "cpu_seconds": 18,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 20.0
+          },
+          "oracle_answer": true,
+          "parent_observed_wall_seconds": 2.7350278962403536,
+          "python_hash_seed": 2026092067,
+          "reason": "work_limit",
+          "resources": {
+            "cpu_system_seconds": 0.011415999999999999,
+            "cpu_user_seconds": 2.621387,
+            "peak_rss_kib": 26232,
+            "wall_seconds": 2.6331707751378417
+          },
+          "status": "UNKNOWN",
+          "union_counts": {
+            "candidate_diagrams": 20495,
+            "compiled_clauses": 17807,
+            "rejected_diagrams": 2688,
+            "satisfied_clauses": 0
+          },
+          "work_limit": 100000,
+          "work_used": 100001
+        },
+        {
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "20.0",
+            "--cpu-seconds",
+            "18",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "raw:shared-odd-length-conflict"
+          ],
+          "coverage_class": "original_unpruned_Python_compiler_union",
+          "full_union_exhausted": false,
+          "id": "shared-odd-length-conflict",
+          "input_sha256": "c1ce1a0ee079f585fcb13b444d86b93f95ae3336b7f2631b6fd2a4c233310b24",
+          "job": "raw",
+          "limits": {
+            "cpu_seconds": 18,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 20.0
+          },
+          "oracle_answer": false,
+          "parent_observed_wall_seconds": 2.4922968922182918,
+          "python_hash_seed": 2026092067,
+          "reason": "work_limit",
+          "resources": {
+            "cpu_system_seconds": 0.0,
+            "cpu_user_seconds": 2.3893489999999997,
+            "peak_rss_kib": 26232,
+            "wall_seconds": 2.389669224154204
+          },
+          "status": "UNKNOWN",
+          "union_counts": {
+            "candidate_diagrams": 19492,
+            "compiled_clauses": 15172,
+            "rejected_diagrams": 4320,
+            "satisfied_clauses": 0
+          },
+          "work_limit": 100000,
+          "work_used": 100001
+        },
+        {
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "20.0",
+            "--cpu-seconds",
+            "18",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "raw:coincident-first-last-wrap-positive"
+          ],
+          "coverage_class": "original_unpruned_Python_compiler_union",
+          "full_union_exhausted": false,
+          "id": "coincident-first-last-wrap-positive",
+          "input_sha256": "00cf076c93709a7a08c9d21fa32d8c52d8b14c96a9b7ac1e387cdc95b06b666e",
+          "job": "raw",
+          "limits": {
+            "cpu_seconds": 18,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 20.0
+          },
+          "oracle_answer": true,
+          "parent_observed_wall_seconds": 2.826342737302184,
+          "python_hash_seed": 2026092067,
+          "reason": "work_limit",
+          "resources": {
+            "cpu_system_seconds": 0.0006200000000000025,
+            "cpu_user_seconds": 2.7184470000000003,
+            "peak_rss_kib": 26232,
+            "wall_seconds": 2.71952390903607
+          },
+          "status": "UNKNOWN",
+          "union_counts": {
+            "candidate_diagrams": 26720,
+            "compiled_clauses": 11432,
+            "rejected_diagrams": 15288,
+            "satisfied_clauses": 0
+          },
+          "work_limit": 100000,
+          "work_used": 100001
+        },
+        {
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "20.0",
+            "--cpu-seconds",
+            "18",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "raw:coincident-end-disequality-negative"
+          ],
+          "coverage_class": "original_unpruned_Python_compiler_union",
+          "full_union_exhausted": false,
+          "id": "coincident-end-disequality-negative",
+          "input_sha256": "db50dcfc2766cc72325bebe1e992c1444dd66a770d4402202956ec127e13624e",
+          "job": "raw",
+          "limits": {
+            "cpu_seconds": 18,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 20.0
+          },
+          "oracle_answer": false,
+          "parent_observed_wall_seconds": 1.5771864806301892,
+          "python_hash_seed": 2026092067,
+          "reason": "work_limit",
+          "resources": {
+            "cpu_system_seconds": 0.0,
+            "cpu_user_seconds": 1.475963,
+            "peak_rss_kib": 26232,
+            "wall_seconds": 1.4762078751809895
+          },
+          "status": "UNKNOWN",
+          "union_counts": {
+            "candidate_diagrams": 9009,
+            "compiled_clauses": 9009,
+            "rejected_diagrams": 0,
+            "satisfied_clauses": 0
+          },
+          "work_limit": 100000,
+          "work_used": 100001
+        }
+      ],
+      "schema": 1,
+      "seed": 2026092067,
+      "snapshot_kind": "full-checkout",
+      "source_files": {
+        "border_lab.py": {
+          "git_blob": "1144ae52379e0417772e79582269cacd91c5bc17",
+          "sha256": "61d42cc1c99f2fdbc50691ae427a77c70b4ec56021d2837187dd2eb6fb51925d"
+        },
+        "rank_preimage.py": {
+          "git_blob": "852fa7d7ba199b9d91ab24a8f7b5abf29ed8819b",
+          "sha256": "7aebb043b557c0ab2db1252c3482d83409c3245d7f6589b627ab12cb44512061"
+        },
+        "rank_preimage_core.py": {
+          "git_blob": "fe297ab4f2252468b1734f6885765cde0d2cecb9",
+          "sha256": "58d0895bbad23853b504999b4cb069e22f47e700af3df68168bdeba363156ab2"
+        },
+        "rank_query_graphs.py": {
+          "git_blob": "6fcc612e47ef65edbb7ec9ff973a528a422da8e4",
+          "sha256": "14981591f4ca734e422e105d5bbf17be576c5af67cc07a4239d10da834470f03"
+        },
+        "rank_query_prefix.py": {
+          "git_blob": "135d3cb960d07dfddefd74dd255bba289a08af1b",
+          "sha256": "d7575eb9b0a1fb923df1ab248261ada138415aab78a9d4171f3e49c399d426cf"
+        }
+      },
+      "source_revision": "19b06d4fed9da635d9b911f0e908d04e4fc4b099",
+      "status": "DIAGNOSTIC",
+      "statuses": {
+        "UNKNOWN": 6
+      }
+    },
+    "strict": {
+      "automatic_two_promotion_success": false,
+      "command": [
+        "<python-3.13.14>",
+        "experiments/issue67_independent_fixtures.py",
+        "--output",
+        "<fresh-checkout>/tmp/issue67-parent-replay/strict.json"
+      ],
+      "environment": {
+        "cpu_count": 8,
+        "platform": "Linux-6.12.94-123.192.amzn2023.aarch64-aarch64-with-glibc2.43",
+        "python": "3.13.14 (main, Aug  5 2026, 15:42:48) [Clang 22.1.3 ]",
+        "rss_units": "KiB normalized; peak over the entire child process, not an allocation delta"
+      },
+      "fixtures_sha256": "701e04ef556ee0b1fea87dbf9bc792389b89dddd7497c708926212deed84a1fe",
+      "harness_sha256": "a065f6e7866ecb5dea2177fff516df981055093698f9f6fbaa9e7f6b10564097",
+      "local_checkout_head": "da74a4327579ac090846e142f7a1fb834451a7bb",
+      "mode": "strict",
+      "native_lean": "NOT_RUN",
+      "original_expression_C081_frontend": "NOT_RUN",
+      "random_search_used": false,
+      "rows": [
+        {
+          "automatic_two_promotion_decision": "NOT_ESTABLISHED",
+          "chain": [
+            {
+              "labels": [
+                3,
+                2
+              ],
+              "word": "0"
+            },
+            {
+              "labels": [
+                3,
+                2,
+                1
+              ],
+              "word": "00"
+            },
+            {
+              "labels": [
+                3,
+                2,
+                1,
+                0
+              ],
+              "word": "000"
+            }
+          ],
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "60",
+            "--cpu-seconds",
+            "55",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "strict:two-promotions-positive"
+          ],
+          "coverage": {
+            "automatic_decider_success_depths": [],
+            "compiled_depth_counts": {
+              "1": 1,
+              "2": 1
+            },
+            "interval_move_return_events": {},
+            "interval_path_results": {},
+            "max_compiled_depth": 2,
+            "profile_events": {
+              "compile_diagram": 2,
+              "extract_diagram": 2,
+              "finish_queries": 2,
+              "model": 7,
+              "reconstruct_reference": 4
+            }
+          },
+          "coverage_class": "certificate_directed_two_promotion_compiler_replay",
+          "diagrams": [
+            {
+              "first_bit": "0",
+              "groups": [
+                [
+                  "f:2",
+                  "@first",
+                  "@last"
+                ]
+              ],
+              "intermediate_controls": [],
+              "locations": [
+                [
+                  "@end",
+                  "fresh",
+                  "f:2"
+                ],
+                [
+                  "@failure",
+                  "core",
+                  "@end"
+                ],
+                [
+                  "@origin:0",
+                  "fresh",
+                  "f:2"
+                ]
+              ],
+              "next_bits": [
+                ""
+              ],
+              "old_end_colour": {
+                "end": true,
+                "forbidden": 0,
+                "next_bit": "",
+                "root": false,
+                "state": 2
+              },
+              "pieces": [
+                [
+                  {
+                    "kind": "exit",
+                    "label": "F",
+                    "left_control": 0,
+                    "right_control": 1,
+                    "source": "f:2",
+                    "target": "@end"
+                  }
+                ],
+                [
+                  {
+                    "kind": "enter",
+                    "label": "K0",
+                    "left_control": 0,
+                    "right_control": 1,
+                    "source": "@end",
+                    "target": "f:2"
+                  }
+                ],
+                [
+                  {
+                    "kind": "forward",
+                    "label": "",
+                    "left_control": 0,
+                    "right_control": 0,
+                    "source": "f:2",
+                    "target": "f:2"
+                  }
+                ]
+              ],
+              "states": [
+                1
+              ]
+            },
+            {
+              "first_bit": "0",
+              "groups": [
+                [
+                  "f:3",
+                  "@first",
+                  "@last"
+                ]
+              ],
+              "intermediate_controls": [],
+              "locations": [
+                [
+                  "e",
+                  "fresh",
+                  "f:3"
+                ],
+                [
+                  "f",
+                  "core",
+                  "@end"
+                ],
+                [
+                  "x",
+                  "core",
+                  "@end"
+                ]
+              ],
+              "next_bits": [
+                ""
+              ],
+              "old_end_colour": {
+                "end": true,
+                "forbidden": 0,
+                "next_bit": "",
+                "root": false,
+                "state": 1
+              },
+              "pieces": [
+                [
+                  {
+                    "kind": "exit",
+                    "label": "F",
+                    "left_control": 0,
+                    "right_control": 1,
+                    "source": "f:3",
+                    "target": "@end"
+                  }
+                ],
+                [
+                  {
+                    "kind": "core",
+                    "label": "",
+                    "left_control": 0,
+                    "right_control": 0,
+                    "source": "@end",
+                    "target": "@end"
+                  }
+                ]
+              ],
+              "states": [
+                0
+              ]
+            }
+          ],
+          "finishing_checks": [
+            {
+              "finish": false,
+              "reference": {
+                "labels": [
+                  3,
+                  2
+                ],
+                "word": "0"
+              }
+            },
+            {
+              "finish": false,
+              "reference": {
+                "labels": [
+                  3,
+                  2,
+                  1
+                ],
+                "word": "00"
+              }
+            },
+            {
+              "finish": true,
+              "reference": {
+                "labels": [
+                  3,
+                  2,
+                  1,
+                  0
+                ],
+                "word": "000"
+              }
+            }
+          ],
+          "id": "two-promotions-positive",
+          "input_sha256": "323675b7f6be1378b0f5966b1045aa30b9d1325815237d22f8356a644b58b2a8",
+          "job": "strict",
+          "limits": {
+            "cpu_seconds": 55,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 60.0
+          },
+          "oracle_bound": 3,
+          "oracle_details": {
+            "": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0
+                ]
+              }
+            ],
+            "0": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0,
+                  1
+                ]
+              }
+            ],
+            "00": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0,
+                  1,
+                  2
+                ]
+              }
+            ],
+            "000": [
+              true,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0,
+                  1,
+                  2,
+                  3
+                ]
+              }
+            ]
+          },
+          "oracle_witnesses": [
+            "000"
+          ],
+          "oracle_words": [
+            "",
+            "0",
+            "00",
+            "000"
+          ],
+          "overlap": {
+            "base": "00",
+            "extension": "000",
+            "occurrence_starts": [
+              0,
+              1
+            ],
+            "overlap_length": 1
+          },
+          "parent_observed_wall_seconds": 0.12002918496727943,
+          "python_hash_seed": 2026092067,
+          "resources": {
+            "cpu_system_seconds": 0.0,
+            "cpu_user_seconds": 0.012274000000000007,
+            "peak_rss_kib": 27068,
+            "wall_seconds": 0.01229530991986394
+          },
+          "semantic_answer": true,
+          "semantic_minimum_promotions": 2,
+          "singleton_role_groups": [
+            [
+              [
+                "f:2",
+                "@first",
+                "@last"
+              ]
+            ],
+            [
+              [
+                "f:3",
+                "@first",
+                "@last"
+              ]
+            ]
+          ],
+          "status": "PASS"
+        },
+        {
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "60",
+            "--cpu-seconds",
+            "55",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "strict:two-promotions-ordered-negative"
+          ],
+          "coverage_class": "complete_DAG_oracle_and_original_finishing_components",
+          "finishing_checks": [
+            {
+              "finish": false,
+              "reference": {
+                "labels": [
+                  3,
+                  2
+                ],
+                "word": "0"
+              }
+            },
+            {
+              "finish": false,
+              "reference": {
+                "labels": [
+                  3,
+                  2,
+                  1
+                ],
+                "word": "00"
+              }
+            }
+          ],
+          "id": "two-promotions-ordered-negative",
+          "input_sha256": "2a7e136c833663ae603b1331283b31d247f121b286709cf6ae07485faab849cb",
+          "job": "strict",
+          "limits": {
+            "cpu_seconds": 55,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 60.0
+          },
+          "oracle_bound": 3,
+          "oracle_details": {
+            "": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0
+                ]
+              }
+            ],
+            "0": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [
+                  [
+                    0,
+                    1
+                  ]
+                ],
+                "flagged_cuts": [
+                  [
+                    0,
+                    1
+                  ]
+                ],
+                "states": [
+                  0,
+                  1
+                ]
+              }
+            ],
+            "00": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [
+                  [
+                    0,
+                    1
+                  ]
+                ],
+                "states": [
+                  0,
+                  1,
+                  2
+                ]
+              }
+            ],
+            "000": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [
+                  [
+                    0,
+                    1
+                  ]
+                ],
+                "states": [
+                  0,
+                  1,
+                  2,
+                  3
+                ]
+              }
+            ]
+          },
+          "oracle_witnesses": [],
+          "oracle_words": [
+            "",
+            "0",
+            "00",
+            "000"
+          ],
+          "parent_observed_wall_seconds": 0.09867835184559226,
+          "python_hash_seed": 2026092067,
+          "resources": {
+            "cpu_system_seconds": 0.0,
+            "cpu_user_seconds": 0.001580999999999999,
+            "peak_rss_kib": 27068,
+            "wall_seconds": 0.0016015470027923584
+          },
+          "semantic_answer": false,
+          "status": "PASS"
+        },
+        {
+          "automatic_two_promotion_decision": "NOT_ESTABLISHED",
+          "chain": [
+            {
+              "labels": [
+                3,
+                2
+              ],
+              "word": "0"
+            },
+            {
+              "labels": [
+                3,
+                2,
+                1
+              ],
+              "word": "00"
+            },
+            {
+              "labels": [
+                3,
+                2,
+                1,
+                0
+              ],
+              "word": "000"
+            }
+          ],
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "60",
+            "--cpu-seconds",
+            "55",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "strict:two-promotions-reversed-flag-positive"
+          ],
+          "coverage": {
+            "automatic_decider_success_depths": [],
+            "compiled_depth_counts": {
+              "1": 1,
+              "2": 1
+            },
+            "interval_move_return_events": {},
+            "interval_path_results": {},
+            "max_compiled_depth": 2,
+            "profile_events": {
+              "compile_diagram": 2,
+              "extract_diagram": 2,
+              "finish_queries": 2,
+              "model": 7,
+              "reconstruct_reference": 4
+            }
+          },
+          "coverage_class": "certificate_directed_two_promotion_compiler_replay",
+          "diagrams": [
+            {
+              "first_bit": "0",
+              "groups": [
+                [
+                  "f:2",
+                  "@first",
+                  "@last"
+                ]
+              ],
+              "intermediate_controls": [],
+              "locations": [
+                [
+                  "@end",
+                  "fresh",
+                  "f:2"
+                ],
+                [
+                  "@failure",
+                  "core",
+                  "@end"
+                ],
+                [
+                  "@origin:0",
+                  "fresh",
+                  "f:2"
+                ]
+              ],
+              "next_bits": [
+                ""
+              ],
+              "old_end_colour": {
+                "end": true,
+                "forbidden": 0,
+                "next_bit": "",
+                "root": false,
+                "state": 2
+              },
+              "pieces": [
+                [
+                  {
+                    "kind": "exit",
+                    "label": "F",
+                    "left_control": 0,
+                    "right_control": 1,
+                    "source": "f:2",
+                    "target": "@end"
+                  }
+                ],
+                [
+                  {
+                    "kind": "enter",
+                    "label": "K0",
+                    "left_control": 0,
+                    "right_control": 1,
+                    "source": "@end",
+                    "target": "f:2"
+                  }
+                ],
+                [
+                  {
+                    "kind": "forward",
+                    "label": "",
+                    "left_control": 0,
+                    "right_control": 0,
+                    "source": "f:2",
+                    "target": "f:2"
+                  }
+                ]
+              ],
+              "states": [
+                1
+              ]
+            },
+            {
+              "first_bit": "0",
+              "groups": [
+                [
+                  "f:3",
+                  "@first",
+                  "@last"
+                ]
+              ],
+              "intermediate_controls": [],
+              "locations": [
+                [
+                  "e",
+                  "fresh",
+                  "f:3"
+                ],
+                [
+                  "f",
+                  "core",
+                  "@end"
+                ],
+                [
+                  "x",
+                  "core",
+                  "@end"
+                ]
+              ],
+              "next_bits": [
+                ""
+              ],
+              "old_end_colour": {
+                "end": true,
+                "forbidden": 0,
+                "next_bit": "",
+                "root": false,
+                "state": 1
+              },
+              "pieces": [
+                [
+                  {
+                    "kind": "exit",
+                    "label": "F",
+                    "left_control": 0,
+                    "right_control": 1,
+                    "source": "f:3",
+                    "target": "@end"
+                  }
+                ],
+                [
+                  {
+                    "kind": "core",
+                    "label": "",
+                    "left_control": 0,
+                    "right_control": 0,
+                    "source": "@end",
+                    "target": "@end"
+                  }
+                ]
+              ],
+              "states": [
+                0
+              ]
+            }
+          ],
+          "finishing_checks": [
+            {
+              "finish": false,
+              "reference": {
+                "labels": [
+                  3,
+                  2
+                ],
+                "word": "0"
+              }
+            },
+            {
+              "finish": false,
+              "reference": {
+                "labels": [
+                  3,
+                  2,
+                  1
+                ],
+                "word": "00"
+              }
+            },
+            {
+              "finish": true,
+              "reference": {
+                "labels": [
+                  3,
+                  2,
+                  1,
+                  0
+                ],
+                "word": "000"
+              }
+            }
+          ],
+          "id": "two-promotions-reversed-flag-positive",
+          "input_sha256": "080d6aa0fe13bae0b743140479c10fc014009f635333973fecd5b479a38ff60c",
+          "job": "strict",
+          "limits": {
+            "cpu_seconds": 55,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 60.0
+          },
+          "oracle_bound": 3,
+          "oracle_details": {
+            "": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0
+                ]
+              }
+            ],
+            "0": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0,
+                  1
+                ]
+              }
+            ],
+            "00": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0,
+                  1,
+                  2
+                ]
+              }
+            ],
+            "000": [
+              true,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0,
+                  1,
+                  2,
+                  3
+                ]
+              }
+            ]
+          },
+          "oracle_witnesses": [
+            "000"
+          ],
+          "oracle_words": [
+            "",
+            "0",
+            "00",
+            "000"
+          ],
+          "overlap": {
+            "base": "00",
+            "extension": "000",
+            "occurrence_starts": [
+              0,
+              1
+            ],
+            "overlap_length": 1
+          },
+          "parent_observed_wall_seconds": 0.10995842423290014,
+          "python_hash_seed": 2026092067,
+          "resources": {
+            "cpu_system_seconds": 0.00018899999999999993,
+            "cpu_user_seconds": 0.011645000000000003,
+            "peak_rss_kib": 27068,
+            "wall_seconds": 0.011860718950629234
+          },
+          "semantic_answer": true,
+          "semantic_minimum_promotions": 2,
+          "singleton_role_groups": [
+            [
+              [
+                "f:2",
+                "@first",
+                "@last"
+              ]
+            ],
+            [
+              [
+                "f:3",
+                "@first",
+                "@last"
+              ]
+            ]
+          ],
+          "status": "PASS"
+        },
+        {
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "60",
+            "--cpu-seconds",
+            "55",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "strict:diagonal-negative"
+          ],
+          "coverage_class": "complete_DAG_oracle_and_original_finishing_components",
+          "finishing_checks": [
+            {
+              "finish": false,
+              "reference": {
+                "labels": [
+                  3,
+                  2
+                ],
+                "word": "0"
+              }
+            }
+          ],
+          "id": "diagonal-negative",
+          "input_sha256": "a9a96136d980cd18b704baff120c03fdbd2858f7d6701edea2f416bf670d69e5",
+          "job": "strict",
+          "limits": {
+            "cpu_seconds": 55,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 60.0
+          },
+          "oracle_bound": 3,
+          "oracle_details": {
+            "": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0
+                ]
+              }
+            ],
+            "0": [
+              false,
+              {
+                "diagonal_cuts": [
+                  [
+                    1,
+                    1
+                  ]
+                ],
+                "empty_suffix_cuts": [
+                  [
+                    1,
+                    1
+                  ]
+                ],
+                "flagged_cuts": [
+                  [
+                    1,
+                    1
+                  ]
+                ],
+                "states": [
+                  0,
+                  1
+                ]
+              }
+            ],
+            "00": [
+              false,
+              {
+                "diagonal_cuts": [
+                  [
+                    1,
+                    1
+                  ]
+                ],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [
+                  [
+                    1,
+                    1
+                  ]
+                ],
+                "states": [
+                  0,
+                  1,
+                  2
+                ]
+              }
+            ],
+            "000": [
+              false,
+              {
+                "diagonal_cuts": [
+                  [
+                    1,
+                    1
+                  ]
+                ],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [
+                  [
+                    1,
+                    1
+                  ]
+                ],
+                "states": [
+                  0,
+                  1,
+                  2,
+                  3
+                ]
+              }
+            ]
+          },
+          "oracle_witnesses": [],
+          "oracle_words": [
+            "",
+            "0",
+            "00",
+            "000"
+          ],
+          "parent_observed_wall_seconds": 0.09961232775822282,
+          "python_hash_seed": 2026092067,
+          "resources": {
+            "cpu_system_seconds": 0.0,
+            "cpu_user_seconds": 0.0010720000000000035,
+            "peak_rss_kib": 27068,
+            "wall_seconds": 0.001080106943845749
+          },
+          "semantic_answer": false,
+          "status": "PASS"
+        },
+        {
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "60",
+            "--cpu-seconds",
+            "55",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "strict:empty-suffix-negative"
+          ],
+          "coverage_class": "complete_DAG_oracle_and_original_finishing_components",
+          "finishing_checks": [
+            {
+              "finish": false,
+              "reference": {
+                "labels": [
+                  3,
+                  2
+                ],
+                "word": "0"
+              }
+            },
+            {
+              "finish": false,
+              "reference": {
+                "labels": [
+                  3,
+                  2,
+                  1
+                ],
+                "word": "00"
+              }
+            }
+          ],
+          "id": "empty-suffix-negative",
+          "input_sha256": "a5bd83a0a61034015d77c2dccffb5f4d95db39cd5e7e2216961bb1e4739ee8dc",
+          "job": "strict",
+          "limits": {
+            "cpu_seconds": 55,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 60.0
+          },
+          "oracle_bound": 3,
+          "oracle_details": {
+            "": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0
+                ]
+              }
+            ],
+            "0": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0,
+                  1
+                ]
+              }
+            ],
+            "00": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0,
+                  1,
+                  2
+                ]
+              }
+            ],
+            "000": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [
+                  [
+                    0,
+                    3
+                  ]
+                ],
+                "flagged_cuts": [
+                  [
+                    0,
+                    3
+                  ]
+                ],
+                "states": [
+                  0,
+                  1,
+                  2,
+                  3
+                ]
+              }
+            ]
+          },
+          "oracle_witnesses": [],
+          "oracle_words": [
+            "",
+            "0",
+            "00",
+            "000"
+          ],
+          "parent_observed_wall_seconds": 0.09936205297708511,
+          "python_hash_seed": 2026092067,
+          "resources": {
+            "cpu_system_seconds": 0.0,
+            "cpu_user_seconds": 0.001583000000000001,
+            "peak_rss_kib": 27068,
+            "wall_seconds": 0.0015919390134513378
+          },
+          "semantic_answer": false,
+          "status": "PASS"
+        },
+        {
+          "backend_answer": {
+            "status": "YES",
+            "word": "",
+            "work": 0
+          },
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "60",
+            "--cpu-seconds",
+            "55",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "strict:empty-word-positive"
+          ],
+          "coverage": {
+            "automatic_decider_success_depths": [],
+            "compiled_depth_counts": {},
+            "interval_move_return_events": {},
+            "interval_path_results": {},
+            "max_compiled_depth": 0,
+            "profile_events": {
+              "decide": 1
+            }
+          },
+          "coverage_class": "automatic_python_decider_boundary_or_zero_promotion",
+          "id": "empty-word-positive",
+          "input_sha256": "7019098f4a3633d23bdb8b680398e6c6ad36107b7bba3405628ba30171f9d2c0",
+          "job": "strict",
+          "limits": {
+            "cpu_seconds": 55,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 60.0
+          },
+          "oracle_bound": 0,
+          "oracle_details": {
+            "": [
+              true,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0
+                ]
+              }
+            ]
+          },
+          "oracle_witnesses": [
+            ""
+          ],
+          "oracle_words": [
+            ""
+          ],
+          "parent_observed_wall_seconds": 0.09973172610625625,
+          "python_hash_seed": 2026092067,
+          "resources": {
+            "cpu_system_seconds": 9.300000000000107e-05,
+            "cpu_user_seconds": 0.0006469999999999948,
+            "peak_rss_kib": 27068,
+            "wall_seconds": 0.0007474287413060665
+          },
+          "semantic_answer": true,
+          "status": "PASS"
+        },
+        {
+          "backend_answer": {
+            "reason": "No safe nonempty initial reference",
+            "status": "NO",
+            "work": 0
+          },
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "60",
+            "--cpu-seconds",
+            "55",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "strict:empty-word-diagonal-negative"
+          ],
+          "coverage": {
+            "automatic_decider_success_depths": [],
+            "compiled_depth_counts": {},
+            "interval_move_return_events": {},
+            "interval_path_results": {},
+            "max_compiled_depth": 0,
+            "profile_events": {
+              "decide": 1
+            }
+          },
+          "coverage_class": "automatic_python_decider_boundary_or_zero_promotion",
+          "id": "empty-word-diagonal-negative",
+          "input_sha256": "3b012995080a3327c94fbaa513bf6097ddd701a1003aeb19c76f5e182ad53410",
+          "job": "strict",
+          "limits": {
+            "cpu_seconds": 55,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 60.0
+          },
+          "oracle_bound": 0,
+          "oracle_details": {
+            "": [
+              false,
+              {
+                "diagonal_cuts": [
+                  [
+                    0,
+                    0
+                  ]
+                ],
+                "empty_suffix_cuts": [
+                  [
+                    0,
+                    0
+                  ]
+                ],
+                "flagged_cuts": [
+                  [
+                    0,
+                    0
+                  ]
+                ],
+                "states": [
+                  0
+                ]
+              }
+            ]
+          },
+          "oracle_witnesses": [],
+          "oracle_words": [
+            ""
+          ],
+          "parent_observed_wall_seconds": 0.09977674717083573,
+          "python_hash_seed": 2026092067,
+          "resources": {
+            "cpu_system_seconds": 0.0001830000000000026,
+            "cpu_user_seconds": 0.0005500000000000019,
+            "peak_rss_kib": 27068,
+            "wall_seconds": 0.0007404549978673458
+          },
+          "semantic_answer": false,
+          "status": "PASS"
+        },
+        {
+          "backend_answer": {
+            "reason": "No safe nonempty initial reference",
+            "status": "NO",
+            "work": 0
+          },
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "60",
+            "--cpu-seconds",
+            "55",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "strict:empty-word-bad-negative"
+          ],
+          "coverage": {
+            "automatic_decider_success_depths": [],
+            "compiled_depth_counts": {},
+            "interval_move_return_events": {},
+            "interval_path_results": {},
+            "max_compiled_depth": 0,
+            "profile_events": {
+              "decide": 1
+            }
+          },
+          "coverage_class": "automatic_python_decider_boundary_or_zero_promotion",
+          "id": "empty-word-bad-negative",
+          "input_sha256": "01f576cd4c425c609cb09caf85b0516d54662e5fda28bfa3854bef051a768fee",
+          "job": "strict",
+          "limits": {
+            "cpu_seconds": 55,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 60.0
+          },
+          "oracle_bound": 0,
+          "oracle_details": {
+            "": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0
+                ]
+              }
+            ]
+          },
+          "oracle_witnesses": [],
+          "oracle_words": [
+            ""
+          ],
+          "parent_observed_wall_seconds": 0.09888518182560802,
+          "python_hash_seed": 2026092067,
+          "resources": {
+            "cpu_system_seconds": 8.99999999999998e-05,
+            "cpu_user_seconds": 0.0006290000000000046,
+            "peak_rss_kib": 27068,
+            "wall_seconds": 0.0007265061140060425
+          },
+          "semantic_answer": false,
+          "status": "PASS"
+        },
+        {
+          "backend_answer": {
+            "status": "YES",
+            "word": "0",
+            "work": 8
+          },
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "60",
+            "--cpu-seconds",
+            "55",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "strict:one-letter-positive"
+          ],
+          "coverage": {
+            "automatic_decider_success_depths": [
+              0
+            ],
+            "compiled_depth_counts": {},
+            "interval_move_return_events": {},
+            "interval_path_results": {},
+            "max_compiled_depth": 0,
+            "profile_events": {
+              "decide": 1,
+              "finish_queries": 2,
+              "iter_rank_queries": 2,
+              "model": 1
+            }
+          },
+          "coverage_class": "automatic_python_decider_boundary_or_zero_promotion",
+          "id": "one-letter-positive",
+          "input_sha256": "5fa1e52c07e967b7f8266306a1e9718dd949638ea9a36da959390767e8c238de",
+          "job": "strict",
+          "limits": {
+            "cpu_seconds": 55,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 60.0
+          },
+          "oracle_bound": 1,
+          "oracle_details": {
+            "": [
+              false,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0
+                ]
+              }
+            ],
+            "0": [
+              true,
+              {
+                "diagonal_cuts": [],
+                "empty_suffix_cuts": [],
+                "flagged_cuts": [],
+                "states": [
+                  0,
+                  1
+                ]
+              }
+            ]
+          },
+          "oracle_witnesses": [
+            "0"
+          ],
+          "oracle_words": [
+            "",
+            "0"
+          ],
+          "parent_observed_wall_seconds": 0.10556339798495173,
+          "python_hash_seed": 2026092067,
+          "resources": {
+            "cpu_system_seconds": 0.00017299999999999954,
+            "cpu_user_seconds": 0.0013839999999999963,
+            "peak_rss_kib": 27068,
+            "wall_seconds": 0.0015655597671866417
+          },
+          "semantic_answer": true,
+          "status": "PASS"
+        },
+        {
+          "all_first_returns": [
+            {
+              "labels": [
+                4,
+                3,
+                2,
+                1
+              ],
+              "word": "010"
+            },
+            {
+              "labels": [
+                4,
+                3,
+                2,
+                1,
+                0
+              ],
+              "word": "0110"
+            }
+          ],
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "60",
+            "--cpu-seconds",
+            "55",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "strict:shared-odd-length-positive"
+          ],
+          "completed_original_witnesses": [
+            "0010"
+          ],
+          "coverage": {
+            "automatic_decider_success_depths": [],
+            "compiled_depth_counts": {
+              "1": 4880
+            },
+            "interval_move_return_events": {
+              "2:empty": 54352,
+              "2:nonempty": 4160
+            },
+            "interval_path_results": {
+              "2:no": 9520,
+              "2:yes": 80
+            },
+            "max_compiled_depth": 1,
+            "profile_events": {
+              "compile_diagram": 5280,
+              "model": 4880,
+              "reconstruct_reference": 1
+            }
+          },
+          "coverage_class": "complete_S_only_satisfiable_shape_compiler_union",
+          "id": "shared-odd-length-positive",
+          "independent_singles": [
+            true,
+            true
+          ],
+          "independent_truth": {
+            "010": true,
+            "0110": false
+          },
+          "input_sha256": "99d5181c8ad04cf48aa9489a41fa75a685e054302de9d3b187bc8e9fac34c2a7",
+          "job": "strict",
+          "limits": {
+            "cpu_seconds": 55,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 60.0
+          },
+          "oracle_bound": 4,
+          "original_unpruned_enumerator_exhausted": false,
+          "parent_observed_wall_seconds": 6.818287023808807,
+          "projected_union_status": "EXHAUSTED",
+          "projection_proof": "All omitted role/order/portal/control classes have an unsatisfiable original compiled clause.",
+          "python_hash_seed": 2026092067,
+          "reconstructed_words": [
+            "010"
+          ],
+          "resources": {
+            "cpu_system_seconds": 0.0,
+            "cpu_user_seconds": 6.697515,
+            "peak_rss_kib": 27068,
+            "wall_seconds": 6.698575878050178
+          },
+          "satisfied_interval_observer_counts": {
+            "2": 1
+          },
+          "satisfied_mark_group_counts": {
+            "2": 1
+          },
+          "semantic_answer": true,
+          "split_generator_mutant_answer": true,
+          "status": "PASS",
+          "union_counts": {
+            "candidate_diagrams": 5280,
+            "compiled_clauses": 4880,
+            "rejected_diagrams": 400,
+            "satisfied_clauses": 1
+          }
+        },
+        {
+          "all_first_returns": [
+            {
+              "labels": [
+                4,
+                3,
+                2,
+                1
+              ],
+              "word": "010"
+            },
+            {
+              "labels": [
+                4,
+                3,
+                2,
+                1,
+                0
+              ],
+              "word": "0110"
+            }
+          ],
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "60",
+            "--cpu-seconds",
+            "55",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "strict:shared-odd-length-conflict"
+          ],
+          "completed_original_witnesses": [],
+          "coverage": {
+            "automatic_decider_success_depths": [],
+            "compiled_depth_counts": {
+              "1": 6480
+            },
+            "interval_move_return_events": {
+              "2:empty": 77664,
+              "2:nonempty": 7040
+            },
+            "interval_path_results": {
+              "2:no": 12704,
+              "2:yes": 96
+            },
+            "max_compiled_depth": 1,
+            "profile_events": {
+              "compile_diagram": 7040,
+              "model": 6480
+            }
+          },
+          "coverage_class": "complete_S_only_satisfiable_shape_compiler_union",
+          "id": "shared-odd-length-conflict",
+          "independent_singles": [
+            true,
+            true
+          ],
+          "independent_truth": {
+            "010": false,
+            "0110": false
+          },
+          "input_sha256": "c1ce1a0ee079f585fcb13b444d86b93f95ae3336b7f2631b6fd2a4c233310b24",
+          "job": "strict",
+          "limits": {
+            "cpu_seconds": 55,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 60.0
+          },
+          "oracle_bound": 4,
+          "original_unpruned_enumerator_exhausted": false,
+          "parent_observed_wall_seconds": 9.321220535319299,
+          "projected_union_status": "EXHAUSTED",
+          "projection_proof": "All omitted role/order/portal/control classes have an unsatisfiable original compiled clause.",
+          "python_hash_seed": 2026092067,
+          "reconstructed_words": [],
+          "resources": {
+            "cpu_system_seconds": 0.010803999999999998,
+            "cpu_user_seconds": 9.166152,
+            "peak_rss_kib": 27068,
+            "wall_seconds": 9.199307806324214
+          },
+          "satisfied_interval_observer_counts": {},
+          "satisfied_mark_group_counts": {},
+          "semantic_answer": false,
+          "split_generator_mutant_answer": true,
+          "status": "PASS",
+          "union_counts": {
+            "candidate_diagrams": 7040,
+            "compiled_clauses": 6480,
+            "rejected_diagrams": 560,
+            "satisfied_clauses": 0
+          }
+        },
+        {
+          "all_first_returns": [
+            {
+              "labels": [
+                3,
+                2,
+                1,
+                0
+              ],
+              "word": "000"
+            }
+          ],
+          "assignment": {
+            "e": 3,
+            "u": 3
+          },
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "60",
+            "--cpu-seconds",
+            "55",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "strict:coincident-first-last-wrap-positive"
+          ],
+          "coverage": {
+            "automatic_decider_success_depths": [],
+            "compiled_depth_counts": {
+              "1": 1
+            },
+            "interval_move_return_events": {},
+            "interval_path_results": {},
+            "max_compiled_depth": 1,
+            "profile_events": {
+              "compile_diagram": 1,
+              "extract_diagram": 1,
+              "model": 2,
+              "reconstruct_reference": 1
+            }
+          },
+          "coverage_class": "literal_coincidence_oracle_and_compiler_certificate",
+          "diagram": {
+            "first_bit": "0",
+            "groups": [
+              [
+                "f:3",
+                "@first",
+                "@last"
+              ]
+            ],
+            "intermediate_controls": [],
+            "locations": [
+              [
+                "e",
+                "fresh",
+                "f:3"
+              ],
+              [
+                "u",
+                "fresh",
+                "f:3"
+              ]
+            ],
+            "next_bits": [
+              ""
+            ],
+            "old_end_colour": {
+              "end": true,
+              "forbidden": 0,
+              "next_bit": "",
+              "root": false,
+              "state": 1
+            },
+            "pieces": [
+              [
+                {
+                  "kind": "forward",
+                  "label": "",
+                  "left_control": 0,
+                  "right_control": 0,
+                  "source": "f:3",
+                  "target": "f:3"
+                }
+              ],
+              [
+                {
+                  "kind": "wrap",
+                  "label": "K0",
+                  "left_control": 0,
+                  "right_control": 1,
+                  "source": "f:3",
+                  "target": "f:3"
+                }
+              ]
+            ],
+            "states": [
+              0
+            ]
+          },
+          "full_union_exhausted": false,
+          "id": "coincident-first-last-wrap-positive",
+          "input_sha256": "00cf076c93709a7a08c9d21fa32d8c52d8b14c96a9b7ac1e387cdc95b06b666e",
+          "job": "strict",
+          "limits": {
+            "cpu_seconds": 55,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 60.0
+          },
+          "oracle_bound": 3,
+          "parent_observed_wall_seconds": 0.12280086474493146,
+          "python_hash_seed": 2026092067,
+          "reconstructed": {
+            "labels": [
+              3,
+              2,
+              1,
+              0
+            ],
+            "word": "000"
+          },
+          "resources": {
+            "cpu_system_seconds": 0.0,
+            "cpu_user_seconds": 0.003925999999999999,
+            "peak_rss_kib": 27068,
+            "wall_seconds": 0.003937215078622103
+          },
+          "semantic_answer": true,
+          "status": "PASS"
+        },
+        {
+          "all_first_returns": [
+            {
+              "labels": [
+                3,
+                2,
+                1,
+                0
+              ],
+              "word": "000"
+            }
+          ],
+          "command": [
+            "<python-3.13.14>",
+            "<fresh-checkout>/experiments/issue67_independent_fixtures.py",
+            "--fixtures",
+            "<fresh-checkout>/tests/fixtures/issue67-independent/cases.json",
+            "--wall-seconds",
+            "60",
+            "--cpu-seconds",
+            "55",
+            "--memory-mib",
+            "1024",
+            "--max-work",
+            "100000",
+            "--job",
+            "strict:coincident-end-disequality-negative"
+          ],
+          "coverage_class": "literal_coincidence_oracle_and_compiler_certificate",
+          "full_union_exhausted": false,
+          "id": "coincident-end-disequality-negative",
+          "input_sha256": "db50dcfc2766cc72325bebe1e992c1444dd66a770d4402202956ec127e13624e",
+          "job": "strict",
+          "limits": {
+            "cpu_seconds": 55,
+            "max_work_for_stress": 100000,
+            "memory_mib": 1024,
+            "wall_seconds": 60.0
+          },
+          "oracle_bound": 3,
+          "parent_observed_wall_seconds": 0.12379674008116126,
+          "python_hash_seed": 2026092067,
+          "resources": {
+            "cpu_system_seconds": 0.0,
+            "cpu_user_seconds": 0.0012029999999999957,
+            "peak_rss_kib": 27068,
+            "wall_seconds": 0.001212945207953453
+          },
+          "semantic_answer": false,
+          "status": "PASS"
+        }
+      ],
+      "schema": 1,
+      "seed": 2026092067,
+      "snapshot_kind": "full-checkout",
+      "source_files": {
+        "border_lab.py": {
+          "git_blob": "1144ae52379e0417772e79582269cacd91c5bc17",
+          "sha256": "61d42cc1c99f2fdbc50691ae427a77c70b4ec56021d2837187dd2eb6fb51925d"
+        },
+        "rank_preimage.py": {
+          "git_blob": "852fa7d7ba199b9d91ab24a8f7b5abf29ed8819b",
+          "sha256": "7aebb043b557c0ab2db1252c3482d83409c3245d7f6589b627ab12cb44512061"
+        },
+        "rank_preimage_core.py": {
+          "git_blob": "fe297ab4f2252468b1734f6885765cde0d2cecb9",
+          "sha256": "58d0895bbad23853b504999b4cb069e22f47e700af3df68168bdeba363156ab2"
+        },
+        "rank_query_graphs.py": {
+          "git_blob": "6fcc612e47ef65edbb7ec9ff973a528a422da8e4",
+          "sha256": "14981591f4ca734e422e105d5bbf17be576c5af67cc07a4239d10da834470f03"
+        },
+        "rank_query_prefix.py": {
+          "git_blob": "135d3cb960d07dfddefd74dd255bba289a08af1b",
+          "sha256": "d7575eb9b0a1fb923df1ab248261ada138415aab78a9d4171f3e49c399d426cf"
+        }
+      },
+      "source_revision": "19b06d4fed9da635d9b911f0e908d04e4fc4b099",
+      "status": "PASS",
+      "statuses": {
+        "PASS": 13
+      }
+    }
+  },
+  "remaining": [
+    "Automatic successful depth-two terminal decision",
+    "Native Lean terminal and original-expression C081 coverage",
+    "Original unpruned compiler-union completion"
+  ],
+  "schema": 1,
+  "scope": "Fresh full-checkout Python replay of the unchanged released #67 contribution; no native Lean or full-expression C081 coverage claimed.",
+  "source_revision": "19b06d4fed9da635d9b911f0e908d04e4fc4b099",
+  "status": "PARTIAL_ACCEPTANCE"
+}

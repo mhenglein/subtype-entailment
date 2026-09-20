@@ -31,7 +31,7 @@ on every input or a theorem for top/other signatures.
 
 | Order | Remaining deliverable | Acceptance | Issue |
 |---|---|---|---|
-| 1 | Final mathematical and contribution review | Resolve substantive manuscript findings; exact source/theorem/domain attribution; checked examples and maps; clean rendered paper | [#64](https://github.com/mhenglein/subtail/issues/64) |
+| 1 | Final mathematical and contribution review — completed at the recorded checkpoint | Exact source/theorem/domain attribution, examples/maps and all 28 PDF pages checked; bounded independent review accepted | [#64](https://github.com/mhenglein/subtail/issues/64) |
 | 2 | Reproducible release | Clean-environment proof/CLI/experiment receipt; accurate documentation; finalized metadata and immutable release checkpoint | [#65](https://github.com/mhenglein/subtail/issues/65) |
 
 The proof milestone is complete. A paper/artifact release is done when both
@@ -41,6 +41,15 @@ Marcus has explicitly deferred licensing and requested author/affiliation
 placeholders. Work on reproducibility can proceed; final metadata and a licensed
 public release wait for those choices. Do not ask again merely to clean up issues.
 No external human referee is automatically commissioned.
+
+September 20 technical checkpoint: the [manuscript acceptance record](../notes/2026-09-20-publication-acceptance.md)
+separates source/literature, mathematical and visual reviews. The
+[fresh project-cache reproduction](../notes/2026-09-20-clean-reproduction.md)
+passed 18 selected checks at its recorded revision, including the optional
+modules and actual CLI boundaries. The technical part of #65 has evidence;
+the metadata and final release checkpoint remain pending. Current issue
+dispositions and contributor ownership are in [STATE](../STATE.md#active-work-and-file-ownership)
+and the issue comments; this record grants no overlapping write scope.
 
 ## Continue the broader research programme
 
@@ -54,6 +63,14 @@ No external human referee is automatically commissioned.
 | New signature | Explicit top | Complete reviewed theorem for a precise extension, decision or undecidability; a study alone is insufficient | [#71](https://github.com/mhenglein/subtail/issues/71) |
 | Other consequences | Arity, constructor labels, variance and automata results | One exact reviewed transfer/result at a time; separate semantic obligations | [#72](https://github.com/mhenglein/subtail/issues/72) |
 | Optional converse certification | Formal C030 budget preservation | Connect the exact ordinary budget statement to checked declarations and differential evidence | [#73](https://github.com/mhenglein/subtail/issues/73) |
+
+Current practical evidence: #66's separate native diagnostic identifies transition
+construction and dense flag construction as capped phases; its n=6 complete
+answer is still UNKNOWN. [E061](../experiments/README.md#e061) closes the scoped
+independent Python fixture/review/replay portion of #67. Automatic successful
+native depth-two and original-expression coverage remain open; six stress
+calls stay UNKNOWN. Proposed extension and quantitative contributions in
+[STATE](../STATE.md#active-work-and-file-ownership) await their own acceptance.
 
 These issues preserve the wider requested programme. They are separate from
 release gates and from the completed proof of Problem 1.7. A restricted result

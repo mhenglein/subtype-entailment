@@ -2,6 +2,17 @@
 
 This table specifies claims to compare, not novelty scores. A theorem not found in this bounded search is **not** thereby absent from the literature. Source keys resolve in [bibliography.md](bibliography.md); scientific status resolves in the current [claims ledger](../../research/claims.md). The [agent handoff](agent-handoff.md) points to current authority; historical pauses and task lists are not current instructions. The [dated detailed review](review-2026-09-19.md) supplies source-to-obligation reading routes.
 
+**September 20 acceptance pass.** The [publication review](../2026-09-20-publication-acceptance.md)
+records fresh primary-source locators and bounded citation/search coverage.
+The paper now explicitly credits NP03 Corollaries 1 and 3: unary decidability
+and reductions between finite, regular and arbitrary tree decision problems.
+Those reductions do not assert identical answers for the same unmodified
+input in every domain. Henglein–Rehof's structural and nonstructural results
+remain the leading historical comparison. The author-hosted SANPT manuscript
+title and source status are corrected; the official SCH21 withdrawal is
+reconfirmed. No stronger full-input complexity, non-subsumption, or priority
+claim is established by this review.
+
 **September 20 refinement.** The C081 fragment whose premises and query contain
 no bottom constants reduces in polynomial time to NP99's restricted
 arbitrary-tree problem: name products, add `omega=omega×omega`, and guard each

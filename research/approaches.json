@@ -178,10 +178,10 @@
       "title": "Build the exact top-free constraint-to-automata pipeline",
       "status": "active",
       "outcome": "supported",
-      "owner": "publication-sequence-20260920 (Astra, parent integrator)",
+      "owner": "Issue-scoped contributors in STATE.md/#37; publication parent scope complete",
       "updated": "2026-09-20",
       "summary": "C081 has a proved cached raw summary with literal whole-Instance equality and unconditional endpoint correctness. E060 resolves the four/five-variable empty raw stress probes, retains 38/38 fixed and 19/19 deeper completions, and exactly checks 83 small query instances. Six-variable raw stress remains UNKNOWN; state/flag counts and signature/quantitative boundaries are unchanged.",
-      "next_step": "ACTIVE parent #64 manuscript/contribution audit and #65 clean reproduction on codex/publication-audit-20260920. #67 fixtures and #66 profiling are explicitly handed to disjoint contributors; other announced scopes and exact ownership agreements are in STATE.md/#37. The parent retains shared-record integration. Licensing/authorship remain deferred; ownership does not establish a new mathematical result.",
+      "next_step": "Parent #64 review and #65 technical reproduction are complete with pinned receipts; license/author/final release remain deferred. #66 has native diagnostic evidence but n=6 stays UNKNOWN; its contributor must propose a measured invariant/module. E061 reviewed/replayed the partial #67 fixtures; automatic native depth-two remains open and needs a fresh claim. Other proposed bounds/extensions await independent review. Read STATE.md and the latest child/#37 claims before writing; no future parent implementation or overlapping integration lease is implied.",
       "record": "research/approaches/A010.md",
       "evidence": [
         "notes/2026-09-04-bridge-foundation.md",
@@ -278,7 +278,13 @@
         "notes/2026-09-20-repository-reconciliation.md",
         "results/repository-reconciliation.json",
         "notes/2026-09-19-end-to-end-semantic-audit.md",
-        "notes/2026-09-19-finite-expression-normalization-advisory.md"
+        "notes/2026-09-19-finite-expression-normalization-advisory.md",
+        "notes/2026-09-20-publication-acceptance.md",
+        "results/publication-acceptance.json",
+        "notes/2026-09-20-clean-reproduction.md",
+        "results/clean-reproduction.json",
+        "scripts/reproduce_release.py",
+        "results/issue66-execution-20260920.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/63"
     },
@@ -485,12 +491,12 @@
     {
       "id": "A017",
       "title": "Bound essential repeated blocks",
-      "status": "tried",
+      "status": "active",
       "outcome": "supported",
-      "owner": null,
+      "owner": "smaller-compiler-20260920-astra, compiler-only #69 scope; other contributions released for review",
       "updated": "2026-09-20",
       "summary": "C081 qualitative decision and C082 corrected terminal bound are checked. The original concrete U estimate is refuted; original F alone and an existential smaller compiler remain open. Historical counterexample evidence is reconciled. The ordinary input resource account and C083 NL lower bound retain their exact scope.",
-      "next_step": "Unassigned #69 retains the two exact C080 questions; #70 targets tighter exact-semantic complexity and #67 terminal/shared-generator stress. Release requirements are separate in #63.",
+      "next_step": "The #69 compiler contributor retains its exact new-path scope. F-only six-path handoff is released at 6aa7047 and requires independent statement/dependency review before promotion. #70 ordinary hardness transfer also awaits review. E061 covers restricted Python terminal/shared-generator fixtures; automatic native depth-two remains open. Read STATE.md/#37 and child issue handoffs before writing.",
       "record": "research/approaches/A017.md",
       "evidence": [
         "notes/2026-09-04-minimal-witness-structure.md",
@@ -612,7 +618,13 @@
         "results/repository-reconciliation.json",
         "notes/2026-09-19-rank-query-weight-counterexample.md",
         "experiments/check_rank_query_weight_counterexample.py",
-        "results/rank-query-weight-counterexample.json"
+        "results/rank-query-weight-counterexample.json",
+        "experiments/issue67_independent_fixtures.py",
+        "tests/fixtures/issue67-independent/cases.json",
+        "notes/2026-09-20-issue67-independent-fixtures.md",
+        "notes/2026-09-20-issue67-replay.md",
+        "results/issue67-independent/receipt.json",
+        "results/issue67-independent/full-checkout-replay.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/69"
     },
@@ -621,10 +633,10 @@
       "title": "Maintain the Lean core and verify critical obligations",
       "status": "active",
       "outcome": "supported",
-      "owner": "publication-sequence-20260920 (Astra, parent integrator)",
+      "owner": "Issue-scoped contributors in STATE.md/#37; publication parent scope complete",
       "updated": "2026-09-20",
       "summary": "C081 has a proved cached raw summary with literal whole-Instance equality and unconditional endpoint correctness. E060 resolves the four/five-variable empty raw stress probes, retains 38/38 fixed and 19/19 deeper completions, and exactly checks 83 small query instances. Six-variable raw stress remains UNKNOWN; state/flag counts and signature/quantitative boundaries are unchanged.",
-      "next_step": "ACTIVE parent #64 manuscript/contribution audit and #65 clean reproduction on codex/publication-audit-20260920. #67 fixtures and #66 profiling are explicitly handed to disjoint contributors; other announced scopes and exact ownership agreements are in STATE.md/#37. The parent retains shared-record integration. Licensing/authorship remain deferred; ownership does not establish a new mathematical result.",
+      "next_step": "Parent #64 review and #65 technical reproduction are complete with pinned receipts; license/author/final release remain deferred. #66 has native diagnostic evidence but n=6 stays UNKNOWN; its contributor must propose a measured invariant/module. E061 reviewed/replayed the partial #67 fixtures; automatic native depth-two remains open and needs a fresh claim. Other proposed bounds/extensions await independent review. Read STATE.md and the latest child/#37 claims before writing; no future parent implementation or overlapping integration lease is implied.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
@@ -783,7 +795,19 @@
         "notes/2026-09-20-repository-reconciliation.md",
         "results/repository-reconciliation.json",
         "notes/2026-09-19-end-to-end-semantic-audit.md",
-        "notes/2026-09-19-finite-expression-normalization-advisory.md"
+        "notes/2026-09-19-finite-expression-normalization-advisory.md",
+        "notes/2026-09-20-publication-acceptance.md",
+        "results/publication-acceptance.json",
+        "notes/2026-09-20-clean-reproduction.md",
+        "results/clean-reproduction.json",
+        "scripts/reproduce_release.py",
+        "results/issue66-execution-20260920.json",
+        "experiments/issue67_independent_fixtures.py",
+        "tests/fixtures/issue67-independent/cases.json",
+        "notes/2026-09-20-issue67-independent-fixtures.md",
+        "notes/2026-09-20-issue67-replay.md",
+        "results/issue67-independent/receipt.json",
+        "results/issue67-independent/full-checkout-replay.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/63"
     }

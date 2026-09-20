@@ -35,7 +35,7 @@ regular countermodels and the constant-free PSPACE transfer. Source pins and
 review records are kept in the artifact guide, outside the manuscript.
 Section 13 now gives the full finite-tree proof, including the cycle test,
 finite canonical replacements and worked differences between the two domains.
-[Current revision and review scope](notes/2026-09-20-finite-paper-readback.md).
+[Current manuscript acceptance and review scope](notes/2026-09-20-publication-acceptance.md).
 
 **Small example.** From `x <= y`, covariance gives
 `x × bottom <= y × bottom`. The reverse query fails: set `x = bottom` and
@@ -168,10 +168,19 @@ Its [verification record](notes/2026-09-19-entailment-decision.md) names exact
 builds, kernel replay, semantic reviews and native checks. Use Lean **4.33.1**,
 selected by `lean/lean-toolchain`, and Python 3.9 or newer for the core checks.
 
+For the logged clean-build procedure, use pinned Python **3.13.14** and a
+fresh clone with no `lean/.lake`, then run `python3 scripts/reproduce_release.py`.
+The [clean reproduction record](notes/2026-09-20-clean-reproduction.md) gives
+the exact checked revision and 18-step receipt, including optional modules,
+kernel/runtime audits, CLI countermodels and finite/arbitrary/timeout cases.
+Installed tools are reused; this does not claim a fresh OS installation.
+Individual checks can also be run as follows:
+
 ```sh
 git clone https://github.com/mhenglein/subtail.git
 cd subtail
 python3 scripts/check_lean.py
+(cd lean && lake build +Subtail.ExpressionNormalizationAudit)
 python3 scripts/check_entailment_decision.py
 python3 experiments/check_entailment_decision.py --phase smoke --strict
 (cd lean && lake build +Subtail.FiniteTreeDecision && lake env lean --run ../paper/example.lean)

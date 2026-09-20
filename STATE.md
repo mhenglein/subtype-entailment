@@ -3,45 +3,86 @@
 ## Active work and file ownership
 
 **Updated 20 September 2026.** Session `publication-sequence-20260920`
-is working on **[#64: manuscript/contribution audit](https://github.com/mhenglein/subtail/issues/64)**
-and **[#65: clean reproduction](https://github.com/mhenglein/subtail/issues/65)**.
-The owner-authorized integrator is Astra in Marcus's current publication task.
-Base: `b63a90443c3b71d086a340785e83751c441190fc`; working branch:
-[`codex/publication-audit-20260920`](https://github.com/mhenglein/subtail/tree/codex/publication-audit-20260920).
-Read the latest [scope and handoff comments in #37](https://github.com/mhenglein/subtail/issues/37)
-before claiming an overlapping task. The registry marks A010/A018 active for
-this bounded work; their established mathematical results are unchanged.
+completed **[#64: manuscript/contribution audit](https://github.com/mhenglein/subtail/issues/64)**
+and the technical reproduction portion of
+**[#65](https://github.com/mhenglein/subtail/issues/65)**. It also executed the
+#66 contributor's pinned diagnostic in a separate worker checkout.
+It also reviewed and replayed the released partial #67 fixtures as E061.
+The [publication acceptance](notes/2026-09-20-publication-acceptance.md),
+[clean reproduction](notes/2026-09-20-clean-reproduction.md) and
+[#66 execution receipt](results/issue66-execution-20260920.json) state exact
+revisions, results and limits. The [E061 review/replay](notes/2026-09-20-issue67-replay.md)
+keeps native and automatic depth-two coverage open.
 
-| Role / task | Owned writes | Boundary |
+Astra was the owner-authorized parent integrator. Its source branch is
+[`codex/publication-audit-20260920`](https://github.com/mhenglein/subtail/tree/codex/publication-audit-20260920).
+The final publication readback in [#37](https://github.com/mhenglein/subtail/issues/37)
+releases the parent scope below; no future parent implementation is reserved.
+Read that issue and each child issue's latest handoff before touching an
+owned path. A010/A017/A018 remain active for the disjoint contributor work below,
+not because the completed publication agent is working in the background.
+Their established mathematical results are unchanged.
+
+| Completed parent scope | Paths covered | Disposition |
 |---|---|---|
-| Parent author/integrator: #64 | `paper/**`, `output/pdf/subtail-paper.*`, `output/pdf/subtail-paper-manifest.json`, `notes/prior-work/novelty-matrix.md`, new `notes/2026-09-20-publication-acceptance.md`, `results/publication-acceptance.json` | Review and exposition; no Lean proof-source changes in this scope. |
-| Parent reproduction operator: #65 | New `scripts/reproduce_release.py`, `notes/2026-09-20-clean-reproduction.md`, `results/clean-reproduction.json`; separate ignored scratch/build outputs | Fresh project cache; reuse installed pinned tools; preserve failed attempts. No separate reproduction agent was launched. |
-| `publication_proof_review` | None: independent read-only review | Reads the manuscript and mapped definitions; sends findings to #64 and parent; does not edit the proof or paper. |
-| Parent integration only | `README.md`, `CONTRIBUTING.md`, this file, `research/COMPLETION.md`, claim/approach ledgers, generated indexes, A010/A017/A018 histories, `experiments/README.md` when needed | One writer for these shared paths. Coordinate changes in #37 first. |
+| #64 author/integrator | `paper/**`, `output/pdf/subtail-paper.*`, manifest, novelty matrix, publication acceptance note/result | Bounded mathematical/source/visual review complete; two clarity edits checked. No Lean proof-source change. |
+| #65 reproduction operator | `scripts/reproduce_release.py`, clean reproduction note/result; isolated ignored outputs | 18 fresh-cache checks passed. Metadata/release tag still deferred. No separate reproduction agent was launched. |
+| `publication_proof_review` | No write paths | Independent manuscript and E061 read-only reviews complete within their exact recorded scopes. |
+| #66 execution support | New `results/issue66-execution-20260920.json`; isolated ignored outputs | Run complete and scope released in #66. Native six-variable answer remains UNKNOWN. |
+| #67 partial contribution | Four released fixture/note/receipt paths, new full-checkout receipt/readback, E061 registry | Review accepted the restricted argument; 13/13 strict cases replayed under both seeds. Six diagnostics remain UNKNOWN; native automatic depth-two remains open. Final readback releases parent ownership. |
+| Shared-record integration | README, CONTRIBUTING, STATE, completion map, approach records/generated tracker | Final publication readback releases this lease. A new integrator must claim its own scope; no contributor owns these paths by default. |
 
 **Agreed contributor scopes.** These are recorded ownership and handoff
 agreements, not a claim that a worker is running in the background. Follow the
 linked issue for its latest status, exact new paths, pushed head and release.
-The parent has handed off #66/#67 and will not implement competing work.
+The parent completed #66 execution support and integrated #67's released
+partial evidence. It reserves no competing implementation or follow-up task.
 
 | Issue / bounded task | Contributor session | Agreed write boundary |
 |---|---|---|
-| [#67 terminal/shared-generator fixtures](https://github.com/mhenglein/subtail/issues/67#issuecomment-5750364458) | `issue67-independent-fixtures-20260920` | New independent fixture harness, JSON fixtures, dated note and results under the exact issue paths. Existing interfaces are read-only. |
+| [#67 terminal/shared-generator fixtures](https://github.com/mhenglein/subtail/issues/67#issuecomment-5750364458) | `issue67-independent-fixtures-20260920` | Author released all four paths at `da74a43`; E061 independently reviewed/replayed the partial contribution. The final #37/#67 readback releases parent integration scope; unfinished native coverage needs a new claim. |
 | [#66 raw n=6 profiling](https://github.com/mhenglein/subtail/issues/66#issuecomment-5750364553) | `raw-summary-scope-readback-20260920` | New `experiments/profile_raw_summary_66.py`, dated `raw-summary-66` note and result. A refinement module requires a further exact invariant/path agreement. |
 | [#68 countermodel producer](https://github.com/mhenglein/subtail/issues/68#issuecomment-5750364625) | `regular-producer-68-20260920` | Six new producer/module/audit/note/checker/result paths from the issue, plus its isolated new CI workflow. Existing certificate interfaces are read-only. |
-| [#70 Henglein–Rehof transfer](https://github.com/mhenglein/subtail/issues/70#issuecomment-5750364870) | `hr-topfree-transfer-70-20260920` | Three new `hr-topfree-transfer-70` note/checker/result paths. Paper and novelty matrix remain parent-owned. |
-| [#71 explicit-top projection](https://github.com/mhenglein/subtail/issues/71#issuecomment-5750364966) | `explicit-top-dual-projection-20260920` | New dual-projection note/checker/result, optional isolated Lean module and CI. No shared source changes. |
-| [#72 ternary constructor](https://github.com/mhenglein/subtail/issues/72#issuecomment-5750364712) | `ternary-transfer-20260920` | Only the six new ternary paths in its scope claim, including optional `TernaryTransfer.lean`. |
-| [#72 standalone first-return theorem](https://github.com/mhenglein/subtail/issues/72#issuecomment-5750364712) | `standalone-first-return-20260920-astra` | Only four new `standalone-first-return-astra` note/review/checker/result paths. |
-| [#74 function variance, child of #72](https://github.com/mhenglein/subtail/issues/74#issuecomment-5750364796) | `function-only-transfer-20260920` | Only three new function-only note/checker/result paths. Covariant core and other signature targets are read-only. |
+| [#69 original shortest-witness F](https://github.com/mhenglein/subtail/issues/69#issuecomment-5750441287) | `f-only-astra-20260920` | Author released six new paths at `6aa7047`. Reported checked F theorem consumes compiler pin `acf0524`; independent statement/dependency review is pending. [Exact handoff](https://github.com/mhenglein/subtail/issues/69#issuecomment-5750572384). No shared-ledger promotion. |
+| [#69 smaller existential compiler](https://github.com/mhenglein/subtail/issues/69#issuecomment-5750441287) | `smaller-compiler-20260920-astra` | New smaller-compiler note/checker/result, additive `SmallerCompilerAstra.lean` and isolated CI. Original F stays with the other contributor. |
+| [#70 Henglein–Rehof transfer](https://github.com/mhenglein/subtail/issues/70#issuecomment-5750364870) | `hr-topfree-transfer-70-20260920` | Author released the three new paths at `371b97c`; proposed ordinary hardness proof awaits independent review. Paper/novelty edits are excluded until acceptance. |
+| [#71 explicit-top projection](https://github.com/mhenglein/subtail/issues/71#issuecomment-5750364966) | `explicit-top-dual-projection-20260920` | Author released all five new paths at `0eff481`; proposed full-signature result and selective checks await independent mathematical review. No promotion or shared source change. |
+| [#72 ternary constructor](https://github.com/mhenglein/subtail/issues/72#issuecomment-5750364712) | `ternary-transfer-20260920` | Author released five actual new files and the unused optional Lean reservation at `3fca2e8`. Ordinary transfer awaits independent review; no established-status promotion. |
+| [#72 standalone first-return theorem](https://github.com/mhenglein/subtail/issues/72#issuecomment-5750364712) | `standalone-first-return-20260920-astra` | Author released four new paths at `910e307` (draft #77). Generalized ordinary theorem awaits independent review; no new Lean or priority claim. |
+| [#74 function variance, child of #72](https://github.com/mhenglein/subtail/issues/74#issuecomment-5750364796) | `function-only-transfer-20260920` | Author released all three paths at `4ed2fb6` (draft #75); ordinary results await independent review. General function-only decidability remains open. |
 
-New independent reviews requested by these contributors remain pending; none
-is implied by an ownership agreement. Shared ledgers, paper, imports, existing
-CI and toolchain stay with the integrator. Other subtasks are not reserved by
-these bounded claims. Licensing and author identities remain deferred.
+Independent reviews requested by these contributors remain pending unless
+an exact issue readback says otherwise; an ownership agreement is not a review.
+Shared ledgers, paper, imports, existing CI and toolchain require a separately
+claimed integration scope. Other subtasks are not reserved by these bounded
+claims. Licensing and author identities remain deferred. A timestamp alone
+never releases a contributor's paths; only its explicit handoff does.
 
-The parent will update this section and release its paths explicitly when the
-scope changes, completes or stops. An old timestamp alone is not a release.
+## September 20: manuscript acceptance and clean reproduction
+
+The existing C081/C085 ordinary arguments received a separate read-only review
+with no substantive gap found. The two requested clarifications distinguish
+fresh state labels from matching cursors and mixed-edge growth return paths.
+The literature pass credits HR97/HR98 and NP03's unary/domain-reduction results
+with exact semantic limits. All 28 rendered pages were checked. This is agent
+acceptance of the supplied draft, not venue acceptance or publication priority.
+
+A fresh project-cache build at `ce48c8e` passed 18 selected release steps,
+including kernel/runtime audits, C030, finite/certificate boundaries, actual
+CLI countermodels and intentional UNKNOWN cases. The installed pinned tools
+were reused. An initial omitted optional build target is preserved as a failed
+harness attempt. No proof source, old receipt, license or author identity changed.
+#65 remains open for deferred metadata and a final release checkpoint.
+
+The separate #66 diagnostic at `f8180b1` passed all eight n=3 modes. At n=6,
+transition construction and dense flags hit their 20-second limits; the complete
+cached raw call remains UNKNOWN. Decode/encode costs now have diagnostic
+measurements, but actual CPU seconds and peak RSS are unavailable. No optimization
+or matched speedup is claimed. The contributor owns the next measured design. E061 separately adds reviewed
+independent terminal/shared-generator fixtures: 13/13 strict cases under both
+hash seeds, complete restricted S-only unions and two certificate-directed
+promotions. Six automatic/unpruned stress calls remain UNKNOWN. Native Lean
+and original-expression coverage of this family remain NOT RUN; #67 stays open.
 
 ## September 20: PR reconciliation and a current completion checklist
 

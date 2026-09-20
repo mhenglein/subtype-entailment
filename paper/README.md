@@ -100,6 +100,12 @@ import. Logs and a source-pinned receipt are written to
 claim a fresh operating-system/toolchain installation or every historical
 experiment. A failed or capped step stops the run and remains in its receipt.
 
+The [September 20 clean reproduction](../notes/2026-09-20-clean-reproduction.md)
+records the actual fresh-cache run, exact revision, the preserved initial
+setup failure and the successful 18-step receipt. The
+[publication acceptance record](../notes/2026-09-20-publication-acceptance.md)
+separates mathematical review, source comparison and visual inspection.
+
 ## Remaining scientific and publication questions
 
 The [publication plan](../research/PUBLICATION_PLAN.md) separates manuscript

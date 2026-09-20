@@ -1388,6 +1388,47 @@ preserved. No smaller state space, complexity, memory, C080 or signature claim
 is inferred from these measurements.
 
 
+<a id="e061"></a>
+
+### E061 — Independent terminal and shared-generator fixtures
+
+```sh
+python3 experiments/issue67_independent_fixtures.py --output tmp/issue67/strict.json
+python3 experiments/issue67_independent_fixtures.py --seed 77 --output tmp/issue67/replay.json
+python3 experiments/issue67_independent_fixtures.py --mode stress --max-work 100000 --wall-seconds 20 --cpu-seconds 18 --output tmp/issue67/stress.json
+```
+
+The independent oracle checks literal cut/suffix witnesses, reverse-prefix
+safety, direct-string prefix graphs and table-observer BFS. It derives a
+complete path bound by checking the entire finite transition graph is acyclic;
+it refuses cyclic inputs. Expected answers do not call the compiler evaluator.
+The 13 strict cases cover ordered/reversed flags, diagonal and empty cuts,
+empty witnesses, overlapping returns, coincident marks and a nonempty self-wrap.
+
+Two original compiler invocations replay the chain `0 -> 00 -> 000` from a
+shared intermediate reference. This is certificate-directed depth-two replay.
+The shared-generator positive and negative queries use exact-length and parity
+observers on one common first return. The negative query has individually
+satisfiable atoms but no common extension. A scoped ordinary argument removes
+only unsatisfiable shape classes of the unchanged Python compiler. The complete
+remaining S-only projection evaluates 4,880 positive and 6,480 negative compiled
+clauses, with one and zero satisfying clauses respectively. This is not physical
+exhaustion of the original unpruned iterator.
+
+The author's partial-source receipt is preserved. A fresh complete checkout at
+`da74a4327579ac090846e142f7a1fb834451a7bb` passes all 13 cases under both hash
+seeds on Python 3.13.14/Linux AArch64, with identical within-host logical rows.
+All six original-decider/unpruned-union stress cases remain UNKNOWN at 100,001
+work units for a 100,000-unit limit. Native Lean and original-expression C081
+frontend coverage are NOT RUN here; automatic successful depth two remains open.
+No existing implementation, proof, default import or CI workflow changes.
+
+[Exact oracle/projection argument and author limitations](../notes/2026-09-20-issue67-independent-fixtures.md);
+[author receipt](../results/issue67-independent/receipt.json);
+[full-checkout replay and review scope](../notes/2026-09-20-issue67-replay.md);
+[complete parent receipt](../results/issue67-independent/full-checkout-replay.json).
+
+
 ## Reconciled supporting evidence (September 20)
 
 The original [concrete compiler-weight counterexample](check_rank_query_weight_counterexample.py)

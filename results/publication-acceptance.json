@@ -1,0 +1,97 @@
+{
+  "base_revision": "b63a90443c3b71d086a340785e83751c441190fc",
+  "date": "2026-09-20",
+  "formal_reproduction": {
+    "not_every_historical_experiment": true,
+    "record": "results/clean-reproduction.json",
+    "revision": "ce48c8e265ab3deef46d734280cda3432514fe8f",
+    "status": "PASS at separately pinned revision",
+    "steps": 18
+  },
+  "independent_mathematical_review": {
+    "actor": "publication_proof_review",
+    "comment": "https://github.com/mhenglein/subtail/issues/64#issuecomment-5750475163",
+    "external_human_peer_review": false,
+    "final_readback": "publication-proof-reviewer \u2014 final read-only review for #64\n\nSource readback: HEAD `5a43064` (the two prose changes are present via `caef0bc`; `paper/manuscript.md` lines 852\u2013855 and 1419\u20131421). No source edits or builds were made in this final pass.\n\nVerdict: both additions are semantically safe and resolve the requested clarity points.\n\n* Section 7.5: `z_t` is the old-graph generator origin/matching cursor, while `q_t` is the state label attached to the corresponding fresh physical vertex. The construction already permits equal origins at distinct physical groups; the sentence correctly prevents readers from identifying those vertices or equating their labels. It changes no quantifier, constraint, or theorem.\n* Section 13.1: `T` is reflexive-transitive closure after labels are forgotten, and its edge relation retains balanced epsilon edges plus reverse-pop letter edges. Therefore a `T`-return can mix both kinds of edges. This agrees with `StackReachability.controlEdge` (balanced OR pop-0 OR pop-1) and `CanonicalReachabilityFast.prepare`; it changes no growth predicate.\n\nBounded falsification evidence\n\n1. Durable milestone regression (pure Python; no Lean build):\n\n    `python3 experiments/check_lean_rank_milestones.py`\n\nPASS at max word length 12: 8,191 binary words; 98,305 prefixes; 16,434 successive milestones; 25,966 arbitrary first returns; 8,190 maximal-rank tails; 6,228 overlapping first returns; 5,096 overlapping milestones; 8,166 singleton extensions; 446 milestones at final position. `native_lean=NOT_RUN` in this invocation. The script records the limits that this is finite support, not the all-word proof.\n\nThe related durable interval/first-return check was also run:\n\n    `python3 experiments/check_rank_query_first_return.py`\n\nPASS, seed `2026091828`: 258 literal first returns, 8,822 directed edges, 86,408 product-simple path checks, 2,000 independent partition comparisons, 8 tight `s+1` examples, and one deliberate non-first-return hypothesis regression. `native_lean=NOT_RUN`.\n\n2. Terminal-rank exhaustive check: no durable repository reproducer was created. The exact ephemeral read-only snippet was:\n\n    ```python\n    from itertools import product\n    def run(delta,s,w):\n        q=s\n        for a in w:\n            q=delta.get((q,a))\n            if q is None:return None\n        return q\n    def borders(w): return [b for b in range(len(w)+1) if w[:b]==w[len(w)-b:]]\n    def rank(w): return sum(b>0 for b in borders(w))\n    for k in range(1,4):\n      pairs=[(q,a) for q in range(k) for a in '01']\n      for vals in product(range(k+1),repeat=len(pairs)):\n        delta={p:(None if v==k else v) for p,v in zip(pairs,vals)}\n        for finalsbits in product([0,1],repeat=k):\n          finals={q for q,b in enumerate(finalsbits) if b}\n          if any(delta.get((q,a)) is not None for q in finals for a in '01'): continue\n          for s in range(k):\n            for n in range(1,7):\n              for w in map(''.join,product('01',repeat=n)):\n                q=run(delta,s,w)\n                if q not in finals: continue\n                R=w[::-1]\n                assert all(rank(R[:j]) <= k-1 for j in range(1,len(R)+1))\n      print('k',k,'ok')\n    print('all ok')\n    ```\n\nOutput: `k 1 ok`, `k 2 ok`, `k 3 ok`, `all ok`. The search covered all terminal partial binary transition tables for `k=1,2,3`, all final subsets allowed by terminality, all initial states, and words of lengths 1\u20136. A counter-enabled replay of the same enumeration counted 5, 200, and 14,739 terminal instances respectively, 3,908 accepted nonempty runs, and 13,676 reversed-prefix checks, with zero failures. This is supporting falsification evidence only; it is not a substitute for the Lean theorem.\n\nDeclarations read for the acceptance record\n\n* Terminal rank/milestones: `TerminalRank.accepted_prefix_eq`, `borderState_injective`, `border_count_le`, `positive_border_count_le`, `suffix_positive_border_count_le`; `RankMilestones.first_milestones_parent`, `first_milestones_first_return`; `RankQueryDecision.terminalWitnessCheck`, `terminalWitnessCheck_complete`, `terminalWitnessCheck_sound`, `terminalWitnessCheck_correct`, `complete_reference_promotes_finish`, `milestone_chain`, and `prefix_oneLetter`.\n* First-return graph and compiler: `RankQuery.Reference`, `SafeReference`, `FirstReturnExt`, `prefixGraph`, `Accepts`, `SatClause`, `Sat`, `ClosureFor`; `FirstReturnColours.fresh_mask`, `fresh_clear_iff`, `surgeryEdges_correct`, `surgeryColour_correct`; `RankQueryFirstReturn.advance_eq`, `mask_get_eq`, `fresh_K_shape`, `fresh_edge_shape`, `old_to_fresh`, `fresh_break_target`, `accepts_bounded_fresh_intervals`; `RankQueryCompiler.freshMap`, `coreMap`, `intervalAllows`, `intervalStep`, `intervalObs`, `pieceValid`, `atomValid`, `compileValid`, `validDiagram`, `baseAtoms`.\n* Finite preimage/coverage/soundness: `RankQueryEnumeration.diagrams`, `mem_diagrams`, `preimageClause`, `preimage`, `DiagramCoverage`, `preimage_sound`, `sat_preimageClause_iff`, `forward_of_coverage`, `preimage_iff_of_coverage`; `RankQueryCoverage.freshCount_le_visits`, `segCount_le`, `K_le`, `raw_length_le`, `n_le_groups`, `coreVars_le`, `pieces_le`, `seams_length`, `bounded`, `coverage`, `closure_iff`; `RankQuerySound.Recon` and its `pre`, `ext`, `pre_walk`, `pre_revRun`, `pre_safe`, `pre_noHit`, `firstReturnExt`, `exists_recon`, `compiled_extension`, `edge_into_first`, `edge_F_mark`, `edge_K_mark`, `interval_run`, `piece_run`, `chain_run`, `atom_accepts`, `test_sound`, `equal_sound`, `unequal_sound`, `compile_sound`, `closure_reverse`.\n* Finite-tree section: `StackReachability.controlEdge`, `exists_pop_iff_path`; `CanonicalReachabilityFast.prepare`, `prepare_correct`; `FiniteTreeDecision.growthCheck`, `growthCheck_correct`, `growthCheck_false_no_loop`, `growthCheck_false_bound`, `push_target_forced`, `growthCheck_true_noFiniteModel`, `entailsCheck_correct`; `FiniteTreeReduction.forced_reverse_pop_loop_noFiniteModel`, `closureBounded_iff_noHot`, `canonicalFinite_iff_noHot`, `finiteEntails_iff_entails_of_uniform_reverse_pop`, `normalize_finite_entails_iff`; `PopAcyclic.pop_trace`, `pop_length_lt_of_no_nonempty_loop`; and `CanonicalModel.closure_models`, `canonical`, `canonical_least`, `not_entails_iff_canonical`.\n\nI found no remaining substantive issue in the two proposed additions or in the reviewed terminal/finite arguments. This review is complete for the supplied source; if either sentence changes again, re-read the affected paragraph before final publication.\n\n",
+    "inherited_conversation_and_existing_argument": true,
+    "paper_source_revision": "caef0bca056a997250a46a52bbeee1dd1c8c59f6",
+    "read_only": true,
+    "reviewed_revision": "5a43064",
+    "status": "PASS; no substantive gap found; two clarity suggestions resolved"
+  },
+  "issue": 64,
+  "lean_source_changed": false,
+  "limits": [
+    "Licensing pending; authors and affiliations remain owner-requested placeholders.",
+    "No new theorem, numerical bound, full-input complexity class or signature extension.",
+    "Source-map and visual checks are not mathematical or kernel proofs.",
+    "Agent review of the supplied argument; no external human referee or venue acceptance is claimed."
+  ],
+  "manuscript_sha256": "be18be1837a1ac50004202b50c4efe6930f6ac468fa622d75f65c20b44906d00",
+  "pdf": {
+    "all_pages_visually_inspected": true,
+    "final_page_comparison": {
+      "changed_pages": [
+        "page-16",
+        "page-17",
+        "page-18",
+        "page-24"
+      ],
+      "pages": 28,
+      "pixel_identical_pages": [
+        "page-01",
+        "page-02",
+        "page-03",
+        "page-04",
+        "page-05",
+        "page-06",
+        "page-07",
+        "page-08",
+        "page-09",
+        "page-10",
+        "page-11",
+        "page-12",
+        "page-13",
+        "page-14",
+        "page-15",
+        "page-19",
+        "page-20",
+        "page-21",
+        "page-22",
+        "page-23",
+        "page-25",
+        "page-26",
+        "page-27",
+        "page-28"
+      ]
+    },
+    "manifest": "output/pdf/subtail-paper-manifest.json",
+    "overfull_underfull_missing_glyph_or_undefined_citation_warnings": 0,
+    "pages": 28,
+    "sha256": "45f318d83e1c4988d67629413a969944b5eb9f487b1ecfb8a0a3604ad05da2f7",
+    "source_files_match_render_revision": true,
+    "status": "PASS visual and build inspection"
+  },
+  "primary_source_review": {
+    "priority_or_nonsubsumption_established": false,
+    "sources": [
+      "HR97 Theorems 4.7-4.8 and Corollary 4.9",
+      "HR98 Theorems 1, 2 and 5",
+      "NP99 Theorem 14 and input grammar",
+      "NP03 Theorems 1, 2, 4, Lemma 1 and Corollaries 1 and 3",
+      "SANPT author record and journal manuscript",
+      "BPR19 presentation slides",
+      "SCH21 official withdrawal record"
+    ],
+    "status": "PASS within stated bounded scope"
+  },
+  "source_map": {
+    "command": "python3 paper/check.py",
+    "kernel_replay_by_this_command": false,
+    "mapped_results": 21,
+    "ordinary_results": 4,
+    "status": "PASS"
+  },
+  "source_revision": "caef0bca056a997250a46a52bbeee1dd1c8c59f6",
+  "status": "PASS within recorded manuscript/source review scope"
+}
