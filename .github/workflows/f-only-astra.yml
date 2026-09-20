@@ -1,0 +1,97 @@
+name: F-only Astra critical steps
+
+# Additive, branch-local research validation. No existing workflow is changed.
+on:
+  push:
+    branches: [codex/f-only-astra-20260920]
+    paths:
+      - 'lean/FOnlyAstra.lean'
+      - 'lean/FOnlyCompilerBridge.lean'
+      - '.github/workflows/f-only-astra.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: f-only-astra-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  critical-steps:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - name: Read separately owned compiler at immutable revision
+        uses: actions/checkout@v7.0.1
+        with:
+          repository: mhenglein/subtail
+          ref: acf0524ffdbc9f407797b68b8953a39e1f79cf5d
+          path: compiler-dependency
+          persist-credentials: false
+          sparse-checkout: lean/Subtail/SmallerCompilerAstra.lean
+          sparse-checkout-cone-mode: false
+      - name: Verify and overlay dependency only in disposable checkout
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo '9d23d5922c627708bb62f6f1d68059870c4566c6ef7aa8bd6384383cfe90ce05  compiler-dependency/lean/Subtail/SmallerCompilerAstra.lean' | sha256sum -c -
+          cp compiler-dependency/lean/Subtail/SmallerCompilerAstra.lean lean/Subtail/SmallerCompilerAstra.lean
+      - uses: actions/cache@v6.1.0
+        with:
+          path: ~/.elan
+          key: elan-${{ runner.os }}-${{ hashFiles('lean/lean-toolchain') }}
+      - uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596
+        with:
+          lake-package-directory: lean
+          build: 'false'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'false'
+      - name: Build dependencies and check the isolated modules
+        working-directory: lean
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Subtail.RankQueryLengthBound +Subtail.SmallerCompilerAstra
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/FOnlyAstra.olean FOnlyAstra.lean | tee FOnlyAstra.log
+          lake env leanchecker FOnlyAstra
+          if grep -nE '\bsorry\b|sorryAx|^[[:space:]]*axiom[[:space:]]' FOnlyAstra.lean; then exit 1; fi
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          text = Path('FOnlyAstra.log').read_text()
+          rows = re.findall(r"'Subtail\.FOnlyAstra\.([^']+)' (does not depend on any axioms|depends on axioms: \[([^]]*)\])", text)
+          assert len(rows) == 20, (len(rows), text)
+          runtime = {'finishPlusObserver', 'finishPlusQuery', 'oldGrowth', 'originalF'}
+          for name, _, raw in rows:
+              allowed = {'propext', 'Quot.sound'}
+              if name not in runtime:
+                  allowed.add('Classical.choice')
+              actual = {x.strip() for x in raw.split(',') if x.strip()}
+              assert actual <= allowed, (name, actual)
+          print('PASS: 20 named axiom closures; 4 runtime definitions choice-free')
+          PY
+          lake env lean -o .lake/build/lib/lean/FOnlyCompilerBridge.olean FOnlyCompilerBridge.lean | tee FOnlyCompilerBridge.log
+          lake env leanchecker FOnlyCompilerBridge
+          if grep -nE '\bsorry\b|sorryAx|^[[:space:]]*axiom[[:space:]]' FOnlyCompilerBridge.lean; then exit 1; fi
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          text = Path('FOnlyCompilerBridge.log').read_text()
+          rows = re.findall(r"'Subtail\.FOnlyCompilerBridge\.([^']+)' depends on axioms: \[([^]]*)\]", text)
+          expected = {'small_preimage_bounded', 'oldGrowth_step', 'promoted_finish_original_bound', 'coverage_small', 'terminal_witness_original_bounded', 'original_F'}
+          assert {name for name, _ in rows} == expected, (rows, text)
+          for name, raw in rows:
+              actual = {x.strip() for x in raw.split(',') if x.strip()}
+              assert actual <= {'propext', 'Quot.sound', 'Classical.choice'}, (name, actual)
+          print('PASS: complete original F and all 6 bridge axiom closures')
+          PY
+      - name: Existing default core regression, unchanged
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 600 python3 scripts/check_lean.py
