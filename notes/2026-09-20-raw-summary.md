@@ -100,3 +100,19 @@ This refinement neither supports nor refutes decidability for explicit top or
 other constructors. Failure would identify an implementation bottleneck in the
 already decided fragment, not an undecidability obstruction. Next implement
 the exact constructor and test the measured four-variable boundary.
+
+## First ablation: relation tables alone
+
+At `3d7ee86`, pinned build/kernel, 45 declaration closures (22 executable)
+checks and all five actual CLI cases pass. The cached relation constructor
+still times out in `summary` on the four-variable empty input. This is a
+negative performance result, not a failed equality proof. Preserve its full
+receipt before testing another change.
+
+The remaining constructor repeatedly evaluates `decode` inside every entry of
+its dense flag matrix. `decode` regenerates the powerset-pair list before an
+indexed list lookup. The next ablation will tabulate those physical-state
+pairs once and reuse their lookups. The finite table has the same order and
+its entry at `q` is exactly `decode q`; replacing these occurrences therefore
+preserves the existing whole-Instance equality. This does not reduce the
+physical state count or flag-matrix size. Performance remains to be measured.
