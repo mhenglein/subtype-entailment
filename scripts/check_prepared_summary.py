@@ -38,7 +38,8 @@ def cli_smoke(directory):
         command = [sys.executable, "scripts/subtail.py", str(path), "--timeout", str(timeout)]
         proc = subprocess.run(command, cwd=ROOT, text=True, capture_output=True, timeout=timeout + 10)
         result = json.loads(proc.stdout)
-        if proc.returncode or result["status"] != expected:
+        expected_exit = 2 if expected == "UNKNOWN" else 0
+        if proc.returncode != expected_exit or result["status"] != expected:
             raise RuntimeError(f"CLI mismatch for {name}: {proc.returncode} {proc.stdout} {proc.stderr}")
         if expected != "UNKNOWN" and result.get("basis") != "Lean EntailmentPrepared.entailsCheck_correct":
             raise RuntimeError("CLI did not use the checked prepared endpoint")
