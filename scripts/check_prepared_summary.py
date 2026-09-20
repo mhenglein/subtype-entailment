@@ -43,6 +43,11 @@ def cli_smoke(directory):
             raise RuntimeError(f"CLI mismatch for {name}: {proc.returncode} {proc.stdout} {proc.stderr}")
         if expected != "UNKNOWN" and result.get("basis") != "Lean EntailmentPrepared.entailsCheck_correct":
             raise RuntimeError("CLI did not use the checked prepared endpoint")
+        if name.startswith("products-depth-"):
+            depth = int(name.rsplit("-", 1)[1])
+            model = result.get("countermodel", {})
+            if model.get("valid") is not True or model.get("separating_path") != [0] * depth:
+                raise RuntimeError("Deep CLI case lacks its independently expected separating path")
         rows.append({"name": name, "expected": expected, "answer": result,
                      "input_sha256": hashlib.sha256(path.read_bytes()).hexdigest(), "timeout": timeout})
     return {"status": "PASS", "cases": rows}
