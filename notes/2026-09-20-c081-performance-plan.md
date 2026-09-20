@@ -61,7 +61,7 @@ push/pop wrap cases. The existing theorem
 does not replace it.
 
 The terminal branch is defined in `RankQueryDecision.terminalWitnessCheck`.
-It first checks the empty word, then binds
+It checks the empty word first. When that check is false, it then binds
 
 ```text
 phi := promote (preimage I RankQueryCoverage.budget)
@@ -167,15 +167,21 @@ its contrapositive makes the false-gate branch false. The existing
 trees, terminality, or the C080 coverage claim is added.
 
 Let `k` be the number of summary states, `R = 2 k^2` the one-letter reference
-count, and `E(k)` the cost of materializing the promoted query. The current
-code pays `E(k)` before checking any reference. The global-gated form pays an
-additional safe-reference scan and pays `E(k)` once only when at least one
-reference is safe. When all candidates are unsafe, as in the measured
-raw-reflexive case, the cost changes from `E(k) + O(R)` to `O(R)`; the
-observed bounded probe changed from OOM to 0.692 seconds. When a safe
-candidate exists, query sharing is preserved and the asymptotic query cost is
-the same, plus the extra gate scan. This is a targeted practical improvement,
-not a complete complexity bound or a claim that all 13 E052 cases will finish.
+count, `C_safe(k)` the cost of one `safeReferenceCheck` on a one-letter
+reference, and `E(k)` the cost of materializing the promoted query. The
+baseline empty-word check can already short-circuit the original `||` branch,
+so both implementations avoid query construction when `witnessCheck I []`
+is true. When that check is false, the original code pays `E(k)` before any
+reference safety result is known. The global-gated form adds a scan costing
+`O(R * C_safe(k))`, then pays `E(k)` once only when at least one reference is
+safe. When all candidates are unsafe, as in the measured raw-reflexive case,
+the query part changes from `E(k) + O(R * C_safe(k))` to
+`O(R * C_safe(k))`; the observed bounded probe changed from OOM to 0.692
+seconds. When a safe candidate exists, query sharing is preserved and the
+query asymptotic cost is the same, plus the extra gate scan and the original
+candidate scan. A one-letter safety check is finite and polynomial in `k`, but
+this accounting does not claim a complete complexity bound or that all 13
+E052 cases will finish.
 
 ## Acceptance, limits, and next experiment
 
@@ -209,9 +215,9 @@ exponential `balancedCheck` table enumeration. A bounded probe cannot prove
 universal runtime behavior.
 
 The initial profiling needed no new Lean formalization. This follow-up adds
-only the small Boolean equality and correctness wrapper in
-`TerminalDecisionLazy.lean`; it does not alter the existing C081 proof or
-arbitrary-tree semantics.
+the small Boolean equality, candidate-specification wrapper, and semantic
+readback theorems in `TerminalDecisionLazy.lean`; it does not alter the
+existing C081 proof or arbitrary-tree semantics.
 
 ## Correction to the earlier released cost claim
 
@@ -226,31 +232,61 @@ scans the same finite references first, constructs `phi` once only when the
 gate is true, and then runs the original candidate scan with that shared query.
 If the gate is false, the query is not constructed. The additive theorem
 `terminalWitnessCheckLazy_eq` proves this corrected wrapper equals the unchanged
-terminal checker. The complexity statement above now refers to this global
-version: one extra gate scan, one shared `E(k)` expansion when any candidate is
-safe, and no `E(k)` expansion when none is safe. The per-candidate claim is
-superseded and must not be used.
+terminal checker. The existing `terminalWitnessCheckLazy_correct` theorem is
+only the syntactic candidate specification, just like
+`terminalWitnessCheck_spec`; it does not assume terminal final states. The new
+`terminalWitnessCheckLazy_witness_iff` theorem takes
+`TerminalFinals I` and rewrites the existing semantic terminal theorem. The
+complexity statement above now refers to this global version: one extra gate
+scan, one shared `E(k)` expansion when any candidate is safe, and no `E(k)`
+expansion when none is safe. The per-candidate claim is superseded and must
+not be used.
+
+## Semantic wrappers added in the continuation
+
+The same module now exposes `rawNormalizedEntailsCheckLazy`,
+`normalizedEntailsCheckLazy`, and `entailsCheckLazy`. The first replaces only
+the `terminalWitnessCheck` call in `rawNormalizedEntailsCheck`; the normalized
+wrapper preserves the equality, premise-membership, satisfiability, and
+empty-address separation guards in the same order; the expression wrapper
+preserves the existing normalization and naming pipeline. The unconditional
+theorems `rawNormalizedEntailsCheckLazy_eq`,
+`normalizedEntailsCheckLazy_eq`, and `entailsCheckLazy_eq` rewrite each result
+to its corresponding `EntailmentDecision` definition. Their `_correct`
+theorems then reuse the existing arbitrary-tree semantic correctness results.
+The module remains additive and is not added to an import aggregator; a later
+CLI can import it directly and call `entailsCheckLazy`.
 
 ## Handoff
 
 Result: the selected direct raw `UNKNOWN` case is dominated by eager promoted
-terminal-query construction. The new global safe-gated wrapper is proved
-Boolean-equivalent to the original terminal checker and has the measured
-0.692-second temporary raw-reflexive probe, while the original code reaches an
-internal OOM after 12.527 seconds.
+terminal-query construction after the empty-word check is false. The new global
+safe-gated wrapper is proved Boolean-equivalent to the original terminal
+checker, and the normalized and expression wrappers are unconditionally equal
+to their existing counterparts. The terminal witness iff is proved under
+`TerminalFinals`. The wrapper has the measured 0.692-second temporary
+raw-reflexive probe, while the original code reaches an internal OOM after
+12.527 seconds.
 
 Evidence remains bounded and local to Lean 4.33.1 on a fresh `wb-marcus`
 worktree from main `29cda9a`. The final module hash is
-`d6b8db9c0f36f1025f67138a22316c0cb1796a7b08e5eadc44ec94c643064c8e` on both
+`67f5735adca1e6d8f059a39aedd50d1529a436e2cf0b0ce6cfda9b00f001b8a9` on both
 checkouts. PASS checks: full pinned 53-job Lake build in the fresh worktree;
 direct compile of `TerminalDecisionLazy.lean`; bundled `leanchecker` replay;
 declaration axiom readback; and capped native probes showing
 `safeOneLetterExists=false`, `terminalWitnessCheckLazy=false` for
 raw-reflexive, and `safeOneLetterExists=true` on the existing toy instance.
+The same capped fresh-worktree semantic probe returned PASS with
+`wall_seconds=0.857`, `maxrss_kib=825680`, and outputs in order
+`safeOneLetterExists=false`, `terminalWitnessCheckLazy=false`,
+`rawNormalizedEntailsCheckLazy=true`, `normalizedEntailsCheckLazy=true`,
+`entailsCheckLazy=true` for the empty bottom query, and
+`entailsCheckLazy=true` for the one-variable reflexive query.
 The source module and note are the only owned changes; E052 was not rerun and
 no claim is made that all diagnostic UNKNOWN cases finish. Parent integration
-should inspect both paths, rerun the listed regressions, and preserve the
-original terminal reference implementation.
+should inspect both paths, run the parent JSON CLI wrapper exercise, rerun the
+listed regressions, and preserve the original terminal reference
+implementation.
 
 Reproducibility commands on the fresh worktree were:
 
@@ -261,9 +297,13 @@ lake env lean -o .lake/build/lib/lean/Subtail/TerminalDecisionLazy.olean \
   Subtail/TerminalDecisionLazy.lean
 lake env leanchecker Subtail.TerminalDecisionLazy
 python3 /tmp/subtail-c081-runner-lazy.py /tmp/subtail-c081-lazy-probe.lean 30
+python3 /tmp/subtail-c081-runner-semantic-remote.py \
+  /tmp/subtail-c081-semantic-probe-full.lean 30
 ```
 
 The temporary runner used a new process group, `LEAN_NUM_THREADS=2`, a 16 GiB
 address-space limit, a 120-second CPU limit, and a 30-second wall limit. Its
 probe output was `raw_reflexive_safe_exists=false`,
 `raw_reflexive_lazy=false`, and `toy_safe_exists=true`.
+The semantic probe used the same caps and exercised the three lazy entailment
+entry points; its six Boolean outputs are listed above.
