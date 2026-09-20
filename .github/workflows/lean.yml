@@ -29,6 +29,7 @@ on:
       - 'scripts/check_fast_summary.py'
       - 'scripts/check_prepared_summary.py'
       - 'scripts/check_infinite_lazy.py'
+      - 'scripts/check_summary_cached.py'
       - 'scripts/test_profile_raw_backend.py'
       - 'scripts/test_profile_entailment.py'
       - 'scripts/check_regular_certificate.py'
@@ -59,6 +60,7 @@ on:
       - 'scripts/check_fast_summary.py'
       - 'scripts/check_prepared_summary.py'
       - 'scripts/check_infinite_lazy.py'
+      - 'scripts/check_summary_cached.py'
       - 'scripts/test_profile_raw_backend.py'
       - 'scripts/test_profile_entailment.py'
       - 'scripts/check_regular_certificate.py'
@@ -686,6 +688,67 @@ jobs:
             tmp/infinite-lazy-audit.json
             tmp/infinite-lazy-components.json
             tmp/infinite-lazy-raw.json
+          retention-days: 90
+          if-no-files-found: warn
+      - name: Proved cached construction and exact physical-state comparisons
+        run: |
+          python3 scripts/check_summary_cached.py --output tmp/summary-cached-audit.json
+          python3 experiments/check_summary_cached.py --raw --components --output tmp/summary-cached-components.json --scratch tmp/summary-cached-components
+          python3 experiments/check_summary_cached.py --stress-raw --output tmp/summary-cached-stress.json --scratch tmp/summary-cached-stress
+          python3 - <<'PYCODE'
+          import json
+          from pathlib import Path
+          checks = json.loads(Path('tmp/summary-cached-components.json').read_text())
+          stress = json.loads(Path('tmp/summary-cached-stress.json').read_text())
+          for report in (checks, stress):
+              assert report['fixture_identity']['sha256'] == '94e242ddfee45b8e1553f665c75e7ca027cac908d04d9acdffdc0ee2b10e8d63', 'E060 fixture change needs explicit review'
+              assert report['caps']['wall_seconds_per_process'] == 20
+          assert checks['status'] == 'PASS'
+          components = checks['phases']['components']
+          assert components['status'] == 'PASS' and components['case_count'] == 29 and len(components['rows']) == 29
+          assert components['instance_count'] == 83
+          assert sum(len(case['rows']) for case in components['rows']) == 83
+          for case in components['rows']:
+              assert case['status'] == case['native']['status'] == 'PASS', case['name']
+              assert len(case['rows']) == case['query_count']
+              assert len(case['native']['markers']) == 2 * case['query_count']
+              for row in case['rows']:
+                  assert row['status'] == 'PASS' and row['candidate_present'] and row['reference_present'], row['name']
+                  assert row['candidate_reference_field'] is None and row['candidate_python_field'] is None
+                  assert set(row['exact_fields']) == {'initial', 'transitions', 'bad', 'final', 'flags'}
+          raw = checks['phases']['raw']
+          assert raw['status'] == 'PASS' and raw['fixture_count'] == 7 and len(raw['rows']) == 7
+          previous = json.loads(Path('tmp/infinite-lazy-raw.json').read_text())['phases']['raw']['rows']
+          previous = {row['name']: row['variants']['candidate'] for row in previous}
+          assert previous.keys() == {row['name'] for row in raw['rows']}
+          for row in raw['rows']:
+              after = row['variants']['candidate']
+              assert after['endpoint'] == 'Subtail.EntailmentPrepared.rawNormalizedEntailsCheck'
+              assert after['status'] == previous[row['name']]['status'] == 'PASS'
+              assert after['actual'] == row['expected'] == previous[row['name']]['actual']
+          rows = stress['phases']['stress_raw']['rows']
+          assert len(rows) == 4 and {row['n'] for row in rows} == {3, 4, 5, 6}
+          for row in rows:
+              actual = row['variants']['candidate']
+              assert actual['endpoint'] == 'Subtail.EntailmentPrepared.rawNormalizedEntailsCheck'
+              assert actual['status'] in ('PASS', 'UNKNOWN'), row['name']
+              if row['n'] <= 5:
+                  assert actual['status'] == 'PASS', row['name']
+              if actual['status'] == 'PASS':
+                  assert actual['actual'] is row['expected'] is False
+              else:
+                  assert 'actual' not in actual, 'A capped run supplies no Boolean answer'
+          print('PASS: 83 exact all-query instances, seven raw answers, n=3/4/5 raw stress; n=6 UNKNOWN remains explicit')
+          PYCODE
+      - name: Preserve cached-summary proof and native evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: summary-cached-audit
+          path: |
+            tmp/summary-cached-audit.json
+            tmp/summary-cached-components.json
+            tmp/summary-cached-stress.json
           retention-days: 90
           if-no-files-found: warn
       - name: Independent native normalization and original-syntax reference checks
