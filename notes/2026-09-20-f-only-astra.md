@@ -331,7 +331,7 @@ safe first-return C satisfying Q_(j-1) and
 Induction on j, ending with (FB), therefore yields SOME original witness w'
 with
 
-    |w'|+1 <= (|B|+1)(k+1)*prod_{t=1..j}(X_t+2).                    (U)
+    |w'|+1 <= (|B|+1)(k+1)*prod_{t=1..j}(X_t+2).                   (LR)
 
 The induction order matters: the first reconstructed factor is X_j+2; the
 remaining factors are X_(j-1)+2 down to X_1+2. All factors are >=1. Starting
@@ -413,7 +413,7 @@ accepted word. Its one-letter reversed reference B=0 has labels (2,1).
 The old finish query fails on B because it must return to the endpoint to
 reach state0. FinishPlus succeeds and reconstructs 00. The four-state unary
 chain and B=00 give an OVERLAPPING final return reconstructing 000. Both
-boundaries are literal Python regressions; the first is also a native Lean
+boundaries are literal Python regressions; the first is also a Lean-evaluated
 `#guard` against the existing and new query semantics.
 
 The independent harness imports NO Subtail implementation. Its forward
@@ -526,12 +526,12 @@ in NoEarlyReturn, the single shared extension in (BR), and product indices.
 The exact proposed final Lean statement is:
 
     theorem original_F (I : Instance k) (ht : TerminalFinals I) :
-      (exists w : Word, Witness I w) <->
-      (exists w : Word, Witness I w and w.length <= originalF k)
+      (Exists fun w : Word => Witness I w) <->
+      (Exists fun w : Word => And (Witness I w) (w.length <= originalF k))
 
-The syntax above is ordinary ASCII notation; the definitions and checked
-critical declarations are in `lean/FOnlyAstra.lean`. It is not presented as
-an already checked final declaration.
+This is the proposed signature in namespace Subtail.FOnlyAstra. The definitions
+and checked critical declarations are in `lean/FOnlyAstra.lean`; the displayed
+final statement is not presented as an already checked declaration.
 
 Confidence is high in the ordinary proof's mechanism, especially the boundary
 mask and arithmetic now checked by Lean; review of the remaining composition
