@@ -123,6 +123,15 @@ class SubtailTests(unittest.TestCase):
             result=cli.run_native(self.problem(),time.monotonic()+1)
             self.assertEqual(result['status'],'UNKNOWN')
 
+    def test_certificate_mode_reports_its_own_trust_boundary(self):
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output):
+            code = cli.main([str(cli.ROOT/'examples/entailment/zero-spine.json'),
+                             '--check-model', str(cli.ROOT/'examples/entailment/zero-spine-model.json')])
+        report = json.loads(output.getvalue())
+        self.assertEqual(code, 0)
+        self.assertIn('Lean was not run', report['trust_boundary'])
+
     def test_ambiguous_marker_is_unknown(self):
         with patch.object(cli,'run_process',side_effect=[{'status':'PASS','seconds':0},
              {'status':'PASS','seconds':0,'output':cli.MARKER+'true\n'+cli.MARKER+'false'}]):

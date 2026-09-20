@@ -286,7 +286,10 @@ def main(argv=None):
     except (RecursionError, MemoryError):
         result = {'status': 'UNKNOWN', 'reason': 'parser_or_certificate_resource_limit'}
     result['seconds'] = round(time.monotonic() - start, 3)
-    result['trust_boundary'] = 'Lean algorithm checked; Python parsing, launch and certificate checker are not Lean-verified.'
+    result['trust_boundary'] = (
+        'Python certificate check only; Lean was not run. Parser and graph checker are not Lean-verified.'
+        if args.check_model else
+        'Lean algorithm checked; Python parsing, launch and certificate checker are not Lean-verified.')
     print(json.dumps(result, indent=2))
     return 0 if result['status'] in ('ENTAILED', 'NOT_ENTAILED') else 2 if result['status'] == 'UNKNOWN' else 1
 
