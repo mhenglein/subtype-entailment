@@ -2,13 +2,15 @@
 
 Generated from `lean-map.json` by `python3 paper/check.py --write`.
 
-Mathematical source checkpoint: `c946d86b9e65da2877e0df42c710abbdcb5a4037`. Links pin that revision.
+Default mathematical source checkpoint: `c946d86b9e65da2877e0df42c710abbdcb5a4037`.
+Each result's links use its explicitly recorded revision; later finite-tree results retain their own pin.
 The manuscript gives ordinary proofs; this map identifies checked dependencies.
 A source/link check is not a new kernel replay or an independent mathematical review.
 
 | Paper result | Statement | Definitions and declarations |
 |---|---|---|
 | Theorem 1.1 | Complete finite-expression arbitrary-tree entailment | [EntailmentDecision.entailsCheck_correct](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/EntailmentDecision.lean#L86); [ExpressionNormalization.ExprEntails](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/ExpressionNormalization.lean#L28); [TreeSemantics.Tree](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/TreeSemantics.lean#L18) |
+| Theorem 1.2 | Unconditional finite-expression entailment over finite trees | [FiniteTreeDecision.entailsCheck_correct](https://github.com/mhenglein/subtail/blob/4159c58bd3ff683d837d23b3eb4c18eef82e8d4d/lean/Subtail/FiniteTreeDecision.lean#L96); [FiniteTreeReduction.FiniteExprEntails](https://github.com/mhenglein/subtail/blob/4159c58bd3ff683d837d23b3eb4c18eef82e8d4d/lean/Subtail/FiniteTreeReduction.lean#L61); [FiniteTreeReduction.FiniteTree](https://github.com/mhenglein/subtail/blob/4159c58bd3ff683d837d23b3eb4c18eef82e8d4d/lean/Subtail/FiniteTreeReduction.lean#L23) |
 | Lemma 2.1 | Exact expression naming and model transfer | [ExpressionNormalization.extend_models](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/ExpressionNormalization.lean#L305); [ExpressionNormalization.restrict_models](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/ExpressionNormalization.lean#L318); [ExpressionNormalization.normalize_entails_iff](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/ExpressionNormalization.lean#L331) |
 | Lemma 3.1 | Least canonical model and separating-address equivalence | [CanonicalModel.closure_models](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/CanonicalModel.lean#L101); [CanonicalModel.canonical_least](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/CanonicalModel.lean#L211); [CanonicalModel.not_entails_iff_canonical](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/CanonicalModel.lean#L219) |
 | Lemma 3.2 | Minimum-stack factorization and finite reachability | [StackSummary.balancedCheck_correct](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/StackSummary.lean#L120); [StackReachability.reaches_iff_normal](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/StackReachability.lean#L169); [StackReachability.reachesCheck_correct](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/StackReachability.lean#L222); [StackReachability.controlReachCheck_correct](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/StackReachability.lean#L261) |
@@ -25,6 +27,9 @@ A source/link check is not a new kernel replay or an independent mathematical re
 | Lemma 10.1 | Finite reverse-monitor language equivalence | [PeriodicTail.eventually_sameSuffix_iff](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/PeriodicTail.lean#L61); [PeriodicMonitorComplete.accepted_path_iff](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/PeriodicMonitorComplete.lean#L196) |
 | Lemma 10.2 | Periodic good prefix and original finite witness | [PeriodicRun.infWitness_of_prefix_good](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/PeriodicRun.lean#L266); [PeriodicRun.prefixGood_of_witness](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/PeriodicRun.lean#L309) |
 | Theorem 10.3 | Infinite-continuation decision under strong absorption | [InfiniteCycle.infWitness_iff_bounded_cycle](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/InfiniteCycle.lean#L95); [InfiniteDecision.infiniteWitnessCheck](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/InfiniteDecision.lean#L169); [InfiniteDecision.infiniteWitnessCheck_correct](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/InfiniteDecision.lean#L198) |
+| Lemma 13.1 | No consuming reverse-pop cycle gives word length below the number of controls | [FiniteTreeDecision.growthCheck_correct](https://github.com/mhenglein/subtail/blob/4159c58bd3ff683d837d23b3eb4c18eef82e8d4d/lean/Subtail/FiniteTreeDecision.lean#L21); [FiniteTreeDecision.growthCheck_false_no_loop](https://github.com/mhenglein/subtail/blob/4159c58bd3ff683d837d23b3eb4c18eef82e8d4d/lean/Subtail/FiniteTreeDecision.lean#L39); [PopAcyclic.pop_length_lt_of_no_nonempty_loop](https://github.com/mhenglein/subtail/blob/4159c58bd3ff683d837d23b3eb4c18eef82e8d4d/lean/Subtail/PopAcyclic.lean#L65); [FiniteTreeDecision.growthCheck_false_bound](https://github.com/mhenglein/subtail/blob/4159c58bd3ff683d837d23b3eb4c18eef82e8d4d/lean/Subtail/FiniteTreeDecision.lean#L51) |
+| Lemma 13.2 | Consuming growth forces an infinite product tree in every model | [FiniteTreeDecision.push_target_forced](https://github.com/mhenglein/subtail/blob/4159c58bd3ff683d837d23b3eb4c18eef82e8d4d/lean/Subtail/FiniteTreeDecision.lean#L58); [FiniteTreeReduction.forced_reverse_pop_loop_noFiniteModel](https://github.com/mhenglein/subtail/blob/4159c58bd3ff683d837d23b3eb4c18eef82e8d4d/lean/Subtail/FiniteTreeReduction.lean#L188); [FiniteTreeDecision.growthCheck_true_noFiniteModel](https://github.com/mhenglein/subtail/blob/4159c58bd3ff683d837d23b3eb4c18eef82e8d4d/lean/Subtail/FiniteTreeDecision.lean#L68) |
+| Theorem 13.3 | Finite entailment is growth or arbitrary entailment; assembled from the checked positive and negative branches | [FiniteTreeReduction.finiteEntails_iff_entails_of_uniform_reverse_pop](https://github.com/mhenglein/subtail/blob/4159c58bd3ff683d837d23b3eb4c18eef82e8d4d/lean/Subtail/FiniteTreeReduction.lean#L351); [FiniteTreeDecision.growthCheck_false_bound](https://github.com/mhenglein/subtail/blob/4159c58bd3ff683d837d23b3eb4c18eef82e8d4d/lean/Subtail/FiniteTreeDecision.lean#L51); [FiniteTreeDecision.growthCheck_true_noFiniteModel](https://github.com/mhenglein/subtail/blob/4159c58bd3ff683d837d23b3eb4c18eef82e8d4d/lean/Subtail/FiniteTreeDecision.lean#L68); [FiniteTreeReduction.normalize_finite_entails_iff](https://github.com/mhenglein/subtail/blob/4159c58bd3ff683d837d23b3eb4c18eef82e8d4d/lean/Subtail/FiniteTreeReduction.lean#L375); [FiniteTreeDecision.entailsCheck_correct](https://github.com/mhenglein/subtail/blob/4159c58bd3ff683d837d23b3eb4c18eef82e8d4d/lean/Subtail/FiniteTreeDecision.lean#L96) |
 
 ## Ordinary consequences
 
@@ -35,6 +40,7 @@ These results have ordinary proofs in the manuscript; they are not new Lean decl
 | Corollary 11.1 | Uniform computable terminal witness bound by finite instance enumeration | [Record](../research/conjectures/Q004.md) |
 | Proposition 12.1 | Guarded constant-free transfer to the NP99 PSPACE procedure | [Record](../notes/2026-09-19-post-c081-extensions.md) |
 | Proposition 12.2 | Effective regular countermodels and equivalence of arbitrary/regular entailment | [Record](../notes/2026-09-19-post-c081-extensions.md) |
+| Corollary 13.4 | Finite satisfiability is arbitrary satisfiability without consuming growth; no separate Lean finite-SAT Boolean theorem | [Record](../notes/2026-09-20-finite-tree-reduction.md) |
 
 ## Source identities
 
@@ -45,6 +51,8 @@ These hashes let a reader detect source drift from the mapped checkpoint.
 45b777cb26c2bde47870bdb1b9f6e243e3fa6d650b26752742680a5758fcd713  lean/Subtail/CanonicalModel.lean
 a899b12e1d2b968053a0062a1600c9d368fe5c16f1ba3b74aef591b311088f59  lean/Subtail/EntailmentDecision.lean
 6e69fa21ebf0a0ffa65f78c976eb6681a85e9c9778cf96e57d16fb86b1285b82  lean/Subtail/ExpressionNormalization.lean
+b8a42b54bbfb626290dd73bdbfc2df2f1880d80af610d9cf458da24998734fd8  lean/Subtail/FiniteTreeDecision.lean
+2b6200f4f913e515bd4f863c77ab4208bef75bb192ac1dc89dfa69614eb415e4  lean/Subtail/FiniteTreeReduction.lean
 848c71747fb6deff903b9ee850a8c6ecdf5f35cd79ce680c7da11c68b7909352  lean/Subtail/FirstReturnColours.lean
 d6c4266c59949785979e6f37dea7d0e93adf50e9a42ad447a7267912949bace6  lean/Subtail/FirstReturnGenerator.lean
 0a3559e3b09dc9a3a1d2ce80893fc354bd6aec7f2ab0a12b82fe9917fb4e2fb3  lean/Subtail/InfiniteCycle.lean
@@ -52,6 +60,7 @@ d9679db4b52062a707f74c4a7198137f608660930e3f4a2d868ab4efac40228d  lean/Subtail/I
 ff3333943b6ca5dbf5e9920f2a3071912244cddf6098f25eededa476d3b1fc32  lean/Subtail/PeriodicMonitorComplete.lean
 d27cdbb13b08aca5410c76e4ae438a0cebcb7b2acf223bd94a95814717815a86  lean/Subtail/PeriodicRun.lean
 1243dc455f48858d1dc30e1543cdc3737e6078aa51f7cc2f761e8af67741b148  lean/Subtail/PeriodicTail.lean
+f1529b5d4dc81e5eca039ce865d1209771730078bea1f949da91525389d802c3  lean/Subtail/PopAcyclic.lean
 3a948deaea047bf02289869210fcc2cbf7ada1010983dee66fa8477e4832d1c6  lean/Subtail/RankMilestones.lean
 e8ef2ec585c49a593c8cee4d11e7aeb75f0284179e36b26ea21d72dd313adb41  lean/Subtail/RankQuery.lean
 1e32f44935490d7e69c8157f4ce12f763c9732b26e4cef2a7fb94518941edb2c  lean/Subtail/RankQueryCompiler.lean
@@ -74,3 +83,8 @@ c3d0efc707cbc0979e99cd26726ed2575f6c1c60e85d34e7449903bf3082ec7f  lean/Subtail/S
 The stronger numerical conjunct of `RankQuery.ClosureFor` is deliberately
 not a premise of Theorems 7.1, 9.2 or 1.1, or Lemma 9.1. A conditional theorem referring to it
 does not establish the concrete compiler's old numerical bound.
+
+Theorem 13.3 is assembled from the listed checked obstruction and bounded-transfer
+branches; Theorem 1.2 maps directly to the final finite-expression Boolean theorem.
+The displayed estimate (13.2) is an ordinary derivation from the minimum-stack
+factorization and Lemma 13.1, not a separately exported numerical Lean theorem.

@@ -73,11 +73,14 @@ def main():
             cwd=ROOT, text=True, capture_output=True)
         return result.returncode == 0 and result.stdout == path.read_text()
     source_matches = all(committed_source_matches(p) for p in source_paths)
+    mapping = json.loads((PAPER / "lean-map.json").read_text())
     manifest = {
         "status": "research draft; licensing pending; author placeholders",
         "repository_revision_at_render": revision,
         "source_files_match_render_revision": source_matches,
-        "mathematical_source_revision": json.loads((PAPER / "lean-map.json").read_text())["source_revision"],
+        "mathematical_source_revisions": sorted({
+            row.get("source_revision", mapping["source_revision"])
+            for row in mapping["entries"]}),
         "tools": {name: run([name, "--version"], capture_output=True).stdout.splitlines()[0] for name in ("pandoc", "tectonic")},
         "sources": {p.relative_to(ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
                     for p in source_paths},

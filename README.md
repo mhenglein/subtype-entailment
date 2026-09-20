@@ -25,7 +25,9 @@ The revised paper uses conventional theorem numbering and a full bibliography,
 integrates the Henglein–Rehof lineage, and gives ordinary proofs of effective
 regular countermodels and the constant-free PSPACE transfer. Source pins and
 review records are kept in the artifact guide, outside the manuscript.
-[Rewrite and review scope](notes/2026-09-20-paper-rewrite-readback.md).
+Section 13 now gives the full finite-tree proof, including the cycle test,
+finite canonical replacements and worked differences between the two domains.
+[Current revision and review scope](notes/2026-09-20-finite-paper-readback.md).
 
 **Small example.** From `x <= y`, covariance gives
 `x × bottom <= y × bottom`. The reverse query fails: set `x = bottom` and
@@ -35,7 +37,7 @@ infinite countermodel and examples of the terminal first-return construction.
 
 **Limits.** This theorem has no explicit top constructor, multiple labelled
 constructors or contravariant function type. Finite-tree entailment has a
-separate [ordinary reduction and partial Lean formalization](research/claims.md#c085). The complete fallback can be very slow. The proved cached solver completes
+separate [unconditional checked decision](research/claims.md#c085). The complete fallback can be very slow. The proved cached solver completes
 all 26 full-expression cases in the matched wb-marcus corpus (previously 17).
 Across all entry points it completes 33/38, up from 24/38; five unchanged
 raw-backend probes remain `UNKNOWN`. A larger generated suite completes 16/19,
@@ -161,7 +163,7 @@ cd subtail
 python3 scripts/check_lean.py
 python3 scripts/check_entailment_decision.py
 python3 experiments/check_entailment_decision.py --phase smoke --strict
-(cd lean && lake env lean --run ../paper/example.lean)
+(cd lean && lake build +Subtail.FiniteTreeDecision && lake env lean --run ../paper/example.lean)
 python3 scripts/research_index.py --check
 python3 paper/check.py
 ```
@@ -169,6 +171,8 @@ python3 paper/check.py
 The Lean check builds the default library and replays its proofs in the kernel.
 The [small executable example](paper/example.lean) prints `true` for a listed
 premise and `false` for its reverse query.
+It then prints `false` and `true` for the forced-spine query under arbitrary
+and finite semantics. The finite theorem has its own [source and validation](notes/2026-09-20-finite-tree-decision-readback.md).
 The declaration audit inspects the computational dependencies as well as theorem
 axioms. The native smoke suite checks a small completed subset; it does not
 claim that all diagnostic cases run quickly. For the full performance record,

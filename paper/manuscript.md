@@ -1,4 +1,4 @@
-# Deciding subtype entailment for bottom and binary product over arbitrary trees
+# Subtype entailment for bottom and binary product: arbitrary and finite trees
 
 Authors and affiliations: **[placeholders]**.
 
@@ -22,7 +22,11 @@ bounded number of times and evaluating the resulting query on two-vertex graphs
 decides the terminal case. We prove soundness, completeness and termination of both branches and
 compose them with exact expression normalization. The decision procedure and
 its correctness theorem are also formalized in Lean. The construction does
-not assume a numerical witness-length bound.
+not assume a numerical witness-length bound. We also decide entailment over
+finite trees. A consuming cycle in a finite reverse-pop automaton rules out
+finite models; without such a cycle, every failed query has a finite canonical
+countermodel. This dichotomy gives a second executable decision theorem,
+also formalized in Lean.
 
 ## 1. Introduction and main result
 
@@ -40,6 +44,12 @@ finite-expression entailment problem in this domain. Its central ingredient
 is a finite preimage construction for existential regular-path queries on
 coloured prefix graphs. It eliminates a shared, unbounded first-return word
 while preserving every path constraint in a conjunction.
+
+A further finite-control argument treats finite-tree valuations. A cycle that
+consumes an address letter forces unbounded product growth. When no such cycle
+exists, the same canonical construction produces finite countermodels. This
+gives a finite-tree decision without identifying finite and arbitrary-tree
+entailment in cases where they differ.
 
 ### 1.1 Relation to previous work
 
@@ -144,6 +154,20 @@ $$D(\Gamma,s,t)=\mathsf{true}\quad\Longleftrightarrow\quad\Gamma\models s\le t.$
 Variables can be indexed by a finite initial segment of the natural numbers.
 Thus the input is an effective finite object; repeated premises do not change
 its interpretation.
+
+A tree $X$ is **finite** if its product-address set is finite, equivalently if
+there is an $h$ such that $|u|<h$ for every $u\in X$. Write
+$\Gamma\models_{\mathrm{fin}}s\le t$ for the same universal condition restricted
+to valuations assigning finite trees to all variables.
+
+**Theorem 1.2 (finite-tree decidability).** There is a total executable Boolean
+procedure $D_{\mathrm{fin}}$ such that, for every finite $\Gamma,s,t$,
+
+$$D_{\mathrm{fin}}(\Gamma,s,t)=\mathsf{true}
+\quad\Longleftrightarrow\quad\Gamma\models_{\mathrm{fin}}s\le t.$$
+
+Section 13 proves this theorem by an effective reduction to Theorem 1.1.
+Neither result requires a satisfiability promise.
 
 The address-set representation includes the ordinary labelled-tree boundary
 conditions. The root exists even for bottom; a nonroot address $ua$ exists
@@ -1350,7 +1374,173 @@ lemma, and is not used as a decision theorem. These comparisons delimit the
 results on which the present proof relies; they do not assert that the general
 nonstructural problem with explicit top has been resolved.
 
-## 13. Formalization and further questions
+## 13. Entailment over finite trees
+
+Finite-tree entailment has the same syntax and subtyping order, but a smaller
+valuation domain. We continue to write $C\models\alpha\le\beta$ for arbitrary
+trees. The reduction below depends on a property of the normalized system:
+every push targets a control whose product root is forced by a lower-product
+clause. It would fail for a pushdown system with unforced pushes.
+
+### 13.1 The finite growth test
+
+Let $W$ be the propagation system on $n$ controls from Section 3. The
+reverse-pop automaton $\mathcal A_C$ has these controls as states and alphabet
+$\{0,1\}$. Its epsilon edges are the balanced pairs of $W^{\mathrm{op}}$;
+its $a$-edges are the pop-$a$ rules of $W^{\mathrm{op}}$. For initial state $q$
+and sole accepting state $m$, it accepts precisely
+
+$$L(q,m)=\{w:\operatorname{Pop}_{W^{\mathrm{op}}}(q,w,m)\}.$$
+
+Indeed, an empty accepted word is a balanced excursion; each consumed letter
+is a pop preceded by balanced motion, followed by the same condition on the
+remaining suffix. This is the recursive Pop definition of Section 3.2.
+The balanced relation is computable by finite saturation.
+
+Let $T$ be reflexive transitive reachability in this automaton after forgetting
+edge labels. Define $\operatorname{Growth}(C)$ by the finite test
+
+$$\exists p,r,a\quad
+p\mathrel{\xrightarrow{a}}r\text{ in }\mathcal A_C
+\quad\text{and}\quad T(r,p).\tag{13.1}$$
+
+Thus growth means a closed walk containing at least one letter edge, called a
+**consuming cycle**. An epsilon-only cycle does not count. Compute $T$ by
+finite graph closure and inspect the finitely many letter edges. In particular,
+internal push/pop steps of a balanced excursion are not consumed input letters.
+
+**Lemma 13.1 (acyclic word bound).** If $\operatorname{Growth}(C)$ is false,
+then $\operatorname{Pop}_{W^{\mathrm{op}}}(q,w,m)$ implies $|w|<n$, for all
+controls $q,m$ and words $w$.
+
+*Proof.* A nonempty accepted loop can be rotated to start at one of its letter
+edges. The rest of the loop is then a return path, satisfying (13.1).
+This remains valid when the original loop begins with balanced epsilon motion.
+More explicitly, decompose that loop as $E(p,r)$, a pop $r\xrightarrow{a}s$,
+and $\operatorname{Pop}(s,v,p)$. Append the initial balanced motion to the
+last part; it becomes $\operatorname{Pop}(s,v,r)$, a return for the selected
+letter edge.
+
+An accepting run for $w$ has $|w|+1$ boundary controls: its initial control
+and the control just after each letter edge. If two of these controls agreed,
+the intervening subrun would consume a nonempty subword and form such a loop.
+They are therefore distinct. There are only $n$ controls, so $|w|+1\le n$.
+Trailing epsilon steps do not affect this count. If $n=0$, there are no
+initial or accepting controls and the statement is vacuous. $\square$
+
+**Lemma 13.2 (forced growth).** If $\operatorname{Growth}(C)$ holds, then $C$
+has no finite-tree model.
+
+*Proof.* Choose a letter edge $p\xrightarrow{a}r$ with a return path.
+That edge reverses a push into $p$ in $W$. By the propagation table, a
+lower-product clause forces $(p,\epsilon)$ in every model. Reading the return
+path gives a word $v$ and $\operatorname{Pop}_{W^{\mathrm{op}}}(r,v,p)$.
+Consequently $\operatorname{Pop}_{W^{\mathrm{op}}}(p,av,p)$.
+
+Put $w=av$, so $w\ne\epsilon$. Reverse this Pop run and lift it over any
+unchanged suffix $z$, obtaining
+
+$$(p,z)\longrightarrow_W^*(p,wz).$$
+
+Starting from the forced root and repeating the run makes $w^j$ a product
+address at $p$ for every $j\ge0$. Propagation is sound in every $C$-model,
+and these addresses have unbounded length. The value at $p$ cannot be finite.
+$\square$
+
+### 13.2 Finite canonical replacements and the decision
+
+Suppose $\operatorname{Growth}(C)$ is false. Let $S$ be a finite seed family
+whose words have length at most $d$. For any run $(p,u)\to_W^*(q,v)$ from
+a seed, Lemma 3.2 gives
+
+$$u=az,\qquad v=bz,\qquad
+\operatorname{Pop}_W(p,a,r),\qquad
+\operatorname{Pop}_{W^{\mathrm{op}}}(q,b,r).$$
+
+Lemma 13.1 bounds $|b|<n$, while $z$ is a suffix of $u$, so $|z|\le d$.
+Hence every reached word satisfies
+
+$$|v|=|b|+|z|<n+d.\tag{13.2}$$
+
+There are only finitely many binary words below this length and finitely many
+controls. The closure is therefore finite. An empty seed family has empty
+closure. This argument bounds the closure of the supplied seeds; it makes no
+assertion about the length of the shortest separating address.
+
+**Theorem 13.3 (finite-model transfer).** For every normalized $C$ and query
+$\alpha\le\beta$,
+
+$$C\models_{\mathrm{fin}}\alpha\le\beta
+\quad\Longleftrightarrow\quad
+\operatorname{Growth}(C)\ \lor\ (C\models\alpha\le\beta).\tag{13.3}$$
+
+*Proof.* If growth holds, Lemma 13.2 makes every finite-tree query true
+vacuously. If arbitrary entailment holds, its restriction to finite valuations
+also holds.
+
+Conversely, suppose neither disjunct holds. A countermodel to arbitrary
+entailment has a finite separating address $w$. The finite seed set
+$S_{\alpha,w}$ of Lemma 3.1 lies inside that countermodel. Its canonical
+closure therefore avoids all denials and omits $(\beta,w)$, while containing
+$(\alpha,w)$. It is a model of $C$ by the same lemma. Equation (13.2), with
+$d=|w|$, makes every component tree finite. Thus it also refutes finite-tree
+entailment. This proves both directions. $\square$
+
+To obtain Theorem 1.2, first normalize the finite expressions. The extension
+in Lemma 2.1 preserves finiteness: bottom has no product addresses, and a
+product of two finite trees adds one root to two finite tagged address sets.
+Structural induction over expressions proves that every auxiliary value is
+finite. Restriction to the original variables also preserves finiteness.
+Thus both model maps and both query interpretations restrict exactly to the
+finite domain. Compute (13.1) on the normalized system; return true if it holds,
+and otherwise use $D$ from Theorem 1.1. The finite graph computations and $D$
+terminate, and (13.3) proves soundness and completeness of the result.
+
+**Corollary 13.4 (finite satisfiability).** A normalized $C$ has a finite model
+if and only if it has an arbitrary model and $\operatorname{Growth}(C)$ is false.
+
+*Proof.* A finite model is an arbitrary model, and Lemma 13.2 rules out growth.
+For the converse, take the closure of the forced-root seeds alone. It is
+contained in the assumed model, hence denial-safe; the canonical-model
+argument of Lemma 3.1 makes it a model. Equation (13.2), now with $d=0$,
+makes it finite. $\square$
+
+Absence of growth does not make every model finite. An unconstrained variable
+may still denote an infinite tree. What the proof supplies is a finite
+replacement for a failed query or a satisfiable constraint set.
+
+### 13.3 Examples and scope
+
+After naming bottom in $C=\{x\times\bot\le x\}$, a reverse-pop left-letter loop
+returns to a forced root. Lemma 13.2 explains the absence of finite models seen in Section 1.
+The query $x\le\bot$ is therefore true under finite entailment and false under
+arbitrary entailment, witnessed by the infinite left spine.
+
+For $C=\{x\le y\}$, there are no letter edges and no growth. The query
+$y\le x$ fails in both domains: $x=\bot$, $y=\bot\times\bot$ is a finite
+countermodel, separated at $\epsilon$.
+
+Finally, take the normalized constraints $x\times x\le b$ and $b\le\bot$.
+The only letter edges of the reverse-pop automaton go from $b$ to $x$; none
+returns. Growth is false, but the forced root at $b$ violates its denial.
+The input is unsatisfiable in both domains. A negative growth test is therefore
+not, by itself, a satisfiability decision.
+
+The finite result concerns the same bottom/product order as Theorem 1.1.
+It does not transfer the structural finite-type coNP theorem of Henglein and
+Rehof, nor their nonstructural finite-tree PSPACE hardness in a domain admitting
+explicit top. Those statements require their own semantic hypotheses
+[@HR97; @HR98]. Likewise, the finite-tree case of Niehren--Priesnitz's restricted
+entailment theorem uses the bottom/product/top valuation domain [@NP99,
+Theorem 14]. The guard $\omega=\omega\times\omega$ from Proposition 12.1 has
+no finite solution, so that particular reduction cannot transfer their finite
+upper bound to the present problem. The cap-automaton characterization also
+distinguishes finite from infinite trees [@NP03]; the consuming-cycle argument
+here is specific to the forced-target property of our top-free propagation
+system. No PSPACE upper or lower bound for the full finite-tree problem follows
+from these comparisons alone.
+
+## 14. Formalization and further questions
 
 The decision procedure is implemented in Lean, together with a proof that its
 Boolean result is equivalent to the semantic entailment definition for every
@@ -1362,11 +1552,20 @@ computes some finite relations by exhaustive table enumeration; a separate
 saturation implementation computes the same least closed relations. Proved
 equivalences justify the optimized entry point.
 
+The finite-tree Boolean has a separate correctness theorem with the restricted
+valuation predicate of Theorem 1.2. Its executable cycle test supplies either
+the forced-loop obstruction or the acyclic word bound. Neither is an assumption
+left to the caller. The argument then uses the same normalization and arbitrary
+entailment implementation.
+
 The accompanying artifact [@SubtailArtifact] contains the source, reproduction
 instructions, examples and a result-by-result map for the seventeen lemmas
-and theorems supporting the decision procedure in Sections 1--10. Corollary 11.1 and
-Propositions 12.1--12.2 are ordinary mathematical consequences proved here; they are
-identified separately from the checked declarations. The correspondence map
+and theorems supporting the arbitrary-tree decision in Sections 1--10, and
+the finite-tree results in Sections 1 and 13. Corollaries 11.1 and 13.4 and
+Propositions 12.1--12.2 are ordinary mathematical consequences proved here;
+they are identified separately from the checked declarations. The explicit
+seed-dependent estimate (13.2) is derived in the text; the formal semantic
+transfer needs the existence of a uniform bound. The correspondence map
 also distinguishes the mathematical dependencies from the larger source
 import graph.
 
@@ -1374,10 +1573,11 @@ Several questions remain. The finite query construction is large, and the
 qualitative argument does not give a tight complexity classification or a
 practical worst-case algorithm. Proved finite saturation and sound early
 certificates improve evaluation, but do not eliminate all expensive cases.
-Implementing the extraction in Proposition 12.2 would complement the
-decision Boolean.
-The finite-tree example in Section 1 shows that finite-tree entailment needs
-its own argument. Other constructor arities, competing labels, and
+The artifact also implements the extraction in Proposition 12.2 and provides
+a checked finite-graph certificate interface; the producer and its input
+handling remain separate from the Lean decision theorems. For finite-tree
+answers, graph finiteness is checked separately at the variable roots.
+Other constructor arities, competing labels, and
 contravariant arguments likewise require separate semantic transfers.
 
 An explicit top constructor poses a particular obstruction to the present

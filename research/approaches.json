@@ -176,12 +176,12 @@
     {
       "id": "A010",
       "title": "Build the exact top-free constraint-to-automata pipeline",
-      "status": "tried",
+      "status": "active",
       "outcome": "supported",
-      "owner": null,
+      "owner": "paper-finite-20260920 (#59)",
       "updated": "2026-09-20",
       "summary": "C085 now has an unconditional executable Lean finite-expression entailment theorem. The classifier supplies a forced loop or proved acyclic word bound; the CLI uses the checked function, with Python parsing and graph-finiteness boundaries explicit.",
-      "next_step": "Add the finite-tree consequence and exact prior-work comparison to the manuscript, or profile deeper E055 timeouts. Explicit top and other signatures remain separate proof obligations; no worker assigned.",
+      "next_step": "Integrate the checked C085 finite-tree consequence into the paper, with exact ordinary proof, source correspondence and Henglein–Rehof/NP comparison; #59 owns the manuscript revision.",
       "record": "research/approaches/A010.md",
       "evidence": [
         "notes/2026-09-04-bridge-foundation.md",
@@ -583,12 +583,12 @@
     {
       "id": "A018",
       "title": "Maintain the Lean core and verify critical obligations",
-      "status": "tried",
+      "status": "active",
       "outcome": "supported",
-      "owner": null,
+      "owner": "paper-finite-20260920 (#59)",
       "updated": "2026-09-20",
       "summary": "C085 now has an unconditional executable Lean finite-expression entailment theorem. The classifier supplies a forced loop or proved acyclic word bound; the CLI uses the checked function, with Python parsing and graph-finiteness boundaries explicit.",
-      "next_step": "Add the finite-tree consequence and exact prior-work comparison to the manuscript, or profile deeper E055 timeouts. Explicit top and other signatures remain separate proof obligations; no worker assigned.",
+      "next_step": "Integrate the checked C085 finite-tree consequence into the paper, with exact ordinary proof, source correspondence and Henglein–Rehof/NP comparison; #59 owns the manuscript revision.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",

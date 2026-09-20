@@ -1,10 +1,12 @@
 # Mathematical paper and proof artifact
 
 [Read the manuscript](manuscript.md) or its [PDF](../output/pdf/subtail-paper.pdf).
-The paper states the exact arbitrary-tree bottom/product theorem, gives the
+The paper states the exact arbitrary- and finite-tree bottom/product theorems, gives the
 complete terminal construction in Sections 5–9, and integrates the
 Henglein–Rehof and Niehren–Priesnitz comparisons. Section 12 gives ordinary
 proofs of a restricted PSPACE transfer and effective regular countermodels.
+Section 13 proves the finite-tree decision through a consuming-cycle test,
+an acyclic word bound and finite canonical replacements.
 
 The manuscript contains the mathematical argument. This directory and the
 research records contain source pins, audit history and reproduction details.
@@ -14,22 +16,29 @@ establish publication priority or human peer review.
 
 ## Read the proof and its correspondence
 
-- [Declaration map](lean-map.md): seventeen numbered paper results and their
+- [Declaration map](lean-map.md): twenty-one numbered paper results and their
   exact checked definitions and declarations. Historical P-identifiers remain
   in `lean-map.json` only to interpret earlier reviews.
 - [Dependency map](dependency-map.md): the mathematical route to the decision.
 - [Import graph](imports.md): the larger source-module closure, which includes
   unused exploratory results and is not a theorem-dependency audit.
-- [Current rewrite review](../notes/2026-09-20-paper-rewrite-readback.md): scope,
+- [Finite-tree revision review](../notes/2026-09-20-finite-paper-readback.md):
+  finite proof, exact literature comparison, source pins and render evidence.
+- [Earlier rewrite review](../notes/2026-09-20-paper-rewrite-readback.md): scope,
   findings, corrections and validation limits for the standalone manuscript.
 - [Original exposition review](../notes/2026-09-19-post-c081-paper-readback.md):
   preserved evidence for the earlier manuscript and source checkpoint.
 
-The seventeen mapped results retain mathematical source revision
-`c946d86b9e65da2877e0df42c710abbdcb5a4037`. Their source bytes are compared
-with that revision. Corollary 11.1 and Propositions 12.1–12.2 are ordinary
-proofs, not new Lean declarations. See the [extension proof record](../notes/2026-09-19-post-c081-extensions.md)
-for the earlier regular-model and guarded-fragment arguments.
+The seventeen original mapped results retain mathematical source revision
+`c946d86b9e65da2877e0df42c710abbdcb5a4037`. The four finite-tree results use
+`4159c58bd3ff683d837d23b3eb4c18eef82e8d4d`. Every linked source file is compared
+byte for byte with its recorded revision. Theorem 1.2 maps directly to the
+finite-expression Boolean theorem; Theorem 13.3 assembles its checked positive
+and negative semantic branches. Corollaries 11.1/13.4 and Propositions 12.1–12.2
+are ordinary proofs, not new Lean declarations. The numerical estimate (13.2)
+is proved in the text; the semantic formalization uses an existential bound.
+See the [finite proof readback](../notes/2026-09-20-finite-tree-decision-readback.md)
+and [earlier extension proof record](../notes/2026-09-19-post-c081-extensions.md).
 
 The reference Boolean may enumerate closed relation tables. The separate
 [proved cached solver](../notes/2026-09-20-fast-summary.md) uses finite
@@ -58,24 +67,29 @@ were committed at the recorded revision. The manifest does not claim a
 mathematical review. Tectonic fetches and caches its TeX bundle on first use.
 On macOS, the tested tools can be installed with `brew install pandoc tectonic`.
 
-After a Lean build, execute the small checked example:
+Build the optional finite entry point, then execute the small checked example:
 
 ```sh
-(cd lean && lake env lean --run ../paper/example.lean)
+(cd lean && lake build +Subtail.FiniteTreeDecision && lake env lean --run ../paper/example.lean)
 ```
 
-It prints `true` and `false` for a listed inequality and its reverse. The
-negative case has a root countermodel. For full formal reproduction, use
+It prints `true` and `false` for a listed inequality and its reverse, followed
+by `false` and `true` for the same forced-spine query under arbitrary and finite
+semantics. The first negative case has a root countermodel; the spine has no
+finite model. The example uses the proved cached implementation. For full formal reproduction, use
 `python3 scripts/check_lean.py` and the additional audits documented in the
 [C081 completion record](../notes/2026-09-19-entailment-decision.md).
-Those historical results apply to their recorded revisions; a new PDF build
-does not repeat them.
+For the finite extension, also run `python3 scripts/check_finite_tree_decision.py`.
+Historical results apply to their recorded revisions; a new PDF build does not
+repeat them. JSON handling, extraction and rooted graph finiteness retain the
+external boundaries documented in the solver notes.
 
 ## Remaining scientific and publication questions
 
 The [publication plan](../research/PUBLICATION_PLAN.md) separates manuscript
 review, complexity, performance and extension theorems. The exact full-input
-PSPACE comparison, complete implemented countermodel extraction, explicit top
-and other signatures are separate obligations. The old proposed quantitative
+PSPACE comparison, formalization of the countermodel producer, explicit top
+and other signatures are separate obligations. Complete ordinary extraction
+and checked certificates are already implemented. The old proposed quantitative
 bounds retain their status in the claim ledger; no notation in this manuscript
 silently changes them. Historical release tags and receipts are preserved.

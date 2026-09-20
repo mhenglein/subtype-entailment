@@ -21,6 +21,25 @@
       "legacy_id": "P1"
     },
     {
+      "id": "Theorem 1.2",
+      "statement": "Unconditional finite-expression entailment over finite trees",
+      "source_revision": "4159c58bd3ff683d837d23b3eb4c18eef82e8d4d",
+      "declarations": [
+        [
+          "FiniteTreeDecision",
+          "entailsCheck_correct"
+        ],
+        [
+          "FiniteTreeReduction",
+          "FiniteExprEntails"
+        ],
+        [
+          "FiniteTreeReduction",
+          "FiniteTree"
+        ]
+      ]
+    },
+    {
       "id": "Lemma 2.1",
       "statement": "Exact expression naming and model transfer",
       "declarations": [
@@ -339,6 +358,75 @@
         ]
       ],
       "legacy_id": "P17"
+    },
+    {
+      "id": "Lemma 13.1",
+      "statement": "No consuming reverse-pop cycle gives word length below the number of controls",
+      "source_revision": "4159c58bd3ff683d837d23b3eb4c18eef82e8d4d",
+      "declarations": [
+        [
+          "FiniteTreeDecision",
+          "growthCheck_correct"
+        ],
+        [
+          "FiniteTreeDecision",
+          "growthCheck_false_no_loop"
+        ],
+        [
+          "PopAcyclic",
+          "pop_length_lt_of_no_nonempty_loop"
+        ],
+        [
+          "FiniteTreeDecision",
+          "growthCheck_false_bound"
+        ]
+      ]
+    },
+    {
+      "id": "Lemma 13.2",
+      "statement": "Consuming growth forces an infinite product tree in every model",
+      "source_revision": "4159c58bd3ff683d837d23b3eb4c18eef82e8d4d",
+      "declarations": [
+        [
+          "FiniteTreeDecision",
+          "push_target_forced"
+        ],
+        [
+          "FiniteTreeReduction",
+          "forced_reverse_pop_loop_noFiniteModel"
+        ],
+        [
+          "FiniteTreeDecision",
+          "growthCheck_true_noFiniteModel"
+        ]
+      ]
+    },
+    {
+      "id": "Theorem 13.3",
+      "statement": "Finite entailment is growth or arbitrary entailment; assembled from the checked positive and negative branches",
+      "source_revision": "4159c58bd3ff683d837d23b3eb4c18eef82e8d4d",
+      "declarations": [
+        [
+          "FiniteTreeReduction",
+          "finiteEntails_iff_entails_of_uniform_reverse_pop"
+        ],
+        [
+          "FiniteTreeDecision",
+          "growthCheck_false_bound"
+        ],
+        [
+          "FiniteTreeDecision",
+          "growthCheck_true_noFiniteModel"
+        ],
+        [
+          "FiniteTreeReduction",
+          "normalize_finite_entails_iff"
+        ],
+        [
+          "FiniteTreeDecision",
+          "entailsCheck_correct"
+        ]
+      ]
     }
   ],
   "ordinary_results": [
@@ -356,6 +444,11 @@
       "id": "Proposition 12.2",
       "statement": "Effective regular countermodels and equivalence of arbitrary/regular entailment",
       "evidence": "../notes/2026-09-19-post-c081-extensions.md"
+    },
+    {
+      "id": "Corollary 13.4",
+      "statement": "Finite satisfiability is arbitrary satisfiability without consuming growth; no separate Lean finite-SAT Boolean theorem",
+      "evidence": "../notes/2026-09-20-finite-tree-reduction.md"
     }
   ]
 }

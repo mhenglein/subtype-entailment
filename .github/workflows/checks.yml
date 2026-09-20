@@ -45,8 +45,10 @@ jobs:
           import json
           from pathlib import Path
           import subprocess
-          revision = json.loads(Path("paper/lean-map.json").read_text())["source_revision"]
-          subprocess.run(["git", "fetch", "--no-tags", "--depth=1", "origin", revision], check=True)
+          mapping = json.loads(Path("paper/lean-map.json").read_text())
+          revisions = {row.get("source_revision", mapping["source_revision"]) for row in mapping["entries"]}
+          for revision in sorted(revisions):
+              subprocess.run(["git", "fetch", "--no-tags", "--depth=1", "origin", revision], check=True)
           PY
           python3 paper/check.py
       - name: Replay extension boundary evidence
