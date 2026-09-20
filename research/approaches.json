@@ -180,8 +180,8 @@
       "outcome": "supported",
       "owner": null,
       "updated": "2026-09-20",
-      "summary": "C081 qualitative entailment and its corrected quantitative/resource results retain their exact scopes. The new optional cached solver is proved equal to C081 and passes build/kernel/runtime/source review. Matched E055 completes 33/38 versus 24/38, including all 26 frontend cases; five raw and three of 19 generated cases remain UNKNOWN. Paper rewrite and extension proofs remain separate work.",
-      "next_step": "Profile deeper generated cases before choosing transition caching, pair queues or prefix reuse; pursue complete regular countermodel extraction and the publication rewrite under separate scoped claims. The full backend and changed-signature theorems remain open work. No worker is currently assigned.",
+      "summary": "C081 and its corrected quantitative/resource results retain their exact scopes. The proved cached solver completes 33/38 matched cases, including all 26 frontend cases; five raw and three generated cases remain UNKNOWN. The standalone manuscript now includes full terminal constructions, integrated Henglein-Rehof attribution, ordinary transfer proofs and a separately recorded manuscript/source review. No new scientific claim is promoted.",
+      "next_step": "Implement complete regular countermodel extraction with a checked interface; profile deeper generated cases before selecting another optimization. Continue external mathematical review and exact novelty comparison. Finite-tree, explicit-top and other signature theorems need separate arguments. No worker is currently assigned.",
       "record": "research/approaches/A010.md",
       "evidence": [
         "notes/2026-09-04-bridge-foundation.md",
@@ -236,7 +236,8 @@
         "lean/Subtail/EntailmentFast.lean",
         "scripts/check_fast_summary.py",
         "experiments/check_fast_summary.py",
-        "results/entailment-fast.json"
+        "results/entailment-fast.json",
+        "notes/2026-09-20-paper-rewrite-readback.md"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/3"
     },
@@ -568,8 +569,8 @@
       "outcome": "supported",
       "owner": null,
       "updated": "2026-09-20",
-      "summary": "C081 qualitative entailment and its corrected quantitative/resource results retain their exact scopes. The new optional cached solver is proved equal to C081 and passes build/kernel/runtime/source review. Matched E055 completes 33/38 versus 24/38, including all 26 frontend cases; five raw and three of 19 generated cases remain UNKNOWN. Paper rewrite and extension proofs remain separate work.",
-      "next_step": "Profile deeper generated cases before choosing transition caching, pair queues or prefix reuse; pursue complete regular countermodel extraction and the publication rewrite under separate scoped claims. The full backend and changed-signature theorems remain open work. No worker is currently assigned.",
+      "summary": "C081 and its corrected quantitative/resource results retain their exact scopes. The proved cached solver completes 33/38 matched cases, including all 26 frontend cases; five raw and three generated cases remain UNKNOWN. The standalone manuscript now includes full terminal constructions, integrated Henglein-Rehof attribution, ordinary transfer proofs and a separately recorded manuscript/source review. No new scientific claim is promoted.",
+      "next_step": "Implement complete regular countermodel extraction with a checked interface; profile deeper generated cases before selecting another optimization. Continue external mathematical review and exact novelty comparison. Finite-tree, explicit-top and other signature theorems need separate arguments. No worker is currently assigned.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
@@ -686,7 +687,8 @@
         "lean/Subtail/EntailmentFast.lean",
         "scripts/check_fast_summary.py",
         "experiments/check_fast_summary.py",
-        "results/entailment-fast.json"
+        "results/entailment-fast.json",
+        "notes/2026-09-20-paper-rewrite-readback.md"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/31"
     }

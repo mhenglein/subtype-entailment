@@ -21,6 +21,11 @@ and the [paper-to-Lean map](paper/lean-map.md). The terminal-decision constructi
 is explained in Sections 5–9, including coverage and reconstruction of the
 whole path-query conjunction. [The source module](lean/Subtail/EntailmentDecision.lean)
 contains the final composition.
+The revised paper uses conventional theorem numbering and a full bibliography,
+integrates the Henglein–Rehof lineage, and gives ordinary proofs of effective
+regular countermodels and the constant-free PSPACE transfer. Source pins and
+review records are kept in the artifact guide, outside the manuscript.
+[Rewrite and review scope](notes/2026-09-20-paper-rewrite-readback.md).
 
 **Small example.** From `x <= y`, covariance gives
 `x × bottom <= y × bottom`. The reverse query fails: set `x = bottom` and
@@ -83,11 +88,15 @@ reachability. The full input-cost derivation and NL reduction are ordinary
 mathematics; the terminal witness bound is Lean-checked. These do not give a tight
 complexity class or bound the runtime of this native frontend.
 
-The stable paper/reader tag is
+The earlier reader checkpoint is
 [`c081-research-2026-09-20`](https://github.com/mhenglein/subtail/tree/c081-research-2026-09-20),
 at `29cda9a`, with all four main checks passing. Its paper explains the
-qualitative C081 proof. Later quantitative and solver results are separate
+qualitative C081 proof. Later quantitative, solver and standalone-paper revisions are separate
 additive contributions; original proof source pins remain unchanged.
+The revised standalone paper is preserved at
+[`c081-paper-2026-09-20`](https://github.com/mhenglein/subtail/tree/c081-paper-2026-09-20).
+Its [review record](notes/2026-09-20-paper-rewrite-readback.md) separates the
+manuscript readback, literature comparison, PDF inspection and formal evidence.
 
 ## Reproduce the result
 

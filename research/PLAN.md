@@ -1,6 +1,6 @@
 # Research plan
 
-Updated: 2026-09-20 (cached solver acceptance target met)
+Updated: 2026-09-20 (cached solver and standalone manuscript revisions)
 
 **Completed qualitative goal:** decide [Problem 1.7](problem.md) for bottom
 and binary product over arbitrary, possibly infinite trees. [C081](claims.md#c081)
@@ -17,9 +17,11 @@ lower bound. The original concrete C080 U is refuted, while its F alone and
 an existential smaller compiler remain open. No issue closure changes that.
 
 The current [publication, solver and extension-proof plan](PUBLICATION_PLAN.md)
-sets concrete next acceptance criteria. Rewrite the manuscript as a standalone
-mathematical paper with integrated Henglein–Rehof attribution and no internal
-project notes. The [proved cached solver](../notes/2026-09-20-fast-summary.md)
+sets concrete next acceptance criteria. The [standalone manuscript rewrite](../notes/2026-09-20-paper-rewrite-readback.md)
+now integrates Henglein–Rehof attribution, supplies the terminal constructions
+and keeps internal project notes in the artifact guide. Further mathematical
+review and exact novelty comparison remain distinct from formatting checks.
+The [proved cached solver](../notes/2026-09-20-fast-summary.md)
 now resolves all nine full-expression timeouts: E055 completes 26/26 frontend
 cases and 33/38 overall. Three deeper generated cases still time out; profile
 them before selecting the next optimization. Finish checked regular
@@ -27,7 +29,7 @@ countermodel extraction, test a specific finite-tree reduction, and pursue arity
 proof obligations. Tight complexity and exact literature transfers remain open.
 
 The remaining items are proposals, not active worker assignments. Ownership and reservations
-remain in [the registry](approaches.json), [#55](https://github.com/mhenglein/subtail/issues/55)
+remain in [the registry](approaches.json), [#56](https://github.com/mhenglein/subtail/issues/56)
 and [#37](https://github.com/mhenglein/subtail/issues/37). The owner deferred
 licensing and requested author/affiliation placeholders. No license grant or
 publication-ready authorship is asserted.

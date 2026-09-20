@@ -1,5 +1,25 @@
 # Subtail — current research state
 
+## September 20: standalone mathematical paper and literature account
+
+The [revised manuscript](paper/manuscript.md) presents the arbitrary-tree
+bottom/product decision with conventional theorem numbers, a bibliography,
+and explicit definitions of the terminal compiler's diagrams and common
+interval observers. Coverage and reconstruction use one generated extension
+for the whole conjunction. The Henglein–Rehof 1997/1998 and Niehren–Priesnitz
+1999/2003 results are compared with their exact tree domains and signatures.
+The [ordinary regular-countermodel and guarded constant-free proofs](paper/manuscript.md#12-comparison-with-restricted-entailment-results)
+are included; neither is presented as a newly checked extractor or a full-input
+PSPACE theorem.
+
+Internal task IDs, source hashes, review logs and licensing administration
+are kept in the artifact guide and [rewrite readback](notes/2026-09-20-paper-rewrite-readback.md).
+The latter records the separate mathematical and primary-source review scopes,
+corrections and final artifact checks. No Lean source or scientific claim status
+changes in this revision. Human peer review, publication priority, author
+information and licensing remain unresolved. Earlier versions and their
+evidence are retained.
+
 ## September 20: proved cached solver meets the basic frontend target
 
 The optional [cached solver](notes/2026-09-20-fast-summary.md) is unconditionally
@@ -25,8 +45,9 @@ remain UNKNOWN. [Pinned receipt](results/entailment-fast.json).
 
 The next performance question is to profile the deeper cases before choosing
 further representation changes. Peak memory and algorithm-phase costs were
-not measured. Full backend optimization, complete countermodel extraction,
-the standalone paper rewrite and extension proofs remain open. Earlier dated
+not measured. Full backend optimization, complete countermodel extraction
+and extension proofs remain open. The standalone paper rewrite is recorded
+above; further mathematical scrutiny remains useful. Earlier dated
 entries below retain their original measurements and scientific scope.
 
 ## September 20: post-C081 package and usable solver

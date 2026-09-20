@@ -12,6 +12,24 @@ publication-ready paper, broadly useful solver and new signature theorems
 require further work. Implementation ownership remains in the registry and
 future scoped issue claims; this document assigns no workers or paths.
 
+## Execution update: standalone paper rewrite
+
+The [revised manuscript](../paper/manuscript.md) now follows the narrative and
+notation plan below. It includes the complete shared-word terminal preimage,
+coverage, reconstruction and termination arguments, worked diagrams, and the
+ordinary regular-model and guarded constant-free transfers. Conventional
+numbered results, a bibliography and integrated Henglein–Rehof attribution
+replace internal research administration. The detailed proof map, source pins,
+licensing status and review evidence remain outside the manuscript.
+
+The [rewrite readback](../notes/2026-09-20-paper-rewrite-readback.md) records the
+manuscript-first mathematical review, refreshed HR97/HR98/NP99/NP03 comparison,
+corrections, source checks and PDF validation. These are bounded agent reviews,
+not human peer review or a global novelty search. No new Lean proof, extension
+theorem or performance result is claimed by the rewrite. Author information
+and licensing remain owner-deferred. Issue [#56](https://github.com/mhenglein/subtail/issues/56)
+contains the exact integration scope and release.
+
 ## Execution update: cached solver proof
 
 The [finite saturation and cached solver](../notes/2026-09-20-fast-summary.md)
@@ -25,8 +43,8 @@ under the same cap, and the matched total improves from 24/38 to 33/38.
 Five unchanged raw probes and three deeper generated cases remain UNKNOWN.
 The note and its [native receipt](../results/entailment-fast.json) preserve those
 limits. Constructing only needed summary states, complete countermodel
-extraction, the paper rewrite and extension
-proofs remain separate tasks. The review findings below describe the original
+extraction and extension proofs remain separate tasks. The paper revision is
+recorded above. The review findings below describe the original
 planning baseline and preserve its earlier measurements.
 
 ## What the review found
@@ -55,7 +73,8 @@ saved-result readbacks, not fresh Lean builds or new benchmark executions.
 
 ## 1. Rewrite the paper around the mathematics and its literature
 
-Start here, alongside the bounded solver work below. Keep the current exact
+The first rewrite is recorded above; retain these criteria for further review.
+Keep the current exact
 bottom/product arbitrary-tree theorem as the paper's principal result. Do not
 delay its exposition until explicit top or every extension is settled.
 
@@ -80,12 +99,12 @@ with a full bibliography. The comparison must retain these boundaries:
 
 | Source | Result to credit | Boundary for this paper |
 |---|---|---|
-| Henglein–Rehof, LICS 1997, Theorems 4.7–4.8 and Corollary 4.9 | coNP completeness of structural simple-type entailment over lattice base types; hardness already with a binary covariant constructor | Structural finite simple types are not our nonstructural arbitrary-tree domain. |
+| Henglein–Rehof, LICS 1997, Theorems 4.7–4.8 and Corollary 4.9 | coNP completeness of structural simple-type entailment over a nontrivial base lattice; hardness already with a binary covariant constructor | Structural finite simple types are not our nonstructural arbitrary-tree domain. |
 | Henglein–Rehof, ICALP 1998, Section 3 and Theorems 1–2 | Constraint automata; PSPACE hardness of nonstructural entailment over both finite and infinite trees | The nonstructural domain includes explicit bottom and top. A syntactically product-only hard instance does not remove top from its valuations. |
-| Henglein–Rehof, ICALP 1998, Theorem 5 | PSPACE completeness for structural infinite-tree entailment | This is a different theorem from their nonstructural hardness result. Their paper leaves the matching nonstructural upper bound open. |
+| Henglein–Rehof, ICALP 1998, Theorem 5 | PSPACE completeness for structural infinite-tree entailment over a lattice of constants | This is a different theorem from their nonstructural hardness result. Their paper leaves the matching nonstructural upper bound open. |
 | Niehren–Priesnitz, Information and Computation 2003 | Automata and word-equation characterization of nonstructural subtype entailment | Explain the exact semantic mapping and which constructions are inherited or adapted before claiming a new step. |
 
-Primary sources: [HR97 paper](https://hjemmesider.diku.dk/~henglein/papers/henglein1997b.pdf),
+Primary sources: [HR97 DOI](https://doi.org/10.1109/LICS.1997.614961),
 [HR97 proceedings record](https://lics.siglog.org/archive/1997/HengleinRehof-Thecomplexityofsubt.html),
 [HR98 paper](https://hjemmesider.diku.dk/~henglein/papers/henglein1998a.pdf),
 [HR98 proceedings record](https://link.springer.com/chapter/10.1007/BFb0055089),
@@ -236,9 +255,10 @@ or proof; neither follows from changing the alphabet or flipping an edge.
 
 ## 4. Review, integrate and release in stages
 
-Recommended sequence: start the manuscript rewrite and measured closure
-optimization as independent tasks; then finish checked regular extraction and
-test the finite-tree reduction. Audit fixed arity next. Pursue explicit top
+The first manuscript rewrite and measured closure optimization are recorded
+above. Next finish checked regular extraction and test the finite-tree reduction,
+while profiling deeper solver cases and inviting further mathematical review.
+Audit fixed arity next. Pursue explicit top
 under its own proof outline, without making the current paper wait for it.
 
 Use a separate manuscript referee, an optimization/proof author and an
@@ -255,7 +275,8 @@ Keep the original checkpoint intact and create a new stable version for the
 revised paper and artifact. Licensing remains pending and author information
 remains placeholder text until the owner supplies it.
 
-This plan used parent manuscript/code/receipt readback, a separate bounded
+The original planning baseline used parent manuscript/code/receipt readback, a separate bounded
 primary-source review of HR97/HR98, and a separate extension-target review.
-These checks were for planning; they are not a fresh review of every line of
+Those checks were for planning; they were not a fresh review of every line of
 the decision proof or a verification of the proposed finite-tree theorem.
+The later paper review has its own scope and evidence linked above.
