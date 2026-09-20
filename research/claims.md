@@ -1250,6 +1250,50 @@ Lean declaration is claimed. The finite/regular equivalence here concerns only
 the variable-only sublanguage; it does not transfer the general C081 theorem
 to finite-tree entailment.
 
+<a id="c084"></a>
+
+### C084 — Checked finite-graph countermodel certificates
+
+**Statement.** For every n,v, original finite `G : Input n`, expressions
+`s t : Expr n`, and `c : RegularTreeCertificate.Certificate n v`,
+
+```lean
+RegularTreeCertificate.check G s t c = true →
+  ¬ ExpressionNormalization.ExprEntails G s t
+```
+
+The stronger `check_sound` conclusion gives `ExprModels G (valuation c)`,
+membership of the supplied word in the left expression, and its absence from
+the right expression. A certificate contains a finite bottom/product graph,
+variable roots, expression-node map, finite Boolean relation and word. Cyclic
+graphs denote regular infinite trees inside the unchanged arbitrary-tree
+semantics. The query is not inserted as a premise.
+
+**Construction.** `simulationCheck` checks every true pair in the finite
+relation. Induction on addresses proves tree inclusion for related roots.
+`embedCheck` recursively checks every original premise/query expression;
+`embed_eval` identifies each checked node with the expression's tree value.
+The word test gives the counterexample. No producer normalization, witness
+bound, SAT assumption or unchecked proposition occurs in the certificate.
+`below_iff_simulation` separately characterizes graph inclusion by existence
+of a proposition-valued locally closed relation; it is not an extractor.
+
+**Status and evidence.** Checked Lean module with independent semantic
+readback and native/instance-proof regression evidence. Source originated at
+`7a3bcd3148d7b0c2e706c8e21593ab0bcc9d4dc3` and is integrated unchanged.
+[Source](../lean/Subtail/RegularTreeCertificate.lean),
+[ordinary construction and exact validation record](../notes/2026-09-20-regular-countermodels.md),
+[separate readback](../notes/2026-09-20-regular-countermodels-readback.md),
+[reproduction driver](../scripts/check_regular_certificate.py).
+
+**Limits.** The complete canonical NFA extractor and its termination argument
+are ordinary reviewed Python/mathematics, not a Lean-verified extraction
+function. `--verify-certificate` generates a particular non-entailment theorem
+using `check_not_entails ... (by decide)` and reports VERIFIED only after the
+whole Lean process succeeds. JSON parsing and source emission remain outside
+the kernel boundary; resource limits can yield UNKNOWN. No new finite-tree,
+explicit-top, complexity or novelty conclusion is claimed.
+
 ## Explicitly unestablished
 
 The following are deliberately not accepted claims in this ledger:

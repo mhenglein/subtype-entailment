@@ -2,8 +2,8 @@
 
 Date / author: 2026-09-20, countermodels-20260920. A010/A018, C081, #57/#37.
 Base: `25e5c124d4fc1dc3c31bcf13ab1b420d835c8639`.
-Status: implementation route; ordinary completeness and new certificate proof
-require the validation recorded below before release.
+Status: ordinary construction with source review and checked certificate
+soundness (C084). Validation revisions and boundaries are recorded below.
 
 ## Exact target
 
@@ -150,8 +150,99 @@ Finite pair-graph inclusion handles every address of a cyclic graph, not just
 an unfolding depth. A successfully checked certificate establishes a negative
 answer even if the extractor chose a different graph or separator.
 
-A Lean certificate module is being added separately. Its exact executable
-signature, soundness theorem, invocation and validation will be recorded after
-completion. No present statement asserts a Lean-verified regular-language
-extractor or checked completeness of Python normalization/search. The reviewed
-ordinary proof and the Lean certificate guarantee must remain distinct.
+The separate [certificate module](../lean/Subtail/RegularTreeCertificate.lean)
+provides `check`, `check_sound` and `check_not_entails`. It checks every
+related pair, every original expression recursively, every premise endpoint
+and the supplied address. `check_sound` gives an explicit model satisfying
+all original premises with the query false at that word. `check_not_entails`
+then rules out universal arbitrary-tree entailment. This is C084.
+
+The Python emitter adds nodes for original expression syntax, builds a finite
+simulation relation by pair reachability, and emits a total expression-node
+map whose unused cases default to zero. Lean only uses this map after recursive
+validation over the finite original input forest. `--verify-certificate` also
+emits the particular theorem `¬ ExprEntails input left right`, proved by
+`check_not_entails ... (by decide)`. A true runtime marker alone is insufficient:
+the complete process, including kernel validation of that proof, must succeed.
+There is no `native_decide` in this proof.
+
+No statement asserts a Lean-verified regular-language extractor or checked
+completeness of Python normalization/search. The reviewed ordinary proof and
+the Lean certificate guarantee remain distinct.
+
+
+## Reproduce
+
+```sh
+python3 -m unittest discover -s scripts -p 'test_subtail.py'
+python3 -m unittest discover -s scripts -p 'test_regular_countermodel.py'
+python3 scripts/check_regular_certificate.py
+(cd lean && lake build +Subtail.EntailmentFast +Subtail.RegularTreeCertificate)
+python3 scripts/subtail.py examples/countermodels/alternating-spine.json \
+  --timeout 60 --verify-certificate
+python3 scripts/subtail.py examples/countermodels/alternating-spine.json \
+  --check-model examples/countermodels/alternating-spine-model.json \
+  --timeout 60 --verify-certificate
+```
+
+The default CLI deadline includes decision, extraction and optional verification.
+The extractor runs in an isolated process group with Linux memory and CPU
+limits. All platforms have a wall-clock deadline. Extraction has an 8 MiB result
+limit; the emitter caps its relation matrix at one million entries. These are
+operational limits, not mathematical cutoffs. Native decision and explanation
+status stay separate. A resource failure never upgrades UNKNOWN to ENTAILED,
+nor retracts a completed negative decision.
+
+The three-node alternating example has roots x=1, y=2 and nodes
+`[null, [0,2], [1,0]]`. Thus x is bottom × y and y is x × bottom. Its query
+`x <= bottom × bottom` fails at `[1]`. No assignment to the five earlier fixed
+graph shapes satisfies this input, as exhaustively checked in the regression.
+
+## Validation and review
+
+The separate construction reviewer read `3e41754` (extractor from `93bfffd`)
+and found no semantic blocker; the exact scope and later invariant guards are
+in [the readback](2026-09-20-regular-countermodels-readback.md). The parent read
+the full certificate source from worker `7a3bcd3` before additive integration
+as `a5d0ebc`. The graph interpretation, left/right order, finite simulation,
+recursive expression map and original-input theorem match the intended C084
+statement. Existing C081 proof sources and import aggregator are unchanged.
+
+The worker's isolated Mac build, module kernel replay and native checks passed
+at `7a3bcd3`, including 34 native certificates (15 valid, 19 invalid/tampered)
+and 15 positive per-input kernel proofs. The parent runs the same full native
+and instance-proof driver against the combined tree; its fresh receipt and
+CLI readbacks are recorded below. The original proof's runtime definitions
+are audited separately from erased proof terms.
+
+
+### Fresh combined evidence
+
+At `d63285292f78f06c1340a7bc2955777ae8317956` on isolated wb-marcus:
+
+- PASS: new module build and kernel replay; all 24 declaration dependency
+  closures; all 14 non-theorems avoid classical choice.
+- PASS: 34 native certificate checks, including 19 invalid/tampered rejections;
+  every one of the 15 valid cases also has a kernel-checked instance proof.
+- PASS: 24 Python CLI/resource tests and 9 extraction tests. The latter use
+  80 complete acyclic literal closures, 60 cyclic systems compared against
+  independent unbounded predecessor saturation, all negative pairs among
+  26 finite depth-three trees, and 120 independently witnessed cyclic inputs.
+  Seeds are 5701, 5702, 5703 and 5704, as recorded with their individual suites.
+- PASS: five actual CLI certificate proofs. Alternating spine takes 4.000 s,
+  zero-variable input 1.997 s, zero spine 1.945 s, reverse query 1.947 s, and
+  rechecking the supplied alternating model 1.040 s. These are single diagnostic
+  timings including startup, not a broad performance claim.
+
+The [machine receipt](../results/regular-countermodels.json) preserves exact
+sources, commands, outcomes and per-input proofs. The earlier default core
+build/kernel/differential suite passed at `93bfffd`; none of its source modules
+changed later. Existing C081/default proof sources remain unchanged. The
+source reviewer separately checked the certificate module at `a5d0ebc` and
+found no semantic mismatch. Old E055 timeouts and measurements are untouched.
+
+The next mathematical target is the explicit finite-tree reduction in the
+publication plan. A fully Lean-verified NFA extractor is a separate possible
+formalization target. No new workstream is automatically launched by this
+handoff. Main CI is read back separately at publication; a pending or skipped
+run is not recorded as a pass here.

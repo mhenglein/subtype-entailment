@@ -1,0 +1,698 @@
+{
+  "certificate_audit": {
+    "build": "PASS",
+    "declarations": {
+      "Subtail.RegularTreeCertificate.Certificate": {
+        "axioms": [],
+        "kind": "structure"
+      },
+      "Subtail.RegularTreeCertificate.Graph": {
+        "axioms": [],
+        "kind": "structure"
+      },
+      "Subtail.RegularTreeCertificate.IsSimulation": {
+        "axioms": [
+          "propext"
+        ],
+        "kind": "def"
+      },
+      "Subtail.RegularTreeCertificate.Node": {
+        "axioms": [],
+        "kind": "abbrev"
+      },
+      "Subtail.RegularTreeCertificate.SimulationStep": {
+        "axioms": [
+          "propext"
+        ],
+        "kind": "def"
+      },
+      "Subtail.RegularTreeCertificate.below_iff_simulation": {
+        "axioms": [
+          "propext"
+        ],
+        "kind": "theorem"
+      },
+      "Subtail.RegularTreeCertificate.check": {
+        "axioms": [
+          "propext"
+        ],
+        "kind": "def"
+      },
+      "Subtail.RegularTreeCertificate.check_not_entails": {
+        "axioms": [
+          "Quot.sound",
+          "propext"
+        ],
+        "kind": "theorem"
+      },
+      "Subtail.RegularTreeCertificate.check_sound": {
+        "axioms": [
+          "Quot.sound",
+          "propext"
+        ],
+        "kind": "theorem"
+      },
+      "Subtail.RegularTreeCertificate.embedCheck": {
+        "axioms": [
+          "propext"
+        ],
+        "kind": "def"
+      },
+      "Subtail.RegularTreeCertificate.embed_eval": {
+        "axioms": [
+          "Quot.sound",
+          "propext"
+        ],
+        "kind": "theorem"
+      },
+      "Subtail.RegularTreeCertificate.expressionForest": {
+        "axioms": [],
+        "kind": "def"
+      },
+      "Subtail.RegularTreeCertificate.graphNodes": {
+        "axioms": [
+          "propext"
+        ],
+        "kind": "def"
+      },
+      "Subtail.RegularTreeCertificate.graphNodes_prefix": {
+        "axioms": [
+          "propext"
+        ],
+        "kind": "theorem"
+      },
+      "Subtail.RegularTreeCertificate.premisesCheck": {
+        "axioms": [],
+        "kind": "def"
+      },
+      "Subtail.RegularTreeCertificate.simulationCheck": {
+        "axioms": [
+          "propext"
+        ],
+        "kind": "def"
+      },
+      "Subtail.RegularTreeCertificate.simulationCheck_closed": {
+        "axioms": [
+          "Quot.sound",
+          "propext"
+        ],
+        "kind": "theorem"
+      },
+      "Subtail.RegularTreeCertificate.simulationStep": {
+        "axioms": [
+          "propext"
+        ],
+        "kind": "def"
+      },
+      "Subtail.RegularTreeCertificate.simulation_sound": {
+        "axioms": [
+          "propext"
+        ],
+        "kind": "theorem"
+      },
+      "Subtail.RegularTreeCertificate.simulation_sound_prop": {
+        "axioms": [
+          "propext"
+        ],
+        "kind": "theorem"
+      },
+      "Subtail.RegularTreeCertificate.treeOf": {
+        "axioms": [
+          "propext"
+        ],
+        "kind": "def"
+      },
+      "Subtail.RegularTreeCertificate.treeOf_product": {
+        "axioms": [
+          "Quot.sound",
+          "propext"
+        ],
+        "kind": "theorem"
+      },
+      "Subtail.RegularTreeCertificate.tree_eq_of_nodes": {
+        "axioms": [
+          "Quot.sound",
+          "propext"
+        ],
+        "kind": "theorem"
+      },
+      "Subtail.RegularTreeCertificate.valuation": {
+        "axioms": [
+          "propext"
+        ],
+        "kind": "def"
+      }
+    },
+    "kernel_replay": "PASS",
+    "native_cases": [
+      {
+        "actual": true,
+        "expected": true,
+        "name": "examples/entailment/reverse.json",
+        "status": "PASS"
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "examples/entailment/zero-spine.json",
+        "status": "PASS"
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "examples/countermodels/alternating-spine.json",
+        "status": "PASS"
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "examples/countermodels/no-variables.json",
+        "status": "PASS"
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "missing-simulation",
+        "status": "PASS"
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "fabricated-simulation",
+        "status": "PASS"
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "wrong-root-address",
+        "status": "PASS"
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "bad-expression-embedding",
+        "status": "PASS"
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "wrong-variable-roots",
+        "status": "PASS"
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "all-bottom-graph",
+        "status": "PASS"
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "cyclic-0",
+        "status": "PASS"
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "cyclic-1",
+        "status": "PASS"
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "cyclic-2",
+        "status": "PASS"
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "cyclic-3",
+        "status": "PASS"
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "cyclic-4",
+        "status": "PASS"
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "cyclic-5",
+        "status": "PASS"
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "cyclic-6",
+        "status": "PASS"
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "cyclic-7",
+        "status": "PASS"
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "cyclic-8",
+        "status": "PASS"
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "cyclic-9",
+        "status": "PASS"
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "cyclic-10",
+        "status": "PASS"
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "cyclic-11",
+        "status": "PASS"
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "cyclic-12",
+        "status": "PASS"
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "cyclic-13",
+        "status": "PASS"
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "cyclic-14",
+        "status": "PASS"
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "cyclic-15",
+        "status": "PASS"
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "cyclic-16",
+        "status": "PASS"
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "cyclic-17",
+        "status": "PASS"
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "cyclic-18",
+        "status": "PASS"
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "cyclic-19",
+        "status": "PASS"
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "cyclic-20",
+        "status": "PASS"
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "cyclic-21",
+        "status": "PASS"
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "cyclic-22",
+        "status": "PASS"
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "cyclic-23",
+        "status": "PASS"
+      }
+    ],
+    "revision": "d63285292f78f06c1340a7bc2955777ae8317956",
+    "scope": "Lean certificate soundness boundary and finite native regressions; Python extraction is not Lean-verified",
+    "source_sha256": {
+      "lean/Subtail/RegularTreeCertificate.lean": "f0a271f276adc997620f2034edd3d3e3e44a33045d1b69c489f48ae81c33579f",
+      "scripts/check_regular_certificate.py": "27f519f07b1f2fc944aa8c1827c1ef20c0b21b79d547bda9b57c09dfbd135053",
+      "scripts/regular_countermodel.py": "e77c547f7f4697609a37d23705bbb33c42361a3f5412378f08dba6c5235ce127",
+      "scripts/subtail.py": "2ffd491902929841efabcf9518ed079cd4ca81a27e1511171e8e627b46e09775"
+    },
+    "status": "PASS"
+  },
+  "cli": {
+    "cases": [
+      {
+        "command": [
+          "python3",
+          "scripts/subtail.py",
+          "examples/countermodels/alternating-spine.json",
+          "--timeout",
+          "60",
+          "--verify-certificate"
+        ],
+        "input_sha256": "dd8b051d304374051f5c039b919634dfaacf98cba7904d406a4654f1aafcdc75",
+        "name": "alternating",
+        "result": {
+          "basis": "Lean EntailmentFast.entailsCheck_correct",
+          "build_seconds": 0.218,
+          "certificate_verification": {
+            "basis": "Lean RegularTreeCertificate.check_not_entails",
+            "checker_sha256": "f0a271f276adc997620f2034edd3d3e3e44a33045d1b69c489f48ae81c33579f",
+            "input_source_sha256": "b587a892b8618ab96bcfe2e51d03d85fd5b628f216b17802fb70a9c2faafc911",
+            "instance_proof": "kernel-checked with decide; no native_decide",
+            "seconds": 0.819,
+            "status": "VERIFIED"
+          },
+          "countermodel": {
+            "checked_premises": 4,
+            "nodes": [
+              null,
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "roots": {
+              "x": 1,
+              "y": 2
+            },
+            "semantics": "arbitrary bottom/product trees; finite graph denotes regular trees",
+            "separating_path": [
+              1
+            ],
+            "valid": true
+          },
+          "explanation_search": {
+            "candidates": 3,
+            "method": "canonical finite-seed NFA and subset graph",
+            "nfa_states": 8,
+            "normalized_controls": 6,
+            "separating_path": [
+              1
+            ],
+            "status": "FOUND"
+          },
+          "native_seconds": 2.624,
+          "seconds": 4.0,
+          "stage": "decision",
+          "status": "NOT_ENTAILED",
+          "trust_boundary": "Lean verified the finite-graph certificate against emitted original expressions. JSON parsing, source emission and the extractor remain ordinary Python.",
+          "wrapper_sha256": "d2867bd220ec379ab19caa9f6d639082b0abd234ce548642d64e3e7d85017afc"
+        }
+      },
+      {
+        "command": [
+          "python3",
+          "scripts/subtail.py",
+          "examples/countermodels/no-variables.json",
+          "--timeout",
+          "60",
+          "--verify-certificate"
+        ],
+        "input_sha256": "1a81ec9769031ec0530d39263140087b6a84aac3e85ba66a6b4236c540fa41c7",
+        "name": "no-variables",
+        "result": {
+          "basis": "Lean EntailmentFast.entailsCheck_correct",
+          "build_seconds": 0.219,
+          "certificate_verification": {
+            "basis": "Lean RegularTreeCertificate.check_not_entails",
+            "checker_sha256": "f0a271f276adc997620f2034edd3d3e3e44a33045d1b69c489f48ae81c33579f",
+            "input_source_sha256": "89cf1378ff423d062f993f3d355e4ea23a84bc6d35f65c2a19e44a8c15b94cb7",
+            "instance_proof": "kernel-checked with decide; no native_decide",
+            "seconds": 0.719,
+            "status": "VERIFIED"
+          },
+          "countermodel": {
+            "checked_premises": 0,
+            "nodes": [
+              null
+            ],
+            "roots": {},
+            "semantics": "arbitrary bottom/product trees; finite graph denotes regular trees",
+            "separating_path": [
+              1
+            ],
+            "valid": true
+          },
+          "explanation_search": {
+            "candidates": 2,
+            "method": "canonical finite-seed NFA and subset graph",
+            "nfa_states": 5,
+            "normalized_controls": 3,
+            "separating_path": [
+              1
+            ],
+            "status": "FOUND"
+          },
+          "native_seconds": 0.719,
+          "seconds": 1.997,
+          "stage": "decision",
+          "status": "NOT_ENTAILED",
+          "trust_boundary": "Lean verified the finite-graph certificate against emitted original expressions. JSON parsing, source emission and the extractor remain ordinary Python.",
+          "wrapper_sha256": "d2867bd220ec379ab19caa9f6d639082b0abd234ce548642d64e3e7d85017afc"
+        }
+      },
+      {
+        "command": [
+          "python3",
+          "scripts/subtail.py",
+          "examples/entailment/zero-spine.json",
+          "--timeout",
+          "60",
+          "--verify-certificate"
+        ],
+        "input_sha256": "3a7cb4d09acb282b5d02e5974255bb6e1682cdef9791b72635ae1bbd1e76d46b",
+        "name": "zero-spine",
+        "result": {
+          "basis": "Lean EntailmentFast.entailsCheck_correct",
+          "build_seconds": 0.218,
+          "certificate_verification": {
+            "basis": "Lean RegularTreeCertificate.check_not_entails",
+            "checker_sha256": "f0a271f276adc997620f2034edd3d3e3e44a33045d1b69c489f48ae81c33579f",
+            "input_source_sha256": "a0907bde8d22a3b82295870ce4ada24a4ed3cd71598c70547bfcae5c74dad4c3",
+            "instance_proof": "kernel-checked with decide; no native_decide",
+            "seconds": 0.719,
+            "status": "VERIFIED"
+          },
+          "countermodel": {
+            "checked_premises": 1,
+            "nodes": [
+              null,
+              [
+                1,
+                0
+              ]
+            ],
+            "roots": {
+              "x": 1
+            },
+            "semantics": "arbitrary bottom/product trees; finite graph denotes regular trees",
+            "separating_path": [],
+            "valid": true
+          },
+          "explanation_search": {
+            "candidates": 1,
+            "method": "canonical finite-seed NFA and subset graph",
+            "nfa_states": 4,
+            "normalized_controls": 3,
+            "separating_path": [],
+            "status": "FOUND"
+          },
+          "native_seconds": 0.669,
+          "seconds": 1.945,
+          "stage": "decision",
+          "status": "NOT_ENTAILED",
+          "trust_boundary": "Lean verified the finite-graph certificate against emitted original expressions. JSON parsing, source emission and the extractor remain ordinary Python.",
+          "wrapper_sha256": "d2867bd220ec379ab19caa9f6d639082b0abd234ce548642d64e3e7d85017afc"
+        }
+      },
+      {
+        "command": [
+          "python3",
+          "scripts/subtail.py",
+          "examples/entailment/reverse.json",
+          "--timeout",
+          "60",
+          "--verify-certificate"
+        ],
+        "input_sha256": "4e57bdd85e1cbc6a7ace7a32b373d24ac3b127fc29204d91cb16e5a4dde4e8a1",
+        "name": "reverse",
+        "result": {
+          "basis": "Lean EntailmentFast.entailsCheck_correct",
+          "build_seconds": 0.218,
+          "certificate_verification": {
+            "basis": "Lean RegularTreeCertificate.check_not_entails",
+            "checker_sha256": "f0a271f276adc997620f2034edd3d3e3e44a33045d1b69c489f48ae81c33579f",
+            "input_source_sha256": "49d0850926dca4f891c873de9a5220d16c59430bfe00f7fbf360ce1405ad0caf",
+            "instance_proof": "kernel-checked with decide; no native_decide",
+            "seconds": 0.719,
+            "status": "VERIFIED"
+          },
+          "countermodel": {
+            "checked_premises": 1,
+            "nodes": [
+              null,
+              [
+                0,
+                0
+              ]
+            ],
+            "roots": {
+              "x": 0,
+              "y": 1
+            },
+            "semantics": "arbitrary bottom/product trees; finite graph denotes regular trees",
+            "separating_path": [],
+            "valid": true
+          },
+          "explanation_search": {
+            "candidates": 1,
+            "method": "canonical finite-seed NFA and subset graph",
+            "nfa_states": 3,
+            "normalized_controls": 2,
+            "separating_path": [],
+            "status": "FOUND"
+          },
+          "native_seconds": 0.669,
+          "seconds": 1.947,
+          "stage": "decision",
+          "status": "NOT_ENTAILED",
+          "trust_boundary": "Lean verified the finite-graph certificate against emitted original expressions. JSON parsing, source emission and the extractor remain ordinary Python.",
+          "wrapper_sha256": "d2867bd220ec379ab19caa9f6d639082b0abd234ce548642d64e3e7d85017afc"
+        }
+      },
+      {
+        "command": [
+          "python3",
+          "scripts/subtail.py",
+          "examples/countermodels/alternating-spine.json",
+          "--timeout",
+          "60",
+          "--verify-certificate",
+          "--check-model",
+          "examples/countermodels/alternating-spine-model.json"
+        ],
+        "input_sha256": "dd8b051d304374051f5c039b919634dfaacf98cba7904d406a4654f1aafcdc75",
+        "name": "supplied-alternating",
+        "result": {
+          "basis": "independent Python regular-tree certificate check",
+          "certificate_verification": {
+            "basis": "Lean RegularTreeCertificate.check_not_entails",
+            "checker_sha256": "f0a271f276adc997620f2034edd3d3e3e44a33045d1b69c489f48ae81c33579f",
+            "input_source_sha256": "b587a892b8618ab96bcfe2e51d03d85fd5b628f216b17802fb70a9c2faafc911",
+            "instance_proof": "kernel-checked with decide; no native_decide",
+            "seconds": 0.819,
+            "status": "VERIFIED"
+          },
+          "countermodel": {
+            "checked_premises": 4,
+            "nodes": [
+              null,
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "roots": {
+              "x": 1,
+              "y": 2
+            },
+            "semantics": "arbitrary bottom/product trees; finite graph denotes regular trees",
+            "separating_path": [
+              1
+            ],
+            "valid": true
+          },
+          "seconds": 1.04,
+          "status": "NOT_ENTAILED",
+          "trust_boundary": "Lean verified the finite-graph certificate against emitted original expressions. JSON parsing, source emission and the extractor remain ordinary Python."
+        }
+      }
+    ],
+    "host": "wb-marcus",
+    "revision": "d63285292f78f06c1340a7bc2955777ae8317956",
+    "status": "PASS"
+  },
+  "date": "2026-09-20",
+  "default_core": {
+    "command": "python3 scripts/check_lean.py",
+    "evidence": "default build, Subtail kernel replay, core dependency audit and finite differential suite; existing core sources unchanged at final checked revision",
+    "host": "wb-marcus",
+    "revision": "93bfffd",
+    "status": "PASS"
+  },
+  "environment": {
+    "host": "wb-marcus",
+    "lean": "4.33.1",
+    "os": "Linux aarch64",
+    "scope": "owned isolated countermodels-20260920 checkout"
+  },
+  "issue": 57,
+  "limits": [
+    "Python extraction completeness is an ordinary reviewed argument, not a Lean extraction theorem.",
+    "JSON parsing and source emission remain outside the kernel proof boundary.",
+    "All resource limits retain UNKNOWN; old E055 remaining timeouts were not rerun or relabelled.",
+    "No finite-tree, explicit-top, new complexity or novelty result."
+  ],
+  "python_tests": {
+    "cli_tests": 24,
+    "complete_acyclic_systems": 80,
+    "cyclic_predecessor_systems": 60,
+    "extraction_tests": 9,
+    "finite_trees": 26,
+    "host": "wb-marcus",
+    "independent_cyclic_countermodel_inputs": 120,
+    "negative_finite_tree_pairs": 454,
+    "revision": "d63285292f78f06c1340a7bc2955777ae8317956",
+    "seeds": [
+      5701,
+      5702,
+      5703,
+      5704
+    ],
+    "source_sha256": {
+      "experiments/check_stack_summary.py": "a2cec595e2c4e1a6dad0958b30e5a2f38f4239170f63a43aa1ab655a52f83e71",
+      "scripts/test_regular_countermodel.py": "ae7c1d3e19f71382b3a262d0ff9f60633977044ffbd208bed25ed7be6a7e5d93",
+      "scripts/test_subtail.py": "7aa319f6609cd8671df05995df281d402b394eab758a42be6c5baacd2da1697f"
+    },
+    "status": "PASS"
+  },
+  "review": {
+    "certificate_revision": "a5d0ebc",
+    "extractor_revision": "3e41754",
+    "extractor_source_origin": "93bfffd",
+    "note": "notes/2026-09-20-regular-countermodels-readback.md",
+    "scope": "independent read-only source/ordinary mathematics; parent added invariant guards and ran combined checks"
+  },
+  "source_revision": "d63285292f78f06c1340a7bc2955777ae8317956",
+  "status": "PASS"
+}

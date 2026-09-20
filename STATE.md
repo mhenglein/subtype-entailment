@@ -1,5 +1,37 @@
 # Subtail — current research state
 
+## September 20: complete countermodels with checked certificates (C084)
+
+The [canonical extractor](notes/2026-09-20-regular-countermodels.md) replaces
+the five-shape explanation library. Exact finite-seed NFA construction and
+fair word enumeration give a complete ordinary algorithm for negative inputs.
+Its finite graph can contain cycles, and its separating path is checked against
+every original premise/query. Operational limits remain UNKNOWN for extraction
+and cannot retract a completed C081 decision.
+
+[C084](research/claims.md#c084) proves the new Lean certificate verifier sound
+against the unchanged arbitrary-tree `ExprEntails`. It checks finite local
+simulation obligations, all original expression embeddings and a separating
+word. `--verify-certificate` additionally compiles a particular non-entailment
+proof using `by decide`; VERIFIED requires kernel acceptance of that proof.
+The extractor, JSON parser and source emitter remain ordinary Python. There
+is no claim of a fully Lean-verified NFA extraction function.
+
+Fresh wb-marcus checks at `d632852` PASS: module build/kernel, all 24 declaration
+dependency closures (14 choice-free non-theorems), 34 native certificate cases,
+15 positive instance proofs, 24 CLI tests and 9 extraction tests. Five actual
+CLI calls return VERIFIED, including a supplied-model recheck. The alternating
+infinite spine now has a three-node certificate and path `[1]`; none of the
+old graph-library assignments worked. [Receipt](results/regular-countermodels.json)
+and [independent readback](notes/2026-09-20-regular-countermodels-readback.md).
+
+The C081 decision and paper are unchanged. E055's five raw UNKNOWN cases and
+three generated UNKNOWN cases remain unresolved; this work does not remeasure
+them or claim a faster decision procedure. Next pursue the explicit finite-tree
+reduction, or profile those decision cases before further optimization. Full
+extraction formalization and explicit-top semantics remain separate. No worker
+is assigned to those next tasks; licensing and author placeholders are unchanged.
+
 ## September 20: standalone mathematical paper and literature account
 
 The [revised manuscript](paper/manuscript.md) presents the arbitrary-tree
@@ -32,8 +64,9 @@ The original reference modules and qualitative theorem are unchanged.
 Default core/build/kernel checks and 97 new declaration dependency closures
 PASS at `cf12580`; 45 non-theorems contain no classical-choice dependency.
 [Source readback](notes/2026-09-20-fast-summary-readback.md) finds no correctness
-blocker. The Python parser/resource/certificate boundary remains unverified
-by Lean, and its explanation search is incomplete.
+blocker. At that checkpoint the Python parser/resource/certificate boundary
+was unverified by Lean and its explanation search was incomplete. The later
+C084/extractor entry above supersedes that explanation status.
 
 Matched E055 at `9a866c1` on wb-marcus completes **33/38 versus 24/38** under
 the same limits, with no wrong answers or regressions. All 26 full-expression
@@ -45,8 +78,9 @@ remain UNKNOWN. [Pinned receipt](results/entailment-fast.json).
 
 The next performance question is to profile the deeper cases before choosing
 further representation changes. Peak memory and algorithm-phase costs were
-not measured. Full backend optimization, complete countermodel extraction
-and extension proofs remain open. The standalone paper rewrite is recorded
+not measured. Full backend optimization and extension proofs remain open.
+Complete ordinary countermodel extraction and the checked certificate boundary
+are now supplied by the later C084 entry; full extraction formalization remains open. The standalone paper rewrite is recorded
 above; further mathematical scrutiny remains useful. Earlier dated
 entries below retain their original measurements and scientific scope.
 

@@ -56,3 +56,33 @@ The exact completed module, parent readback and fresh combined-tree checks
 are recorded in the main construction note and its linked machine receipt.
 This review is not retroactively attributed to a module the reviewer did not
 read. Changes after `3e41754` retain their own source and validation pins.
+
+
+### Independent certificate semantic readback
+
+The same separate reviewer then read the complete new module at `a5d0ebc`
+(worker source `7a3bcd3`) without editing or building. This was a distinct,
+later review, after source release. The reviewer confirmed product/root and
+left/right address semantics, prefix closure, every finite table pair's local
+simulation obligations, all-word induction, the original arbitrary Tree
+valuation, recursive embedding of the whole input forest, and the final
+`check_sound`/`check_not_entails` composition. No definition-level mismatch
+was found. The parent independently read the same full 371-line module.
+
+The relation need not be reflexive or transitive. Only its true pairs need
+local simulation closure, checked over the entire finite pair carrier.
+`below_iff_simulation` uses a semantic proposition-valued relation for its
+existence direction; it does not implement the producer. The module has no
+separate `RegularTree` predicate. Its finite `Graph v` with `treeOf` unfolding
+is the precise formal representation. No claim that Python extraction or a
+separate regularity/completeness theorem was formalized follows from C084.
+
+The review ended with the worker's scope released. The later parent combined
+build/kernel/audit/native results are recorded separately in
+[the receipt](../results/regular-countermodels.json), at `d632852` with the
+reviewed Lean source unchanged. All 24 declaration dependency closures pass,
+including 14 non-theorems with no classical-choice dependency. There are
+34 native cases, 15 positive instance proofs, 24 CLI tests and 9 extraction
+tests. The actual CLI also produces five VERIFIED instance proofs, including
+an independent supplied-model recheck. These tests support the implementation;
+the checked general C084 theorem supplies its all-input certificate guarantee.

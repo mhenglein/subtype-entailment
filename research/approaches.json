@@ -176,12 +176,12 @@
     {
       "id": "A010",
       "title": "Build the exact top-free constraint-to-automata pipeline",
-      "status": "active",
+      "status": "tried",
       "outcome": "supported",
-      "owner": "countermodels-20260920 (#57)",
+      "owner": null,
       "updated": "2026-09-20",
-      "summary": "C081 and its corrected quantitative/resource results retain their exact scopes. The proved cached solver completes 33/38 matched cases, including all 26 frontend cases; five raw and three generated cases remain UNKNOWN. The standalone manuscript now includes full terminal constructions, integrated Henglein-Rehof attribution, ordinary transfer proofs and a separately recorded manuscript/source review. No new scientific claim is promoted.",
-      "next_step": "Implement complete regular countermodels and a checked finite-graph certificate interface under #57; preserve separate extraction and verification guarantees.",
+      "summary": "C081 remains exact; C084 checks finite-graph countermodels against original arbitrary-tree expressions. Complete ordinary extraction replaces the fixed graph library; every VERIFIED result has a kernel-checked instance proof.",
+      "next_step": "Prove or refute the explicit finite-tree reduction; separately profile remaining E055 decision timeouts. Complete ordinary extraction and C084 certificate verification are integrated; full NFA extraction formalization remains open. No worker assigned.",
       "record": "research/approaches/A010.md",
       "evidence": [
         "notes/2026-09-04-bridge-foundation.md",
@@ -237,7 +237,11 @@
         "scripts/check_fast_summary.py",
         "experiments/check_fast_summary.py",
         "results/entailment-fast.json",
-        "notes/2026-09-20-paper-rewrite-readback.md"
+        "notes/2026-09-20-paper-rewrite-readback.md",
+        "notes/2026-09-20-regular-countermodels.md",
+        "notes/2026-09-20-regular-countermodels-readback.md",
+        "results/regular-countermodels.json",
+        "lean/Subtail/RegularTreeCertificate.lean"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/3"
     },
@@ -565,12 +569,12 @@
     {
       "id": "A018",
       "title": "Maintain the Lean core and verify critical obligations",
-      "status": "active",
+      "status": "tried",
       "outcome": "supported",
-      "owner": "countermodels-20260920 (#57)",
+      "owner": null,
       "updated": "2026-09-20",
-      "summary": "C081 and its corrected quantitative/resource results retain their exact scopes. The proved cached solver completes 33/38 matched cases, including all 26 frontend cases; five raw and three generated cases remain UNKNOWN. The standalone manuscript now includes full terminal constructions, integrated Henglein-Rehof attribution, ordinary transfer proofs and a separately recorded manuscript/source review. No new scientific claim is promoted.",
-      "next_step": "Implement complete regular countermodels and a checked finite-graph certificate interface under #57; preserve separate extraction and verification guarantees.",
+      "summary": "C081 remains exact; C084 checks finite-graph countermodels against original arbitrary-tree expressions. Complete ordinary extraction replaces the fixed graph library; every VERIFIED result has a kernel-checked instance proof.",
+      "next_step": "Prove or refute the explicit finite-tree reduction; separately profile remaining E055 decision timeouts. Complete ordinary extraction and C084 certificate verification are integrated; full NFA extraction formalization remains open. No worker assigned.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
@@ -688,7 +692,11 @@
         "scripts/check_fast_summary.py",
         "experiments/check_fast_summary.py",
         "results/entailment-fast.json",
-        "notes/2026-09-20-paper-rewrite-readback.md"
+        "notes/2026-09-20-paper-rewrite-readback.md",
+        "notes/2026-09-20-regular-countermodels.md",
+        "notes/2026-09-20-regular-countermodels-readback.md",
+        "results/regular-countermodels.json",
+        "lean/Subtail/RegularTreeCertificate.lean"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/31"
     }

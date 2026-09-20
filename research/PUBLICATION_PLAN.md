@@ -12,6 +12,23 @@ publication-ready paper, broadly useful solver and new signature theorems
 require further work. Implementation ownership remains in the registry and
 future scoped issue claims; this document assigns no workers or paths.
 
+## September 20 update: complete extraction and checked certificates
+
+Issue #57 supplies a complete ordinary canonical NFA/finite graph extractor
+and [C084](claims.md#c084), a Lean certificate soundness theorem for original
+expressions over arbitrary trees. `--verify-certificate` compiles a particular
+non-entailment proof using `by decide`. The new alternating-spine example
+requires a graph outside the old fixed library. [Construction and proof boundary](../notes/2026-09-20-regular-countermodels.md)
+and [source-pinned validation](../results/regular-countermodels.json).
+
+This completes usable extraction with a checked certificate interface. It
+does not complete the stronger plan below to formalize the NFA construction,
+its graph conversion and all producer-completeness implications in Lean.
+JSON/source emission and extraction remain ordinary Python. E055's remaining
+decision timeouts are unchanged. The next mathematical target is the finite-tree
+reduction below; the next performance target remains profiling those timed-out
+cases. Neither is assigned by this update.
+
 ## Execution update: standalone paper rewrite
 
 The [revised manuscript](../paper/manuscript.md) now follows the narrative and
