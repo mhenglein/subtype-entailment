@@ -30,7 +30,7 @@ def compact (I : Instance k) (c : Clause k) (D : Diagram k) : Bool :=
 
 theorem compact_iff (I : Instance k) (c : Clause k) (D : Diagram k) :
     compact I c D = true <->
-      forall g, g < D.groups - 1 -> (itemsAt I c D g).length <= activeBudget c := by
+      ∀ g, g < D.groups - 1 -> (itemsAt I c D g).length <= activeBudget c := by
   simp [compact, List.all_eq_true, List.mem_range]
 
 /-- No reference, graph, generated word, or semantic test enters this filter. -/
@@ -45,7 +45,7 @@ def preSmall (I : Instance k) (phi : Query k) : Query k :=
 
 theorem mem_preClause (I : Instance k) (c out : Clause k) :
     out ∈ preClause I c <->
-      exists D, Bounded c (RankQueryCoverage.budget c) D ∧
+      ∃ D, Bounded c (RankQueryCoverage.budget c) D ∧
         compact I c D = true ∧ compileDiagram I c D = some out := by
   simp [preClause, preimageOver, smallDiagrams, List.mem_filterMap,
     List.mem_filter, mem_diagrams, and_assoc]
@@ -53,7 +53,7 @@ theorem mem_preClause (I : Instance k) (c out : Clause k) :
 /-! ## The existing coverage diagram survives the guard -/
 
 section CoverageCount
-open RankQueryCoverage RankQueryPaths
+open RankQueryCoverage
 
 /-- Indexing a finite list does not change multiplicity, even with duplicates. -/
 theorem map_range_getD {alpha : Type} [Inhabited alpha] (xs : List alpha) :
@@ -69,7 +69,7 @@ theorem filter_indices_length {alpha : Type} [Inhabited alpha]
     ((List.range xs.length).filter fun j => p (xs.getD j default)).length =
       (xs.filter p).length := by
   have h := congrArg (fun ys : List alpha => (ys.filter p).length) (map_range_getD xs)
-  simpa [List.filter_map, List.length_map] using h
+  simpa [List.filter_map, List.length_map, Function.comp_def] using h
 
 /-- Inject contributing piece indices into fresh block indices. Portal pieces
 never contribute; distinct occurrences are NOT identified with each other. -/
@@ -81,7 +81,7 @@ theorem covered_count_le {I : Instance k} {B : Reference k} {E : Ext I B}
   let freshIndices := (List.range (X.segCount ai)).filter fun si =>
     isFresh B.word.length (X.blk ai si)
   have hn : chosen.Nodup := List.Pairwise.filter _ List.nodup_range
-  have hs : forall pi, pi ∈ chosen -> pi ∈ (freshIndices.map fun si => 2 * si) := by
+  have hs : ∀ pi, pi ∈ chosen -> pi ∈ (freshIndices.map fun si => 2 * si) := by
     intro pi hp
     obtain ⟨hr, hc⟩ := List.mem_filter.mp hp
     obtain ⟨si, heq, hsi, hf, _, _⟩ := X.coversPi_block hai (List.mem_range.mp hr) hc
@@ -118,9 +118,9 @@ theorem cov_compact {I : Instance k} {B : Reference k} {E : Ext I B}
 retained diagram. The extraction below is the existing coverage construction;
 only cov_compact is new. -/
 theorem coverage (I : Instance k) :
-    forall B C, SafeReference I B -> FirstReturnExt I B C ->
-      forall c, SatClause (prefixGraph I C) c ->
-        exists D, Bounded c (RankQueryCoverage.budget c) D ∧
+    ∀ B C, SafeReference I B -> FirstReturnExt I B C ->
+      ∀ c, SatClause (prefixGraph I C) c ->
+        ∃ D, Bounded c (RankQueryCoverage.budget c) D ∧
           compact I c D = true ∧ validDiagram I c D = true ∧
           SatClause (prefixGraph I B) (compileValid I c D) := by
   intro B C hB hC c hsat
@@ -132,11 +132,11 @@ theorem coverage (I : Instance k) :
   obtain ⟨tau, htests, hequal, hunequal, hatoms⟩ := hsat'
   have hentry : B.word.length + 1 < (prefixGraph I E.C).size :=
     Nat.succ_lt_succ E.m_lt_N
-  have hch : forall ai, exists l : List NNode, forall h : ai < c.atoms.length,
+  have hch : ∀ ai, ∃ l : List NNode, ∀ h : ai < c.atoms.length,
       Consec (NStep (prefixGraph I E.C) (obsAt c ai)) l ∧
-      (forall x ∈ l, NAllowed (prefixGraph I E.C) (obsAt c ai) x) ∧
-      (exists q ∈ (obsAt c ai).initial, l.head? = some ((tau (c.atoms[ai]).source).val, q.val)) ∧
-      (exists p ∈ (obsAt c ai).final, l.getLast? = some ((tau (c.atoms[ai]).target).val, p.val)) ∧
+      (∀ x ∈ l, NAllowed (prefixGraph I E.C) (obsAt c ai) x) ∧
+      (∃ q ∈ (obsAt c ai).initial, l.head? = some ((tau (c.atoms[ai]).source).val, q.val)) ∧
+      (∃ p ∈ (obsAt c ai).final, l.getLast? = some ((tau (c.atoms[ai]).target).val, p.val)) ∧
       visitsN (B.word.length + 1) l <= (obsAt c ai).size := by
     intro ai
     by_cases h : ai < c.atoms.length
@@ -162,7 +162,7 @@ end CoverageCount
 
 theorem reconstruction (I : Instance k) (phi : Query k) (B : Reference k)
     (hB : SafeReference I B) (h : Sat (prefixGraph I B) (preSmall I phi)) :
-    exists C, FirstReturnExt I B C ∧ Sat (prefixGraph I C) phi := by
+    ∃ C, FirstReturnExt I B C ∧ Sat (prefixGraph I C) phi := by
   obtain ⟨out, hout, hsat⟩ := h
   obtain ⟨c, hc, hp⟩ := List.mem_flatMap.mp hout
   obtain ⟨D, hb, _, hd⟩ := (mem_preClause I c out).mp hp
@@ -181,7 +181,7 @@ theorem forward (I : Instance k) (phi : Query k) (B C : Reference k)
 
 theorem closure_iff (I : Instance k) (B : Reference k) (hB : SafeReference I B) (phi : Query k) :
     Sat (prefixGraph I B) (preSmall I phi) <->
-      exists C, FirstReturnExt I B C ∧ Sat (prefixGraph I C) phi := by
+      ∃ C, FirstReturnExt I B C ∧ Sat (prefixGraph I C) phi := by
   constructor
   . exact reconstruction I phi B hB
   . rintro ⟨C, hC, hs⟩
@@ -216,8 +216,8 @@ theorem compileValid_weight_le (I : Instance k) (c : Clause k) (D : Diagram k)
   have hcore : D.coreVars <= c.vars + M := by
     simpa [RankQueryCoverage.budget, RankQueryCoverage.coreBound, M, P,
       Nat.mul_assoc, Nat.mul_left_comm, Nat.mul_comm] using hnc
-  have hp : forall ps ∈ D.pieces, ps.length <= P := fun ps hps => (hpieces ps hps).1
-  have ho : forall a ∈ c.atoms, a.observer.size <= T := by
+  have hp : ∀ ps ∈ D.pieces, ps.length <= P := fun ps hps => (hpieces ps hps).1
+  have ho : ∀ a ∈ c.atoms, a.observer.size <= T := by
     intro a ha
     have hs : a.observer.size <= RankQuery.sumSizes c :=
       member_le_sum (List.mem_map.mpr ⟨a, ha, rfl⟩)
