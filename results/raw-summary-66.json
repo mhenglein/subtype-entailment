@@ -1,0 +1,90 @@
+{
+  "actor": "raw-summary-scope-readback-20260920",
+  "agreement_comment_id": 5750364553,
+  "base_revision": "19b06d4fed9da635d9b911f0e908d04e4fc4b099",
+  "branch": "codex/raw-summary-66-diagnostics-20260920",
+  "complexity_claim": false,
+  "diagnostic_git_blob_sha1": "c720933002c9ecf2eec135fbcc6f799c3e2be848",
+  "diagnostic_source_revision": "f8180b199721679dca8e4bd6df6b5ab420516f5d",
+  "historical_baseline": {
+    "cached_seconds": {
+      "n3": 0.769,
+      "n4": 1.221,
+      "n5": 7.139
+    },
+    "evidence": "prior receipt, not remeasured here",
+    "host": "wb-marcus",
+    "lean_stack_kib": 32768,
+    "lean_threads": 1,
+    "linux_address_space_gib": 16,
+    "n6": {
+      "completion_seconds": null,
+      "observed_capped_seconds": 20.008,
+      "status": "UNKNOWN"
+    },
+    "old_large_json_read_scope": "beginning/caps/fixture metadata accessed; full transfer truncated; totals from complete readback",
+    "performance_revision": "66f545e8fb1cc3d0fd19bea2468f31a872c5bc46",
+    "source": "notes/2026-09-20-raw-summary-readback.md at base",
+    "wall_cpu_cap_seconds": 20
+  },
+  "independent_review": "REQUESTED_NOT_OBTAINED",
+  "issue": 66,
+  "kernel_replay": "NOT_RUN",
+  "lake_build": "NOT_RUN",
+  "limits": [
+    "Diagnostic digest costs are not uninstrumented runtime.",
+    "Separate probe caps cannot be added into a single raw-query result.",
+    "Legacy killed-run RSS may remain null.",
+    "Local finite Python checks do not replace any required Lean/CLI/regression gate."
+  ],
+  "local_environment": {
+    "lake_on_path": false,
+    "lean_on_path": false,
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.13.5"
+  },
+  "local_python_checks": {
+    "baseline_marker_checks": 8,
+    "lean_compilation": "NOT_RUN",
+    "native_performance": "NOT_RUN",
+    "ordinary_row_identity_cells_n0_through_n4": 69905,
+    "rendered_sources": 32,
+    "scope": "Python/source-template checks only; not the 83 full-field Lean comparisons or independent review",
+    "status": "PASS"
+  },
+  "local_workspace": "artifact-only; not a full git/Lake checkout",
+  "matched_measurements": "NOT_RUN",
+  "measured_bottleneck": null,
+  "modified_existing_repository_paths": [],
+  "n6_target": "OPEN",
+  "native_attempt": {
+    "exit_code": 2,
+    "native_processes_started": 0,
+    "reason": "Lake and complete repository dependencies absent",
+    "status": "NOT_READY"
+  },
+  "native_diagnostics": "NOT_RUN",
+  "native_request_comment_id": 5750407203,
+  "new_lean_theorem": "NOT_IMPLEMENTED",
+  "new_refinement_module": null,
+  "optimization_selected": false,
+  "ordinary_candidate_identity": {
+    "all_input_refinement": "not yet implemented or checked",
+    "candidate": "share equal complete flag rows without changing physical indices",
+    "conditional_selection": "only after native flag-cost evidence and new-module approval",
+    "status": "ORDINARY_ARGUMENT_NOT_INDEPENDENTLY_REVIEWED"
+  },
+  "peak_memory": "NOT_MEASURED",
+  "python_compile": "PASS",
+  "retained_gates": {
+    "actual_cli_and_certificates": "NOT_RUN",
+    "actual_resource_boundary": "NOT_RUN",
+    "deeper_19": "NOT_RUN",
+    "fixed_38": "NOT_RUN",
+    "full_field_83": "NOT_RUN"
+  },
+  "source_sha256": {
+    "experiments/profile_raw_summary_66.py": "7e84967b9039f9cadcbe6e8ef290ea4773b478dc36613466d9d7675dd6ecf6ae"
+  },
+  "status": "BLOCKED_NATIVE_VALIDATION"
+}
