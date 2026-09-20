@@ -279,3 +279,21 @@ This replay is not a new Lean run. All native timing/answer receipts remain
 pinned at `9a866c1`; the five-line classifier change does not modify a Lean
 query, source definition or proof. The combined receipt records both source
 versions and their validation separately.
+
+## CI build-order follow-up
+
+The first published CI run,
+[35484509265](https://github.com/mhenglein/subtail/actions/runs/35484509265),
+failed before the new solver checks. An existing `Stack*.lean` audit found
+`StackSummaryFast.lean`, but its optional module had not yet been built. Lean
+reported that `StackSummaryFast.olean` did not exist. No theorem check or native
+answer failed at this point.
+
+The workflow now builds `StackSummaryFast` in its early explicit module list,
+before that wildcard audit. Running the affected build and audit commands on
+the owned wb-marcus checkout passes all 145 declaration closures; an owned
+scratch path replaces the CI runner's temporary output path. Workflow ordering
+and YAML validation pass. This changes only build order and this note; all
+mathematical source, proofs and native receipts remain at their stated pins.
+The replacement main-run status is recorded in issue #55 rather than inferred
+from the old failed job.

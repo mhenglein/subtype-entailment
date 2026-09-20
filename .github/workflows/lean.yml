@@ -102,6 +102,7 @@ jobs:
           lake build +Subtail.RankQueryDecision
           lake build +Subtail.CanonicalModelAudit
           lake build +Subtail.StackSummaryAudit
+          lake build +Subtail.StackSummaryFast
           lake build +Subtail.ExpressionNormalizationAudit
       - name: Replay the whole library through the kernel
         working-directory: lean
