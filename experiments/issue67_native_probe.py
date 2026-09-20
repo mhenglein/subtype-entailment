@@ -49,7 +49,7 @@ def process_group_memory(pgid):
     return rss, virtual
 
 
-def execute(command, cwd, wall, cpu, memory_mib):
+def execute(command, cwd, wall, cpu, memory_mib, extra_env=None):
     """One process group, always reaped, including failed/limited executions.
 
     wait4 supplies actual user/system time and lifetime max RSS of the waited
@@ -57,6 +57,8 @@ def execute(command, cwd, wall, cpu, memory_mib):
     """
     env = dict(os.environ, LEAN_NUM_THREADS='1', LEAN_STACK_SIZE_KB='32768',
                PYTHONHASHSEED='2026092067')
+    if extra_env:
+        env.update(extra_env)
     def limits():
         resource.setrlimit(resource.RLIMIT_CPU, (cpu, cpu))
     began = time.monotonic()
@@ -131,6 +133,40 @@ def execute(command, cwd, wall, cpu, memory_mib):
                           'user_cpu_seconds': usage.ru_utime, 'system_cpu_seconds': usage.ru_stime,
                           'peak_rss_kib': usage.ru_maxrss // 1024 if sys.platform == 'darwin' else usage.ru_maxrss})
     return out
+
+
+def resolve_runtime(wall, cpu, memory_mib):
+    """Resolve Lake's environment once, outside the measured solver process.
+
+    The timed child is the real Lean executable, not elan or Lake. Its wait4
+    usage therefore includes the solver on forced termination. Only public
+    Lean path variables are retained, never the complete runner environment.
+    """
+    setup = []
+    prefix = execute(['lake', 'env', 'lean', '-j1', '--print-prefix'],
+                     ROOT / 'lean', wall, cpu, memory_mib)
+    setup.append(prefix)
+    if prefix['status'] != 'PASS':
+        return {'status': 'FAIL', 'steps': setup}
+    root = Path(prefix['stdout'].strip())
+    binary = root / 'bin' / 'lean'
+    if not root.is_absolute() or not binary.is_file():
+        return {'status': 'FAIL', 'reason': 'invalid_lean_prefix', 'steps': setup}
+    code = ("import os,json; print(json.dumps({k:os.environ[k] for k in "
+            "('LEAN_PATH','LEAN_SRC_PATH','LEAN_SYSROOT') if k in os.environ}))")
+    environment = execute(['lake', 'env', sys.executable, '-c', code],
+                          ROOT / 'lean', wall, cpu, memory_mib)
+    setup.append(environment)
+    if environment['status'] != 'PASS':
+        return {'status': 'FAIL', 'steps': setup}
+    try:
+        paths = json.loads(environment['stdout'])
+    except (ValueError, TypeError):
+        return {'status': 'FAIL', 'reason': 'invalid_lean_environment', 'steps': setup}
+    if not isinstance(paths, dict) or not isinstance(paths.get('LEAN_PATH'), str):
+        return {'status': 'FAIL', 'reason': 'missing_lean_path', 'steps': setup}
+    return {'status': 'PASS', 'binary': str(binary), 'binary_sha256': sha(binary),
+            'environment': paths, 'steps': setup}
 
 
 def parameters(n, variant):
@@ -264,16 +300,25 @@ def main():
               'provenance': provenance(), 'command': [sys.executable, *sys.argv],
               'environment': {'python': sys.version, 'platform': platform.platform(),
                               'cpu_count': os.cpu_count(), 'LEAN_NUM_THREADS': 1,
-                              'rss_basis': 'wait4 child lifetime max RSS plus separate 50ms group RSS samples; no address-space cap'},
-              'native_execution': 'lake env lean -j1 --run (Lean runtime; not a standalone C binary)',
+                              'rss_basis': 'direct Lean child wait4 CPU and lifetime max RSS, plus separate 50ms group RSS samples; no address-space cap'},
+              'native_execution': 'resolved Lean binary -j1 --run, with Lake environment; no Lake parent in measured case',
               'rows': []}
     jobs = selected(args.mode)
     if args.only:
         jobs = [a for a in jobs if ' '.join(a) == args.only]
         if not jobs:
             parser.error('No matching job')
-    preflight = execute(['lake', 'env', 'lean', '-j1', '--version'], ROOT / 'lean',
-                        args.wall_seconds, args.cpu_seconds, args.memory_mib)
+    runtime = resolve_runtime(args.wall_seconds, args.cpu_seconds, args.memory_mib)
+    report['runtime_resolution'] = runtime
+    if runtime['status'] != 'PASS':
+        report['status'] = 'FAIL'
+        report['cases_status'] = 'NOT_RUN: runtime resolution failed'
+        args.output.write_text(json.dumps(report, indent=2, sort_keys=True) + '\n')
+        print('RESOLUTION ' + json.dumps(runtime, sort_keys=True), flush=True)
+        raise SystemExit(1)
+    preflight = execute([runtime['binary'], '-j1', '--version'], ROOT / 'lean',
+                        args.wall_seconds, args.cpu_seconds, args.memory_mib,
+                        runtime['environment'])
     report['preflight'] = preflight
     if preflight['status'] != 'PASS':
         report['status'] = 'FAIL'
@@ -291,8 +336,9 @@ def main():
         else:
             oracle = expected(int(argv[1]), argv[2])
         print('RUN ' + ' '.join(argv), flush=True)
-        row = execute(['lake', 'env', 'lean', '-j1', '--run', str(DRIVER), *argv],
-                      ROOT / 'lean', args.wall_seconds, args.cpu_seconds, args.memory_mib)
+        row = execute([runtime['binary'], '-j1', '--run', str(DRIVER), *argv],
+                      ROOT / 'lean', args.wall_seconds, args.cpu_seconds, args.memory_mib,
+                      runtime['environment'])
         row.update(id=' '.join(argv), oracle=oracle,
                    input_sha256=hashlib.sha256(json.dumps(oracle['input'], sort_keys=True).encode()).hexdigest())
         check_result(row, argv, oracle)
