@@ -688,6 +688,15 @@ native checks are reproduction evidence, separate from the all-state proof.
 [complete executable proof, construction and validation](../notes/2026-09-19-c029-completion.md);
 [native independent checks](../results/infinite-decision.json).
 
+
+**Equivalent incremental implementation (September 20).**
+`InfiniteDecisionLazy.infiniteWitnessCheckLazy_eq` proves equality with this
+Boolean on every finite instance, without an absorption hypothesis. It streams
+the same bounded cycle words and rejects an unsafe initial state before the
+scan. The semantic correctness theorem still requires `Absorbing I`.
+[Ordinary argument, source review and native checks](../notes/2026-09-20-raw-backend-readback.md).
+No stronger witness bound or complexity result follows.
+
 <a id="c030"></a>
 
 ### C030 — Terminal-final abstract instances are realizable
@@ -1177,6 +1186,15 @@ when its candidate scan cannot succeed. The old core is unchanged.
 record build/kernel/runtime checks and E054. This is an evaluation improvement,
 not a stronger decision theorem. The capped Python interface and certificate
 checker have separate trust boundaries; remaining timeouts stay UNKNOWN.
+
+
+**Equivalent raw-backend refinement (September 20).**
+`InfiniteDecisionLazy.rawNormalizedEntailsCheckLazy_eq` replaces only the
+infinite-witness Boolean, leaving the summary construction and terminal branch
+unchanged. `EntailmentPrepared.entailsCheck_correct` composes it into the
+existing arbitrary-tree endpoint with no new assumption. Raw measurements
+invoke the raw function directly; they do not use frontend shortcuts.
+[Proof and execution boundary](../notes/2026-09-20-raw-backend-readback.md).
 
 <a id="c082"></a>
 
