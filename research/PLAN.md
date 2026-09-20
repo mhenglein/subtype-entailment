@@ -17,8 +17,9 @@ The [seven-part programme](POST_C081.md) produced an ordinary research draft,
 focused novelty review, explicit input resource account, prototype solver
 with a proved evaluation gate, extension study and reader checkpoint.
 C082 supplies a corrected quantitative bound; C083 gives an elementary NL
-lower bound. The original concrete C080 U is refuted, while its F alone and
-an existential smaller compiler remain open. No issue closure changes that.
+lower bound. The original concrete C080 U remains refuted. [C086](claims.md#c086)
+now proves the original F and an existential smaller compiler, with independent
+review and fresh combined-tree validation. No practical speedup follows.
 
 The current [publication, solver and extension-proof plan](PUBLICATION_PLAN.md)
 sets concrete next acceptance criteria. The [standalone manuscript rewrite](../notes/2026-09-20-paper-rewrite-readback.md)

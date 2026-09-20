@@ -1,5 +1,11 @@
 # Corrected quantitative bound: reviewed integration
 
+**Later September 20 result.** [C086](../research/claims.md#c086) proves the original terminal
+F and the original U contract for a different, filtered compiler. The old
+unfiltered compiler counterexample remains valid, and C082 remains a valid
+larger bound. The dated argument and earlier open status below are preserved
+as history, not the current C086 status.
+
 Date: 2026-09-20. Integrator: post-c081-20260919. A017/A018, C080/C082,
 Q004; coordination #53/#37/#30 and source PR #48.
 

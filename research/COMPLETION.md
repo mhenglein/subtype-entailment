@@ -11,8 +11,11 @@ no worker, changes no workstream owner and reserves no path.
 - **C081:** total executable entailment for finite expressions over bottom and
   one covariant binary product, valued in arbitrary possibly infinite trees.
 - **C085:** a separate total executable decision for finite-tree entailment.
-- **C082:** the corrected larger terminal witness bound. The old concrete C080
-  U estimate is refuted; the original F alone and a smaller compiler remain open.
+- **C082:** the corrected larger terminal witness bound; the old concrete C080
+  U estimate remains refuted.
+- **C086 / #69:** the smaller compiler satisfies the original U contract, and
+  the original terminal F is checked, reviewed and integrated with continuing CI.
+  [Exact proof scope and evidence](../notes/2026-09-20-original-bounds-integration.md).
 - **C030 core:** checked satisfiability and same-word realization on `2k+1`
   variables under terminal-finality. Budget preservation remains an ordinary
   proof and reproduction result, with a separate formalization issue below.
@@ -58,7 +61,6 @@ and the issue comments; this record grants no overlapping write scope.
 | Next practical | Reduce six-variable raw summary cost | Profile first, prove refinement, retain existing regressions; target completion at unchanged caps | [#66](https://github.com/mhenglein/subtail/issues/66) |
 | Next validation | Exercise terminal promotion and shared generators | Independently justified branch-covering fixtures; exact small exhaustion, capped stress marked UNKNOWN | [#67](https://github.com/mhenglein/subtail/issues/67) |
 | Verification hardening | Check the complete countermodel producer | Executable construction and completeness proof; finite certificate boundary and JSON trust boundary stated | [#68](https://github.com/mhenglein/subtail/issues/68) |
-| Stronger quantitative | Original C080 F and smaller compiler | Separate proof/refutation for each exact claim; no inference from the refuted concrete U | [#69](https://github.com/mhenglein/subtail/issues/69) |
 | Complexity | Tighten exact-semantic upper/lower bounds | Explicit encoding, tree domain and resource accounting; prove every literature transfer | [#70](https://github.com/mhenglein/subtail/issues/70) |
 | New signature | Explicit top | Complete reviewed theorem for a precise extension, decision or undecidability; a study alone is insufficient | [#71](https://github.com/mhenglein/subtail/issues/71) |
 | Other consequences | Arity, constructor labels, variance and automata results | One exact reviewed transfer/result at a time; separate semantic obligations | [#72](https://github.com/mhenglein/subtail/issues/72) |
@@ -69,8 +71,11 @@ construction and dense flag construction as capped phases; its n=6 complete
 answer is still UNKNOWN. [E061](../experiments/README.md#e061) closes the scoped
 independent Python fixture/review/replay portion of #67. Automatic successful
 native depth-two and original-expression coverage remain open; six stress
-calls stay UNKNOWN. Proposed extension and quantitative contributions in
-[STATE](../STATE.md#active-work-and-file-ownership) await their own acceptance.
+calls stay UNKNOWN. The new #67 native follow-up has its own scope. The
+[submission review](../notes/2026-09-20-submission-review.md) accepted the scoped
+producer, hardness and extension contributions; their integration remains
+separate from the completed compiler/F integration. Read the current ownership
+record in [STATE](../STATE.md#active-work-and-file-ownership).
 
 These issues preserve the wider requested programme. They are separate from
 release gates and from the completed proof of Problem 1.7. A restricted result
@@ -87,9 +92,9 @@ calling that larger programme complete.
 | #28 forward closure | Checked and integrated | New stress coverage in [#67](https://github.com/mhenglein/subtail/issues/67), no reopened proof gap |
 | #32 adversarial fixtures | Superseded after partial bounded coverage; preserve caps and original results | Uncompleted multi-atom/stress scope in [#67](https://github.com/mhenglein/subtail/issues/67) |
 | #33 cross-session readback | Completed for C081; later C082 review recorded separately | Final manuscript/contribution acceptance in [#64](https://github.com/mhenglein/subtail/issues/64) |
-| #30 and #34 quantitative stage trackers | Superseded by C081/C082 and narrower open questions | Original F/smaller-compiler scope in [#69](https://github.com/mhenglein/subtail/issues/69) |
+| #30 and #34 quantitative stage trackers | Superseded by C081/C082/C086 | Original F/smaller-compiler obligations completed in #69; practical and tight complexity remain separate |
 | PRs #44/#45 | Historical semantic and normalization advisories retained with current-status notices | No new proof claim from merging prose |
-| PR #47 | Original counterexample, checker and replacement proof retained; newer C082 correction preserved | [#69](https://github.com/mhenglein/subtail/issues/69) |
+| PR #47 | Original counterexample, checker and replacement proof retained; C082 and C086 are distinct later results | No surviving original-F/smaller-compiler obligation; no practical runtime claim |
 | PR #51 | Independent C030 source readback, fresh combined-tree validation and continued CI coverage | [#73](https://github.com/mhenglein/subtail/issues/73) |
 
 [Reconciliation evidence and exact source heads](../notes/2026-09-20-repository-reconciliation.md).

@@ -1429,6 +1429,39 @@ No existing implementation, proof, default import or CI workflow changes.
 [complete parent receipt](../results/issue67-independent/full-checkout-replay.json).
 
 
+<a id="e062"></a>
+
+### E062 — Smaller compiler and original-F regression evidence
+
+```sh
+python3 experiments/check_smaller_compiler_astra.py --output tmp/compiler-literal.json
+python3 experiments/check_smaller_compiler_astra.py --repository --output tmp/compiler-repository.json
+python3 experiments/f_only_astra.py --output tmp/f-bounded.json
+python3 scripts/check_original_bounds.py
+```
+
+The compiler corpus checks common assignments and generators, repeated interval
+coordinates, empty/zero-length cases, ordered flags and exact integer envelopes.
+The repository mode also replays the unchanged old compiler's oversized clause;
+the new filter rejects that diagram. The saved standalone receipt must match.
+These are bounded literal checks, not an enumeration of all possible diagrams.
+
+The F corpus uses seed `2026092069`, 1,000 random trials, random word cap 10 and
+three-state census word cap 8. It checks literal witnesses, return deletion,
+finishing cases and integer comparisons. It returns
+`PASS_BOUNDED_CHECKS_NOT_GLOBAL_PROOF`; unsuccessful capped searches remain
+UNKNOWN unless independently decided. Its semantic receipt matches the saved
+one except for Python/platform and elapsed-time metadata.
+
+The last command additionally builds and kernel-replays the three integrated
+Lean modules, audits all 48 public declarations and runs native guards. The
+all-input theorem comes from those checked declarations and their independent
+mathematical review, not from the bounded corpus.
+[C086](../research/claims.md#c086),
+[combined validation](../notes/2026-09-20-original-bounds-integration.md),
+[compiler receipt](../results/smaller-compiler-astra.json),
+[F receipt](../results/f-only-astra.json).
+
 ## Reconciled supporting evidence (September 20)
 
 The original [concrete compiler-weight counterexample](check_rank_query_weight_counterexample.py)

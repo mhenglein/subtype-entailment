@@ -2,61 +2,62 @@
 
 ## Active work and file ownership
 
-**Updated 20 September 2026.** Session `publication-sequence-20260920`
-completed **[#64: manuscript/contribution audit](https://github.com/mhenglein/subtail/issues/64)**
-and the technical reproduction portion of
-**[#65](https://github.com/mhenglein/subtail/issues/65)**. It also executed the
-#66 contributor's pinned diagnostic in a separate worker checkout.
-It also reviewed and replayed the released partial #67 fixtures as E061.
-The [publication acceptance](notes/2026-09-20-publication-acceptance.md),
-[clean reproduction](notes/2026-09-20-clean-reproduction.md) and
-[#66 execution receipt](results/issue66-execution-20260920.json) state exact
-revisions, results and limits. The [E061 review/replay](notes/2026-09-20-issue67-replay.md)
-keeps native and automatic depth-two coverage open.
+**Updated 20 September 2026.** The owner-authorized
+`issue69-integration-20260920` session integrates reviewed PR #78 and the
+original-F bridge from #69. [C086](research/claims.md#c086) records the smaller
+compiler's original U contract and the original terminal witness bound F.
+The old unfiltered compiler's U estimate remains refuted; C082 stays valid.
+[Exact source pins, combined-tree checks and limits](notes/2026-09-20-original-bounds-integration.md).
+The integration lease releases at the final publication readback in
+[#37](https://github.com/mhenglein/subtail/issues/37). No follow-up implementation
+is reserved by this completed scope. Read the latest issue comments before writing.
 
-Astra was the owner-authorized parent integrator. Its source branch is
-[`codex/publication-audit-20260920`](https://github.com/mhenglein/subtail/tree/codex/publication-audit-20260920).
-The final publication readback in [#37](https://github.com/mhenglein/subtail/issues/37)
-releases the parent scope below; no future parent implementation is reserved.
-Read that issue and each child issue's latest handoff before touching an
-owned path. A010/A017/A018 remain active for the disjoint contributor work below,
-not because the completed publication agent is working in the background.
-Their established mathematical results are unchanged.
+The [submission review](notes/2026-09-20-submission-review.md) accepted nine
+contributions within their exact scopes. Only the compiler/F pair is integrated
+here. Accepted ordinary proofs and optional modules awaiting integration do
+not become established shared claims merely because review passed.
 
-| Completed parent scope | Paths covered | Disposition |
-|---|---|---|
-| #64 author/integrator | `paper/**`, `output/pdf/subtail-paper.*`, manifest, novelty matrix, publication acceptance note/result | Bounded mathematical/source/visual review complete; two clarity edits checked. No Lean proof-source change. |
-| #65 reproduction operator | `scripts/reproduce_release.py`, clean reproduction note/result; isolated ignored outputs | 18 fresh-cache checks passed. Metadata/release tag still deferred. No separate reproduction agent was launched. |
-| `publication_proof_review` | No write paths | Independent manuscript and E061 read-only reviews complete within their exact recorded scopes. |
-| #66 execution support | New `results/issue66-execution-20260920.json`; isolated ignored outputs | Run complete and scope released in #66. Native six-variable answer remains UNKNOWN. |
-| #67 partial contribution | Four released fixture/note/receipt paths, new full-checkout receipt/readback, E061 registry | Review accepted the restricted argument; 13/13 strict cases replayed under both seeds. Six diagnostics remain UNKNOWN; native automatic depth-two remains open. Final readback releases parent ownership. |
-| Shared-record integration | README, CONTRIBUTING, STATE, completion map, approach records/generated tracker | Final publication readback releases this lease. A new integrator must claim its own scope; no contributor owns these paths by default. |
+| Issue / bounded task | Current disposition and ownership |
+|---|---|
+| [#64 manuscript](https://github.com/mhenglein/subtail/issues/64) | Bounded source, mathematical and visual acceptance complete at its recorded checkpoint. No human refereeing or priority claim. |
+| [#65 release](https://github.com/mhenglein/subtail/issues/65) | Technical reproduction complete; licensing, author identities and final release checkpoint remain owner-deferred. |
+| [#66 raw n=6 profiling](https://github.com/mhenglein/subtail/issues/66) / [PR #76](https://github.com/mhenglein/subtail/pull/76) | Diagnostic contribution reviewed; author scope released. Integration and a measured optimization remain separate tasks. Complete n=6 answer stays UNKNOWN. |
+| [#67 native terminal fixtures](https://github.com/mhenglein/subtail/issues/67#issuecomment-5750924171) | `issue67-native-followup-20260920` owns only `lean/Issue67NativeProbe.lean`, `experiments/issue67_native_probe.py`, its dated note, `results/issue67-native/*.json` and `.github/workflows/issue67-native-probe.yml`. Existing interfaces and shared records are read-only. Earlier E061 partial fixtures remain integrated. |
+| [#68 countermodel producer](https://github.com/mhenglein/subtail/issues/68) | Released producer core at `049aa110cf13` reviewed. Continuing CI, source handoff and integration remain separate gates; certificate adapter and Python/JSON boundaries remain open. |
+| [#69 smaller compiler and F](https://github.com/mhenglein/subtail/issues/69) / [PR #78](https://github.com/mhenglein/subtail/pull/78) | C086 integrates compiler head `db0a6d3505e9` and F head `6aa7047cc6cbc`, with unchanged proof/checker blobs and continuing combined-tree CI. Coordinator accepts these exact published compiler blobs; unknown local author work is not claimed released. |
+| [#70 hardness](https://github.com/mhenglein/subtail/issues/70) | Released ordinary PSPACE lower-bound transfer at `371b97c40d53` reviewed for arbitrary/regular trees; ledger/paper integration pending. No finite-tree transfer or upper bound. |
+| [#71 explicit top](https://github.com/mhenglein/subtail/issues/71) | Released ordinary decision reduction and selective checked lifting at `0eff4818d990` reviewed; integration pending. No complete expression-level Lean implementation is claimed. |
+| [#72 arity](https://github.com/mhenglein/subtail/issues/72) | Released ordinary fixed-positive-arity reduction at `3fca2e8bf8a0` reviewed; integration pending. |
+| [#72 standalone first-return theorem](https://github.com/mhenglein/subtail/pull/77) | Released ordinary schema theorem at `910e3071eab4` reviewed; integration pending. No generic compiler implementation or generalized Lean proof. |
+| [#74 variance](https://github.com/mhenglein/subtail/pull/75) | Released ordinary characterization/obstruction at `4ed2fb67458f` reviewed; integration pending. General function-only decidability remains open. |
 
-**Agreed contributor scopes.** These are recorded ownership and handoff
-agreements, not a claim that a worker is running in the background. Follow the
-linked issue for its latest status, exact new paths, pushed head and release.
-The parent completed #66 execution support and integrated #67's released
-partial evidence. It reserves no competing implementation or follow-up task.
+These are scope records, not a claim that every contributor is running.
+Shared records, imports, workflows and publication require a fresh integrator
+lease. Unknown local work, historical branches and stashes are preserved.
 
-| Issue / bounded task | Contributor session | Agreed write boundary |
-|---|---|---|
-| [#67 terminal/shared-generator fixtures](https://github.com/mhenglein/subtail/issues/67#issuecomment-5750364458) | `issue67-independent-fixtures-20260920` | Author released all four paths at `da74a43`; E061 independently reviewed/replayed the partial contribution. The final #37/#67 readback releases parent integration scope; unfinished native coverage needs a new claim. |
-| [#66 raw n=6 profiling](https://github.com/mhenglein/subtail/issues/66#issuecomment-5750364553) | `raw-summary-scope-readback-20260920` | New `experiments/profile_raw_summary_66.py`, dated `raw-summary-66` note and result. A refinement module requires a further exact invariant/path agreement. |
-| [#68 countermodel producer](https://github.com/mhenglein/subtail/issues/68#issuecomment-5750364625) | `regular-producer-68-20260920` | Six new producer/module/audit/note/checker/result paths from the issue, plus its isolated new CI workflow. Existing certificate interfaces are read-only. |
-| [#69 original shortest-witness F](https://github.com/mhenglein/subtail/issues/69#issuecomment-5750441287) | `f-only-astra-20260920` | Author released six new paths at `6aa7047`. Reported checked F theorem consumes compiler pin `acf0524`; independent statement/dependency review is pending. [Exact handoff](https://github.com/mhenglein/subtail/issues/69#issuecomment-5750572384). No shared-ledger promotion. |
-| [#69 smaller existential compiler](https://github.com/mhenglein/subtail/issues/69#issuecomment-5750441287) | `smaller-compiler-20260920-astra` | New smaller-compiler note/checker/result, additive `SmallerCompilerAstra.lean` and isolated CI. Original F stays with the other contributor. |
-| [#70 Henglein–Rehof transfer](https://github.com/mhenglein/subtail/issues/70#issuecomment-5750364870) | `hr-topfree-transfer-70-20260920` | Author released the three new paths at `371b97c`; proposed ordinary hardness proof awaits independent review. Paper/novelty edits are excluded until acceptance. |
-| [#71 explicit-top projection](https://github.com/mhenglein/subtail/issues/71#issuecomment-5750364966) | `explicit-top-dual-projection-20260920` | Author released all five new paths at `0eff481`; proposed full-signature result and selective checks await independent mathematical review. No promotion or shared source change. |
-| [#72 ternary constructor](https://github.com/mhenglein/subtail/issues/72#issuecomment-5750364712) | `ternary-transfer-20260920` | Author released five actual new files and the unused optional Lean reservation at `3fca2e8`. Ordinary transfer awaits independent review; no established-status promotion. |
-| [#72 standalone first-return theorem](https://github.com/mhenglein/subtail/issues/72#issuecomment-5750364712) | `standalone-first-return-20260920-astra` | Author released four new paths at `910e307` (draft #77). Generalized ordinary theorem awaits independent review; no new Lean or priority claim. |
-| [#74 function variance, child of #72](https://github.com/mhenglein/subtail/issues/74#issuecomment-5750364796) | `function-only-transfer-20260920` | Author released all three paths at `4ed2fb6` (draft #75); ordinary results await independent review. General function-only decidability remains open. |
+## September 20: original terminal witness bound proved (C086)
 
-Independent reviews requested by these contributors remain pending unless
-an exact issue readback says otherwise; an ownership agreement is not a review.
-Shared ledgers, paper, imports, existing CI and toolchain require a separately
-claimed integration scope. Other subtasks are not reserved by these bounded
-claims. Licensing and author identities remain deferred. A timestamp alone
-never releases a contributor's paths; only its explicit handoff does.
+For every finite binary terminal k-state instance, witness existence is
+equivalent to a witness of length at most the original
+`F(1)=0`, `F(k)=2*(k+1)*product_(j=1..k-2)(T_j+2)` for k>=2, with
+`T_0=k+10` and `T_(j+1)=64*k*T_j^(2*T_j+2)`. The checked bridge has no
+caller compiler contract or witness-cap premise.
+
+The new compiler filters the finite old enumeration by at most `a+S` active
+coordinates per physical interval. Coverage keeps one common extension and
+all repeated observations. The F bridge reconstructs an actual retained
+diagram before applying the length recurrence. The old compiler remains
+unchanged, and its universal U counterexample remains true. The production
+C081 solver is unchanged; no practical speedup or tighter input complexity
+class follows. [C086 statement and evidence](research/claims.md#c086).
+
+Continuing main/PR CI now explicitly builds and kernel-replays all three
+optional modules, audits all 48 public declarations and nine executable
+definitions, checks native guards and reruns the bounded independent receipts.
+The two author workflows are preserved in Git history; the historical compiler
+overlay is removed. [Integration receipt](results/original-bounds-integration-20260920.json).
+The separate FinishPlus route remains an ordinary proof with selected checked
+lemmas. The complete checked F route uses the smaller compiler.
 
 ## September 20: manuscript acceptance and clean reproduction
 
@@ -78,7 +79,7 @@ The separate #66 diagnostic at `f8180b1` passed all eight n=3 modes. At n=6,
 transition construction and dense flags hit their 20-second limits; the complete
 cached raw call remains UNKNOWN. Decode/encode costs now have diagnostic
 measurements, but actual CPU seconds and peak RSS are unavailable. No optimization
-or matched speedup is claimed. The contributor owns the next measured design. E061 separately adds reviewed
+or matched speedup is claimed. The contributor later released its scope; a new measured design needs its own claim. E061 separately adds reviewed
 independent terminal/shared-generator fixtures: 13/13 strict cases under both
 hash seeds, complete restricted S-only unions and two certificate-directed
 promotions. Six automatic/unpruned stress calls remain UNKNOWN. Native Lean
@@ -88,7 +89,8 @@ and original-expression coverage of this family remain NOT RUN; #67 stays open.
 
 The [completion map](research/COMPLETION.md) replaces obsolete stage trackers
 with release gates and exact remaining research questions. C081 and C085 stay
-complete; C080's original F and smaller-compiler questions stay open.
+complete. At that checkpoint C080's original F and smaller-compiler questions
+remained open; C086 above now resolves those two exact questions.
 
 C030's direct `2k+1`-variable constructor, satisfiability and same-word
 arbitrary-tree separation equivalence are now Lean-checked and independently
@@ -399,7 +401,8 @@ distinguish the full source check from the later trust-label repair and rerun.
 Next questions: reduce summary construction costs with a proved representation
 change, extract complete regular countermodels, narrow the complexity gap,
 seek external mathematical review, and investigate label-aware explicit-top
-semantics. The original C080 F and an existential smaller compiler remain open.
+semantics. At this historical checkpoint the original C080 F and an existential
+smaller compiler remained open; C086 above now proves them.
 The later sections preserve their dated milestones and earlier open status.
 
 ## September 20: corrected quantitative theorem (C082)
@@ -412,8 +415,8 @@ retains the shared word and every observation. Q004 now has the ordinary
 explicit source-visit bound Fhat(k)+1.
 
 A checked five-state counterexample **refutes the old universal concrete
-compiler weight estimate** `64*k*T^(2*T+2)`. The original F alone and an
-existential smaller compiler remain open. The earlier favourable size audits
+compiler weight estimate** `64*k*T^(2*T+2)`. The original F and existential
+smaller compiler, open at this checkpoint, are now proved separately as C086. The earlier favourable size audits
 are corrected at their entry points; their semantic results are kept separate.
 C081's qualitative decision does not depend on the false size estimate.
 

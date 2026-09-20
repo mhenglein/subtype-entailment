@@ -1,0 +1,1686 @@
+{
+  "author_blob_checks": [
+    {
+      "author_head": "db0a6d3505e93ff6bc51a8d89fcb52fb05adfe0f",
+      "byte_identity": "PASS",
+      "path": "lean/Subtail/SmallerCompilerAstra.lean",
+      "sha256": "9d23d5922c627708bb62f6f1d68059870c4566c6ef7aa8bd6384383cfe90ce05"
+    },
+    {
+      "author_head": "db0a6d3505e93ff6bc51a8d89fcb52fb05adfe0f",
+      "byte_identity": "PASS",
+      "path": "experiments/check_smaller_compiler_astra.py",
+      "sha256": "bf7dafe0ea0c3269261de858ee9c813d1f958cb044c0ae8fd808000d02a9741c"
+    },
+    {
+      "author_head": "db0a6d3505e93ff6bc51a8d89fcb52fb05adfe0f",
+      "byte_identity": "PASS",
+      "path": "notes/2026-09-20-smaller-compiler-astra.md",
+      "sha256": "d1ea96333ba8b3066314c58891aa53e825447a13845ab7b6b15c84d1134cc92b"
+    },
+    {
+      "author_head": "db0a6d3505e93ff6bc51a8d89fcb52fb05adfe0f",
+      "byte_identity": "PASS",
+      "path": "results/smaller-compiler-astra.json",
+      "sha256": "b91558da2248401349442a4603d18ca07d5217b70dfa97d9a732c298075820c2"
+    },
+    {
+      "author_head": "6aa7047cc6cbccd44c64223209b7563cf2824b8e",
+      "byte_identity": "PASS",
+      "path": "lean/FOnlyAstra.lean",
+      "sha256": "3b0bf239b02eb4e953cbab72672591d418307e2491f015b375a777e9e733f610"
+    },
+    {
+      "author_head": "6aa7047cc6cbccd44c64223209b7563cf2824b8e",
+      "byte_identity": "PASS",
+      "path": "lean/FOnlyCompilerBridge.lean",
+      "sha256": "8c49288e6f3167635ca3c56f4ed0ee9174860be6febb91e073929dc4dd364143"
+    },
+    {
+      "author_head": "6aa7047cc6cbccd44c64223209b7563cf2824b8e",
+      "byte_identity": "PASS",
+      "path": "experiments/f_only_astra.py",
+      "sha256": "c6d90046defd3ef086a2e8039588dfb6a59fec0209737d5af1c84877c1c60f5d"
+    },
+    {
+      "author_head": "6aa7047cc6cbccd44c64223209b7563cf2824b8e",
+      "byte_identity": "PASS",
+      "path": "notes/2026-09-20-f-only-astra.md",
+      "sha256": "b05741cba4bf7450526bcc620ad0857c42b8f3cac057c2263a7ef79867f02c8a"
+    },
+    {
+      "author_head": "6aa7047cc6cbccd44c64223209b7563cf2824b8e",
+      "byte_identity": "PASS",
+      "path": "results/f-only-astra.json",
+      "sha256": "a5664bd5c3eb9d3f36f37fadaa95c24346627bc6976deba0087f6cf11a9e6d19"
+    }
+  ],
+  "base_main": "9f4b95784a212c322c48a957b80645a1077543ed",
+  "default_core_saved_receipt": "PASS: byte-identical; remote tracked tree clean after all checks",
+  "final_gate_validation_revision": "a33fb055be1473b025380c105a6a2883d35a5385",
+  "final_original_bounds": {
+    "axioms": {
+      "Subtail.FOnlyAstra.border_count_add_one_le_of_avoids": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.budget_le_next": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.budgets_lag": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.coefficient_le_fourth": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.corrected_budget_ge_seed": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.final_return_safe": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.final_return_witness": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.finishPlusObserver": [
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.finishPlusQuery": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.growth_lag": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.lag_step": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.oldGrowth": [],
+      "Subtail.FOnlyAstra.one_less_product_le_originalF": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.originalF": [],
+      "Subtail.FOnlyAstra.original_F_small": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.rank_le_of_avoids": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.shortest_no_initial_return": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.stateAt_drop_of_return": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.weight_finishPlus_le": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.witness_drop_of_return": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyCompilerBridge.coverage_small": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyCompilerBridge.oldGrowth_step": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyCompilerBridge.original_F": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyCompilerBridge.promoted_finish_original_bound": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyCompilerBridge.small_preimage_bounded": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyCompilerBridge.terminal_witness_original_bounded": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.activeBudget": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.closureFor": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.closureStatement": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.closure_iff": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.compact": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.compact_iff": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.compileValid_weight_le": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.cov_active_length": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.cov_compact": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.coverage": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.covered_count_le": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.filter_indices_length": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.forward": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.map_range_getD": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.mem_preClause": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.old_counterexample_rejected": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.preClause": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.preSmall": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.preSmall_nil": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.preimage_clause_weight_le": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.reconstruction": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.smallDiagrams": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    "commands": [
+      {
+        "command": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.004,
+        "exit_code": 0,
+        "log": "original-bounds-f8d491u4/git-head.log",
+        "name": "git-head",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "git",
+          "status",
+          "--short",
+          "--untracked-files=no"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.008,
+        "exit_code": 0,
+        "log": "original-bounds-f8d491u4/git-status.log",
+        "name": "git-status",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "lean",
+          "--version"
+        ],
+        "cwd": "lean",
+        "elapsed_seconds": 0.115,
+        "exit_code": 0,
+        "log": "original-bounds-f8d491u4/toolchain.log",
+        "name": "toolchain",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "lake",
+          "build",
+          "+Subtail.RankQueryLengthBound",
+          "+Subtail.SmallerCompilerAstra"
+        ],
+        "cwd": "lean",
+        "elapsed_seconds": 0.215,
+        "exit_code": 0,
+        "log": "original-bounds-f8d491u4/build-dependencies.log",
+        "name": "build-dependencies",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "-o",
+          ".lake/build/lib/lean/FOnlyAstra.olean",
+          "FOnlyAstra.lean"
+        ],
+        "cwd": "lean",
+        "elapsed_seconds": 1.468,
+        "exit_code": 0,
+        "log": "original-bounds-f8d491u4/compile-FOnlyAstra.log",
+        "name": "compile-FOnlyAstra",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "-o",
+          ".lake/build/lib/lean/FOnlyCompilerBridge.olean",
+          "FOnlyCompilerBridge.lean"
+        ],
+        "cwd": "lean",
+        "elapsed_seconds": 0.817,
+        "exit_code": 0,
+        "log": "original-bounds-f8d491u4/compile-FOnlyCompilerBridge.log",
+        "name": "compile-FOnlyCompilerBridge",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "leanchecker",
+          "Subtail.SmallerCompilerAstra"
+        ],
+        "cwd": "lean",
+        "elapsed_seconds": 2.822,
+        "exit_code": 0,
+        "log": "original-bounds-f8d491u4/kernel-Subtail.SmallerCompilerAstra.log",
+        "name": "kernel-Subtail.SmallerCompilerAstra",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "leanchecker",
+          "FOnlyAstra"
+        ],
+        "cwd": "lean",
+        "elapsed_seconds": 1.519,
+        "exit_code": 0,
+        "log": "original-bounds-f8d491u4/kernel-FOnlyAstra.log",
+        "name": "kernel-FOnlyAstra",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "leanchecker",
+          "FOnlyCompilerBridge"
+        ],
+        "cwd": "lean",
+        "elapsed_seconds": 1.117,
+        "exit_code": 0,
+        "log": "original-bounds-f8d491u4/kernel-FOnlyCompilerBridge.log",
+        "name": "kernel-FOnlyCompilerBridge",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "<checkout>/tmp/original-bounds-f8d491u4/axioms.lean"
+        ],
+        "cwd": "lean",
+        "elapsed_seconds": 0.666,
+        "exit_code": 0,
+        "log": "original-bounds-f8d491u4/axioms.log",
+        "name": "axioms",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "<checkout>/tmp/original-bounds-f8d491u4/native.lean"
+        ],
+        "cwd": "lean",
+        "elapsed_seconds": 0.666,
+        "exit_code": 0,
+        "log": "original-bounds-f8d491u4/native-guards.log",
+        "name": "native-guards",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "<python3.13.14>",
+          "experiments/check_smaller_compiler_astra.py",
+          "--output",
+          "<checkout>/tmp/original-bounds-f8d491u4/compiler-standalone.json"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.265,
+        "exit_code": 0,
+        "log": "original-bounds-f8d491u4/python-compiler.log",
+        "name": "python-compiler",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "<python3.13.14>",
+          "experiments/check_smaller_compiler_astra.py",
+          "--repository",
+          "--output",
+          "<checkout>/tmp/original-bounds-f8d491u4/compiler-repository.json"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.365,
+        "exit_code": 0,
+        "log": "original-bounds-f8d491u4/python-compiler-repository.log",
+        "name": "python-compiler-repository",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "<python3.13.14>",
+          "experiments/f_only_astra.py",
+          "--output",
+          "<checkout>/tmp/original-bounds-f8d491u4/f-bounded.json"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 1.919,
+        "exit_code": 0,
+        "log": "original-bounds-f8d491u4/python-f-bounded.log",
+        "name": "python-f-bounded",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      }
+    ],
+    "declaration_counts": {
+      "FOnlyAstra": 20,
+      "FOnlyCompilerBridge": 6,
+      "Subtail.SmallerCompilerAstra": 22
+    },
+    "git_head": "a33fb055be1473b025380c105a6a2883d35a5385",
+    "lean_version": "Lean (version 4.33.1, aarch64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
+    "limits": [
+      "Python searches are bounded diagnostics, not proofs of nonexistence.",
+      "This does not profile or replace the production subtype decision backend.",
+      "The older concrete compiler U counterexample remains valid."
+    ],
+    "native_guards": {
+      "output": [
+        "0",
+        "6",
+        "false",
+        "0"
+      ],
+      "status": "PASS"
+    },
+    "platform": "Linux-6.12.94-123.192.amzn2023.aarch64-aarch64-with-glibc2.43",
+    "python": "3.13.14",
+    "python_diagnostics": {
+      "compiler_saved_receipt": "MATCH",
+      "f_saved_receipt": "MATCH_EXCEPT_ENVIRONMENT_AND_TIME",
+      "f_status": "PASS_BOUNDED_CHECKS_NOT_GLOBAL_PROOF",
+      "negative_search_semantics": "UNKNOWN unless an independent all-length proof is supplied",
+      "repository_counterexample_replays": 1,
+      "status": "PASS"
+    },
+    "runtime_choice_free": true,
+    "scope": "smaller compiler U contract and original terminal witness F",
+    "source_sha256": {
+      "experiments/check_smaller_compiler_astra.py": "bf7dafe0ea0c3269261de858ee9c813d1f958cb044c0ae8fd808000d02a9741c",
+      "experiments/f_only_astra.py": "c6d90046defd3ef086a2e8039588dfb6a59fec0209737d5af1c84877c1c60f5d",
+      "lean/FOnlyAstra.lean": "3b0bf239b02eb4e953cbab72672591d418307e2491f015b375a777e9e733f610",
+      "lean/FOnlyCompilerBridge.lean": "8c49288e6f3167635ca3c56f4ed0ee9174860be6febb91e073929dc4dd364143",
+      "lean/Subtail/Basic.lean": "1a7cb0c1f7546ed2efdae96d1af9a84dc6f433531549a50f4738ed25eb64c6c6",
+      "lean/Subtail/FirstReturnColours.lean": "848c71747fb6deff903b9ee850a8c6ecdf5f35cd79ce680c7da11c68b7909352",
+      "lean/Subtail/FirstReturnGenerator.lean": "d6c4266c59949785979e6f37dea7d0e93adf50e9a42ad447a7267912949bace6",
+      "lean/Subtail/FirstReturnGraph.lean": "06d11930a30fc4034e9a8997a4b2d57f82b5f8779b87f709287502fccbde88d8",
+      "lean/Subtail/PrefixMatching.lean": "59de0b193b55765db895f0f9ceb2a4155cd4d4dcfe54fa58cb285ec0577931e4",
+      "lean/Subtail/RankMilestones.lean": "3a948deaea047bf02289869210fcc2cbf7ada1010983dee66fa8477e4832d1c6",
+      "lean/Subtail/RankQuery.lean": "e8ef2ec585c49a593c8cee4d11e7aeb75f0284179e36b26ea21d72dd313adb41",
+      "lean/Subtail/RankQueryCompiler.lean": "1e32f44935490d7e69c8157f4ce12f763c9732b26e4cef2a7fb94518941edb2c",
+      "lean/Subtail/RankQueryCoverage.lean": "b1ccfa2fe221d355451ccfffe3d701ee46489d616e7e20d015f3e4fb2e86b49f",
+      "lean/Subtail/RankQueryDecision.lean": "51fef747bb443d313559e57d8fb8e3c1ce68b804eb4883a7d504e2945da5bd8a",
+      "lean/Subtail/RankQueryEnumeration.lean": "f65f40733e4cd45c8499cf1874509b23bacfdfd9f32278b5d459d12dd7016189",
+      "lean/Subtail/RankQueryFinishFacts.lean": "8e67cbbcf2a2710ec5307455303180fea8c0d7756969b121efab025b8f7ff2a2",
+      "lean/Subtail/RankQueryFinishTrace.lean": "93653a3ade48c9c4c628a8f05583a1deef201d412427de87ce3209a91949a258",
+      "lean/Subtail/RankQueryFirstReturn.lean": "b029e89e706c0724428194ddbc7d08abd494710d29ac65fb21e1dc90d7df10e0",
+      "lean/Subtail/RankQueryLengthBound.lean": "daec0fabc8c8e8b5c9ff5b1078a110f2fddf48ef60d3cbfec04557261a794399",
+      "lean/Subtail/RankQueryPaths.lean": "d383b44afb6bb7625181fb58e1d269030fa388a477849c76b7bc7dc64172de2a",
+      "lean/Subtail/RankQuerySemanticUnwind.lean": "2b3968f40f9b42d9bc051a0d6b11de3c80e2c3bd30351b04f579765960c9b3de",
+      "lean/Subtail/RankQuerySound.lean": "7729268fb6f82a0c508747e774e92133f869e3038d05e6c8c1a0caf962c9cd76",
+      "lean/Subtail/RankQueryUnwind.lean": "c6006c46aa86de0d173711a14f8c4076fcd5723a7470664da0d87d18a70efa3e",
+      "lean/Subtail/RankQueryWeightBound.lean": "d92069dfe5de891ba9bcfe3c5599a6a5e726fd57e2995f87a3b569fa0daabe50",
+      "lean/Subtail/RankQueryWeightCounterexample.lean": "d3e2ebbe27bdc277f8080e5e75f8d8939784d670e396e52e69aac631681a68ce",
+      "lean/Subtail/RankWitnessReference.lean": "eb5f6485995190a3a829b6de2c87e31a79f47b408c6afb77cecfc031c03d7772",
+      "lean/Subtail/SmallerCompilerAstra.lean": "9d23d5922c627708bb62f6f1d68059870c4566c6ef7aa8bd6384383cfe90ce05",
+      "lean/Subtail/TerminalRank.lean": "3771a1a58ff7e5ddb2aa5134e08fca65a1a05d64c3a5de8487c4f7d7630b6fc2",
+      "lean/lake-manifest.json": "7d0c22bfe200e71ceec96760909d8f9162a5d1e4b96398fa14ba8a4c013bee15",
+      "lean/lakefile.toml": "cc1765726c70b0a02e969ffa24ee5732fd6aab703ef8c71d0f0dd415a545c938",
+      "lean/lean-toolchain": "3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71",
+      "results/f-only-astra.json": "a5664bd5c3eb9d3f36f37fadaa95c24346627bc6976deba0087f6cf11a9e6d19",
+      "results/smaller-compiler-astra.json": "b91558da2248401349442a4603d18ca07d5217b70dfa97d9a732c298075820c2",
+      "scripts/check_original_bounds.py": "68f56317b8068d17c56da31ea4bb52f0c3c1c2377e3f80714e3c55d1dcc38a6b",
+      "scripts/test_check_original_bounds.py": "67d914632cb7c239b6ddff2b8002e998cc0f20c1686b88db58977cb98c05bd25"
+    },
+    "status": "PASS",
+    "tracked_status_before": []
+  },
+  "followup_steps": [
+    {
+      "command": [
+        "<python3.13.14>",
+        "scripts/test_check_original_bounds.py"
+      ],
+      "exit_code": 0,
+      "name": "gate-tests-final",
+      "seconds": 0.128,
+      "status": "PASS"
+    },
+    {
+      "command": [
+        "<python3.13.14>",
+        "scripts/check_original_bounds.py",
+        "--output",
+        "tmp/original-bounds-final.json"
+      ],
+      "exit_code": 0,
+      "name": "original-bounds-final",
+      "seconds": 12.052,
+      "status": "PASS"
+    }
+  ],
+  "hosted_ci": {
+    "status": "NOT RUN at receipt creation; publish/read back separately in issue #37"
+  },
+  "independent_reviews": {
+    "continuing_ci": "ACCEPT at a33fb05 after fixing manifest/test provenance and timeout cleanup race; no builds by reviewer",
+    "final_ledger": "ACCEPT: actual C086, README and STATE text read against the declarations; historical unresolved wording corrected",
+    "mathematical": "ACCEPT: prior nine-submission review; independent declaration-to-C086 readback at 92680b0"
+  },
+  "limits": [
+    "Full existing hosted CI matrix was not duplicated on the workbench.",
+    "Python corpus failures under caps are UNKNOWN, not nonexistence.",
+    "No production solver, default import graph or original proof definition changed.",
+    "No practical speedup, complexity-class, signature or priority claim.",
+    "Other author worktrees, stashes and unpushed work were not audited or retired.",
+    "CI inventory audits all current public declarations and requires critical names; independent source review checks intended statements.",
+    "Whole-job cancellation can preempt the final gate receipt; an absent or incomplete report is not PASS."
+  ],
+  "old_quantitative": {
+    "checkout_sha": "92680b0630de86fbe5ca3aa323fa97cdd0b6ecaa",
+    "commands": [
+      {
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "--version"
+        ],
+        "elapsed_seconds": 0.123,
+        "exit_code": 0,
+        "wall_timeout_seconds": 60
+      },
+      {
+        "command": [
+          "lake",
+          "build",
+          "+Subtail.RankQueryWeightCounterexample",
+          "+Subtail.RankQueryWeightBound",
+          "+Subtail.RankQueryLengthBound"
+        ],
+        "elapsed_seconds": 0.167,
+        "exit_code": 0,
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "leanchecker",
+          "Subtail.RankQueryWeightCounterexample"
+        ],
+        "elapsed_seconds": 5.079,
+        "exit_code": 0,
+        "wall_timeout_seconds": 600
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "<checkout>/rank-weight-audit-hp6nqyw7/Audit.lean"
+        ],
+        "elapsed_seconds": 0.634,
+        "exit_code": 0,
+        "wall_timeout_seconds": 300
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "leanchecker",
+          "Subtail.RankQueryWeightBound"
+        ],
+        "elapsed_seconds": 1.879,
+        "exit_code": 0,
+        "wall_timeout_seconds": 600
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "<checkout>/rank-weight-audit-6g3b8x4e/Audit.lean"
+        ],
+        "elapsed_seconds": 0.637,
+        "exit_code": 0,
+        "wall_timeout_seconds": 300
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "leanchecker",
+          "Subtail.RankQueryLengthBound"
+        ],
+        "elapsed_seconds": 1.242,
+        "exit_code": 0,
+        "wall_timeout_seconds": 600
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "<checkout>/rank-weight-audit-reoa99d7/Audit.lean"
+        ],
+        "elapsed_seconds": 0.644,
+        "exit_code": 0,
+        "wall_timeout_seconds": 300
+      }
+    ],
+    "driver_sha256": "87f4d0e5d8114b2d8c6bb15d24ef9d1ad36ffafb1921c8af2b7f68135915e9b3",
+    "full_enumerator_executed": false,
+    "full_lake_build": true,
+    "independent_mathematical_review": false,
+    "large_observer_materialized": false,
+    "lean": "Lean (version 4.33.1, aarch64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
+    "lean_num_threads": "1",
+    "modules": {
+      "RankQueryLengthBound": {
+        "declarations_audited": 25,
+        "dependencies": {
+          "Subtail.RankQueryLengthBound.LengthRun": [],
+          "Subtail.RankQueryLengthBound.LengthRun.prepend": [],
+          "Subtail.RankQueryLengthBound.LengthRun.rec": [],
+          "Subtail.RankQueryLengthBound.LengthRun.refl": [],
+          "Subtail.RankQueryLengthBound.LengthRun.step": [],
+          "Subtail.RankQueryLengthBound.LengthRun.toRun": [],
+          "Subtail.RankQueryLengthBound.accepts_length_bound": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryLengthBound.allNodes_length": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryLengthBound.compile_bounded": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryLengthBound.exists_bounded_recon": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryLengthBound.finish_bounded": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryLengthBound.growth": [],
+          "Subtail.RankQueryLengthBound.growth_step": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryLengthBound.interval_trace_bounded": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryLengthBound.lengthRun_finish_trace": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryLengthBound.lengthRun_gen": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryLengthBound.lengthRun_of_chain": [
+            "propext"
+          ],
+          "Subtail.RankQueryLengthBound.one_state_empty": [
+            "propext"
+          ],
+          "Subtail.RankQueryLengthBound.preimage_bounded": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryLengthBound.promoted_finish_bounded": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryLengthBound.recon_length_le": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryLengthBound.sum_map_mul_le": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryLengthBound.terminal_witness_bound_iff": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryLengthBound.terminal_witness_bounded": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryLengthBound.witnessBound": []
+        },
+        "runtime_definitions_choice_free": true,
+        "sha256": "daec0fabc8c8e8b5c9ff5b1078a110f2fddf48ef60d3cbfec04557261a794399",
+        "status": "PASS"
+      },
+      "RankQueryWeightBound": {
+        "declarations_audited": 38,
+        "dependencies": {
+          "Subtail.RankQueryWeightBound.Estimate": [],
+          "Subtail.RankQueryWeightBound.Estimate.active": [],
+          "Subtail.RankQueryWeightBound.Estimate.activeSizes": [],
+          "Subtail.RankQueryWeightBound.Estimate.atoms": [],
+          "Subtail.RankQueryWeightBound.Estimate.mk": [],
+          "Subtail.RankQueryWeightBound.Estimate.sizes": [],
+          "Subtail.RankQueryWeightBound.allEmitted_estimate": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightBound.atomSum": [],
+          "Subtail.RankQueryWeightBound.compileAtom_estimate": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightBound.compilePiece_estimate": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightBound.compileValid_weight_le": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightBound.compile_atoms_length": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightBound.compile_sum": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightBound.coverage_sum_eq": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightBound.estimate_append": [
+            "propext"
+          ],
+          "Subtail.RankQueryWeightBound.estimate_blank": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightBound.estimate_fold": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightBound.estimate_fold_aux": [
+            "propext"
+          ],
+          "Subtail.RankQueryWeightBound.estimate_fold_le": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightBound.estimate_mono": [],
+          "Subtail.RankQueryWeightBound.filter_add_length_le_one": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightBound.forward_selected_length": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightBound.forward_selected_observer": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightBound.improvedBound": [],
+          "Subtail.RankQueryWeightBound.improvedBound_mono": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightBound.interval_cardinality": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightBound.interval_size_le": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightBound.le_improvedBound": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightBound.member_le_sum": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightBound.piecesOf_length_le": [
+            "propext"
+          ],
+          "Subtail.RankQueryWeightBound.preimage_clause_weight_le": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightBound.prod_sizes_le": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightBound.selected": [],
+          "Subtail.RankQueryWeightBound.selected_append": [
+            "propext"
+          ],
+          "Subtail.RankQueryWeightBound.two_le_weightBudget": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightBound.weightBudget": [],
+          "Subtail.RankQueryWeightBound.weight_preimage_le": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightBound.weight_promote_finish_le": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ]
+        },
+        "runtime_definitions_choice_free": true,
+        "sha256": "d92069dfe5de891ba9bcfe3c5599a6a5e726fd57e2995f87a3b569fa0daabe50",
+        "status": "PASS"
+      },
+      "RankQueryWeightCounterexample": {
+        "declarations_audited": 24,
+        "dependencies": {
+          "Subtail.RankQueryWeightCounterexample.active_count": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightCounterexample.diagram": [
+            "propext"
+          ],
+          "Subtail.RankQueryWeightCounterexample.diagram_bounded": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightCounterexample.diagram_valid": [
+            "propext"
+          ],
+          "Subtail.RankQueryWeightCounterexample.exact_budget": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightCounterexample.exceeds_old_bound": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightCounterexample.forward": [],
+          "Subtail.RankQueryWeightCounterexample.input": [
+            "propext"
+          ],
+          "Subtail.RankQueryWeightCounterexample.input_weight": [
+            "propext"
+          ],
+          "Subtail.RankQueryWeightCounterexample.inst": [
+            "propext"
+          ],
+          "Subtail.RankQueryWeightCounterexample.interval_size": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightCounterexample.not_closureFor": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightCounterexample.obs": [
+            "propext"
+          ],
+          "Subtail.RankQueryWeightCounterexample.original_witness": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightCounterexample.output": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightCounterexample.output_atoms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightCounterexample.output_mem": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightCounterexample.output_vars": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightCounterexample.output_weight": [
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightCounterexample.pathPieces": [],
+          "Subtail.RankQueryWeightCounterexample.singleton_weight": [
+            "propext"
+          ],
+          "Subtail.RankQueryWeightCounterexample.terminal": [
+            "propext"
+          ],
+          "Subtail.RankQueryWeightCounterexample.terminal_counterexample": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "Subtail.RankQueryWeightCounterexample.wrap": []
+        },
+        "runtime_definitions_choice_free": true,
+        "sha256": "d3e2ebbe27bdc277f8080e5e75f8d8939784d670e396e52e69aac631681a68ce",
+        "status": "PASS"
+      }
+    },
+    "platform": "Linux-6.12.94-123.192.amzn2023.aarch64-aarch64-with-glibc2.43",
+    "python": "3.13.14 (main, Aug  5 2026, 15:42:48) [Clang 22.1.3 ]",
+    "scope": "Lean elaboration, kernel replay, transitive axiom audit",
+    "source_dependency_sha256": {
+      "lean/Subtail/Basic.lean": "1a7cb0c1f7546ed2efdae96d1af9a84dc6f433531549a50f4738ed25eb64c6c6",
+      "lean/Subtail/FirstReturnColours.lean": "848c71747fb6deff903b9ee850a8c6ecdf5f35cd79ce680c7da11c68b7909352",
+      "lean/Subtail/FirstReturnGenerator.lean": "d6c4266c59949785979e6f37dea7d0e93adf50e9a42ad447a7267912949bace6",
+      "lean/Subtail/FirstReturnGraph.lean": "06d11930a30fc4034e9a8997a4b2d57f82b5f8779b87f709287502fccbde88d8",
+      "lean/Subtail/PrefixMatching.lean": "59de0b193b55765db895f0f9ceb2a4155cd4d4dcfe54fa58cb285ec0577931e4",
+      "lean/Subtail/RankMilestones.lean": "3a948deaea047bf02289869210fcc2cbf7ada1010983dee66fa8477e4832d1c6",
+      "lean/Subtail/RankQuery.lean": "e8ef2ec585c49a593c8cee4d11e7aeb75f0284179e36b26ea21d72dd313adb41",
+      "lean/Subtail/RankQueryCompiler.lean": "1e32f44935490d7e69c8157f4ce12f763c9732b26e4cef2a7fb94518941edb2c",
+      "lean/Subtail/RankQueryCoverage.lean": "b1ccfa2fe221d355451ccfffe3d701ee46489d616e7e20d015f3e4fb2e86b49f",
+      "lean/Subtail/RankQueryDecision.lean": "51fef747bb443d313559e57d8fb8e3c1ce68b804eb4883a7d504e2945da5bd8a",
+      "lean/Subtail/RankQueryEnumeration.lean": "f65f40733e4cd45c8499cf1874509b23bacfdfd9f32278b5d459d12dd7016189",
+      "lean/Subtail/RankQueryFinishFacts.lean": "8e67cbbcf2a2710ec5307455303180fea8c0d7756969b121efab025b8f7ff2a2",
+      "lean/Subtail/RankQueryFinishTrace.lean": "93653a3ade48c9c4c628a8f05583a1deef201d412427de87ce3209a91949a258",
+      "lean/Subtail/RankQueryFirstReturn.lean": "b029e89e706c0724428194ddbc7d08abd494710d29ac65fb21e1dc90d7df10e0",
+      "lean/Subtail/RankQueryLengthBound.lean": "daec0fabc8c8e8b5c9ff5b1078a110f2fddf48ef60d3cbfec04557261a794399",
+      "lean/Subtail/RankQueryPaths.lean": "d383b44afb6bb7625181fb58e1d269030fa388a477849c76b7bc7dc64172de2a",
+      "lean/Subtail/RankQuerySemanticUnwind.lean": "2b3968f40f9b42d9bc051a0d6b11de3c80e2c3bd30351b04f579765960c9b3de",
+      "lean/Subtail/RankQuerySound.lean": "7729268fb6f82a0c508747e774e92133f869e3038d05e6c8c1a0caf962c9cd76",
+      "lean/Subtail/RankQueryUnwind.lean": "c6006c46aa86de0d173711a14f8c4076fcd5723a7470664da0d87d18a70efa3e",
+      "lean/Subtail/RankQueryWeightBound.lean": "d92069dfe5de891ba9bcfe3c5599a6a5e726fd57e2995f87a3b569fa0daabe50",
+      "lean/Subtail/RankQueryWeightCounterexample.lean": "d3e2ebbe27bdc277f8080e5e75f8d8939784d670e396e52e69aac631681a68ce",
+      "lean/Subtail/RankWitnessReference.lean": "eb5f6485995190a3a829b6de2c87e31a79f47b408c6afb77cecfc031c03d7772",
+      "lean/Subtail/TerminalRank.lean": "3771a1a58ff7e5ddb2aa5134e08fca65a1a05d64c3a5de8487c4f7d7630b6fc2"
+    },
+    "source_sha": "92680b0630de86fbe5ca3aa323fa97cdd0b6ecaa",
+    "status": "PASS"
+  },
+  "original_bounds": {
+    "axioms": {
+      "Subtail.FOnlyAstra.border_count_add_one_le_of_avoids": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.budget_le_next": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.budgets_lag": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.coefficient_le_fourth": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.corrected_budget_ge_seed": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.final_return_safe": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.final_return_witness": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.finishPlusObserver": [
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.finishPlusQuery": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.growth_lag": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.lag_step": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.oldGrowth": [],
+      "Subtail.FOnlyAstra.one_less_product_le_originalF": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.originalF": [],
+      "Subtail.FOnlyAstra.original_F_small": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.rank_le_of_avoids": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.shortest_no_initial_return": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.stateAt_drop_of_return": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.weight_finishPlus_le": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyAstra.witness_drop_of_return": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyCompilerBridge.coverage_small": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyCompilerBridge.oldGrowth_step": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyCompilerBridge.original_F": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyCompilerBridge.promoted_finish_original_bound": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyCompilerBridge.small_preimage_bounded": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.FOnlyCompilerBridge.terminal_witness_original_bounded": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.activeBudget": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.closureFor": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.closureStatement": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.closure_iff": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.compact": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.compact_iff": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.compileValid_weight_le": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.cov_active_length": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.cov_compact": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.coverage": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.covered_count_le": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.filter_indices_length": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.forward": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.map_range_getD": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.mem_preClause": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.old_counterexample_rejected": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.preClause": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.preSmall": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.preSmall_nil": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.preimage_clause_weight_le": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.reconstruction": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Subtail.SmallerCompilerAstra.smallDiagrams": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    "commands": [
+      {
+        "command": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.004,
+        "exit_code": 0,
+        "log": "original-bounds-9rkwleuz/git-head.log",
+        "name": "git-head",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "git",
+          "status",
+          "--short",
+          "--untracked-files=no"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.115,
+        "exit_code": 0,
+        "log": "original-bounds-9rkwleuz/git-status.log",
+        "name": "git-status",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "lean",
+          "--version"
+        ],
+        "cwd": "lean",
+        "elapsed_seconds": 0.064,
+        "exit_code": 0,
+        "log": "original-bounds-9rkwleuz/toolchain.log",
+        "name": "toolchain",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "lake",
+          "build",
+          "+Subtail.RankQueryLengthBound",
+          "+Subtail.SmallerCompilerAstra"
+        ],
+        "cwd": "lean",
+        "elapsed_seconds": 50.063,
+        "exit_code": 0,
+        "log": "original-bounds-9rkwleuz/build-dependencies.log",
+        "name": "build-dependencies",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "-o",
+          ".lake/build/lib/lean/FOnlyAstra.olean",
+          "FOnlyAstra.lean"
+        ],
+        "cwd": "lean",
+        "elapsed_seconds": 1.518,
+        "exit_code": 0,
+        "log": "original-bounds-9rkwleuz/compile-FOnlyAstra.log",
+        "name": "compile-FOnlyAstra",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "-o",
+          ".lake/build/lib/lean/FOnlyCompilerBridge.olean",
+          "FOnlyCompilerBridge.lean"
+        ],
+        "cwd": "lean",
+        "elapsed_seconds": 0.816,
+        "exit_code": 0,
+        "log": "original-bounds-9rkwleuz/compile-FOnlyCompilerBridge.log",
+        "name": "compile-FOnlyCompilerBridge",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "leanchecker",
+          "Subtail.SmallerCompilerAstra"
+        ],
+        "cwd": "lean",
+        "elapsed_seconds": 2.772,
+        "exit_code": 0,
+        "log": "original-bounds-9rkwleuz/kernel-Subtail.SmallerCompilerAstra.log",
+        "name": "kernel-Subtail.SmallerCompilerAstra",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "leanchecker",
+          "FOnlyAstra"
+        ],
+        "cwd": "lean",
+        "elapsed_seconds": 1.419,
+        "exit_code": 0,
+        "log": "original-bounds-9rkwleuz/kernel-FOnlyAstra.log",
+        "name": "kernel-FOnlyAstra",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "leanchecker",
+          "FOnlyCompilerBridge"
+        ],
+        "cwd": "lean",
+        "elapsed_seconds": 1.067,
+        "exit_code": 0,
+        "log": "original-bounds-9rkwleuz/kernel-FOnlyCompilerBridge.log",
+        "name": "kernel-FOnlyCompilerBridge",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "<checkout>/tmp/original-bounds-9rkwleuz/axioms.lean"
+        ],
+        "cwd": "lean",
+        "elapsed_seconds": 0.666,
+        "exit_code": 0,
+        "log": "original-bounds-9rkwleuz/axioms.log",
+        "name": "axioms",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "<checkout>/tmp/original-bounds-9rkwleuz/native.lean"
+        ],
+        "cwd": "lean",
+        "elapsed_seconds": 0.666,
+        "exit_code": 0,
+        "log": "original-bounds-9rkwleuz/native-guards.log",
+        "name": "native-guards",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "<python3.13.14>",
+          "experiments/check_smaller_compiler_astra.py",
+          "--output",
+          "<checkout>/tmp/original-bounds-9rkwleuz/compiler-standalone.json"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.265,
+        "exit_code": 0,
+        "log": "original-bounds-9rkwleuz/python-compiler.log",
+        "name": "python-compiler",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "<python3.13.14>",
+          "experiments/check_smaller_compiler_astra.py",
+          "--repository",
+          "--output",
+          "<checkout>/tmp/original-bounds-9rkwleuz/compiler-repository.json"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.365,
+        "exit_code": 0,
+        "log": "original-bounds-9rkwleuz/python-compiler-repository.log",
+        "name": "python-compiler-repository",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      },
+      {
+        "command": [
+          "<python3.13.14>",
+          "experiments/f_only_astra.py",
+          "--output",
+          "<checkout>/tmp/original-bounds-9rkwleuz/f-bounded.json"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 1.919,
+        "exit_code": 0,
+        "log": "original-bounds-9rkwleuz/python-f-bounded.log",
+        "name": "python-f-bounded",
+        "status": "PASS",
+        "wall_timeout_seconds": 900
+      }
+    ],
+    "declaration_counts": {
+      "FOnlyAstra": 20,
+      "FOnlyCompilerBridge": 6,
+      "Subtail.SmallerCompilerAstra": 22
+    },
+    "git_head": "92680b0630de86fbe5ca3aa323fa97cdd0b6ecaa",
+    "lean_version": "Lean (version 4.33.1, aarch64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
+    "limits": [
+      "Python searches are bounded diagnostics, not proofs of nonexistence.",
+      "This does not profile or replace the production subtype decision backend.",
+      "The older concrete compiler U counterexample remains valid."
+    ],
+    "native_guards": {
+      "output": [
+        "0",
+        "6",
+        "false",
+        "0"
+      ],
+      "status": "PASS"
+    },
+    "platform": "Linux-6.12.94-123.192.amzn2023.aarch64-aarch64-with-glibc2.43",
+    "python": "3.13.14",
+    "python_diagnostics": {
+      "compiler_saved_receipt": "MATCH",
+      "f_saved_receipt": "MATCH_EXCEPT_ENVIRONMENT_AND_TIME",
+      "f_status": "PASS_BOUNDED_CHECKS_NOT_GLOBAL_PROOF",
+      "negative_search_semantics": "UNKNOWN unless an independent all-length proof is supplied",
+      "repository_counterexample_replays": 1,
+      "status": "PASS"
+    },
+    "runtime_choice_free": true,
+    "scope": "smaller compiler U contract and original terminal witness F",
+    "source_sha256": {
+      "experiments/check_smaller_compiler_astra.py": "bf7dafe0ea0c3269261de858ee9c813d1f958cb044c0ae8fd808000d02a9741c",
+      "experiments/f_only_astra.py": "c6d90046defd3ef086a2e8039588dfb6a59fec0209737d5af1c84877c1c60f5d",
+      "lean/FOnlyAstra.lean": "3b0bf239b02eb4e953cbab72672591d418307e2491f015b375a777e9e733f610",
+      "lean/FOnlyCompilerBridge.lean": "8c49288e6f3167635ca3c56f4ed0ee9174860be6febb91e073929dc4dd364143",
+      "lean/Subtail/Basic.lean": "1a7cb0c1f7546ed2efdae96d1af9a84dc6f433531549a50f4738ed25eb64c6c6",
+      "lean/Subtail/FirstReturnColours.lean": "848c71747fb6deff903b9ee850a8c6ecdf5f35cd79ce680c7da11c68b7909352",
+      "lean/Subtail/FirstReturnGenerator.lean": "d6c4266c59949785979e6f37dea7d0e93adf50e9a42ad447a7267912949bace6",
+      "lean/Subtail/FirstReturnGraph.lean": "06d11930a30fc4034e9a8997a4b2d57f82b5f8779b87f709287502fccbde88d8",
+      "lean/Subtail/PrefixMatching.lean": "59de0b193b55765db895f0f9ceb2a4155cd4d4dcfe54fa58cb285ec0577931e4",
+      "lean/Subtail/RankMilestones.lean": "3a948deaea047bf02289869210fcc2cbf7ada1010983dee66fa8477e4832d1c6",
+      "lean/Subtail/RankQuery.lean": "e8ef2ec585c49a593c8cee4d11e7aeb75f0284179e36b26ea21d72dd313adb41",
+      "lean/Subtail/RankQueryCompiler.lean": "1e32f44935490d7e69c8157f4ce12f763c9732b26e4cef2a7fb94518941edb2c",
+      "lean/Subtail/RankQueryCoverage.lean": "b1ccfa2fe221d355451ccfffe3d701ee46489d616e7e20d015f3e4fb2e86b49f",
+      "lean/Subtail/RankQueryDecision.lean": "51fef747bb443d313559e57d8fb8e3c1ce68b804eb4883a7d504e2945da5bd8a",
+      "lean/Subtail/RankQueryEnumeration.lean": "f65f40733e4cd45c8499cf1874509b23bacfdfd9f32278b5d459d12dd7016189",
+      "lean/Subtail/RankQueryFinishFacts.lean": "8e67cbbcf2a2710ec5307455303180fea8c0d7756969b121efab025b8f7ff2a2",
+      "lean/Subtail/RankQueryFinishTrace.lean": "93653a3ade48c9c4c628a8f05583a1deef201d412427de87ce3209a91949a258",
+      "lean/Subtail/RankQueryFirstReturn.lean": "b029e89e706c0724428194ddbc7d08abd494710d29ac65fb21e1dc90d7df10e0",
+      "lean/Subtail/RankQueryLengthBound.lean": "daec0fabc8c8e8b5c9ff5b1078a110f2fddf48ef60d3cbfec04557261a794399",
+      "lean/Subtail/RankQueryPaths.lean": "d383b44afb6bb7625181fb58e1d269030fa388a477849c76b7bc7dc64172de2a",
+      "lean/Subtail/RankQuerySemanticUnwind.lean": "2b3968f40f9b42d9bc051a0d6b11de3c80e2c3bd30351b04f579765960c9b3de",
+      "lean/Subtail/RankQuerySound.lean": "7729268fb6f82a0c508747e774e92133f869e3038d05e6c8c1a0caf962c9cd76",
+      "lean/Subtail/RankQueryUnwind.lean": "c6006c46aa86de0d173711a14f8c4076fcd5723a7470664da0d87d18a70efa3e",
+      "lean/Subtail/RankQueryWeightBound.lean": "d92069dfe5de891ba9bcfe3c5599a6a5e726fd57e2995f87a3b569fa0daabe50",
+      "lean/Subtail/RankQueryWeightCounterexample.lean": "d3e2ebbe27bdc277f8080e5e75f8d8939784d670e396e52e69aac631681a68ce",
+      "lean/Subtail/RankWitnessReference.lean": "eb5f6485995190a3a829b6de2c87e31a79f47b408c6afb77cecfc031c03d7772",
+      "lean/Subtail/SmallerCompilerAstra.lean": "9d23d5922c627708bb62f6f1d68059870c4566c6ef7aa8bd6384383cfe90ce05",
+      "lean/Subtail/TerminalRank.lean": "3771a1a58ff7e5ddb2aa5134e08fca65a1a05d64c3a5de8487c4f7d7630b6fc2",
+      "lean/lakefile.toml": "cc1765726c70b0a02e969ffa24ee5732fd6aab703ef8c71d0f0dd415a545c938",
+      "lean/lean-toolchain": "3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71",
+      "results/f-only-astra.json": "a5664bd5c3eb9d3f36f37fadaa95c24346627bc6976deba0087f6cf11a9e6d19",
+      "results/smaller-compiler-astra.json": "b91558da2248401349442a4603d18ca07d5217b70dfa97d9a732c298075820c2",
+      "scripts/check_original_bounds.py": "00f257aac52a151c7d761f76e7d6bc8272afb568d87b6c765f7415d38224cfdd"
+    },
+    "status": "PASS",
+    "tracked_status_before": []
+  },
+  "record_checks": {
+    "checks": [
+      {
+        "command": [
+          "python3",
+          "scripts/research_index.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "output": "Research tracker valid: 18 approaches; 169 A/C/E/Q records; local paths and ID links checked.",
+        "status": "PASS"
+      },
+      {
+        "command": [
+          "python3",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "scripts",
+          "-p",
+          "test_research_index.py"
+        ],
+        "exit_code": 0,
+        "output": ".............\n----------------------------------------------------------------------\nRan 13 tests in 0.058s\n\nOK",
+        "status": "PASS"
+      },
+      {
+        "command": [
+          "python3",
+          "scripts/test_check_original_bounds.py"
+        ],
+        "exit_code": 0,
+        "output": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.001s\n\nOK",
+        "status": "PASS"
+      },
+      {
+        "command": [
+          "python3",
+          "paper/check.py"
+        ],
+        "exit_code": 0,
+        "output": "PASS: 21 mapped results, 4 ordinary results, source maps, bibliography and literal examples\nLean build/kernel replay: NOT RUN by this documentation check",
+        "status": "PASS"
+      },
+      {
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exit_code": 0,
+        "output": "",
+        "status": "PASS"
+      },
+      {
+        "name": "workflow schema, main/PR dependency triggers and single gate",
+        "status": "PASS"
+      }
+    ],
+    "context": "Integration documentation working tree, before publication. Exact main commit is recorded in issue #37.",
+    "document_sha256": {
+      "README.md": "6d01f5da9acf01e508d53b5de69732cda23e245474977c61809d609703099d10",
+      "STATE.md": "fb1c3897e583d5acb69f205e48dc9e9d4acbc1cec87aac5d2c8e0812e663919e",
+      "experiments/README.md": "0b6d87c5804f6899001d69c109dcb5f045cb8664fd49a4747c9a6268d29e110d",
+      "notes/2026-09-15-candidate-rank-query-decision.md": "a6d07fc110ea59c6048aceb488dab15053d9141543efc6ff01b1a8da3937e230",
+      "notes/2026-09-17-rank-query-closure-audit.md": "fda0e95e772c67327add3c77cd2d933890fc194d883ab832436d7e388a6bd574",
+      "notes/2026-09-20-c080-quantitative-independent-readback.md": "3e9fa498ebab8463c86778ad50177024782ef205cd784e22a64dfbaf5248cc37",
+      "notes/2026-09-20-original-bounds-integration.md": "061fe157670cf694b7fea909a85315d3af3c91074d8f0b7a7b5444706a7f8e2b",
+      "notes/2026-09-20-post-c081-quantitative-integration.md": "80610cc67dd8be7fa2c0ae6437d9aed17cd1def4a0e8a55affc7a16978707025",
+      "research/COMPLETION.md": "045e9cedf4f4cca90b72958544f871445a0f2001ff53437c93aacc0586a40ba0",
+      "research/PLAN.md": "ae494ae5bebe1a9139c7a11bd114f23460ef1f301b15d81ab93271051d255bed",
+      "research/POST_C081.md": "fb534e9d28e44eec2fcfbcfe6e9898cc40b1240af78667a1740fca4e463f5d90",
+      "research/RANK_QUERY_CANDIDATE.md": "1f4f903f6fe97a64f080374fea1d64acfb7a1f12e6487cffe646f1fbb9eed37d",
+      "research/RANK_QUERY_COMPILER.md": "6c39e3a9c11d6e8537e95b232aa369e0e5b9cfd0eac7b2e5e2adad979288ee49",
+      "research/README.md": "a4be89bdeea4e54276991d9b0c1703a883871e657cd0bce2f4095af1ead6cb26",
+      "research/approaches.json": "8e3b2019c4e1620d17cc0068b524e21b36c093df1ce0de3aed316dbcfdbd691a",
+      "research/approaches/A017.md": "4b13afe40bb8a4ddcac4589b780993f47c9d23eff4038d8240fb3992530b5c4f",
+      "research/approaches/A018.md": "efab4d8f1e0ca513563f06f6284d72fe7adcca1ba363710881ca2c347093449f",
+      "research/claims.md": "83700712c2dc8bb9c251557b5243096a0ca2a71b3a7bd74bc2dbd8bb8ba79b43"
+    },
+    "python": "3.9.6",
+    "status": "PASS",
+    "working_tree_base": "a33fb055be1473b025380c105a6a2883d35a5385"
+  },
+  "remote_environment": "isolated Linux AArch64 workbench; fresh project Lake cache; installed pinned toolchain reused",
+  "review_origin": "2ffdbd8384f5d98aa257d476c1901cfc3deddd8f",
+  "schema_version": 1,
+  "scope": "C086 smaller compiler original U contract and original terminal witness F; old concrete U remains refuted",
+  "session": "issue69-integration-20260920",
+  "source_heads": {
+    "original_f": "6aa7047cc6cbccd44c64223209b7563cf2824b8e",
+    "smaller_compiler": "db0a6d3505e93ff6bc51a8d89fcb52fb05adfe0f"
+  },
+  "source_validation_revision": "92680b0630de86fbe5ca3aa323fa97cdd0b6ecaa",
+  "steps": [
+    {
+      "command": [
+        "<python3.13.14>",
+        "scripts/test_check_original_bounds.py"
+      ],
+      "exit_code": 0,
+      "name": "gate-tests",
+      "seconds": 0.091,
+      "status": "PASS"
+    },
+    {
+      "command": [
+        "<python3.13.14>",
+        "scripts/check_original_bounds.py",
+        "--output",
+        "tmp/original-bounds-check.json"
+      ],
+      "exit_code": 0,
+      "name": "original-bounds",
+      "seconds": 61.805,
+      "status": "PASS"
+    },
+    {
+      "command": [
+        "<python3.13.14>",
+        "scripts/check_rank_weight_native.py"
+      ],
+      "exit_code": 0,
+      "name": "old-quantitative",
+      "seconds": 10.481,
+      "status": "PASS"
+    },
+    {
+      "command": [
+        "<python3.13.14>",
+        "scripts/check_lean.py"
+      ],
+      "exit_code": 0,
+      "name": "default-core",
+      "seconds": 173.662,
+      "status": "PASS"
+    }
+  ]
+}

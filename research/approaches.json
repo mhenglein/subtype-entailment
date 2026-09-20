@@ -178,10 +178,10 @@
       "title": "Build the exact top-free constraint-to-automata pipeline",
       "status": "active",
       "outcome": "supported",
-      "owner": "Issue-scoped contributors in STATE.md/#37; publication parent scope complete",
+      "owner": "Issue-scoped contributors in STATE.md/#37; compiler/F parent integration complete",
       "updated": "2026-09-20",
       "summary": "C081 has a proved cached raw summary with literal whole-Instance equality and unconditional endpoint correctness. E060 resolves the four/five-variable empty raw stress probes, retains 38/38 fixed and 19/19 deeper completions, and exactly checks 83 small query instances. Six-variable raw stress remains UNKNOWN; state/flag counts and signature/quantitative boundaries are unchanged.",
-      "next_step": "Parent #64 review and #65 technical reproduction are complete with pinned receipts; license/author/final release remain deferred. #66 has native diagnostic evidence but n=6 stays UNKNOWN; its contributor must propose a measured invariant/module. E061 reviewed/replayed the partial #67 fixtures; automatic native depth-two remains open and needs a fresh claim. Other proposed bounds/extensions await independent review. Read STATE.md and the latest child/#37 claims before writing; no future parent implementation or overlapping integration lease is implied.",
+      "next_step": "C086 compiler/F is reviewed and integrated with continuing CI. #66 diagnostic review is accepted; no n=6 speedup is claimed and a refinement needs a new scope. #67 native follow-up is claimed on its exact new paths. Reviewed producer and extension submissions await separate integration. #64 acceptance and #65 technical reproduction are complete; license/authors/final release remain deferred. Read latest child/#37 claims before writing.",
       "record": "research/approaches/A010.md",
       "evidence": [
         "notes/2026-09-04-bridge-foundation.md",
@@ -491,12 +491,12 @@
     {
       "id": "A017",
       "title": "Bound essential repeated blocks",
-      "status": "active",
+      "status": "tried",
       "outcome": "supported",
-      "owner": "smaller-compiler-20260920-astra, compiler-only #69 scope; other contributions released for review",
+      "owner": null,
       "updated": "2026-09-20",
-      "summary": "C081 qualitative decision and C082 corrected terminal bound are checked. The original concrete U estimate is refuted; original F alone and an existential smaller compiler remain open. Historical counterexample evidence is reconciled. The ordinary input resource account and C083 NL lower bound retain their exact scope.",
-      "next_step": "The #69 compiler contributor retains its exact new-path scope. F-only six-path handoff is released at 6aa7047 and requires independent statement/dependency review before promotion. #70 ordinary hardness transfer also awaits review. E061 covers restricted Python terminal/shared-generator fixtures; automatic native depth-two remains open. Read STATE.md/#37 and child issue handoffs before writing.",
+      "summary": "C081 qualitative decision, C082 larger bound and C086 original terminal F are checked. A filtered compiler now satisfies the original U contract; the old concrete compiler U remains refuted. No practical speedup or tight input complexity class follows. The reviewed #70 hardness transfer awaits separate integration.",
+      "next_step": "Original-F and smaller-compiler obligations are discharged by C086. Preserve the old counterexample and the larger C082 result. Integrate the separately reviewed #70 hardness contribution with exact domain limits, or claim a new quantitative question. The #67 native follow-up owns its announced paths; do not overlap.",
       "record": "research/approaches/A017.md",
       "evidence": [
         "notes/2026-09-04-minimal-witness-structure.md",
@@ -624,7 +624,14 @@
         "notes/2026-09-20-issue67-independent-fixtures.md",
         "notes/2026-09-20-issue67-replay.md",
         "results/issue67-independent/receipt.json",
-        "results/issue67-independent/full-checkout-replay.json"
+        "results/issue67-independent/full-checkout-replay.json",
+        "notes/2026-09-20-submission-review.md",
+        "results/submission-review-20260920.json",
+        "notes/2026-09-20-original-bounds-integration.md",
+        "results/original-bounds-integration-20260920.json",
+        "lean/Subtail/SmallerCompilerAstra.lean",
+        "lean/FOnlyCompilerBridge.lean",
+        "scripts/check_original_bounds.py"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/69"
     },
@@ -633,10 +640,10 @@
       "title": "Maintain the Lean core and verify critical obligations",
       "status": "active",
       "outcome": "supported",
-      "owner": "Issue-scoped contributors in STATE.md/#37; publication parent scope complete",
+      "owner": "Issue-scoped contributors in STATE.md/#37; compiler/F parent integration complete",
       "updated": "2026-09-20",
       "summary": "C081 has a proved cached raw summary with literal whole-Instance equality and unconditional endpoint correctness. E060 resolves the four/five-variable empty raw stress probes, retains 38/38 fixed and 19/19 deeper completions, and exactly checks 83 small query instances. Six-variable raw stress remains UNKNOWN; state/flag counts and signature/quantitative boundaries are unchanged.",
-      "next_step": "Parent #64 review and #65 technical reproduction are complete with pinned receipts; license/author/final release remain deferred. #66 has native diagnostic evidence but n=6 stays UNKNOWN; its contributor must propose a measured invariant/module. E061 reviewed/replayed the partial #67 fixtures; automatic native depth-two remains open and needs a fresh claim. Other proposed bounds/extensions await independent review. Read STATE.md and the latest child/#37 claims before writing; no future parent implementation or overlapping integration lease is implied.",
+      "next_step": "C086 compiler/F is reviewed and integrated with continuing CI. #66 diagnostic review is accepted; no n=6 speedup is claimed and a refinement needs a new scope. #67 native follow-up is claimed on its exact new paths. Reviewed producer and extension submissions await separate integration. #64 acceptance and #65 technical reproduction are complete; license/authors/final release remain deferred. Read latest child/#37 claims before writing.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
@@ -807,7 +814,14 @@
         "notes/2026-09-20-issue67-independent-fixtures.md",
         "notes/2026-09-20-issue67-replay.md",
         "results/issue67-independent/receipt.json",
-        "results/issue67-independent/full-checkout-replay.json"
+        "results/issue67-independent/full-checkout-replay.json",
+        "notes/2026-09-20-submission-review.md",
+        "results/submission-review-20260920.json",
+        "notes/2026-09-20-original-bounds-integration.md",
+        "results/original-bounds-integration-20260920.json",
+        "lean/Subtail/SmallerCompilerAstra.lean",
+        "lean/FOnlyCompilerBridge.lean",
+        "scripts/check_original_bounds.py"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/63"
     }

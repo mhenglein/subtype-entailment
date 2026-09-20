@@ -1,6 +1,6 @@
 # Claims ledger
 
-Index updated: 2026-09-19. Original C001-C020 review: 2026-09-04.
+Index updated: 2026-09-20. Original C001-C020 review: 2026-09-04.
 Later claims retain the evidence and review scope of their linked records.
 
 This ledger gives stable IDs for claims about Problem 1.7 and its BorderAvoid
@@ -11,8 +11,9 @@ Later continuation records are indexed in [Continued claim records](#continued-c
 subtype entailment decision for finite bottom/product inputs over arbitrary,
 possibly infinite trees. Its build, kernel/runtime audits and independent
 semantic readback are recorded separately from finite native tests. The
-explicit quantitative C080 bound remains a candidate. The memo's original
-census has not been reproduced.
+original terminal witness bound is now checked separately as [C086](#c086),
+using a smaller compiler. The old concrete compiler estimate in C080 remains
+refuted. The memo's original census has not been reproduced.
 
 ## Evidence labels
 
@@ -1015,12 +1016,14 @@ all-sequences or unrestricted solver.
 **September 20 correction.** The old universal clause-weight conjunct for
 `preimage I RankQueryCoverage.budget` is **REFUTED (LEAN + independent readback)**
 by `RankQueryWeightCounterexample.terminal_counterexample`. The bundle below
-is not an established quantitative theorem. The original F alone and an
-existentially chosen smaller compiler remain open. Semantic preimage closure,
+is not an established quantitative theorem for that old compiler. The original
+F and an existentially chosen smaller compiler are now proved as [C086](#c086).
+Semantic preimage closure,
 terminal decidability and C081 remain checked and do not use the false conjunct.
 The larger replacement bound is recorded separately as [C082](#c082).
 [Exact scope, provenance and dependency correction](../notes/2026-09-20-post-c081-quantitative-integration.md).
-The original proposed statement and discovery history follow.
+The original proposed statement and discovery history follow. Their candidate
+or open status records those earlier checkpoints, not the current C086 result.
 
 **Statement (proposed).** For every finite binary terminal instance with k
 states, witness existence is equivalent to satisfaction of a finite existential
@@ -1078,15 +1081,16 @@ all-state strong absorption. The executable construction retains UNSAT as a
 Bad bit. [Bridge proof and independent readback](../notes/2026-09-19-subtype-summary-bridge.md).
 
 The original clause-weight conjunct of `ClosureFor` for the concrete compiler
-is now refuted, as recorded in the correction above. The original F alone
-remains open. [C081](#c081) supplies the complete qualitative stage-6 theorem
+is now refuted, as recorded in the correction above. The original F alone,
+open at that checkpoint, is now proved separately as [C086](#c086).
+[C081](#c081) supplies the complete qualitative stage-6 theorem
 without those numerical claims. The reviewed PR #48 counterexample and larger
 replacement are integrated separately as [C082](#c082); PR #47 preserves the
 ordinary discovery history. The absorbing safe-cycle/terminal split
 of C031 is now `LEAN`, as is the composed exact normalized non-entailment split
 in `SubtypeTerminalBridge`. The later [C029](#c029) theorem supplies a checked
 executable decision for its infinite branch. The original bundled statement is refuted at its concrete weight conjunct;
-its original F remains a candidate, while terminal decidability is checked. Two
+its original F is now proved as C086, while terminal decidability is checked. Two
 separate AI-assisted audits, both informed by the author's argument, found no
 gap in stages 1–5 and in the stage-6 bridge; neither is a human referee or a
 blind derivation. Independent adversarial fixtures found no compiler
@@ -1109,8 +1113,9 @@ and proof pilot on 2026-09-19 (#30, #37). Its first result was semantic-only unw
 terminal decision. The subsequent C081 completes Problem 1.7's decision.
 Q004 follows as an ordinary computability corollary of the terminal decision;
 its explicit construction and review are recorded separately. C080's specific
-F(k) remains unresolved; its old universal concrete-clause weight estimate is
-refuted. C082 supplies a separate sufficient recurrence.
+F(k) was unresolved at that checkpoint and is now proved as C086; its old
+universal concrete-clause weight estimate remains refuted. C082 supplies a
+separate sufficient recurrence.
 
 **Evidence.** [Candidate proof](../notes/2026-09-15-candidate-rank-query-decision.md),
 [closure proof and bound](../notes/2026-09-17-rank-query-closure-audit.md),
@@ -1422,13 +1427,66 @@ is ordinary Python. Caps remain UNKNOWN. The seed-dependent height bound is
 not a new global shortest-witness bound. Explicit top, new constructor labels,
 variance, tight complexity and novelty remain separate obligations.
 
+<a id="c086"></a>
+
+### C086 — Smaller compiler and original terminal witness bound
+
+**Statement.** For every finite binary `Instance k`, the computable compiler
+`SmallerCompilerAstra.preSmall I` satisfies the original `ClosureFor` contract.
+For every safe reference B and query phi, its preimage is satisfiable on B's
+prefix graph exactly when phi is satisfiable on one common first-return
+extension C. Every emitted clause has weight at most
+`U_k(weight(phi))`, where `U_k(T)=64*k*T^(2*T+2)`. No terminal-finality
+assumption is needed for this compiler contract. The empty query maps to the
+empty query.
+
+For every such I whose final states are terminal,
+
+```text
+(exists w, Witness I w) iff (exists w, Witness I w and |w| <= F(k)),
+T_0 = k+10,  T_(j+1) = 64*k*T_j^(2*T_j+2),
+F(1) = 0,
+F(k) = 2*(k+1)*product_(j=1..k-2)(T_j+2), k >= 2.
+```
+
+Thus `F(2)=6`. The total runtime definition returns 2 at zero, but `Instance 0`
+has no initial state and hence no inhabitants. The theorem uses the original
+Witness predicate, with ordered flags and bad-state avoidance. It has no
+caller-supplied compiler, satisfiability, absorption or witness-bound premise.
+
+**Status.** `LEAN + WRITTEN PROOF + AUDIT + REPRO`. The compiler's
+`closureFor`, `closureStatement` and `preimage_clause_weight_le` establish the
+first statement. `FOnlyCompilerBridge.original_F` establishes the second.
+The compiler filters the existing finite diagram enumeration by at most
+`a+S` active coordinates per physical interval, where a is the number of
+atoms and S the sum of observer state counts. Coverage retains multiplicity
+under one common assignment and extension. The F bridge extracts an actual
+retained diagram and applies bounded joint reconstruction; it does not infer
+a length bound from clause weight alone.
+
+**Evidence.** [Compiler proof and checker](../notes/2026-09-20-smaller-compiler-astra.md),
+[F proof and alternative route](../notes/2026-09-20-f-only-astra.md),
+[independent submission review](../notes/2026-09-20-submission-review.md),
+[combined-tree integration and exact validation](../notes/2026-09-20-original-bounds-integration.md),
+[continuing build/kernel/axiom/native check](../scripts/check_original_bounds.py).
+The checked composition uses the smaller compiler. The separate FinishPlus
+ordinary route has selected checked lemmas, not a second complete Lean composition.
+
+**Limits.** The old universal estimate for
+`preimage I RankQueryCoverage.budget` remains false; C086 bounds the outputs of
+a different, filtered compiler. C082's larger sufficient bound remains valid.
+C081's production decision, imports and semantics are unchanged. This result
+does not establish a practical runtime, an input complexity class, a tighter
+lower bound, a new constructor signature or publication priority. Python
+searches are finite diagnostics and capped failures remain UNKNOWN.
+
 ## Explicitly unestablished
 
 The following are deliberately not accepted claims in this ledger:
 
 - a converse from arbitrary BorderAvoid annotations to top-free subtype
   constraints;
-- the original C080 F or a practical complexity bound (the old concrete U
-  is refuted; C082 proves a different sufficient bound);
+- a practical complexity bound (C086 proves the original terminal F, while
+  the old concrete U remains refuted and C082 remains a valid larger bound);
 - PSPACE membership for Problem 1.7;
 - reproduction of the memo's original `analysis-2026` census.

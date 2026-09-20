@@ -1,5 +1,11 @@
 # Independent C080 quantitative Lean readback
 
+**Later September 20 result.** [C086](../research/claims.md#c086) proves the original terminal
+F and the original U contract for a different, filtered compiler. The old
+unfiltered compiler counterexample remains valid, and C082 remains a valid
+larger bound. The dated argument and earlier open status below are preserved
+as history, not the current C086 status.
+
 Date: 2026-09-20
 Reviewer: independent non-author successor reviewer for issue #53
 Scope: PR #48's released quantitative proof source and its terminal witness

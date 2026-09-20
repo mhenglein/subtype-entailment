@@ -1,5 +1,11 @@
 # Rank-query compiler and proposed unrestricted witness bound
 
+**Later September 20 result.** [C086](claims.md#c086) proves the original terminal
+F and the original U contract for a different, filtered compiler. The old
+unfiltered compiler counterexample remains valid, and C082 remains a valid
+larger bound. The dated argument and earlier open status below are preserved
+as history, not the current C086 status.
+
 **September 20 correction.** The old universal weight estimate
 `64*k*T^(2*T+2)` is false for the concrete enumerator: a checked terminal
 five-state counterexample emits a larger clause. The semantic compiler and

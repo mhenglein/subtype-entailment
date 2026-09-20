@@ -58,9 +58,11 @@ its quantifiers; an independent readback is an acceptance gate.
 
 The former `ClosureFor` bundles semantic closure with a numerical bound. The
 qualitative proof uses the semantic part proved separately. The old universal numerical weight bound for the concrete compiler is now
-refuted. C082 records the separately proved larger bound. The original F
-alone and an existential smaller compiler remain open. Exact source/readback
-and fresh combined checks are in the [integration note](../notes/2026-09-20-post-c081-quantitative-integration.md).
+refuted. C082 records the separately proved larger bound. [C086](claims.md#c086)
+now proves the original F with an existential smaller compiler. The old
+[integration note](../notes/2026-09-20-post-c081-quantitative-integration.md) and
+[new combined checks](../notes/2026-09-20-original-bounds-integration.md) retain
+the distinct proof scopes and source pins.
 
 ## Experiments and review
 

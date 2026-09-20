@@ -52,8 +52,9 @@ The deeper suite completes 19/19. Separate empty-constraint raw probes with
 four and five variables now finish in 1.221s and 7.139s; six variables
 still return `UNKNOWN`.
 [Exact proof, matched measurements and limits](notes/2026-09-20-raw-summary-readback.md).
-A timeout remains `UNKNOWN`. Qualitative decidability does not establish the old C080 numerical
-bounds, a complexity class, or novelty. The [post-C081 programme](research/POST_C081.md)
+A timeout remains `UNKNOWN`. The original terminal witness bound is now
+proved separately as [C086](research/claims.md#c086), using a smaller compiler.
+Neither result establishes a tight complexity class or novelty. The [post-C081 programme](research/POST_C081.md)
 tracks these separate questions. Author names and affiliations are placeholders;
 licensing is pending. The paper is a research draft, not a peer-reviewed publication.
 
@@ -140,9 +141,16 @@ python3 scripts/check_finite_tree_decision.py --output tmp/finite-tree-decision.
 
 ## Bounds and research checkpoint
 
-[C082](research/claims.md#c082) gives a checked explicit terminal witness bound.
-It also records why the earlier concrete C080 weight estimate is false; the
-original F alone remains open. The [input resource account](notes/2026-09-20-c081-input-complexity.md)
+[C086](research/claims.md#c086) proves the original terminal witness bound:
+`F(1)=0`, and for `k>=2`, `F(k)=2*(k+1)*product_(j=1..k-2)(T_j+2)`, where
+`T_0=k+10` and `T_(j+1)=64*k*T_j^(2*T_j+2)`. Its computable smaller compiler
+preserves the whole conjunction on one shared extension and meets the original
+clause-weight bound. The [proof and validation](notes/2026-09-20-original-bounds-integration.md)
+do not change the production solver or claim a speedup.
+
+[C082](research/claims.md#c082) remains a valid larger bound. The earlier
+concrete C080 compiler estimate remains false: C086 uses a filtered compiler.
+The [input resource account](notes/2026-09-20-c081-input-complexity.md)
 gives a very large explicit bound for a specified reference decision algorithm,
 including normalization, summary tables, arithmetic and storage.
 [C083](research/claims.md#c083) supplies an NL lower bound by directed
@@ -180,6 +188,7 @@ Individual checks can also be run as follows:
 git clone https://github.com/mhenglein/subtail.git
 cd subtail
 python3 scripts/check_lean.py
+python3 scripts/check_original_bounds.py
 (cd lean && lake build +Subtail.ExpressionNormalizationAudit)
 python3 scripts/check_entailment_decision.py
 python3 experiments/check_entailment_decision.py --phase smoke --strict
@@ -288,8 +297,9 @@ Native tests are supplementary finite evidence; the exhaustive backend can
 be impractical even for simple inputs, and test timeouts remain UNKNOWN.
 
 The old concrete weight estimate in [C080](research/claims.md#c080) is refuted;
-its original F alone remains open. [C082](research/claims.md#c082) supplies a
-separate corrected bound. Neither numerical estimate is needed by C081. [STATE.md](STATE.md) separates
+[C086](research/claims.md#c086) proves its original F with a smaller compiler.
+[C082](research/claims.md#c082) supplies a separate larger bound. Neither
+numerical result is needed by C081. [STATE.md](STATE.md) separates
 the checked theorem, ordinary corollaries, performance limits and prior failed
 attempts. No complexity, novelty or human peer-review claim follows from CI.
 
@@ -315,6 +325,7 @@ For later continuation work, consult `experiments/README.md` for the exact regis
 
 ```sh
 python3 scripts/check_lean.py
+python3 scripts/check_original_bounds.py
 ```
 
 GitHub Actions validates the tracker and local document paths and replays the checks wired into CI. Passing CI is evidence of reproducibility, not a mathematical proof.
