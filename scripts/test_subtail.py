@@ -132,6 +132,28 @@ class SubtailTests(unittest.TestCase):
         self.assertEqual(code, 0)
         self.assertIn('Lean was not run', report['trust_boundary'])
 
+    def test_native_diagnostic_distinguishes_interruption_from_compile_error(self):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location(
+            "subtail_fast_diagnostic_test", cli.ROOT / "experiments/check_fast_summary.py")
+        module = importlib.util.module_from_spec(spec)
+        old_path = sys.path[:]
+        try:
+            with patch.dict(sys.modules, {spec.name: module}):
+                spec.loader.exec_module(module)
+                for code, output, expected in [(-9, "", "UNKNOWN"),
+                                               (-24, "", "UNKNOWN"),
+                                               (-15, "", "UNKNOWN"),
+                                               (1, "error: unknown identifier", "FAIL")]:
+                    result = {'status':'UNKNOWN', 'returncode':code, 'output':output,
+                              'reason':'process_failed_or_resource_limit'}
+                    with self.subTest(code=code), patch.object(module, 'run_process', return_value=result):
+                        actual = module.run_generated_source(Path('/unused/probe.lean'), module.BENCHMARK_MARKER, 20)
+                        self.assertEqual(actual['status'], expected)
+                        self.assertNotIn('actual', actual)
+        finally:
+            sys.path[:] = old_path
+
     def test_ambiguous_marker_is_unknown(self):
         with patch.object(cli,'run_process',side_effect=[{'status':'PASS','seconds':0},
              {'status':'PASS','seconds':0,'output':cli.MARKER+'true\n'+cli.MARKER+'false'}]):

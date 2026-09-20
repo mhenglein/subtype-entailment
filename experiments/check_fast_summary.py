@@ -653,6 +653,11 @@ def run_generated_source(
     elif result.get("reason") in ("time_limit", "tool_unavailable"):
         # These are resource/tool availability outcomes, not phase errors.
         result["status"] = "UNKNOWN"
+    elif result.get("returncode", 0) < 0:
+        # CPU limits, OOM or an external signal can end the process before it
+        # writes a diagnostic. An interrupted computation supplies no answer.
+        result["status"] = "UNKNOWN"
+        result["reason"] = "process_interrupted_or_resource_limit"
     elif any(word in output.lower() for word in RESOURCE_WORDS):
         result["status"] = "UNKNOWN"
         result["reason"] = "resource_limit_or_runtime_abort"
