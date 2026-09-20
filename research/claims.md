@@ -1168,6 +1168,16 @@ separate converse certification and the unrestricted nonabsorbing abstract
 BorderAvoid problem are not proved by this theorem. Other constructors and
 finite-tree entailment are outside its semantics.
 
+**Additive execution improvement (September 20).** The optional
+`TerminalDecisionLazy.entailsCheckLazy_eq` proves unconditional equality to
+the original full-input Boolean; `entailsCheckLazy_correct` retains the exact
+C081 semantics. The global safe-reference gate skips a query construction only
+when its candidate scan cannot succeed. The old core is unchanged.
+[Proof, independent boundary review and native evidence](../notes/2026-09-20-c081-solver.md)
+record build/kernel/runtime checks and E054. This is an evaluation improvement,
+not a stronger decision theorem. The capped Python interface and certificate
+checker have separate trust boundaries; remaining timeouts stay UNKNOWN.
+
 <a id="c082"></a>
 
 ### C082 — Corrected compiler weight and terminal witness bound

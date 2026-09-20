@@ -180,8 +180,8 @@
       "outcome": "supported",
       "owner": null,
       "updated": "2026-09-20",
-      "summary": "C081 gives a complete Lean-checked executable entailment decision for every finite bottom/product expression input over arbitrary, possibly infinite trees. Exact normalization, the same normalized summary instance, C029 and the terminal decision compose without SAT, model-finiteness, witness-bound or caller absorption assumptions. Pinned build/kernel/runtime checks and independent semantic readback pass; native timeouts remain UNKNOWN. The implementation can be impractical.",
-      "next_step": "Under #53, profile and prove an improvement to the actual entailment entry point, then build a small interface and independently checked regular countermodel output. Preserve the reviewed paper, tentative novelty and open quantitative/signature boundaries.",
+      "summary": "C081 qualitative entailment, corrected C082 terminal witness bound, ordinary input resource account and C083 NL lower bound are recorded with exact limits. The optional equality-proved gate and JSON interface pass source/kernel/runtime and boundary checks. Matched E054 completes 24/38 versus 22/38 original, with 14 UNKNOWN and unchanged full-expression coverage. Paper, novelty and extension studies are complete research drafts.",
+      "next_step": "Choose a scoped follow-up: prove faster summary representations, extract complete regular countermodels, narrow complexity bounds or seek external review. Explicit top and changed signatures need new arguments; original C080 F remains open. No worker is currently assigned.",
       "record": "research/approaches/A010.md",
       "evidence": [
         "notes/2026-09-04-bridge-foundation.md",
@@ -219,7 +219,16 @@
         "notes/2026-09-19-post-c081-extensions.md",
         "notes/2026-09-19-post-c081-extension-readback.md",
         "experiments/check_extension_boundaries.py",
-        "results/extension-boundaries.json"
+        "results/extension-boundaries.json",
+        "notes/2026-09-20-c081-input-complexity.md",
+        "notes/2026-09-20-reachability-lower-bound.md",
+        "notes/2026-09-20-c081-performance-plan.md",
+        "notes/2026-09-20-c081-solver.md",
+        "lean/Subtail/TerminalDecisionLazy.lean",
+        "scripts/subtail.py",
+        "scripts/check_terminal_lazy.py",
+        "experiments/check_entailment_lazy.py",
+        "results/entailment-lazy.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/3"
     },
@@ -419,12 +428,12 @@
     {
       "id": "A017",
       "title": "Bound essential repeated blocks",
-      "status": "active",
-      "outcome": "inconclusive",
-      "owner": "post-c081-20260919 integrator (#53); scoped reviewers in issue",
+      "status": "tried",
+      "outcome": "supported",
+      "owner": null,
       "updated": "2026-09-20",
-      "summary": "C081 qualitative entailment remains checked. C082 adds a corrected explicit terminal witness bound and refutes the old universal concrete U contract. Independent source readback and fresh combined build, kernel and runtime checks pass; original F alone remains open.",
-      "next_step": "Publish reviewed C082 integration and finish original-input accounting and a proved executable improvement under #53. Keep original U/F, optional modules and practical performance separate.",
+      "summary": "C081 qualitative entailment, corrected C082 terminal witness bound, ordinary input resource account and C083 NL lower bound are recorded with exact limits. The optional equality-proved gate and JSON interface pass source/kernel/runtime and boundary checks. Matched E054 completes 24/38 versus 22/38 original, with 14 UNKNOWN and unchanged full-expression coverage. Paper, novelty and extension studies are complete research drafts.",
+      "next_step": "Choose a scoped follow-up: prove faster summary representations, extract complete regular countermodels, narrow complexity bounds or seek external review. Explicit top and changed signatures need new arguments; original C080 F remains open. No worker is currently assigned.",
       "record": "research/approaches/A017.md",
       "evidence": [
         "notes/2026-09-04-minimal-witness-structure.md",
@@ -531,19 +540,28 @@
         "notes/2026-09-20-c080-quantitative-independent-readback.md",
         "results/rank-weight-integration.json",
         "lean/Subtail/RankQueryWeightBound.lean",
-        "lean/Subtail/RankQueryLengthBound.lean"
+        "lean/Subtail/RankQueryLengthBound.lean",
+        "notes/2026-09-20-c081-input-complexity.md",
+        "notes/2026-09-20-reachability-lower-bound.md",
+        "notes/2026-09-20-c081-performance-plan.md",
+        "notes/2026-09-20-c081-solver.md",
+        "lean/Subtail/TerminalDecisionLazy.lean",
+        "scripts/subtail.py",
+        "scripts/check_terminal_lazy.py",
+        "experiments/check_entailment_lazy.py",
+        "results/entailment-lazy.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/34"
     },
     {
       "id": "A018",
       "title": "Maintain the Lean core and verify critical obligations",
-      "status": "active",
+      "status": "tried",
       "outcome": "supported",
-      "owner": "post-c081-20260919 integrator (#53); scoped reviewers in issue",
+      "owner": null,
       "updated": "2026-09-20",
-      "summary": "C081 qualitative entailment remains checked. C082 adds a corrected explicit terminal witness bound and refutes the old universal concrete U contract. Independent source readback and fresh combined build, kernel and runtime checks pass; original F alone remains open.",
-      "next_step": "Publish reviewed C082 integration and finish original-input accounting and a proved executable improvement under #53. Keep original U/F, optional modules and practical performance separate.",
+      "summary": "C081 qualitative entailment, corrected C082 terminal witness bound, ordinary input resource account and C083 NL lower bound are recorded with exact limits. The optional equality-proved gate and JSON interface pass source/kernel/runtime and boundary checks. Matched E054 completes 24/38 versus 22/38 original, with 14 UNKNOWN and unchanged full-expression coverage. Paper, novelty and extension studies are complete research drafts.",
+      "next_step": "Choose a scoped follow-up: prove faster summary representations, extract complete regular countermodels, narrow complexity bounds or seek external review. Explicit top and changed signatures need new arguments; original C080 F remains open. No worker is currently assigned.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
@@ -643,7 +661,16 @@
         "notes/2026-09-20-c080-quantitative-independent-readback.md",
         "results/rank-weight-integration.json",
         "lean/Subtail/RankQueryWeightBound.lean",
-        "lean/Subtail/RankQueryLengthBound.lean"
+        "lean/Subtail/RankQueryLengthBound.lean",
+        "notes/2026-09-20-c081-input-complexity.md",
+        "notes/2026-09-20-reachability-lower-bound.md",
+        "notes/2026-09-20-c081-performance-plan.md",
+        "notes/2026-09-20-c081-solver.md",
+        "lean/Subtail/TerminalDecisionLazy.lean",
+        "scripts/subtail.py",
+        "scripts/check_terminal_lazy.py",
+        "experiments/check_entailment_lazy.py",
+        "results/entailment-lazy.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/31"
     }

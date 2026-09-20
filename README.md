@@ -30,8 +30,10 @@ infinite countermodel and examples of the terminal first-return construction.
 
 **Limits.** This theorem has no explicit top constructor, multiple labelled
 constructors or contravariant function type. Finite-tree entailment is a
-different problem. The exhaustive implementation can be very slow: the saved
-38-case diagnostic completed 25 cases and timed out on 13. A timeout is
+different problem. The exhaustive implementation can be very slow. A matched
+wb-marcus diagnostic completed 24/38 cases after the proved gate, compared with 22/38
+before it. Fourteen cases remain `UNKNOWN`; both gains were direct raw-backend
+probes. The historical Mac 25/38 record is preserved separately. A timeout is
 `UNKNOWN`. Qualitative decidability does not establish the old C080 numerical
 bounds, a complexity class, or novelty. The [post-C081 programme](research/POST_C081.md)
 tracks these separate questions. Author names and affiliations are placeholders;
@@ -72,7 +74,8 @@ original F alone remains open. The [input resource account](notes/2026-09-20-c08
 gives a very large explicit bound for a specified reference decision algorithm,
 including normalization, summary tables, arithmetic and storage.
 [C083](research/claims.md#c083) supplies an NL lower bound by directed
-reachability. The bounds are ordinary mathematics; they do not give a tight
+reachability. The full input-cost derivation and NL reduction are ordinary
+mathematics; the terminal witness bound is Lean-checked. These do not give a tight
 complexity class or bound the runtime of this native frontend.
 
 The stable paper/reader tag is

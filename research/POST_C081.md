@@ -11,11 +11,11 @@ silently strengthen its signature, tree domain, complexity or quantitative bound
 |---|---|---|---|
 | 1 | Ordinary mathematical paper | Full terminal preimage construction and proof, exact semantic bridge, infinite branch, termination, worked examples and checked-declaration map; independent exposition readback | Ordinary draft and follow-up exposition readback complete |
 | 1 | Focused novelty review | Primary-source theorem matrix; backward/forward citation trail; exact new/inherited/uncertain statements; recorded search limits | Focused source comparison complete; priority and exact transfers remain uncertain |
-| 2 | Complexity | Explicit effective resource bound with input encoding and algorithm identified; independent readback of quantitative proposals; lower-bound transfers proved or left conditional | C082 quantitative source reviewed and freshly checked; complete input accounting is under review |
-| 3 | Usable verified algorithm | Measured costs, at least one meaningful proved improvement, small interface, sound status handling and explanatory examples; failure evidence independently checked where supplied | Global safe-reference gate implementation and proof active; interface remains |
+| 2 | Complexity | Explicit effective resource bound with input encoding and algorithm identified; independent readback of quantitative proposals; lower-bound transfers proved or left conditional | Reviewed ordinary full-input time/space bound using checked C082; C083 proves an NL lower bound; tight class remains open |
+| 3 | Usable verified algorithm | Measured costs, at least one meaningful proved improvement, small interface, sound status handling and explanatory examples; failure evidence independently checked where supplied | Equality-proved global gate, capped JSON CLI and exact graph checker complete; matched E054 improves 22/38 to 24/38 with 14 UNKNOWN |
 | 4 | Explicit-top study | Exact problem, proof-dependency audit, tested reductions/obstructions and a feasibility conclusion with remaining obligations | Feasibility study complete; naive encodings fail, new label-aware semantics needed |
 | 4 | Other transfers | Separate arguments or counterexamples for regular/finite trees, arities, constructors and variance; standalone automata results identified | Regular-transfer ordinary proof and boundary map independently reviewed; new signature theorems remain open |
-| 5 | Reader package and checkpoint | Consistent README/paper/proof map, reproduction, issue disposition and immutable checkpoint; metadata accurately records licensing/authorship status | Published 29cda9a, all four CI runs PASS; tag c081-research-2026-09-20 verified |
+| 5 | Reader package and checkpoint | Consistent README/paper/proof map, reproduction, issue disposition and immutable checkpoint; metadata accurately records licensing/authorship status | Published paper checkpoint 29cda9a, all four CI runs PASS; tag c081-research-2026-09-20 verified; later source checks and exact issue dispositions recorded below |
 
 Marcus chose **licensing pending** and **author/affiliation placeholders**.
 Do not add a license grant, assign human authorship, or describe the checkpoint
@@ -72,8 +72,9 @@ open. A failed encoding refutes that encoding, not the extension. Ordinary
 semantics and small falsification come before substantial new formalization.
 
 Execution ownership is recorded in the approach registry and concrete issue
-claims. This programme lists future deliverables; it does not reserve every path
-or imply all investigations have started.
+claims. These deliverables are research results and feasibility studies, not
+proofs that all extensions or performance questions are solved. Follow-up
+proposals do not reserve paths or launch workers.
 
 ## Checkpoint evidence and next work
 
@@ -81,29 +82,49 @@ or imply all investigations have started.
   [initial and follow-up exposition readback](../notes/2026-09-19-post-c081-paper-readback.md).
 - [Focused novelty review](../notes/prior-work/c081-review-2026-09-19.md): inherited,
   candidate-new and uncertain claims, exact signatures, backward/forward trail.
-- [Complexity investigation](../notes/2026-09-19-c081-complexity-review.md): an
-  alternative terminal enumerator using the corrected C082 Fhat
-  theorem; [independent accounting corrections](../notes/2026-09-20-post-c081-cost-readback.md).
-  Complete normalization/summary costs and lower-bound transfers remain open.
-  The separate guarded NP99 reduction supplies a PSPACE upper bound only for
-  inputs without bottom constants; no implementation bound follows from it.
+- [Full original-input resource account](../notes/2026-09-20-c081-input-complexity.md):
+  an explicit total-recursive time/space bound for a specified reference
+  algorithm using C082, including summary construction and bit arithmetic.
+  Independent accounting review found no remaining blocker. This is ordinary
+  mathematics, not a Lean complexity theorem or native runtime estimate.
+  [C083](../notes/2026-09-20-reachability-lower-bound.md) gives a separately
+  reviewed logspace reachability reduction and NL lower bound. The guarded
+  NP99 PSPACE upper bound covers only inputs without bottom constants.
+- [Solver and checked optimization](../notes/2026-09-20-c081-solver.md): an
+  optional equality-proved gate, native JSON CLI, incomplete regular-model
+  explanation search and exact Python graph checker. Native build/kernel/
+  dependency checks and current 16-test boundary suite pass. Matched E054
+  gains two direct raw-backend cases (22/38 to 24/38), with no wrong answer
+  and no new full-expression completion. Fourteen cases remain UNKNOWN.
+  [Exact revision/hash/timing receipts](../results/entailment-lazy.json).
 - [Extensions](../notes/2026-09-19-post-c081-extensions.md) and
   [readback](../notes/2026-09-19-post-c081-extension-readback.md): explicit NFA
   construction for regular countermodels, finite/top/variance obstructions and
   the remaining arity/label obligations. E053 is bounded evidence only.
 
-The next implementation target is a measured, proved improvement to the actual
-entailment entry point, followed by a small input/output interface. Reuse the
-E052 cases and preserve UNKNOWN on resource exhaustion. Investigate the repeated
-closed-table enumeration in `StackSummary.balancedCheck`, the eager summary
-carrier, and obvious source-level implications before choosing an optimization.
-A small guarded example running successfully does not validate backend speed.
-The regular construction gives a route to finite countermodel output, but no
-extractor or verified optimized interface has been implemented in this checkpoint.
+The most useful next implementation question is whether cached balanced
+reachability or a smaller summary representation can reduce the unchanged
+full-expression timeouts. A complete regular-countermodel extractor remains
+open; the current candidate library is deliberately incomplete. Other next
+questions are tighter complexity, external mathematical review and explicit-top
+label semantics. The [current plan](PLAN.md) gives distinct follow-up targets.
 
-Quantitative #48 is integrated through its exact released files with the corrected
-C082 status; #47 preserves its discovery argument. Direct-realization #51 and preserved
-advisory notes #44/#45 remain separate contributions. Their open disposition is
-intentional: the paper checkpoint does not integrate, discard, or certify their
-unique content. Reconcile each exact patch and its released scope before closing
-its issue or branch. No branch is retired by this programme update.
+## Issue and branch disposition
+
+Remote states and exact heads were read on September 20. None of these
+dispositions certifies unreviewed unique content or retires a branch.
+
+| Item | Exact source or head | Disposition |
+|---|---|---|
+| #48 quantitative proof | `881d4beeb903d679d7d36a8a9abc2aa0efa60a52` | Closed as integrated in main `98bbcde`; exact source files retained, isolated workflow folded into the shared Lean job. Branch retained. |
+| #47 ordinary counterexample | `42be43f35a98d4d23a4ba26439833730bbcd6510` | Open historical discovery/proof evidence. C082 supersedes the old bound; unique experiment/notes remain preserved for separate patch reconciliation. |
+| #44 semantic audit | `99d951077ace1c93d0fec604839674fb3f19dbc9` | Open advisory note. Not newly certified or integrated by this programme; retain for a separate provenance/readback pass. |
+| #45 normalization advisory | `c33d0c8d65158fc7ba53e5bc24c14132f071dc42` | Open advisory note. The final normalization proof is on main; this note's unique observations are retained for separate reconciliation. |
+| #51 direct realization | `db55acded6064b12d5d483216e29653ae3d884f3` | Open optional C030 converse certification. Outside the required forward C081 proof; no integration or independent validation is claimed here. |
+| #30 and #34 quantitative tracking | Main `98bbcde` correction | Remain open for original F alone and an existential smaller compiler. Their bodies distinguish the refuted old concrete U from C082. |
+| #37 integration coordination | Main and scoped release comments | Remains the shared coordination record; this session releases its lease after final checked publication. |
+| #53 this programme | Source and publication receipts in comments | The seven requested deliverables are covered at the stated evidence levels. Final main CI and release are recorded in the issue; licensing/authorship remain owner-deferred. |
+
+All worker scopes used in this episode were explicitly released. Other
+workspaces' uncommitted files, stashes and unpushed work were not audited;
+there is no claim that every historical local artifact has been recovered.

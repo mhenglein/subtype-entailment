@@ -1,34 +1,42 @@
 # Research plan
 
-Updated: 2026-09-19 (C081 complete qualitative entailment theorem checked)
+Updated: 2026-09-20 (post-C081 research package)
 
-**Completed goal:** decide [Problem 1.7](problem.md) for bottom and binary
-product over arbitrary, possibly infinite trees. [C081](claims.md#c081) gives
-the total executable Boolean and unconditional correctness theorem. Source
-pins, review and validation are in the [completion record](../notes/2026-09-19-entailment-decision.md).
-The formal semantics and performance limits remain explicit.
+**Completed qualitative goal:** decide [Problem 1.7](problem.md) for bottom
+and binary product over arbitrary, possibly infinite trees. [C081](claims.md#c081)
+gives the total executable Boolean and unconditional correctness theorem.
+[Source pins and validation](../notes/2026-09-19-entailment-decision.md).
 
-## Active post-C081 programme
+## Post-C081 results and next questions
 
-Marcus authorized a goal covering the full paper, focused novelty review,
-complexity, usable verified execution, explicit top, other transfers and an
-outside-reader checkpoint. The ordered deliverables and acceptance gates are
-in [POST_C081.md](POST_C081.md), coordinated in
-[#53](https://github.com/mhenglein/subtail/issues/53) and the single-integrator
-[#37](https://github.com/mhenglein/subtail/issues/37).
+The [seven-part programme](POST_C081.md) now has a full ordinary paper,
+focused novelty review, explicit input resource account, small usable solver
+with a proved evaluation gate, extension study and reader checkpoint.
+C082 supplies a corrected quantitative bound; C083 gives an elementary NL
+lower bound. The original concrete C080 U is refuted, while its F alone and
+an existential smaller compiler remain open. No issue closure changes that.
 
-The first episode drafts the full ordinary terminal proof while separate
-contexts audit prior work and the released quantitative proposals. The checked
-qualitative theorem remains the baseline. The old C080 numerical U/F statement,
-its concrete-compiler counterexample and replacement estimates are different
-claims. No title, issue closure or passing check merges them.
+The next discriminating tasks are:
 
-The owner explicitly deferred licensing and requested author/affiliation
-placeholders. Research and a labelled reproducible draft can proceed; a license
-grant and publication-ready citation metadata remain deferred.
+1. Prove and measure caching or a smaller representation for balanced/summary
+   reachability. Use the matched E054 cases and preserve UNKNOWN.
+2. Turn the ordinary regular-countermodel construction into a complete
+   finite-graph extractor with an independent exact checker.
+3. Narrow the large gap between the explicit reference upper bound and NL
+   hardness. Prove each literature transfer under the exact signature.
+4. Obtain outside mathematical review of the terminal coverage/reconstruction
+   and the claimed novelty. The current reviews are agent source readbacks.
+5. Investigate explicit top with labelled semantics; the tested naive encodings
+   fail. New arities, constructors and variance need separate arguments.
 
-The original programme below is historical. Its earlier open status is
-superseded for exact C081 semantics, not for changed constructors or tree domains.
+These are proposals, not active worker assignments. Ownership and reservations
+remain in [the registry](approaches.json), [#53](https://github.com/mhenglein/subtail/issues/53)
+and [#37](https://github.com/mhenglein/subtail/issues/37). The owner deferred
+licensing and requested author/affiliation placeholders. No license grant or
+publication-ready authorship is asserted.
+
+The original programme below is historical. Its open qualitative status is
+superseded only for the exact checked semantics.
 
 ## Earlier mathematical continuation: single-source capture (2026-09-09)
 

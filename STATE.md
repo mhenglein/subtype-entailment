@@ -1,5 +1,40 @@
 # Subtail — current research state
 
+## September 20: post-C081 package and usable solver
+
+The [post-C081 programme](research/POST_C081.md) has delivered the ordinary
+paper, focused novelty review, reader checkpoint, explicit resource account,
+proved evaluation gate and CLI, explicit-top feasibility study and transfer
+map. Licensing remains owner-deferred; authors and affiliations are placeholders.
+This is a reproducible research draft, not a human-reviewed publication.
+
+The [input resource account](notes/2026-09-20-c081-input-complexity.md) gives a
+reviewed total-recursive time/space bound for a specified reference algorithm,
+including normalization, summary construction, arithmetic and storage. It uses
+the checked C082 witness bound. [C083](research/claims.md#c083) proves the
+variable-only directed-reachability reduction, giving an NL lower bound.
+Neither result supplies a tight complexity class or a practical runtime bound
+for the native implementation.
+
+The [solver](notes/2026-09-20-c081-solver.md) accepts finite-expression JSON.
+Its optional Lean gate is unconditionally equal to the original decision;
+build, kernel and runtime audits pass. Independent boundary review and 16
+Python tests cover parsing, process limits and exact finite-graph checking.
+Negative answers can include a regular countermodel and separating path;
+the explanation search is incomplete and the Python boundary is not Lean-verified.
+
+Matched E054 on wb-marcus completes 24/38 gated versus 22/38 original cases,
+with no disagreements. The two gains are direct raw-backend calls; full-expression
+coverage is unchanged. Fourteen gated cases remain UNKNOWN. Historical E052
+Mac results are not rewritten. [Pinned native receipts](results/entailment-lazy.json)
+distinguish the full source check from the later trust-label repair and rerun.
+
+Next questions: reduce summary construction costs with a proved representation
+change, extract complete regular countermodels, narrow the complexity gap,
+seek external mathematical review, and investigate label-aware explicit-top
+semantics. The original C080 F and an existential smaller compiler remain open.
+The later sections preserve their dated milestones and earlier open status.
+
 ## September 20: corrected quantitative theorem (C082)
 
 [C082](research/claims.md#c082) proves an explicit terminal witness bound with
@@ -19,8 +54,8 @@ C081's qualitative decision does not depend on the false size estimate.
 and [fresh combined build, kernel and runtime checks](notes/2026-09-20-post-c081-quantitative-integration.md)
 pass at 7525724. The optional new modules leave the original core definitions
 and paper source pins unchanged. This does not establish practical runtime or
-a complexity class. Full original-input accounting and a proved performance
-improvement are active under #53.
+a complexity class. The later original-input accounting and proved evaluation
+gate are recorded in the current programme entry above.
 
 ## September 20: ordinary paper and post-C081 review checkpoint
 
@@ -37,9 +72,10 @@ The [focused novelty review](notes/prior-work/c081-review-2026-09-19.md)
 separates inherited address/cap/periodic methods from the candidate new
 whole-conjunction terminal construction and checked composition. A reviewed
 guarded reduction to NP99 now gives a PSPACE upper bound for inputs without
-bottom constants; that fragment's decidability is inherited. Full-C081 and
-lower-bound transfers remain unproved. The NP03 automata characterization alone
-is not an earlier general decision theorem.
+bottom constants; that fragment's decidability is inherited. The full-C081
+PSPACE upper/lower-bound transfers remain unproved. The later C083 elementary
+NL lower bound is separate. The NP03 automata characterization alone is not
+an earlier general decision theorem.
 
 The [extension study](notes/2026-09-19-post-c081-extensions.md) gives an ordinary
 regular-countermodel construction, the finite-tree zero-spine distinction,
@@ -52,12 +88,12 @@ that extension is claimed.
 The [complexity note](notes/2026-09-19-c081-complexity-review.md) records an
 alternative witness-enumeration route whose quantitative dependency is now
 supplied by C082 above. The [independent accounting readback](notes/2026-09-20-post-c081-cost-readback.md)
-repairs omitted construction and storage costs. Complete original-input costs and exact lower-bound transfers remain open. Its
-superseded draft estimates are not established bounds. The current executable's performance
-is unchanged, including the 13 diagnostic timeouts. A useful interface and
-proved optimizations are still required.
+repairs omitted construction and storage costs. Its early open original-input
+accounting is superseded by the reviewed note above. C083 supplies only the elementary reachability lower bound; stronger
+transfers remain open. The original 13 Mac timeouts remain historical evidence.
+The later E054 result and new interface are recorded separately above.
 
-[The programme](research/POST_C081.md) tracks the remaining deliverables.
+[The programme](research/POST_C081.md) tracks deliverables and remaining questions.
 Author names and affiliations remain placeholders; licensing is owner-deferred.
 No earlier numerical bound or unintegrated proposal is promoted by this
 documentation checkpoint.

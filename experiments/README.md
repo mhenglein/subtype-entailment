@@ -1080,3 +1080,36 @@ passes after correcting tuple/list normalization in the first replay implementat
 The literal counterexamples refute specific encodings. The finite census does
 not settle extension decidability, prove an all-size preservation theorem,
 or establish the separate regular-countermodel argument.
+
+<a id="e054"></a>
+
+### E054 — Matched native diagnostic for the gated entailment decision
+
+**Command.** `python3 experiments/check_entailment_lazy.py --compare-baseline --output tmp/entailment-lazy.json`.
+Omit `--compare-baseline` for the gated implementation alone, as in CI.
+
+**Scope.** Reuse all 38 E052 inputs and independent expectations. Execute the
+original and equality-proved gated Lean decisions under the same per-fixture
+limits: 20 seconds wall/CPU, 16 GiB Linux address space, one Lean thread and
+32768 KiB stack. Compilation failures or wrong answers fail the check; capped
+cases remain UNKNOWN. A successful diagnostic process does not mean every
+fixture completed.
+
+**Observed result.** At `89385df1b41825bed8983cac232b7778698db926` on wb-marcus,
+the original completed 22/38 and the gated implementation completed 24/38.
+All completed answers agreed. The two gains are direct raw-backend positive
+probes: `raw-reflexive` (20-second UNKNOWN to 0.869 seconds) and
+`raw-unsat-denial-lower` (20-second UNKNOWN to 0.669 seconds).
+Both implementations complete the same 17 full-expression and five normalized
+cases. Fourteen gated cases remain UNKNOWN, so the full diagnostic status is
+UNKNOWN. No practical worst-case bound follows. The old E052 Mac 25/38 result
+is preserved and is not a matched hardware comparison.
+
+**Evidence.** [Driver](check_entailment_lazy.py),
+[combined source, audit, diagnostic and CLI receipts](../results/entailment-lazy.json),
+[proof/interface/limits](../notes/2026-09-20-c081-solver.md).
+The optional-module build/kernel replay, 17 declaration dependency audits and
+default core passed at the diagnostic revision. A later certificate-only
+trust-label correction changed no Lean or benchmark source. The current
+16-test Python suite and actual positive/negative CLI plus graph readbacks
+passed separately at `20c1f23937f9d43bf47b0b3890afff75ed613be5`.
