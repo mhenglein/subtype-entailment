@@ -25,6 +25,10 @@ on:
       - 'scripts/check_infinite_witness.py'
       - 'scripts/check_entailment_decision.py'
       - 'scripts/check_rank_weight_native.py'
+      - 'scripts/check_terminal_lazy.py'
+      - 'scripts/subtail.py'
+      - 'scripts/test_subtail.py'
+      - 'examples/entailment/**'
       - 'experiments/**'
       - 'results/**'
       - '.github/workflows/lean.yml'
@@ -37,6 +41,10 @@ on:
       - 'scripts/check_infinite_witness.py'
       - 'scripts/check_entailment_decision.py'
       - 'scripts/check_rank_weight_native.py'
+      - 'scripts/check_terminal_lazy.py'
+      - 'scripts/subtail.py'
+      - 'scripts/test_subtail.py'
+      - 'examples/entailment/**'
       - 'experiments/**'
       - 'results/**'
       - '.github/workflows/lean.yml'
@@ -501,6 +509,23 @@ jobs:
           path: tmp/rank-weight-native.json
           retention-days: 90
           if-no-files-found: error
+      - name: Gated terminal and expression wrapper proof checks
+        run: |
+          (cd lean && lake build +Subtail.TerminalDecisionLazy)
+          (cd lean && lake env leanchecker Subtail.TerminalDecisionLazy)
+          python3 scripts/check_terminal_lazy.py --output tmp/terminal-lazy-axioms.json
+      - name: Gated C081 full diagnostic (timeouts remain UNKNOWN)
+        run: python3 experiments/check_entailment_lazy.py --output tmp/entailment-lazy.json
+      - name: Preserve gated-wrapper audit and diagnostic
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: entailment-lazy-audit
+          path: |
+            tmp/terminal-lazy-axioms.json
+            tmp/entailment-lazy.json
+          retention-days: 90
+          if-no-files-found: warn
       - name: Independent native normalization and original-syntax reference checks
         run: |
           (cd lean && lake env lean --run Subtail/ExpressionNormalizationAudit.lean) > /tmp/normalization-native.jsonl
