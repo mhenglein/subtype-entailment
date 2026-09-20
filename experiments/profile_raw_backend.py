@@ -21,7 +21,8 @@ import check_entailment_decision as decision
 
 PREFIX = "SUBTAIL_RAW_PROFILE:"
 PHASES = {"summary", "cycle_candidates", "infinite_prefix_search", "terminalize",
-          "empty_witness", "safe_references", "promotion", "terminal_scan"}
+          "empty_witness", "safe_references", "promotion", "terminal_scan",
+          "initial_safety", "infinite_stream"}
 
 PRELUDE = r'''import Subtail.TerminalDecisionLazy
 open Subtail Subtail.TreeSemantics Subtail.StackSummary Subtail.CanonicalReachability
@@ -46,13 +47,23 @@ def emit (text : String) : IO Unit := do
   return value
 '''
 
-def source(fixture: decision.Fixture) -> str:
+def source(fixture: decision.Fixture, variant: str = "baseline") -> str:
     if fixture.kind != "raw":
         raise ValueError("Only raw fixtures belong in this experiment")
-    return PRELUDE + f"""
+    code = PRELUDE + f"""
 open Subtail.SummaryAutomaton Subtail.InfiniteDecision Subtail.AbsorbingTerminal
 open Subtail.TerminalDecisionLazy Subtail.RankQuery Subtail.RankQueryDecision
 open Subtail.RankQueryEnumeration
+
+def anyExact (xs : List α) : Nat → (List α → Bool) → Bool
+  | 0, test => test []
+  | n+1, test => xs.any (fun x => anyExact xs n (fun w => test (x :: w)))
+
+def infiniteStream (I : Instance k) : Bool :=
+  (List.finRange k).any fun q =>
+    I.final.get q && (List.finRange k).all (fun p => !((I.flags.get p).get q)) &&
+      (List.range (k+1)).any (fun len => anyExact [false,true] len (fun c =>
+        cycleCheck I q c && prefixCheck I q c))
 
 def main : IO Unit := do
   let C := {decision.render_constraints(fixture)}
@@ -78,6 +89,18 @@ def main : IO Unit := do
   let terminal ← timed "terminal_scan" (fun _ => terminalCandidateScan T phi) toString
   emit ("result:" ++ toString (!terminal))
 """
+    if variant != "baseline":
+        eager = '''  let cycles ← timed "cycle_candidates" (fun _ => candidates I) (fun cs => toString cs.length)
+  let infinite ← timed "infinite_prefix_search" (fun _ => cycles.any (fun qc => prefixCheck I qc.1 qc.2)) toString'''
+        stream = '''  let infinite ← timed "infinite_stream" (fun _ => infiniteStream I) toString'''
+        if variant == "gated":
+            stream = '''  let initialSafe ← timed "initial_safety" (fun _ => safeState I I.initial) toString
+  let infinite ← if initialSafe then
+    timed "infinite_stream" (fun _ => infiniteStream I) toString
+    else pure false'''
+        code = code.replace(eager, stream)
+    return code
+
 
 def parse_trace(output: str, completed: bool, expected: bool) -> dict:
     phases, active, values, results = [], None, {}, []
@@ -185,6 +208,7 @@ def main() -> int:
     fixtures = [f for f in decision.corpus() if f.kind == "raw"]
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--case", action="append", choices=[f.name for f in fixtures])
+    ap.add_argument("--variant", choices=("baseline", "stream", "gated"), default="baseline")
     ap.add_argument("--timeout", type=float, default=20)
     ap.add_argument("--output", type=Path, required=True)
     ap.add_argument("--scratch", type=Path, required=True)
@@ -193,7 +217,7 @@ def main() -> int:
         ap.error("timeout must be positive and finite")
     args.scratch = args.scratch.resolve()
     args.scratch.mkdir(parents=True, exist_ok=True)
-    receipt = {"revision": fast.git_revision(), "system": platform.platform(),
+    receipt = {"revision": fast.git_revision(), "variant": args.variant, "system": platform.platform(),
                "source_hashes": fast.source_hashes(),
                "profiler_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                "caps": {"wall_seconds": args.timeout, "cpu_seconds": math.ceil(args.timeout),
@@ -205,7 +229,7 @@ def main() -> int:
     for fixture in fixtures:
         if args.case and fixture.name not in args.case:
             continue
-        code = source(fixture)
+        code = source(fixture, args.variant)
         path = args.scratch / (fixture.name + ".lean")
         path.write_text(code)
         measured = run(path, args.timeout, fixture.expected)
