@@ -176,12 +176,12 @@
     {
       "id": "A010",
       "title": "Build the exact top-free constraint-to-automata pipeline",
-      "status": "tried",
+      "status": "active",
       "outcome": "supported",
-      "owner": null,
+      "owner": "raw-summary-20260920",
       "updated": "2026-09-20",
       "summary": "C081 now has a proved primitive-table solver with exact System and whole-decision equality. E058 resolves all three deeper generated timeouts (19/19) while preserving 33/38 original completions and five raw UNKNOWN cases. C085, the paper and quantitative/signature boundaries are unchanged. E059 proves incremental raw cycle search and completes all 38 fixed inputs; a four-variable summary-construction stress probe remains UNKNOWN.",
-      "next_step": "Investigate reuse of proved balanced tables in raw summary construction on the measured four-variable stress case; retain separate terminal-promotion and countermodel producer obligations.",
+      "next_step": "Construct the exact raw summary with the existing proved balanced/control tables; validate all physical states, raw stress, and frontend regressions under #62.",
       "record": "research/approaches/A010.md",
       "evidence": [
         "notes/2026-09-04-bridge-foundation.md",
@@ -268,7 +268,7 @@
         "notes/2026-09-20-raw-backend-readback.md",
         "results/raw-backend.json"
       ],
-      "issue": "https://github.com/mhenglein/subtail/issues/61"
+      "issue": "https://github.com/mhenglein/subtail/issues/62"
     },
     {
       "id": "A011",
@@ -594,12 +594,12 @@
     {
       "id": "A018",
       "title": "Maintain the Lean core and verify critical obligations",
-      "status": "tried",
+      "status": "active",
       "outcome": "supported",
-      "owner": null,
+      "owner": "raw-summary-20260920",
       "updated": "2026-09-20",
       "summary": "C081 now has a proved primitive-table solver with exact System and whole-decision equality. E058 resolves all three deeper generated timeouts (19/19) while preserving 33/38 original completions and five raw UNKNOWN cases. C085, the paper and quantitative/signature boundaries are unchanged. E059 proves incremental raw cycle search and completes all 38 fixed inputs; a four-variable summary-construction stress probe remains UNKNOWN.",
-      "next_step": "Investigate reuse of proved balanced tables in raw summary construction on the measured four-variable stress case; retain separate terminal-promotion and countermodel producer obligations.",
+      "next_step": "Construct the exact raw summary with the existing proved balanced/control tables; validate all physical states, raw stress, and frontend regressions under #62.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
@@ -748,7 +748,7 @@
         "notes/2026-09-20-raw-backend-readback.md",
         "results/raw-backend.json"
       ],
-      "issue": "https://github.com/mhenglein/subtail/issues/61"
+      "issue": "https://github.com/mhenglein/subtail/issues/62"
     }
   ]
 }
