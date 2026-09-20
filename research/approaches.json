@@ -176,12 +176,12 @@
     {
       "id": "A010",
       "title": "Build the exact top-free constraint-to-automata pipeline",
-      "status": "tried",
+      "status": "active",
       "outcome": "supported",
-      "owner": null,
+      "owner": "finite-decision-20260920 (#58)",
       "updated": "2026-09-20",
       "summary": "C085 proves the ordinary finite-tree cycle reduction; Lean checks closure, conditional semantic endpoints and finite-preserving normalization. The finite CLI is implemented, with the unverified classifier bridge explicit.",
-      "next_step": "Connect an executable Lean growth classifier to the forced-loop or uniform reverse-Pop bound endpoints. Keep Python naming/graph boundaries, E055 timeouts and explicit top separate; no worker assigned.",
+      "next_step": "Complete the executable Lean finite-tree growth classifier and compose its exact C085 semantic endpoints; #58 scope and separate worktrees.",
       "record": "research/approaches/A010.md",
       "evidence": [
         "notes/2026-09-04-bridge-foundation.md",
@@ -577,12 +577,12 @@
     {
       "id": "A018",
       "title": "Maintain the Lean core and verify critical obligations",
-      "status": "tried",
+      "status": "active",
       "outcome": "supported",
-      "owner": null,
+      "owner": "finite-decision-20260920 (#58)",
       "updated": "2026-09-20",
       "summary": "C085 proves the ordinary finite-tree cycle reduction; Lean checks closure, conditional semantic endpoints and finite-preserving normalization. The finite CLI is implemented, with the unverified classifier bridge explicit.",
-      "next_step": "Connect an executable Lean growth classifier to the forced-loop or uniform reverse-Pop bound endpoints. Keep Python naming/graph boundaries, E055 timeouts and explicit top separate; no worker assigned.",
+      "next_step": "Complete the executable Lean finite-tree growth classifier and compose its exact C085 semantic endpoints; #58 scope and separate worktrees.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
