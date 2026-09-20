@@ -88,7 +88,8 @@ def source_hashes() -> dict[str, str]:
             if line.startswith("import "):
                 pending.extend(line.split()[1:])
     paths.update(ROOT / p for p in (
-        "scripts/check_original_bounds.py", "lean/lean-toolchain", "lean/lakefile.toml",
+        "scripts/check_original_bounds.py", "scripts/test_check_original_bounds.py",
+        "lean/lean-toolchain", "lean/lakefile.toml", "lean/lake-manifest.json",
         "experiments/check_smaller_compiler_astra.py", "experiments/f_only_astra.py",
         "results/smaller-compiler-astra.json", "results/f-only-astra.json",
     ))
@@ -104,6 +105,14 @@ def compare_receipt(actual: Path, saved: Path, ignored: tuple[str, ...] = ()) ->
     if fresh != old:
         changed = sorted(k for k in fresh.keys() | old.keys() if fresh.get(k) != old.get(k))
         raise CheckFailure(f"Saved regression receipt differs in {saved.name}: {changed}")
+
+
+def stop_process_group(proc: subprocess.Popen) -> None:
+    try:
+        os.killpg(proc.pid, signal.SIGKILL)
+    except ProcessLookupError:
+        pass  # The group can exit between the timeout and this cleanup.
+    proc.wait()
 
 
 def main() -> int:
@@ -140,8 +149,7 @@ def main() -> int:
             try:
                 proc.wait(timeout=args.timeout)
             except subprocess.TimeoutExpired:
-                os.killpg(proc.pid, signal.SIGKILL)
-                proc.wait()
+                stop_process_group(proc)
                 row["status"] = "UNKNOWN"
             row["exit_code"] = proc.returncode
             row["elapsed_seconds"] = round(time.monotonic() - start, 3)
