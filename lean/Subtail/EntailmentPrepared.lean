@@ -1,10 +1,11 @@
 import Subtail.EntailmentFast
-import Subtail.InfiniteDecisionLazy
+import Subtail.SummaryInstanceCached
 
 /-! Materialize primitive transitions once, then reuse the existing exact tests.
 The table-backed System equals its input on every control and letter. The
 terminal branch and candidate-path order are unchanged. The complete fallback
-uses the proved equivalent streaming cycle search.
+uses the proved equivalent streaming cycle search and reuses its prepared
+tables to construct the exact original summary instance.
 -/
 namespace Subtail.EntailmentPrepared
 
@@ -84,11 +85,24 @@ theorem separationCheck_eq (C : List (Constraint n)) (a b : Fin n) (w : Word) :
   rw [prepare_eq]
   rfl
 
+def rawNormalizedEntailsCheck (C : List (Constraint n)) (a b : Fin n) : Bool :=
+  let P := prepare (systemOf C)
+  SummaryInstanceCached.rawWith C P.machine P.cache a b
+
+theorem rawNormalizedEntailsCheck_eq (C : List (Constraint n)) (a b : Fin n) :
+    rawNormalizedEntailsCheck C a b = InfiniteDecisionLazy.rawNormalizedEntailsCheckLazy C a b := by
+  rw [rawNormalizedEntailsCheck, prepare_eq]
+  exact SummaryInstanceCached.rawWith_eq C _ _ rfl (prepare_correct _) a b
+
+theorem rawNormalizedEntailsCheck_correct (C : List (Constraint n)) (a b : Fin n) :
+    rawNormalizedEntailsCheck C a b = true ↔ Entails C a b := by
+  rw [rawNormalizedEntailsCheck_eq, InfiniteDecisionLazy.rawNormalizedEntailsCheckLazy_correct]
+
 def afterPositive (C : List (Constraint n)) (P : Prepared n)
     (a b : Fin n) (paths : List Word) : Bool :=
   if satCheck C P then
     if paths.any (separationCheck C P a b) then false
-    else InfiniteDecisionLazy.rawNormalizedEntailsCheckLazy C a b
+    else SummaryInstanceCached.rawWith C P.machine P.cache a b
   else true
 
 theorem afterPositive_eq (C : List (Constraint n)) (a b : Fin n) (paths : List Word) :
@@ -96,6 +110,7 @@ theorem afterPositive_eq (C : List (Constraint n)) (a b : Fin n) (paths : List W
       EntailmentFast.afterPositive C (CanonicalReachabilityFast.prepare (systemOf C)) a b paths := by
   rw [prepare_eq]
   simp only [afterPositive, EntailmentFast.afterPositive,
+    reference, SummaryInstanceCached.rawWith_eq C _ _ rfl (prepare_correct _),
     InfiniteDecisionLazy.rawNormalizedEntailsCheckLazy_eq]
   rfl
 
