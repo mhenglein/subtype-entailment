@@ -1,5 +1,11 @@
 # End-to-end semantic audit: exact normalized split, not yet a full executable decision
 
+> **September 20 integration note.** Historical review of the exact revisions named below. The later C081 theorem
+> and independent final readback discharge the then-open C029, normalization
+> and composition obligations; see [the completion record](2026-09-19-entailment-decision.md)
+> and [final semantic readback](2026-09-19-entailment-decision-independent-readback.md).
+> This note preserves its original scope and does not claim a new Lean execution.
+
 Date: 2026-09-19.
 Actor/session: ChatGPT `end-to-end-semantic-audit-20260919`, independent source reviewer; subsequent documentation publication explicitly requested by Marcus.
 Related workstreams: A010, A013, A017, A018. Related claims: C029, C030, C031, C080. Review #33; semantic bridge #31; parent #34; coordination #37.

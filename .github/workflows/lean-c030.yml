@@ -1,15 +1,23 @@
 name: C030 direct realization
 
-# The opt-in modules do not edit another worker's shared import or CI files.
+# Keep the optional converse checked independently of the forward core.
+# All Lean paths are included so changes to imported definitions retrigger it.
 on:
   push:
-    branches: ['lean/c030-direct-20260919']
+    branches: ['main', 'lean/c030-direct-20260919']
     paths:
-      - 'lean/Subtail/TerminalRealization*.lean'
+      - 'lean/**'
+      - 'experiments/check_c030_independent.py'
+      - 'experiments/replay_c030_independent.py'
+      - 'results/c030-independent-review.json'
       - '.github/workflows/lean-c030.yml'
+  workflow_dispatch:
   pull_request:
     paths:
-      - 'lean/Subtail/TerminalRealization*.lean'
+      - 'lean/**'
+      - 'experiments/check_c030_independent.py'
+      - 'experiments/replay_c030_independent.py'
+      - 'results/c030-independent-review.json'
       - '.github/workflows/lean-c030.yml'
 
 permissions:

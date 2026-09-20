@@ -1,5 +1,11 @@
 # C080 quantitative review: the concrete Lean compiler exceeds the proposed U bound
 
+> **September 20 integration note.** Historical discovery and ordinary replacement proof. The counterexample and
+> corrected larger bound are now Lean-checked as C082; see [the quantitative
+> integration and dependency audit](2026-09-20-post-c081-quantitative-integration.md).
+> The original F alone and a smaller existential compiler remain unresolved.
+> The pending-review statements below retain their original checkpoint scope.
+
 Date: 2026-09-19. Workstreams: A017/A018; quantitative issue #30, proof tracker #34, coordination #37.
 Reviewer/session: ChatGPT `rank-weight-publication-20260919`, publishing the completed independent advisory investigation at the repository owner's request.
 

@@ -1,5 +1,10 @@
 # Finite-expression normalization is a conservative definitional extension
 
+> **September 20 integration note.** Historical ordinary proof and interface proposal. The later checked normalizer
+> and independent review are recorded in [the C081 completion record](2026-09-19-entailment-decision.md).
+> The unimplemented interfaces and proposed status wording below describe the
+> September 19 advisory checkpoint, not the current implementation.
+
 Date: 2026-09-19.
 Actor/session: ChatGPT `finite-expression-normalization-advisory-20260919`.
 Related work: A010/A018; the finite-syntax obligation in #31; tracking #34; integration #37.
