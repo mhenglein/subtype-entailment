@@ -33,6 +33,9 @@ def main():
     # Keep a numbered result's opening with its displayed statement.
     body = re.sub(r"(?=^\*\*(?:Theorem|Lemma|Proposition|Corollary) \d)",
                   lambda _: "\\Needspace{6\\baselineskip}\n\n", body, flags=re.M)
+    # Leave room for a section's opening paragraph and its first display.
+    body = re.sub(r"(?=^# \d+\.)",
+                  lambda _: "\\Needspace{9\\baselineskip}\n\n", body, flags=re.M)
     # Paper-relative source links become immutable repository links in the PDF.
     def absolute_link(match):
         label, target = match.groups()
