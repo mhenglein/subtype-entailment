@@ -693,17 +693,22 @@ jobs:
       - name: Proved cached construction and exact physical-state comparisons
         run: |
           python3 scripts/check_summary_cached.py --output tmp/summary-cached-audit.json
-          python3 experiments/check_summary_cached.py --raw --components --output tmp/summary-cached-components.json --scratch tmp/summary-cached-components
+          python3 experiments/check_summary_cached.py --raw --output tmp/summary-cached-raw.json --scratch tmp/summary-cached-raw
+          python3 experiments/check_summary_cached.py --components --timeout 60 --output tmp/summary-cached-components.json --scratch tmp/summary-cached-components
           python3 experiments/check_summary_cached.py --stress-raw --output tmp/summary-cached-stress.json --scratch tmp/summary-cached-stress
           python3 - <<'PYCODE'
           import json
           from pathlib import Path
           checks = json.loads(Path('tmp/summary-cached-components.json').read_text())
+          raw_report = json.loads(Path('tmp/summary-cached-raw.json').read_text())
           stress = json.loads(Path('tmp/summary-cached-stress.json').read_text())
-          for report in (checks, stress):
+          for report in (checks, raw_report, stress):
               assert report['fixture_identity']['sha256'] == '94e242ddfee45b8e1553f665c75e7ca027cac908d04d9acdffdc0ee2b10e8d63', 'E060 fixture change needs explicit review'
+          for report in (raw_report, stress):
               assert report['caps']['wall_seconds_per_process'] == 20
+          assert 0 < checks['caps']['wall_seconds_per_process'] <= 60
           assert checks['status'] == 'PASS'
+          assert raw_report['status'] == 'PASS'
           components = checks['phases']['components']
           assert components['status'] == 'PASS' and components['case_count'] == 29 and len(components['rows']) == 29
           assert components['instance_count'] == 83
@@ -721,7 +726,7 @@ jobs:
                   assert row['status'] == 'PASS' and row['candidate_present'] and row['reference_present'], row['name']
                   assert row['candidate_reference_field'] is None and row['candidate_python_field'] is None
                   assert set(row['exact_fields']) == {'initial', 'transitions', 'bad', 'final', 'flags'}
-          raw = checks['phases']['raw']
+          raw = raw_report['phases']['raw']
           assert raw['status'] == 'PASS' and raw['fixture_count'] == 7 and len(raw['rows']) == 7
           previous = json.loads(Path('tmp/infinite-lazy-raw.json').read_text())['phases']['raw']['rows']
           previous = {row['name']: row['variants']['candidate'] for row in previous}
@@ -753,6 +758,7 @@ jobs:
           name: summary-cached-audit
           path: |
             tmp/summary-cached-audit.json
+            tmp/summary-cached-raw.json
             tmp/summary-cached-components.json
             tmp/summary-cached-stress.json
           retention-days: 90
