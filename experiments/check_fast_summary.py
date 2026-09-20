@@ -93,17 +93,15 @@ def source_hashes() -> dict[str, str]:
         "experiments/check_entailment_decision.py",
         "experiments/check_entailment_lazy.py",
         "experiments/check_stack_summary.py",
-        "lean/Subtail/StackSummary.lean",
-        "lean/Subtail/StackReachability.lean",
-        "lean/Subtail/CanonicalReachability.lean",
-        "lean/Subtail/SummaryAutomaton.lean",
-        "lean/Subtail/EntailmentDecision.lean",
-        "lean/Subtail/TerminalDecisionLazy.lean",
-        "lean/Subtail/FiniteSearch.lean",
         "lean/Subtail/StackSummaryFast.lean",
         "lean/Subtail/CanonicalReachabilityFast.lean",
         "lean/Subtail/EntailmentFast.lean",
     ]
+    relative.extend(
+        str(path.relative_to(ROOT))
+        for path in sorted((ROOT / "lean/Subtail").glob("*.lean"))
+    )
+    relative = sorted(set(relative))
     result: dict[str, str] = {}
     for name in relative:
         path = ROOT / name
@@ -610,7 +608,7 @@ def benchmark_source(fixture: decision.Fixture, variant: str) -> tuple[str, bool
         )
     else:
         call = (
-            f"{function} {decision.render_constraints(fixture.constraints, fixture.n)} "
+            f"{function} {decision.render_constraints(fixture)} "
             f"{render_fin(int(fixture.a), fixture.n)} {render_fin(int(fixture.b), fixture.n)}"
         )
     source = f'''import {module}
@@ -625,23 +623,29 @@ def main : IO Unit := do
     return source, raw_unchanged, function
 
 
-def parse_marker(output: str, marker: str) -> tuple[Optional[str], Optional[str]]:
+def parse_markers(
+    output: str, marker: str, expected_count: int
+) -> tuple[list[str], Optional[str]]:
     rows = [line.strip() for line in output.splitlines() if line.startswith(marker)]
-    if len(rows) != 1:
-        return None, "missing_or_ambiguous_marker"
-    return rows[0], None
+    if len(rows) != expected_count:
+        return [], "missing_or_ambiguous_marker"
+    return rows, None
 
 
-def run_generated_source(path: Path, marker: str, timeout: float) -> dict:
+def run_generated_source(
+    path: Path, marker: str, timeout: float, expected_markers: int = 1
+) -> dict:
     result = run_process(["lake", "env", "lean", str(path)], LEAN_ROOT, timeout)
     output = result.pop("output", "")
     result["output_tail"] = output[-2000:]
     if result.get("status") == "PASS":
-        marker_line, error = parse_marker(output, marker)
+        marker_lines, error = parse_markers(output, marker, expected_markers)
         if error:
             result.update(status="FAIL", reason=error)
         else:
-            result["marker"] = marker_line
+            result["markers"] = marker_lines
+            if expected_markers == 1:
+                result["marker"] = marker_lines[0]
     elif result.get("reason") in ("time_limit", "tool_unavailable"):
         # These are resource/tool availability outcomes, not phase errors.
         result["status"] = "UNKNOWN"
@@ -662,42 +666,40 @@ def component_phase(timeout: float, scratch: Path) -> dict:
     source, expected = component_source(systems)
     path = scratch / "fast-components.lean"
     path.write_text(source)
-    run = run_generated_source(path, COMPONENT_MARKER, timeout)
+    run = run_generated_source(path, COMPONENT_MARKER, timeout, len(expected))
     rows: list[dict] = []
     if run.get("status") == "PASS":
-        output = run.get("output_tail", "")
-        for line in output.splitlines():
-            if line.startswith(COMPONENT_MARKER):
-                body = line[len(COMPONENT_MARKER) :]
-                tag, length_text, digest1_text, digest2_text = body.split(":", 3)
-                wanted = expected.get(
-                    tag,
-                    {"length": -1, "digest1": -1, "digest2": -1, "sha256": ""},
-                )
-                actual_length = int(length_text)
-                actual_digest1 = int(digest1_text)
-                actual_digest2 = int(digest2_text)
-                row = {
-                    "name": tag,
-                    "status": "PASS"
-                    if (wanted["length"], wanted["digest1"], wanted["digest2"])
-                    == (actual_length, actual_digest1, actual_digest2)
-                    else "FAIL",
-                    "expected_sha256": wanted["sha256"],
-                    "actual_length": actual_length,
-                    "actual_digest1": actual_digest1,
-                    "actual_digest2": actual_digest2,
-                    "expected_length": wanted["length"],
-                    "expected_digest1": wanted["digest1"],
-                    "expected_digest2": wanted["digest2"],
-                }
-                if (wanted["length"], wanted["digest1"], wanted["digest2"]) != (
-                    actual_length,
-                    actual_digest1,
-                    actual_digest2,
-                ):
-                    row["reason"] = "oracle_disagreement"
-                rows.append(row)
+        for line in run.get("markers", []):
+            body = line[len(COMPONENT_MARKER) :]
+            tag, length_text, digest1_text, digest2_text = body.split(":", 3)
+            wanted = expected.get(
+                tag,
+                {"length": -1, "digest1": -1, "digest2": -1, "sha256": ""},
+            )
+            actual_length = int(length_text)
+            actual_digest1 = int(digest1_text)
+            actual_digest2 = int(digest2_text)
+            row = {
+                "name": tag,
+                "status": "PASS"
+                if (wanted["length"], wanted["digest1"], wanted["digest2"])
+                == (actual_length, actual_digest1, actual_digest2)
+                else "FAIL",
+                "expected_sha256": wanted["sha256"],
+                "actual_length": actual_length,
+                "actual_digest1": actual_digest1,
+                "actual_digest2": actual_digest2,
+                "expected_length": wanted["length"],
+                "expected_digest1": wanted["digest1"],
+                "expected_digest2": wanted["digest2"],
+            }
+            if (wanted["length"], wanted["digest1"], wanted["digest2"]) != (
+                actual_length,
+                actual_digest1,
+                actual_digest2,
+            ):
+                row["reason"] = "oracle_disagreement"
+            rows.append(row)
         if len(rows) != len(expected):
             run = {
                 **run,
@@ -730,25 +732,24 @@ def normalized_component_phase(timeout: float, scratch: Path) -> dict:
     source, expected = normalized_source()
     path = scratch / "fast-normalized-components.lean"
     path.write_text(source)
-    run = run_generated_source(path, COMPONENT_MARKER, timeout)
+    run = run_generated_source(path, COMPONENT_MARKER, timeout, len(expected))
     rows: list[dict] = []
     if run.get("status") == "PASS":
-        for line in run.get("output_tail", "").splitlines():
-            if line.startswith(COMPONENT_MARKER):
-                body = line[len(COMPONENT_MARKER) :]
-                tag, length_text, code_text = body.split(":", 2)
-                wanted = expected.get(tag, {"length": -1, "code": -1, "sha256": ""})
-                actual_length = int(length_text)
-                actual_code = int(code_text)
-                rows.append({
-                    "name": tag,
-                    "status": "PASS" if (wanted["length"], wanted["code"]) == (actual_length, actual_code) else "FAIL",
-                    "expected_sha256": wanted["sha256"],
-                    "actual_length": actual_length,
-                    "actual_code": actual_code,
-                    "expected_length": wanted["length"],
-                    "expected_code": wanted["code"],
-                })
+        for line in run.get("markers", []):
+            body = line[len(COMPONENT_MARKER) :]
+            tag, length_text, code_text = body.split(":", 2)
+            wanted = expected.get(tag, {"length": -1, "code": -1, "sha256": ""})
+            actual_length = int(length_text)
+            actual_code = int(code_text)
+            rows.append({
+                "name": tag,
+                "status": "PASS" if (wanted["length"], wanted["code"]) == (actual_length, actual_code) else "FAIL",
+                "expected_sha256": wanted["sha256"],
+                "actual_length": actual_length,
+                "actual_code": actual_code,
+                "expected_length": wanted["length"],
+                "expected_code": wanted["code"],
+            })
         if len(rows) != len(expected):
             run = {**run, "status": "FAIL", "reason": "missing_normalized_rows", "rows_seen": len(rows)}
     else:
@@ -806,9 +807,9 @@ def benchmark_phase(timeout: float, scratch: Path, compare_baseline: bool) -> di
                     if row["kind"] == kind
                 )
             )
-            for variant in variants
             for kind in ("frontend", "normalized", "raw")
         }
+        for variant in variants
     }
     disagreements = []
     if compare_baseline:
