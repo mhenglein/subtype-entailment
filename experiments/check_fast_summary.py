@@ -195,7 +195,9 @@ def reverse_system(system: stack_oracle.System) -> stack_oracle.System:
 def component_systems() -> list[tuple[str, stack_oracle.System]]:
     """Small deterministic systems covering empty, epsilon, push/pop, dense and reverse cases."""
 
-    systems: list[tuple[str, stack_oracle.System]] = []
+    systems: list[tuple[str, stack_oracle.System]] = [
+        ("empty-zero", stack_oracle.System(0, frozenset(), frozenset(), frozenset()))
+    ]
     for mask in range(32):
         bits = [(mask >> i) & 1 for i in range(5)]
         systems.append(
@@ -295,7 +297,9 @@ def component_expected(system: stack_oracle.System) -> dict[str, dict[str, objec
         for q in range(system.n):
             bits["forward"].append(balanced(system, q, ())(p, ()))
             bits["backward"].append(balanced(reverse, q, ())(p, ()))
-            bits["paths"].append(balanced(reverse, q, None)(p, ()))
+            # Reverse-control paths p -> q encode original-system control reach
+            # from (q, []) to (p, arbitrary stack), not reverse reach from [].
+            bits["paths"].append(balanced(system, p, None)(q, ()))
     for p in range(system.n):
         for u in words:
             for q in range(system.n):
@@ -788,7 +792,8 @@ def benchmark_phase(timeout: float, scratch: Path, compare_baseline: bool) -> di
             run = run_generated_source(path, BENCHMARK_MARKER, timeout)
             actual_marker = run.get("marker")
             if run.get("status") == "PASS":
-                actual = actual_marker.endswith(":true") if actual_marker else None
+                actual = True if actual_marker and actual_marker.endswith(":true") else (
+                    False if actual_marker and actual_marker.endswith(":false") else None)
                 run["actual"] = actual
                 if actual != fixture.expected:
                     run.update(status="FAIL", reason="independent_expected_answer_mismatch")
@@ -797,6 +802,8 @@ def benchmark_phase(timeout: float, scratch: Path, compare_baseline: bool) -> di
             if fixture.kind == "raw":
                 raw_calls.add(function)
         rows.append(row)
+        print(f"{fixture.name}: " + "; ".join(
+            f"{variant} {row[variant]['status']}" for variant in variants), flush=True)
 
     counts = {
         variant: {
@@ -855,7 +862,7 @@ def generated_phase(timeout: float, scratch: Path) -> dict:
         run = run_generated_source(path, GENERATED_MARKER, timeout)
         if run.get("status") == "PASS":
             marker = run.get("marker", "")
-            actual = marker.endswith(":true")
+            actual = True if marker.endswith(":true") else (False if marker.endswith(":false") else None)
             run["actual"] = actual
             if actual != case.expected:
                 run.update(status="FAIL", reason="independent_expected_answer_mismatch")
@@ -878,7 +885,7 @@ def generated_phase(timeout: float, scratch: Path) -> dict:
         "families": {
             "positive-transitivity": "Listed leq chain; expected true by transitivity.",
             "positive-covariance": "Monotone component chains with exact upper/lower product definitions; expected true by product_mono.",
-            "negative-supplied-separation": "C=[] and an explicit source path; expected separation true, hence negative entailment.",
+            "negative-supplied-separation": "A finite lower-constraint push chain and an explicit source path; expected separation true, hence negative entailment.",
         },
     }
 
