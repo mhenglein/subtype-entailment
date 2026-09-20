@@ -51,6 +51,16 @@ jobs:
           for name in ('core_build', 'module_build', 'kernel_replay', 'axiom_audit', 'native_producer'):
               assert r['lean'][name]['status'] == 'PASS', (name, r['lean'][name])
           PY
+      - name: Preserve generated producer code for runtime readback
+        if: always()
+        run: |
+          mkdir -p tmp/regular-producer-68
+          for module in RegularLanguageGraph RegularCountermodelProducer; do
+            source="lean/.lake/build/ir/Subtail/${module}.c"
+            if test -f "$source"; then
+              cp "$source" "tmp/regular-producer-68/${module}.c"
+            fi
+          done
       - name: Preserve exact logs and receipt even on failure
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a

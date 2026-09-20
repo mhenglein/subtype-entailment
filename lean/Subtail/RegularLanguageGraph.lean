@@ -6,7 +6,7 @@ Finite-language graph conversion for issue 68.  The state graph is the existing
 C084 Graph, not a new tree semantics.  Only the selected root language must be
 prefix-closed; unreachable automaton states have no extra hypothesis.
 
-SOURCE DRAFT: pinned elaboration/kernel checks must be recorded independently.
+Exact pinned validation is recorded in notes/2026-09-20-regular-producer-68.md.
 -/
 namespace Subtail.RegularLanguageGraph
 

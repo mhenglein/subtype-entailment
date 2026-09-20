@@ -74,3 +74,12 @@ import Subtail.RegularCountermodelProducer
 #print axioms Subtail.RegularCountermodelProducer.produce_none_iff
 #print axioms Subtail.RegularCountermodelProducer.produce_sound
 #print axioms Subtail.RegularCountermodelProducer.produce_complete
+
+/- An executed delayed-search regression, distinct from the axiom inventory. -/
+open Subtail.RegularCountermodelProducer
+#eval show IO Unit from do
+  let result := seek (fun d => decide (d = 7)) (by exact ⟨7, by decide⟩)
+  if result.val = 7 then
+    IO.println "REGULAR68 delayed_search PASS"
+  else
+    throw (IO.userError "delayed search failed")
