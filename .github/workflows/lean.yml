@@ -25,6 +25,8 @@ on:
       - 'scripts/check_infinite_witness.py'
       - 'scripts/check_entailment_decision.py'
       - 'scripts/check_rank_weight_native.py'
+      - 'scripts/check_original_bounds.py'
+      - 'scripts/test_check_original_bounds.py'
       - 'scripts/check_terminal_lazy.py'
       - 'scripts/check_fast_summary.py'
       - 'scripts/check_prepared_summary.py'
@@ -56,6 +58,8 @@ on:
       - 'scripts/check_infinite_witness.py'
       - 'scripts/check_entailment_decision.py'
       - 'scripts/check_rank_weight_native.py'
+      - 'scripts/check_original_bounds.py'
+      - 'scripts/test_check_original_bounds.py'
       - 'scripts/check_terminal_lazy.py'
       - 'scripts/check_fast_summary.py'
       - 'scripts/check_prepared_summary.py'
@@ -546,6 +550,21 @@ jobs:
           path: tmp/rank-weight-native.json
           retention-days: 90
           if-no-files-found: error
+      - name: Original terminal witness bound and smaller compiler
+        env:
+          LEAN_NUM_THREADS: '1'
+          LEAN_STACK_SIZE_KB: '32768'
+        run: |
+          python3 scripts/test_check_original_bounds.py
+          python3 scripts/check_original_bounds.py
+      - name: Preserve original-bound integration checks
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: original-bounds-audit
+          path: tmp/original-bounds-*
+          retention-days: 90
+          if-no-files-found: warn
       - name: Gated terminal and expression wrapper proof checks
         run: |
           (cd lean && lake build +Subtail.TerminalDecisionLazy)
