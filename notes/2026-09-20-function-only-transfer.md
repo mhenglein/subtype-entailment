@@ -154,7 +154,13 @@ On a dependency path, signs multiply, or equivalently parities add. An even cont
 
 For instance X=F(X,bottom) has the regular zero-spine solution L with P(L)={0^n:n>=0}. It has an odd negative self-cycle, but is entirely consistent. Its two-state presentation is one function node whose 0 edge returns to itself and whose 1 edge reaches bottom. The mutual equations X=F(Y,bottom), Y=F(X,bottom) traverse an even two-edge negative cycle and also have this solution. Both equations force infinitely many nodes, so have no finite solution. In contrast, the inequality F(X,bottom)<=X DOES have the finite solution X=B, because F(B,bottom)=A<=B. Importing the covariant lower-self zero-spine rule would incorrectly rule it out.
 
-No explicit top is being introduced. In the arbitrary domain there happens to be a greatest value G=F(bottom,G): the relation {(t,G):all t} is postfixed, since each function domain comparison is bottom<=t0 and the codomain remains paired with G. G is an infinite right spine, not an extra top-labelled leaf. This observation supplies neither an encoding of an explicit-top theory nor a finite-model result.
+No explicit top is being introduced. In the arbitrary domain there happens to be a greatest value G=F(bottom,G). To prove this by ordinary coinduction, use
+
+    R = {(bottom,t) : all values t} union {(t,G) : all values t}.
+
+Every bottom-left pair is in Phi(R). For a pair (F(a,b),G), the domain obligation (bottom,a) and the codomain obligation (b,G) both belong to R. Thus R is postfixed and every t<=G. G is an infinite right spine, not an extra top-labelled leaf. This observation supplies neither an encoding of an explicit-top theory nor a finite-model result.
+
+**Author readback correction.** The first version of this auxiliary paragraph used only the pairs (t,G) and mistakenly called that relation postfixed. The missing pairs (bottom,t) are now explicitly included. The conclusion, Theorems 1-4, Proposition 5 and the diagnostic code are unchanged. This is an author correction, not independent review.
 
 ## 8. Finite and regular boundaries
 
