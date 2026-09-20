@@ -1,6 +1,6 @@
 # Research plan
 
-Updated: 2026-09-20 (post-C081 research package)
+Updated: 2026-09-20 (publication, solver and extension-proof plan)
 
 **Completed qualitative goal:** decide [Problem 1.7](problem.md) for bottom
 and binary product over arbitrary, possibly infinite trees. [C081](claims.md#c081)
@@ -9,28 +9,23 @@ gives the total executable Boolean and unconditional correctness theorem.
 
 ## Post-C081 results and next questions
 
-The [seven-part programme](POST_C081.md) now has a full ordinary paper,
-focused novelty review, explicit input resource account, small usable solver
+The [seven-part programme](POST_C081.md) produced an ordinary research draft,
+focused novelty review, explicit input resource account, prototype solver
 with a proved evaluation gate, extension study and reader checkpoint.
 C082 supplies a corrected quantitative bound; C083 gives an elementary NL
 lower bound. The original concrete C080 U is refuted, while its F alone and
 an existential smaller compiler remain open. No issue closure changes that.
 
-The next discriminating tasks are:
-
-1. Prove and measure caching or a smaller representation for balanced/summary
-   reachability. Use the matched E054 cases and preserve UNKNOWN.
-2. Turn the ordinary regular-countermodel construction into a complete
-   finite-graph extractor with an independent exact checker.
-3. Narrow the large gap between the explicit reference upper bound and NL
-   hardness. Prove each literature transfer under the exact signature.
-4. Obtain outside mathematical review of the terminal coverage/reconstruction
-   and the claimed novelty. The current reviews are agent source readbacks.
-5. Investigate explicit top with labelled semantics; the tested naive encodings
-   fail. New arities, constructors and variance need separate arguments.
+The current [publication, solver and extension-proof plan](PUBLICATION_PLAN.md)
+sets concrete next acceptance criteria. Rewrite the manuscript as a standalone
+mathematical paper with integrated Henglein–Rehof attribution and no internal
+project notes. Address the nine full-expression timeouts with measured, proved
+optimizations. Finish checked regular countermodel extraction, test a specific
+finite-tree reduction, and pursue arity and explicit-top theorems under separate
+proof obligations. Tight complexity and exact literature transfers remain open.
 
 These are proposals, not active worker assignments. Ownership and reservations
-remain in [the registry](approaches.json), [#53](https://github.com/mhenglein/subtail/issues/53)
+remain in [the registry](approaches.json), [#54](https://github.com/mhenglein/subtail/issues/54)
 and [#37](https://github.com/mhenglein/subtail/issues/37). The owner deferred
 licensing and requested author/affiliation placeholders. No license grant or
 publication-ready authorship is asserted.
