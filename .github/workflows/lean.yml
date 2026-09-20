@@ -602,7 +602,7 @@ jobs:
           counts = phases['benchmark']['counts_by_variant_and_kind']['prepared']
           assert counts['frontend'] == {'PASS': 26}, counts
           assert counts['normalized'] == {'PASS': 5}, counts
-          assert phases['generated']['counts_by_variant']['prepared'] == {'PASS': 19}, phases['generated']['counts_by_variant']
+          assert phases['generated']['counts']['prepared'] == {'PASS': 19}, phases['generated']['counts']
           print('PASS: prepared components, original frontend and 19 deeper/generated cases; raw caps remain explicit')
           PYCODE
       - name: Preserve primitive-table proof and CLI evidence
