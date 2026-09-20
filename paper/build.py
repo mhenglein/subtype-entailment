@@ -45,6 +45,8 @@ def main():
     body = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", absolute_link, body)
     # Force a separate contents page after the abstract and before Section 1.
     body = body.replace("# 1. Introduction", "\\newpage\n\\begingroup\\small\n\\tableofcontents\n\\endgroup\n\\newpage\n\n# 1. Introduction", 1)
+    # Give the bibliography a clean page instead of splitting its final entries.
+    body = body.replace("# References\n", "\\newpage\n\n# References\n", 1)
     OUT.mkdir(parents=True, exist_ok=True)
     scratch = ROOT / "tmp" / "pdfs" / "paper-rewrite"
     scratch.mkdir(parents=True, exist_ok=True)
