@@ -13,6 +13,7 @@ import json
 from pathlib import Path
 import re
 import subprocess
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 MODULES = {name: "Subtail." + name + "." for name in
@@ -20,9 +21,36 @@ MODULES = {name: "Subtail." + name + "." for name in
 DECL = re.compile(r"^(?:@\[[^\n]*\]\s*)?(theorem|def|abbrev|inductive|structure)\s+([A-Za-z_][A-Za-z_0-9.']*)", re.M)
 
 
+def cli_smoke(directory):
+    rows = []
+    inputs = [("reflexive", {"variables": ["x"], "constraints": [], "query": ["x", "x"]}, "ENTAILED", 20),
+              ("zero-variables", {"variables": [], "constraints": [], "query": ["bottom", "bottom"]}, "ENTAILED", 20)]
+    for depth in (6, 8):
+        left, right = "x", "y"
+        for _ in range(depth):
+            left, right = {"prod": [left, "bottom"]}, {"prod": [right, "bottom"]}
+        inputs.append((f"products-depth-{depth}", {"variables": ["x", "y"], "constraints": [],
+                                                   "query": [left, right]}, "NOT_ENTAILED", 20))
+    inputs.append(("capped", inputs[0][1], "UNKNOWN", .001))
+    for name, problem, expected, timeout in inputs:
+        path = directory / (name + ".json")
+        path.write_text(json.dumps(problem))
+        command = [sys.executable, "scripts/subtail.py", str(path), "--timeout", str(timeout)]
+        proc = subprocess.run(command, cwd=ROOT, text=True, capture_output=True, timeout=timeout + 10)
+        result = json.loads(proc.stdout)
+        if proc.returncode or result["status"] != expected:
+            raise RuntimeError(f"CLI mismatch for {name}: {proc.returncode} {proc.stdout} {proc.stderr}")
+        if expected != "UNKNOWN" and result.get("basis") != "Lean EntailmentPrepared.entailsCheck_correct":
+            raise RuntimeError("CLI did not use the checked prepared endpoint")
+        rows.append({"name": name, "expected": expected, "answer": result,
+                     "input_sha256": hashlib.sha256(path.read_bytes()).hexdigest(), "timeout": timeout})
+    return {"status": "PASS", "cases": rows}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=ROOT / "tmp/prepared-summary-axioms.json")
+    parser.add_argument("--cli", action="store_true", help="also run the actual default JSON endpoint and cap boundary")
     args = parser.parse_args()
     version = subprocess.check_output(["lake", "env", "lean", "--version"], cwd=ROOT / "lean", text=True).strip()
     if "version 4.33.1," not in version:
@@ -77,6 +105,11 @@ def main():
               "toolchain": version, "build": "PASS", "kernel_replay": "PASS",
               "runtime_declarations": sum(kind != "theorem" for kind in expected.values()),
               "checker_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
+    if args.cli:
+        directory = args.output.resolve().parent / "prepared-cli"
+        directory.mkdir(parents=True, exist_ok=True)
+        result["cli"] = cli_smoke(directory)
+        result["source_sha256"]["scripts/subtail.py"] = hashlib.sha256((ROOT / "scripts/subtail.py").read_bytes()).hexdigest()
     args.output.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
     runtime = sum(kind != "theorem" for kind in expected.values())
     print(f"PASS: {len(reports)} complete declaration closures, {runtime} non-theorems; no Classical.choice in executable definitions")

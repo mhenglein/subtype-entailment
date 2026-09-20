@@ -21,7 +21,7 @@ import tempfile
 import time
 
 ROOT = Path(__file__).resolve().parents[1]
-MODULE = ROOT / 'lean/Subtail/EntailmentFast.lean'
+MODULE = ROOT / 'lean/Subtail/EntailmentPrepared.lean'
 FINITE_MODULE = ROOT / 'lean/Subtail/FiniteTreeDecision.lean'
 MARKER = 'SUBTAIL_RESULT:'
 GROWTH_MARKER = 'SUBTAIL_GROWTH:'
@@ -79,13 +79,13 @@ def lean_expr(e):
 def lean_source(p: Problem, finite_trees=False) -> str:
     # Only parsed integer indices and fixed syntax enter Lean source. Names do not.
     premises = ', '.join(f'({lean_expr(l)}, {lean_expr(r)})' for l, r in p.constraints)
-    module = 'Subtail.FiniteTreeDecision' if finite_trees else 'Subtail.EntailmentFast'
+    module = 'Subtail.FiniteTreeDecision' if finite_trees else 'Subtail.EntailmentPrepared'
     output = f'''#eval do
   let answer := Subtail.FiniteTreeDecision.run input left right
   IO.println ("{GROWTH_MARKER}" ++ toString answer.1)
   IO.println ("{MARKER}" ++ toString answer.2)
 ''' if finite_trees else f'''#eval IO.println ("{MARKER}" ++ toString
-  (Subtail.EntailmentFast.entailsCheck input left right))
+  (Subtail.EntailmentPrepared.entailsCheck input left right))
 '''
     return f'''import {module}
 open Subtail.ExpressionNormalization
@@ -145,7 +145,7 @@ def run_process(command, cwd, timeout, memory_gib=16.0):
 
 
 def run_native(p: Problem, deadline, memory_gib=16.0, finite_trees=False):
-    module = 'Subtail.FiniteTreeDecision' if finite_trees else 'Subtail.EntailmentFast'
+    module = 'Subtail.FiniteTreeDecision' if finite_trees else 'Subtail.EntailmentPrepared'
     build = run_process(['lake', 'build', '+' + module], ROOT / 'lean',
                         deadline - time.monotonic(), memory_gib)
     if build['status'] != 'PASS':
