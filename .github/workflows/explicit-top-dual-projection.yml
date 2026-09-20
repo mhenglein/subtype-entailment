@@ -1,0 +1,80 @@
+name: Explicit top projection lifting
+
+# Isolated contribution check. This does not build or certify the full C081
+# executable, and does not alter the repository's existing shared workflows.
+on:
+  push:
+    branches: [codex/issue71-dual-projection-20260920]
+    paths:
+      - 'lean/Subtail/ExplicitTopDualProjection.lean'
+      - '.github/workflows/explicit-top-dual-projection.yml'
+  pull_request:
+    paths:
+      - 'lean/Subtail/ExplicitTopDualProjection.lean'
+      - '.github/workflows/explicit-top-dual-projection.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: explicit-top-projection-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lifting:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.11'
+      - uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596
+        with:
+          lake-package-directory: lean
+          build: 'false'
+          test: 'false'
+          lint: 'false'
+      - name: Pinned build and kernel replay of the new module only
+        working-directory: lean
+        run: |
+          set -eu
+          git rev-parse HEAD
+          lean --version
+          test "$(cat lean-toolchain)" = 'leanprover/lean4:v4.33.1'
+          lake build Subtail.ExplicitTopDualProjection
+          lake env leanchecker Subtail.ExplicitTopDualProjection
+          sha256sum Subtail/ExplicitTopDualProjection.lean
+      - name: Audit every explicit declaration and reject unproved axioms
+        working-directory: lean
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          import subprocess
+          import tempfile
+          source = Path('Subtail/ExplicitTopDualProjection.lean').read_text()
+          declarations = re.findall(r'^(?:@\[[^\]]*\]\s*)?(theorem|def|abbrev|structure|inductive)\s+([A-Za-z_][\w.]*)', source, re.M)
+          if not declarations:
+              raise RuntimeError('No declarations found')
+          prefix = 'Subtail.ExplicitTopDualProjection.'
+          with tempfile.TemporaryDirectory() as temporary:
+              audit = Path(temporary) / 'Audit.lean'
+              audit.write_text('import Subtail.ExplicitTopDualProjection\n' + ''.join('#print axioms ' + prefix + name + '\n' for _, name in declarations))
+              result = subprocess.run(['lake', 'env', 'lean', str(audit)], text=True, capture_output=True, check=True)
+          print(result.stdout)
+          found = {}
+          for name, _, listed in re.findall(r"'([^']+)' (does not depend on any axioms|depends on axioms: \[([^]]*)\])", result.stdout):
+              found[name] = {a.strip() for a in listed.split(',') if a.strip()}
+          expected = {prefix + name for _, name in declarations}
+          if set(found) != expected:
+              raise RuntimeError(f'Incomplete audit: {expected - set(found)}; unexpected {set(found) - expected}')
+          for kind, name in declarations:
+              allowed = {'propext', 'Quot.sound'}
+              if kind == 'theorem':
+                  allowed.add('Classical.choice')
+              if found[prefix + name] - allowed:
+                  raise RuntimeError(f'Unexpected axiom in {name}: {found[prefix + name]}')
+          print(f'PASS: {len(declarations)} explicit declaration closures; no sorryAx or custom axioms')
+          print('Scope: paired arbitrary-language lifting only. Full labelled-tree/compiler/C081 composition and independent mathematical review are separate.')
+          PY
