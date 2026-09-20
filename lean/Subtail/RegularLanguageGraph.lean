@@ -58,16 +58,16 @@ theorem graphNodes_iff (D : DFA v) (q : Fin v)
           have hi := ih (D.next q a) (derivative_closed D q h a)
           cases a <;> simpa [graphNodes, accepts, hf] using hi
 
-/-! Explicit finite subset construction.  Repeated universe entries are allowed. -/
+/-! Explicit finite subset construction.  Repeated carrier entries are allowed. -/
 
 structure NFA (alpha : Type) where
-  universe : List alpha
+  carrier : List alpha
   next : alpha -> Bool -> alpha -> Bool
   final : alpha -> Bool
 
 variable [DecidableEq alpha]
 
-def subsetsOf (A : NFA alpha) : List (List alpha) := subsets A.universe
+def subsetsOf (A : NFA alpha) : List (List alpha) := subsets A.carrier
 
 def encode (A : NFA alpha) (s : List alpha) (h : s ∈ subsetsOf A) :
     Fin (subsetsOf A).length := locate (subsetsOf A) s h
@@ -80,10 +80,10 @@ def decode (A : NFA alpha) (q : Fin (subsetsOf A).length) : List alpha :=
   get_locate (subsetsOf A) s h
 
 def nextSet (A : NFA alpha) (s : List alpha) (a : Bool) : List alpha :=
-  A.universe.filter fun q => s.any fun p => A.next p a q
+  A.carrier.filter fun q => s.any fun p => A.next p a q
 
 def initialSet (A : NFA alpha) (p : alpha) : List alpha :=
-  A.universe.filter fun q => decide (q = p)
+  A.carrier.filter fun q => decide (q = p)
 
 def initial (A : NFA alpha) (p : alpha) : Fin (subsetsOf A).length :=
   encode A (initialSet A p) (filter_mem_subsets _ _)
@@ -109,20 +109,20 @@ theorem member_of_subset {xs ys : List alpha} (h : ys ∈ subsets xs)
         · exact List.mem_cons.mpr (Or.inr (ih hzs hp))
 
 theorem decode_member (A : NFA alpha) (q : Fin (subsetsOf A).length)
-    {p : alpha} (hp : p ∈ decode A q) : p ∈ A.universe := by
+    {p : alpha} (hp : p ∈ decode A q) : p ∈ A.carrier := by
   exact member_of_subset (List.get_mem (subsetsOf A) q) hp
 
 @[simp] theorem mem_nextSet (A : NFA alpha) (s : List alpha)
     (a : Bool) (q : alpha) :
     q ∈ nextSet A s a <->
-      q ∈ A.universe ∧ ∃ p, p ∈ s ∧ A.next p a q = true := by
+      q ∈ A.carrier ∧ ∃ p, p ∈ s ∧ A.next p a q = true := by
   simp [nextSet, List.any_eq_true]
 
 /-- The finite NFA derivative law is enough; no unbounded path decision is assumed. -/
 theorem accepts_iff (A : NFA alpha) (L : alpha -> Word -> Prop)
-    (hfinal : ∀ p, p ∈ A.universe -> (A.final p = true <-> L p []))
-    (hnext : ∀ p, p ∈ A.universe -> ∀ a w,
-      L p (a :: w) <-> ∃ q, q ∈ A.universe ∧
+    (hfinal : ∀ p, p ∈ A.carrier -> (A.final p = true <-> L p []))
+    (hnext : ∀ p, p ∈ A.carrier -> ∀ a w,
+      L p (a :: w) <-> ∃ q, q ∈ A.carrier ∧
         A.next p a q = true ∧ L q w)
     (q : Fin (subsetsOf A).length) (w : Word) :
     accepts (determinize A) q w = true <->
@@ -152,11 +152,11 @@ theorem accepts_iff (A : NFA alpha) (L : alpha -> Word -> Prop)
           ⟨hrU, p, hp, ht⟩, hr⟩
 
 theorem accepts_initial_iff (A : NFA alpha) (L : alpha -> Word -> Prop)
-    (hfinal : ∀ p, p ∈ A.universe -> (A.final p = true <-> L p []))
-    (hnext : ∀ p, p ∈ A.universe -> ∀ a w,
-      L p (a :: w) <-> ∃ q, q ∈ A.universe ∧
+    (hfinal : ∀ p, p ∈ A.carrier -> (A.final p = true <-> L p []))
+    (hnext : ∀ p, p ∈ A.carrier -> ∀ a w,
+      L p (a :: w) <-> ∃ q, q ∈ A.carrier ∧
         A.next p a q = true ∧ L q w)
-    (p : alpha) (hp : p ∈ A.universe) (w : Word) :
+    (p : alpha) (hp : p ∈ A.carrier) (w : Word) :
     accepts (determinize A) (initial A p) w = true <-> L p w := by
   rw [accepts_iff A L hfinal hnext]
   simp [initial, initialSet, hp]

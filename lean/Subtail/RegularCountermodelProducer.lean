@@ -38,7 +38,7 @@ abbrev Raw (n : Nat) := Sum (Fin n) Word
 def suffixes (seeds : List (Config n)) : List Word :=
   seeds.flatMap fun c => (List.range (c.2.length + 1)).map fun i => c.2.drop i
 
-def universe (seeds : List (Config n)) : List (Raw n) :=
+def rawStates (seeds : List (Config n)) : List (Raw n) :=
   (List.finRange n).map Sum.inl ++ (suffixes seeds).map Sum.inr
 
 @[simp] theorem mem_suffixes (seeds : List (Config n)) (z : Word) :
@@ -47,12 +47,12 @@ def universe (seeds : List (Config n)) : List (Raw n) :=
   simp [suffixes, List.mem_flatMap, List.mem_map, Nat.lt_succ_iff, eq_comm]
 
 @[simp] theorem control_mem (seeds : List (Config n)) (q : Fin n) :
-    (Sum.inl q : Raw n) ∈ universe seeds := by
-  simp [universe]
+    (Sum.inl q : Raw n) ∈ rawStates seeds := by
+  simp [rawStates]
 
 @[simp] theorem suffix_mem (seeds : List (Config n)) (z : Word) :
-    (Sum.inr z : Raw n) ∈ universe seeds <-> z ∈ suffixes seeds := by
-  simp [universe]
+    (Sum.inr z : Raw n) ∈ rawStates seeds <-> z ∈ suffixes seeds := by
+  simp [rawStates]
 
 theorem suffix_tail (seeds : List (Config n)) (a : Bool) (z : Word)
     (h : a :: z ∈ suffixes seeds) : z ∈ suffixes seeds := by
@@ -160,9 +160,9 @@ theorem rawFinal_correct (M : System n) (seeds : List (Config n)) (p : Raw n) :
 
 /-- This derivative identity is the NFA correctness invariant. -/
 theorem rawNext_correct (M : System n) (seeds : List (Config n))
-    (p : Raw n) (hp : p ∈ universe seeds) (a : Bool) (w : Word) :
+    (p : Raw n) (hp : p ∈ rawStates seeds) (a : Bool) (w : Word) :
     Language M seeds p (a :: w) <->
-      ∃ q, q ∈ universe seeds ∧ rawNext M seeds p a q = true ∧
+      ∃ q, q ∈ rawStates seeds ∧ rawNext M seeds p a q = true ∧
         Language M seeds q w := by
   cases p with
   | inr z =>
@@ -215,7 +215,7 @@ theorem rawNext_correct (M : System n) (seeds : List (Config n))
             exact ⟨[], a :: z, r, rfl, hb, ha⟩
 
 def nfa (M : System n) (seeds : List (Config n)) : RegularLanguageGraph.NFA (Raw n) where
-  universe := universe seeds
+  carrier := rawStates seeds
   next := rawNext M seeds
   final := rawFinal M seeds
 

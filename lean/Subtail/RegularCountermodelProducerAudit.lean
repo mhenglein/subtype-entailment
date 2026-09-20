@@ -25,7 +25,7 @@ import Subtail.RegularCountermodelProducer
 #print axioms Subtail.RegularCountermodelProducer.popTest_correct
 #print axioms Subtail.RegularCountermodelProducer.Raw
 #print axioms Subtail.RegularCountermodelProducer.suffixes
-#print axioms Subtail.RegularCountermodelProducer.universe
+#print axioms Subtail.RegularCountermodelProducer.rawStates
 #print axioms Subtail.RegularCountermodelProducer.mem_suffixes
 #print axioms Subtail.RegularCountermodelProducer.control_mem
 #print axioms Subtail.RegularCountermodelProducer.suffix_mem
