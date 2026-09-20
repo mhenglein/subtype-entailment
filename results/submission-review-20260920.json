@@ -1,0 +1,3679 @@
+{
+  "additional_runtime": {
+    "compiler_native": {
+      "command": [
+        "lake",
+        "env",
+        "lean",
+        "<scratch>/NativeCompiler.lean"
+      ],
+      "output": "false\n0\n",
+      "source": "import Subtail.SmallerCompilerAstra\nopen Subtail Subtail.RankQueryWeightCounterexample Subtail.SmallerCompilerAstra\n#eval compact inst input diagram\n#eval (preSmall inst []).length\n",
+      "status": "PASS"
+    },
+    "producer_generated_C": {
+      "RegularCountermodelProducer": {
+        "path": "lean/.lake/build/ir/Subtail/RegularCountermodelProducer.c",
+        "sha256": "31f7c24ba80dad68975a2d1479fb3460431ce2acf611d70754a479a12495c399",
+        "status": "GENERATED_FOR_READBACK"
+      },
+      "RegularLanguageGraph": {
+        "path": "lean/.lake/build/ir/Subtail/RegularLanguageGraph.c",
+        "sha256": "2dd29077e8e605a81650446b23d76a616946bf9a9bde492b23ac1c10fe9310c5",
+        "status": "GENERATED_FOR_READBACK"
+      }
+    },
+    "producer_generated_C_readback": {
+      "entry_points": [
+        "seekAcc",
+        "seek",
+        "findWord",
+        "produceNegative",
+        "produce"
+      ],
+      "full_transitive_runtime_audit": "NOT RUN",
+      "observations": "inspected generated loop/length-batch selection/model construction and C081 branch; ignored proof parameters are unused; no axiom/Classical runtime call in these generated modules",
+      "status": "PASS_LIMITED_SOURCE_READBACK"
+    }
+  },
+  "base_main": "9f4b95784a212c322c48a957b80645a1077543ed",
+  "completed_at_utc": "2026-09-20T16:08:29.918190+00:00",
+  "coordination": "https://github.com/mhenglein/subtail/issues/37#issuecomment-5750834857",
+  "date": "2026-09-20",
+  "deterministic_replay": {
+    "comparisons": {
+      "F": {
+        "author_receipt": "results/f-only-astra.json",
+        "author_receipt_sha256": "a5664bd5c3eb9d3f36f37fadaa95c24346627bc6976deba0087f6cf11a9e6d19",
+        "author_revision": "6aa7047cc6cbccd44c64223209b7563cf2824b8e",
+        "comparison": "all fields equal after removal only of explicitly listed environment/time keys",
+        "status": "PASS"
+      },
+      "compiler-standalone": {
+        "author_receipt": "results/smaller-compiler-astra.json",
+        "author_receipt_sha256": "b91558da2248401349442a4603d18ca07d5217b70dfa97d9a732c298075820c2",
+        "author_revision": "db0a6d3505e93ff6bc51a8d89fcb52fb05adfe0f",
+        "comparison": "all fields equal after removal only of explicitly listed environment/time keys",
+        "status": "PASS"
+      },
+      "function": {
+        "author_receipt": "results/function-only-transfer.json",
+        "author_receipt_sha256": "2f6dbf9a45a1bfd7513dbf62f0bd1a4a5cbe54ec77b2f832018950fc99d79f93",
+        "author_revision": "4ed2fb67458f37b286740a325d91404bb22b58f0",
+        "comparison": "all fields equal after removal only of explicitly listed environment/time keys",
+        "status": "PASS"
+      },
+      "graph": {
+        "author_receipt": "results/standalone-first-return-astra.json",
+        "author_receipt_sha256": "6eebda7f4ba994792d3650945ec7a19c158d50d5ae86a15467152b785d5a2600",
+        "author_revision": "910e3071eab494e58e01c53b1e6891186ed73b30",
+        "comparison": "all fields equal after removal only of explicitly listed environment/time keys",
+        "status": "PASS"
+      },
+      "hardness": {
+        "author_receipt": "results/hr-topfree-transfer-70.json",
+        "author_receipt_sha256": "955cfc11197fbed16ca52079f496171d365d2733e83b4bd54c5dcb885da1c75a",
+        "author_revision": "371b97c40d532f076fbe09fc640db9333734c91c",
+        "comparison": "all fields equal after removal only of explicitly listed environment/time keys",
+        "status": "PASS"
+      },
+      "ternary": {
+        "author_receipt": "results/ternary-transfer.json",
+        "author_receipt_sha256": "733570fa7ce5ed0617c2d2f8b5c80831ff79cc5dcb54a98d532846e37c36294a",
+        "author_revision": "3fca2e8bf8a0036469867cb528b3ff96b9d9eb96",
+        "comparison": "all fields equal after removal only of explicitly listed environment/time keys",
+        "status": "PASS"
+      },
+      "top": {
+        "author_receipt": "results/explicit-top-dual-projection.json",
+        "author_receipt_sha256": "a9af0bf9bd1a2c31d1199726f0cc5b75f086f6eee5ef6f2b3ecff9aa067632c2",
+        "author_revision": "0eff4818d990821fd1c08f704a2392f2d0047cf5",
+        "comparison": "all fields equal after removal only of explicitly listed environment/time keys",
+        "status": "PASS"
+      }
+    },
+    "omitted_key_names": [
+      "elapsed_s",
+      "elapsed_seconds",
+      "environment",
+      "machine",
+      "platform",
+      "python",
+      "wall_seconds"
+    ]
+  },
+  "execution": {
+    "axiom_audits": {
+      "ExplicitTopDualProjection": {
+        "declarations": 29,
+        "runtime_choice_free": true,
+        "status": "PASS"
+      },
+      "SmallerCompilerAstra": {
+        "declarations": 22,
+        "runtime_choice_free": true,
+        "status": "PASS"
+      }
+    },
+    "base": "9f4b95784a212c322c48a957b80645a1077543ed",
+    "final_tracked_diff": "",
+    "platform": "linux",
+    "python": "3.13.14 (main, Aug  5 2026, 15:42:48) [Clang 22.1.3 ]",
+    "source_kind": "isolated full base checkout plus byte-exact disjoint added-file overlays; no source edits",
+    "source_manifest": {
+      ".github/workflows/explicit-top-dual-projection.yml": {
+        "contribution": "71",
+        "git_blob": "40653d3f7e23468c633303771371e07a14e8a84e",
+        "revision": "0eff4818d990821fd1c08f704a2392f2d0047cf5",
+        "sha256": "2fe1f25e5d86a7e0e7e218c3509dc56e6b38e6593b2d7de1b4ca130dcd3c9c30"
+      },
+      ".github/workflows/f-only-astra.yml": {
+        "contribution": "F",
+        "git_blob": "8599cd7d2833315b01b3fdd7dff554e98e315f01",
+        "revision": "6aa7047cc6cbccd44c64223209b7563cf2824b8e",
+        "sha256": "778a9227c9bdc7f38ab9b397101e773f60bef96e7ea753ef3f4b19e1a6c18d3c"
+      },
+      ".github/workflows/regular-producer-68.yml": {
+        "contribution": "68",
+        "git_blob": "a39797063db8cec753989ac6a706b1473821445a",
+        "revision": "049aa110cf13688d4058b1cbecf80aa0fc3a7fb6",
+        "sha256": "1fc12ec67138485ab46b1aa0f6eb5c5c34c8b20674cdb49f45268efeb8973ac6"
+      },
+      ".github/workflows/smaller-compiler-astra.yml": {
+        "contribution": "78",
+        "git_blob": "af5596fb8bdc1e869a7183cf004da92d19a7a101",
+        "revision": "db0a6d3505e93ff6bc51a8d89fcb52fb05adfe0f",
+        "sha256": "61378e6fbb65f86fe9b98debb66e946e6e44774d3bf561f0c8acf28882bebe3f"
+      },
+      "experiments/check_explicit_top_dual_projection.py": {
+        "contribution": "71",
+        "git_blob": "bdfa5237a87f65d4765c76e06e5a090dc4c2ff74",
+        "revision": "0eff4818d990821fd1c08f704a2392f2d0047cf5",
+        "sha256": "c5da4fc788f3d1b33db843eb9fc205e53bb08538e5b2ac98d25bcbaa33f9e058"
+      },
+      "experiments/check_function_only_transfer.py": {
+        "contribution": "75",
+        "git_blob": "3879401c16b3aaea1f3f843f5b678fda90240d4b",
+        "revision": "4ed2fb67458f37b286740a325d91404bb22b58f0",
+        "sha256": "6fe91892aed56517256c67a4052dd9eee96ab6fd0b4d5f805fa889898340aa03"
+      },
+      "experiments/check_hr_topfree_transfer_70.py": {
+        "contribution": "70",
+        "git_blob": "9c51f28cf38a476b6f5a5cfa4df93418ef4c62ca",
+        "revision": "371b97c40d532f076fbe09fc640db9333734c91c",
+        "sha256": "81e54110e789c9ef282236bec55e5fee97df194e6040a719fe5ba89533396e0a"
+      },
+      "experiments/check_smaller_compiler_astra.py": {
+        "contribution": "78",
+        "git_blob": "fb9a71ae73bd880793e53d68f68d0fbae8526c1b",
+        "revision": "db0a6d3505e93ff6bc51a8d89fcb52fb05adfe0f",
+        "sha256": "bf7dafe0ea0c3269261de858ee9c813d1f958cb044c0ae8fd808000d02a9741c"
+      },
+      "experiments/f_only_astra.py": {
+        "contribution": "F",
+        "git_blob": "c56aa0d837fb846586541bb9fc02c8b95ec3f5b4",
+        "revision": "6aa7047cc6cbccd44c64223209b7563cf2824b8e",
+        "sha256": "c6d90046defd3ef086a2e8039588dfb6a59fec0209737d5af1c84877c1c60f5d"
+      },
+      "experiments/profile_raw_summary_66.py": {
+        "contribution": "76",
+        "git_blob": "c720933002c9ecf2eec135fbcc6f799c3e2be848",
+        "revision": "986e34b4b61a1ba05a45282bd1f3c84f28103fee",
+        "sha256": "7e84967b9039f9cadcbe6e8ef290ea4773b478dc36613466d9d7675dd6ecf6ae"
+      },
+      "experiments/standalone_first_return_astra.py": {
+        "contribution": "77",
+        "git_blob": "afdb35aad22def15315e913bc115b81928f232b8",
+        "revision": "910e3071eab494e58e01c53b1e6891186ed73b30",
+        "sha256": "10369e0856e9240fe4217748fc47900394fd63af00a34597e6bcdbc02b4aeeab"
+      },
+      "experiments/ternary_transfer.py": {
+        "contribution": "ternary",
+        "git_blob": "1ae20133a456af8aa72b4088fcff5839a5d4511f",
+        "revision": "3fca2e8bf8a0036469867cb528b3ff96b9d9eb96",
+        "sha256": "235b59485219f1d26247afd73427c53d05021da0f4a3f43130d35981bbc46fb9"
+      },
+      "lean/FOnlyAstra.lean": {
+        "contribution": "F",
+        "git_blob": "50e17f2b6e1a00b00b6416de2385c36310bdc909",
+        "revision": "6aa7047cc6cbccd44c64223209b7563cf2824b8e",
+        "sha256": "3b0bf239b02eb4e953cbab72672591d418307e2491f015b375a777e9e733f610"
+      },
+      "lean/FOnlyCompilerBridge.lean": {
+        "contribution": "F",
+        "git_blob": "999b9dbd6ad5696afba20db077a277ad24b41f68",
+        "revision": "6aa7047cc6cbccd44c64223209b7563cf2824b8e",
+        "sha256": "8c49288e6f3167635ca3c56f4ed0ee9174860be6febb91e073929dc4dd364143"
+      },
+      "lean/Subtail/ExplicitTopDualProjection.lean": {
+        "contribution": "71",
+        "git_blob": "e71bce3c36ad25e1edb02509e6f96cc661aea066",
+        "revision": "0eff4818d990821fd1c08f704a2392f2d0047cf5",
+        "sha256": "bac45e1f4613e6c95035b3d24f42950f3bf3fcd98324ee25bd8515888e130993"
+      },
+      "lean/Subtail/RegularCountermodelProducer.lean": {
+        "contribution": "68",
+        "git_blob": "8636a92798fd9fcc1e24b85817515bd700f0b800",
+        "revision": "049aa110cf13688d4058b1cbecf80aa0fc3a7fb6",
+        "sha256": "e8cdada1e6980be2719f266a585f6fe1169d836ccb83bd3d251960958ebf1804"
+      },
+      "lean/Subtail/RegularCountermodelProducerAudit.lean": {
+        "contribution": "68",
+        "git_blob": "413ecf91f8019c496e228f8f03715075be3e5152",
+        "revision": "049aa110cf13688d4058b1cbecf80aa0fc3a7fb6",
+        "sha256": "db6d5fbf8303e0137f41ccd3850e99281684aadd31ddd32a1e6a5797af14e454"
+      },
+      "lean/Subtail/RegularLanguageGraph.lean": {
+        "contribution": "68",
+        "git_blob": "9f8818cfbf2bc2b707e3b71275851ec4d2746707",
+        "revision": "049aa110cf13688d4058b1cbecf80aa0fc3a7fb6",
+        "sha256": "6d837f2f7e852311602fdab1b1df1526d7668104ed8e4630bbe732e2543a40cb"
+      },
+      "lean/Subtail/SmallerCompilerAstra.lean": {
+        "contribution": "78",
+        "git_blob": "9df4d52402243cb43b0312f01e735954a02a480f",
+        "revision": "db0a6d3505e93ff6bc51a8d89fcb52fb05adfe0f",
+        "sha256": "9d23d5922c627708bb62f6f1d68059870c4566c6ef7aa8bd6384383cfe90ce05"
+      },
+      "notes/2026-09-20-explicit-top-dual-projection.md": {
+        "contribution": "71",
+        "git_blob": "085a3340aac41abaa1852646dcaf43575c79d3c9",
+        "revision": "0eff4818d990821fd1c08f704a2392f2d0047cf5",
+        "sha256": "075c614ee539df193c95ef97c9c3000b3aefdb6f4c84133ffa7d4cfcd559de06"
+      },
+      "notes/2026-09-20-f-only-astra.md": {
+        "contribution": "F",
+        "git_blob": "edf4539814801574a3aa4c9f5f25c82a3c446559",
+        "revision": "6aa7047cc6cbccd44c64223209b7563cf2824b8e",
+        "sha256": "b05741cba4bf7450526bcc620ad0857c42b8f3cac057c2263a7ef79867f02c8a"
+      },
+      "notes/2026-09-20-function-only-transfer.md": {
+        "contribution": "75",
+        "git_blob": "9407ba55edaf34f335eff4920b4c6b6e7f80f19d",
+        "revision": "4ed2fb67458f37b286740a325d91404bb22b58f0",
+        "sha256": "11181fa52b44ee2dfdfe52c198c9ea35c7f9b52b57c696b61143b921a2c3b35e"
+      },
+      "notes/2026-09-20-hr-topfree-transfer-70.md": {
+        "contribution": "70",
+        "git_blob": "b31a7aa97d219a5b388039a4a64c1bff7f5bfebc",
+        "revision": "371b97c40d532f076fbe09fc640db9333734c91c",
+        "sha256": "42defd195743543c7e52348b12a23aa89354af2c4f6ce3f92420f1564c7b9f63"
+      },
+      "notes/2026-09-20-raw-summary-66.md": {
+        "contribution": "76",
+        "git_blob": "8e6feb460efe4013bebaaa073e0ab0b1ac2eb16f",
+        "revision": "986e34b4b61a1ba05a45282bd1f3c84f28103fee",
+        "sha256": "0af8f3133bc6f65b51694679e0200312d01e937bae1e90902d04afe983f70d0b"
+      },
+      "notes/2026-09-20-regular-producer-68.md": {
+        "contribution": "68",
+        "git_blob": "bfb1a8d980f75fa55af89343fce0bc7b04eb0980",
+        "revision": "049aa110cf13688d4058b1cbecf80aa0fc3a7fb6",
+        "sha256": "44044669e6e4d4f0a5edc37a8e3499d153dfa9b08000442184fc99b6fa723db7"
+      },
+      "notes/2026-09-20-smaller-compiler-astra.md": {
+        "contribution": "78",
+        "git_blob": "7ab3d9a8a944618dfa865267074f572d59c6062f",
+        "revision": "db0a6d3505e93ff6bc51a8d89fcb52fb05adfe0f",
+        "sha256": "d1ea96333ba8b3066314c58891aa53e825447a13845ab7b6b15c84d1134cc92b"
+      },
+      "notes/2026-09-20-standalone-first-return-astra-review.md": {
+        "contribution": "77",
+        "git_blob": "5f4563fec79f52fb8ba26c566ac928334756abcb",
+        "revision": "910e3071eab494e58e01c53b1e6891186ed73b30",
+        "sha256": "eeae572f742306dcd63f119972dbb43a8dd0740b27ae830d83a5419ec98ef4a4"
+      },
+      "notes/2026-09-20-standalone-first-return-astra.md": {
+        "contribution": "77",
+        "git_blob": "92d93b3363e42d52fc81c715909c24bad1e3768f",
+        "revision": "910e3071eab494e58e01c53b1e6891186ed73b30",
+        "sha256": "394f76f7c27d45e1d0ffac1dfe5d15c2d46f5594ea32c166b0f77de736fb0121"
+      },
+      "notes/2026-09-20-ternary-transfer-integration.md": {
+        "contribution": "ternary",
+        "git_blob": "ed504b822ddecb227e80ff32fc7251636396f74d",
+        "revision": "3fca2e8bf8a0036469867cb528b3ff96b9d9eb96",
+        "sha256": "b2c45f156372df21f9cc404de0da254915b86d4b574c80c4e56dc9a8782c5b16"
+      },
+      "notes/2026-09-20-ternary-transfer-review.md": {
+        "contribution": "ternary",
+        "git_blob": "fdd4c9bb05ef5c4c3938e0aa7503be325f4bc7c7",
+        "revision": "3fca2e8bf8a0036469867cb528b3ff96b9d9eb96",
+        "sha256": "1d2a469ee255a89a57a65be0d61585380c5ab14bbe67fe99ed9803f5b405e279"
+      },
+      "notes/2026-09-20-ternary-transfer.md": {
+        "contribution": "ternary",
+        "git_blob": "471c30a32b5f1f105e7370c28322caea3fe8f9a3",
+        "revision": "3fca2e8bf8a0036469867cb528b3ff96b9d9eb96",
+        "sha256": "720d682085b5e1fdc2f54c247fcd0171a25a3cade4ab052879eb066c1daf20b8"
+      },
+      "results/explicit-top-dual-projection.json": {
+        "contribution": "71",
+        "git_blob": "58c0093fbfc066f8a6ec63f80cd9018d2f272a52",
+        "revision": "0eff4818d990821fd1c08f704a2392f2d0047cf5",
+        "sha256": "a9af0bf9bd1a2c31d1199726f0cc5b75f086f6eee5ef6f2b3ecff9aa067632c2"
+      },
+      "results/f-only-astra.json": {
+        "contribution": "F",
+        "git_blob": "412304db4f000d2112e196113d43541e3b0f77f9",
+        "revision": "6aa7047cc6cbccd44c64223209b7563cf2824b8e",
+        "sha256": "a5664bd5c3eb9d3f36f37fadaa95c24346627bc6976deba0087f6cf11a9e6d19"
+      },
+      "results/function-only-transfer.json": {
+        "contribution": "75",
+        "git_blob": "58b1f16db2f47ef13bf78431730b1b58402bbaa4",
+        "revision": "4ed2fb67458f37b286740a325d91404bb22b58f0",
+        "sha256": "2f6dbf9a45a1bfd7513dbf62f0bd1a4a5cbe54ec77b2f832018950fc99d79f93"
+      },
+      "results/hr-topfree-transfer-70.json": {
+        "contribution": "70",
+        "git_blob": "37643bac5423190c22c725073dc0a232ead36fbc",
+        "revision": "371b97c40d532f076fbe09fc640db9333734c91c",
+        "sha256": "955cfc11197fbed16ca52079f496171d365d2733e83b4bd54c5dcb885da1c75a"
+      },
+      "results/raw-summary-66.json": {
+        "contribution": "76",
+        "git_blob": "08d3442d1fa7c298038605533490101d370a41e1",
+        "revision": "986e34b4b61a1ba05a45282bd1f3c84f28103fee",
+        "sha256": "b647b555c19c1c93d6322660f6a1e93c4c8890746c1e5b67e0bd79de0275c1ad"
+      },
+      "results/regular-producer-68.json": {
+        "contribution": "68",
+        "git_blob": "8ffe0f2d307e366f0643e07fda580d6d23b87096",
+        "revision": "049aa110cf13688d4058b1cbecf80aa0fc3a7fb6",
+        "sha256": "596351f8438fc6be12fab8170d4a7e3e86a956f94e50214eb8d15143837439a7"
+      },
+      "results/smaller-compiler-astra.json": {
+        "contribution": "78",
+        "git_blob": "d88c20daf603f9fd5806ad1f1da01bfe9fd2e99c",
+        "revision": "db0a6d3505e93ff6bc51a8d89fcb52fb05adfe0f",
+        "sha256": "b91558da2248401349442a4603d18ca07d5217b70dfa97d9a732c298075820c2"
+      },
+      "results/standalone-first-return-astra.json": {
+        "contribution": "77",
+        "git_blob": "86eb566476a5e944918a69399cab8d2375df5742",
+        "revision": "910e3071eab494e58e01c53b1e6891186ed73b30",
+        "sha256": "6eebda7f4ba994792d3650945ec7a19c158d50d5ae86a15467152b785d5a2600"
+      },
+      "results/ternary-transfer.json": {
+        "contribution": "ternary",
+        "git_blob": "720b1c053ed4eaf705adc8b15ccdcbb588857d9f",
+        "revision": "3fca2e8bf8a0036469867cb528b3ff96b9d9eb96",
+        "sha256": "733570fa7ce5ed0617c2d2f8b5c80831ff79cc5dcb54a98d532846e37c36294a"
+      },
+      "scripts/check_regular_producer_68.py": {
+        "contribution": "68",
+        "git_blob": "dcf11330df1e2c38f44e35c7f5ab173c8d3182e1",
+        "revision": "049aa110cf13688d4058b1cbecf80aa0fc3a7fb6",
+        "sha256": "50f4c98ef14fc3106a2a5091d6d7dce75d90a58a08a5ce863b0f44f2b71925d2"
+      }
+    },
+    "status": "PASS",
+    "steps": [
+      {
+        "cap_seconds": 180,
+        "command": [
+          "<python3.13.14>",
+          "experiments/check_function_only_transfer.py",
+          "--output",
+          "<review-checkout>/tmp/submission-review/function.json"
+        ],
+        "cwd": "<review-checkout>",
+        "exit_code": 0,
+        "log_sha256": "9345987989408257ca72cd56f74b00cb67e4de86a3d28b342ef15edfe0cfa468",
+        "name": "function",
+        "status": "PASS",
+        "wall_seconds": 0.2356935110874474
+      },
+      {
+        "cap_seconds": 180,
+        "command": [
+          "<python3.13.14>",
+          "experiments/standalone_first_return_astra.py",
+          "--output",
+          "<review-checkout>/tmp/submission-review/graph.json"
+        ],
+        "cwd": "<review-checkout>",
+        "exit_code": 0,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "name": "graph",
+        "status": "PASS",
+        "wall_seconds": 0.36991250794380903
+      },
+      {
+        "cap_seconds": 180,
+        "command": [
+          "<python3.13.14>",
+          "experiments/check_smaller_compiler_astra.py",
+          "--output",
+          "<review-checkout>/tmp/submission-review/compiler-standalone.json"
+        ],
+        "cwd": "<review-checkout>",
+        "exit_code": 0,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "name": "compiler-standalone",
+        "status": "PASS",
+        "wall_seconds": 0.25521992798894644
+      },
+      {
+        "cap_seconds": 180,
+        "command": [
+          "<python3.13.14>",
+          "experiments/check_smaller_compiler_astra.py",
+          "--repository",
+          "--output",
+          "<review-checkout>/tmp/submission-review/compiler-repository.json"
+        ],
+        "cwd": "<review-checkout>",
+        "exit_code": 0,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "name": "compiler-repository",
+        "status": "PASS",
+        "wall_seconds": 0.35522449808195233
+      },
+      {
+        "cap_seconds": 180,
+        "command": [
+          "<python3.13.14>",
+          "experiments/f_only_astra.py",
+          "--output",
+          "<review-checkout>/tmp/submission-review/F.json"
+        ],
+        "cwd": "<review-checkout>",
+        "exit_code": 0,
+        "log_sha256": "4077ef5ccee1c65c5e02e1a1b63b07aa48b9ceca26e1ff9af1d0c6dc09e9943c",
+        "name": "F",
+        "status": "PASS",
+        "wall_seconds": 1.8906528619118035
+      },
+      {
+        "cap_seconds": 180,
+        "command": [
+          "<python3.13.14>",
+          "experiments/check_hr_topfree_transfer_70.py",
+          "--output",
+          "<review-checkout>/tmp/submission-review/hardness.json"
+        ],
+        "cwd": "<review-checkout>",
+        "exit_code": 0,
+        "log_sha256": "2d695b987fcf9be92fe3694648cbbe3231bb182849ed6b7f3615ee60ecca005d",
+        "name": "hardness",
+        "status": "PASS",
+        "wall_seconds": 0.8377203932031989
+      },
+      {
+        "cap_seconds": 180,
+        "command": [
+          "<python3.13.14>",
+          "experiments/check_explicit_top_dual_projection.py",
+          "--output",
+          "<review-checkout>/tmp/submission-review/top.json"
+        ],
+        "cwd": "<review-checkout>",
+        "exit_code": 0,
+        "log_sha256": "4c5f3c305ff157f4dd094985839dc4a99b675e9d5cf22e68a9f1c7a0517269c4",
+        "name": "top",
+        "status": "PASS",
+        "wall_seconds": 1.0315160797908902
+      },
+      {
+        "cap_seconds": 180,
+        "command": [
+          "<python3.13.14>",
+          "experiments/ternary_transfer.py",
+          "--output",
+          "<review-checkout>/tmp/submission-review/ternary.json"
+        ],
+        "cwd": "<review-checkout>",
+        "exit_code": 0,
+        "log_sha256": "da967219a500be525be85a773cd1a0d7492262210bcaaba4a61b72d44a1e4cb1",
+        "name": "ternary",
+        "status": "PASS",
+        "wall_seconds": 1.9281978597864509
+      },
+      {
+        "cap_seconds": 180,
+        "command": [
+          "<python3.13.14>",
+          "experiments/profile_raw_summary_66.py",
+          "--self-test",
+          "--output",
+          "<review-checkout>/tmp/submission-review/raw66-selftest.json"
+        ],
+        "cwd": "<review-checkout>",
+        "exit_code": 0,
+        "log_sha256": "80318b161386721202e009e28d673773b1311f823d39b1b517cf3620bbd008fe",
+        "name": "raw66-selftest",
+        "status": "PASS",
+        "wall_seconds": 0.09700902784243226
+      },
+      {
+        "cap_seconds": 600,
+        "command": [
+          "<python3.13.14>",
+          "scripts/check_regular_producer_68.py",
+          "--lean",
+          "--lean-timeout",
+          "180",
+          "--output",
+          "<review-checkout>/tmp/submission-review/producer.json"
+        ],
+        "cwd": "<review-checkout>",
+        "exit_code": 0,
+        "log_sha256": "a7f20b50222bfd1c23e063cbf6a9905b670ca62b666aa8101be2d65bd9c7946b",
+        "name": "producer",
+        "status": "PASS",
+        "wall_seconds": 151.03498694114387
+      },
+      {
+        "cap_seconds": 300,
+        "command": [
+          "lake",
+          "build",
+          "+Subtail.SmallerCompilerAstra",
+          "+Subtail.ExplicitTopDualProjection",
+          "+Subtail.RankQueryLengthBound"
+        ],
+        "cwd": "<review-checkout>/lean",
+        "exit_code": 0,
+        "log_sha256": "1ca72ba7793dc31f9ad1731a5c092513805397b7e919bedae75ee553eae075e9",
+        "name": "build-support",
+        "status": "PASS",
+        "wall_seconds": 7.8817491927184165
+      },
+      {
+        "cap_seconds": 180,
+        "command": [
+          "lake",
+          "env",
+          "leanchecker",
+          "Subtail.SmallerCompilerAstra"
+        ],
+        "cwd": "<review-checkout>/lean",
+        "exit_code": 0,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "name": "kernel-Subtail.SmallerCompilerAstra",
+        "status": "PASS",
+        "wall_seconds": 2.7895741551183164
+      },
+      {
+        "cap_seconds": 180,
+        "command": [
+          "lake",
+          "env",
+          "leanchecker",
+          "Subtail.ExplicitTopDualProjection"
+        ],
+        "cwd": "<review-checkout>/lean",
+        "exit_code": 0,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "name": "kernel-Subtail.ExplicitTopDualProjection",
+        "status": "PASS",
+        "wall_seconds": 1.0780229740776122
+      },
+      {
+        "cap_seconds": 180,
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "-o",
+          ".lake/build/lib/lean/FOnlyAstra.olean",
+          "FOnlyAstra.lean"
+        ],
+        "cwd": "<review-checkout>/lean",
+        "exit_code": 0,
+        "log_sha256": "43b017de2221b5b235fe7b3de090043a24ded494b87c29783e8ebadf6b6e9861",
+        "name": "compile-FOnlyAstra",
+        "status": "PASS",
+        "wall_seconds": 1.5326249692589045
+      },
+      {
+        "cap_seconds": 180,
+        "command": [
+          "lake",
+          "env",
+          "leanchecker",
+          "FOnlyAstra"
+        ],
+        "cwd": "<review-checkout>/lean",
+        "exit_code": 0,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "name": "kernel-FOnlyAstra",
+        "status": "PASS",
+        "wall_seconds": 1.3808107092045248
+      },
+      {
+        "cap_seconds": 180,
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "-o",
+          ".lake/build/lib/lean/FOnlyCompilerBridge.olean",
+          "FOnlyCompilerBridge.lean"
+        ],
+        "cwd": "<review-checkout>/lean",
+        "exit_code": 0,
+        "log_sha256": "73d6c3d31e0514ee0be80b3027dd5660755c90f7a10e95b4ce3909a9c486c969",
+        "name": "compile-FOnlyCompilerBridge",
+        "status": "PASS",
+        "wall_seconds": 0.8073785454034805
+      },
+      {
+        "cap_seconds": 180,
+        "command": [
+          "lake",
+          "env",
+          "leanchecker",
+          "FOnlyCompilerBridge"
+        ],
+        "cwd": "<review-checkout>/lean",
+        "exit_code": 0,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "name": "kernel-FOnlyCompilerBridge",
+        "status": "PASS",
+        "wall_seconds": 1.1710594398900867
+      },
+      {
+        "cap_seconds": 180,
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "<review-checkout>/tmp/submission-review/SmallerCompilerAstraAudit.lean"
+        ],
+        "cwd": "<review-checkout>/lean",
+        "exit_code": 0,
+        "log_sha256": "b882572aca3f1b84d26df8817e3d78e53108678bf8cb13906ca0771ee23ccc51",
+        "name": "axioms-SmallerCompilerAstra",
+        "status": "PASS",
+        "wall_seconds": 0.6300529949367046
+      },
+      {
+        "cap_seconds": 180,
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "<review-checkout>/tmp/submission-review/ExplicitTopDualProjectionAudit.lean"
+        ],
+        "cwd": "<review-checkout>/lean",
+        "exit_code": 0,
+        "log_sha256": "eaf3d8b2069adecd01f5e61836e14362b2c783185636c3be23e2f857615ad882",
+        "name": "axioms-ExplicitTopDualProjection",
+        "status": "PASS",
+        "wall_seconds": 0.6396607030183077
+      }
+    ]
+  },
+  "existing_ci": {
+    "main_lean": {
+      "head": "9f4b95784a212c322c48a957b80645a1077543ed",
+      "status": "PASS",
+      "url": "https://github.com/mhenglein/subtail/actions/runs/35518360794"
+    },
+    "pr_checks": {
+      "75": [
+        {
+          "conclusion": "SUCCESS",
+          "name": "experiments",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35516652173/job/106093624999"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "replay",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35516652092/job/106093624643"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "lean",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35516652136/job/106093661743"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "replay",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35516652101/job/106093624521"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "replay-python-3-11",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35516652043/job/106093663632"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "organization",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35516652037/job/106093624323"
+        },
+        {
+          "conclusion": "SKIPPED",
+          "name": "record-route",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35516652092/job/106093650419"
+        },
+        {
+          "conclusion": "SKIPPED",
+          "name": "record-recovery",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35516652101/job/106093749764"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "replay-python-3-12-and-3-13",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35516652043/job/106093663454"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "GitGuardian Security Checks",
+          "status": "COMPLETED",
+          "url": "https://dashboard.gitguardian.com"
+        }
+      ],
+      "76": [
+        {
+          "conclusion": "SUCCESS",
+          "name": "experiments",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35516752795/job/106093885535"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "replay",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35516752790/job/106093885831"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "lean",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35516752825/job/106093885969"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "replay",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35516752792/job/106093885791"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "replay-python-3-11",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35516752791/job/106093885700"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "organization",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35516752796/job/106093885932"
+        },
+        {
+          "conclusion": "SKIPPED",
+          "name": "record-route",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35516752790/job/106093911299"
+        },
+        {
+          "conclusion": "SKIPPED",
+          "name": "record-recovery",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35516752792/job/106093973184"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "replay-python-3-12-and-3-13",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35516752791/job/106093885585"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "GitGuardian Security Checks",
+          "status": "COMPLETED",
+          "url": "https://dashboard.gitguardian.com"
+        }
+      ],
+      "77": [
+        {
+          "conclusion": "SUCCESS",
+          "name": "experiments",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35517047646/job/106094635922"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "replay",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35517047695/job/106094636373"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "lean",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35517047614/job/106094636099"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "replay",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35517047706/job/106094636163"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "replay-python-3-11",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35517047566/job/106094636006"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "organization",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35517047621/job/106094635978"
+        },
+        {
+          "conclusion": "SKIPPED",
+          "name": "record-route",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35517047695/job/106094665255"
+        },
+        {
+          "conclusion": "SKIPPED",
+          "name": "record-recovery",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35517047706/job/106094742593"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "replay-python-3-12-and-3-13",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35517047566/job/106094636086"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "GitGuardian Security Checks",
+          "status": "COMPLETED",
+          "url": "https://dashboard.gitguardian.com"
+        }
+      ],
+      "78": [
+        {
+          "conclusion": "SUCCESS",
+          "name": "direct-proof",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35517440192/job/106095646321"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "experiments",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35517440210/job/106095647173"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "replay",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35517440215/job/106095647296"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "lean",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35517440228/job/106095647299"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "replay",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35517440194/job/106095646310"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "replay-python-3-11",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35517440171/job/106095646275"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "organization",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35517440193/job/106095646431"
+        },
+        {
+          "conclusion": "SKIPPED",
+          "name": "record-route",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35517440215/job/106095679697"
+        },
+        {
+          "conclusion": "SKIPPED",
+          "name": "record-recovery",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35517440194/job/106095763055"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "replay-python-3-12-and-3-13",
+          "status": "COMPLETED",
+          "url": "https://github.com/mhenglein/subtail/actions/runs/35517440171/job/106095646163"
+        },
+        {
+          "conclusion": "SUCCESS",
+          "name": "GitGuardian Security Checks",
+          "status": "COMPLETED",
+          "url": "https://dashboard.gitguardian.com"
+        }
+      ]
+    }
+  },
+  "f_named_axiom_audits": {
+    "FOnlyAstra": {
+      "closures": {
+        "Subtail.FOnlyAstra.border_count_add_one_le_of_avoids": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.budget_le_next": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.budgets_lag": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.coefficient_le_fourth": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.corrected_budget_ge_seed": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.final_return_safe": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.final_return_witness": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.finishPlusObserver": [
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.finishPlusQuery": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.growth_lag": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.lag_step": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.oldGrowth": [],
+        "Subtail.FOnlyAstra.one_less_product_le_originalF": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.originalF": [],
+        "Subtail.FOnlyAstra.original_F_small": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.rank_le_of_avoids": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.shortest_no_initial_return": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.stateAt_drop_of_return": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.weight_finishPlus_le": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyAstra.witness_drop_of_return": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      },
+      "explicitly_audited_declarations": 20,
+      "log_sha256": "43b017de2221b5b235fe7b3de090043a24ded494b87c29783e8ebadf6b6e9861",
+      "runtime_choice_free": [
+        "finishPlusObserver",
+        "finishPlusQuery",
+        "oldGrowth",
+        "originalF"
+      ],
+      "status": "PASS"
+    },
+    "FOnlyCompilerBridge": {
+      "closures": {
+        "Subtail.FOnlyCompilerBridge.coverage_small": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyCompilerBridge.oldGrowth_step": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyCompilerBridge.original_F": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyCompilerBridge.promoted_finish_original_bound": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyCompilerBridge.small_preimage_bounded": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.FOnlyCompilerBridge.terminal_witness_original_bounded": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      },
+      "explicitly_audited_declarations": 6,
+      "log_sha256": "73d6c3d31e0514ee0be80b3027dd5660755c90f7a10e95b4ce3909a9c486c969",
+      "runtime_choice_free": [],
+      "status": "PASS"
+    }
+  },
+  "findings": [
+    {
+      "affected": [
+        "78",
+        "69-F",
+        "68",
+        "71"
+      ],
+      "description": "New optional modules lack complete continuing main/PR build, kernel, axiom and native coverage. Branch-scoped source checks are valid prior evidence but must be wired into maintained CI.",
+      "id": "continuing-ci",
+      "priority": "P2",
+      "state": "INTEGRATION_GATE"
+    },
+    {
+      "affected": [
+        "69-F"
+      ],
+      "description": "The F branch workflow overwrites the compiler with its immutable historical dependency. After integration, test the actual integrated dependency instead; preserve original pinned evidence.",
+      "id": "historical-overlay",
+      "lines": [
+        27,
+        41
+      ],
+      "path": ".github/workflows/f-only-astra.yml",
+      "priority": "P2",
+      "state": "INTEGRATION_GATE"
+    }
+  ],
+  "fresh_checker_receipts": {
+    "F": {
+      "base_revision": "19b06d4fed9da635d9b911f0e908d04e4fc4b099",
+      "counts": {
+        "arbitrary_safe_reference_soundness_checks": 328,
+        "certified_unique_word_negative_mask_oracles": 52,
+        "final_return_in_original_minimum": 226,
+        "found_shortest_witnesses": 8253,
+        "initial_return_suffix_checks": 366,
+        "lag_base_integer_checks": 50,
+        "lag_exponent_checks": 294,
+        "last_initial_visit_normalization_cases": 20,
+        "literal_bounded_completion_coverage_checks": 285,
+        "literal_forward_reverse_checks": 7285,
+        "max_product_explored": 9,
+        "milestone_promotions_0": 596,
+        "milestone_promotions_1": 23,
+        "milestone_promotions_2": 3,
+        "milestone_promotions_3": 1,
+        "milestone_promotions_4": 1,
+        "milestone_promotions_5": 1,
+        "milestone_promotions_6": 1,
+        "milestone_promotions_7": 1,
+        "old_finish_fails_new_finish_succeeds": 180,
+        "one_letter_witnesses": 7398,
+        "one_two_state_annotations": 12820,
+        "overlapping_final_return_in_minimum": 16,
+        "random_instances": 1000,
+        "random_no_witness_through_cap_UNKNOWN": 389,
+        "recurrent_shared_parameter_cases": 144,
+        "required_final_return_regression": 1,
+        "required_overlapping_final_return_regression": 1,
+        "shortest_length_0": 228,
+        "shortest_length_1": 7398,
+        "shortest_length_2": 572,
+        "shortest_length_3": 33,
+        "shortest_length_4": 12,
+        "shortest_length_5": 6,
+        "shortest_length_6": 1,
+        "shortest_length_7": 1,
+        "shortest_length_8": 1,
+        "shortest_length_9": 1,
+        "three_state_annotations": 131072,
+        "three_state_no_witness_through_cap_UNKNOWN": 123440,
+        "unique_accepted_word_chain_oracles": 8
+      },
+      "elapsed_seconds": 1.811429,
+      "independent_mathematical_review": "NOT_ASSESSED_BY_THIS_HARNESS",
+      "negative_search_semantics": "UNKNOWN unless an independent all-length proof is supplied",
+      "new_Lean_check": "SEPARATE_WORKFLOW_NOT_MEASURED_BY_THIS_HARNESS",
+      "platform": "Linux-6.12.94-123.192.amzn2023.aarch64-aarch64-with-glibc2.43",
+      "python": "3.13.14",
+      "random_trials": 1000,
+      "random_word_length_cap": 10,
+      "script_sha256": "c6d90046defd3ef086a2e8039588dfb6a59fec0209737d5af1c84877c1c60f5d",
+      "seed": 2026092069,
+      "status": "PASS_BOUNDED_CHECKS_NOT_GLOBAL_PROOF",
+      "three_state_scope": "initial0, sole terminal final2, no Bad, all 256 tables and all 512 ordered flag sets",
+      "three_state_word_length_cap": 8
+    },
+    "compiler-repository": {
+      "boundaries": {
+        "bad_state_rejected": true,
+        "empty_border_flag_rejected": true,
+        "empty_query_union_output": [],
+        "once_only_filter_counterexample": {
+          "path": [
+            "S",
+            "K0",
+            "S"
+          ],
+          "required_forward_blocks": 2,
+          "word": "0101"
+        },
+        "ordered_flag_cases": {
+          "safe": 14,
+          "unsafe": 11
+        },
+        "preserved_counterexample": {
+          "input_weight": 17,
+          "old_diagram_filtered": true,
+          "old_output_weight": "1436714569561770804710950337953414859642567927047127052",
+          "original_target": "63286510177916475148846592658733814121868185920",
+          "rejected_coordinate_count": 175,
+          "retained_coordinate_cap": 15,
+          "smaller_coordinate_count": 5,
+          "smaller_output_weight": 972
+        },
+        "shared_generator_conflict": {
+          "duplicate_same_observation": true,
+          "individual_words": [
+            "10",
+            "110"
+          ],
+          "joint": false,
+          "oracle": "exact finite product reachability, all lengths"
+        },
+        "zero_length_interval_mutant_rejected": true,
+        "zero_state_observer_unsatisfiable": true
+      },
+      "counts": {
+        "binary_first_return_pairs_through_length_6": 44,
+        "certificates": 158,
+        "changed_length_reconstructions": 6,
+        "coincident_first_last": 33,
+        "coincident_variable_roles": 103,
+        "distinct_marks_same_origin": 23,
+        "fresh_zero_blocks": 183,
+        "integer_envelope_checks": 8100,
+        "interior_seam_positions": 10,
+        "intervals": 167,
+        "multiple_atom_conjunctions": 140,
+        "old_zero_blocks": 88,
+        "overlapping_returns": 38,
+        "path_relation_comparisons": 1644,
+        "repeated_observer_intervals": 8,
+        "shared_intervals": 26,
+        "unchanged_python_compiler_certificates": 62,
+        "unchanged_python_counterexample_replays": 1
+      },
+      "evidence": "Independent finite corpus; complete finite interval-product oracles; exact integer arithmetic.",
+      "limits": [
+        "Not a full enumeration of all bounded diagrams.",
+        "Not a Lean execution.",
+        "No shortest-witness F claim.",
+        "No human or separate-agent review implied."
+      ],
+      "repository_comparison": "RUN",
+      "seed": 2026092069,
+      "source_revision": "19b06d4fed9da635d9b911f0e908d04e4fc4b099",
+      "status": "PASS"
+    },
+    "compiler-standalone": {
+      "boundaries": {
+        "bad_state_rejected": true,
+        "empty_border_flag_rejected": true,
+        "empty_query_union_output": [],
+        "once_only_filter_counterexample": {
+          "path": [
+            "S",
+            "K0",
+            "S"
+          ],
+          "required_forward_blocks": 2,
+          "word": "0101"
+        },
+        "ordered_flag_cases": {
+          "safe": 14,
+          "unsafe": 11
+        },
+        "preserved_counterexample": {
+          "input_weight": 17,
+          "old_diagram_filtered": true,
+          "old_output_weight": "1436714569561770804710950337953414859642567927047127052",
+          "original_target": "63286510177916475148846592658733814121868185920",
+          "rejected_coordinate_count": 175,
+          "retained_coordinate_cap": 15,
+          "smaller_coordinate_count": 5,
+          "smaller_output_weight": 972
+        },
+        "shared_generator_conflict": {
+          "duplicate_same_observation": true,
+          "individual_words": [
+            "10",
+            "110"
+          ],
+          "joint": false,
+          "oracle": "exact finite product reachability, all lengths"
+        },
+        "zero_length_interval_mutant_rejected": true,
+        "zero_state_observer_unsatisfiable": true
+      },
+      "counts": {
+        "binary_first_return_pairs_through_length_6": 44,
+        "certificates": 158,
+        "changed_length_reconstructions": 6,
+        "coincident_first_last": 33,
+        "coincident_variable_roles": 103,
+        "distinct_marks_same_origin": 23,
+        "fresh_zero_blocks": 183,
+        "integer_envelope_checks": 8100,
+        "interior_seam_positions": 10,
+        "intervals": 167,
+        "multiple_atom_conjunctions": 140,
+        "old_zero_blocks": 88,
+        "overlapping_returns": 38,
+        "path_relation_comparisons": 1644,
+        "repeated_observer_intervals": 8,
+        "shared_intervals": 26
+      },
+      "evidence": "Independent finite corpus; complete finite interval-product oracles; exact integer arithmetic.",
+      "limits": [
+        "Not a full enumeration of all bounded diagrams.",
+        "Not a Lean execution.",
+        "No shortest-witness F claim.",
+        "No human or separate-agent review implied."
+      ],
+      "repository_comparison": "NOT RUN",
+      "seed": 2026092069,
+      "source_revision": "19b06d4fed9da635d9b911f0e908d04e4fc4b099",
+      "status": "PASS"
+    },
+    "function": {
+      "checker_sha256": "6fe91892aed56517256c67a4052dd9eee96ab6fd0b4d5f805fa889898340aa03",
+      "command": "python3 experiments/check_function_only_transfer.py --output results/function-only-transfer.json",
+      "counterexample": {
+        "A": "B -> bottom",
+        "B": "bottom -> bottom",
+        "C": [
+          "x <= y"
+        ],
+        "S1": [
+          [
+            1,
+            ""
+          ],
+          [
+            1,
+            "0"
+          ]
+        ],
+        "S2": [
+          [
+            0,
+            ""
+          ],
+          [
+            1,
+            ""
+          ]
+        ],
+        "closure_union": [
+          [
+            0,
+            ""
+          ],
+          [
+            0,
+            "0"
+          ],
+          [
+            1,
+            ""
+          ],
+          [
+            1,
+            "0"
+          ]
+        ],
+        "new_fact": [
+          0,
+          "0"
+        ]
+      },
+      "counts": {
+        "canonical_witness_classes": {
+          "empty": 100,
+          "nonempty_even": 580,
+          "odd": 620
+        },
+        "exhaustive_regular_graph_pairs": 729,
+        "finite_expression_Horn_cases": 2025,
+        "finite_pair_comparisons": 676,
+        "finite_trees_max_constructor_depth_3": 26,
+        "random_regular_graph_pairs_up_to_six_states": 500,
+        "regular_graphs_on_one_or_two_labelled_states_root_zero": 27,
+        "variable_only_canonical_countermodel_cases": 1300
+      },
+      "elapsed_seconds": 0.155698,
+      "environment": {
+        "platform": "Linux-6.12.94-123.192.amzn2023.aarch64-aarch64-with-glibc2.43",
+        "python": "3.13.14",
+        "workspace": "isolated standalone worktree; not a Subtail clone"
+      },
+      "input_revision": "19b06d4fed9da635d9b911f0e908d04e4fc4b099",
+      "limitations": [
+        "Author-run independent ALGORITHMS, not independent mathematical review.",
+        "No Subtail, Lean, full-suite, integration or performance claim.",
+        "Finite expression truth checks are bounded evidence.",
+        "Variable-only finite-seed closure is exact; no general guarded-closure solver implemented.",
+        "Regular comparisons concern supplied graphs, not regular or arbitrary entailment.",
+        "Absence of finite recursive solutions in this census is not the all-depth proof."
+      ],
+      "named_checks": [
+        "inactive odd-address parity refuted",
+        "node-union closure refuted",
+        "odd and even contravariant cycles accepted coinductively",
+        "same-address canonical reconstruction",
+        "finite model of (X->bottom)<=X",
+        "infinite greatest right-spine fixtures"
+      ],
+      "random_seed": 2026092074,
+      "session": "function-only-transfer-20260920",
+      "status": "PASS"
+    },
+    "graph": {
+      "base_revision": "19b06d4fed9da635d9b911f0e908d04e4fc4b099",
+      "bounds": {
+        "binary_base_length_max": 3,
+        "binary_full_word_length_max": 7,
+        "generator_length_max": 4,
+        "generators_per_base_max": 3,
+        "interval_walk_length_max": 4,
+        "observer_sizes": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "relational_base_count": 40,
+        "relational_base_vertices": 3
+      },
+      "fixtures": {
+        "distinct_marks_equal_origins": {
+          "fresh_positions": [
+            2,
+            3,
+            4
+          ],
+          "origins": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "word": "0110"
+        },
+        "interval_mutation_traps": "PASS: zero interval, leave End, no-observation/no-generator",
+        "inverse_S_family": [
+          [
+            2,
+            0,
+            1
+          ],
+          [
+            3,
+            1,
+            2
+          ],
+          [
+            4,
+            2,
+            3
+          ],
+          [
+            5,
+            3,
+            4
+          ],
+          [
+            6,
+            4,
+            5
+          ],
+          [
+            7,
+            5,
+            6
+          ],
+          [
+            8,
+            6,
+            7
+          ],
+          [
+            9,
+            7,
+            8
+          ],
+          [
+            10,
+            8,
+            9
+          ],
+          [
+            11,
+            9,
+            10
+          ],
+          [
+            12,
+            10,
+            11
+          ]
+        ],
+        "later_return_surgery_counterexample": {
+          "actual_F": [
+            3,
+            2
+          ],
+          "base": "0",
+          "later_word": "000",
+          "wrong_F": [
+            3,
+            1
+          ]
+        },
+        "old_safety_premise": "PASS: fresh q safe, old bad persists",
+        "relational_exits": {
+          "distinct_targets": [
+            0,
+            1
+          ],
+          "fresh_vertex": 2
+        },
+        "repeated_interval": {
+          "coordinates_required": 2,
+          "run": [
+            [
+              [
+                2,
+                0
+              ],
+              [
+                3,
+                1
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                3,
+                3
+              ]
+            ],
+            [
+              "S",
+              "K1",
+              "S"
+            ]
+          ],
+          "word": "010"
+        },
+        "same_word_different_origin_traces": {
+          "each_alone": true,
+          "joint": false,
+          "word": "10"
+        },
+        "shared_extension": {
+          "2": [
+            "00"
+          ],
+          "3": [
+            "010"
+          ],
+          "joint": []
+        },
+        "singleton_empty_and_equality": "PASS: loop, empty allowed, disallowed empty, distinct endpoints",
+        "two_entrances": {
+          "fresh_blocks": 3,
+          "observer_controls": 1,
+          "p": 2
+        },
+        "unbounded_entrance_family": [
+          [
+            1,
+            1,
+            2
+          ],
+          [
+            2,
+            2,
+            4
+          ],
+          [
+            3,
+            3,
+            6
+          ],
+          [
+            4,
+            4,
+            8
+          ],
+          [
+            5,
+            5,
+            10
+          ],
+          [
+            6,
+            6,
+            12
+          ],
+          [
+            7,
+            7,
+            14
+          ],
+          [
+            8,
+            8,
+            16
+          ],
+          [
+            9,
+            9,
+            18
+          ],
+          [
+            10,
+            10,
+            20
+          ],
+          [
+            11,
+            11,
+            22
+          ],
+          [
+            12,
+            12,
+            24
+          ]
+        ]
+      },
+      "interval_products": {
+        "comparisons": 720,
+        "negative": 565,
+        "positive": 155,
+        "zero_coordinate_cases": 180
+      },
+      "limits": [
+        "No repository modules imported",
+        "No full compiler implemented or exhausted",
+        "No all-input claim derived from finite counts",
+        "No Lean build or repository CI executed",
+        "All-length fixture conclusions are ordinary arguments in the accompanying note"
+      ],
+      "python": "3.13.14",
+      "relational_bounds": {
+        "accepted_product_paths": 1536,
+        "bases": 40,
+        "empty_paths": 176,
+        "endpoint_tests": 4572,
+        "generated_extensions": 47,
+        "joint_mark_checks": 173,
+        "nonfunctional_bases": 35
+      },
+      "review_status": "Author checks only; independent mathematical review of generalized theorem pending",
+      "scope": "Independent bounded graph/interval checks; NOT full Pre_T enumeration or Lean verification",
+      "seed": 2026092072,
+      "source_sha256": "10369e0856e9240fe4217748fc47900394fd63af00a34597e6bcdbc02b4aeeab",
+      "status": "PASS",
+      "word_surgery": {
+        "alias_traces": 108,
+        "coloured_graph_equalities": 192,
+        "first_return_pairs": 64,
+        "overlaps": 6,
+        "safe_base_equivalences": 71,
+        "singleton_returns": 6,
+        "valid_reverse_run_annotations": 81
+      }
+    },
+    "hardness": {
+      "base_commit": "19b06d4fed9da635d9b911f0e908d04e4fc4b099",
+      "independent_mathematical_review": "UNKNOWN",
+      "lean_and_full_repository_checks": "NOT RUN",
+      "machine": "aarch64",
+      "nfa_and_graph_checks": {
+        "exhaustive_nfas": 4104,
+        "maximum_model_nodes": 130,
+        "nonuniversal": 1695,
+        "premise_checks": 33447,
+        "random_nfas": 400,
+        "universal": 2809
+      },
+      "non_image_value_checks": {
+        "arbitrary_graph_valuations": 4913,
+        "literal_finite_values": 677,
+        "satisfying_finite_values": 11,
+        "satisfying_graph_valuations": 106,
+        "status": "PASS"
+      },
+      "original_pdf_page_image_check": "NOT RUN",
+      "platform": "Linux",
+      "python": "3.13.14",
+      "repair_checks": {
+        "finite_reference_repair": {
+          "reason": "recursive bound or YES case fails",
+          "status": "FAIL"
+        },
+        "identity_transfer": {
+          "reason": "RHS is greatest Omega",
+          "status": "FAIL"
+        },
+        "marker_pilots": {
+          "fixtures": [
+            {
+              "missing_word": "0",
+              "name": "no_edges",
+              "shortest_graph_separator": "001"
+            },
+            {
+              "missing_word": "1",
+              "name": "only_0_loop",
+              "shortest_graph_separator": "011"
+            },
+            {
+              "missing_word": null,
+              "name": "both_loops",
+              "shortest_graph_separator": null
+            }
+          ],
+          "status": "PASS"
+        },
+        "reversed_query_repair": {
+          "reason": "bottom state valuation",
+          "status": "FAIL"
+        }
+      },
+      "scope": "finite experiment families; ordinary all-input proof is separate",
+      "script_sha256": "81e54110e789c9ef282236bec55e5fee97df194e6040a719fe5ba89533396e0a",
+      "seed": 2026092070,
+      "status": "PASS"
+    },
+    "producer": {
+      "elapsed_seconds": 150.9433762198314,
+      "environment": {
+        "platform": "Linux-6.12.94-123.192.amzn2023.aarch64-aarch64-with-glibc2.43",
+        "python": "3.13.14 (main, Aug  5 2026, 15:42:48) [Clang 22.1.3 ]"
+      },
+      "finite_product_pair_cap": 50000,
+      "guard_checks": {
+        "capped_extractions": [
+          {
+            "candidates": 16,
+            "reason": "word_limit",
+            "status": "UNKNOWN"
+          },
+          {
+            "candidates": 16,
+            "reason": "word_limit",
+            "status": "UNKNOWN"
+          },
+          {
+            "candidates": 16,
+            "reason": "word_limit",
+            "status": "UNKNOWN"
+          }
+        ],
+        "expired_extraction": {
+          "candidates": 0,
+          "reason": "time_limit",
+          "status": "UNKNOWN"
+        },
+        "non_prefix_closed_graph_guard": "PASS",
+        "pair_cap_guard": {
+          "pairs": 1,
+          "reason": "pair_limit",
+          "status": "UNKNOWN"
+        }
+      },
+      "language_checks": {
+        "acyclic_systems": 80,
+        "cyclic_systems": 160,
+        "exact_literal_equivalences": 238,
+        "exact_nfa_equivalences": 623,
+        "literal_configurations": 319,
+        "product_pairs": 3912,
+        "unknown": []
+      },
+      "lean": {
+        "axiom_audit": {
+          "classical_closures": [
+            "Subtail.RegularLanguageGraph.nodes_toGraph",
+            "Subtail.RegularLanguageGraph.graphNodes_iff",
+            "Subtail.RegularCountermodelProducer.popTest_correct",
+            "Subtail.RegularCountermodelProducer.attachmentCheck_correct",
+            "Subtail.RegularCountermodelProducer.joinCheck_correct",
+            "Subtail.RegularCountermodelProducer.rawFinal_correct",
+            "Subtail.RegularCountermodelProducer.rawNext_correct",
+            "Subtail.RegularCountermodelProducer.nfa_recognizes",
+            "Subtail.RegularCountermodelProducer.canonicalGraph_exact",
+            "Subtail.RegularCountermodelProducer.canonicalGraph_tree",
+            "Subtail.RegularCountermodelProducer.normalizedModel_valuation",
+            "Subtail.RegularCountermodelProducer.normalizedModel_correct",
+            "Subtail.RegularCountermodelProducer.modelForWord_correct",
+            "Subtail.RegularCountermodelProducer.exists_input_word",
+            "Subtail.RegularCountermodelProducer.findWord",
+            "Subtail.RegularCountermodelProducer.produceNegative",
+            "Subtail.RegularCountermodelProducer.produceNegative_correct",
+            "Subtail.RegularCountermodelProducer.produce",
+            "Subtail.RegularCountermodelProducer.produce_none_iff",
+            "Subtail.RegularCountermodelProducer.produce_sound",
+            "Subtail.RegularCountermodelProducer.produce_complete"
+          ],
+          "closures": {
+            "Subtail.RegularCountermodelProducer.Attachment": [],
+            "Subtail.RegularCountermodelProducer.Jump": [],
+            "Subtail.RegularCountermodelProducer.Language": [],
+            "Subtail.RegularCountermodelProducer.Model": [],
+            "Subtail.RegularCountermodelProducer.Model.valuation": [
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.Raw": [],
+            "Subtail.RegularCountermodelProducer.accessible_before_hit": [
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.attachmentCheck": [
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.attachmentCheck_correct": [
+              "Classical.choice",
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.attachment_suffix": [
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.canonicalGraph": [
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.canonicalGraph_exact": [
+              "Classical.choice",
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.canonicalGraph_tree": [
+              "Classical.choice",
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.canonicalRoot": [
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.canonicalSize": [
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.control_mem": [
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.exists_input_word": [
+              "Classical.choice",
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.findWord": [
+              "Classical.choice",
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.inputTest": [
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.joinCheck": [
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.joinCheck_correct": [
+              "Classical.choice",
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.language_coverage": [
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.language_iff_reaches": [
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.language_reconstruction": [],
+            "Subtail.RegularCountermodelProducer.mem_suffixes": [
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.modelForWord": [
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.modelForWord_correct": [
+              "Classical.choice",
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.nfa": [
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.nfa_recognizes": [
+              "Classical.choice",
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.normalizedModel": [
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.normalizedModel_correct": [
+              "Classical.choice",
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.normalizedModel_valuation": [
+              "Classical.choice",
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.pickWord": [
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.popTest": [
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.popTest_correct": [
+              "Classical.choice",
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.produce": [
+              "Classical.choice",
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.produceNegative": [
+              "Classical.choice",
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.produceNegative_correct": [
+              "Classical.choice",
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.produce_complete": [
+              "Classical.choice",
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.produce_none_iff": [
+              "Classical.choice",
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.produce_sound": [
+              "Classical.choice",
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.rawFinal": [
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.rawFinal_correct": [
+              "Classical.choice",
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.rawNext": [
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.rawNext_correct": [
+              "Classical.choice",
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.rawStates": [],
+            "Subtail.RegularCountermodelProducer.seek": [
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.seekAcc": [
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.suffix_mem": [
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.suffix_tail": [
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.suffixes": [],
+            "Subtail.RegularCountermodelProducer.word_enumerated": [
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularCountermodelProducer.wordsOfLength": [],
+            "Subtail.RegularLanguageGraph.DFA": [],
+            "Subtail.RegularLanguageGraph.NFA": [],
+            "Subtail.RegularLanguageGraph.accepts": [],
+            "Subtail.RegularLanguageGraph.accepts_iff": [
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularLanguageGraph.accepts_initial_iff": [
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularLanguageGraph.decode": [],
+            "Subtail.RegularLanguageGraph.decode_encode": [
+              "propext"
+            ],
+            "Subtail.RegularLanguageGraph.decode_member": [
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularLanguageGraph.derivative_closed": [],
+            "Subtail.RegularLanguageGraph.determinize": [
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularLanguageGraph.encode": [
+              "propext"
+            ],
+            "Subtail.RegularLanguageGraph.graphNodes_iff": [
+              "Classical.choice",
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularLanguageGraph.initial": [
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularLanguageGraph.initialSet": [],
+            "Subtail.RegularLanguageGraph.mem_nextSet": [
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularLanguageGraph.member_of_subset": [
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularLanguageGraph.nextSet": [],
+            "Subtail.RegularLanguageGraph.nodes_toGraph": [
+              "Classical.choice",
+              "Quot.sound",
+              "propext"
+            ],
+            "Subtail.RegularLanguageGraph.subsetsOf": [],
+            "Subtail.RegularLanguageGraph.toGraph": [
+              "propext"
+            ]
+          },
+          "command": [
+            "lake",
+            "env",
+            "lean",
+            "Subtail/RegularCountermodelProducerAudit.lean"
+          ],
+          "inventory_complete": true,
+          "log_sha256": "f94179062ba04f90744574467360269020e79da602e61e411da14d48f3f7ce70",
+          "runtime_erasure_review": "NOT RUN",
+          "seconds": 0.7015218930318952,
+          "status": "PASS",
+          "unexpected_axioms": {}
+        },
+        "core_build": {
+          "command": [
+            "lake",
+            "build"
+          ],
+          "log_sha256": "9ab3c0994e0b28a9f2ae003bc5ce3ef51ba41a2fd72f72cc8e3900954a5c553e",
+          "seconds": 35.679941358976066,
+          "status": "PASS"
+        },
+        "kernel_replay": {
+          "command": [
+            "lake",
+            "env",
+            "leanchecker",
+            "Subtail.RegularCountermodelProducer"
+          ],
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "seconds": 1.1461741891689599,
+          "status": "PASS"
+        },
+        "module_build": {
+          "command": [
+            "lake",
+            "build",
+            "+Subtail.RegularLanguageGraph",
+            "+Subtail.RegularCountermodelProducer"
+          ],
+          "log_sha256": "a01f8b042993184ea305b4fee8904ad5121d93ebee547a5746da3b9612f4ef86",
+          "seconds": 4.071621856186539,
+          "status": "PASS"
+        },
+        "native_producer": {
+          "cases": [
+            {
+              "case": "closed_negative",
+              "graph_nodes": 16,
+              "independent_check": {
+                "independent_separator": [],
+                "premise_pairs": 0,
+                "query_pairs": 1,
+                "valid": true
+              },
+              "log_sha256": "4651a75aab26f400211efc15a24322a6cb80f80b111422bfa19b0f48d1bd5b53",
+              "reachable_cycle": false,
+              "separator": [],
+              "status": "PASS"
+            },
+            {
+              "case": "variable_negative",
+              "graph_nodes": 8,
+              "independent_check": {
+                "independent_separator": [],
+                "premise_pairs": 0,
+                "query_pairs": 1,
+                "valid": true
+              },
+              "log_sha256": "515b11370fd12e1ee5fd1b6ab09c0bf832eac23786b50af46410ca81b409df6e",
+              "reachable_cycle": false,
+              "separator": [],
+              "status": "PASS"
+            },
+            {
+              "case": "cyclic_negative",
+              "graph_nodes": 32,
+              "independent_check": {
+                "independent_separator": [],
+                "premise_pairs": 4,
+                "query_pairs": 1,
+                "valid": true
+              },
+              "log_sha256": "f78479b6b21aee56d12d584a2b67dfc65f9607db93e4494f8bf0370433a044e7",
+              "reachable_cycle": true,
+              "separator": [],
+              "status": "PASS"
+            },
+            {
+              "answer": "none",
+              "case": "positive",
+              "status": "PASS"
+            },
+            {
+              "case": "normalized_alternating",
+              "graph_nodes": 256,
+              "independent_check": {
+                "independent_separator": [
+                  1
+                ],
+                "premise_pairs": 19,
+                "query_pairs": 3,
+                "valid": true
+              },
+              "log_sha256": "f361f371cf9d4b53b8c6e0c6f10a15d71e82de04b11d543f3d496a4aeaccede1",
+              "reachable_cycle": true,
+              "separator": [
+                1
+              ],
+              "status": "PASS"
+            }
+          ],
+          "status": "PASS"
+        },
+        "version": {
+          "command": [
+            "lake",
+            "env",
+            "lean",
+            "--version"
+          ],
+          "log_sha256": "0110641c723d5ff89249b4eea2e67e3ddb9b6fb97d5849563c7a5f60742350cf",
+          "seconds": 0.12671189196407795,
+          "status": "PASS"
+        }
+      },
+      "model_checks": {
+        "boundary_models": [
+          {
+            "independent_check": {
+              "independent_separator": [],
+              "premise_pairs": 0,
+              "query_pairs": 1,
+              "valid": true
+            },
+            "separator": [],
+            "status": "PASS",
+            "variables": 1
+          },
+          {
+            "independent_check": {
+              "independent_separator": [
+                1
+              ],
+              "premise_pairs": 0,
+              "query_pairs": 3,
+              "valid": true
+            },
+            "separator": [
+              1
+            ],
+            "status": "PASS",
+            "variables": 0
+          },
+          {
+            "independent_check": {
+              "independent_separator": [],
+              "premise_pairs": 3,
+              "query_pairs": 1,
+              "valid": true
+            },
+            "separator": [],
+            "status": "PASS",
+            "variables": 2
+          }
+        ],
+        "old_library_assignments_rejected": 775,
+        "periodic_cyclic_models": [
+          {
+            "candidates": 2,
+            "depth": 1,
+            "graph_nodes": 3,
+            "independent_check": {
+              "independent_separator": [
+                0
+              ],
+              "premise_pairs": 20,
+              "query_pairs": 3,
+              "valid": true
+            },
+            "model": {
+              "nodes": [
+                null,
+                [
+                  2,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ],
+              "roots": {
+                "x0": 1,
+                "x1": 2
+              }
+            },
+            "period": [
+              0,
+              1
+            ],
+            "reachable_cycle": true,
+            "separator": [
+              0
+            ],
+            "status": "PASS"
+          },
+          {
+            "candidates": 5,
+            "depth": 2,
+            "graph_nodes": 3,
+            "independent_check": {
+              "independent_separator": [
+                0,
+                1
+              ],
+              "premise_pairs": 20,
+              "query_pairs": 4,
+              "valid": true
+            },
+            "model": {
+              "nodes": [
+                null,
+                [
+                  2,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ],
+              "roots": {
+                "x0": 1,
+                "x1": 2
+              }
+            },
+            "period": [
+              0,
+              1
+            ],
+            "reachable_cycle": true,
+            "separator": [
+              0,
+              1
+            ],
+            "status": "PASS"
+          },
+          {
+            "candidates": 21,
+            "depth": 4,
+            "graph_nodes": 3,
+            "independent_check": {
+              "independent_separator": [
+                0,
+                1,
+                0,
+                1
+              ],
+              "premise_pairs": 20,
+              "query_pairs": 6,
+              "valid": true
+            },
+            "model": {
+              "nodes": [
+                null,
+                [
+                  2,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ],
+              "roots": {
+                "x0": 1,
+                "x1": 2
+              }
+            },
+            "period": [
+              0,
+              1
+            ],
+            "reachable_cycle": true,
+            "separator": [
+              0,
+              1,
+              0,
+              1
+            ],
+            "status": "PASS"
+          },
+          {
+            "candidates": 2,
+            "depth": 1,
+            "graph_nodes": 4,
+            "independent_check": {
+              "independent_separator": [
+                0
+              ],
+              "premise_pairs": 36,
+              "query_pairs": 3,
+              "valid": true
+            },
+            "model": {
+              "nodes": [
+                null,
+                [
+                  2,
+                  0
+                ],
+                [
+                  3,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ],
+              "roots": {
+                "x0": 1,
+                "x1": 2,
+                "x2": 3
+              }
+            },
+            "period": [
+              0,
+              0,
+              1
+            ],
+            "reachable_cycle": true,
+            "separator": [
+              0
+            ],
+            "status": "PASS"
+          },
+          {
+            "candidates": 4,
+            "depth": 2,
+            "graph_nodes": 4,
+            "independent_check": {
+              "independent_separator": [
+                0,
+                0
+              ],
+              "premise_pairs": 36,
+              "query_pairs": 4,
+              "valid": true
+            },
+            "model": {
+              "nodes": [
+                null,
+                [
+                  2,
+                  0
+                ],
+                [
+                  3,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ],
+              "roots": {
+                "x0": 1,
+                "x1": 2,
+                "x2": 3
+              }
+            },
+            "period": [
+              0,
+              0,
+              1
+            ],
+            "reachable_cycle": true,
+            "separator": [
+              0,
+              0
+            ],
+            "status": "PASS"
+          },
+          {
+            "candidates": 18,
+            "depth": 4,
+            "graph_nodes": 4,
+            "independent_check": {
+              "independent_separator": [
+                0,
+                0,
+                1,
+                0
+              ],
+              "premise_pairs": 36,
+              "query_pairs": 6,
+              "valid": true
+            },
+            "model": {
+              "nodes": [
+                null,
+                [
+                  2,
+                  0
+                ],
+                [
+                  3,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ],
+              "roots": {
+                "x0": 1,
+                "x1": 2,
+                "x2": 3
+              }
+            },
+            "period": [
+              0,
+              0,
+              1
+            ],
+            "reachable_cycle": true,
+            "separator": [
+              0,
+              0,
+              1,
+              0
+            ],
+            "status": "PASS"
+          },
+          {
+            "candidates": 2,
+            "depth": 1,
+            "graph_nodes": 5,
+            "independent_check": {
+              "independent_separator": [
+                0
+              ],
+              "premise_pairs": 56,
+              "query_pairs": 3,
+              "valid": true
+            },
+            "model": {
+              "nodes": [
+                null,
+                [
+                  2,
+                  0
+                ],
+                [
+                  3,
+                  0
+                ],
+                [
+                  4,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ],
+              "roots": {
+                "x0": 1,
+                "x1": 2,
+                "x2": 3,
+                "x3": 4
+              }
+            },
+            "period": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "reachable_cycle": true,
+            "separator": [
+              0
+            ],
+            "status": "PASS"
+          },
+          {
+            "candidates": 4,
+            "depth": 2,
+            "graph_nodes": 5,
+            "independent_check": {
+              "independent_separator": [
+                0,
+                0
+              ],
+              "premise_pairs": 56,
+              "query_pairs": 4,
+              "valid": true
+            },
+            "model": {
+              "nodes": [
+                null,
+                [
+                  2,
+                  0
+                ],
+                [
+                  3,
+                  0
+                ],
+                [
+                  4,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ],
+              "roots": {
+                "x0": 1,
+                "x1": 2,
+                "x2": 3,
+                "x3": 4
+              }
+            },
+            "period": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "reachable_cycle": true,
+            "separator": [
+              0,
+              0
+            ],
+            "status": "PASS"
+          },
+          {
+            "candidates": 17,
+            "depth": 4,
+            "graph_nodes": 5,
+            "independent_check": {
+              "independent_separator": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "premise_pairs": 56,
+              "query_pairs": 6,
+              "valid": true
+            },
+            "model": {
+              "nodes": [
+                null,
+                [
+                  2,
+                  0
+                ],
+                [
+                  3,
+                  0
+                ],
+                [
+                  4,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ],
+              "roots": {
+                "x0": 1,
+                "x1": 2,
+                "x2": 3,
+                "x3": 4
+              }
+            },
+            "period": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "reachable_cycle": true,
+            "separator": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "status": "PASS"
+          },
+          {
+            "candidates": 2,
+            "depth": 1,
+            "graph_nodes": 6,
+            "independent_check": {
+              "independent_separator": [
+                0
+              ],
+              "premise_pairs": 80,
+              "query_pairs": 3,
+              "valid": true
+            },
+            "model": {
+              "nodes": [
+                null,
+                [
+                  2,
+                  0
+                ],
+                [
+                  3,
+                  0
+                ],
+                [
+                  0,
+                  4
+                ],
+                [
+                  5,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ],
+              "roots": {
+                "x0": 1,
+                "x1": 2,
+                "x2": 3,
+                "x3": 4,
+                "x4": 5
+              }
+            },
+            "period": [
+              0,
+              0,
+              1,
+              0,
+              1
+            ],
+            "reachable_cycle": true,
+            "separator": [
+              0
+            ],
+            "status": "PASS"
+          },
+          {
+            "candidates": 4,
+            "depth": 2,
+            "graph_nodes": 6,
+            "independent_check": {
+              "independent_separator": [
+                0,
+                0
+              ],
+              "premise_pairs": 80,
+              "query_pairs": 4,
+              "valid": true
+            },
+            "model": {
+              "nodes": [
+                null,
+                [
+                  2,
+                  0
+                ],
+                [
+                  3,
+                  0
+                ],
+                [
+                  0,
+                  4
+                ],
+                [
+                  5,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ],
+              "roots": {
+                "x0": 1,
+                "x1": 2,
+                "x2": 3,
+                "x3": 4,
+                "x4": 5
+              }
+            },
+            "period": [
+              0,
+              0,
+              1,
+              0,
+              1
+            ],
+            "reachable_cycle": true,
+            "separator": [
+              0,
+              0
+            ],
+            "status": "PASS"
+          },
+          {
+            "candidates": 18,
+            "depth": 4,
+            "graph_nodes": 6,
+            "independent_check": {
+              "independent_separator": [
+                0,
+                0,
+                1,
+                0
+              ],
+              "premise_pairs": 80,
+              "query_pairs": 6,
+              "valid": true
+            },
+            "model": {
+              "nodes": [
+                null,
+                [
+                  2,
+                  0
+                ],
+                [
+                  3,
+                  0
+                ],
+                [
+                  0,
+                  4
+                ],
+                [
+                  5,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ],
+              "roots": {
+                "x0": 1,
+                "x1": 2,
+                "x2": 3,
+                "x3": 4,
+                "x4": 5
+              }
+            },
+            "period": [
+              0,
+              0,
+              1,
+              0,
+              1
+            ],
+            "reachable_cycle": true,
+            "separator": [
+              0,
+              0,
+              1,
+              0
+            ],
+            "status": "PASS"
+          },
+          {
+            "candidates": 2,
+            "depth": 1,
+            "graph_nodes": 7,
+            "independent_check": {
+              "independent_separator": [
+                0
+              ],
+              "premise_pairs": 108,
+              "query_pairs": 3,
+              "valid": true
+            },
+            "model": {
+              "nodes": [
+                null,
+                [
+                  2,
+                  0
+                ],
+                [
+                  3,
+                  0
+                ],
+                [
+                  0,
+                  4
+                ],
+                [
+                  5,
+                  0
+                ],
+                [
+                  0,
+                  6
+                ],
+                [
+                  0,
+                  1
+                ]
+              ],
+              "roots": {
+                "x0": 1,
+                "x1": 2,
+                "x2": 3,
+                "x3": 4,
+                "x4": 5,
+                "x5": 6
+              }
+            },
+            "period": [
+              0,
+              0,
+              1,
+              0,
+              1,
+              1
+            ],
+            "reachable_cycle": true,
+            "separator": [
+              0
+            ],
+            "status": "PASS"
+          },
+          {
+            "candidates": 4,
+            "depth": 2,
+            "graph_nodes": 7,
+            "independent_check": {
+              "independent_separator": [
+                0,
+                0
+              ],
+              "premise_pairs": 108,
+              "query_pairs": 4,
+              "valid": true
+            },
+            "model": {
+              "nodes": [
+                null,
+                [
+                  2,
+                  0
+                ],
+                [
+                  3,
+                  0
+                ],
+                [
+                  0,
+                  4
+                ],
+                [
+                  5,
+                  0
+                ],
+                [
+                  0,
+                  6
+                ],
+                [
+                  0,
+                  1
+                ]
+              ],
+              "roots": {
+                "x0": 1,
+                "x1": 2,
+                "x2": 3,
+                "x3": 4,
+                "x4": 5,
+                "x5": 6
+              }
+            },
+            "period": [
+              0,
+              0,
+              1,
+              0,
+              1,
+              1
+            ],
+            "reachable_cycle": true,
+            "separator": [
+              0,
+              0
+            ],
+            "status": "PASS"
+          },
+          {
+            "candidates": 18,
+            "depth": 4,
+            "graph_nodes": 7,
+            "independent_check": {
+              "independent_separator": [
+                0,
+                0,
+                1,
+                0
+              ],
+              "premise_pairs": 108,
+              "query_pairs": 6,
+              "valid": true
+            },
+            "model": {
+              "nodes": [
+                null,
+                [
+                  2,
+                  0
+                ],
+                [
+                  3,
+                  0
+                ],
+                [
+                  0,
+                  4
+                ],
+                [
+                  5,
+                  0
+                ],
+                [
+                  0,
+                  6
+                ],
+                [
+                  0,
+                  1
+                ]
+              ],
+              "roots": {
+                "x0": 1,
+                "x1": 2,
+                "x2": 3,
+                "x3": 4,
+                "x4": 5,
+                "x5": 6
+              }
+            },
+            "period": [
+              0,
+              0,
+              1,
+              0,
+              1,
+              1
+            ],
+            "reachable_cycle": true,
+            "separator": [
+              0,
+              0,
+              1,
+              0
+            ],
+            "status": "PASS"
+          },
+          {
+            "candidates": 2,
+            "depth": 1,
+            "graph_nodes": 8,
+            "independent_check": {
+              "independent_separator": [
+                0
+              ],
+              "premise_pairs": 140,
+              "query_pairs": 3,
+              "valid": true
+            },
+            "model": {
+              "nodes": [
+                null,
+                [
+                  2,
+                  0
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  4,
+                  0
+                ],
+                [
+                  5,
+                  0
+                ],
+                [
+                  6,
+                  0
+                ],
+                [
+                  0,
+                  7
+                ],
+                [
+                  0,
+                  1
+                ]
+              ],
+              "roots": {
+                "x0": 1,
+                "x1": 2,
+                "x2": 3,
+                "x3": 4,
+                "x4": 5,
+                "x5": 6,
+                "x6": 7
+              }
+            },
+            "period": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "reachable_cycle": true,
+            "separator": [
+              0
+            ],
+            "status": "PASS"
+          },
+          {
+            "candidates": 5,
+            "depth": 2,
+            "graph_nodes": 8,
+            "independent_check": {
+              "independent_separator": [
+                0,
+                1
+              ],
+              "premise_pairs": 140,
+              "query_pairs": 4,
+              "valid": true
+            },
+            "model": {
+              "nodes": [
+                null,
+                [
+                  2,
+                  0
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  4,
+                  0
+                ],
+                [
+                  5,
+                  0
+                ],
+                [
+                  6,
+                  0
+                ],
+                [
+                  0,
+                  7
+                ],
+                [
+                  0,
+                  1
+                ]
+              ],
+              "roots": {
+                "x0": 1,
+                "x1": 2,
+                "x2": 3,
+                "x3": 4,
+                "x4": 5,
+                "x5": 6,
+                "x6": 7
+              }
+            },
+            "period": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "reachable_cycle": true,
+            "separator": [
+              0,
+              1
+            ],
+            "status": "PASS"
+          },
+          {
+            "candidates": 20,
+            "depth": 4,
+            "graph_nodes": 8,
+            "independent_check": {
+              "independent_separator": [
+                0,
+                1,
+                0,
+                0
+              ],
+              "premise_pairs": 140,
+              "query_pairs": 6,
+              "valid": true
+            },
+            "model": {
+              "nodes": [
+                null,
+                [
+                  2,
+                  0
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  4,
+                  0
+                ],
+                [
+                  5,
+                  0
+                ],
+                [
+                  6,
+                  0
+                ],
+                [
+                  0,
+                  7
+                ],
+                [
+                  0,
+                  1
+                ]
+              ],
+              "roots": {
+                "x0": 1,
+                "x1": 2,
+                "x2": 3,
+                "x3": 4,
+                "x4": 5,
+                "x5": 6,
+                "x6": 7
+              }
+            },
+            "period": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "reachable_cycle": true,
+            "separator": [
+              0,
+              1,
+              0,
+              0
+            ],
+            "status": "PASS"
+          }
+        ]
+      },
+      "python_status": "PASS",
+      "scope": "Actual pinned Python extractor; all-depth finite checks. Lean separately gated.",
+      "seed": 2026092068,
+      "source_hashes": {
+        "lean/Subtail/RegularCountermodelProducer.lean": {
+          "git_blob": "8636a92798fd9fcc1e24b85817515bd700f0b800",
+          "sha256": "e8cdada1e6980be2719f266a585f6fe1169d836ccb83bd3d251960958ebf1804"
+        },
+        "lean/Subtail/RegularCountermodelProducerAudit.lean": {
+          "git_blob": "413ecf91f8019c496e228f8f03715075be3e5152",
+          "sha256": "db6d5fbf8303e0137f41ccd3850e99281684aadd31ddd32a1e6a5797af14e454"
+        },
+        "lean/Subtail/RegularLanguageGraph.lean": {
+          "git_blob": "9f8818cfbf2bc2b707e3b71275851ec4d2746707",
+          "sha256": "6d837f2f7e852311602fdab1b1df1526d7668104ed8e4630bbe732e2543a40cb"
+        },
+        "scripts/check_regular_producer_68.py": {
+          "git_blob": "dcf11330df1e2c38f44e35c7f5ab173c8d3182e1",
+          "sha256": "50f4c98ef14fc3106a2a5091d6d7dce75d90a58a08a5ce863b0f44f2b71925d2"
+        }
+      },
+      "upstream_commit": "19b06d4fed9da635d9b911f0e908d04e4fc4b099",
+      "upstream_producer_blob": "b59c57174e24d00fdbe8dfca1c99337921adf88f"
+    },
+    "raw66-selftest": {
+      "baseline_marker_checks": 8,
+      "lean_compilation": "NOT_RUN",
+      "native_performance": "NOT_RUN",
+      "ordinary_row_identity_cells_n0_through_n4": 69905,
+      "rendered_sources": 32,
+      "scope": "Python/source-template checks only; not the 83 full-field Lean comparisons or independent review",
+      "status": "PASS"
+    },
+    "ternary": {
+      "coding": {
+        "binary_witnesses": 16422,
+        "binary_words_checked": 124440,
+        "complete_word_comparisons": 39136,
+        "instances": 488,
+        "nontruncation_fixture": {
+          "completed_binary": [
+            0,
+            1,
+            0
+          ],
+          "decoded": [
+            0,
+            1
+          ],
+          "partial_binary": [
+            0,
+            1
+          ],
+          "source": {
+            "bad": [],
+            "finals": [
+              1,
+              2
+            ],
+            "flags": [
+              [
+                0,
+                1
+              ]
+            ],
+            "initial": 0,
+            "r": 3,
+            "transitions": [
+              [
+                1,
+                null,
+                null
+              ],
+              [
+                null,
+                2,
+                null
+              ],
+              [
+                null,
+                null,
+                null
+              ]
+            ]
+          }
+        },
+        "partial_witnesses_completed": 5358,
+        "random_nontruncation_found": false,
+        "scope": "all one-state absorbing encodings for arities 1..4; seeded samples for 1..5"
+      },
+      "elapsed_seconds": 1.835,
+      "evidence": "bounded component regressions plus exact finite-graph/NFA checks",
+      "expressions": {
+        "exact_infinite_graph_and_expression_cases": [
+          {
+            "canonical_graph_nodes": 10,
+            "fixture": "zero_spine",
+            "normalized_variables": 4,
+            "same_separating_address": []
+          },
+          {
+            "canonical_graph_nodes": 14,
+            "fixture": "nonroot_zero_spine",
+            "normalized_variables": 5,
+            "same_separating_address": [
+              0
+            ]
+          },
+          {
+            "canonical_graph_nodes": 10,
+            "fixture": "middle_spine",
+            "normalized_variables": 4,
+            "same_separating_address": []
+          },
+          {
+            "canonical_graph_nodes": 14,
+            "fixture": "nonroot_middle_spine",
+            "normalized_variables": 5,
+            "same_separating_address": [
+              1
+            ]
+          },
+          {
+            "canonical_graph_nodes": 10,
+            "fixture": "last_spine",
+            "normalized_variables": 4,
+            "same_separating_address": []
+          },
+          {
+            "canonical_graph_nodes": 18,
+            "fixture": "nonroot_last_spine",
+            "normalized_variables": 6,
+            "same_separating_address": [
+              2,
+              2
+            ]
+          },
+          {
+            "canonical_graph_nodes": 10,
+            "fixture": "full_infinite",
+            "normalized_variables": 4,
+            "same_separating_address": []
+          },
+          {
+            "canonical_graph_nodes": 10,
+            "fixture": "mixed_bottom_and_auxiliary",
+            "normalized_variables": 6,
+            "same_separating_address": []
+          },
+          {
+            "canonical_graph_nodes": 5,
+            "fixture": "query_only_constructor",
+            "normalized_variables": 4,
+            "same_separating_address": []
+          }
+        ],
+        "finite_semantics": "not identified with arbitrary-tree semantics",
+        "positive_bounded_source_values": 9,
+        "unsat_mixed_case": "PASS"
+      },
+      "full_pipeline_fixtures": {
+        "boundary": "C029 results certified for these fixtures; actual C029 executable NOT RUN",
+        "inconsistent_branch": "PASS",
+        "positive_infinite_branch_certificate": {
+          "cycle": [
+            0
+          ],
+          "stem": [
+            0
+          ],
+          "witness": []
+        },
+        "terminal_branch": {
+          "binary_full_physical_states": 128,
+          "decoded_separating_word": [],
+          "exact_output_graph_nodes": 372,
+          "negative_infinite_branch_certificate": "safe initial sink",
+          "off_image_left_root": true,
+          "output_constraints": 2697,
+          "output_variables": 257,
+          "source": "y<=T(bottom,bottom,bottom); query y<=bottom",
+          "source_full_physical_states": 64,
+          "source_normalized_names": 3
+        }
+      },
+      "naive_counterexample": {
+        "binary_nodes": 3,
+        "binary_value": [
+          [],
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "minimal_for_this_instance": true,
+        "separating_address": [
+          0,
+          1
+        ],
+        "source_models_exhausted": 9,
+        "source_premise": "y <= T(M,M,M), M=T(bottom,bottom,bottom)",
+        "source_query": "y <= T(y,y,y)"
+      },
+      "not_run": [
+        "Lean build",
+        "Lean kernel replay",
+        "C029 executable",
+        "complete source-to-target command-line translator",
+        "independent mathematical review"
+      ],
+      "platform": "Linux-6.12.94-123.192.amzn2023.aarch64-aarch64-with-glibc2.43",
+      "preserved_failed_attempts": [
+        "Naive homomorphic type encoding refuted by a three-node off-image model.",
+        "An initial nontruncation TEST FIXTURE used partial word 101; literal Witness correctly rejected it. Repaired fixture uses 01 and completes to 010; encoding algorithm unchanged.",
+        "Unconditional summary/model equivalence is invalid without source SAT. A disconnected forced denial regression explicitly preserves this guard."
+      ],
+      "python": "3.13.14",
+      "script_sha256": "235b59485219f1d26247afd73427c53d05021da0f4a3f43130d35981bbc46fb9",
+      "seed": 2026092072,
+      "status": "PASS",
+      "summary_vs_independent_post": {
+        "disconnected_unsat_guard": "PASS",
+        "exact_regular_countermodels_checked": 448,
+        "exact_sat_comparisons": 70,
+        "oracles": "independent Post* epsilon-NFA saturation and graph pair reachability",
+        "physical_states_checked_for_absorption": 1936,
+        "word_comparisons": 2467
+      },
+      "terminal_realization": {
+        "always_sat_graphs": 61,
+        "decoded_realized_countermodels": 3,
+        "exact_countermodels": 23,
+        "implementation": "independent Python C030 formula, not executed Lean",
+        "terminal_instances": 61,
+        "word_model_comparisons": 1891
+      },
+      "upstream_base": "19b06d4fed9da635d9b911f0e908d04e4fc4b099"
+    },
+    "top": {
+      "bounds": {
+        "additional_seeded_systems": 250,
+        "all_system_clause_count_at_most": 2,
+        "comparison_word_depth": 3,
+        "direct_derivation_stack_cap": 6,
+        "enumerated_graph_nodes": 2,
+        "finite_tree_depth": 2,
+        "random_max_clauses": 8,
+        "right_extension_depth": 2,
+        "targeted_graph_nodes_at_most": 4
+      },
+      "command": "python3 experiments/check_explicit_top_dual_projection.py --output results/explicit-top-dual-projection.json",
+      "counts": {
+        "bounded_derivation_membership_comparisons": 11790,
+        "cyclic_graph_order_pairs": 5184,
+        "finite_tree_order_pairs": 1444,
+        "larger_targeted_lifts": 6,
+        "larger_top_cone_membership_checks": 1397,
+        "literal_boundary_fixtures": 6,
+        "projected_models_lifted": 5156,
+        "right_ideal_checks": 33838,
+        "same_word_countermodels": 292,
+        "source_model_projection_checks": 2384,
+        "systems_checked": 393,
+        "systems_with_two_projection_witnesses": 176,
+        "systems_without_two_bounded_projection_witnesses_UNKNOWN": 217
+      },
+      "limits": [
+        "All graph comparisons are exact for the given regular graph unfoldings.",
+        "The input/model corpus is finite; it supplies no universal model bound.",
+        "Absent bounded model witnesses and capped derivation misses remain UNKNOWN.",
+        "No C081 implementation was executed; its use in the decision proof is imported.",
+        "No independent mathematical reviewer or full repository suite was run by this script."
+      ],
+      "maximum_lift_graph_nodes": 6,
+      "maximum_nfa_saturation_rounds": 2,
+      "nfa_positive_without_bounded_derivation_UNKNOWN": 0,
+      "platform": "Linux-6.12.94-123.192.amzn2023.aarch64-aarch64-with-glibc2.43",
+      "python": "3.13.14",
+      "script_sha256": "c5da4fc788f3d1b33db843eb9fc205e53bb08538e5b2ac98d25bcbaa33f9e058",
+      "seed": 2026092071,
+      "source_base": "19b06d4fed9da635d9b911f0e908d04e4fc4b099",
+      "status": "PASS"
+    }
+  },
+  "head_readback": "All nine source branches and main still match the pinned revisions; checked again before publication.",
+  "integration_order": [
+    "78 compiler, then dependent 69-F, with explicit author handoff and actual-tree continuing checks",
+    "70 hardness and 71 top, synchronize paper and ledgers",
+    "68 producer after final author handoff; then fixed-arity reduction separately",
+    "75,76,77 independent scoped records; keep broader issues open"
+  ],
+  "limitations": [
+    "Reviewers read author arguments, not independent discoveries; no human referee or model-diversity claim.",
+    "No new publication-priority review.",
+    "Bounded missing witnesses remain UNKNOWN.",
+    "New full generic graph compiler, fixed-arity CLI/C029 execution and full explicit-top expression Lean formalization were not run or claimed.",
+    "Producer full Certificate adapter, Python refinement and complete transitive runtime audit are not established.",
+    "Entire broad default CI matrix not rerun on overlay; targeted fresh checks and existing revision-pinned CI are separate.",
+    "Original harnesses may emit hard-coded author workspace/review labels. This outer receipt states the actual full combined-checkout context.",
+    "No source author worktree, unpushed work or stash was inspected or modified.",
+    "No main publication, issue closure, branch deletion or ongoing integration lease."
+  ],
+  "native_66_reused_evidence": {
+    "actual_cpu_seconds": null,
+    "n3": "all eight modes PASS",
+    "n6_complete_query": "UNKNOWN at unchanged 20-second cap",
+    "no_optimization": true,
+    "peak_rss": null,
+    "receipt": "results/issue66-execution-20260920.json",
+    "script_matches_review_head": true,
+    "script_revision": "f8180b199721679dca8e4bd6df6b5ab420516f5d",
+    "status": "HISTORICAL_PINNED_NOT_RERUN"
+  },
+  "ownership_readback": {
+    "66": "author RELEASED comment5750437070; later parent retention summaries are stale",
+    "68": "latest author still preparing handoff; review does not take ownership",
+    "69-F": "author RELEASED comment5750572384",
+    "78": "explicit final author release not found; review does not take ownership"
+  },
+  "primary_source": {
+    "author_url": "https://hjemmesider.diku.dk/~henglein/papers/henglein1998a.pdf",
+    "finite_tree_argument_imported": false,
+    "imported_fact": "Section 4 CLOSED-UNIV PSPACE-complete for any nontrivial alphabet, immediately specialized to two letters",
+    "rendered_published_pages": [
+      621,
+      622,
+      623
+    ],
+    "sha256": "6da53bb92428595af33d2466e71a8436cd43c41d750f75f010e909780d795d39",
+    "status": "VISUALLY_VERIFIED",
+    "title": "Henglein and Rehof, Constraint Automata and the Complexity of Recursive Subtype Entailment (ICALP 1998)"
+  },
+  "resolved_review_questions": [
+    {
+      "question": "Does h0=e violate interval End guards?",
+      "resolution": "No. First emission binds f=h0 separately; marked z0=h1. Reviewer withdrew the alleged blocker after parent challenged it. No source change.",
+      "submission": "77"
+    }
+  ],
+  "review_roles": [
+    {
+      "method": "independent source/argument readback, targeted fresh execution, primary-source visual verification",
+      "reviewer": "parent",
+      "scope": [
+        "68 producer definitions, ordinary proof, runtime and native tests",
+        "70 all-input proof and HR98 source pages",
+        "71 ordinary lifting and selective Lean readback",
+        "72 fixed-arity ordinary proof and C029/C030/C031 interfaces",
+        "76 source, marker/cap semantics, historical native receipt"
+      ]
+    },
+    {
+      "execution": "no builds, edits, issue writes or state mutations",
+      "reviewer": "publication_proof_review",
+      "scope": [
+        "78 same-assignment coverage injection, multiplicity, coordinate budget, original U",
+        "69-F exact theorem, diagram length reconstruction, original recurrence, dependency pin"
+      ],
+      "verdict": "ACCEPT_WITH_STATED_LIMITS"
+    },
+    {
+      "execution": "no builds, edits, issue writes or state mutations",
+      "reviewer": "historical_pr_review",
+      "scope": [
+        "77 graph schema, decomposition, shared generator and bounded portal interface",
+        "75 signed active paths, guarded Horn closure and obstruction scope"
+      ],
+      "verdict": "ACCEPT_WITH_STATED_LIMITS_AFTER_RESOLVED_QUERY"
+    },
+    {
+      "execution": "read-only second readback; no edits, builds or state mutations",
+      "remaining": "Full labelled semantics/normalization/C081 composition ordinary only; expand their presentation when integrating into paper.",
+      "reviewer": "publication_proof_review",
+      "scope": [
+        "71 paired-language/labelled-tree correspondence",
+        "71 universal lifting under opposite SAT and entailment/vacuity decomposition"
+      ],
+      "verdict": "ACCEPT_WITH_STATED_LIMITS"
+    }
+  ],
+  "schema_version": 1,
+  "scope": "four open draft PRs plus five additional submitted issue handoffs; review only, no merges, fixes, claim promotion or issue closure",
+  "session": "submission-review-20260920",
+  "source_checks": {
+    "files": 41,
+    "method": "SHA256 of every overlay path compared with git show at its immutable contribution revision; all unique changes are additions relative to current-main merge-base",
+    "original_tracked_diff": "",
+    "status": "PASS"
+  },
+  "status": "REVIEW_COMPLETE_ACCEPT_SCOPED_CONTRIBUTIONS_WITH_INTEGRATION_GATES",
+  "submissions": [
+    {
+      "branch": "codex/function-only-transfer-20260920",
+      "head": "4ed2fb67458f37b286740a325d91404bb22b58f0",
+      "id": "75",
+      "remaining": "General function entailment remains open.",
+      "verdict": "ACCEPT_ORDINARY_PARTIAL"
+    },
+    {
+      "branch": "codex/raw-summary-66-diagnostics-20260920",
+      "head": "986e34b4b61a1ba05a45282bd1f3c84f28103fee",
+      "id": "76",
+      "remaining": "No optimization; full n=6 query remains UNKNOWN.",
+      "verdict": "ACCEPT_DIAGNOSTICS"
+    },
+    {
+      "branch": "codex/standalone-first-return-20260920-astra",
+      "head": "910e3071eab494e58e01c53b1e6891186ed73b30",
+      "id": "77",
+      "remaining": "No generic Lean compiler or publication-priority conclusion.",
+      "verdict": "ACCEPT_ORDINARY_SCOPED"
+    },
+    {
+      "branch": "codex/smaller-compiler-20260920-astra",
+      "head": "db0a6d3505e93ff6bc51a8d89fcb52fb05adfe0f",
+      "id": "78",
+      "remaining": "Original existential U via preSmall; old compiler universal U stays refuted; author handoff required.",
+      "verdict": "ACCEPT_CHECKED_WITH_INTEGRATION_GATES"
+    },
+    {
+      "branch": "codex/f-only-astra-20260920",
+      "head": "6aa7047cc6cbccd44c64223209b7563cf2824b8e",
+      "id": "69-F",
+      "remaining": "Requires exact reviewed smaller compiler; optional FinishPlus route remains distinct.",
+      "verdict": "ACCEPT_CHECKED_WITH_DEPENDENCY"
+    },
+    {
+      "branch": "codex/regular-producer-68-20260920",
+      "head": "049aa110cf13688d4058b1cbecf80aa0fc3a7fb6",
+      "id": "68",
+      "remaining": "Author handoff, CI, complete Certificate adapter, Python refinement and JSON boundary remain.",
+      "verdict": "ACCEPT_CHECKED_CORE"
+    },
+    {
+      "branch": "codex/hr-topfree-transfer-70-20260920",
+      "head": "371b97c40d532f076fbe09fc640db9333734c91c",
+      "id": "70",
+      "remaining": "PSPACE lower bound for arbitrary and regular trees only; no finite transfer or upper bound.",
+      "verdict": "ACCEPT_ORDINARY_THEOREM"
+    },
+    {
+      "branch": "codex/issue71-dual-projection-20260920",
+      "head": "0eff4818d990821fd1c08f704a2392f2d0047cf5",
+      "id": "71",
+      "remaining": "Full labelled semantics and expression compiler remain ordinary proofs.",
+      "verdict": "ACCEPT_ORDINARY_WITH_CHECKED_CORE"
+    },
+    {
+      "branch": "codex/ternary-transfer-20260920",
+      "head": "3fca2e8bf8a0036469867cb528b3ff96b9d9eb96",
+      "id": "72-ternary",
+      "remaining": "No polynomial complexity, finite-tree transfer, full translator or generalized Lean theorem.",
+      "verdict": "ACCEPT_ORDINARY_THEOREM"
+    }
+  ]
+}
