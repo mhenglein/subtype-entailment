@@ -1,0 +1,62 @@
+{
+  "base_commit": "19b06d4fed9da635d9b911f0e908d04e4fc4b099",
+  "independent_mathematical_review": "UNKNOWN",
+  "lean_and_full_repository_checks": "NOT RUN",
+  "machine": "x86_64",
+  "nfa_and_graph_checks": {
+    "exhaustive_nfas": 4104,
+    "maximum_model_nodes": 130,
+    "nonuniversal": 1695,
+    "premise_checks": 33447,
+    "random_nfas": 400,
+    "universal": 2809
+  },
+  "non_image_value_checks": {
+    "arbitrary_graph_valuations": 4913,
+    "literal_finite_values": 677,
+    "satisfying_finite_values": 11,
+    "satisfying_graph_valuations": 106,
+    "status": "PASS"
+  },
+  "original_pdf_page_image_check": "NOT RUN",
+  "platform": "Linux",
+  "python": "3.13.5",
+  "repair_checks": {
+    "finite_reference_repair": {
+      "reason": "recursive bound or YES case fails",
+      "status": "FAIL"
+    },
+    "identity_transfer": {
+      "reason": "RHS is greatest Omega",
+      "status": "FAIL"
+    },
+    "marker_pilots": {
+      "fixtures": [
+        {
+          "missing_word": "0",
+          "name": "no_edges",
+          "shortest_graph_separator": "001"
+        },
+        {
+          "missing_word": "1",
+          "name": "only_0_loop",
+          "shortest_graph_separator": "011"
+        },
+        {
+          "missing_word": null,
+          "name": "both_loops",
+          "shortest_graph_separator": null
+        }
+      ],
+      "status": "PASS"
+    },
+    "reversed_query_repair": {
+      "reason": "bottom state valuation",
+      "status": "FAIL"
+    }
+  },
+  "scope": "finite experiment families; ordinary all-input proof is separate",
+  "script_sha256": "81e54110e789c9ef282236bec55e5fee97df194e6040a719fe5ba89533396e0a",
+  "seed": 2026092070,
+  "status": "PASS"
+}
