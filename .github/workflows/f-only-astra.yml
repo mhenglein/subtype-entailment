@@ -1,0 +1,66 @@
+name: F-only Astra critical steps
+
+# Additive, branch-local research validation. No existing workflow is changed.
+on:
+  push:
+    branches: [codex/f-only-astra-20260920]
+    paths:
+      - 'lean/FOnlyAstra.lean'
+      - '.github/workflows/f-only-astra.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: f-only-astra-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  critical-steps:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/cache@v6.1.0
+        with:
+          path: ~/.elan
+          key: elan-${{ runner.os }}-${{ hashFiles('lean/lean-toolchain') }}
+      - uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596
+        with:
+          lake-package-directory: lean
+          build: 'false'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'false'
+      - name: Build dependencies and check the isolated module
+        working-directory: lean
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Subtail.RankQueryLengthBound
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/FOnlyAstra.olean FOnlyAstra.lean | tee FOnlyAstra.log
+          lake env leanchecker FOnlyAstra
+          if grep -nE '\bsorry\b|sorryAx|^[[:space:]]*axiom[[:space:]]' FOnlyAstra.lean; then exit 1; fi
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          text = Path('FOnlyAstra.log').read_text()
+          rows = re.findall(r"'Subtail\.FOnlyAstra\.([^']+)' (does not depend on any axioms|depends on axioms: \[([^]]*)\])", text)
+          assert len(rows) == 20, (len(rows), text)
+          runtime = {'finishPlusObserver', 'finishPlusQuery', 'oldGrowth', 'originalF'}
+          for name, _, raw in rows:
+              allowed = {'propext', 'Quot.sound'}
+              if name not in runtime:
+                  allowed.add('Classical.choice')
+              actual = {x.strip() for x in raw.split(',') if x.strip()}
+              assert actual <= allowed, (name, actual)
+          print('PASS: 20 named axiom closures; 4 runtime definitions choice-free')
+          PY
+      - name: Existing default core regression, unchanged
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 600 python3 scripts/check_lean.py
