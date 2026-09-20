@@ -28,6 +28,8 @@ on:
       - 'scripts/check_terminal_lazy.py'
       - 'scripts/check_fast_summary.py'
       - 'scripts/check_prepared_summary.py'
+      - 'scripts/check_infinite_lazy.py'
+      - 'scripts/test_profile_raw_backend.py'
       - 'scripts/test_profile_entailment.py'
       - 'scripts/check_regular_certificate.py'
       - 'scripts/check_finite_tree_reduction.py'
@@ -56,6 +58,8 @@ on:
       - 'scripts/check_terminal_lazy.py'
       - 'scripts/check_fast_summary.py'
       - 'scripts/check_prepared_summary.py'
+      - 'scripts/check_infinite_lazy.py'
+      - 'scripts/test_profile_raw_backend.py'
       - 'scripts/test_profile_entailment.py'
       - 'scripts/check_regular_certificate.py'
       - 'scripts/check_finite_tree_reduction.py'
@@ -633,6 +637,18 @@ jobs:
           path: |
             tmp/prepared-audit-cli.json
             tmp/entailment-prepared.json
+          retention-days: 90
+          if-no-files-found: warn
+      - name: Proved streamed cycle decision and current JSON endpoint
+        run: |
+          python3 scripts/check_infinite_lazy.py --cli --output tmp/infinite-lazy-audit.json
+          PYTHONPATH=scripts python3 -m unittest scripts/test_profile_raw_backend.py
+      - name: Preserve streamed decision proof and CLI evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: infinite-lazy-audit
+          path: tmp/infinite-lazy-audit.json
           retention-days: 90
           if-no-files-found: warn
       - name: Independent native normalization and original-syntax reference checks
