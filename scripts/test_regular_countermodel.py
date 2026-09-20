@@ -69,6 +69,28 @@ class ExtractionTests(unittest.TestCase):
                 self.assertEqual(bool(nfa.productive() & (1 << q)),
                                  any(p == q for p, _ in reached), (sample, q))
 
+    def test_cyclic_nfa_against_independent_predecessor_saturation(self):
+        from experiments import check_stack_summary as oracle
+        rng = random.Random(5704)
+        for sample in range(60):
+            n = rng.randrange(1, 4)
+            epsilon = {(p,q) for p in range(n) for q in range(n) if rng.random() < .2}
+            push = {(p,a,q) for p in range(n) for a in (0,1) for q in range(n) if rng.random() < .2}
+            pop = {(p,a,q) for p in range(n) for a in (0,1) for q in range(n) if rng.random() < .2}
+            system = rc.System(n, epsilon, push, pop, set(), set(), 0, 0)
+            source = oracle.System(n, frozenset(epsilon),
+                frozenset((a,p,q) for p,a,q in push), frozenset((a,p,q) for p,a,q in pop))
+            seeds = {(rng.randrange(n), rng.choice(word_set(3))) for _ in range(3)}
+            nfa = rc.ClosureNFA(rc.PopMachine(system), rc.PopMachine(system.reverse()), seeds)
+            for q in range(n):
+                for word in word_set(3):
+                    pre = oracle.predecessor(source, q, word)
+                    self.assertEqual(nfa.accepts(q, word), any(pre(p,u) for p,u in seeds),
+                                     (sample, q, word))
+                pre = oracle.predecessor(source, q, None)
+                self.assertEqual(bool(nfa.productive() & (1 << q)),
+                                 any(pre(p,u) for p,u in seeds), (sample,q))
+
     def check(self, data):
         p = subtail.parse_problem(data)
         result = rc.extract(p, time.monotonic() + 5, max_words=128)
