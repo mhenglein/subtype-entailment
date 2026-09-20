@@ -1,4 +1,4 @@
-"""Profile protocol boundaries; a interrupted trace never supplies a decision."""
+"""Profile protocol boundaries; an interrupted trace never supplies a decision."""
 import sys
 from pathlib import Path
 import unittest
@@ -10,6 +10,7 @@ from profile_entailment import parse_trace
 class ProfileTraceTests(unittest.TestCase):
     def test_completed_false_answer_and_phase(self):
         trace = "\n".join([
+            "SUBTAIL_PROFILE:input:controls:2",
             "SUBTAIL_PROFILE:begin:positive", "SUBTAIL_PROFILE:value:positive:false",
             "SUBTAIL_PROFILE:end:positive:12", "SUBTAIL_PROFILE:result:false",
         ])
@@ -38,6 +39,21 @@ class ProfileTraceTests(unittest.TestCase):
     def test_phase_protocol_error_fails_on_completed_process(self):
         trace = "SUBTAIL_PROFILE:begin:forward\nSUBTAIL_PROFILE:end:backward:3\nSUBTAIL_PROFILE:result:false\n"
         self.assertEqual(parse_trace(trace, True, False)["status"], "FAIL")
+
+    def test_bare_result_and_markers_after_result_fail(self):
+        phase = ("SUBTAIL_PROFILE:input:controls:2\nSUBTAIL_PROFILE:begin:positive\n"
+                 "SUBTAIL_PROFILE:value:positive:false\nSUBTAIL_PROFILE:end:positive:1\n")
+        result = "SUBTAIL_PROFILE:result:false\n"
+        for trace in [result, result + phase, phase + result + "SUBTAIL_PROFILE:input:controls:2\n",
+                      phase + result + phase]:
+            self.assertEqual(parse_trace(trace, True, False)["status"], "FAIL")
+
+    def test_unknown_phase_and_duplicate_input_fail(self):
+        trace = ("SUBTAIL_PROFILE:input:controls:2\nSUBTAIL_PROFILE:begin:positive\n"
+                 "SUBTAIL_PROFILE:value:positive:false\nSUBTAIL_PROFILE:end:positive:1\n"
+                 "SUBTAIL_PROFILE:result:false\n")
+        for bad in [trace.replace("positive", "bogus"), "SUBTAIL_PROFILE:input:controls:2\n" + trace]:
+            self.assertEqual(parse_trace(bad, True, False)["status"], "FAIL")
 
 
 if __name__ == "__main__":

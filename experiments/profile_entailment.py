@@ -14,6 +14,7 @@ import math
 import os
 from pathlib import Path
 import platform
+import re
 import signal
 import subprocess
 import sys
@@ -153,9 +154,16 @@ def parse_trace(output: str, completed: bool, expected: bool) -> dict:
         if not line.startswith(PREFIX):
             continue
         fields = line[len(PREFIX):].split(":", 2)
+        if results:
+            error = "marker_after_result"
         if fields[0] == "begin" and len(fields) == 2:
             if active is not None:
                 error = "overlapping_phase_markers"
+            if (fields[1] not in {"normalization", "candidate_paths", "positive", "primitive_tables",
+                                  "forward", "backward", "control_paths", "satisfiability",
+                                  "separation", "fallback"}
+                    and not re.fullmatch(r"separation_\d+_length_\d+", fields[1])):
+                error = "unknown_phase"
             active = fields[1]
         elif fields[0] == "value" and len(fields) == 3:
             if fields[1] != active or active in values:
@@ -170,6 +178,8 @@ def parse_trace(output: str, completed: bool, expected: bool) -> dict:
         elif fields[0] == "result" and len(fields) == 2:
             results.append(fields[1])
         elif fields[0] == "input" and len(fields) == 3:
+            if fields[1] != "controls" or fields[1] in inputs or not fields[2].isdigit():
+                error = "invalid_input_marker"
             inputs[fields[1]] = fields[2]
         else:
             error = "malformed_marker"
@@ -178,7 +188,7 @@ def parse_trace(output: str, completed: bool, expected: bool) -> dict:
         return dict(parsed, status="UNKNOWN", reason="interrupted_or_resource_limit", protocol_error=error)
     if error:
         return dict(parsed, status="FAIL", reason=error)
-    if active is not None or results not in (["true"], ["false"]):
+    if not phases or not inputs or active is not None or results not in (["true"], ["false"]):
         return dict(parsed, status="FAIL", reason="missing_or_ambiguous_result")
     actual = results[0] == "true"
     return dict(parsed, status="PASS" if actual == expected else "FAIL", actual=actual,
@@ -208,25 +218,37 @@ def run(path: Path, timeout: float, expected: bool) -> dict:
     start = time.monotonic()
     timed_out = False
     with tempfile.TemporaryFile() as capture:
-        proc = subprocess.Popen(command, cwd=ROOT / "lean", env=env, stdout=capture,
-                                stderr=subprocess.STDOUT, start_new_session=True,
-                                preexec_fn=limits if os.name == "posix" else None)
+        try:
+            proc = subprocess.Popen(command, cwd=ROOT / "lean", env=env, stdout=capture,
+                                    stderr=subprocess.STDOUT, start_new_session=True,
+                                    preexec_fn=limits if os.name == "posix" else None)
+        except OSError as error:
+            return {"status": "UNKNOWN", "reason": "launch_error", "error": str(error),
+                    "phases": [], "unfinished_phase": None, "inputs": {},
+                    "wall_seconds": round(time.monotonic() - start, 3), "peak_rss_kib": None}
         try:
             proc.wait(timeout=timeout)
         except subprocess.TimeoutExpired:
             timed_out = True
             os.killpg(proc.pid, signal.SIGKILL)
             proc.wait()
+        output_bytes = capture.seek(0, os.SEEK_END)
         capture.seek(0)
         output = capture.read(65536).decode("utf-8", errors="replace")
+        capture.seek(max(0, output_bytes - 3000))
+        tail = capture.read().decode("utf-8", errors="replace")
     parsed = parse_trace(output, proc.returncode == 0 and not timed_out, expected)
-    if (proc.returncode != 0 and not timed_out and ": error:" in output
-            and not any(word in output.lower() for word in fast.RESOURCE_WORDS)):
+    if output_bytes > 65536 and proc.returncode == 0 and not timed_out:
+        parsed.pop("actual", None)
+        parsed.update(status="FAIL", reason="trace_output_truncated")
+    diagnostics = output + tail
+    if (proc.returncode != 0 and not timed_out and ": error:" in diagnostics
+            and not any(word in diagnostics.lower() for word in fast.RESOURCE_WORDS)):
         parsed.update(status="FAIL", reason="lean_compilation_error")
     rss = memory_file.read_text().strip().splitlines() if memory_file.is_file() else []
     parsed.update(wall_seconds=round(time.monotonic() - start, 3), returncode=proc.returncode,
                   peak_rss_kib=int(rss[-1]) if rss and rss[-1].isdigit() else None,
-                  output_tail=output[-3000:])
+                  output_tail=tail, output_bytes=output_bytes, trace_truncated=output_bytes > 65536)
     return parsed
 
 
@@ -238,8 +260,8 @@ def main() -> int:
     ap.add_argument("--output", type=Path, required=True)
     ap.add_argument("--scratch", type=Path, required=True)
     args = ap.parse_args()
-    if args.timeout <= 0:
-        ap.error("timeout must be positive")
+    if not math.isfinite(args.timeout) or args.timeout <= 0:
+        ap.error("timeout must be positive and finite")
     args.scratch = args.scratch.resolve()
     args.scratch.mkdir(parents=True, exist_ok=True)
     receipt = {"revision": fast.git_revision(), "system": platform.platform(),
@@ -247,7 +269,10 @@ def main() -> int:
                "source_hashes": fast.source_hashes(),
                "profiler_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                "caps": {"wall_seconds": args.timeout, "cpu_seconds": math.ceil(args.timeout),
-                        "memory_gib": 16, "threads": 1, "stack_kib": 32768},
+                        "address_space_gib_linux": 16,
+                        "address_space_enforced": sys.platform.startswith("linux"),
+                        "cpu_enforced": os.name == "posix", "threads": 1, "stack_kib": 32768},
+               "rss_measurement": "GNU time command peak RSS in KiB where available; not a process-group memory cap",
                "execution": "lake env lean --run; diagnostic trace only; matched E055 still uses its original #eval command",
                "timing_boundary": "phase tracing includes forced summaries and output; not uninstrumented end-to-end timing",
                "cases": []}
@@ -257,6 +282,8 @@ def main() -> int:
         path.write_text(code)
         measured = run(path, args.timeout, expected)
         receipt["cases"].append({"name": name, "expected": expected,
+                                 "family": "supplied-address component" if name.startswith("supplied-") else "full expression frontend",
+                                 "true_means": "separating address" if name.startswith("supplied-") else "entailment",
                                  "generated_source_sha256": hashlib.sha256(code.encode()).hexdigest(), **measured})
         print(name, measured["status"], measured.get("unfinished_phase"), flush=True)
         args.output.parent.mkdir(parents=True, exist_ok=True)

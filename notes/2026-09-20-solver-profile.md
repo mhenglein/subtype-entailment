@@ -41,4 +41,46 @@ on the original corpus plus deeper families. A timeout remains UNKNOWN. An
 optimization failure does not reopen undecidability for this already decided
 fragment; explicit-top and other signatures retain their separate questions.
 
-Results, final interfaces, measurements and handoff follow after execution.
+## Measured obstruction and sufficient proof
+
+The first `#eval` trace at `7e03916` lost partial output on interruption.
+This is a diagnostic limitation, not evidence that no phase ran. At `d712a40`,
+`lean --run` retained the interrupted phases. Supplied depth twelve spent
+13.536 seconds in forward saturation and then timed out in reverse saturation.
+Both deeper expression cases timed out in forward saturation.
+
+An ablation at the same revision materialized the five primitive transition
+matrices for preparation only. Supplied depth twelve finished in 4.178 seconds;
+expression depth four fell from 12.651 to 2.877 seconds. Depths six and eight
+then timed out in candidate separation, which still used the original list
+predicates. These are diagnostic times, not matched production benchmarks.
+
+The selected construction caches each primitive Boolean function
+`e : Fin n → Fin n → Bool` as the finite matrix `T[p,q] = e(p,q)`.
+There are five such matrices: epsilon, the two pushes and the two pops.
+Their construction terminates after exactly five finite square tabulations;
+`n = 0` is allowed. Lookup equals the original predicate at every pair.
+Case analysis on the two letters, followed by function extensionality, proves
+that the resulting `System` equals its input, not merely that it has the same
+accepted paths. This equality is unconditional for any finite `System`.
+
+A prepared record stores that system and the existing exact summary cache.
+Substituting the equality proves that the whole record equals the reference
+record made from the original system. Saturation and all generic path tests
+are reused unchanged. The supplied-path test uses the same forced seeds,
+denials, source prefixes and target address. Therefore its Boolean answer is
+equal by substitution. The same reasoning applies to satisfiability and the
+ordered candidate scan. Positive reasoning and the complete terminal fallback
+are unchanged. Substitution gives equality of normalized and original-expression
+decisions, including empty candidate lists and all arbitrary-tree inputs.
+
+This argument does not claim that the candidate paths are complete or that a
+timeout is a negative answer. It changes no witness bound or complexity theorem.
+It does not optimize the separate finite-tree endpoint in this attempt.
+The opposing research question for explicit top is unaffected: this finite
+representation change supplies no new semantic reduction for competing labels.
+
+The additive implementation is `EntailmentPrepared`. The remaining gates are
+Lean equality/kernel/runtime checks, independent source readback, oracle
+regressions and a matched uninstrumented comparison. The profiler's protocol
+and metadata review is also being resolved before final receipts are accepted.
