@@ -119,7 +119,7 @@ def source(case: str) -> tuple[str, bool]:
   emit ("result:" ++ toString answer)
 '''
         expected = False
-    return PRELUDE + "\ndef main : IO Unit := do\n" + body + "\n#eval main\n", expected
+    return PRELUDE + "\ndef main : IO Unit := do\n" + body, expected
 
 
 def parse_trace(output: str, completed: bool, expected: bool) -> dict:
@@ -173,7 +173,9 @@ def run(path: Path, timeout: float, expected: bool) -> dict:
         seconds = max(1, math.ceil(timeout))
         resource.setrlimit(resource.RLIMIT_CPU, (seconds, seconds))
 
-    command = ["lake", "env", "lean", str(path.resolve())]
+    # --run exposes IO output immediately. #eval captures it inside Lean's
+    # command diagnostics and can lose every phase marker when evaluation dies.
+    command = ["lake", "env", "lean", "--run", str(path.resolve())]
     # GNU time reports per-run peak RSS on normal completion. A killed group
     # may not write it; report None in that case rather than infer a peak.
     memory_file = path.with_suffix(".rss")
@@ -221,6 +223,7 @@ def main() -> int:
                "profiler_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                "caps": {"wall_seconds": args.timeout, "cpu_seconds": math.ceil(args.timeout),
                         "memory_gib": 16, "threads": 1, "stack_kib": 32768},
+               "execution": "lake env lean --run; diagnostic trace only; matched E055 still uses its original #eval command",
                "timing_boundary": "phase tracing includes forced summaries and output; not uninstrumented end-to-end timing",
                "cases": []}
     for name in args.case or CASES:
