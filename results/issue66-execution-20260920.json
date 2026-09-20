@@ -1,0 +1,793 @@
+{
+  "branch": "codex/raw-summary-66-diagnostics-20260920",
+  "build": {
+    "jobs": 49,
+    "log_sha256": "5412b478165625776fb26eddf76e335f2cdc5d107a2e4facd90c8f8a128a138f",
+    "outside_query_caps": true,
+    "status": "PASS"
+  },
+  "commands": [
+    "(cd lean && lake build +Subtail.EntailmentPrepared)",
+    "python3 experiments/profile_raw_summary_66.py --self-test --output tmp/raw66-self-test.json",
+    "python3 experiments/profile_raw_summary_66.py --run --n 3 --output tmp/raw66-n3.json",
+    "python3 experiments/profile_raw_summary_66.py --run --n 6 --output tmp/raw66-n6.json"
+  ],
+  "contribution_revision": "f8180b199721679dca8e4bd6df6b5ab420516f5d",
+  "date": "2026-09-20",
+  "environment": "Isolated full clone on Linux AArch64; pinned Lean 4.33.1; existing toolchain reused; no shared active Lake build",
+  "final_git_status": "",
+  "initial_git_status": "",
+  "normalization": "Private host/path fields are portable placeholders; exact original receipts are identified by hashes.",
+  "operator": "publication-sequence-20260920, parent executor; contributor owns harness",
+  "original_receipt_sha256": {
+    "raw66-n3.json": "c7bd7c8ec56121021dc8df692cb9997b5d522a138581ca950070cfcb575055be",
+    "raw66-n6.json": "db5b12d0dd3cc646f8643ce74a98ee55c43f54454f21fbe00547fa71942c14c2",
+    "raw66-self-test.json": "2748f2e3adb537eefde2489c2fbb4bf60570c3885e593e89d4497cd938454d1b"
+  },
+  "readback": {
+    "conclusions": "Decode/encode work and dense flag materialization are measured candidates for refinement, not an implemented optimization. No n=6 completion or all-input equivalence claim.",
+    "encode_boundary": "Encoding emitted its end/completion token, but the entire process was killed at 20.010 seconds. Status remains UNKNOWN; the marker cannot override process completion.",
+    "measurement_limits": "Diagnostic forces include traversal/output overhead and different prerequisites. Times are not additive and are not a proved or matched speedup. Actual CPU seconds are NOT RECORDED. Peak RSS is unavailable for every mode; /usr/bin/time was absent on the worker.",
+    "n3": "All eight native modes PASS; actual complete cached raw answer false in 0.719 seconds.",
+    "n6": "Actual complete cached raw query UNKNOWN at 20.008 seconds. Phased execution UNKNOWN while constructing transitions; dense flags separately UNKNOWN.",
+    "phase_diagnostics_ms": {
+      "decode_scan": 8700,
+      "encode_successors_observed_before_process_timeout": 17315,
+      "enumeration": 11,
+      "lookup_scan": 12,
+      "lookup_state_table": 15,
+      "successors": 1898
+    },
+    "source_blob_contract": "PASS; critical_source_mismatch empty at n=3 and n=6"
+  },
+  "receipts": {
+    "raw66-n3.json": {
+      "base": "19b06d4fed9da635d9b911f0e908d04e4fc4b099",
+      "caps": {
+        "address_space_gib_linux": 16,
+        "cpu_seconds": 20,
+        "lean_stack_kib": 32768,
+        "lean_threads": 1,
+        "wall_seconds": 20
+      },
+      "checked_revision": "f8180b199721679dca8e4bd6df6b5ab420516f5d",
+      "critical_git_blob_sha1": {
+        "experiments/profile_raw_backend.py": "5634f283eeb54d97441d446ee4461ef6719e981e",
+        "lean/Subtail/EntailmentPrepared.lean": "2c0d5a0877de67d888f8a21f0e0624b838e5aedf",
+        "lean/Subtail/SummaryAutomaton.lean": "c1a6bb0ff71a3053c7b795b35d08220685ed990f",
+        "lean/Subtail/SummaryInstanceCached.lean": "bc687f57879bac64455544ab99d5dcb45301a762"
+      },
+      "critical_source_mismatch": [],
+      "host": "<isolated-linux-aarch64-worker>",
+      "lake_available": true,
+      "lean_version": "Lean (version 4.33.1, aarch64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
+      "limitations": [
+        "Diagnostic forces include digest/traversal overhead; no matched speedup inferred.",
+        "Isolated probes have separate prerequisites and caps; their times are not additive.",
+        "Microprobe result:true is only a completion token, never an entailment answer.",
+        "Legacy GNU-time peak RSS can be absent on a killed group; null is not zero.",
+        "No optimization, new checked theorem, independent review, or n=6 completion is claimed."
+      ],
+      "missing_sources": [],
+      "modes": [
+        {
+          "actual": false,
+          "generated_source_sha256": "6c73fa8b4f2ec653fe50329fdf03fd9925e5b25b8e240057429a01f155e736d7",
+          "inputs": {
+            "controls": "3"
+          },
+          "meaning": "Instrumented complete raw query",
+          "mode": "phased",
+          "n": 3,
+          "output_bytes": 1136,
+          "output_tail": "SUBTAIL_RAW_PROFILE:input:controls:3\nSUBTAIL_RAW_PROFILE:begin:prepare\nSUBTAIL_RAW_PROFILE:value:prepare:9\nSUBTAIL_RAW_PROFILE:end:prepare:1\nSUBTAIL_RAW_PROFILE:begin:sat\nSUBTAIL_RAW_PROFILE:value:sat:true\nSUBTAIL_RAW_PROFILE:end:sat:0\nSUBTAIL_RAW_PROFILE:begin:danger\nSUBTAIL_RAW_PROFILE:value:danger:0\nSUBTAIL_RAW_PROFILE:end:danger:0\nSUBTAIL_RAW_PROFILE:begin:state_table\nSUBTAIL_RAW_PROFILE:value:state_table:384\nSUBTAIL_RAW_PROFILE:end:state_table:0\nSUBTAIL_RAW_PROFILE:begin:initial\nSUBTAIL_RAW_PROFILE:value:initial:34\nSUBTAIL_RAW_PROFILE:end:initial:0\nSUBTAIL_RAW_PROFILE:begin:transitions\nSUBTAIL_RAW_PROFILE:value:transitions:128\nSUBTAIL_RAW_PROFILE:end:transitions:19\nSUBTAIL_RAW_PROFILE:begin:bad\nSUBTAIL_RAW_PROFILE:value:bad:0\nSUBTAIL_RAW_PROFILE:end:bad:0\nSUBTAIL_RAW_PROFILE:begin:final\nSUBTAIL_RAW_PROFILE:value:final:64\nSUBTAIL_RAW_PROFILE:end:final:1\nSUBTAIL_RAW_PROFILE:begin:flags\nSUBTAIL_RAW_PROFILE:value:flags:2368\nSUBTAIL_RAW_PROFILE:end:flags:7\nSUBTAIL_RAW_PROFILE:begin:infinite_stream\nSUBTAIL_RAW_PROFILE:value:infinite_stream:true\nSUBTAIL_RAW_PROFILE:end:infinite_stream:19\nSUBTAIL_RAW_PROFILE:result:false\n",
+          "peak_rss_kib": null,
+          "phases": [
+            {
+              "milliseconds": 1,
+              "phase": "prepare",
+              "value": "9"
+            },
+            {
+              "milliseconds": 0,
+              "phase": "sat",
+              "value": "true"
+            },
+            {
+              "milliseconds": 0,
+              "phase": "danger",
+              "value": "0"
+            },
+            {
+              "milliseconds": 0,
+              "phase": "state_table",
+              "value": "384"
+            },
+            {
+              "milliseconds": 0,
+              "phase": "initial",
+              "value": "34"
+            },
+            {
+              "milliseconds": 19,
+              "phase": "transitions",
+              "value": "128"
+            },
+            {
+              "milliseconds": 0,
+              "phase": "bad",
+              "value": "0"
+            },
+            {
+              "milliseconds": 1,
+              "phase": "final",
+              "value": "64"
+            },
+            {
+              "milliseconds": 7,
+              "phase": "flags",
+              "value": "2368"
+            },
+            {
+              "milliseconds": 19,
+              "phase": "infinite_stream",
+              "value": "true"
+            }
+          ],
+          "reason": "expected_answer",
+          "returncode": 0,
+          "source": "<checkout>/tmp/raw-summary-66/n3-phased.lean",
+          "status": "PASS",
+          "trace_truncated": false,
+          "unfinished_phase": null,
+          "wall_seconds": 0.97
+        },
+        {
+          "generated_source_sha256": "9ad63d97e4bea9b98a7b4cbd0106ad74833be9c1e1bc8f56fe2bdfbd7e6e19a7",
+          "inputs": {
+            "controls": "3"
+          },
+          "meaning": "Isolated diagnostic completion, NOT entailment",
+          "mode": "enumeration",
+          "n": 3,
+          "output_bytes": 187,
+          "output_tail": "SUBTAIL_RAW_PROFILE:input:controls:3\nSUBTAIL_RAW_PROFILE:begin:enumeration\nSUBTAIL_RAW_PROFILE:value:enumeration:384\nSUBTAIL_RAW_PROFILE:end:enumeration:0\nSUBTAIL_RAW_PROFILE:result:true\n",
+          "peak_rss_kib": null,
+          "phases": [
+            {
+              "milliseconds": 0,
+              "phase": "enumeration",
+              "value": "384"
+            }
+          ],
+          "probe_completed": true,
+          "reason": "expected_answer",
+          "returncode": 0,
+          "source": "<checkout>/tmp/raw-summary-66/n3-enumeration.lean",
+          "status": "PASS",
+          "trace_truncated": false,
+          "unfinished_phase": null,
+          "wall_seconds": 0.769
+        },
+        {
+          "generated_source_sha256": "8ee724b631d62c13c11e2db32b477644b9f07f23876cad395c6df906fc04a40c",
+          "inputs": {
+            "controls": "3"
+          },
+          "meaning": "Isolated diagnostic completion, NOT entailment",
+          "mode": "decode",
+          "n": 3,
+          "output_bytes": 187,
+          "output_tail": "SUBTAIL_RAW_PROFILE:input:controls:3\nSUBTAIL_RAW_PROFILE:begin:decode_scan\nSUBTAIL_RAW_PROFILE:value:decode_scan:384\nSUBTAIL_RAW_PROFILE:end:decode_scan:4\nSUBTAIL_RAW_PROFILE:result:true\n",
+          "peak_rss_kib": null,
+          "phases": [
+            {
+              "milliseconds": 4,
+              "phase": "decode_scan",
+              "value": "384"
+            }
+          ],
+          "probe_completed": true,
+          "reason": "expected_answer",
+          "returncode": 0,
+          "source": "<checkout>/tmp/raw-summary-66/n3-decode.lean",
+          "status": "PASS",
+          "trace_truncated": false,
+          "unfinished_phase": null,
+          "wall_seconds": 0.769
+        },
+        {
+          "generated_source_sha256": "923eed64109f90fe4b6d03fc62f58f3841502011559005da7a01a39e509dc9d7",
+          "inputs": {
+            "controls": "3"
+          },
+          "meaning": "Isolated diagnostic completion, NOT entailment",
+          "mode": "lookup",
+          "n": 3,
+          "output_bytes": 305,
+          "output_tail": "SUBTAIL_RAW_PROFILE:input:controls:3\nSUBTAIL_RAW_PROFILE:begin:state_table\nSUBTAIL_RAW_PROFILE:value:state_table:384\nSUBTAIL_RAW_PROFILE:end:state_table:1\nSUBTAIL_RAW_PROFILE:begin:lookup_scan\nSUBTAIL_RAW_PROFILE:value:lookup_scan:384\nSUBTAIL_RAW_PROFILE:end:lookup_scan:0\nSUBTAIL_RAW_PROFILE:result:true\n",
+          "peak_rss_kib": null,
+          "phases": [
+            {
+              "milliseconds": 1,
+              "phase": "state_table",
+              "value": "384"
+            },
+            {
+              "milliseconds": 0,
+              "phase": "lookup_scan",
+              "value": "384"
+            }
+          ],
+          "probe_completed": true,
+          "reason": "expected_answer",
+          "returncode": 0,
+          "source": "<checkout>/tmp/raw-summary-66/n3-lookup.lean",
+          "status": "PASS",
+          "trace_truncated": false,
+          "unfinished_phase": null,
+          "wall_seconds": 0.77
+        },
+        {
+          "generated_source_sha256": "d92e617e8d6f13fd8123e69b8251bdb8b6e57c5693b7c12f73fefca35ad571a3",
+          "inputs": {
+            "controls": "3"
+          },
+          "meaning": "Isolated diagnostic completion, NOT entailment",
+          "mode": "successors",
+          "n": 3,
+          "output_bytes": 286,
+          "output_tail": "SUBTAIL_RAW_PROFILE:input:controls:3\nSUBTAIL_RAW_PROFILE:begin:prepare\nSUBTAIL_RAW_PROFILE:value:prepare:9\nSUBTAIL_RAW_PROFILE:end:prepare:2\nSUBTAIL_RAW_PROFILE:begin:successors\nSUBTAIL_RAW_PROFILE:value:successors:0\nSUBTAIL_RAW_PROFILE:end:successors:7\nSUBTAIL_RAW_PROFILE:result:true\n",
+          "peak_rss_kib": null,
+          "phases": [
+            {
+              "milliseconds": 2,
+              "phase": "prepare",
+              "value": "9"
+            },
+            {
+              "milliseconds": 7,
+              "phase": "successors",
+              "value": "0"
+            }
+          ],
+          "probe_completed": true,
+          "reason": "expected_answer",
+          "returncode": 0,
+          "source": "<checkout>/tmp/raw-summary-66/n3-successors.lean",
+          "status": "PASS",
+          "trace_truncated": false,
+          "unfinished_phase": null,
+          "wall_seconds": 0.769
+        },
+        {
+          "generated_source_sha256": "56877fd5c6e52b42dd658b51716f34d107f92f3b7652f614657ac063c45993e5",
+          "inputs": {
+            "controls": "3"
+          },
+          "meaning": "Isolated diagnostic completion, NOT entailment",
+          "mode": "encode",
+          "n": 3,
+          "output_bytes": 420,
+          "output_tail": "SUBTAIL_RAW_PROFILE:input:controls:3\nSUBTAIL_RAW_PROFILE:begin:prepare\nSUBTAIL_RAW_PROFILE:value:prepare:9\nSUBTAIL_RAW_PROFILE:end:prepare:2\nSUBTAIL_RAW_PROFILE:begin:successors\nSUBTAIL_RAW_PROFILE:value:successors:0\nSUBTAIL_RAW_PROFILE:end:successors:5\nSUBTAIL_RAW_PROFILE:begin:encode_successors\nSUBTAIL_RAW_PROFILE:value:encode_successors:0\nSUBTAIL_RAW_PROFILE:end:encode_successors:7\nSUBTAIL_RAW_PROFILE:result:true\n",
+          "peak_rss_kib": null,
+          "phases": [
+            {
+              "milliseconds": 2,
+              "phase": "prepare",
+              "value": "9"
+            },
+            {
+              "milliseconds": 5,
+              "phase": "successors",
+              "value": "0"
+            },
+            {
+              "milliseconds": 7,
+              "phase": "encode_successors",
+              "value": "0"
+            }
+          ],
+          "probe_completed": true,
+          "reason": "expected_answer",
+          "returncode": 0,
+          "source": "<checkout>/tmp/raw-summary-66/n3-encode.lean",
+          "status": "PASS",
+          "trace_truncated": false,
+          "unfinished_phase": null,
+          "wall_seconds": 0.77
+        },
+        {
+          "generated_source_sha256": "ff3c9b3f371be1c00159638652bef1ee220091c7c4fc9c11c2c3343af5ed0779",
+          "inputs": {
+            "controls": "3"
+          },
+          "meaning": "Isolated diagnostic completion, NOT entailment",
+          "mode": "flags",
+          "n": 3,
+          "output_bytes": 288,
+          "output_tail": "SUBTAIL_RAW_PROFILE:input:controls:3\nSUBTAIL_RAW_PROFILE:begin:state_table\nSUBTAIL_RAW_PROFILE:value:state_table:384\nSUBTAIL_RAW_PROFILE:end:state_table:1\nSUBTAIL_RAW_PROFILE:begin:flags\nSUBTAIL_RAW_PROFILE:value:flags:2368\nSUBTAIL_RAW_PROFILE:end:flags:6\nSUBTAIL_RAW_PROFILE:result:true\n",
+          "peak_rss_kib": null,
+          "phases": [
+            {
+              "milliseconds": 1,
+              "phase": "state_table",
+              "value": "384"
+            },
+            {
+              "milliseconds": 6,
+              "phase": "flags",
+              "value": "2368"
+            }
+          ],
+          "probe_completed": true,
+          "reason": "expected_answer",
+          "returncode": 0,
+          "source": "<checkout>/tmp/raw-summary-66/n3-flags.lean",
+          "status": "PASS",
+          "trace_truncated": false,
+          "unfinished_phase": null,
+          "wall_seconds": 0.772
+        },
+        {
+          "actual": false,
+          "generated_source_sha256": "083a368a4ad8c683939f456fe7fbfd987049ce73b755f0a0664649d842c0c38d",
+          "marker": "RAW66_BASELINE:n3:false",
+          "markers": [
+            "RAW66_BASELINE:n3:false"
+          ],
+          "meaning": "Complete current cached raw entailment endpoint, uninstrumented #eval; independently expected false",
+          "mode": "baseline",
+          "n": 3,
+          "output_tail": "RAW66_BASELINE:n3:false\n",
+          "returncode": 0,
+          "seconds": 0.719,
+          "source": "<checkout>/tmp/raw-summary-66/n3-baseline.lean",
+          "status": "PASS"
+        }
+      ],
+      "platform": "Linux-6.12.94-123.192.amzn2023.aarch64-aarch64-with-glibc2.43",
+      "python": "3.13.14",
+      "source_sha256": {
+        "experiments/check_entailment_decision.py": "78262d84da6b5c1bc0cc446895a461720a9d5b3038953f4a5678a10ba450f1f0",
+        "experiments/check_fast_summary.py": "2c1cce2ff983ff9d253ac5e4069c9f35a2bed2c8c9f6b497466deace24ee7279",
+        "experiments/profile_raw_backend.py": "7b0fc1d74ada0f7a04cd794fe3a8591560d7927bfc6624ea25cf095965da0c15",
+        "experiments/profile_raw_summary_66.py": "7e84967b9039f9cadcbe6e8ef290ea4773b478dc36613466d9d7675dd6ecf6ae",
+        "lean/Subtail/AbsorbingTerminal.lean": "596d502361547a2b01c276fd41bc1b2b004bdbe4ce0de561cd4b6bce9002bb1b",
+        "lean/Subtail/Audit.lean": "0487d784c6f61affa4e332c2d8edba145d4cebb4d831ea2ddcf0e157a1821ad5",
+        "lean/Subtail/Basic.lean": "1a7cb0c1f7546ed2efdae96d1af9a84dc6f433531549a50f4738ed25eb64c6c6",
+        "lean/Subtail/Boundary.lean": "016ecea3ef35bcff2421cf5b25ac702a617db707c51014d49166de8715cc88c8",
+        "lean/Subtail/CanonicalModel.lean": "45b777cb26c2bde47870bdb1b9f6e243e3fa6d650b26752742680a5758fcd713",
+        "lean/Subtail/CanonicalModelAudit.lean": "140ab22c11130e6138f80824f2a2c8df936b2152b0353d792a4d3555523094da",
+        "lean/Subtail/CanonicalReachability.lean": "6400b93753493a13b9a4cc1cb391e3ca5ad8b7b45623824877e2ad1d78e72403",
+        "lean/Subtail/CanonicalReachabilityFast.lean": "6adfbb85117674122f0bceafe351bc4789206c61b00489486ddb4aeb53219273",
+        "lean/Subtail/Conditional.lean": "64f902acce370dadd3f0ac53cbd31ae4026664552c48e31ccd56b1ca542ac01b",
+        "lean/Subtail/EntailmentDecision.lean": "a899b12e1d2b968053a0062a1600c9d368fe5c16f1ba3b74aef591b311088f59",
+        "lean/Subtail/EntailmentFast.lean": "d2867bd220ec379ab19caa9f6d639082b0abd234ce548642d64e3e7d85017afc",
+        "lean/Subtail/EntailmentPrepared.lean": "9810cb89e8a25646d75281621c616a1d7c5e09abb1d38250e12e0da272d3256d",
+        "lean/Subtail/Examples.lean": "3b3e091c4b944992f3aa65c7d5923e35558b05193dec7540ed0e9acda13864c7",
+        "lean/Subtail/ExpressionNormalization.lean": "6e69fa21ebf0a0ffa65f78c976eb6681a85e9c9778cf96e57d16fb86b1285b82",
+        "lean/Subtail/ExpressionNormalizationAudit.lean": "471699acaca0a37f6502f7f631c9b1c3bae3d393584252cbad9174ec27fc6074",
+        "lean/Subtail/FiniteSearch.lean": "10583fb950420ccfb3ae88c906a0e3f004d72fcb8a3aac53a24b4281800a4057",
+        "lean/Subtail/FiniteTreeDecision.lean": "b8a42b54bbfb626290dd73bdbfc2df2f1880d80af610d9cf458da24998734fd8",
+        "lean/Subtail/FiniteTreeReduction.lean": "2b6200f4f913e515bd4f863c77ab4208bef75bb192ac1dc89dfa69614eb415e4",
+        "lean/Subtail/FirstReturnColours.lean": "848c71747fb6deff903b9ee850a8c6ecdf5f35cd79ce680c7da11c68b7909352",
+        "lean/Subtail/FirstReturnGenerator.lean": "d6c4266c59949785979e6f37dea7d0e93adf50e9a42ad447a7267912949bace6",
+        "lean/Subtail/FirstReturnGraph.lean": "06d11930a30fc4034e9a8997a4b2d57f82b5f8779b87f709287502fccbde88d8",
+        "lean/Subtail/InfiniteCycle.lean": "0a3559e3b09dc9a3a1d2ce80893fc354bd6aec7f2ab0a12b82fe9917fb4e2fb3",
+        "lean/Subtail/InfiniteDecision.lean": "d9679db4b52062a707f74c4a7198137f608660930e3f4a2d868ab4efac40228d",
+        "lean/Subtail/InfiniteDecisionLazy.lean": "e9ad300545cde49da4979ec62f214db59d9453953919118962e206dc12c68a75",
+        "lean/Subtail/InfiniteWitness.lean": "778759b132b97fd0e8546a2ad0346b1e977e0cbf34423f69f0e04170f7624fdc",
+        "lean/Subtail/PeriodicGood.lean": "5f13030c1825fb396f0f288cc4a080d88810f9c08449841a913efc52486eaf9e",
+        "lean/Subtail/PeriodicMonitor.lean": "719ce76ea2d91c7325f733462791d4da924e38afb8ec9cbe7e4743da0402c7bb",
+        "lean/Subtail/PeriodicMonitorComplete.lean": "ff3333943b6ca5dbf5e9920f2a3071912244cddf6098f25eededa476d3b1fc32",
+        "lean/Subtail/PeriodicRotation.lean": "ce02774c6dd7f483dbc34b574c7894335dd5340c6ddc08459c5295d1dc64c6f4",
+        "lean/Subtail/PeriodicRun.lean": "d27cdbb13b08aca5410c76e4ae438a0cebcb7b2acf223bd94a95814717815a86",
+        "lean/Subtail/PeriodicTail.lean": "1243dc455f48858d1dc30e1543cdc3737e6078aa51f7cc2f761e8af67741b148",
+        "lean/Subtail/PopAcyclic.lean": "f1529b5d4dc81e5eca039ce865d1209771730078bea1f949da91525389d802c3",
+        "lean/Subtail/PrefixMatching.lean": "59de0b193b55765db895f0f9ceb2a4155cd4d4dcfe54fa58cb285ec0577931e4",
+        "lean/Subtail/RankMilestones.lean": "3a948deaea047bf02289869210fcc2cbf7ada1010983dee66fa8477e4832d1c6",
+        "lean/Subtail/RankQuery.lean": "e8ef2ec585c49a593c8cee4d11e7aeb75f0284179e36b26ea21d72dd313adb41",
+        "lean/Subtail/RankQueryCompiler.lean": "1e32f44935490d7e69c8157f4ce12f763c9732b26e4cef2a7fb94518941edb2c",
+        "lean/Subtail/RankQueryCoverage.lean": "b1ccfa2fe221d355451ccfffe3d701ee46489d616e7e20d015f3e4fb2e86b49f",
+        "lean/Subtail/RankQueryDecision.lean": "51fef747bb443d313559e57d8fb8e3c1ce68b804eb4883a7d504e2945da5bd8a",
+        "lean/Subtail/RankQueryEnumeration.lean": "f65f40733e4cd45c8499cf1874509b23bacfdfd9f32278b5d459d12dd7016189",
+        "lean/Subtail/RankQueryEnumerationAudit.lean": "93c60b30d903e2a30da0152fda5abdf45b923ee09facdb1293264e44ed98f853",
+        "lean/Subtail/RankQueryFinishFacts.lean": "8e67cbbcf2a2710ec5307455303180fea8c0d7756969b121efab025b8f7ff2a2",
+        "lean/Subtail/RankQueryFinishTrace.lean": "93653a3ade48c9c4c628a8f05583a1deef201d412427de87ce3209a91949a258",
+        "lean/Subtail/RankQueryFirstReturn.lean": "b029e89e706c0724428194ddbc7d08abd494710d29ac65fb21e1dc90d7df10e0",
+        "lean/Subtail/RankQueryLengthBound.lean": "daec0fabc8c8e8b5c9ff5b1078a110f2fddf48ef60d3cbfec04557261a794399",
+        "lean/Subtail/RankQueryPaths.lean": "d383b44afb6bb7625181fb58e1d269030fa388a477849c76b7bc7dc64172de2a",
+        "lean/Subtail/RankQuerySemanticUnwind.lean": "2b3968f40f9b42d9bc051a0d6b11de3c80e2c3bd30351b04f579765960c9b3de",
+        "lean/Subtail/RankQuerySound.lean": "7729268fb6f82a0c508747e774e92133f869e3038d05e6c8c1a0caf962c9cd76",
+        "lean/Subtail/RankQueryUnwind.lean": "c6006c46aa86de0d173711a14f8c4076fcd5723a7470664da0d87d18a70efa3e",
+        "lean/Subtail/RankQueryWeightBound.lean": "d92069dfe5de891ba9bcfe3c5599a6a5e726fd57e2995f87a3b569fa0daabe50",
+        "lean/Subtail/RankQueryWeightCounterexample.lean": "d3e2ebbe27bdc277f8080e5e75f8d8939784d670e396e52e69aac631681a68ce",
+        "lean/Subtail/RankWitnessReference.lean": "eb5f6485995190a3a829b6de2c87e31a79f47b408c6afb77cecfc031c03d7772",
+        "lean/Subtail/RegularTreeCertificate.lean": "f0a271f276adc997620f2034edd3d3e3e44a33045d1b69c489f48ae81c33579f",
+        "lean/Subtail/SandwichPredicates.lean": "81b031e2c472d632b1d1b0bc0ad206aa8977571d78c58afc5b3e03670457e177",
+        "lean/Subtail/StackReachability.lean": "c3d0efc707cbc0979e99cd26726ed2575f6c1c60e85d34e7449903bf3082ec7f",
+        "lean/Subtail/StackSummary.lean": "345b4b1719f31b3963ca5ccc50b2fc861fc19864fe891cd9fcd547121acbe1fc",
+        "lean/Subtail/StackSummaryAudit.lean": "743ce0dbd00b926a7ec22377f621156afb593695bc3c8a4ca2d4b22139658d46",
+        "lean/Subtail/StackSummaryFast.lean": "c3294589e5114d2d4b26c595226d94fd1d470fca22eff47e85ca7868c793cb6f",
+        "lean/Subtail/SubtypeTerminalBridge.lean": "4a6fb1e783fdf052c1ac61bfd24aae9dbc5d1c441961e41d7cd02f434d57b751",
+        "lean/Subtail/SummaryAutomaton.lean": "68832af44bc8907e99dd2889968c699245aff70d40bf5690539f3f9edd8ca37b",
+        "lean/Subtail/SummaryBridge.lean": "8c5d8038b87a1b419e9be03dee668d390260c2677e42f227622cd199dff58bd9",
+        "lean/Subtail/SummaryInstanceCached.lean": "011b62cb5dfdc945c2c8b9ef0eb85da7549e21ec9fce3bcca4e050ed7e81f75c",
+        "lean/Subtail/TerminalDecisionLazy.lean": "67f5735adca1e6d8f059a39aedd50d1529a436e2cf0b0ce6cfda9b00f001b8a9",
+        "lean/Subtail/TerminalRank.lean": "3771a1a58ff7e5ddb2aa5134e08fca65a1a05d64c3a5de8487c4f7d7630b6fc2",
+        "lean/Subtail/TerminalRealization.lean": "7ab0df63e8deb4ec4d9448298cee34cca74548e6578cb3994bbe204c3a56c429",
+        "lean/Subtail/TerminalRealizationAudit.lean": "064fa8410b668e94df2e6741632f34f69dbcec6ed179b4070db2faf4461d935d",
+        "lean/Subtail/TerminalRealizationModel.lean": "aecfb3159e0d110acc57792370a600f90b945b224eeb74bb80102928020297f0",
+        "lean/Subtail/TreeSemantics.lean": "8b08b74d08bac48454f99f0241eb066ef6b218334641f284bc26423957a78f2e",
+        "lean/Subtail/Truncation.lean": "2e2af26dc02e8168715296f4296d78ca1ea9133a156e4792969cb04efb70df07",
+        "lean/Subtail/TwoState.lean": "063c3991d77f3037b209e8c74410cdb6449144545b3b1c4eb49fe0a5b4cf1b26",
+        "scripts/subtail.py": "d399857d7206828dcc6a75c1fe34d33b22c584fc5542b7fbb2afd933b492eb5a"
+      },
+      "status": "PASS"
+    },
+    "raw66-n6.json": {
+      "base": "19b06d4fed9da635d9b911f0e908d04e4fc4b099",
+      "caps": {
+        "address_space_gib_linux": 16,
+        "cpu_seconds": 20,
+        "lean_stack_kib": 32768,
+        "lean_threads": 1,
+        "wall_seconds": 20
+      },
+      "checked_revision": "f8180b199721679dca8e4bd6df6b5ab420516f5d",
+      "critical_git_blob_sha1": {
+        "experiments/profile_raw_backend.py": "5634f283eeb54d97441d446ee4461ef6719e981e",
+        "lean/Subtail/EntailmentPrepared.lean": "2c0d5a0877de67d888f8a21f0e0624b838e5aedf",
+        "lean/Subtail/SummaryAutomaton.lean": "c1a6bb0ff71a3053c7b795b35d08220685ed990f",
+        "lean/Subtail/SummaryInstanceCached.lean": "bc687f57879bac64455544ab99d5dcb45301a762"
+      },
+      "critical_source_mismatch": [],
+      "host": "<isolated-linux-aarch64-worker>",
+      "lake_available": true,
+      "lean_version": "Lean (version 4.33.1, aarch64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
+      "limitations": [
+        "Diagnostic forces include digest/traversal overhead; no matched speedup inferred.",
+        "Isolated probes have separate prerequisites and caps; their times are not additive.",
+        "Microprobe result:true is only a completion token, never an entailment answer.",
+        "Legacy GNU-time peak RSS can be absent on a killed group; null is not zero.",
+        "No optimization, new checked theorem, independent review, or n=6 completion is claimed."
+      ],
+      "missing_sources": [],
+      "modes": [
+        {
+          "generated_source_sha256": "229d441045a8c63ab7f2252f82ea462b0546f02badbec3fc8a01a6003063f062",
+          "inputs": {
+            "controls": "6"
+          },
+          "meaning": "Instrumented complete raw query",
+          "mode": "phased",
+          "n": 6,
+          "output_bytes": 605,
+          "output_tail": "SUBTAIL_RAW_PROFILE:input:controls:6\nSUBTAIL_RAW_PROFILE:begin:prepare\nSUBTAIL_RAW_PROFILE:value:prepare:18\nSUBTAIL_RAW_PROFILE:end:prepare:12\nSUBTAIL_RAW_PROFILE:begin:sat\nSUBTAIL_RAW_PROFILE:value:sat:true\nSUBTAIL_RAW_PROFILE:end:sat:0\nSUBTAIL_RAW_PROFILE:begin:danger\nSUBTAIL_RAW_PROFILE:value:danger:0\nSUBTAIL_RAW_PROFILE:end:danger:0\nSUBTAIL_RAW_PROFILE:begin:state_table\nSUBTAIL_RAW_PROFILE:value:state_table:86016\nSUBTAIL_RAW_PROFILE:end:state_table:16\nSUBTAIL_RAW_PROFILE:begin:initial\nSUBTAIL_RAW_PROFILE:value:initial:2064\nSUBTAIL_RAW_PROFILE:end:initial:4\nSUBTAIL_RAW_PROFILE:begin:transitions\n",
+          "peak_rss_kib": null,
+          "phases": [
+            {
+              "milliseconds": 12,
+              "phase": "prepare",
+              "value": "18"
+            },
+            {
+              "milliseconds": 0,
+              "phase": "sat",
+              "value": "true"
+            },
+            {
+              "milliseconds": 0,
+              "phase": "danger",
+              "value": "0"
+            },
+            {
+              "milliseconds": 16,
+              "phase": "state_table",
+              "value": "86016"
+            },
+            {
+              "milliseconds": 4,
+              "phase": "initial",
+              "value": "2064"
+            }
+          ],
+          "protocol_error": null,
+          "reason": "interrupted_or_resource_limit",
+          "returncode": -9,
+          "source": "<checkout>/tmp/raw-summary-66/n6-phased.lean",
+          "status": "UNKNOWN",
+          "trace_truncated": false,
+          "unfinished_phase": "transitions",
+          "wall_seconds": 20.009
+        },
+        {
+          "generated_source_sha256": "12e84b61ae04e04aa3e1340b7e27269f3b545c7bd783d4f8d994085c374e2685",
+          "inputs": {
+            "controls": "6"
+          },
+          "meaning": "Isolated diagnostic completion, NOT entailment",
+          "mode": "enumeration",
+          "n": 6,
+          "output_bytes": 190,
+          "output_tail": "SUBTAIL_RAW_PROFILE:input:controls:6\nSUBTAIL_RAW_PROFILE:begin:enumeration\nSUBTAIL_RAW_PROFILE:value:enumeration:86016\nSUBTAIL_RAW_PROFILE:end:enumeration:11\nSUBTAIL_RAW_PROFILE:result:true\n",
+          "peak_rss_kib": null,
+          "phases": [
+            {
+              "milliseconds": 11,
+              "phase": "enumeration",
+              "value": "86016"
+            }
+          ],
+          "probe_completed": true,
+          "reason": "expected_answer",
+          "returncode": 0,
+          "source": "<checkout>/tmp/raw-summary-66/n6-enumeration.lean",
+          "status": "PASS",
+          "trace_truncated": false,
+          "unfinished_phase": null,
+          "wall_seconds": 0.77
+        },
+        {
+          "generated_source_sha256": "cea5af0c179339bc7978f6dc81799e4c75d4935a8506ae1281a52b3134101981",
+          "inputs": {
+            "controls": "6"
+          },
+          "meaning": "Isolated diagnostic completion, NOT entailment",
+          "mode": "decode",
+          "n": 6,
+          "output_bytes": 192,
+          "output_tail": "SUBTAIL_RAW_PROFILE:input:controls:6\nSUBTAIL_RAW_PROFILE:begin:decode_scan\nSUBTAIL_RAW_PROFILE:value:decode_scan:86016\nSUBTAIL_RAW_PROFILE:end:decode_scan:8700\nSUBTAIL_RAW_PROFILE:result:true\n",
+          "peak_rss_kib": null,
+          "phases": [
+            {
+              "milliseconds": 8700,
+              "phase": "decode_scan",
+              "value": "86016"
+            }
+          ],
+          "probe_completed": true,
+          "reason": "expected_answer",
+          "returncode": 0,
+          "source": "<checkout>/tmp/raw-summary-66/n6-decode.lean",
+          "status": "PASS",
+          "trace_truncated": false,
+          "unfinished_phase": null,
+          "wall_seconds": 9.444
+        },
+        {
+          "generated_source_sha256": "4f7610b4097ab2c79e585ec98b89a40090afa770c6cacc44ff92351adf26ddfc",
+          "inputs": {
+            "controls": "6"
+          },
+          "meaning": "Isolated diagnostic completion, NOT entailment",
+          "mode": "lookup",
+          "n": 6,
+          "output_bytes": 311,
+          "output_tail": "SUBTAIL_RAW_PROFILE:input:controls:6\nSUBTAIL_RAW_PROFILE:begin:state_table\nSUBTAIL_RAW_PROFILE:value:state_table:86016\nSUBTAIL_RAW_PROFILE:end:state_table:15\nSUBTAIL_RAW_PROFILE:begin:lookup_scan\nSUBTAIL_RAW_PROFILE:value:lookup_scan:86016\nSUBTAIL_RAW_PROFILE:end:lookup_scan:12\nSUBTAIL_RAW_PROFILE:result:true\n",
+          "peak_rss_kib": null,
+          "phases": [
+            {
+              "milliseconds": 15,
+              "phase": "state_table",
+              "value": "86016"
+            },
+            {
+              "milliseconds": 12,
+              "phase": "lookup_scan",
+              "value": "86016"
+            }
+          ],
+          "probe_completed": true,
+          "reason": "expected_answer",
+          "returncode": 0,
+          "source": "<checkout>/tmp/raw-summary-66/n6-lookup.lean",
+          "status": "PASS",
+          "trace_truncated": false,
+          "unfinished_phase": null,
+          "wall_seconds": 0.769
+        },
+        {
+          "generated_source_sha256": "566dc7628987e4f14f75006765a32fc5f6f32d384f30b892d3d3f2f612ab2ecb",
+          "inputs": {
+            "controls": "6"
+          },
+          "meaning": "Isolated diagnostic completion, NOT entailment",
+          "mode": "successors",
+          "n": 6,
+          "output_bytes": 291,
+          "output_tail": "SUBTAIL_RAW_PROFILE:input:controls:6\nSUBTAIL_RAW_PROFILE:begin:prepare\nSUBTAIL_RAW_PROFILE:value:prepare:18\nSUBTAIL_RAW_PROFILE:end:prepare:12\nSUBTAIL_RAW_PROFILE:begin:successors\nSUBTAIL_RAW_PROFILE:value:successors:0\nSUBTAIL_RAW_PROFILE:end:successors:1898\nSUBTAIL_RAW_PROFILE:result:true\n",
+          "peak_rss_kib": null,
+          "phases": [
+            {
+              "milliseconds": 12,
+              "phase": "prepare",
+              "value": "18"
+            },
+            {
+              "milliseconds": 1898,
+              "phase": "successors",
+              "value": "0"
+            }
+          ],
+          "probe_completed": true,
+          "reason": "expected_answer",
+          "returncode": 0,
+          "source": "<checkout>/tmp/raw-summary-66/n6-successors.lean",
+          "status": "PASS",
+          "trace_truncated": false,
+          "unfinished_phase": null,
+          "wall_seconds": 2.674
+        },
+        {
+          "generated_source_sha256": "f1851086efb13d5d76da07b83e6e65dc3de264001eb3e4b001baf79a55bc0714",
+          "inputs": {
+            "controls": "6"
+          },
+          "meaning": "Isolated diagnostic completion, NOT entailment",
+          "mode": "encode",
+          "n": 6,
+          "output_bytes": 429,
+          "output_tail": "SUBTAIL_RAW_PROFILE:input:controls:6\nSUBTAIL_RAW_PROFILE:begin:prepare\nSUBTAIL_RAW_PROFILE:value:prepare:18\nSUBTAIL_RAW_PROFILE:end:prepare:12\nSUBTAIL_RAW_PROFILE:begin:successors\nSUBTAIL_RAW_PROFILE:value:successors:0\nSUBTAIL_RAW_PROFILE:end:successors:1895\nSUBTAIL_RAW_PROFILE:begin:encode_successors\nSUBTAIL_RAW_PROFILE:value:encode_successors:0\nSUBTAIL_RAW_PROFILE:end:encode_successors:17315\nSUBTAIL_RAW_PROFILE:result:true\n",
+          "peak_rss_kib": null,
+          "phases": [
+            {
+              "milliseconds": 12,
+              "phase": "prepare",
+              "value": "18"
+            },
+            {
+              "milliseconds": 1895,
+              "phase": "successors",
+              "value": "0"
+            },
+            {
+              "milliseconds": 17315,
+              "phase": "encode_successors",
+              "value": "0"
+            }
+          ],
+          "probe_completed": null,
+          "protocol_error": null,
+          "reason": "interrupted_or_resource_limit",
+          "returncode": -9,
+          "source": "<checkout>/tmp/raw-summary-66/n6-encode.lean",
+          "status": "UNKNOWN",
+          "trace_truncated": false,
+          "unfinished_phase": null,
+          "wall_seconds": 20.01
+        },
+        {
+          "generated_source_sha256": "440d581e7783f5b54b580a9de603a877f5b294b1e8de47ff773d161d40079dcb",
+          "inputs": {
+            "controls": "6"
+          },
+          "meaning": "Isolated diagnostic completion, NOT entailment",
+          "mode": "flags",
+          "n": 6,
+          "output_bytes": 190,
+          "output_tail": "SUBTAIL_RAW_PROFILE:input:controls:6\nSUBTAIL_RAW_PROFILE:begin:state_table\nSUBTAIL_RAW_PROFILE:value:state_table:86016\nSUBTAIL_RAW_PROFILE:end:state_table:15\nSUBTAIL_RAW_PROFILE:begin:flags\n",
+          "peak_rss_kib": null,
+          "phases": [
+            {
+              "milliseconds": 15,
+              "phase": "state_table",
+              "value": "86016"
+            }
+          ],
+          "probe_completed": null,
+          "protocol_error": null,
+          "reason": "interrupted_or_resource_limit",
+          "returncode": -9,
+          "source": "<checkout>/tmp/raw-summary-66/n6-flags.lean",
+          "status": "UNKNOWN",
+          "trace_truncated": false,
+          "unfinished_phase": "flags",
+          "wall_seconds": 20.008
+        },
+        {
+          "generated_source_sha256": "5f353b15a531579ccae95eabd237c9ceacb9c3a5b711663eecd87787299a4363",
+          "meaning": "Complete current cached raw entailment endpoint, uninstrumented #eval; independently expected false",
+          "mode": "baseline",
+          "n": 6,
+          "output_tail": "",
+          "reason": "time_limit",
+          "seconds": 20.008,
+          "source": "<checkout>/tmp/raw-summary-66/n6-baseline.lean",
+          "status": "UNKNOWN"
+        }
+      ],
+      "platform": "Linux-6.12.94-123.192.amzn2023.aarch64-aarch64-with-glibc2.43",
+      "python": "3.13.14",
+      "source_sha256": {
+        "experiments/check_entailment_decision.py": "78262d84da6b5c1bc0cc446895a461720a9d5b3038953f4a5678a10ba450f1f0",
+        "experiments/check_fast_summary.py": "2c1cce2ff983ff9d253ac5e4069c9f35a2bed2c8c9f6b497466deace24ee7279",
+        "experiments/profile_raw_backend.py": "7b0fc1d74ada0f7a04cd794fe3a8591560d7927bfc6624ea25cf095965da0c15",
+        "experiments/profile_raw_summary_66.py": "7e84967b9039f9cadcbe6e8ef290ea4773b478dc36613466d9d7675dd6ecf6ae",
+        "lean/Subtail/AbsorbingTerminal.lean": "596d502361547a2b01c276fd41bc1b2b004bdbe4ce0de561cd4b6bce9002bb1b",
+        "lean/Subtail/Audit.lean": "0487d784c6f61affa4e332c2d8edba145d4cebb4d831ea2ddcf0e157a1821ad5",
+        "lean/Subtail/Basic.lean": "1a7cb0c1f7546ed2efdae96d1af9a84dc6f433531549a50f4738ed25eb64c6c6",
+        "lean/Subtail/Boundary.lean": "016ecea3ef35bcff2421cf5b25ac702a617db707c51014d49166de8715cc88c8",
+        "lean/Subtail/CanonicalModel.lean": "45b777cb26c2bde47870bdb1b9f6e243e3fa6d650b26752742680a5758fcd713",
+        "lean/Subtail/CanonicalModelAudit.lean": "140ab22c11130e6138f80824f2a2c8df936b2152b0353d792a4d3555523094da",
+        "lean/Subtail/CanonicalReachability.lean": "6400b93753493a13b9a4cc1cb391e3ca5ad8b7b45623824877e2ad1d78e72403",
+        "lean/Subtail/CanonicalReachabilityFast.lean": "6adfbb85117674122f0bceafe351bc4789206c61b00489486ddb4aeb53219273",
+        "lean/Subtail/Conditional.lean": "64f902acce370dadd3f0ac53cbd31ae4026664552c48e31ccd56b1ca542ac01b",
+        "lean/Subtail/EntailmentDecision.lean": "a899b12e1d2b968053a0062a1600c9d368fe5c16f1ba3b74aef591b311088f59",
+        "lean/Subtail/EntailmentFast.lean": "d2867bd220ec379ab19caa9f6d639082b0abd234ce548642d64e3e7d85017afc",
+        "lean/Subtail/EntailmentPrepared.lean": "9810cb89e8a25646d75281621c616a1d7c5e09abb1d38250e12e0da272d3256d",
+        "lean/Subtail/Examples.lean": "3b3e091c4b944992f3aa65c7d5923e35558b05193dec7540ed0e9acda13864c7",
+        "lean/Subtail/ExpressionNormalization.lean": "6e69fa21ebf0a0ffa65f78c976eb6681a85e9c9778cf96e57d16fb86b1285b82",
+        "lean/Subtail/ExpressionNormalizationAudit.lean": "471699acaca0a37f6502f7f631c9b1c3bae3d393584252cbad9174ec27fc6074",
+        "lean/Subtail/FiniteSearch.lean": "10583fb950420ccfb3ae88c906a0e3f004d72fcb8a3aac53a24b4281800a4057",
+        "lean/Subtail/FiniteTreeDecision.lean": "b8a42b54bbfb626290dd73bdbfc2df2f1880d80af610d9cf458da24998734fd8",
+        "lean/Subtail/FiniteTreeReduction.lean": "2b6200f4f913e515bd4f863c77ab4208bef75bb192ac1dc89dfa69614eb415e4",
+        "lean/Subtail/FirstReturnColours.lean": "848c71747fb6deff903b9ee850a8c6ecdf5f35cd79ce680c7da11c68b7909352",
+        "lean/Subtail/FirstReturnGenerator.lean": "d6c4266c59949785979e6f37dea7d0e93adf50e9a42ad447a7267912949bace6",
+        "lean/Subtail/FirstReturnGraph.lean": "06d11930a30fc4034e9a8997a4b2d57f82b5f8779b87f709287502fccbde88d8",
+        "lean/Subtail/InfiniteCycle.lean": "0a3559e3b09dc9a3a1d2ce80893fc354bd6aec7f2ab0a12b82fe9917fb4e2fb3",
+        "lean/Subtail/InfiniteDecision.lean": "d9679db4b52062a707f74c4a7198137f608660930e3f4a2d868ab4efac40228d",
+        "lean/Subtail/InfiniteDecisionLazy.lean": "e9ad300545cde49da4979ec62f214db59d9453953919118962e206dc12c68a75",
+        "lean/Subtail/InfiniteWitness.lean": "778759b132b97fd0e8546a2ad0346b1e977e0cbf34423f69f0e04170f7624fdc",
+        "lean/Subtail/PeriodicGood.lean": "5f13030c1825fb396f0f288cc4a080d88810f9c08449841a913efc52486eaf9e",
+        "lean/Subtail/PeriodicMonitor.lean": "719ce76ea2d91c7325f733462791d4da924e38afb8ec9cbe7e4743da0402c7bb",
+        "lean/Subtail/PeriodicMonitorComplete.lean": "ff3333943b6ca5dbf5e9920f2a3071912244cddf6098f25eededa476d3b1fc32",
+        "lean/Subtail/PeriodicRotation.lean": "ce02774c6dd7f483dbc34b574c7894335dd5340c6ddc08459c5295d1dc64c6f4",
+        "lean/Subtail/PeriodicRun.lean": "d27cdbb13b08aca5410c76e4ae438a0cebcb7b2acf223bd94a95814717815a86",
+        "lean/Subtail/PeriodicTail.lean": "1243dc455f48858d1dc30e1543cdc3737e6078aa51f7cc2f761e8af67741b148",
+        "lean/Subtail/PopAcyclic.lean": "f1529b5d4dc81e5eca039ce865d1209771730078bea1f949da91525389d802c3",
+        "lean/Subtail/PrefixMatching.lean": "59de0b193b55765db895f0f9ceb2a4155cd4d4dcfe54fa58cb285ec0577931e4",
+        "lean/Subtail/RankMilestones.lean": "3a948deaea047bf02289869210fcc2cbf7ada1010983dee66fa8477e4832d1c6",
+        "lean/Subtail/RankQuery.lean": "e8ef2ec585c49a593c8cee4d11e7aeb75f0284179e36b26ea21d72dd313adb41",
+        "lean/Subtail/RankQueryCompiler.lean": "1e32f44935490d7e69c8157f4ce12f763c9732b26e4cef2a7fb94518941edb2c",
+        "lean/Subtail/RankQueryCoverage.lean": "b1ccfa2fe221d355451ccfffe3d701ee46489d616e7e20d015f3e4fb2e86b49f",
+        "lean/Subtail/RankQueryDecision.lean": "51fef747bb443d313559e57d8fb8e3c1ce68b804eb4883a7d504e2945da5bd8a",
+        "lean/Subtail/RankQueryEnumeration.lean": "f65f40733e4cd45c8499cf1874509b23bacfdfd9f32278b5d459d12dd7016189",
+        "lean/Subtail/RankQueryEnumerationAudit.lean": "93c60b30d903e2a30da0152fda5abdf45b923ee09facdb1293264e44ed98f853",
+        "lean/Subtail/RankQueryFinishFacts.lean": "8e67cbbcf2a2710ec5307455303180fea8c0d7756969b121efab025b8f7ff2a2",
+        "lean/Subtail/RankQueryFinishTrace.lean": "93653a3ade48c9c4c628a8f05583a1deef201d412427de87ce3209a91949a258",
+        "lean/Subtail/RankQueryFirstReturn.lean": "b029e89e706c0724428194ddbc7d08abd494710d29ac65fb21e1dc90d7df10e0",
+        "lean/Subtail/RankQueryLengthBound.lean": "daec0fabc8c8e8b5c9ff5b1078a110f2fddf48ef60d3cbfec04557261a794399",
+        "lean/Subtail/RankQueryPaths.lean": "d383b44afb6bb7625181fb58e1d269030fa388a477849c76b7bc7dc64172de2a",
+        "lean/Subtail/RankQuerySemanticUnwind.lean": "2b3968f40f9b42d9bc051a0d6b11de3c80e2c3bd30351b04f579765960c9b3de",
+        "lean/Subtail/RankQuerySound.lean": "7729268fb6f82a0c508747e774e92133f869e3038d05e6c8c1a0caf962c9cd76",
+        "lean/Subtail/RankQueryUnwind.lean": "c6006c46aa86de0d173711a14f8c4076fcd5723a7470664da0d87d18a70efa3e",
+        "lean/Subtail/RankQueryWeightBound.lean": "d92069dfe5de891ba9bcfe3c5599a6a5e726fd57e2995f87a3b569fa0daabe50",
+        "lean/Subtail/RankQueryWeightCounterexample.lean": "d3e2ebbe27bdc277f8080e5e75f8d8939784d670e396e52e69aac631681a68ce",
+        "lean/Subtail/RankWitnessReference.lean": "eb5f6485995190a3a829b6de2c87e31a79f47b408c6afb77cecfc031c03d7772",
+        "lean/Subtail/RegularTreeCertificate.lean": "f0a271f276adc997620f2034edd3d3e3e44a33045d1b69c489f48ae81c33579f",
+        "lean/Subtail/SandwichPredicates.lean": "81b031e2c472d632b1d1b0bc0ad206aa8977571d78c58afc5b3e03670457e177",
+        "lean/Subtail/StackReachability.lean": "c3d0efc707cbc0979e99cd26726ed2575f6c1c60e85d34e7449903bf3082ec7f",
+        "lean/Subtail/StackSummary.lean": "345b4b1719f31b3963ca5ccc50b2fc861fc19864fe891cd9fcd547121acbe1fc",
+        "lean/Subtail/StackSummaryAudit.lean": "743ce0dbd00b926a7ec22377f621156afb593695bc3c8a4ca2d4b22139658d46",
+        "lean/Subtail/StackSummaryFast.lean": "c3294589e5114d2d4b26c595226d94fd1d470fca22eff47e85ca7868c793cb6f",
+        "lean/Subtail/SubtypeTerminalBridge.lean": "4a6fb1e783fdf052c1ac61bfd24aae9dbc5d1c441961e41d7cd02f434d57b751",
+        "lean/Subtail/SummaryAutomaton.lean": "68832af44bc8907e99dd2889968c699245aff70d40bf5690539f3f9edd8ca37b",
+        "lean/Subtail/SummaryBridge.lean": "8c5d8038b87a1b419e9be03dee668d390260c2677e42f227622cd199dff58bd9",
+        "lean/Subtail/SummaryInstanceCached.lean": "011b62cb5dfdc945c2c8b9ef0eb85da7549e21ec9fce3bcca4e050ed7e81f75c",
+        "lean/Subtail/TerminalDecisionLazy.lean": "67f5735adca1e6d8f059a39aedd50d1529a436e2cf0b0ce6cfda9b00f001b8a9",
+        "lean/Subtail/TerminalRank.lean": "3771a1a58ff7e5ddb2aa5134e08fca65a1a05d64c3a5de8487c4f7d7630b6fc2",
+        "lean/Subtail/TerminalRealization.lean": "7ab0df63e8deb4ec4d9448298cee34cca74548e6578cb3994bbe204c3a56c429",
+        "lean/Subtail/TerminalRealizationAudit.lean": "064fa8410b668e94df2e6741632f34f69dbcec6ed179b4070db2faf4461d935d",
+        "lean/Subtail/TerminalRealizationModel.lean": "aecfb3159e0d110acc57792370a600f90b945b224eeb74bb80102928020297f0",
+        "lean/Subtail/TreeSemantics.lean": "8b08b74d08bac48454f99f0241eb066ef6b218334641f284bc26423957a78f2e",
+        "lean/Subtail/Truncation.lean": "2e2af26dc02e8168715296f4296d78ca1ea9133a156e4792969cb04efb70df07",
+        "lean/Subtail/TwoState.lean": "063c3991d77f3037b209e8c74410cdb6449144545b3b1c4eb49fe0a5b4cf1b26",
+        "scripts/subtail.py": "d399857d7206828dcc6a75c1fe34d33b22c584fc5542b7fbb2afd933b492eb5a"
+      },
+      "status": "UNKNOWN"
+    },
+    "raw66-self-test.json": {
+      "baseline_marker_checks": 8,
+      "lean_compilation": "NOT_RUN",
+      "native_performance": "NOT_RUN",
+      "ordinary_row_identity_cells_n0_through_n4": 69905,
+      "rendered_sources": 32,
+      "scope": "Python/source-template checks only; not the 83 full-field Lean comparisons or independent review",
+      "status": "PASS"
+    }
+  },
+  "review_scope": "Parent read generated modes, status-marker guards and inherited resource runner, then ran the n=3 gate and n=6 diagnostic. This does not review a new optimization or change existing mathematical results.",
+  "status": "UNKNOWN n=6; PASS n=3 smoke and reproducible diagnostic execution"
+}
