@@ -81,7 +81,12 @@ equation $\pi\nu=\mu\pi$ [@NP03, Theorems 1, 2, 4 and Lemma 1]. Their ambient
 signature contains one covariant constructor of positive arity, bottom and
 explicit top, and they distinguish finite, regular and arbitrary trees.
 This characterization exposes the repeated-word condition;
-it does not by itself provide a general universality algorithm. Their earlier
+it does not by itself provide a general universality algorithm. They also
+prove decidability for a unary constructor and reductions between the
+finite, regular and arbitrary-tree problems for arity at least two
+[@NP03, Corollaries 1 and 3]. These are reductions between decision problems
+in their bottom/product/top domain, not assertions that a fixed input has
+the same answer in every tree domain. Their earlier
 work introduces P-automata and proves PSPACE-completeness for a restricted
 syntax of product equations and variable inequalities, over both arbitrary
 and finite bottom/product/top trees [@NP99, Theorem 14]. Bottom and top are
@@ -1358,8 +1363,8 @@ finite-tree countermodel: the constructed graph may have cycles.
 
 ### 12.3 Scope of the contribution
 
-The distinction from prior automata characterizations lies in the effective
-elimination in Theorem 7.1. The common generated word is not replaced by
+The effective elimination in Theorem 7.1 supplements the automata
+characterizations reviewed above. The common generated word is not replaced by
 independent choices for individual path atoms. The one-entrance property
 bounds the number of pieces in product-simple paths, and the common interval
 observer enforces their simultaneous realizability. This gives a finite
@@ -1377,6 +1382,9 @@ procedure [@Schubert21] was withdrawn following an incorrectly formulated
 lemma, and is not used as a decision theorem. These comparisons delimit the
 results on which the present proof relies; they do not assert that the general
 nonstructural problem with explicit top has been resolved.
+The comparison concerns the stated theorems and their semantic domains;
+it establishes neither publication priority nor the impossibility of another
+reduction to an earlier decidable fragment.
 
 ## 13. Entailment over finite trees
 
