@@ -686,8 +686,8 @@ z&=r+g+2b+a+\sigma+1;\\
 \end{aligned}\tag{7.4}$$
 
 Here $r$ bounds only auxiliary old-core slots. The compiled clause's total
-variable carrier has size $2+\#\mathrm{groups}+r$: two fixed variables $e,f$,
-one origin variable per group, and the auxiliary core slots. These variables
+variable carrier has size at most $2+\#\mathrm{groups}+r$: two fixed variables $e,f$,
+one origin variable per group, and at most $r$ auxiliary core slots. These variables
 are allowed to denote the same base vertex when no disequality forbids it.
 
 Each integer field in a piece or seam is less than $z$. There must be at least
