@@ -1,0 +1,48 @@
+{
+  "artifact_id": 10608861585,
+  "artifact_sha256": "4fc6338d9a447c6c41ed298d6e745eba57120c4f21afe3c38986f232038265aa",
+  "common_events": [],
+  "common_returncode": -6,
+  "common_stdout": "libc++abi: terminating due to uncaught exception of type lean::exception: failed to create thread\n",
+  "common_stdout_sha256": "32a60967270365f092cad81a408cf0e68f13aceab4359f32700f140a54129b9b",
+  "correction": "Separate startup preflight; lean -j1; replace RLIMIT_AS with 50ms sampled group RSS threshold; descendant cleanup; preserve process failures and prior receipts. Changes are not an isolated-cause experiment.",
+  "correction_revision": "05a30a1bcc873d7812b04c8c2e13c67c408fc477",
+  "evidence_kind": "transcribed GitHub Actions log summary; full original JSON retained in linked artifact",
+  "job": 106107253275,
+  "limits": {
+    "address_space_mib": 2048,
+    "cpu_seconds": 18,
+    "wall_seconds": 20
+  },
+  "original_counts": {
+    "acceptance": {
+      "FAIL": 14,
+      "NOT_RUN": 0,
+      "PASS": 0,
+      "UNKNOWN": 0
+    },
+    "stress": {
+      "FAIL": 6,
+      "NOT_RUN": 0,
+      "PASS": 0,
+      "UNKNOWN": 0
+    }
+  },
+  "resources_range": {
+    "wait4_peak_rss_kib": [
+      38164,
+      38300
+    ],
+    "wall_seconds": [
+      2.871428222000006,
+      4.450751842999992
+    ]
+  },
+  "revision": "1f63117844d9a664317db1af8c7e450952fec6ce",
+  "run": 35521879288,
+  "schema": 1,
+  "selftest": "PASS 7",
+  "semantic_observations": "NOT_RUN: every child failed before its first probe event",
+  "terminal_module_kernel_replays": "PASS",
+  "typecheck": "PASS"
+}
