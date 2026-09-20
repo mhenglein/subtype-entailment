@@ -639,7 +639,7 @@ def parse_markers(
 def run_generated_source(
     path: Path, marker: str, timeout: float, expected_markers: int = 1
 ) -> dict:
-    result = run_process(["lake", "env", "lean", str(path)], LEAN_ROOT, timeout)
+    result = run_process(["lake", "env", "lean", str(path.resolve())], LEAN_ROOT, timeout)
     output = result.pop("output", "")
     result["output_tail"] = output[-2000:]
     if result.get("status") == "PASS":
@@ -876,6 +876,30 @@ def generated_phase(timeout: float, scratch: Path) -> dict:
             "cache_reuse": case.kind == "negative-supplied-separation",
             "run": run,
         })
+    # These are full original-expression calls: a depth d separator cannot be
+    # found by the fixed seven short paths once d > 2. No constraints or
+    # products from the implementation enter the independent expectation.
+    for depth in (3, 4, 6, 8):
+        left, right = decision.V(0), decision.V(1)
+        for _ in range(depth):
+            left, right = decision.P(left, decision.BOT), decision.P(right, decision.BOT)
+        fixture = decision.frontend(
+            f"negative-frontend-products-depth-{depth}", 2, (), left, right, False,
+            "finite_countermodel", "Set x=product(bottom,bottom), y=bottom; the first separating address is d zeroes.")
+        source, _, function = benchmark_source(fixture, "candidate")
+        path = scratch / (fixture.name + ".lean")
+        path.write_text(source)
+        run = run_generated_source(path, BENCHMARK_MARKER, timeout)
+        if run.get("status") == "PASS":
+            marker = run.get("marker", "")
+            actual = True if marker.endswith(":true") else (False if marker.endswith(":false") else None)
+            run["actual"] = actual
+            if actual is not False:
+                run.update(status="FAIL", reason="independent_expected_answer_mismatch")
+        rows.append({"name": fixture.name, "kind": "negative-frontend-products",
+                     "input_variables": 2, "word_length": depth, "expected": False,
+                     "justification": fixture.justification, "function": function, "run": run})
+        print(f"{fixture.name}: {run['status']}", flush=True)
     counts = Counter(row["run"].get("status", "FAIL") for row in rows)
     return {
         "status": "FAIL" if counts["FAIL"] else "UNKNOWN" if counts["UNKNOWN"] else "PASS",
@@ -886,6 +910,7 @@ def generated_phase(timeout: float, scratch: Path) -> dict:
             "positive-transitivity": "Listed leq chain; expected true by transitivity.",
             "positive-covariance": "Monotone component chains with exact upper/lower product definitions; expected true by product_mono.",
             "negative-supplied-separation": "A finite lower-constraint push chain and an explicit source path; expected separation true, hence negative entailment.",
+            "negative-frontend-products": "Nested original expressions with a first possible separator beyond the short-path list; explicit finite countermodel.",
         },
     }
 
@@ -929,7 +954,7 @@ def main() -> int:
         "phases": {},
         "limitations": [
             "Component comparisons use the independent finite P-automaton oracle; they do not replace the Lean all-input proofs.",
-            "Generated negative cases validate supplied addresses, not shortest-witness or global search completeness.",
+            "Supplied-address negative probes are component tests; the separately labelled nested-product family calls the full frontend. Neither proves global candidate-search completeness.",
             "UNKNOWN is preserved for resource caps and is never converted into a Boolean answer.",
         ],
     }
