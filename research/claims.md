@@ -1212,6 +1212,34 @@ Q004 obtains the ordinary explicit source-visit bound `R(k)=Fhat(k)+1` for
 k>=1, with R(0)=0; that corollary is not a new Lean declaration. No result for
 explicit top, new constructor signatures or finite-tree semantics follows.
 
+<a id="c083"></a>
+
+### C083 — Directed reachability lower bound for exact entailment
+
+**Statement.** For a finite directed graph with distinguished vertices s,t,
+encode every edge u->v by the variable inequality x_u<=x_v and query x_s<=x_t.
+There is a path s->t (including length zero) iff this input entails the query,
+separately under arbitrary, regular and finite bottom/product tree valuations.
+For the standard explicit-vertex graph encoding this is a deterministic
+logspace many-one reduction. Hence the full C081 problem is NL-hard, already
+on variable-only inputs.
+
+**Proof and status.** Ordinary proof plus independent read-only review.
+Reachability implies the query by transitivity/reflexivity. If t is unreachable,
+assign the finite root-only product tree to vertices reachable from s, and
+bottom to the others. Every edge constraint holds, while the query fails at
+address []. Computing reachability is only part of the existence proof for the
+countervaluation, not the reduction. The imported PATH NL-completeness theorem
+uses the same logspace-reduction convention.
+
+**Evidence.** [Full construction, primary source, encoding and independent review](../notes/2026-09-20-reachability-lower-bound.md).
+
+**Limits.** This is an inherited elementary lower bound, not a novelty claim.
+No NL membership, PSPACE-hardness, superpolynomial runtime lower bound or new
+Lean declaration is claimed. The finite/regular equivalence here concerns only
+the variable-only sublanguage; it does not transfer the general C081 theorem
+to finite-tree entailment.
+
 ## Explicitly unestablished
 
 The following are deliberately not accepted claims in this ledger:

@@ -2,7 +2,7 @@
 
 Date: 2026-09-20
 Reviewer: independent input-complexity analyst for issue #53
-Status: `READY_FOR_INTEGRATION` after a bounded accounting revision
+Status: ordinary resource argument with independent accounting review (see final readback)
 
 ## Scope and evidence
 
@@ -287,7 +287,9 @@ The exact summary state list has
 q = |states k| = 4^k
 ```
 
-states, each containing two subsets of at most `k` controls. Let
+states, each containing two subsets of at most `k` controls. In every
+`Instance q`, `initial : Fin q` ensures q>=1; here q=4^k also gives this
+directly. Let
 
 ```text
 C_states(k) = 16(k+1) q,
@@ -295,6 +297,10 @@ C_system(k,m) = 16(k+1)^3(m+1),
 C_reverse(k) = 16(k+1)^2,
 C_encode(k,q) = 16(k+1) q.
 ```
+
+`C_states` includes recomputing the inner subsets in each outer iteration:
+there are 2^k outer sets and each inner enumeration costs O(k*2^k),
+so 16(k+1)*4^k covers the repeated construction.
 
 `C_system` tabulates all epsilon, push, and pop entries by scanning the
 normalized constraint list. `C_reverse` materializes the epsilon, push, and
@@ -646,3 +652,21 @@ the bounded wrapper nor a Lean complexity theorem is asserted. The earlier
 no-build and unintegrated-status statements above are historical provenance.
 No lower bound transfers to full C081 without the missing semantic reduction;
 the guarded NP99 upper-bound transfer covers only inputs without bottom.
+
+## Independent accounting audit
+
+A separate reviewer compared this note at a4310b6 (parent 89385df) against
+normalization, summary, finite-search, periodic-monitor and witness sources.
+It found no blocker in the ordinary total-recursive bound. Its follow-ups
+clarified repeated subset construction and the nonempty carrier above.
+Historical PR/main status remains pinned to its date; C082's completed
+integration is recorded in the preceding section.
+[Review coverage and release](https://github.com/mhenglein/subtail/issues/53#issuecomment-5746357472).
+The reviewer ran no new build or large enumeration. These bounds concern
+well-formed typed input; a public parser's malformed-input behavior is a
+separate implementation contract, tested for the new JSON interface.
+
+The separate [C083 reachability argument](2026-09-20-reachability-lower-bound.md)
+now supplies a modest NL lower bound. No PSPACE lower-bound transfer is
+claimed. The large gap between that bound and this explicit reference upper
+bound remains open.

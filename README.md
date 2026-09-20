@@ -70,8 +70,10 @@ are not Lean-verified. [Interface, proof, resources and evidence](notes/2026-09-
 It also records why the earlier concrete C080 weight estimate is false; the
 original F alone remains open. The [input resource account](notes/2026-09-20-c081-input-complexity.md)
 gives a very large explicit bound for a specified reference decision algorithm,
-including normalization, summary tables, arithmetic and storage. It is ordinary
-mathematics, and does not bound the runtime of this native frontend.
+including normalization, summary tables, arithmetic and storage.
+[C083](research/claims.md#c083) supplies an NL lower bound by directed
+reachability. The bounds are ordinary mathematics; they do not give a tight
+complexity class or bound the runtime of this native frontend.
 
 The stable paper/reader tag is
 [`c081-research-2026-09-20`](https://github.com/mhenglein/subtail/tree/c081-research-2026-09-20),
