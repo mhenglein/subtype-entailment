@@ -1,0 +1,63 @@
+name: Issue 68 isolated regular producer
+
+# Approved by coordinator in issue 68 comment 5750364625.
+# This workflow cannot run on main and does not modify shared import targets.
+on:
+  push:
+    branches: ['codex/regular-producer-68-20260920']
+    paths:
+      - 'lean/**'
+      - 'scripts/check_regular_producer_68.py'
+      - 'scripts/regular_countermodel.py'
+      - '.github/workflows/regular-producer-68.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: regular-producer-68-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  producer-proof:
+    if: github.ref == 'refs/heads/codex/regular-producer-68-20260920'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/cache@v6.1.0
+        with:
+          path: ~/.elan
+          key: elan-${{ runner.os }}-${{ hashFiles('lean/lean-toolchain') }}
+      - uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596
+        with:
+          lake-package-directory: lean
+          build: 'false'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'false'
+      - name: Explicit source, kernel, dependency and independent model checks
+        run: |
+          python3 scripts/check_regular_producer_68.py --lean --lean-timeout 180 --output /tmp/regular-producer-68-ci.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          r = json.loads(Path('/tmp/regular-producer-68-ci.json').read_text())
+          print(json.dumps(r, indent=2))
+          assert r['python_status'] == 'PASS'
+          for name in ('core_build', 'module_build', 'kernel_replay', 'axiom_audit', 'native_producer'):
+              assert r['lean'][name]['status'] == 'PASS', (name, r['lean'][name])
+          PY
+      - name: Preserve exact logs and receipt even on failure
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: regular-producer-68-${{ github.sha }}
+          path: |
+            /tmp/regular-producer-68-ci.json
+            tmp/regular-producer-68/
+          if-no-files-found: warn
+          retention-days: 14
