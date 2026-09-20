@@ -16,3 +16,6 @@
 \setlength{\emergencystretch}{3em}
 \AtBeginDocument{\hypersetup{breaklinks=true}}
 \AtBeginEnvironment{longtable}{\footnotesize}
+
+% Latin Modern Math provides U+2216 for set difference, rather than U+29F5.
+\AtBeginDocument{\let\setminus\smallsetminus}

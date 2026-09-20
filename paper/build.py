@@ -70,6 +70,9 @@ def main():
          "--variable", "citecolor=blue", "--variable", "toc-depth=2",
          "--include-in-header", str(PAPER / "header.tex"), "--output", str(tex)])
     run(["tectonic", str(tex), "--outdir", str(OUT), "--keep-logs"])
+    log = (OUT / "subtail-paper.log").read_text(errors="replace")
+    if "Missing character:" in log or "Overfull \\hbox" in log or "Overfull \\vbox" in log:
+        raise RuntimeError("PDF has missing glyphs or overflowing boxes; inspect output/pdf/subtail-paper.log")
     pdf = OUT / "subtail-paper.pdf"
     source_paths = (PAPER / "manuscript.md", PAPER / "header.tex", PAPER / "build.py", PAPER / "lean-map.json",
                     PAPER / "references.bib", PAPER / "references.csl")
