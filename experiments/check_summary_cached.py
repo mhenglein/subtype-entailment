@@ -13,7 +13,7 @@ and a timeout or unavailable parent module is never a Boolean answer.
 from __future__ import annotations
 
 import argparse
-from dataclasses import asdict, dataclass, is_dataclass
+from dataclasses import asdict, dataclass, is_dataclass, replace
 import hashlib
 import json
 import math
@@ -543,9 +543,22 @@ def component_phase(
     rows: list[dict[str, object]] = []
     for case in cases:
         marker = COMPONENT_MARKER + case.name + ":"
-        source, expected = component_source(case, marker)
-        path = scratch / f"component-{case.name}.lean"
-        run = run_marked(source, path, marker, timeout, expected_markers=2 * len(case.queries))
+        expected: dict[str, dict[str, object]] = {}
+        processes: list[dict[str, object]] = []
+        for a, b in case.queries:
+            source, query_expected = component_source(replace(case, queries=((a, b),)), marker)
+            expected.update(query_expected)
+            path = scratch / f"component-{case.name}-{a}-{b}.lean"
+            process = run_marked(source, path, marker, timeout, expected_markers=2)
+            process["query"] = [a, b]
+            processes.append(process)
+        statuses = [process.get("status", "FAIL") for process in processes]
+        run: dict[str, object] = {
+            "status": "FAIL" if "FAIL" in statuses else "UNKNOWN" if "UNKNOWN" in statuses else "PASS",
+            "process_scope": "One candidate/reference query pair per capped process",
+            "processes": processes,
+            "markers": [item for process in processes for item in process.get("markers", [])],
+        }
         by_tag: dict[str, dict[str, object]] = {}
         parse_error: Optional[str] = None
         if run.get("status") == "PASS":
@@ -632,6 +645,8 @@ def component_phase(
         "instance_count": sum(row["query_count"] for row in rows),
         "exact_fields": ["initial", "transitions", "bad", "final", "flags"],
         "oracle": "Independent P-automaton predecessor saturation in check_subtype_summary.reference",
+        "process_count": sum(len(row["native"]["processes"]) for row in rows),
+        "process_scope": "One candidate/reference query pair per capped process; case totals are not solver timings",
         "rows": rows,
         "limitation": "Reference equality and Python agreement are finite validation evidence; they do not prove the all-input Lean equality theorem.",
     }
@@ -715,6 +730,7 @@ def main(argv=None) -> int:
             "lean_stack_KiB": 32768,
             "runner": "scripts/subtail.py:run_process",
             "protocol": "lake env lean <source.lean> with #eval main",
+            "component_process_scope": "One candidate/reference query pair; all queries retained",
             "variants": list(selected_variants(args.compare_baseline)),
         },
         "source_sha256": source_hashes(),

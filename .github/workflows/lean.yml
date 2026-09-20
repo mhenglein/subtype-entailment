@@ -707,11 +707,16 @@ jobs:
           components = checks['phases']['components']
           assert components['status'] == 'PASS' and components['case_count'] == 29 and len(components['rows']) == 29
           assert components['instance_count'] == 83
+          assert components['process_count'] == 83
           assert sum(len(case['rows']) for case in components['rows']) == 83
           for case in components['rows']:
               assert case['status'] == case['native']['status'] == 'PASS', case['name']
               assert len(case['rows']) == case['query_count']
               assert len(case['native']['markers']) == 2 * case['query_count']
+              processes = case['native']['processes']
+              assert len(processes) == case['query_count'] == case['n'] ** 2
+              assert {tuple(p['query']) for p in processes} == {(a, b) for a in range(case['n']) for b in range(case['n'])}
+              assert all(p['status'] == 'PASS' and len(p['markers']) == 2 for p in processes)
               for row in case['rows']:
                   assert row['status'] == 'PASS' and row['candidate_present'] and row['reference_present'], row['name']
                   assert row['candidate_reference_field'] is None and row['candidate_python_field'] is None
