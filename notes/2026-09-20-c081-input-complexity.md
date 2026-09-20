@@ -135,7 +135,7 @@ terminal branch on `J`. `AbsorbingTerminal.terminalize_terminal` supplies
 terminal witness equivalence, and `Basic.witnessCheck_correct` turns each
 finite enumeration result into the exact `Witness` predicate. Therefore the
 reference algorithm has the same Boolean answer as the checked qualitative
-composition, assuming the reviewed endpoint is integrated with this wrapper.
+composition, by the reviewed endpoint and this ordinary wrapper argument.
 
 This mathematical correctness argument does not depend on repository
 integration. It is conditional on the reviewed statement of
@@ -155,9 +155,8 @@ The primary count is a cell-RAM model with an explicit source-list layer:
 * source-derived collections such as `subsets`, state lists, candidate words,
   closure relations, and finite search lists retain list spines. A list lookup
   costs at most the list length plus one, and those scans are charged in the
-  displayed envelopes. Thus the formulas remain safe for a direct list-based
-  evaluator, while dense arrays avoid charging a repeated scan for a table
-  lookup;
+  displayed envelopes. The prior backend envelopes also allow list-backed instance vectors; the
+  summary construction here uses arrays for the tabulated function fields;
 * a list spine cell, Boolean, finite-index value, option tag, pair, and natural
   unit operation costs one unit;
 * a binary word of length `ell` occupies at most `ell+1` cells;
@@ -563,12 +562,13 @@ If a single-tape Turing-machine cost is required, a deliberately crude
 simulation of the bit-RAM run gives
 
 ```text
-T_tape(B) <= (S_bits(B) + 4*ell_*(B) + 4) * T_bits(B),
+T_tape(B) <= 64*(S_bits(B) + 4*ell_*(B) + 4)^2 * (T_bits(B)+1),
 S_tape(B) <= 2*S_bits(B) + 4*ell_*(B) + 4.
 ```
 
-This scans the full encoded RAM tape for each bit operation and is included
-only to make the machine-model conversion explicit; it is not a practical
+This allows full tape scans, address comparison, and copying for each
+bit operation, with a deliberately quadratic allowance for moving operands.
+It is included only to make the machine-model conversion explicit; it is not a practical
 implementation claim.
 
 This bound is deliberately far larger than the syntax size. It is a complete
@@ -630,3 +630,19 @@ complexity theorem until the combined source and runtime audit passes.
 
 All Lean, source, workflow, ledger, parent-note, and main files remained
 read-only for this task. Only this new note is owned.
+
+## Integration readback, September 20
+
+The parent compared the revised loops and representations with the exact
+source definitions. The earlier reference to a fully list-backed summary is
+removed: system lookup uses the stated dense arrays. The optional single-tape
+simulation is enlarged to allow repeated scans, address tests and copying.
+These repairs only enlarge the bound and do not alter the semantic argument.
+C082 is now on main at `98bbcde423a3e53792fd68971a9a72ab58ee51db`; its fresh
+combined proof evidence is in [the integration record](2026-09-20-post-c081-quantitative-integration.md).
+The mathematical dependency is discharged at that source. The exact finite
+reference algorithm and its cost derivation are ordinary mathematics; neither
+the bounded wrapper nor a Lean complexity theorem is asserted. The earlier
+no-build and unintegrated-status statements above are historical provenance.
+No lower bound transfers to full C081 without the missing semantic reduction;
+the guarded NP99 upper-bound transfer covers only inputs without bottom.
