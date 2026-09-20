@@ -2,7 +2,8 @@
 """Capped JSON interface to the checked C081 entailment procedure.
 
 The input parser, launcher and finite-graph certificate checker are ordinary
-Python, not Lean proofs. Positive decisions only come from the Lean procedure.
+Python, not Lean proofs. Optional finite-tree mode adds an ordinary proved
+cycle reduction, whose implementation is not yet Lean-verified.
 """
 from __future__ import annotations
 
@@ -399,6 +400,8 @@ def main(argv=None):
     parser.add_argument('--timeout', type=float, default=20.0, help='Total build/decision/explanation seconds')
     parser.add_argument('--memory-gib', type=float, default=16.0, help='Process address-space cap on Linux')
     parser.add_argument('--no-explain', action='store_true')
+    parser.add_argument('--finite-trees', action='store_true',
+                        help='Restrict valuations to finite trees using the ordinary cycle reduction')
     parser.add_argument('--check-model', type=Path, help='Check a supplied graph instead of running the entailment decision')
     parser.add_argument('--verify-certificate', action='store_true',
                         help='Also verify a found/supplied countermodel with the Lean certificate checker')
@@ -409,19 +412,30 @@ def main(argv=None):
     deadline = start + args.timeout
     try:
         p = parse_problem(json.loads(args.input.read_text()))
+        if args.finite_trees:
+            import finite_trees
         if args.check_model:
             model = json.loads(args.check_model.read_text())
             if 'countermodel' in model:
                 model = model['countermodel']
-            checked = check_countermodel(p, model, deadline)
+            checker = finite_trees.check_countermodel if args.finite_trees else check_countermodel
+            checked = checker(p, model, deadline)
             result = {'status': 'NOT_ENTAILED' if checked['valid'] else 'INVALID_MODEL',
                       'basis': 'independent Python regular-tree certificate check',
                       'countermodel': checked}
         else:
-            result = run_native(p, deadline, args.memory_gib)
+            decision = finite_trees.run_decision if args.finite_trees else run_native
+            result = decision(p, deadline, args.memory_gib)
             if result['status'] == 'NOT_ENTAILED' and not args.no_explain:
                 try:
                     explanation = find_countermodel(p, deadline, args.memory_gib)
+                    if args.finite_trees and 'countermodel' in explanation:
+                        checked = finite_trees.check_countermodel(p, explanation['countermodel'], deadline)
+                        if checked['valid']:
+                            explanation['countermodel'] = checked
+                        else:
+                            explanation = {'status': 'UNKNOWN',
+                                           'reason': 'extracted_finite_model_rejected', 'check': checked}
                 except (TimeoutError, RecursionError, MemoryError):
                     explanation = {'status': 'UNKNOWN', 'reason': 'extraction_resource_limit'}
                 except (ValueError, OSError, TypeError):
@@ -454,6 +468,15 @@ def main(argv=None):
         result['trust_boundary'] = ('Python graph check completed; Lean certificate verification is ' +
             result['certificate_verification']['status'] +
             '. JSON parsing and source emission remain ordinary Python.')
+    result['semantics'] = 'finite bottom/product trees' if args.finite_trees else 'arbitrary bottom/product trees'
+    if args.finite_trees:
+        result['trust_boundary'] = (
+            'Finite-tree classification and graph finiteness use ordinary Python backed by the written reduction. '
+            'The complete finite-tree procedure is not Lean-verified. ' + result['trust_boundary'])
+        if result.get('reason') == 'no_finite_model':
+            result['trust_boundary'] = (
+                'Ordinary Python found a consuming cycle at a forced product root, excluding finite models. '
+                'The cycle reduction and classifier are not Lean-verified; Lean was not run.')
     print(json.dumps(result, indent=2))
     return 0 if result['status'] in ('ENTAILED', 'NOT_ENTAILED') else 2 if result['status'] == 'UNKNOWN' else 1
 
