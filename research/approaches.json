@@ -176,12 +176,12 @@
     {
       "id": "A010",
       "title": "Build the exact top-free constraint-to-automata pipeline",
-      "status": "tried",
+      "status": "active",
       "outcome": "supported",
-      "owner": null,
+      "owner": "finite-trees-20260920 (#58)",
       "updated": "2026-09-20",
       "summary": "C081 remains exact; C084 checks finite-graph countermodels against original arbitrary-tree expressions. Complete ordinary extraction replaces the fixed graph library; every VERIFIED result has a kernel-checked instance proof.",
-      "next_step": "Prove or refute the explicit finite-tree reduction; separately profile remaining E055 decision timeouts. Complete ordinary extraction and C084 certificate verification are integrated; full NFA extraction formalization remains open. No worker assigned.",
+      "next_step": "Prove or refute the Hot-denial finite-tree reduction, with independent tests and selective formalization under #58.",
       "record": "research/approaches/A010.md",
       "evidence": [
         "notes/2026-09-04-bridge-foundation.md",
@@ -569,12 +569,12 @@
     {
       "id": "A018",
       "title": "Maintain the Lean core and verify critical obligations",
-      "status": "tried",
+      "status": "active",
       "outcome": "supported",
-      "owner": null,
+      "owner": "finite-trees-20260920 (#58)",
       "updated": "2026-09-20",
       "summary": "C081 remains exact; C084 checks finite-graph countermodels against original arbitrary-tree expressions. Complete ordinary extraction replaces the fixed graph library; every VERIFIED result has a kernel-checked instance proof.",
-      "next_step": "Prove or refute the explicit finite-tree reduction; separately profile remaining E055 decision timeouts. Complete ordinary extraction and C084 certificate verification are integrated; full NFA extraction formalization remains open. No worker assigned.",
+      "next_step": "Prove or refute the Hot-denial finite-tree reduction, with independent tests and selective formalization under #58.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
