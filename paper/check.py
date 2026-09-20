@@ -41,6 +41,13 @@ def render_map(data):
             url = f"https://github.com/mhenglein/subtail/blob/{data['source_revision']}/{rel}#L{line}"
             refs.append(f"[{module}.{name}]({url})")
         lines.append(f"| {row['id']} | {row['statement']} | {'; '.join(refs)} |")
+    lines += ["", "## Ordinary consequences", "",
+              "These results have ordinary proofs in the manuscript; they are not new Lean declarations.", "",
+              "| Paper result | Statement | Earlier proof record |", "|---|---|---|"]
+    for row in data.get("ordinary_results", []):
+        if not (PAPER / row["evidence"]).is_file():
+            raise ValueError(f"Missing ordinary-proof record: {row['evidence']}")
+        lines.append(f"| {row['id']} | {row['statement']} | [Record]({row['evidence']}) |")
     lines += ["", "## Source identities", "", "These hashes let a reader detect source drift from the mapped checkpoint.", "", "```text"]
     lines += [f"{value}  {key}" for key, value in sorted(hashes.items())]
     lines += ["```", "", "The stronger numerical conjunct of `RankQuery.ClosureFor` is deliberately", "not a premise of Theorems 7.1, 9.2 or 1.1, or Lemma 9.1. A conditional theorem referring to it", "does not establish the concrete compiler's old numerical bound.", ""]
@@ -130,9 +137,10 @@ def main():
         elif not dest.exists() or dest.read_text() != expected:
             raise SystemExit(f"Stale map {dest}; run python3 paper/check.py --write and review drift")
     manuscript = (PAPER / "manuscript.md").read_text()
-    for entry in data["entries"]:
-        if not re.search(r"\b" + re.escape(entry["id"]) + r"\b", manuscript):
-            raise ValueError(f"Unreferenced paper result {entry['id']}")
+    for entry in data["entries"] + data.get("ordinary_results", []):
+        declaration = r"\*\*" + re.escape(entry["id"]) + r"(?:[.(]| \()"
+        if len(re.findall(declaration, manuscript)) != 1:
+            raise ValueError(f"Expected one stated paper result: {entry['id']}")
     bibliography = (PAPER / "references.bib").read_text()
     keys = re.findall(r"@[A-Za-z]+\{([^,]+),", bibliography)
     if len(keys) != len(set(keys)):
@@ -145,7 +153,7 @@ def main():
         if re.search(pattern, manuscript):
             raise ValueError(f"Internal research administration in manuscript: {pattern}")
     literal_examples()
-    print(f"PASS: {len(data['entries'])} paper results, declaration/source maps and literal worked examples")
+    print(f"PASS: {len(data['entries'])} mapped results, {len(data.get('ordinary_results', []))} ordinary results, source maps, bibliography and literal examples")
     print("Lean build/kernel replay: NOT RUN by this documentation check")
 
 

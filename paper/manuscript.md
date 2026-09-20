@@ -168,7 +168,7 @@ child, then every address $0^j$. Finite-tree entailment would make every query
 true for this input. This is a concrete reason not to replace arbitrary trees
 by finite trees in Theorem 1.1.
 
-## 2. Normalize expressions without changing their models
+## 2. Expression normalization
 
 Give each compound expression a fresh name, include the compound expressions
 in the query as well as those in the premises, and use a name $b$ for bottom
@@ -362,7 +362,7 @@ member of $D_0$. Thus safety of every prefix is exactly the Bad check, together
 with the forced-root satisfiability check. These are all canonical sources.
 Apply Lemma 3.1. $\square$
 
-## 4. Absorption separates two complete cases
+## 4. Absorption and the terminal/cyclic decomposition
 
 Say that an instance is **absorbing** when every defined successor $q$ of any
 final state is final and has an empty incoming flag column:
@@ -500,7 +500,7 @@ Boolean tests. Colours lie in the finite alphabet
 $Q\times2^Q\times\{0,1,\mathrm{END}\}\times\{0,1\}^2$.
 A numerical position is **not** part of a colour. No inverse edge is supplied.
 
-### 6.2 Generate one first return
+### 6.2 First-return generation
 
 Fix a safe labelled reference $B$. A **safe first-return extension** preserves
 its word and all labels through position $m$, appends at least one letter,
@@ -563,7 +563,7 @@ $v_1$. Inside the strip, all edges are forward adjacent, except for the endpoint
 wrap $v_L\to v_1$. All other fresh edges return to the old core. For $L=1$,
 the wrap is a self-loop; it must not be discarded.
 
-### Worked graph example: an overlapping return
+### 6.3 Example: an overlapping return
 
 Take $B=0$ and $C=00$. The occurrence ending at position 2 overlaps the old
 one, so $L=1$, $h_0=0$, and $h_1=1$. There is one fresh vertex 2. Its failure
@@ -578,7 +578,7 @@ flags. The original word `00` runs $s,p,f$. Its reversed labels are $f,p,s$;
 its two milestones are 1 and 2. The finishing continuation after the single
 promotion is empty. This realizes the $k-2=1$ boundary exactly.
 
-## 7. Positive directed queries and a finite preimage construction
+## 7. A finite preimage construction for directed path queries
 
 This section is the central elimination argument. It must operate on a whole
 conjunction at once: choosing different generated words for different atoms
@@ -596,7 +596,8 @@ A graph path is accepted when its vertex/control pairs satisfy allow, consecutiv
 pairs follow an edge and an observer transition, and its endpoint controls are
 initial/final. Empty paths are allowed when one control meets both endpoint
 conditions and allows the vertex colour. No hidden word or vertex register is
-part of an observer; all its arguments range over finite sets.
+part of an observer. All predicates and transition relations are represented
+by truth tables on the indicated finite sets.
 
 A clause existentially quantifies finitely many vertices and conjoins finite
 unary colour tests, vertex equalities/disequalities, and observer path atoms
@@ -632,7 +633,7 @@ envelope below. The construction below specifies the finite data, consistency te
 observers needed for both implications; no bound on reference-word length
 is used.
 
-### 7.2 Why finitely many diagrams cover every satisfying extension
+### 7.2 Finite diagram enumeration
 
 Fix a clause with $v$ variables and $a$ path atoms whose observer sizes are
 $s_1,\ldots,s_a$. Put $\sigma=\sum_i s_i$. For each satisfied atom in $P(C)$,
@@ -723,7 +724,7 @@ It does not claim that all emitted diagrams retain the original product-simple
 normal form, or a small bound on the number of active observer coordinates.
 The proof needs finite coverage, rather than minimal diagrams.
 
-### 7.3 Pull back the old core
+### 7.3 The old-core preimage
 
 Fix a diagram's first bit $a_1$ and old endpoint colour. In $P(C)$ the old-core
 induced graph is $P(B)$ with the old endpoint recoloured and its outgoing
@@ -744,7 +745,7 @@ core, however long the piece is. Old variable tests are pulled back by the
 same map. Old/old equalities and disequalities remain ordinary base-variable
 constraints.
 
-### 7.4 Encode marks and the portal edges
+### 7.4 Marks and portal edges
 
 For every fresh group $t$, introduce **one** old-graph variable $z_t$ denoting
 its generator origin $h_i$. Guess one original-state label $q_t$ and one next
@@ -800,14 +801,15 @@ physical interval are known. Split every such piece at all intermediate
 marks and retain its control at each seam. If one original path crosses an
 interval twice, it contributes **two coordinates**, not one.
 
-Make a product observer whose control is
+Let $\ell$ be the number of active forward pieces on this interval, counting
+repeated traversals separately. Make a product observer whose control is
 
-$$(q,n,\eta,t_1,\ldots,t_b),\tag{7.6}$$
+$$(q,n,\eta,t_1,\ldots,t_\ell),\tag{7.6}$$
 
 where $q\in Q$ is the current generated reverse state, $n$ is the next bit or
 END, $\eta\in\{0,1\}$ records whether a step has occurred, and each $t_j$ is
 the current control of one active forward piece. Its size is
-$6k\prod_j|S_j|$. Even when there are no active pieces, retain the generator
+$6k\prod_{j=1}^\ell|S_j|$. Even when there are no active pieces, retain the generator
 coordinates; that unobserved interval still has to exist and be safe.
 
 At a base origin of colour $c$, allow a control only if
@@ -836,7 +838,7 @@ first emission they specify exactly one first-return generation, rather than
 one generation per original atom. Core path witnesses remain independent,
 as the original query semantics allow.
 
-### 7.6 Assemble the finite query
+### 7.6 Assembly of the finite query
 
 Conjoin the pulled-back tests, equalities, portal constraints, core-path atoms,
 first-emission constraints, and one product-path atom for each interval.
@@ -885,7 +887,7 @@ so each original observer accepts its reconstructed path. Zero-length pieces
 use their endpoint allow/control tests; a single-group wrap uses Lemma 6.1's genuine
 self-loop. Thus the original clause holds in $P(C)$, proving (7.1). $\square$
 
-### A complete two-observer diagram
+### 7.9 Example: two simultaneous observations
 
 Take four original states $f,p,q,s$, initial state $s$, final state $f$, no
 Bad states or flags, and only the transitions
@@ -927,7 +929,7 @@ paths in that one graph. Replacing the second observer's sole label by
 $\mathsf K_1$ would remove this product transition: the first observer and
 the second cannot choose different emissions for the same physical interval.
 
-### Why sharing is indispensable
+### 7.10 Shared-word consistency
 
 Suppose two forward observations cover the same interval, one requiring the
 first emitted bit to be 0, the other requiring it to be 1. Each may have a
@@ -937,7 +939,7 @@ independent preimage per atom would incorrectly accept; the single product in
 arises with incompatible lengths, repeated traversals, and marks contributed
 by another atom. Sharing only endpoints would not repair it.
 
-### Why direction is indispensable
+### 7.11 The directedness restriction
 
 For $B=0$ and $C=0\,1^n\,0$, every internal prefix ending in 1 has failure
 parent 0. If inverse failure edges were available, the old root would have
@@ -946,7 +948,7 @@ Our compiler introduces no inverse edge. Nor does it introduce equality of
 independent path labels or negative reachability. Theorem 7.1 asserts closure only
 for the specified positive directed query language.
 
-## 8. Finish without another return
+## 8. Completion without another return
 
 Starting at $h_0=\pi(m)$ in $P(B)$ with original control $r_m$, follow only
 $\mathsf K_a$ edges. On such an edge from cursor $h$ to $h'$, choose a
@@ -981,7 +983,7 @@ completion determines its matching-cursor path and the required state choices.
 Empty completion is included. Reversing the completed reference gives an
 original witness by Section 5. $\square$
 
-## 9. Decide terminal witnesses by finite semantic promotion
+## 9. Terminal decision by finite preimage iteration
 
 Set
 
@@ -1034,7 +1036,7 @@ further return, including at the final cut, so Lemma 8.1 makes the finishing que
 true there. Lemma 9.1 makes $\Phi_{k-2}$ true on the initial one-letter graph, which
 the algorithm enumerates. The empty witness was checked separately. $\square$
 
-## 10. Decide the infinite-continuation branch
+## 10. Decision of infinite continuation
 
 Now let $I$ be an absorbing instance with $k$ states, without assuming terminal
 finals. A witness with a safe cyclic future can be extended to a witness
@@ -1143,7 +1145,7 @@ whether some original witness has a safe cyclic continuation.
 directions for each enumerated cycle. There are finitely many cycles to test,
 and each monitor is finite. $\square$
 
-## 11. Compose the complete decision
+## 11. The entailment decision procedure
 
 Normalize the expressions by Lemma 2.1, construct the summary instance $I$ of Lemma 3.3,
 and compute
@@ -1207,7 +1209,11 @@ two domains is unsound.
 There is, nevertheless, a polynomial reduction of our constant-free input
 fragment to the restricted problem of Niehren and Priesnitz [@NP99, Theorem 14].
 The target permits product equations and inequalities between variables,
-with valuations in the bottom/product/top domain. Name every product
+with valuations in the bottom/product/top domain. Its order is the greatest
+relation satisfying the following rule: $X\le Y$ exactly when $X=\bot$,
+or $Y=\top$, or both roots are products and their corresponding children
+are ordered. There are no other comparisons of root labels.
+Name every product
 subexpression as in Section 2, writing its two defining inequalities as a
 single product equation. Add a fresh variable $\omega$ and the constraints
 
@@ -1299,9 +1305,8 @@ search terminates on a failed input. Apply the finite constructions above.
 Finally, a regular countermodel is itself an arbitrary-tree countermodel,
 which proves the converse implication for entailment. $\square$
 
-This argument specifies complete extraction, but does not bound its cost or
-assert that the current interface implements every step. It also does not
-supply a finite-tree countermodel: the constructed graph may have cycles.
+This extraction has no efficiency guarantee. It also does not supply a
+finite-tree countermodel: the constructed graph may have cycles.
 
 ### 12.3 Scope of the contribution
 

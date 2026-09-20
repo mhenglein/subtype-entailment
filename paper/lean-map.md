@@ -26,6 +26,16 @@ A source/link check is not a new kernel replay or an independent mathematical re
 | Lemma 10.2 | Periodic good prefix and original finite witness | [PeriodicRun.infWitness_of_prefix_good](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/PeriodicRun.lean#L266); [PeriodicRun.prefixGood_of_witness](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/PeriodicRun.lean#L309) |
 | Theorem 10.3 | Infinite-continuation decision under strong absorption | [InfiniteCycle.infWitness_iff_bounded_cycle](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/InfiniteCycle.lean#L95); [InfiniteDecision.infiniteWitnessCheck](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/InfiniteDecision.lean#L169); [InfiniteDecision.infiniteWitnessCheck_correct](https://github.com/mhenglein/subtail/blob/c946d86b9e65da2877e0df42c710abbdcb5a4037/lean/Subtail/InfiniteDecision.lean#L198) |
 
+## Ordinary consequences
+
+These results have ordinary proofs in the manuscript; they are not new Lean declarations.
+
+| Paper result | Statement | Earlier proof record |
+|---|---|---|
+| Corollary 11.1 | Uniform computable terminal witness bound by finite instance enumeration | [Record](../research/conjectures/Q004.md) |
+| Proposition 12.1 | Guarded constant-free transfer to the NP99 PSPACE procedure | [Record](../notes/2026-09-19-post-c081-extensions.md) |
+| Proposition 12.2 | Effective regular countermodels and equivalence of arbitrary/regular entailment | [Record](../notes/2026-09-19-post-c081-extensions.md) |
+
 ## Source identities
 
 These hashes let a reader detect source drift from the mapped checkpoint.

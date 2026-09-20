@@ -340,5 +340,22 @@
       ],
       "legacy_id": "P17"
     }
+  ],
+  "ordinary_results": [
+    {
+      "id": "Corollary 11.1",
+      "statement": "Uniform computable terminal witness bound by finite instance enumeration",
+      "evidence": "../research/conjectures/Q004.md"
+    },
+    {
+      "id": "Proposition 12.1",
+      "statement": "Guarded constant-free transfer to the NP99 PSPACE procedure",
+      "evidence": "../notes/2026-09-19-post-c081-extensions.md"
+    },
+    {
+      "id": "Proposition 12.2",
+      "statement": "Effective regular countermodels and equivalence of arbitrary/regular entailment",
+      "evidence": "../notes/2026-09-19-post-c081-extensions.md"
+    }
   ]
 }

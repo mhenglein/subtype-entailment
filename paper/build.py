@@ -56,7 +56,8 @@ def main():
          "--csl", str(PAPER / "references.csl"), "--metadata", "link-citations=true",
          "--variable", "documentclass=article", "--variable", "fontsize=11pt", "--variable", "papersize=a4",
          "--variable", "geometry=margin=25mm", "--variable", "colorlinks=true",
-         "--variable", "urlcolor=blue", "--variable", "toc-depth=2",
+         "--variable", "urlcolor=blue", "--variable", "linkcolor=black",
+         "--variable", "citecolor=blue", "--variable", "toc-depth=2",
          "--include-in-header", str(PAPER / "header.tex"), "--output", str(tex)])
     run(["tectonic", str(tex), "--outdir", str(OUT), "--keep-logs"])
     pdf = OUT / "subtail-paper.pdf"
