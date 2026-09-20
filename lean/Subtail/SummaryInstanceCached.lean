@@ -10,6 +10,13 @@ namespace Subtail.SummaryInstanceCached
 open TreeSemantics StackSummary StackReachability CanonicalReachability
 open CanonicalReachabilityFast SummaryAutomaton
 
+def stateTable (n : Nat) : Vector (Summary n) (states n).length :=
+  ⟨(states n).toArray, by simp⟩
+
+@[simp] theorem stateTable_get (q : Fin (states n).length) :
+    (stateTable n).get q = decode q := by
+  simp [stateTable, Vector.get, decode]
+
 def initialPair (M : System n) (cache : Cache M) (a b : Fin n) : Summary n :=
   ((List.finRange n).filter fun q => lookup cache.forward a q,
    (List.finRange n).filter fun q => lookup cache.backward b q)
@@ -46,13 +53,14 @@ def summaryInstance (C : List (Constraint n)) (M : System n) (cache : Cache M)
     (a b : Fin n) : Instance (states n).length :=
   let sat := satCheck C M cache
   let danger := Vector.ofFn (dangerCheck C M cache)
+  let decoded := stateTable n
   { initial := initial M cache a b
     transitions := Vector.ofFn fun q => (some (advance M cache q false), some (advance M cache q true))
-    bad := Vector.ofFn fun q => !sat || (decode q).1.any (fun m => danger.get m)
+    bad := Vector.ofFn fun q => !sat || (decoded.get q).1.any (fun m => danger.get m)
     final := Vector.ofFn fun q =>
-      !((decode q).2.any fun f => decide (∃ l r, Constraint.lower l r f ∈ C))
+      !((decoded.get q).2.any fun f => decide (∃ l r, Constraint.lower l r f ∈ C))
     flags := Vector.ofFn fun p => Vector.ofFn fun q =>
-      (decode p).1.any fun m => decide (m ∈ (decode q).2) }
+      (decoded.get p).1.any fun m => decide (m ∈ (decoded.get q).2) }
 
 theorem initialPair_eq (C : List (Constraint n)) (cache : Cache (systemOf C))
     (hc : Correct (systemOf C) cache) (a b : Fin n) :
@@ -93,7 +101,7 @@ theorem summaryInstance_eq (C : List (Constraint n)) (M : System n) (cache : Cac
     summaryInstance C M cache a b = SummaryAutomaton.summaryInstance C a b := by
   subst M
   simp only [summaryInstance, initial_eq C cache hc, advance_eq C cache hc,
-    satCheck_eq C cache hc, dangerCheck_eq C cache hc, vector_get_ofFn]
+    satCheck_eq C cache hc, dangerCheck_eq C cache hc, vector_get_ofFn, stateTable_get]
   rfl
 
 def rawWith (C : List (Constraint n)) (M : System n) (cache : Cache M) (a b : Fin n) : Bool :=
