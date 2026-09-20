@@ -8,8 +8,8 @@ Issue 68: constructive finite-seed language compilation and regular graph
 production. The public model uses the C084 Graph, original variable roots,
 and one unchanged separating word. No finite-tree conclusion is made.
 
-SOURCE DRAFT: this module has not been elaborated in the authoring container.
-Its intended all-input theorem is not a report of successful kernel checking.
+Exact pinned build, kernel and execution receipts are recorded separately in
+notes/2026-09-20-regular-producer-68.md. Source inspection is not execution.
 -/
 namespace Subtail.RegularCountermodelProducer
 
@@ -201,8 +201,8 @@ theorem rawNext_correct (M : System n) (seeds : List (Config n))
             refine ⟨.inl t, control_mem seeds t, ?_, ys, z, r, hw, hrest, ha⟩
             apply List.any_eq_true.mpr
             refine ⟨u, by simp, ?_⟩
-            exact Bool.and_eq_true.mpr
-              ⟨(StackSummaryFast.balancedCheck_correct _ _ _).mpr hb, ht⟩
+            have hbal := (StackSummaryFast.balancedCheck_correct _ _ _).mpr hb
+            simp [hbal, ht]
       · rintro ⟨p, _, ht, hl⟩
         cases p with
         | inl s =>
