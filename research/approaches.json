@@ -176,12 +176,12 @@
     {
       "id": "A010",
       "title": "Build the exact top-free constraint-to-automata pipeline",
-      "status": "tried",
+      "status": "active",
       "outcome": "supported",
-      "owner": null,
+      "owner": "publication-sequence-20260920 (Astra, parent integrator)",
       "updated": "2026-09-20",
       "summary": "C081 has a proved cached raw summary with literal whole-Instance equality and unconditional endpoint correctness. E060 resolves the four/five-variable empty raw stress probes, retains 38/38 fixed and 19/19 deeper completions, and exactly checks 83 small query instances. Six-variable raw stress remains UNKNOWN; state/flag counts and signature/quantitative boundaries are unchanged.",
-      "next_step": "Follow #63 completion gates. Practical #66 profiles six-variable raw construction; #67 adds terminal-promotion coverage. Proof hardening and explicit-top/signature targets are separate #68/#71/#72 issues. No worker is assigned.",
+      "next_step": "ACTIVE #64 manuscript/contribution audit and #65 clean reproduction on codex/publication-audit-20260920. Exact owned paths and read-only reviewer are in STATE.md and #37. #67 terminal coverage then #66 performance are queued, not claimed. Licensing/authorship remain deferred; no Lean proof or scientific claim is changed by starting this review.",
       "record": "research/approaches/A010.md",
       "evidence": [
         "notes/2026-09-04-bridge-foundation.md",
@@ -619,12 +619,12 @@
     {
       "id": "A018",
       "title": "Maintain the Lean core and verify critical obligations",
-      "status": "tried",
+      "status": "active",
       "outcome": "supported",
-      "owner": null,
+      "owner": "publication-sequence-20260920 (Astra, parent integrator)",
       "updated": "2026-09-20",
       "summary": "C081 has a proved cached raw summary with literal whole-Instance equality and unconditional endpoint correctness. E060 resolves the four/five-variable empty raw stress probes, retains 38/38 fixed and 19/19 deeper completions, and exactly checks 83 small query instances. Six-variable raw stress remains UNKNOWN; state/flag counts and signature/quantitative boundaries are unchanged.",
-      "next_step": "Follow #63 completion gates. Practical #66 profiles six-variable raw construction; #67 adds terminal-promotion coverage. Proof hardening and explicit-top/signature targets are separate #68/#71/#72 issues. No worker is assigned.",
+      "next_step": "ACTIVE #64 manuscript/contribution audit and #65 clean reproduction on codex/publication-audit-20260920. Exact owned paths and read-only reviewer are in STATE.md and #37. #67 terminal coverage then #66 performance are queued, not claimed. Licensing/authorship remain deferred; no Lean proof or scientific claim is changed by starting this review.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",

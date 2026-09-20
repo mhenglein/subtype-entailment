@@ -1,5 +1,34 @@
 # Subtail — current research state
 
+## Active work and file ownership
+
+**Updated 20 September 2026.** Session `publication-sequence-20260920`
+is working on **[#64: manuscript/contribution audit](https://github.com/mhenglein/subtail/issues/64)**
+and **[#65: clean reproduction](https://github.com/mhenglein/subtail/issues/65)**.
+The owner-authorized integrator is Astra in Marcus's current publication task.
+Base: `b63a90443c3b71d086a340785e83751c441190fc`; working branch:
+[`codex/publication-audit-20260920`](https://github.com/mhenglein/subtail/tree/codex/publication-audit-20260920).
+Read the latest [scope and handoff comments in #37](https://github.com/mhenglein/subtail/issues/37)
+before claiming an overlapping task. The registry marks A010/A018 active for
+this bounded work; their established mathematical results are unchanged.
+
+| Role / task | Owned writes | Boundary |
+|---|---|---|
+| Parent author/integrator: #64 | `paper/**`, `output/pdf/subtail-paper.*`, `output/pdf/subtail-paper-manifest.json`, `notes/prior-work/novelty-matrix.md`, new `notes/2026-09-20-publication-acceptance.md`, `results/publication-acceptance.json` | Review and exposition; no Lean proof-source changes in this scope. |
+| Parent reproduction operator: #65 | New `scripts/reproduce_release.py`, `notes/2026-09-20-clean-reproduction.md`, `results/clean-reproduction.json`; separate ignored scratch/build outputs | Fresh project cache; reuse installed pinned tools; preserve failed attempts. No separate reproduction agent was launched. |
+| `publication_proof_review` | None: independent read-only review | Reads the manuscript and mapped definitions; sends findings to #64 and parent; does not edit the proof or paper. |
+| Parent integration only | `README.md`, `CONTRIBUTING.md`, this file, `research/COMPLETION.md`, claim/approach ledgers, generated indexes, A010/A017/A018 histories, `experiments/README.md` when needed | One writer for these shared paths. Coordinate changes in #37 first. |
+
+**Queued, not claimed:** #67 terminal/shared-generator coverage, then #66
+six-variable raw-summary performance. Their implementation paths are not
+reserved by this queue. Other research issues are unassigned; claim a disjoint
+scope in the relevant issue and #37 before starting. No source-module,
+toolchain or shared-CI change is authorized by the current file reservation.
+Licensing and author identities remain deferred.
+
+The parent will update this section and release its paths explicitly when the
+scope changes, completes or stops. An old timestamp alone is not a release.
+
 ## September 20: PR reconciliation and a current completion checklist
 
 The [completion map](research/COMPLETION.md) replaces obsolete stage trackers

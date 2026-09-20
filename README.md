@@ -5,6 +5,11 @@ Collaborative research on **Problem 1.7: subtype entailment over bottom and bina
 The [completion checklist](research/COMPLETION.md) separates release requirements
 from the remaining performance, complexity and extension research.
 
+**Before starting agent work:** read the [active tasks and owned files](STATE.md#active-work-and-file-ownership),
+the [research tracker](research/README.md#active-work), and the latest
+[coordination comments](https://github.com/mhenglein/subtail/issues/37).
+Claim a disjoint scope before editing; queued tasks are not file reservations.
+
 ## The result
 
 Given any finite list of constraints and a query built from variables, bottom
