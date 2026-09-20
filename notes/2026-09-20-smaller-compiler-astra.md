@@ -5,6 +5,13 @@ Workstreams A017/A018; issue #69, **compiler-only**. Original shortest-witness F
 Inspected source: `19b06d4fed9da635d9b911f0e908d04e4fc4b099`.
 Branch: `codex/smaller-compiler-20260920-astra`.
 
+> **Current validation:** the full ORIGINAL `ClosureFor I (preSmall I)` and
+> `ClosureStatement I` pass pinned Lean build, kernel replay, all 22 declaration
+> audits and the scoped runtime comparisons at `acf0524ffdbc9f407797b68b8953a39e1f79cf5d`.
+> See Section 10 for exact receipts and preserved failed builds. Separate
+> mathematical review is requested but not received: acceptance is BLOCKED on
+> that review, not READY_FOR_INTEGRATION. No original-F conclusion is made.
+
 ## Status and evidence boundary
 
 This note gives an ordinary construction and proof of the ORIGINAL existential
@@ -389,3 +396,75 @@ C080 as a whole from this local clause.
 At handoff, record the exact final commit and workflow outcomes, retain any
 failed formalization diagnostics, release all five new paths and leave issue
 #69 open for its separate F limb and any remaining review obligations.
+
+## 10. Completed validation and acceptance boundary
+
+The historical PENDING statements above describe the initial note publication
+at `2b2b994c288519b79acb02962c9305a0373d5f3d`; they are not the final status.
+The complete checked source is `acf0524ffdbc9f407797b68b8953a39e1f79cf5d`.
+Actual execution: GitHub Actions run **35517192465**, job **106095004645**,
+completed successfully on 2026-09-20 at 14:40:52 UTC. Environment: Ubuntu 24.04.5,
+Lean **4.33.1** (`819816b2e0a3bf405af45ae5c7af2491d8f5bee6`), Lake 5.0.0.
+Workflow file `.github/workflows/smaller-compiler-astra.yml` has a 20-minute job
+limit, with 180-second declaration-audit and 120-second Python-command limits.
+
+Actual completed steps:
+
+- `lake build +Subtail.SmallerCompilerAstra`: PASS, 19 jobs. The new module
+  compiled in 2.2 seconds; dependencies used the workflow's Lake cache. This is
+  not a fresh whole-library build or a compiler performance benchmark.
+- `lake env leanchecker Subtail.SmallerCompilerAstra`: PASS.
+- All **22** new def/theorem transitive axiom closures: PASS. Only `propext`,
+  `Quot.sound`, `Classical.choice` occur. Every executable `def` is free of
+  `Classical.choice`. No `sorryAx`, native-decision axiom or custom axiom occurs.
+- Native `compact inst input diagram` is `false` for the preserved historical
+  diagram, matching the kernel-checked `old_counterexample_rejected` theorem.
+  Native `(preSmall inst []).length` is `0`, matching `preSmall_nil`.
+- Standalone Python checker: PASS; `cmp` with the committed JSON is exact.
+- `--repository`: PASS, **62** independently constructed certificates checked
+  with the unchanged Python extraction/compiler/model evaluator, plus **one**
+  preserved counterexample/smaller-diagram replay. This also validates the four
+  pinned source blob hashes before comparison. The full JSON is printed in the
+  job log; the committed JSON intentionally remains the standalone receipt.
+
+Final source hashes (SHA-256):
+
+    Lean:   9d23d5922c627708bb62f6f1d68059870c4566c6ef7aa8bd6384383cfe90ce05
+    Python: bf7dafe0ea0c3269261de858ee9c813d1f958cb044c0ae8fd808000d02a9741c
+    JSON:   b91558da2248401349442a4603d18ca07d5217b70dfa97d9a732c298075820c2
+
+The checked endpoints include both directions of `closure_iff`, the universal
+retained-output `compileValid_weight_le`, its query-weight lift, and the exact
+unchanged `ClosureFor`/`ClosureStatement`. The original final numerical target,
+not just a helper or conditional statement, is now a checked declaration.
+The sharper intermediate `28*k*t^(t+1)` displayed in Section 6 remains ordinary
+arithmetic; the Lean proof uses the stated looser intermediate and proves the
+same original U. No stronger runtime or shortest-witness conclusion follows here.
+
+Failed native attempts are preserved in branch history and Actions logs:
+`4e1d652082bcae4845487165a2fba9b879eeef82` / run 35516838445 failed on namespace,
+binder and composition syntax; `7d6090007c93f80888b30a810e46452aca36cc72` / run
+35516995998 failed on an explicit list-default mismatch and a missing namespace
+open. The later JSON/checker commits repeated that second source failure.
+`acf0524` corrected those proof-writing issues; no theorem statement, existing
+definition or numerical bound was weakened. Skipped checks on failed runs are
+not retrospectively labelled successful.
+
+Coordination was acknowledged in both directions: the F-only session's
+5750400657 comment agrees the split in our 5750364181. Its separate proof route
+was not adopted or investigated by this compiler-only contribution. Review of
+Sections 4-6 was explicitly requested in #69 comment 5750449854, with full
+formal evidence reported in 5750490632. **No separate mathematical review receipt
+has been received at this handoff.** Thus the implementation and its precise
+formal contract are checked, while independent semantic/ordinary-size acceptance
+remains BLOCKED and the PR should remain draft. A kernel pass is not relabelled
+as a human or separate-agent review.
+
+Main advanced separately to `e2c981b44418ca12a689e8ef3c4b63f62d750e64`.
+The exact base-to-main comparison changes only CONTRIBUTING.md, STATE.md,
+research/README.md and research/approaches.json; AGENTS, all mathematical/source
+dependencies and the toolchain are unchanged. This branch retains its pinned
+base. No combined-main integration run or merge is claimed; the integrator owns
+that step and the shared-ledger update. All five new paths are released at the
+final #69/#37 handoff, with no background work, successor assignment or retained
+integration lease. Keep #69 open for its separate F limb and pending review.
