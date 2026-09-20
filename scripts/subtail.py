@@ -312,6 +312,8 @@ def cert : Certificate {n} {v} := {{
   word := {word}
 }}
 #eval IO.println ("{CERTIFICATE_MARKER}" ++ toString (check input left right cert))
+example : ¬ ExprEntails input left right :=
+  check_not_entails input left right cert (by decide)
 '''
 
 
@@ -334,6 +336,7 @@ def verify_certificate(p: Problem, model, deadline, memory_gib=16.0):
     markers = [line.strip() for line in run['output'].splitlines() if line.startswith(CERTIFICATE_MARKER)]
     if markers == [CERTIFICATE_MARKER + 'true']:
         return {'status': 'VERIFIED', 'basis': 'Lean RegularTreeCertificate.check_not_entails',
+                'instance_proof': 'kernel-checked with decide; no native_decide',
                 'checker_sha256': hashlib.sha256((ROOT / 'lean/Subtail/RegularTreeCertificate.lean').read_bytes()).hexdigest(),
                 'input_source_sha256': hashlib.sha256(source.encode()).hexdigest(),
                 'seconds': run['seconds']}
@@ -396,7 +399,7 @@ def main(argv=None):
     parser.add_argument('--timeout', type=float, default=20.0, help='Total build/decision/explanation seconds')
     parser.add_argument('--memory-gib', type=float, default=16.0, help='Process address-space cap on Linux')
     parser.add_argument('--no-explain', action='store_true')
-    parser.add_argument('--check-model', type=Path, help='Check a supplied finite-graph model instead of running Lean')
+    parser.add_argument('--check-model', type=Path, help='Check a supplied graph instead of running the entailment decision')
     parser.add_argument('--verify-certificate', action='store_true',
                         help='Also verify a found/supplied countermodel with the Lean certificate checker')
     args = parser.parse_args(argv)
@@ -447,6 +450,10 @@ def main(argv=None):
     if result.get('certificate_verification', {}).get('status') == 'VERIFIED':
         result['trust_boundary'] = ('Lean verified the finite-graph certificate against emitted original expressions. '
             'JSON parsing, source emission and the extractor remain ordinary Python.')
+    elif args.check_model and 'certificate_verification' in result:
+        result['trust_boundary'] = ('Python graph check completed; Lean certificate verification is ' +
+            result['certificate_verification']['status'] +
+            '. JSON parsing and source emission remain ordinary Python.')
     print(json.dumps(result, indent=2))
     return 0 if result['status'] in ('ENTAILED', 'NOT_ENTAILED') else 2 if result['status'] == 'UNKNOWN' else 1
 

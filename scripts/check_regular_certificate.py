@@ -122,6 +122,9 @@ def main():
     args.output.parent.mkdir(parents=True, exist_ok=True)
     directory = args.output.parent / (args.output.stem + '-scratch')
     directory.mkdir(exist_ok=True)
+    version = command(['lean', '--version']).strip()
+    if 'version 4.33.1,' not in version:
+        raise RuntimeError('Use the pinned Lean 4.33.1 toolchain: ' + version)
     command(['lake', 'build', '+Subtail.RegularTreeCertificate'])
     command(['lake', 'env', 'leanchecker', 'Subtail.RegularTreeCertificate'])
     declarations = audit(directory)

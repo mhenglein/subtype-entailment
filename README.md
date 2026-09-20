@@ -63,18 +63,35 @@ separation checks, then the complete Lean decision when those checks are
 inconclusive. The CLI timeout includes any needed build and explanation work;
 the benchmark measures queries after the initial build.
 
-Negative answers may include a finite graph for a regular infinite countermodel
-and a separating path (`[]` is the root). The small explanation search is
-incomplete. You can independently check a supplied graph without running Lean:
+Negative answers trigger a complete countermodel search: without resource
+limits it eventually returns a finite graph and a separating path (`[]` is
+the root). Graphs can contain cycles and denote regular infinite trees. If
+extraction runs out of time, `explanation_search` is UNKNOWN and the completed
+Lean decision remains NOT_ENTAILED. The search strategy and its ordinary proof
+are [documented separately](notes/2026-09-20-regular-countermodels.md).
+
+You can independently check a supplied graph without running Lean:
 
 ```sh
 python3 scripts/subtail.py examples/entailment/zero-spine.json \
   --check-model examples/entailment/zero-spine-model.json
 ```
 
-The Lean decision is checked; the Python parser, launcher and graph checker
-are not Lean-verified. [Current solver proof and measurements](notes/2026-09-20-fast-summary.md);
-[interface and certificate format](notes/2026-09-20-c081-solver.md).
+To check the finite graph with Lean too, use `--verify-certificate`:
+
+```sh
+(cd lean && lake build +Subtail.EntailmentFast +Subtail.RegularTreeCertificate)
+python3 scripts/subtail.py examples/countermodels/alternating-spine.json \
+  --timeout 60 --verify-certificate
+```
+
+The alternating-spine example requires `x = bottom × y` and `y = x × bottom`.
+It returns a cyclic countermodel to `x <= bottom × bottom`, separated at `[1]`.
+`certificate_verification: VERIFIED` means Lean accepted the graph against the
+emitted original expressions. JSON parsing, source emission and extraction
+remain ordinary Python; this is not a Lean-verified extractor. A verification
+timeout is reported separately. [Certificate proof and validation](notes/2026-09-20-regular-countermodels.md);
+[solver proof and performance limits](notes/2026-09-20-fast-summary.md).
 
 ## Bounds and research checkpoint
 
