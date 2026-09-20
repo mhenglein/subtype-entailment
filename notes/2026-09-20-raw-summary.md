@@ -68,7 +68,7 @@ replacement is proposed.
    Substituting steps 1–5 proves both unconditional endpoint equalities.
 
 The semantic risks to check in Lean and independent review are ordered subset
-encoding, reverse-system orientation, denominator-free handling of `n=0`,
+encoding, reverse-system orientation, handling of zero controls,
 unreachable states, global UNSAT and ordered/diagonal flags. A change preserving
 only accepted words would suffice semantically, but exact Instance equality is
 the simpler available argument and permits direct component comparisons.
