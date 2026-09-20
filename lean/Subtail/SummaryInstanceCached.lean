@@ -16,6 +16,7 @@ def stateTable (n : Nat) : Vector (Summary n) (states n).length :=
 @[simp] theorem stateTable_get (q : Fin (states n).length) :
     (stateTable n).get q = decode q := by
   simp [stateTable, Vector.get, decode]
+  rfl
 
 def initialPair (M : System n) (cache : Cache M) (a b : Fin n) : Summary n :=
   ((List.finRange n).filter fun q => lookup cache.forward a q,
