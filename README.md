@@ -37,6 +37,48 @@ bounds, a complexity class, or novelty. The [post-C081 programme](research/POST_
 tracks these separate questions. Author names and affiliations are placeholders;
 licensing is pending. The paper is a research draft, not a peer-reviewed publication.
 
+## Try the solver
+
+With the pinned Lean toolchain on PATH:
+
+```sh
+python3 scripts/subtail.py examples/entailment/premise.json --timeout 20
+python3 scripts/subtail.py examples/entailment/reverse.json --timeout 20
+```
+
+Input is JSON with `variables`, a list of `constraints`, and one `query`.
+An inequality is `[left,right]`. An expression is a variable name, `"bottom"`,
+or `{"prod":[left,right]}`. The command returns ENTAILED, NOT_ENTAILED, or
+UNKNOWN on a resource limit. It uses the complete Lean decision with a proved
+evaluation-order optimization; a failed early test still reaches the backend.
+
+Negative answers may include a finite graph for a regular infinite countermodel
+and a separating path (`[]` is the root). The small explanation search is
+incomplete. You can independently check a supplied graph without running Lean:
+
+```sh
+python3 scripts/subtail.py examples/entailment/zero-spine.json \
+  --check-model examples/entailment/zero-spine-model.json
+```
+
+The Lean decision is checked; the Python parser, launcher and graph checker
+are not Lean-verified. [Interface, proof, resources and evidence](notes/2026-09-20-c081-solver.md).
+
+## Bounds and research checkpoint
+
+[C082](research/claims.md#c082) gives a checked explicit terminal witness bound.
+It also records why the earlier concrete C080 weight estimate is false; the
+original F alone remains open. The [input resource account](notes/2026-09-20-c081-input-complexity.md)
+gives a very large explicit bound for a specified reference decision algorithm,
+including normalization, summary tables, arithmetic and storage. It is ordinary
+mathematics, and does not bound the runtime of this native frontend.
+
+The stable paper/reader tag is
+[`c081-research-2026-09-20`](https://github.com/mhenglein/subtail/tree/c081-research-2026-09-20),
+at `29cda9a`, with all four main checks passing. Its paper explains the
+qualitative C081 proof. Later quantitative and solver results are separate
+additive contributions; original proof source pins remain unchanged.
+
 ## Reproduce the result
 
 The mathematical source checkpoint is
@@ -153,8 +195,9 @@ semantic readback support the result. [Complete argument and validation](notes/2
 Native tests are supplementary finite evidence; the exhaustive backend can
 be impractical even for simple inputs, and test timeouts remain UNKNOWN.
 
-The candidate explicit `U/F` bound in [C080](research/claims.md#c080) remains
-unproved and is not needed for this decision. [STATE.md](STATE.md) separates
+The old concrete weight estimate in [C080](research/claims.md#c080) is refuted;
+its original F alone remains open. [C082](research/claims.md#c082) supplies a
+separate corrected bound. Neither numerical estimate is needed by C081. [STATE.md](STATE.md) separates
 the checked theorem, ordinary corollaries, performance limits and prior failed
 attempts. No complexity, novelty or human peer-review claim follows from CI.
 

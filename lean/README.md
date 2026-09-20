@@ -40,6 +40,9 @@ From the repository root:
 python3 scripts/check_lean.py
 python3 scripts/check_entailment_decision.py
 python3 scripts/check_rank_weight_native.py
+(cd lean && lake build +Subtail.TerminalDecisionLazy)
+(cd lean && lake env leanchecker Subtail.TerminalDecisionLazy)
+python3 scripts/check_terminal_lazy.py
 python3 experiments/check_entailment_decision.py
 python3 scripts/check_rank_decision.py
 python3 scripts/check_subtype_summary.py
@@ -73,7 +76,9 @@ lake env lean Subtail/Audit.lean
 The qualitative core modules are included by `Subtail.lean`. The three C082
 quantitative modules are optional imports; `check_rank_weight_native.py`
 builds, kernel-replays and audits them explicitly. Their check runs inside the
-same cached Lean job, with a small audit artifact. Complete public dependency
+same cached Lean job, with a small audit artifact. The optional
+`TerminalDecisionLazy` module is also built/replayed/audited explicitly and
+E054 runs the full capped native diagnostic without replacing E052 history. Complete public dependency
 audits are enforced by [the Lean workflow](../.github/workflows/lean.yml), which
 since 2026-09-19 runs the former foundation, milestone, query and
 graph/interface audits as steps of one cached build (CI diet, #37).
@@ -84,6 +89,7 @@ Its graph/interface step audits all 65 public declarations of the four graph mod
 
 | File | Result |
 |---|---|
+| [TerminalDecisionLazy.lean](Subtail/TerminalDecisionLazy.lean) | Optional globally gated terminal and complete expression wrappers, with unconditional equality to the original Booleans and inherited correctness |
 | [AbsorbingTerminal.lean](Subtail/AbsorbingTerminal.lean) | Under strong absorption, witness existence iff a witnessed safe cycle is reachable or a witness exists in the safely pruned terminal instance |
 | [SubtypeTerminalBridge.lean](Subtail/SubtypeTerminalBridge.lean) | Exact normalized non-entailment iff InfWitness of the summary instance or the terminal decision returns true; both branch Booleans are composed in EntailmentDecision |
 | [SummaryBridge.lean](Subtail/SummaryBridge.lean), [SummaryAutomaton.lean](Subtail/SummaryAutomaton.lean) | Exact ordered cuts and prefix-denial characterization; explicit two-summary instance; same-word separation equivalence and all-state strong absorption |

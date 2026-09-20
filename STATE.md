@@ -49,7 +49,7 @@ corpus; it does not prove an extension theorem. Explicit top first breaks the
 old product-root propagation rule. No decision or undecidability result for
 that extension is claimed.
 
-The [complexity note](notes/2026-09-19-c081-complexity-review.md) records a
+The [complexity note](notes/2026-09-19-c081-complexity-review.md) records an
 alternative witness-enumeration route whose quantitative dependency is now
 supplied by C082 above. The [independent accounting readback](notes/2026-09-20-post-c081-cost-readback.md)
 repairs omitted construction and storage costs. Complete original-input costs and exact lower-bound transfers remain open. Its
