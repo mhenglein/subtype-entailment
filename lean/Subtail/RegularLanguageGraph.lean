@@ -160,6 +160,14 @@ theorem accepts_initial_iff (A : NFA alpha) (L : alpha -> Word -> Prop)
     (p : alpha) (hp : p ∈ A.carrier) (w : Word) :
     accepts (determinize A) (initial A p) w = true <-> L p w := by
   rw [accepts_iff A L hfinal hnext]
-  simp [initial, initialSet, and_assoc, hp]
+  constructor
+  · rintro ⟨q, hq, hl⟩
+    have hq' : q ∈ A.carrier ∧ q = p := by
+      simpa [initial, initialSet] using hq
+    rcases hq' with ⟨_, rfl⟩
+    exact hl
+  · intro hl
+    refine ⟨p, ?_, hl⟩
+    simp [initial, initialSet, hp]
 
 end Subtail.RegularLanguageGraph
