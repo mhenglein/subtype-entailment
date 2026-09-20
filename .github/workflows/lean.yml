@@ -591,6 +591,20 @@ jobs:
         run: |
           python3 scripts/check_prepared_summary.py --cli --output tmp/prepared-audit-cli.json
           PYTHONPATH=scripts python3 -m unittest scripts/test_profile_entailment.py
+      - name: Independent primitive-table components and deeper cases
+        run: |
+          python3 experiments/check_prepared_summary.py --components --benchmark --generated --output tmp/entailment-prepared.json
+          python3 - <<'PYCODE'
+          import json
+          from pathlib import Path
+          phases = json.loads(Path('tmp/entailment-prepared.json').read_text())['phases']
+          assert phases['components']['status'] == 'PASS', phases['components']['status']
+          counts = phases['benchmark']['counts_by_variant_and_kind']['prepared']
+          assert counts['frontend'] == {'PASS': 26}, counts
+          assert counts['normalized'] == {'PASS': 5}, counts
+          assert phases['generated']['counts_by_variant']['prepared'] == {'PASS': 19}, phases['generated']['counts_by_variant']
+          print('PASS: prepared components, original frontend and 19 deeper/generated cases; raw caps remain explicit')
+          PYCODE
       - name: Preserve primitive-table proof and CLI evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
