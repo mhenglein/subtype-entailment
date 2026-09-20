@@ -266,7 +266,7 @@
         "notes/2026-09-20-solver-profile-readback.md",
         "results/solver-profile.json"
       ],
-      "issue": 61
+      "issue": "https://github.com/mhenglein/subtail/issues/61"
     },
     {
       "id": "A011",
@@ -744,7 +744,7 @@
         "notes/2026-09-20-solver-profile-readback.md",
         "results/solver-profile.json"
       ],
-      "issue": 61
+      "issue": "https://github.com/mhenglein/subtail/issues/61"
     }
   ]
 }
