@@ -4,8 +4,9 @@ Date/session: 2026-09-20, `regular-producer-68-20260920`.
 Inspected upstream: `19b06d4fed9da635d9b911f0e908d04e4fc4b099`.
 Branch: `codex/regular-producer-68-20260920`.
 
-Status at outline: ordinary constructive argument; formalization and validation
-are separate obligations below. This note does not promote C084, amend any
+Status: the complete original-input graph producer is Lean-checked at the
+source checkpoints recorded below. This began as an ordinary constructive
+outline; source inspection, kernel checking and execution remain distinct. This note does not promote C084, amend any
 ledger, or close issue 68. Its first version precedes source implementation.
 The local worktree is a sparse inspection workspace: its initial synthetic
 commit contains one byte-verified upstream Python file, not the whole upstream
@@ -287,7 +288,7 @@ certificate-decoration adapter. Finiteness of a graph is not finiteness of
 its unfolding. No finite-tree claim, complexity improvement, novel priority,
 C080 bound or change of constructor signature is made.
 
-## Initial execution evidence (not a final acceptance claim)
+## Retained development evidence
 
 The actual upstream Python blob is `b59c57174e24d00fdbe8dfca1c99337921adf88f`.
 The checker uses seed `2026092068` and a 50,000-pair equivalence cap. Local
@@ -306,7 +307,7 @@ revision. Revision `f42836961f780df4000c01a3d52fde789d8c6b62`, run
 `35517286238`, fixes the identifier and reaches the subset proof, but fails
 on decoder rewriting and initial existential normalization. These failures
 are retained in history. The next revision `b1fc4cf7287e16418cd5e24ed145a9f18da469a1`
-makes those proof steps explicit; acceptance is pending its actual checks.
+makes those proof steps explicit; that revision was not an accepted checkpoint. Later checks are recorded below.
 
 The intended Lean output is a freshly constructed graph, not an input graph
 or a regularity assumption. This is a new epsilon-free/all-subsets algorithm;
@@ -314,3 +315,135 @@ no checked refinement of the existing optimized Python extractor is claimed.
 The full C084 embedding/simulation decoration adapter is not implemented in
 the new Lean modules. Independent mathematical review and runtime-erasure
 readback remain separate from a successful source build.
+
+## Checked original-input result
+
+At source `8201846e70733c75567fc8e8b0e4f7342aa1ef0c`, the entire new
+producer module, not just a supplied-certificate helper, passed the pinned
+module build and bundled kernel replay. The exact public conclusions are:
+
+- `produce_none_iff`: `produce G s t = none` iff `ExprEntails G s t`.
+- `produce_sound`: every returned Model satisfies all original premises and
+  separates the original expressions at that Model's finite word.
+- `produce_complete`: every failed arbitrary-tree entailment returns some Model.
+
+These have no caller-supplied regular graph, model, regularity assumption,
+witness-length cutoff or certificate oracle. `Model` contains a newly computed
+C084 Graph, roots for the original variables, and a finite word.
+`modelForWord_correct` separately preserves an externally specified successful
+word exactly. `canonicalGraph_exact` identifies every normalized root language
+with the entire canonical closure, independently of satisfiability.
+
+The final accessibility definition uses the standard well-founded relation on
+accessible indices, with measure `Subtype.mk i acc`. This is the computable
+interface to the same accessibility argument; the rejected initial attempt to
+use the equation compiler's structural `Acc.brecOn` into Type is retained in
+development history. It is not a change of search order or a bound assumption.
+
+Run 35517920234 (artifact 10607761122) passed the explicit new-module build,
+`leanchecker Subtail.RegularCountermodelProducer`, the full 73-named-declaration
+axiom inventory, and five actual Lean runtime cases. Its downloaded artifact
+SHA256 is `f5018d76c2e577ebaf399fa8b403a1c0ae7435d604144036e12e5daf6a9b40c4`.
+The final source/checker/artifact pins are recorded in
+`results/regular-producer-68.json`; documentation-only handoff changes do not
+constitute another Lean execution.
+
+The native cases are three total-wrapper negatives (closed terms, an
+unconstrained variable, and an infinite left spine), a reflexive positive
+returning none, and the normalized constructor on the alternating infinite
+spine at word [true]. The alternating case exercises the supplied-word
+constructor, NOT the full frontend/decision wrapper. All returned graph
+valuations are checked at all addresses against their original-syntax test
+problems by a separate finite-pair inclusion checker. The cyclic native graphs
+have 32 and 256 nodes, including retained unreachable subset states.
+
+The ordinary Python tests additionally produce 18 original-input periodic
+cyclic models across six nonconstant periods, at separator depths 1, 2 and 4.
+They exhaust 3,912 finite-product comparison states and 319 complete literal
+configurations across the differential tests. The literal closures are finite
+because every control transition strictly increases the control index; there
+is no hidden stack-depth truncation. Regression tests are evidence about the
+sampled cases, not a substitute for the all-input theorem.
+
+### Trust and remaining obligations
+
+The full named axiom inventory has no unexpected axiom and contains only
+subsets of `propext`, `Quot.sound`, and `Classical.choice`. The top-level producer
+and its correctness/completeness closures include all three. In particular,
+classical existential reasoning is present in the termination/correctness
+proof chain. `seekAcc` itself has only `propext` in its closure. No source
+`sorry`, `admit`, `native_decide`, `noncomputable`, or `unsafe` occurs in the two
+new implementation modules; this static observation is separate from the
+completed kernel and runtime checks.
+
+The type-checked executable model producer is the proved result. It is a new
+Lean epsilon-free/all-subsets implementation, not a checked refinement of the
+existing optimized Python epsilon-NFA/reachable-subsets implementation. The
+ordinary language argument and differential experiments relate them, but no
+Lean theorem asserts their implementation-level equality.
+
+Automatic generation of C084's complete expression-map/simulation Certificate
+record is NOT FORMALIZED here, although its ordinary construction is proved
+above. JSON parsing, external names/indices, source emission, compilation and
+serialization correctness, process limits and memory exhaustion are outside
+the semantic producer theorem. A complete transitive generated-runtime audit
+is NOT RUN. Independent mathematical reviewer readback is NOT RUN by this
+worker; a request was posted, not treated as an acknowledgement or a completed
+review. Integration onto a newer main revision needs its own pinned checks.
+
+The source constructor can be exponentially large and the underlying complete
+decision procedure can be expensive. No practical worst-case runtime or memory
+bound is claimed. The harness uses 180 seconds per Lean command/case and a
+50,000-pair differential-comparison cap; any exhausted cap is UNKNOWN. Explicit
+positive-input one-sided extraction caps are UNKNOWN, not positive decisions.
+The checked total wrapper instead uses C081 to handle positive inputs.
+
+Finite graph size does not imply finite unfolding. In particular the reported
+reachable cycles certify arbitrary regular infinite trees. No finite-tree
+completeness or finite-tree certificate theorem is claimed. Issue 68 remains
+open, and shared ledgers, manuscript, workflows and import aggregators remain
+integrator-owned (apart from the expressly approved new branch-only workflow).
+
+### Final pinned execution and limited generated-code readback
+
+Final checked source: `b5dfd3576a0f9948d1f77ea9cfc215c08e85a77a`, still based
+on the original `19b06d4fed9da635d9b911f0e908d04e4fc4b099` snapshot. Run
+35518193660, artifact 10607761447, repeats all six version/build/kernel/audit/
+runtime gates successfully. The actual downloaded artifact SHA256 is
+`683a06c4c2261659611152b824224a31913fd23eae52dffcb958f7c62306b8aa`.
+Every implementation/checker source hash in its receipt was matched to the
+local authored bytes. The only subsequent handoff changes are this note and
+the curated result receipt. These do not claim a new source execution.
+
+The audit additionally executes `seek` with the first successful index 7 and
+prints `REGULAR68 delayed_search PASS`. That is a delayed generic-search
+regression, not a new original-input fixture. The five original/normalized
+graph cases and their distinctions above are unchanged. In the receipt, the
+label `native_producer` means actual Lean `#eval` evaluation, not a standalone
+generated-C command-line executable. Standalone CLI packaging/testing is
+NOT RUN. The ordinary `lake build` may reuse pinned cached dependencies; no
+clean-from-empty-cache rebuild is claimed. The two new modules are explicitly
+targeted and the producer module is passed to the bundled kernel checker.
+
+The generated `RegularCountermodelProducer.c` has SHA256
+`31f7c24ba80dad68975a2d1479fb3460431ce2acf611d70754a479a12495c399`;
+`RegularLanguageGraph.c` has SHA256
+`2dd29077e8e605a81650446b23d76a616946bf9a9bde492b23ac1c10fe9310c5`.
+The former's `seekAcc`/`seek` definitions (lines 1918-1967) and
+`findWord`/`produceNegative`/`produce` definitions (lines 2072-2157) were
+read directly. The operational search body tests p(i), increments i when
+false, and returns i when true. Proof-parameter wrappers forward without
+using their proof argument. `produce` calls the existing entailment Boolean,
+then either returns none or calls the actual search-and-construction code.
+No Classical or sorryAx symbol occurs in this generated module. This is a
+LIMITED source readback, not a proof of compiler correctness or an audit of
+the complete transitive runtime/import closure. The latter remains NOT RUN.
+
+All initial failures remain in branch history: runs 35517118147 and
+35517286238 fail on the reserved carrier identifier and decoder proof;
+35517371383 fails on the remaining initial-state witness; 35517515405
+reaches the producer and reports five elaboration issues, including the
+initial accessibility-recursion form; 35517788899 reports the final Boolean
+proof-name error. Kernel/audit/runtime gates blocked behind those failures
+are NOT RUN at those revisions, not inherited successes. Runs 35517920234
+and 35518193660 are the successful complete checkpoints.

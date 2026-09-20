@@ -1,0 +1,298 @@
+{
+  "session": "regular-producer-68-20260920",
+  "kind": "curated receipt; full machine receipts and exact logs are in the identified CI artifacts and handoff bundle",
+  "upstream_commit": "19b06d4fed9da635d9b911f0e908d04e4fc4b099",
+  "checked_source_commit": "b5dfd3576a0f9948d1f77ea9cfc215c08e85a77a",
+  "first_checked_source_commit": "8201846e70733c75567fc8e8b0e4f7342aa1ef0c",
+  "branch": "codex/regular-producer-68-20260920",
+  "ci": {
+    "run_id": 35518193660,
+    "artifact_id": 10607761447,
+    "artifact_sha256": "683a06c4c2261659611152b824224a31913fd23eae52dffcb958f7c62306b8aa",
+    "receipt_sha256": "c5b44b071ad6fe9cef70f41964d084d32d73b9dc961f9980a20bdfed715c9b3c",
+    "lean_command_timeout_seconds": 180,
+    "runner_job_timeout_minutes": 20
+  },
+  "toolchain": {
+    "version": "4.33.1",
+    "compiler_commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+    "environment": {
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "python": "3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]"
+    }
+  },
+  "source_hashes": {
+    "lean/Subtail/RegularCountermodelProducer.lean": {
+      "git_blob": "8636a92798fd9fcc1e24b85817515bd700f0b800",
+      "sha256": "e8cdada1e6980be2719f266a585f6fe1169d836ccb83bd3d251960958ebf1804"
+    },
+    "lean/Subtail/RegularCountermodelProducerAudit.lean": {
+      "git_blob": "413ecf91f8019c496e228f8f03715075be3e5152",
+      "sha256": "db6d5fbf8303e0137f41ccd3850e99281684aadd31ddd32a1e6a5797af14e454"
+    },
+    "lean/Subtail/RegularLanguageGraph.lean": {
+      "git_blob": "9f8818cfbf2bc2b707e3b71275851ec4d2746707",
+      "sha256": "6d837f2f7e852311602fdab1b1df1526d7668104ed8e4630bbe732e2543a40cb"
+    },
+    "scripts/check_regular_producer_68.py": {
+      "git_blob": "dcf11330df1e2c38f44e35c7f5ab173c8d3182e1",
+      "sha256": "50f4c98ef14fc3106a2a5091d6d7dce75d90a58a08a5ce863b0f44f2b71925d2"
+    }
+  },
+  "gates": {
+    "axiom_audit": {
+      "command": [
+        "lake",
+        "env",
+        "lean",
+        "Subtail/RegularCountermodelProducerAudit.lean"
+      ],
+      "inventory_complete": true,
+      "log_sha256": "f94179062ba04f90744574467360269020e79da602e61e411da14d48f3f7ce70",
+      "runtime_erasure_review": "NOT RUN",
+      "seconds": 0.33891502999999545,
+      "status": "PASS",
+      "unexpected_axioms": {}
+    },
+    "core_build": {
+      "command": [
+        "lake",
+        "build"
+      ],
+      "log_sha256": "8ba064926949df48be6bf37d79c30d95c512f61d242281c395090a49eb89f591",
+      "seconds": 0.14055275200000494,
+      "status": "PASS"
+    },
+    "kernel_replay": {
+      "command": [
+        "lake",
+        "env",
+        "leanchecker",
+        "Subtail.RegularCountermodelProducer"
+      ],
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.6506656880000037,
+      "status": "PASS"
+    },
+    "module_build": {
+      "command": [
+        "lake",
+        "build",
+        "+Subtail.RegularLanguageGraph",
+        "+Subtail.RegularCountermodelProducer"
+      ],
+      "log_sha256": "49f612d9375cde4ae0b6ea9c968d90369c5bbdb3f9c98fcf717bdc549fceaaac",
+      "seconds": 1.3445600090000056,
+      "status": "PASS"
+    },
+    "native_producer": {
+      "status": "PASS"
+    },
+    "version": {
+      "command": [
+        "lake",
+        "env",
+        "lean",
+        "--version"
+      ],
+      "log_sha256": "63f3e16bf0258e2cc0ab3010eb1830723df9bb85097b7b72b0137b9be25a78e9",
+      "seconds": 0.08526137900000208,
+      "status": "PASS"
+    }
+  },
+  "axioms": {
+    "named_declarations": 73,
+    "permitted": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "unexpected": [],
+    "producer_and_main_theorems": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "seekAcc": [
+      "propext"
+    ],
+    "classical_closures": [
+      "Subtail.RegularLanguageGraph.nodes_toGraph",
+      "Subtail.RegularLanguageGraph.graphNodes_iff",
+      "Subtail.RegularCountermodelProducer.popTest_correct",
+      "Subtail.RegularCountermodelProducer.attachmentCheck_correct",
+      "Subtail.RegularCountermodelProducer.joinCheck_correct",
+      "Subtail.RegularCountermodelProducer.rawFinal_correct",
+      "Subtail.RegularCountermodelProducer.rawNext_correct",
+      "Subtail.RegularCountermodelProducer.nfa_recognizes",
+      "Subtail.RegularCountermodelProducer.canonicalGraph_exact",
+      "Subtail.RegularCountermodelProducer.canonicalGraph_tree",
+      "Subtail.RegularCountermodelProducer.normalizedModel_valuation",
+      "Subtail.RegularCountermodelProducer.normalizedModel_correct",
+      "Subtail.RegularCountermodelProducer.modelForWord_correct",
+      "Subtail.RegularCountermodelProducer.exists_input_word",
+      "Subtail.RegularCountermodelProducer.findWord",
+      "Subtail.RegularCountermodelProducer.produceNegative",
+      "Subtail.RegularCountermodelProducer.produceNegative_correct",
+      "Subtail.RegularCountermodelProducer.produce",
+      "Subtail.RegularCountermodelProducer.produce_none_iff",
+      "Subtail.RegularCountermodelProducer.produce_sound",
+      "Subtail.RegularCountermodelProducer.produce_complete"
+    ]
+  },
+  "actual_lean_evaluation": {
+    "meaning": "Lean #eval of executable declarations, not a standalone linked C binary",
+    "cases": [
+      {
+        "case": "closed_negative",
+        "graph_nodes": 16,
+        "independent_check": {
+          "independent_separator": [],
+          "premise_pairs": 0,
+          "query_pairs": 1,
+          "valid": true
+        },
+        "log_sha256": "4651a75aab26f400211efc15a24322a6cb80f80b111422bfa19b0f48d1bd5b53",
+        "reachable_cycle": false,
+        "separator": [],
+        "status": "PASS"
+      },
+      {
+        "case": "variable_negative",
+        "graph_nodes": 8,
+        "independent_check": {
+          "independent_separator": [],
+          "premise_pairs": 0,
+          "query_pairs": 1,
+          "valid": true
+        },
+        "log_sha256": "515b11370fd12e1ee5fd1b6ab09c0bf832eac23786b50af46410ca81b409df6e",
+        "reachable_cycle": false,
+        "separator": [],
+        "status": "PASS"
+      },
+      {
+        "case": "cyclic_negative",
+        "graph_nodes": 32,
+        "independent_check": {
+          "independent_separator": [],
+          "premise_pairs": 4,
+          "query_pairs": 1,
+          "valid": true
+        },
+        "log_sha256": "f78479b6b21aee56d12d584a2b67dfc65f9607db93e4494f8bf0370433a044e7",
+        "reachable_cycle": true,
+        "separator": [],
+        "status": "PASS"
+      },
+      {
+        "answer": "none",
+        "case": "positive",
+        "status": "PASS"
+      },
+      {
+        "case": "normalized_alternating",
+        "graph_nodes": 256,
+        "independent_check": {
+          "independent_separator": [
+            1
+          ],
+          "premise_pairs": 19,
+          "query_pairs": 3,
+          "valid": true
+        },
+        "log_sha256": "f361f371cf9d4b53b8c6e0c6f10a15d71e82de04b11d543f3d496a4aeaccede1",
+        "reachable_cycle": true,
+        "separator": [
+          1
+        ],
+        "status": "PASS"
+      }
+    ],
+    "delayed_search_index_7": "PASS"
+  },
+  "python_checks": {
+    "upstream_producer_blob": "b59c57174e24d00fdbe8dfca1c99337921adf88f",
+    "seed": 2026092068,
+    "pair_cap": 50000,
+    "status": "PASS",
+    "acyclic_systems": 80,
+    "cyclic_systems": 160,
+    "exact_literal_equivalences": 238,
+    "exact_nfa_equivalences": 623,
+    "literal_configurations": 319,
+    "product_pairs": 3912,
+    "unknown": [],
+    "periodic_cyclic_models": 18,
+    "boundary_models": 3,
+    "old_library_assignments_rejected": 775,
+    "intentional_word_time_and_pair_caps": "UNKNOWN, expected guard behavior; not entailment decisions"
+  },
+  "generated_code_readback": {
+    "status": "LIMITED SOURCE INSPECTION",
+    "producer_c_sha256": "31f7c24ba80dad68975a2d1479fb3460431ce2acf611d70754a479a12495c399",
+    "graph_c_sha256": "2dd29077e8e605a81650446b23d76a616946bf9a9bde492b23ac1c10fe9310c5",
+    "ranges": [
+      [
+        1918,
+        1967
+      ],
+      [
+        2072,
+        2157
+      ]
+    ],
+    "observations": [
+      "search tests successive indices and increments on failure",
+      "proof wrappers do not use the proof argument",
+      "total wrapper calls C081 then search/construction or returns none",
+      "no Classical or sorryAx symbol in generated producer module"
+    ],
+    "complete_transitive_runtime_audit": "NOT RUN"
+  },
+  "remaining": {
+    "full_C084_certificate_decoration": "NOT FORMALIZED",
+    "optimized_Python_refinement": "NOT FORMALIZED",
+    "independent_mathematical_reviewer_readback": "NOT RUN",
+    "standalone_compiled_CLI": "NOT RUN",
+    "clean_from_empty_cache_build": "NOT RUN",
+    "newer_main_integration_checks": "NOT RUN",
+    "JSON_names_indices_source_emission_serialization": "OUTSIDE PROOF",
+    "resource_limits": "OUTSIDE PROOF; caps are UNKNOWN",
+    "finite_tree_certification": "SEPARATE OBLIGATION; cycles may denote infinite trees"
+  },
+  "failed_development_runs": [
+    {
+      "run_id": 35517118147,
+      "source": "17a57b6ac716ff2d7a20c35978a3192715b46182",
+      "status": "FAIL",
+      "reason": "reserved carrier identifier"
+    },
+    {
+      "run_id": 35517286238,
+      "source": "f42836961f780df4000c01a3d52fde789d8c6b62",
+      "status": "FAIL",
+      "reason": "subset decoder and initial existential"
+    },
+    {
+      "run_id": 35517371383,
+      "source": "b1fc4cf7287e16418cd5e24ed145a9f18da469a1",
+      "status": "FAIL",
+      "reason": "initial subset witness"
+    },
+    {
+      "run_id": 35517515405,
+      "source": "406fea371b9812a71b3b16281b6f081c0d2fa177",
+      "status": "FAIL",
+      "reason": "producer elaboration and initial Acc recursion form"
+    },
+    {
+      "run_id": 35517788899,
+      "source": "8dfcde07d639b7587542d299005d706ae310f5f8",
+      "status": "FAIL",
+      "reason": "Boolean proof-name error"
+    }
+  ],
+  "historical_gate_policy": "gates behind failed builds were NOT RUN at those revisions; no inherited PASS",
+  "issue_68_status": "OPEN; no shared ledger or manuscript promotion"
+}
