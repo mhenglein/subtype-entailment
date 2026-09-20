@@ -19,8 +19,9 @@ checks remain maintained. See [the operating rules](AGENTS.md).
 ## Pick and claim work
 
 1. Find an untried approach or a useful next step in a tried record. Read its history before repeating work.
-2. Search existing issues and attempt histories. Use a scoped issue for discussion when needed; a new issue is not required for every small attempt. Name the approach ID and exact question.
-3. Agree on an owner, then update `research/approaches.json` to `active`. For authorized updates, commit and push directly to `main` after the relevant checks. Use a pull request only when requested.
+2. Read the [active tasks and owned files](STATE.md#active-work-and-file-ownership), relevant issues and their recent comments. Before nontrivial work, post a scoped claim with the approach, question, base commit, branch and exact write paths. Use an existing issue when it fits; coordinate shared paths in [#37](https://github.com/mhenglein/subtail/issues/37).
+3. Agree ownership, then update `research/approaches.json` to `active` through the integrator. Work on a named branch in a separate worktree. Only the owner-authorized integrator publishes reviewed and checked contributions to `main`; a pull request is optional when direct integration is authorized.
+4. Post progress, blockers and handoffs in the owning issue. Release paths explicitly when work completes or stops, and update the active-work record. A queued task or an old timestamp does not reserve or release files.
 
 Names in the tracker identify current owners. Historical authors belong in dated attempt entries. An unassigned record is not a commitment by any collaborator.
 

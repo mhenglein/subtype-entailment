@@ -30,6 +30,9 @@ def main():
     body = re.sub(r"^##", "#", body, flags=re.M)
     # Keep the proof-end symbol with the preceding sentence.
     body = body.replace(r" $\square$", r"\nobreak\hspace{.5em}$\square$")
+    # Keep a numbered result's opening with its displayed statement.
+    body = re.sub(r"(?=^\*\*(?:Theorem|Lemma|Proposition|Corollary) \d)",
+                  lambda _: "\\Needspace{6\\baselineskip}\n\n", body, flags=re.M)
     # Paper-relative source links become immutable repository links in the PDF.
     def absolute_link(match):
         label, target = match.groups()

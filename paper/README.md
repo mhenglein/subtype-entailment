@@ -84,6 +84,22 @@ Historical results apply to their recorded revisions; a new PDF build does not
 repeat them. JSON handling, extraction and rooted graph finiteness retain the
 external boundaries documented in the solver notes.
 
+For one logged reproduction from a fresh clone, put Python 3.13.14 and Lean
+4.33.1 on PATH and run:
+
+```sh
+python3 scripts/reproduce_release.py
+```
+
+The runner refuses an existing `lean/.lake`, a dirty checkout, or an existing
+output directory. It builds the default library and optional normalization,
+C030, finite, optimized and certificate modules explicitly, then runs their
+checks and the paper example. The normalization audit is not a default-library
+import. Logs and a source-pinned receipt are written to
+`tmp/release-reproduction/`. This reuses the installed toolchain; it does not
+claim a fresh operating-system/toolchain installation or every historical
+experiment. A failed or capped step stops the run and remains in its receipt.
+
 ## Remaining scientific and publication questions
 
 The [publication plan](../research/PUBLICATION_PLAN.md) separates manuscript
