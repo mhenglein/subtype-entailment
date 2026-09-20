@@ -1113,3 +1113,61 @@ default core passed at the diagnostic revision. A later certificate-only
 trust-label correction changed no Lean or benchmark source. The current
 16-test Python suite and actual positive/negative CLI plus graph readbacks
 passed separately at `20c1f23937f9d43bf47b0b3890afff75ed613be5`.
+
+
+<a id="e055"></a>
+
+### E055 — Proved finite saturation, cached solver and deeper-input limits
+
+**Build and commands.** Use pinned Lean 4.33.1 and build the optional module:
+
+```sh
+(cd lean && lake build +Subtail.EntailmentFast)
+python3 scripts/check_fast_summary.py
+python3 experiments/check_fast_summary.py --components \
+  --output tmp/fast-components.json --scratch tmp/fast-components
+python3 experiments/check_fast_summary.py --benchmark --compare-baseline --generated \
+  --output tmp/entailment-fast.json --scratch tmp/entailment-fast
+```
+
+Omit `--compare-baseline` for the candidate-only diagnostic. The harness's
+`--components` includes both system-level and normalized SAT/separation checks.
+Default process caps are 20 seconds wall/CPU, 16 GiB Linux address space, one
+Lean thread and 32768 KiB stack; the initial module build is separate. Full
+receipts record source hashes, exact revision, host, expected answers and
+individual PASS/FAIL/UNKNOWN outcomes. A capped run supplies no Boolean answer.
+
+**Scope.** Independent P-automaton predecessor saturation checks five aggregate
+Boolean vectors across 62 zero/one/two-control systems. Each vector is compared
+by length and two rolling digests; six normalized SAT/separation vectors use
+an exact integer encoding. These are regression tests alongside the all-input
+Lean proofs. All 38 E054 fixtures are rerun against the current gated baseline
+and the new wrapper. The seven raw probes deliberately call the same old raw
+backend in both variants. Nineteen generated cases cover transitive chains,
+covariance, supplied-address depth and original-expression nested products.
+The last family exercises candidate paths beyond the short-word prefix.
+
+**Observed result.** At `9a866c196f30f2fe1f11d4201d6237642fbd3cb8` on wb-marcus:
+33/38 candidate cases complete versus 24/38 baseline, with no wrong answers
+or regressions. Frontend completion is 26/26 versus 17/26, taking 0.668–0.771
+seconds per candidate including Lean startup. Normalized completion is 5/5
+for both. Raw completion is unchanged at 2/7; five cases remain UNKNOWN.
+Both component phases PASS. Generated completion is 16/19; supplied depth
+twelve and full-expression depths six and eight remain UNKNOWN. Thus the
+basic acceptance target passes while the full diagnostic status is UNKNOWN.
+
+**Evidence and limits.** [Driver](check_fast_summary.py),
+[combined receipts](../results/entailment-fast.json),
+[ordinary proof, declarations, failed harness attempts and remaining costs](../notes/2026-09-20-fast-summary.md),
+[source readback](../notes/2026-09-20-fast-summary-readback.md).
+The identical Lean source passed default and optional build/kernel checks plus
+97 declaration audits at `cf12580`. The interface keeps its separate Python
+trust boundary and incomplete explanation search. No global backend speedup,
+peak-memory measurement, per-phase cost profile or practical worst-case bound
+is claimed. The E052/E054 receipts are preserved unchanged.
+
+A later diagnostic-only signal-classification repair at `6163f27` preserves
+UNKNOWN when a killed process emits no message. Its 17 boundary tests and
+replay of 97 recorded native outcomes PASS; no measured answer or status
+changes. This is not a new native run, and the original `9a866c1` receipt is
+retained with its exact hashes.

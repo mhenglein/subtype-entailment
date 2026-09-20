@@ -1,5 +1,34 @@
 # Subtail — current research state
 
+## September 20: proved cached solver meets the basic frontend target
+
+The optional [cached solver](notes/2026-09-20-fast-summary.md) is unconditionally
+equal to the C081 Boolean over the same arbitrary-tree semantics. It computes
+a least finite balanced relation, materializes reusable matrices, checks a
+sound positive closure and exact syntax-guided separating paths, and retains
+the complete fallback. The JSON interface now uses this implementation.
+The original reference modules and qualitative theorem are unchanged.
+
+Default core/build/kernel checks and 97 new declaration dependency closures
+PASS at `cf12580`; 45 non-theorems contain no classical-choice dependency.
+[Source readback](notes/2026-09-20-fast-summary-readback.md) finds no correctness
+blocker. The Python parser/resource/certificate boundary remains unverified
+by Lean, and its explanation search is incomplete.
+
+Matched E055 at `9a866c1` on wb-marcus completes **33/38 versus 24/38** under
+the same limits, with no wrong answers or regressions. All 26 full-expression
+cases now complete in 0.668–0.771 seconds including Lean startup; the previous
+nine timeouts are resolved. Five unchanged raw-backend probes remain UNKNOWN.
+Independent P-automaton component comparisons PASS. The generated suite
+completes 16/19; supplied depth twelve and full-expression depths six and eight
+remain UNKNOWN. [Pinned receipt](results/entailment-fast.json).
+
+The next performance question is to profile the deeper cases before choosing
+further representation changes. Peak memory and algorithm-phase costs were
+not measured. Full backend optimization, complete countermodel extraction,
+the standalone paper rewrite and extension proofs remain open. Earlier dated
+entries below retain their original measurements and scientific scope.
+
 ## September 20: post-C081 package and usable solver
 
 The [post-C081 programme](research/POST_C081.md) has delivered the ordinary

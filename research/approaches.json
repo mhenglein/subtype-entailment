@@ -180,8 +180,8 @@
       "outcome": "supported",
       "owner": null,
       "updated": "2026-09-20",
-      "summary": "C081 qualitative entailment, corrected C082 terminal witness bound, ordinary input resource account and C083 NL lower bound are recorded with exact limits. The optional equality-proved gate and JSON interface pass source/kernel/runtime and boundary checks. Matched E054 completes 24/38 versus 22/38 original, with 14 UNKNOWN and unchanged full-expression coverage. Paper, novelty and extension studies are complete research drafts.",
-      "next_step": "Choose a scoped follow-up: prove faster summary representations, extract complete regular countermodels, narrow complexity bounds or seek external review. Explicit top and changed signatures need new arguments; original C080 F remains open. No worker is currently assigned.",
+      "summary": "C081 qualitative entailment and its corrected quantitative/resource results retain their exact scopes. The new optional cached solver is proved equal to C081 and passes build/kernel/runtime/source review. Matched E055 completes 33/38 versus 24/38, including all 26 frontend cases; five raw and three of 19 generated cases remain UNKNOWN. Paper rewrite and extension proofs remain separate work.",
+      "next_step": "Profile deeper generated cases before choosing transition caching, pair queues or prefix reuse; pursue complete regular countermodel extraction and the publication rewrite under separate scoped claims. The full backend and changed-signature theorems remain open work. No worker is currently assigned.",
       "record": "research/approaches/A010.md",
       "evidence": [
         "notes/2026-09-04-bridge-foundation.md",
@@ -228,7 +228,15 @@
         "scripts/subtail.py",
         "scripts/check_terminal_lazy.py",
         "experiments/check_entailment_lazy.py",
-        "results/entailment-lazy.json"
+        "results/entailment-lazy.json",
+        "notes/2026-09-20-fast-summary.md",
+        "notes/2026-09-20-fast-summary-readback.md",
+        "lean/Subtail/StackSummaryFast.lean",
+        "lean/Subtail/CanonicalReachabilityFast.lean",
+        "lean/Subtail/EntailmentFast.lean",
+        "scripts/check_fast_summary.py",
+        "experiments/check_fast_summary.py",
+        "results/entailment-fast.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/3"
     },
@@ -560,8 +568,8 @@
       "outcome": "supported",
       "owner": null,
       "updated": "2026-09-20",
-      "summary": "C081 qualitative entailment, corrected C082 terminal witness bound, ordinary input resource account and C083 NL lower bound are recorded with exact limits. The optional equality-proved gate and JSON interface pass source/kernel/runtime and boundary checks. Matched E054 completes 24/38 versus 22/38 original, with 14 UNKNOWN and unchanged full-expression coverage. Paper, novelty and extension studies are complete research drafts.",
-      "next_step": "Choose a scoped follow-up: prove faster summary representations, extract complete regular countermodels, narrow complexity bounds or seek external review. Explicit top and changed signatures need new arguments; original C080 F remains open. No worker is currently assigned.",
+      "summary": "C081 qualitative entailment and its corrected quantitative/resource results retain their exact scopes. The new optional cached solver is proved equal to C081 and passes build/kernel/runtime/source review. Matched E055 completes 33/38 versus 24/38, including all 26 frontend cases; five raw and three of 19 generated cases remain UNKNOWN. Paper rewrite and extension proofs remain separate work.",
+      "next_step": "Profile deeper generated cases before choosing transition caching, pair queues or prefix reuse; pursue complete regular countermodel extraction and the publication rewrite under separate scoped claims. The full backend and changed-signature theorems remain open work. No worker is currently assigned.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
@@ -670,7 +678,15 @@
         "scripts/subtail.py",
         "scripts/check_terminal_lazy.py",
         "experiments/check_entailment_lazy.py",
-        "results/entailment-lazy.json"
+        "results/entailment-lazy.json",
+        "notes/2026-09-20-fast-summary.md",
+        "notes/2026-09-20-fast-summary-readback.md",
+        "lean/Subtail/StackSummaryFast.lean",
+        "lean/Subtail/CanonicalReachabilityFast.lean",
+        "lean/Subtail/EntailmentFast.lean",
+        "scripts/check_fast_summary.py",
+        "experiments/check_fast_summary.py",
+        "results/entailment-fast.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/31"
     }

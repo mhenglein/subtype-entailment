@@ -1,0 +1,3231 @@
+{
+  "acceptance_target": {
+    "completed": 26,
+    "full_expression_cases": 26,
+    "no_regression": true,
+    "previously_completed": 17,
+    "status": "PASS"
+  },
+  "cli_smoke": {
+    "cases": [
+      {
+        "name": "premise",
+        "result": {
+          "basis": "Lean EntailmentFast.entailsCheck_correct",
+          "build_seconds": 0.218,
+          "native_seconds": 0.719,
+          "seconds": 0.939,
+          "stage": "decision",
+          "status": "ENTAILED",
+          "trust_boundary": "Lean algorithm checked; Python parsing, launch and certificate checker are not Lean-verified.",
+          "wrapper_sha256": "d2867bd220ec379ab19caa9f6d639082b0abd234ce548642d64e3e7d85017afc"
+        }
+      },
+      {
+        "name": "reverse",
+        "result": {
+          "basis": "Lean EntailmentFast.entailsCheck_correct",
+          "build_seconds": 0.218,
+          "countermodel": {
+            "checked_premises": 1,
+            "nodes": [
+              null,
+              [
+                0,
+                0
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                3,
+                0
+              ],
+              [
+                0,
+                4
+              ]
+            ],
+            "roots": {
+              "x": 0,
+              "y": 1
+            },
+            "semantics": "arbitrary bottom/product trees; finite graph denotes regular trees",
+            "separating_path": [],
+            "valid": true
+          },
+          "explanation_search": {
+            "candidates": 2,
+            "status": "FOUND"
+          },
+          "native_seconds": 0.719,
+          "seconds": 0.938,
+          "stage": "decision",
+          "status": "NOT_ENTAILED",
+          "trust_boundary": "Lean algorithm checked; Python parsing, launch and certificate checker are not Lean-verified.",
+          "wrapper_sha256": "d2867bd220ec379ab19caa9f6d639082b0abd234ce548642d64e3e7d85017afc"
+        }
+      },
+      {
+        "name": "zero-spine",
+        "result": {
+          "basis": "Lean EntailmentFast.entailsCheck_correct",
+          "build_seconds": 0.217,
+          "countermodel": {
+            "checked_premises": 1,
+            "nodes": [
+              null,
+              [
+                0,
+                0
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                3,
+                0
+              ],
+              [
+                0,
+                4
+              ]
+            ],
+            "roots": {
+              "x": 2
+            },
+            "semantics": "arbitrary bottom/product trees; finite graph denotes regular trees",
+            "separating_path": [],
+            "valid": true
+          },
+          "explanation_search": {
+            "candidates": 3,
+            "status": "FOUND"
+          },
+          "native_seconds": 0.669,
+          "seconds": 0.888,
+          "stage": "decision",
+          "status": "NOT_ENTAILED",
+          "trust_boundary": "Lean algorithm checked; Python parsing, launch and certificate checker are not Lean-verified.",
+          "wrapper_sha256": "d2867bd220ec379ab19caa9f6d639082b0abd234ce548642d64e3e7d85017afc"
+        }
+      }
+    ],
+    "checked_revision": "cf125800a9c26cb4589d4eb0bd889d6a76b1a8e5",
+    "execution": "wb-marcus"
+  },
+  "components": {
+    "caps": {
+      "address_space_GiB_linux": 16,
+      "cpu_seconds_per_process": 20.0,
+      "lean_stack_KiB": 32768,
+      "lean_threads": 1,
+      "wall_seconds_per_process": 20.0
+    },
+    "checked_revision": "9a866c196f30f2fe1f11d4201d6237642fbd3cb8",
+    "host": "wb-marcus",
+    "limitations": [
+      "Component comparisons use the independent finite P-automaton oracle; they do not replace the Lean all-input proofs.",
+      "Supplied-address negative probes are component tests; the separately labelled nested-product family calls the full frontend. Neither proves global candidate-search completeness.",
+      "UNKNOWN is preserved for resource caps and is never converted into a Boolean answer."
+    ],
+    "phases": {
+      "components": {
+        "cache_reuse": {
+          "prepare_calls_per_system": 1,
+          "same_cache_for_all_queries": true
+        },
+        "component_kinds": [
+          "forward",
+          "backward",
+          "paths",
+          "reaches",
+          "control"
+        ],
+        "counts": {
+          "PASS": 5
+        },
+        "native": {
+          "markers": [
+            "SUBTAIL_FAST_COMPONENT:forward:148:2931543990614888834:1331100230",
+            "SUBTAIL_FAST_COMPONENT:backward:148:5036814650625217562:715621043",
+            "SUBTAIL_FAST_COMPONENT:paths:148:17097211521960327765:1910230639",
+            "SUBTAIL_FAST_COMPONENT:reaches:12884:6666430084157856943:152098917",
+            "SUBTAIL_FAST_COMPONENT:control:1292:13228401126457446324:1701275367"
+          ],
+          "output_tail": "SUBTAIL_FAST_COMPONENT:forward:148:2931543990614888834:1331100230\nSUBTAIL_FAST_COMPONENT:backward:148:5036814650625217562:715621043\nSUBTAIL_FAST_COMPONENT:paths:148:17097211521960327765:1910230639\nSUBTAIL_FAST_COMPONENT:reaches:12884:6666430084157856943:152098917\nSUBTAIL_FAST_COMPONENT:control:1292:13228401126457446324:1701275367\n",
+          "returncode": 0,
+          "seconds": 9.097,
+          "status": "PASS"
+        },
+        "oracle": "experiments/check_stack_summary.py P-automaton predecessor saturation",
+        "rows": [
+          {
+            "actual_digest1": 2931543990614888834,
+            "actual_digest2": 1331100230,
+            "actual_length": 148,
+            "expected_digest1": 2931543990614888834,
+            "expected_digest2": 1331100230,
+            "expected_length": 148,
+            "expected_sha256": "adf3cf109b0b5f5b31763f0bcbcfd2d0f1008acfaba520f98fc9f8bcb53720bf",
+            "name": "forward",
+            "status": "PASS"
+          },
+          {
+            "actual_digest1": 5036814650625217562,
+            "actual_digest2": 715621043,
+            "actual_length": 148,
+            "expected_digest1": 5036814650625217562,
+            "expected_digest2": 715621043,
+            "expected_length": 148,
+            "expected_sha256": "fe22d148e467c1e9c467f7d593a643b1e714e54ea6b05b077fce6d1f2829236b",
+            "name": "backward",
+            "status": "PASS"
+          },
+          {
+            "actual_digest1": 17097211521960327765,
+            "actual_digest2": 1910230639,
+            "actual_length": 148,
+            "expected_digest1": 17097211521960327765,
+            "expected_digest2": 1910230639,
+            "expected_length": 148,
+            "expected_sha256": "22eb39e6f9ca9597910d50c5fc09faf4fd5b55869fc0d3f4ad6bcb01b18c5c66",
+            "name": "paths",
+            "status": "PASS"
+          },
+          {
+            "actual_digest1": 6666430084157856943,
+            "actual_digest2": 152098917,
+            "actual_length": 12884,
+            "expected_digest1": 6666430084157856943,
+            "expected_digest2": 152098917,
+            "expected_length": 12884,
+            "expected_sha256": "b7db07fd1b6e10165aa51f437bd73e19919828710e945b199e86bc4ba5009119",
+            "name": "reaches",
+            "status": "PASS"
+          },
+          {
+            "actual_digest1": 13228401126457446324,
+            "actual_digest2": 1701275367,
+            "actual_length": 1292,
+            "expected_digest1": 13228401126457446324,
+            "expected_digest2": 1701275367,
+            "expected_length": 1292,
+            "expected_sha256": "044f46ad014beb7f41ddf38a23ad1bcf6b7ef961019170ab6989823972a4dd03",
+            "name": "control",
+            "status": "PASS"
+          }
+        ],
+        "status": "PASS",
+        "systems": 62
+      },
+      "normalized": {
+        "cache_reuse": {
+          "prepare_calls_per_system": 1,
+          "same_cache_for_all_constraints": true
+        },
+        "counts": {
+          "PASS": 6
+        },
+        "native": {
+          "markers": [
+            "SUBTAIL_FAST_COMPONENT:normalized-empty:29:270532480",
+            "SUBTAIL_FAST_COMPONENT:normalized-epsilon:29:268451712",
+            "SUBTAIL_FAST_COMPONENT:normalized-push-pop:29:268517248",
+            "SUBTAIL_FAST_COMPONENT:normalized-reverse:29:270516480",
+            "SUBTAIL_FAST_COMPONENT:normalized-denial-unsat:29:0",
+            "SUBTAIL_FAST_COMPONENT:normalized-epsilon-and-denial:29:268435456"
+          ],
+          "output_tail": "SUBTAIL_FAST_COMPONENT:normalized-empty:29:270532480\nSUBTAIL_FAST_COMPONENT:normalized-epsilon:29:268451712\nSUBTAIL_FAST_COMPONENT:normalized-push-pop:29:268517248\nSUBTAIL_FAST_COMPONENT:normalized-reverse:29:270516480\nSUBTAIL_FAST_COMPONENT:normalized-denial-unsat:29:0\nSUBTAIL_FAST_COMPONENT:normalized-epsilon-and-denial:29:268435456\n",
+          "returncode": 0,
+          "seconds": 0.869,
+          "status": "PASS"
+        },
+        "oracle": "experiments/check_stack_summary.py semantic_case using P-automaton predecessors",
+        "rows": [
+          {
+            "actual_code": 270532480,
+            "actual_length": 29,
+            "expected_code": 270532480,
+            "expected_length": 29,
+            "expected_sha256": "71869d810aba2a382282534e3e56ef3ad5964c45f349fe482e4bc588d865ce4c",
+            "name": "normalized-empty",
+            "status": "PASS"
+          },
+          {
+            "actual_code": 268451712,
+            "actual_length": 29,
+            "expected_code": 268451712,
+            "expected_length": 29,
+            "expected_sha256": "e84fcfecf238d02443042ee0e395575895cae844ddd8599db73a06a88b82d5ef",
+            "name": "normalized-epsilon",
+            "status": "PASS"
+          },
+          {
+            "actual_code": 268517248,
+            "actual_length": 29,
+            "expected_code": 268517248,
+            "expected_length": 29,
+            "expected_sha256": "b0ef84ac18541e4453dc886d3870ce02c61d6a56c536f8330f0c7b975f3bc8c0",
+            "name": "normalized-push-pop",
+            "status": "PASS"
+          },
+          {
+            "actual_code": 270516480,
+            "actual_length": 29,
+            "expected_code": 270516480,
+            "expected_length": 29,
+            "expected_sha256": "121c8b481ac2aa974696d017b3f5ec6b5f53b7f24dec4226e6ac7954236f34a5",
+            "name": "normalized-reverse",
+            "status": "PASS"
+          },
+          {
+            "actual_code": 0,
+            "actual_length": 29,
+            "expected_code": 0,
+            "expected_length": 29,
+            "expected_sha256": "28a816c91423ad09ea0d883f9b2c6d26550e2b94f5bfbf1a762d8a6c9fdd6c9d",
+            "name": "normalized-denial-unsat",
+            "status": "PASS"
+          },
+          {
+            "actual_code": 268435456,
+            "actual_length": 29,
+            "expected_code": 268435456,
+            "expected_length": 29,
+            "expected_sha256": "f4b26a702d2ce14451842e14f0434317791959dcea814df6c768dc0e65a958b8",
+            "name": "normalized-epsilon-and-denial",
+            "status": "PASS"
+          }
+        ],
+        "status": "PASS"
+      }
+    },
+    "platform": "Linux-6.12.94-123.192.amzn2023.aarch64-aarch64-with-glibc2.43",
+    "python": "3.13.14",
+    "seed": 2026092020,
+    "source_sha256": {
+      "experiments/check_entailment_decision.py": "78262d84da6b5c1bc0cc446895a461720a9d5b3038953f4a5678a10ba450f1f0",
+      "experiments/check_entailment_lazy.py": "7a45b26348d11e2218b9fa42d4554c57ced32a262693670dceb6f99830d15fb3",
+      "experiments/check_fast_summary.py": "17b919052dd165bfa8b7b0c41e86477d5c5acde08b8de68704abba68550daa19",
+      "experiments/check_stack_summary.py": "a2cec595e2c4e1a6dad0958b30e5a2f38f4239170f63a43aa1ab655a52f83e71",
+      "lean/Subtail/AbsorbingTerminal.lean": "596d502361547a2b01c276fd41bc1b2b004bdbe4ce0de561cd4b6bce9002bb1b",
+      "lean/Subtail/Audit.lean": "0487d784c6f61affa4e332c2d8edba145d4cebb4d831ea2ddcf0e157a1821ad5",
+      "lean/Subtail/Basic.lean": "1a7cb0c1f7546ed2efdae96d1af9a84dc6f433531549a50f4738ed25eb64c6c6",
+      "lean/Subtail/Boundary.lean": "016ecea3ef35bcff2421cf5b25ac702a617db707c51014d49166de8715cc88c8",
+      "lean/Subtail/CanonicalModel.lean": "45b777cb26c2bde47870bdb1b9f6e243e3fa6d650b26752742680a5758fcd713",
+      "lean/Subtail/CanonicalModelAudit.lean": "140ab22c11130e6138f80824f2a2c8df936b2152b0353d792a4d3555523094da",
+      "lean/Subtail/CanonicalReachability.lean": "6400b93753493a13b9a4cc1cb391e3ca5ad8b7b45623824877e2ad1d78e72403",
+      "lean/Subtail/CanonicalReachabilityFast.lean": "6adfbb85117674122f0bceafe351bc4789206c61b00489486ddb4aeb53219273",
+      "lean/Subtail/Conditional.lean": "64f902acce370dadd3f0ac53cbd31ae4026664552c48e31ccd56b1ca542ac01b",
+      "lean/Subtail/EntailmentDecision.lean": "a899b12e1d2b968053a0062a1600c9d368fe5c16f1ba3b74aef591b311088f59",
+      "lean/Subtail/EntailmentFast.lean": "d2867bd220ec379ab19caa9f6d639082b0abd234ce548642d64e3e7d85017afc",
+      "lean/Subtail/Examples.lean": "3b3e091c4b944992f3aa65c7d5923e35558b05193dec7540ed0e9acda13864c7",
+      "lean/Subtail/ExpressionNormalization.lean": "6e69fa21ebf0a0ffa65f78c976eb6681a85e9c9778cf96e57d16fb86b1285b82",
+      "lean/Subtail/ExpressionNormalizationAudit.lean": "471699acaca0a37f6502f7f631c9b1c3bae3d393584252cbad9174ec27fc6074",
+      "lean/Subtail/FiniteSearch.lean": "10583fb950420ccfb3ae88c906a0e3f004d72fcb8a3aac53a24b4281800a4057",
+      "lean/Subtail/FirstReturnColours.lean": "848c71747fb6deff903b9ee850a8c6ecdf5f35cd79ce680c7da11c68b7909352",
+      "lean/Subtail/FirstReturnGenerator.lean": "d6c4266c59949785979e6f37dea7d0e93adf50e9a42ad447a7267912949bace6",
+      "lean/Subtail/FirstReturnGraph.lean": "06d11930a30fc4034e9a8997a4b2d57f82b5f8779b87f709287502fccbde88d8",
+      "lean/Subtail/InfiniteCycle.lean": "0a3559e3b09dc9a3a1d2ce80893fc354bd6aec7f2ab0a12b82fe9917fb4e2fb3",
+      "lean/Subtail/InfiniteDecision.lean": "d9679db4b52062a707f74c4a7198137f608660930e3f4a2d868ab4efac40228d",
+      "lean/Subtail/InfiniteWitness.lean": "778759b132b97fd0e8546a2ad0346b1e977e0cbf34423f69f0e04170f7624fdc",
+      "lean/Subtail/PeriodicGood.lean": "5f13030c1825fb396f0f288cc4a080d88810f9c08449841a913efc52486eaf9e",
+      "lean/Subtail/PeriodicMonitor.lean": "719ce76ea2d91c7325f733462791d4da924e38afb8ec9cbe7e4743da0402c7bb",
+      "lean/Subtail/PeriodicMonitorComplete.lean": "ff3333943b6ca5dbf5e9920f2a3071912244cddf6098f25eededa476d3b1fc32",
+      "lean/Subtail/PeriodicRotation.lean": "ce02774c6dd7f483dbc34b574c7894335dd5340c6ddc08459c5295d1dc64c6f4",
+      "lean/Subtail/PeriodicRun.lean": "d27cdbb13b08aca5410c76e4ae438a0cebcb7b2acf223bd94a95814717815a86",
+      "lean/Subtail/PeriodicTail.lean": "1243dc455f48858d1dc30e1543cdc3737e6078aa51f7cc2f761e8af67741b148",
+      "lean/Subtail/PrefixMatching.lean": "59de0b193b55765db895f0f9ceb2a4155cd4d4dcfe54fa58cb285ec0577931e4",
+      "lean/Subtail/RankMilestones.lean": "3a948deaea047bf02289869210fcc2cbf7ada1010983dee66fa8477e4832d1c6",
+      "lean/Subtail/RankQuery.lean": "e8ef2ec585c49a593c8cee4d11e7aeb75f0284179e36b26ea21d72dd313adb41",
+      "lean/Subtail/RankQueryCompiler.lean": "1e32f44935490d7e69c8157f4ce12f763c9732b26e4cef2a7fb94518941edb2c",
+      "lean/Subtail/RankQueryCoverage.lean": "b1ccfa2fe221d355451ccfffe3d701ee46489d616e7e20d015f3e4fb2e86b49f",
+      "lean/Subtail/RankQueryDecision.lean": "51fef747bb443d313559e57d8fb8e3c1ce68b804eb4883a7d504e2945da5bd8a",
+      "lean/Subtail/RankQueryEnumeration.lean": "f65f40733e4cd45c8499cf1874509b23bacfdfd9f32278b5d459d12dd7016189",
+      "lean/Subtail/RankQueryEnumerationAudit.lean": "93c60b30d903e2a30da0152fda5abdf45b923ee09facdb1293264e44ed98f853",
+      "lean/Subtail/RankQueryFinishFacts.lean": "8e67cbbcf2a2710ec5307455303180fea8c0d7756969b121efab025b8f7ff2a2",
+      "lean/Subtail/RankQueryFinishTrace.lean": "93653a3ade48c9c4c628a8f05583a1deef201d412427de87ce3209a91949a258",
+      "lean/Subtail/RankQueryFirstReturn.lean": "b029e89e706c0724428194ddbc7d08abd494710d29ac65fb21e1dc90d7df10e0",
+      "lean/Subtail/RankQueryLengthBound.lean": "daec0fabc8c8e8b5c9ff5b1078a110f2fddf48ef60d3cbfec04557261a794399",
+      "lean/Subtail/RankQueryPaths.lean": "d383b44afb6bb7625181fb58e1d269030fa388a477849c76b7bc7dc64172de2a",
+      "lean/Subtail/RankQuerySemanticUnwind.lean": "2b3968f40f9b42d9bc051a0d6b11de3c80e2c3bd30351b04f579765960c9b3de",
+      "lean/Subtail/RankQuerySound.lean": "7729268fb6f82a0c508747e774e92133f869e3038d05e6c8c1a0caf962c9cd76",
+      "lean/Subtail/RankQueryUnwind.lean": "c6006c46aa86de0d173711a14f8c4076fcd5723a7470664da0d87d18a70efa3e",
+      "lean/Subtail/RankQueryWeightBound.lean": "d92069dfe5de891ba9bcfe3c5599a6a5e726fd57e2995f87a3b569fa0daabe50",
+      "lean/Subtail/RankQueryWeightCounterexample.lean": "d3e2ebbe27bdc277f8080e5e75f8d8939784d670e396e52e69aac631681a68ce",
+      "lean/Subtail/RankWitnessReference.lean": "eb5f6485995190a3a829b6de2c87e31a79f47b408c6afb77cecfc031c03d7772",
+      "lean/Subtail/SandwichPredicates.lean": "81b031e2c472d632b1d1b0bc0ad206aa8977571d78c58afc5b3e03670457e177",
+      "lean/Subtail/StackReachability.lean": "c3d0efc707cbc0979e99cd26726ed2575f6c1c60e85d34e7449903bf3082ec7f",
+      "lean/Subtail/StackSummary.lean": "345b4b1719f31b3963ca5ccc50b2fc861fc19864fe891cd9fcd547121acbe1fc",
+      "lean/Subtail/StackSummaryAudit.lean": "743ce0dbd00b926a7ec22377f621156afb593695bc3c8a4ca2d4b22139658d46",
+      "lean/Subtail/StackSummaryFast.lean": "c3294589e5114d2d4b26c595226d94fd1d470fca22eff47e85ca7868c793cb6f",
+      "lean/Subtail/SubtypeTerminalBridge.lean": "4a6fb1e783fdf052c1ac61bfd24aae9dbc5d1c441961e41d7cd02f434d57b751",
+      "lean/Subtail/SummaryAutomaton.lean": "68832af44bc8907e99dd2889968c699245aff70d40bf5690539f3f9edd8ca37b",
+      "lean/Subtail/SummaryBridge.lean": "8c5d8038b87a1b419e9be03dee668d390260c2677e42f227622cd199dff58bd9",
+      "lean/Subtail/TerminalDecisionLazy.lean": "67f5735adca1e6d8f059a39aedd50d1529a436e2cf0b0ce6cfda9b00f001b8a9",
+      "lean/Subtail/TerminalRank.lean": "3771a1a58ff7e5ddb2aa5134e08fca65a1a05d64c3a5de8487c4f7d7630b6fc2",
+      "lean/Subtail/TreeSemantics.lean": "8b08b74d08bac48454f99f0241eb066ef6b218334641f284bc26423957a78f2e",
+      "lean/Subtail/Truncation.lean": "2e2af26dc02e8168715296f4296d78ca1ea9133a156e4792969cb04efb70df07",
+      "lean/Subtail/TwoState.lean": "063c3991d77f3037b209e8c74410cdb6449144545b3b1c4eb49fe0a5b4cf1b26",
+      "scripts/subtail.py": "82e8e5b138aed5c8bcaad620b961cb8f757df5e7f22ca3f0e0fa1f0375729d63"
+    },
+    "status": "PASS"
+  },
+  "description": "A proved optional C081 implementation; the full matched diagnostic and larger generated families retain explicit resource limits.",
+  "experiment": "E055",
+  "exploratory_cli_depth_cases": {
+    "cases": [
+      {
+        "command": [
+          "python3",
+          "scripts/subtail.py",
+          "tmp/fast-summary/deep-products-3.json",
+          "--no-explain",
+          "--timeout",
+          "20"
+        ],
+        "depth": 3,
+        "expected": "NOT_ENTAILED",
+        "input": {
+          "constraints": [],
+          "query": [
+            {
+              "prod": [
+                {
+                  "prod": [
+                    {
+                      "prod": [
+                        "x",
+                        "bottom"
+                      ]
+                    },
+                    "bottom"
+                  ]
+                },
+                "bottom"
+              ]
+            },
+            {
+              "prod": [
+                {
+                  "prod": [
+                    {
+                      "prod": [
+                        "y",
+                        "bottom"
+                      ]
+                    },
+                    "bottom"
+                  ]
+                },
+                "bottom"
+              ]
+            }
+          ],
+          "variables": [
+            "x",
+            "y"
+          ]
+        },
+        "result": {
+          "basis": "Lean EntailmentFast.entailsCheck_correct",
+          "build_seconds": 0.218,
+          "native_seconds": 4.178,
+          "seconds": 4.398,
+          "stage": "decision",
+          "status": "NOT_ENTAILED",
+          "trust_boundary": "Lean algorithm checked; Python parsing, launch and certificate checker are not Lean-verified.",
+          "wrapper_sha256": "d2867bd220ec379ab19caa9f6d639082b0abd234ce548642d64e3e7d85017afc"
+        },
+        "returncode": 0
+      },
+      {
+        "command": [
+          "python3",
+          "scripts/subtail.py",
+          "tmp/fast-summary/deep-products-4.json",
+          "--no-explain",
+          "--timeout",
+          "20"
+        ],
+        "depth": 4,
+        "expected": "NOT_ENTAILED",
+        "input": {
+          "constraints": [],
+          "query": [
+            {
+              "prod": [
+                {
+                  "prod": [
+                    {
+                      "prod": [
+                        {
+                          "prod": [
+                            "x",
+                            "bottom"
+                          ]
+                        },
+                        "bottom"
+                      ]
+                    },
+                    "bottom"
+                  ]
+                },
+                "bottom"
+              ]
+            },
+            {
+              "prod": [
+                {
+                  "prod": [
+                    {
+                      "prod": [
+                        {
+                          "prod": [
+                            "y",
+                            "bottom"
+                          ]
+                        },
+                        "bottom"
+                      ]
+                    },
+                    "bottom"
+                  ]
+                },
+                "bottom"
+              ]
+            }
+          ],
+          "variables": [
+            "x",
+            "y"
+          ]
+        },
+        "result": {
+          "basis": "Lean EntailmentFast.entailsCheck_correct",
+          "build_seconds": 0.217,
+          "native_seconds": 12.55,
+          "seconds": 12.769,
+          "stage": "decision",
+          "status": "NOT_ENTAILED",
+          "trust_boundary": "Lean algorithm checked; Python parsing, launch and certificate checker are not Lean-verified.",
+          "wrapper_sha256": "d2867bd220ec379ab19caa9f6d639082b0abd234ce548642d64e3e7d85017afc"
+        },
+        "returncode": 0
+      },
+      {
+        "command": [
+          "python3",
+          "scripts/subtail.py",
+          "tmp/fast-summary/deep-products-6.json",
+          "--no-explain",
+          "--timeout",
+          "20"
+        ],
+        "depth": 6,
+        "expected": "NOT_ENTAILED",
+        "input": {
+          "constraints": [],
+          "query": [
+            {
+              "prod": [
+                {
+                  "prod": [
+                    {
+                      "prod": [
+                        {
+                          "prod": [
+                            {
+                              "prod": [
+                                {
+                                  "prod": [
+                                    "x",
+                                    "bottom"
+                                  ]
+                                },
+                                "bottom"
+                              ]
+                            },
+                            "bottom"
+                          ]
+                        },
+                        "bottom"
+                      ]
+                    },
+                    "bottom"
+                  ]
+                },
+                "bottom"
+              ]
+            },
+            {
+              "prod": [
+                {
+                  "prod": [
+                    {
+                      "prod": [
+                        {
+                          "prod": [
+                            {
+                              "prod": [
+                                {
+                                  "prod": [
+                                    "y",
+                                    "bottom"
+                                  ]
+                                },
+                                "bottom"
+                              ]
+                            },
+                            "bottom"
+                          ]
+                        },
+                        "bottom"
+                      ]
+                    },
+                    "bottom"
+                  ]
+                },
+                "bottom"
+              ]
+            }
+          ],
+          "variables": [
+            "x",
+            "y"
+          ]
+        },
+        "result": {
+          "reason": "time_limit",
+          "seconds": 20.008,
+          "stage": "decision",
+          "status": "UNKNOWN",
+          "trust_boundary": "Lean algorithm checked; Python parsing, launch and certificate checker are not Lean-verified."
+        },
+        "returncode": 2
+      },
+      {
+        "command": [
+          "python3",
+          "scripts/subtail.py",
+          "tmp/fast-summary/deep-products-8.json",
+          "--no-explain",
+          "--timeout",
+          "20"
+        ],
+        "depth": 8,
+        "expected": "NOT_ENTAILED",
+        "input": {
+          "constraints": [],
+          "query": [
+            {
+              "prod": [
+                {
+                  "prod": [
+                    {
+                      "prod": [
+                        {
+                          "prod": [
+                            {
+                              "prod": [
+                                {
+                                  "prod": [
+                                    {
+                                      "prod": [
+                                        {
+                                          "prod": [
+                                            "x",
+                                            "bottom"
+                                          ]
+                                        },
+                                        "bottom"
+                                      ]
+                                    },
+                                    "bottom"
+                                  ]
+                                },
+                                "bottom"
+                              ]
+                            },
+                            "bottom"
+                          ]
+                        },
+                        "bottom"
+                      ]
+                    },
+                    "bottom"
+                  ]
+                },
+                "bottom"
+              ]
+            },
+            {
+              "prod": [
+                {
+                  "prod": [
+                    {
+                      "prod": [
+                        {
+                          "prod": [
+                            {
+                              "prod": [
+                                {
+                                  "prod": [
+                                    {
+                                      "prod": [
+                                        {
+                                          "prod": [
+                                            "y",
+                                            "bottom"
+                                          ]
+                                        },
+                                        "bottom"
+                                      ]
+                                    },
+                                    "bottom"
+                                  ]
+                                },
+                                "bottom"
+                              ]
+                            },
+                            "bottom"
+                          ]
+                        },
+                        "bottom"
+                      ]
+                    },
+                    "bottom"
+                  ]
+                },
+                "bottom"
+              ]
+            }
+          ],
+          "variables": [
+            "x",
+            "y"
+          ]
+        },
+        "result": {
+          "reason": "time_limit",
+          "seconds": 20.008,
+          "stage": "decision",
+          "status": "UNKNOWN",
+          "trust_boundary": "Lean algorithm checked; Python parsing, launch and certificate checker are not Lean-verified."
+        },
+        "returncode": 2
+      }
+    ],
+    "checked_revision": "cf125800a9c26cb4589d4eb0bd889d6a76b1a8e5",
+    "justification": "For nested products L^d(x) and L^d(y), choose x=product(bottom,bottom), y=bottom. The first separating address is d zeros; all ancestors are common products.",
+    "source_sha256": {
+      "lean/Subtail/EntailmentFast.lean": "d2867bd220ec379ab19caa9f6d639082b0abd234ce548642d64e3e7d85017afc",
+      "scripts/subtail.py": "82e8e5b138aed5c8bcaad620b961cb8f757df5e7f22ca3f0e0fa1f0375729d63"
+    }
+  },
+  "harness_failures": [
+    {
+      "checked_revision": "21c5d76",
+      "mathematical_answers": 0,
+      "reason": "Relative scratch paths were passed to Lean from the lean/ working directory; no probes executed. Fixed by path.resolve() at 9a866c1.",
+      "status": "FAIL"
+    }
+  ],
+  "harness_status_followup": {
+    "change": "Treat negative subprocess return codes as UNKNOWN interruptions/resource limits even when no message is printed. No generated Lean query or mathematical source changed.",
+    "checked_revision": "6163f27ea0d0964fadc747a82c2dceff287fc5d2",
+    "checks": {
+      "compile_error_still_FAIL": true,
+      "injected_signal_codes": [
+        -9,
+        -24,
+        -15
+      ],
+      "python_boundary_tests": 17,
+      "recorded_native_outcome_replays": 97
+    },
+    "execution": "local Mac",
+    "native_lean_after_this_change": "NOT RUN; existing native receipts remain pinned at 9a866c1. All observed statuses are unchanged in the replay.",
+    "source_sha256": {
+      "experiments/check_fast_summary.py": "2c1cce2ff983ff9d253ac5e4069c9f35a2bed2c8c9f6b497466deace24ee7279",
+      "scripts/test_subtail.py": "a799222da84f1dd995a39eb6614e9a156db1e8b5bbeeba8a7e58ae59139f6343"
+    },
+    "status": "PASS"
+  },
+  "limits": [
+    "The five raw backend cases are unchanged and remain UNKNOWN; the complete fallback is not globally optimized.",
+    "Generated supplied separation at depth 12 and original-expression product depths 6 and 8 remain UNKNOWN.",
+    "Component Boolean vectors are compared by length and two rolling digests; normalized vectors use an exact integer encoding. These tests supplement the all-input Lean proofs.",
+    "Query timings include Lean startup but exclude the initial module build; CLI caps also include build and explanation work.",
+    "Python parsing, resource handling and finite-graph checking remain outside the Lean proof; the explanation library is incomplete.",
+    "No peak-memory or per-algorithm-phase profile was measured. Those remain follow-up work."
+  ],
+  "matched_and_generated": {
+    "caps": {
+      "address_space_GiB_linux": 16,
+      "cpu_seconds_per_process": 20.0,
+      "lean_stack_KiB": 32768,
+      "lean_threads": 1,
+      "wall_seconds_per_process": 20.0
+    },
+    "checked_revision": "9a866c196f30f2fe1f11d4201d6237642fbd3cb8",
+    "host": "wb-marcus",
+    "limitations": [
+      "Component comparisons use the independent finite P-automaton oracle; they do not replace the Lean all-input proofs.",
+      "Supplied-address negative probes are component tests; the separately labelled nested-product family calls the full frontend. Neither proves global candidate-search completeness.",
+      "UNKNOWN is preserved for resource caps and is never converted into a Boolean answer."
+    ],
+    "phases": {
+      "benchmark": {
+        "baseline_candidate_disagreements": [],
+        "cases": [
+          {
+            "baseline": {
+              "actual": true,
+              "function": "Subtail.TerminalDecisionLazy.entailsCheckLazy",
+              "marker": "SUBTAIL_FAST_BENCHMARK:baseline:empty-reflexive:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:baseline:empty-reflexive:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:baseline:empty-reflexive:true\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.669,
+              "status": "PASS"
+            },
+            "candidate": {
+              "actual": true,
+              "function": "Subtail.EntailmentFast.entailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:empty-reflexive:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:empty-reflexive:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:empty-reflexive:true\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.669,
+              "status": "PASS"
+            },
+            "expected": true,
+            "justification": "Every tree is below itself; no premise is needed.",
+            "kind": "frontend",
+            "name": "empty-reflexive"
+          },
+          {
+            "baseline": {
+              "actual": false,
+              "function": "Subtail.TerminalDecisionLazy.entailsCheckLazy",
+              "marker": "SUBTAIL_FAST_BENCHMARK:baseline:empty-variable-cross:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:baseline:empty-variable-cross:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:baseline:empty-variable-cross:false\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.669,
+              "status": "PASS"
+            },
+            "candidate": {
+              "actual": false,
+              "function": "Subtail.EntailmentFast.entailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:empty-variable-cross:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:empty-variable-cross:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:empty-variable-cross:false\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.669,
+              "status": "PASS"
+            },
+            "expected": false,
+            "justification": "Set v0 to the root-only tree product(bottom,bottom), v1 to bottom, and use the empty address.",
+            "kind": "frontend",
+            "name": "empty-variable-cross"
+          },
+          {
+            "baseline": {
+              "function": "Subtail.TerminalDecisionLazy.entailsCheckLazy",
+              "output_tail": "",
+              "raw_backend_unchanged": false,
+              "reason": "time_limit",
+              "seconds": 20.007,
+              "status": "UNKNOWN"
+            },
+            "candidate": {
+              "actual": true,
+              "function": "Subtail.EntailmentFast.entailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:empty-bottom-left:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:empty-bottom-left:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:empty-bottom-left:true\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.769,
+              "status": "PASS"
+            },
+            "expected": true,
+            "justification": "Bottom has no product nodes, so bottom is below every tree.",
+            "kind": "frontend",
+            "name": "empty-bottom-left"
+          },
+          {
+            "baseline": {
+              "actual": false,
+              "function": "Subtail.TerminalDecisionLazy.entailsCheckLazy",
+              "marker": "SUBTAIL_FAST_BENCHMARK:baseline:empty-variable-bottom:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:baseline:empty-variable-bottom:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:baseline:empty-variable-bottom:false\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.669,
+              "status": "PASS"
+            },
+            "candidate": {
+              "actual": false,
+              "function": "Subtail.EntailmentFast.entailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:empty-variable-bottom:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:empty-variable-bottom:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:empty-variable-bottom:false\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.769,
+              "status": "PASS"
+            },
+            "expected": false,
+            "justification": "Set v0 to the root-only tree product(bottom,bottom); it has the empty node and bottom does not.",
+            "kind": "frontend",
+            "name": "empty-variable-bottom"
+          },
+          {
+            "baseline": {
+              "actual": false,
+              "function": "Subtail.TerminalDecisionLazy.entailsCheckLazy",
+              "marker": "SUBTAIL_FAST_BENCHMARK:baseline:empty-product-left:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:baseline:empty-product-left:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:baseline:empty-product-left:false\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 1.071,
+              "status": "PASS"
+            },
+            "candidate": {
+              "actual": false,
+              "function": "Subtail.EntailmentFast.entailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:empty-product-left:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:empty-product-left:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:empty-product-left:false\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.669,
+              "status": "PASS"
+            },
+            "expected": false,
+            "justification": "Set v0 to the root-only tree. product(v0,bottom) has the false-left child while v0 does not.",
+            "kind": "frontend",
+            "name": "empty-product-left"
+          },
+          {
+            "baseline": {
+              "actual": true,
+              "function": "Subtail.TerminalDecisionLazy.entailsCheckLazy",
+              "marker": "SUBTAIL_FAST_BENCHMARK:baseline:premise-forward:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:baseline:premise-forward:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:baseline:premise-forward:true\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.669,
+              "status": "PASS"
+            },
+            "candidate": {
+              "actual": true,
+              "function": "Subtail.EntailmentFast.entailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:premise-forward:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:premise-forward:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:premise-forward:true\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.77,
+              "status": "PASS"
+            },
+            "expected": true,
+            "justification": "The queried inequality is exactly the listed premise.",
+            "kind": "frontend",
+            "name": "premise-forward"
+          },
+          {
+            "baseline": {
+              "actual": false,
+              "function": "Subtail.TerminalDecisionLazy.entailsCheckLazy",
+              "marker": "SUBTAIL_FAST_BENCHMARK:baseline:premise-reverse:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:baseline:premise-reverse:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:baseline:premise-reverse:false\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.719,
+              "status": "PASS"
+            },
+            "candidate": {
+              "actual": false,
+              "function": "Subtail.EntailmentFast.entailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:premise-reverse:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:premise-reverse:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:premise-reverse:false\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.669,
+              "status": "PASS"
+            },
+            "expected": false,
+            "justification": "Set v0 to bottom and v1 to the root-only tree. The premise holds, but v1 is not below v0 at the empty address.",
+            "kind": "frontend",
+            "name": "premise-reverse"
+          },
+          {
+            "baseline": {
+              "function": "Subtail.TerminalDecisionLazy.entailsCheckLazy",
+              "output_tail": "",
+              "raw_backend_unchanged": false,
+              "reason": "time_limit",
+              "seconds": 20.008,
+              "status": "UNKNOWN"
+            },
+            "candidate": {
+              "actual": true,
+              "function": "Subtail.EntailmentFast.entailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:transitive-query-not-premise:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:transitive-query-not-premise:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:transitive-query-not-premise:true\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.719,
+              "status": "PASS"
+            },
+            "expected": true,
+            "justification": "Both listed premises compose by transitivity; the queried pair is not itself a premise.",
+            "kind": "frontend",
+            "name": "transitive-query-not-premise"
+          },
+          {
+            "baseline": {
+              "function": "Subtail.TerminalDecisionLazy.entailsCheckLazy",
+              "output_tail": "",
+              "raw_backend_unchanged": false,
+              "reason": "time_limit",
+              "seconds": 20.008,
+              "status": "UNKNOWN"
+            },
+            "candidate": {
+              "actual": true,
+              "function": "Subtail.EntailmentFast.entailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:product-monotone:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:product-monotone:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:product-monotone:true\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.669,
+              "status": "PASS"
+            },
+            "expected": true,
+            "justification": "Product is covariant in both arguments, and bottom is below itself; apply product_mono to the premise.",
+            "kind": "frontend",
+            "name": "product-monotone"
+          },
+          {
+            "baseline": {
+              "function": "Subtail.TerminalDecisionLazy.entailsCheckLazy",
+              "output_tail": "",
+              "raw_backend_unchanged": false,
+              "reason": "time_limit",
+              "seconds": 20.008,
+              "status": "UNKNOWN"
+            },
+            "candidate": {
+              "actual": false,
+              "function": "Subtail.EntailmentFast.entailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:product-monotone-reverse:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:product-monotone-reverse:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:product-monotone-reverse:false\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.769,
+              "status": "PASS"
+            },
+            "expected": false,
+            "justification": "Set v0 to bottom and v1 to the root-only tree. The premise holds, while the queried products differ at the left child.",
+            "kind": "frontend",
+            "name": "product-monotone-reverse"
+          },
+          {
+            "baseline": {
+              "actual": false,
+              "function": "Subtail.TerminalDecisionLazy.entailsCheckLazy",
+              "marker": "SUBTAIL_FAST_BENCHMARK:baseline:query-only-source:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:baseline:query-only-source:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:baseline:query-only-source:false\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.769,
+              "status": "PASS"
+            },
+            "candidate": {
+              "actual": false,
+              "function": "Subtail.EntailmentFast.entailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:query-only-source:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:query-only-source:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:query-only-source:false\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.719,
+              "status": "PASS"
+            },
+            "expected": false,
+            "justification": "The query-only v2 is root-only, v0 is bottom, and v1 is root-only; the premise holds but the query fails at the empty address.",
+            "kind": "frontend",
+            "name": "query-only-source"
+          },
+          {
+            "baseline": {
+              "actual": false,
+              "function": "Subtail.TerminalDecisionLazy.entailsCheckLazy",
+              "marker": "SUBTAIL_FAST_BENCHMARK:baseline:query-only-target:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:baseline:query-only-target:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:baseline:query-only-target:false\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.77,
+              "status": "PASS"
+            },
+            "candidate": {
+              "actual": false,
+              "function": "Subtail.EntailmentFast.entailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:query-only-target:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:query-only-target:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:query-only-target:false\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.771,
+              "status": "PASS"
+            },
+            "expected": false,
+            "justification": "Set v0 and v1 to the root-only tree and query-only v2 to bottom; the premise holds but the query fails at the empty address.",
+            "kind": "frontend",
+            "name": "query-only-target"
+          },
+          {
+            "baseline": {
+              "actual": true,
+              "function": "Subtail.TerminalDecisionLazy.entailsCheckLazy",
+              "marker": "SUBTAIL_FAST_BENCHMARK:baseline:zero-vars-empty-reflexive:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:baseline:zero-vars-empty-reflexive:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:baseline:zero-vars-empty-reflexive:true\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.669,
+              "status": "PASS"
+            },
+            "candidate": {
+              "actual": true,
+              "function": "Subtail.EntailmentFast.entailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:zero-vars-empty-reflexive:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:zero-vars-empty-reflexive:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:zero-vars-empty-reflexive:true\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.669,
+              "status": "PASS"
+            },
+            "expected": true,
+            "justification": "With zero original variables, bottom is still below itself.",
+            "kind": "frontend",
+            "name": "zero-vars-empty-reflexive"
+          },
+          {
+            "baseline": {
+              "actual": false,
+              "function": "Subtail.TerminalDecisionLazy.entailsCheckLazy",
+              "marker": "SUBTAIL_FAST_BENCHMARK:baseline:zero-vars-product-bottom:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:baseline:zero-vars-product-bottom:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:baseline:zero-vars-product-bottom:false\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.669,
+              "status": "PASS"
+            },
+            "candidate": {
+              "actual": false,
+              "function": "Subtail.EntailmentFast.entailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:zero-vars-product-bottom:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:zero-vars-product-bottom:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:zero-vars-product-bottom:false\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.669,
+              "status": "PASS"
+            },
+            "expected": false,
+            "justification": "The product has its root node by definition while bottom has no nodes; there are no valuations to restrict this result.",
+            "kind": "frontend",
+            "name": "zero-vars-product-bottom"
+          },
+          {
+            "baseline": {
+              "actual": true,
+              "function": "Subtail.TerminalDecisionLazy.entailsCheckLazy",
+              "marker": "SUBTAIL_FAST_BENCHMARK:baseline:unsat-zero-variable-query:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:baseline:unsat-zero-variable-query:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:baseline:unsat-zero-variable-query:true\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.669,
+              "status": "PASS"
+            },
+            "candidate": {
+              "actual": true,
+              "function": "Subtail.EntailmentFast.entailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:unsat-zero-variable-query:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:unsat-zero-variable-query:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:unsat-zero-variable-query:true\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.719,
+              "status": "PASS"
+            },
+            "expected": true,
+            "justification": "The only premise is impossible because product(bottom,bottom) contains its root and bottom does not; entailment is vacuous.",
+            "kind": "frontend",
+            "name": "unsat-zero-variable-query"
+          },
+          {
+            "baseline": {
+              "actual": true,
+              "function": "Subtail.TerminalDecisionLazy.entailsCheckLazy",
+              "marker": "SUBTAIL_FAST_BENCHMARK:baseline:unsat-query-variable:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:baseline:unsat-query-variable:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:baseline:unsat-query-variable:true\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 1.02,
+              "status": "PASS"
+            },
+            "candidate": {
+              "actual": true,
+              "function": "Subtail.EntailmentFast.entailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:unsat-query-variable:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:unsat-query-variable:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:unsat-query-variable:true\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.769,
+              "status": "PASS"
+            },
+            "expected": true,
+            "justification": "The same variable-free impossible premise has no model, so the unrelated query v0 <= bottom is vacuously entailed.",
+            "kind": "frontend",
+            "name": "unsat-query-variable"
+          },
+          {
+            "baseline": {
+              "actual": false,
+              "function": "Subtail.TerminalDecisionLazy.entailsCheckLazy",
+              "marker": "SUBTAIL_FAST_BENCHMARK:baseline:bottom-premise-reverse:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:baseline:bottom-premise-reverse:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:baseline:bottom-premise-reverse:false\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.669,
+              "status": "PASS"
+            },
+            "candidate": {
+              "actual": false,
+              "function": "Subtail.EntailmentFast.entailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:bottom-premise-reverse:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:bottom-premise-reverse:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:bottom-premise-reverse:false\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.669,
+              "status": "PASS"
+            },
+            "expected": false,
+            "justification": "Set v0 to the root-only tree. bottom <= v0 holds, but v0 <= bottom fails at the empty address.",
+            "kind": "frontend",
+            "name": "bottom-premise-reverse"
+          },
+          {
+            "baseline": {
+              "function": "Subtail.TerminalDecisionLazy.entailsCheckLazy",
+              "output_tail": "",
+              "raw_backend_unchanged": false,
+              "reason": "time_limit",
+              "seconds": 20.007,
+              "status": "UNKNOWN"
+            },
+            "candidate": {
+              "actual": true,
+              "function": "Subtail.EntailmentFast.entailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:bottom-to-product:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:bottom-to-product:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:bottom-to-product:true\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.669,
+              "status": "PASS"
+            },
+            "expected": true,
+            "justification": "Bottom is below every product tree, independently of v0.",
+            "kind": "frontend",
+            "name": "bottom-to-product"
+          },
+          {
+            "baseline": {
+              "actual": true,
+              "function": "Subtail.TerminalDecisionLazy.entailsCheckLazy",
+              "marker": "SUBTAIL_FAST_BENCHMARK:baseline:duplicate-product-reflexive:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:baseline:duplicate-product-reflexive:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:baseline:duplicate-product-reflexive:true\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.719,
+              "status": "PASS"
+            },
+            "candidate": {
+              "actual": true,
+              "function": "Subtail.EntailmentFast.entailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:duplicate-product-reflexive:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:duplicate-product-reflexive:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:duplicate-product-reflexive:true\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.719,
+              "status": "PASS"
+            },
+            "expected": true,
+            "justification": "The same product occurs on both sides of a premise and in the query; reflexivity is independent of slot allocation.",
+            "kind": "frontend",
+            "name": "duplicate-product-reflexive"
+          },
+          {
+            "baseline": {
+              "function": "Subtail.TerminalDecisionLazy.entailsCheckLazy",
+              "output_tail": "",
+              "raw_backend_unchanged": false,
+              "reason": "time_limit",
+              "seconds": 20.007,
+              "status": "UNKNOWN"
+            },
+            "candidate": {
+              "actual": false,
+              "function": "Subtail.EntailmentFast.entailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:duplicate-product-reverse:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:duplicate-product-reverse:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:duplicate-product-reverse:false\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.769,
+              "status": "PASS"
+            },
+            "expected": false,
+            "justification": "Set v0=bottom, v1=bottom, and v2 to product(root-only,bottom). The premise holds at every address, but v2 has a false-left child absent from product(v0,v1).",
+            "kind": "frontend",
+            "name": "duplicate-product-reverse"
+          },
+          {
+            "baseline": {
+              "actual": true,
+              "function": "Subtail.TerminalDecisionLazy.entailsCheckLazy",
+              "marker": "SUBTAIL_FAST_BENCHMARK:baseline:nested-duplicate-reflexive:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:baseline:nested-duplicate-reflexive:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:baseline:nested-duplicate-reflexive:true\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.719,
+              "status": "PASS"
+            },
+            "candidate": {
+              "actual": true,
+              "function": "Subtail.EntailmentFast.entailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:nested-duplicate-reflexive:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:nested-duplicate-reflexive:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:nested-duplicate-reflexive:true\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.719,
+              "status": "PASS"
+            },
+            "expected": true,
+            "justification": "A nested product expression is repeated exactly; reflexivity remains valid with duplicate product occurrences.",
+            "kind": "frontend",
+            "name": "nested-duplicate-reflexive"
+          },
+          {
+            "baseline": {
+              "function": "Subtail.TerminalDecisionLazy.entailsCheckLazy",
+              "output_tail": "",
+              "raw_backend_unchanged": false,
+              "reason": "time_limit",
+              "seconds": 20.008,
+              "status": "UNKNOWN"
+            },
+            "candidate": {
+              "actual": true,
+              "function": "Subtail.EntailmentFast.entailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:duplicate-product-derived:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:duplicate-product-derived:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:duplicate-product-derived:true\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.668,
+              "status": "PASS"
+            },
+            "expected": true,
+            "justification": "Apply the premise twice and product covariance; the duplicated variable children are intentional.",
+            "kind": "frontend",
+            "name": "duplicate-product-derived"
+          },
+          {
+            "baseline": {
+              "actual": false,
+              "function": "Subtail.TerminalDecisionLazy.entailsCheckLazy",
+              "marker": "SUBTAIL_FAST_BENCHMARK:baseline:necessarily-infinite-zero-spine:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:baseline:necessarily-infinite-zero-spine:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:baseline:necessarily-infinite-zero-spine:false\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 1.17,
+              "status": "PASS"
+            },
+            "candidate": {
+              "actual": false,
+              "function": "Subtail.EntailmentFast.entailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:necessarily-infinite-zero-spine:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:necessarily-infinite-zero-spine:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:necessarily-infinite-zero-spine:false\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.769,
+              "status": "PASS"
+            },
+            "expected": false,
+            "justification": "The regular zeroSpine tree satisfies product(zeroSpine,bottom) <= zeroSpine and has the empty node, so it refutes zeroSpine <= bottom. The premise also forces arbitrarily long false spines in every model.",
+            "kind": "frontend",
+            "name": "necessarily-infinite-zero-spine"
+          },
+          {
+            "baseline": {
+              "actual": true,
+              "function": "Subtail.TerminalDecisionLazy.entailsCheckLazy",
+              "marker": "SUBTAIL_FAST_BENCHMARK:baseline:necessarily-infinite-premise:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:baseline:necessarily-infinite-premise:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:baseline:necessarily-infinite-premise:true\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.669,
+              "status": "PASS"
+            },
+            "candidate": {
+              "actual": true,
+              "function": "Subtail.EntailmentFast.entailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:necessarily-infinite-premise:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:necessarily-infinite-premise:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:necessarily-infinite-premise:true\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.719,
+              "status": "PASS"
+            },
+            "expected": true,
+            "justification": "The queried inequality is the premise, even though its models include the regular infinite zeroSpine model.",
+            "kind": "frontend",
+            "name": "necessarily-infinite-premise"
+          },
+          {
+            "baseline": {
+              "function": "Subtail.TerminalDecisionLazy.entailsCheckLazy",
+              "output_tail": "",
+              "raw_backend_unchanged": false,
+              "reason": "time_limit",
+              "seconds": 20.008,
+              "status": "UNKNOWN"
+            },
+            "candidate": {
+              "actual": false,
+              "function": "Subtail.EntailmentFast.entailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:query-not-premise-reverse-product:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:query-not-premise-reverse-product:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:query-not-premise-reverse-product:false\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.769,
+              "status": "PASS"
+            },
+            "expected": false,
+            "justification": "This repeats the product from the premise in the reversed query; the explicit root-plus-left-child v2 countermodel separates the directions.",
+            "kind": "frontend",
+            "name": "query-not-premise-reverse-product"
+          },
+          {
+            "baseline": {
+              "function": "Subtail.TerminalDecisionLazy.entailsCheckLazy",
+              "output_tail": "",
+              "raw_backend_unchanged": false,
+              "reason": "time_limit",
+              "seconds": 20.008,
+              "status": "UNKNOWN"
+            },
+            "candidate": {
+              "actual": false,
+              "function": "Subtail.EntailmentFast.entailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:empty-product-swap:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:empty-product-swap:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:empty-product-swap:false\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.719,
+              "status": "PASS"
+            },
+            "expected": false,
+            "justification": "Set v0 to root-only and v1 to bottom. The two products disagree at the first child address.",
+            "kind": "frontend",
+            "name": "empty-product-swap"
+          },
+          {
+            "baseline": {
+              "function": "Subtail.TerminalDecisionLazy.rawNormalizedEntailsCheckLazy",
+              "output_tail": "",
+              "raw_backend_unchanged": true,
+              "reason": "time_limit",
+              "seconds": 20.008,
+              "status": "UNKNOWN"
+            },
+            "candidate": {
+              "function": "Subtail.TerminalDecisionLazy.rawNormalizedEntailsCheckLazy",
+              "output_tail": "",
+              "raw_backend_unchanged": true,
+              "reason": "time_limit",
+              "seconds": 20.008,
+              "status": "UNKNOWN"
+            },
+            "expected": false,
+            "justification": "The normalized variable instance has the root-only/bottom countermodel at the empty address.",
+            "kind": "raw",
+            "name": "raw-empty-cross"
+          },
+          {
+            "baseline": {
+              "function": "Subtail.TerminalDecisionLazy.rawNormalizedEntailsCheckLazy",
+              "output_tail": "",
+              "raw_backend_unchanged": true,
+              "reason": "time_limit",
+              "seconds": 20.008,
+              "status": "UNKNOWN"
+            },
+            "candidate": {
+              "function": "Subtail.TerminalDecisionLazy.rawNormalizedEntailsCheckLazy",
+              "output_tail": "",
+              "raw_backend_unchanged": true,
+              "reason": "time_limit",
+              "seconds": 20.008,
+              "status": "UNKNOWN"
+            },
+            "expected": true,
+            "justification": "The variable inequality is explicitly present in the normalized premise list.",
+            "kind": "raw",
+            "name": "raw-premise-forward"
+          },
+          {
+            "baseline": {
+              "function": "Subtail.TerminalDecisionLazy.rawNormalizedEntailsCheckLazy",
+              "output_tail": "",
+              "raw_backend_unchanged": true,
+              "reason": "time_limit",
+              "seconds": 20.008,
+              "status": "UNKNOWN"
+            },
+            "candidate": {
+              "function": "Subtail.TerminalDecisionLazy.rawNormalizedEntailsCheckLazy",
+              "output_tail": "",
+              "raw_backend_unchanged": true,
+              "reason": "time_limit",
+              "seconds": 20.008,
+              "status": "UNKNOWN"
+            },
+            "expected": false,
+            "justification": "The root-only/bottom valuation satisfies 0 <= 1 but refutes 1 <= 0 at the empty address.",
+            "kind": "raw",
+            "name": "raw-premise-reverse"
+          },
+          {
+            "baseline": {
+              "actual": true,
+              "function": "Subtail.TerminalDecisionLazy.rawNormalizedEntailsCheckLazy",
+              "marker": "SUBTAIL_FAST_BENCHMARK:baseline:raw-reflexive:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:baseline:raw-reflexive:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:baseline:raw-reflexive:true\n",
+              "raw_backend_unchanged": true,
+              "returncode": 0,
+              "seconds": 0.92,
+              "status": "PASS"
+            },
+            "candidate": {
+              "actual": true,
+              "function": "Subtail.TerminalDecisionLazy.rawNormalizedEntailsCheckLazy",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:raw-reflexive:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:raw-reflexive:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:raw-reflexive:true\n",
+              "raw_backend_unchanged": true,
+              "returncode": 0,
+              "seconds": 0.869,
+              "status": "PASS"
+            },
+            "expected": true,
+            "justification": "The raw two-branch backend must preserve reflexivity without a frontend guard.",
+            "kind": "raw",
+            "name": "raw-reflexive"
+          },
+          {
+            "baseline": {
+              "actual": true,
+              "function": "Subtail.TerminalDecisionLazy.rawNormalizedEntailsCheckLazy",
+              "marker": "SUBTAIL_FAST_BENCHMARK:baseline:raw-unsat-denial-lower:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:baseline:raw-unsat-denial-lower:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:baseline:raw-unsat-denial-lower:true\n",
+              "raw_backend_unchanged": true,
+              "returncode": 0,
+              "seconds": 0.771,
+              "status": "PASS"
+            },
+            "candidate": {
+              "actual": true,
+              "function": "Subtail.TerminalDecisionLazy.rawNormalizedEntailsCheckLazy",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:raw-unsat-denial-lower:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:raw-unsat-denial-lower:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:raw-unsat-denial-lower:true\n",
+              "raw_backend_unchanged": true,
+              "returncode": 0,
+              "seconds": 0.719,
+              "status": "PASS"
+            },
+            "expected": true,
+            "justification": "Denial forces v0 below bottom, while lower requires product(v0,v0) below v0; these conflict at the product root, but reflexivity remains true.",
+            "kind": "raw",
+            "name": "raw-unsat-denial-lower"
+          },
+          {
+            "baseline": {
+              "function": "Subtail.TerminalDecisionLazy.rawNormalizedEntailsCheckLazy",
+              "output_tail": "",
+              "raw_backend_unchanged": true,
+              "reason": "time_limit",
+              "seconds": 20.008,
+              "status": "UNKNOWN"
+            },
+            "candidate": {
+              "function": "Subtail.TerminalDecisionLazy.rawNormalizedEntailsCheckLazy",
+              "output_tail": "",
+              "raw_backend_unchanged": true,
+              "reason": "time_limit",
+              "seconds": 20.008,
+              "status": "UNKNOWN"
+            },
+            "expected": true,
+            "justification": "The two listed inequalities establish both directions; query the reverse one without a frontend guard.",
+            "kind": "raw",
+            "name": "raw-equality-both-directions"
+          },
+          {
+            "baseline": {
+              "function": "Subtail.TerminalDecisionLazy.rawNormalizedEntailsCheckLazy",
+              "output_tail": "",
+              "raw_backend_unchanged": true,
+              "reason": "time_limit",
+              "seconds": 20.008,
+              "status": "UNKNOWN"
+            },
+            "candidate": {
+              "function": "Subtail.TerminalDecisionLazy.rawNormalizedEntailsCheckLazy",
+              "output_tail": "",
+              "raw_backend_unchanged": true,
+              "reason": "time_limit",
+              "seconds": 20.008,
+              "status": "UNKNOWN"
+            },
+            "expected": false,
+            "justification": "Take v1=root-only and v0=product(v1,v1). The upper premise holds by equality, but v0 has a child absent from v1.",
+            "kind": "raw",
+            "name": "raw-upper-only"
+          },
+          {
+            "baseline": {
+              "actual": false,
+              "function": "Subtail.TerminalDecisionLazy.normalizedEntailsCheckLazy",
+              "marker": "SUBTAIL_FAST_BENCHMARK:baseline:normalized-empty-cross:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:baseline:normalized-empty-cross:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:baseline:normalized-empty-cross:false\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.669,
+              "status": "PASS"
+            },
+            "candidate": {
+              "actual": false,
+              "function": "Subtail.EntailmentFast.normalizedEntailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:normalized-empty-cross:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:normalized-empty-cross:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:normalized-empty-cross:false\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.668,
+              "status": "PASS"
+            },
+            "expected": false,
+            "justification": "The normalized fast path sees a root-only/bottom countermodel at the empty address.",
+            "kind": "normalized",
+            "name": "normalized-empty-cross"
+          },
+          {
+            "baseline": {
+              "actual": true,
+              "function": "Subtail.TerminalDecisionLazy.normalizedEntailsCheckLazy",
+              "marker": "SUBTAIL_FAST_BENCHMARK:baseline:normalized-premise-forward:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:baseline:normalized-premise-forward:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:baseline:normalized-premise-forward:true\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.719,
+              "status": "PASS"
+            },
+            "candidate": {
+              "actual": true,
+              "function": "Subtail.EntailmentFast.normalizedEntailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:normalized-premise-forward:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:normalized-premise-forward:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:normalized-premise-forward:true\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.668,
+              "status": "PASS"
+            },
+            "expected": true,
+            "justification": "The queried normalized leq clause is explicitly present.",
+            "kind": "normalized",
+            "name": "normalized-premise-forward"
+          },
+          {
+            "baseline": {
+              "actual": false,
+              "function": "Subtail.TerminalDecisionLazy.normalizedEntailsCheckLazy",
+              "marker": "SUBTAIL_FAST_BENCHMARK:baseline:normalized-premise-reverse:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:baseline:normalized-premise-reverse:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:baseline:normalized-premise-reverse:false\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.669,
+              "status": "PASS"
+            },
+            "candidate": {
+              "actual": false,
+              "function": "Subtail.EntailmentFast.normalizedEntailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:normalized-premise-reverse:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:normalized-premise-reverse:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:normalized-premise-reverse:false\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.672,
+              "status": "PASS"
+            },
+            "expected": false,
+            "justification": "A root-only/bottom valuation satisfies the premise and refutes the reversed query.",
+            "kind": "normalized",
+            "name": "normalized-premise-reverse"
+          },
+          {
+            "baseline": {
+              "actual": true,
+              "function": "Subtail.TerminalDecisionLazy.normalizedEntailsCheckLazy",
+              "marker": "SUBTAIL_FAST_BENCHMARK:baseline:normalized-reflexive:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:baseline:normalized-reflexive:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:baseline:normalized-reflexive:true\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.669,
+              "status": "PASS"
+            },
+            "candidate": {
+              "actual": true,
+              "function": "Subtail.EntailmentFast.normalizedEntailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:normalized-reflexive:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:normalized-reflexive:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:normalized-reflexive:true\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.669,
+              "status": "PASS"
+            },
+            "expected": true,
+            "justification": "This calls the guarded normalized entry point directly, so its reflexivity guard returns true.",
+            "kind": "normalized",
+            "name": "normalized-reflexive"
+          },
+          {
+            "baseline": {
+              "actual": true,
+              "function": "Subtail.TerminalDecisionLazy.normalizedEntailsCheckLazy",
+              "marker": "SUBTAIL_FAST_BENCHMARK:baseline:normalized-unsat-denial-lower:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:baseline:normalized-unsat-denial-lower:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:baseline:normalized-unsat-denial-lower:true\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.669,
+              "status": "PASS"
+            },
+            "candidate": {
+              "actual": true,
+              "function": "Subtail.EntailmentFast.normalizedEntailsCheck",
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:normalized-unsat-denial-lower:true",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:normalized-unsat-denial-lower:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:normalized-unsat-denial-lower:true\n",
+              "raw_backend_unchanged": false,
+              "returncode": 0,
+              "seconds": 0.669,
+              "status": "PASS"
+            },
+            "expected": true,
+            "justification": "The normalized constraints are contradictory at the product root; reflexivity remains valid.",
+            "kind": "normalized",
+            "name": "normalized-unsat-denial-lower"
+          }
+        ],
+        "corpus": "experiments/check_entailment_decision.py E054 38 fixtures",
+        "counts_by_variant_and_kind": {
+          "baseline": {
+            "frontend": {
+              "PASS": 17,
+              "UNKNOWN": 9
+            },
+            "normalized": {
+              "PASS": 5
+            },
+            "raw": {
+              "PASS": 2,
+              "UNKNOWN": 5
+            }
+          },
+          "candidate": {
+            "frontend": {
+              "PASS": 26
+            },
+            "normalized": {
+              "PASS": 5
+            },
+            "raw": {
+              "PASS": 2,
+              "UNKNOWN": 5
+            }
+          }
+        },
+        "failures": [],
+        "raw_backend_warning": {
+          "candidate_does_not_use_EntailmentFast_for_raw": true,
+          "observed_functions": [
+            "Subtail.TerminalDecisionLazy.rawNormalizedEntailsCheckLazy"
+          ],
+          "unchanged_call": "Subtail.TerminalDecisionLazy.rawNormalizedEntailsCheckLazy"
+        },
+        "status": "UNKNOWN",
+        "variants": [
+          "baseline",
+          "candidate"
+        ]
+      },
+      "generated": {
+        "counts": {
+          "PASS": 16,
+          "UNKNOWN": 3
+        },
+        "families": {
+          "negative-frontend-products": "Nested original expressions with a first possible separator beyond the short-path list; explicit finite countermodel.",
+          "negative-supplied-separation": "A finite lower-constraint push chain and an explicit source path; expected separation true, hence negative entailment.",
+          "positive-covariance": "Monotone component chains with exact upper/lower product definitions; expected true by product_mono.",
+          "positive-transitivity": "Listed leq chain; expected true by transitivity."
+        },
+        "oracle": "independent P-automaton supplied-address predicate plus order-law justifications",
+        "rows": [
+          {
+            "cache_reuse": false,
+            "expected": true,
+            "justification": "A finite chain of listed leq premises entails its transitive endpoint.",
+            "kind": "positive-transitivity",
+            "n": 2,
+            "name": "positive-transitive-2",
+            "run": {
+              "actual": true,
+              "marker": "SUBTAIL_FAST_GENERATED:positive-transitive-2:true",
+              "markers": [
+                "SUBTAIL_FAST_GENERATED:positive-transitive-2:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_GENERATED:positive-transitive-2:true\n",
+              "returncode": 0,
+              "seconds": 0.669,
+              "status": "PASS"
+            },
+            "word_length": 0
+          },
+          {
+            "cache_reuse": false,
+            "expected": true,
+            "justification": "A finite chain of listed leq premises entails its transitive endpoint.",
+            "kind": "positive-transitivity",
+            "n": 4,
+            "name": "positive-transitive-4",
+            "run": {
+              "actual": true,
+              "marker": "SUBTAIL_FAST_GENERATED:positive-transitive-4:true",
+              "markers": [
+                "SUBTAIL_FAST_GENERATED:positive-transitive-4:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_GENERATED:positive-transitive-4:true\n",
+              "returncode": 0,
+              "seconds": 0.669,
+              "status": "PASS"
+            },
+            "word_length": 0
+          },
+          {
+            "cache_reuse": false,
+            "expected": true,
+            "justification": "A finite chain of listed leq premises entails its transitive endpoint.",
+            "kind": "positive-transitivity",
+            "n": 6,
+            "name": "positive-transitive-6",
+            "run": {
+              "actual": true,
+              "marker": "SUBTAIL_FAST_GENERATED:positive-transitive-6:true",
+              "markers": [
+                "SUBTAIL_FAST_GENERATED:positive-transitive-6:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_GENERATED:positive-transitive-6:true\n",
+              "returncode": 0,
+              "seconds": 0.719,
+              "status": "PASS"
+            },
+            "word_length": 0
+          },
+          {
+            "cache_reuse": false,
+            "expected": true,
+            "justification": "A finite chain of listed leq premises entails its transitive endpoint.",
+            "kind": "positive-transitivity",
+            "n": 8,
+            "name": "positive-transitive-8",
+            "run": {
+              "actual": true,
+              "marker": "SUBTAIL_FAST_GENERATED:positive-transitive-8:true",
+              "markers": [
+                "SUBTAIL_FAST_GENERATED:positive-transitive-8:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_GENERATED:positive-transitive-8:true\n",
+              "returncode": 0,
+              "seconds": 0.719,
+              "status": "PASS"
+            },
+            "word_length": 0
+          },
+          {
+            "cache_reuse": false,
+            "expected": true,
+            "justification": "A finite chain of listed leq premises entails its transitive endpoint.",
+            "kind": "positive-transitivity",
+            "n": 10,
+            "name": "positive-transitive-10",
+            "run": {
+              "actual": true,
+              "marker": "SUBTAIL_FAST_GENERATED:positive-transitive-10:true",
+              "markers": [
+                "SUBTAIL_FAST_GENERATED:positive-transitive-10:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_GENERATED:positive-transitive-10:true\n",
+              "returncode": 0,
+              "seconds": 0.719,
+              "status": "PASS"
+            },
+            "word_length": 0
+          },
+          {
+            "cache_reuse": false,
+            "expected": true,
+            "justification": "Component chains plus exact upper/lower product definitions imply covariance.",
+            "kind": "positive-covariance",
+            "n": 6,
+            "name": "positive-covariance-depth-1",
+            "run": {
+              "actual": true,
+              "marker": "SUBTAIL_FAST_GENERATED:positive-covariance-depth-1:true",
+              "markers": [
+                "SUBTAIL_FAST_GENERATED:positive-covariance-depth-1:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_GENERATED:positive-covariance-depth-1:true\n",
+              "returncode": 0,
+              "seconds": 0.77,
+              "status": "PASS"
+            },
+            "word_length": 0
+          },
+          {
+            "cache_reuse": false,
+            "expected": true,
+            "justification": "Component chains plus exact upper/lower product definitions imply covariance.",
+            "kind": "positive-covariance",
+            "n": 9,
+            "name": "positive-covariance-depth-2",
+            "run": {
+              "actual": true,
+              "marker": "SUBTAIL_FAST_GENERATED:positive-covariance-depth-2:true",
+              "markers": [
+                "SUBTAIL_FAST_GENERATED:positive-covariance-depth-2:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_GENERATED:positive-covariance-depth-2:true\n",
+              "returncode": 0,
+              "seconds": 0.769,
+              "status": "PASS"
+            },
+            "word_length": 0
+          },
+          {
+            "cache_reuse": false,
+            "expected": true,
+            "justification": "Component chains plus exact upper/lower product definitions imply covariance.",
+            "kind": "positive-covariance",
+            "n": 12,
+            "name": "positive-covariance-depth-3",
+            "run": {
+              "actual": true,
+              "marker": "SUBTAIL_FAST_GENERATED:positive-covariance-depth-3:true",
+              "markers": [
+                "SUBTAIL_FAST_GENERATED:positive-covariance-depth-3:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_GENERATED:positive-covariance-depth-3:true\n",
+              "returncode": 0,
+              "seconds": 0.769,
+              "status": "PASS"
+            },
+            "word_length": 0
+          },
+          {
+            "cache_reuse": false,
+            "expected": true,
+            "justification": "Component chains plus exact upper/lower product definitions imply covariance.",
+            "kind": "positive-covariance",
+            "n": 15,
+            "name": "positive-covariance-depth-4",
+            "run": {
+              "actual": true,
+              "marker": "SUBTAIL_FAST_GENERATED:positive-covariance-depth-4:true",
+              "markers": [
+                "SUBTAIL_FAST_GENERATED:positive-covariance-depth-4:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_GENERATED:positive-covariance-depth-4:true\n",
+              "returncode": 0,
+              "seconds": 0.92,
+              "status": "PASS"
+            },
+            "word_length": 0
+          },
+          {
+            "cache_reuse": true,
+            "expected": true,
+            "justification": "Independent P-automaton predecessor oracle accepts the supplied source path; the target is outside the false-push chain.",
+            "kind": "negative-supplied-separation",
+            "n": 2,
+            "name": "negative-supplied-separation-depth-0",
+            "run": {
+              "actual": true,
+              "marker": "SUBTAIL_FAST_GENERATED:negative-supplied-separation-depth-0:true",
+              "markers": [
+                "SUBTAIL_FAST_GENERATED:negative-supplied-separation-depth-0:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_GENERATED:negative-supplied-separation-depth-0:true\n",
+              "returncode": 0,
+              "seconds": 0.669,
+              "status": "PASS"
+            },
+            "word_length": 0
+          },
+          {
+            "cache_reuse": true,
+            "expected": true,
+            "justification": "Independent P-automaton predecessor oracle accepts the supplied source path; the target is outside the false-push chain.",
+            "kind": "negative-supplied-separation",
+            "n": 3,
+            "name": "negative-supplied-separation-depth-1",
+            "run": {
+              "actual": true,
+              "marker": "SUBTAIL_FAST_GENERATED:negative-supplied-separation-depth-1:true",
+              "markers": [
+                "SUBTAIL_FAST_GENERATED:negative-supplied-separation-depth-1:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_GENERATED:negative-supplied-separation-depth-1:true\n",
+              "returncode": 0,
+              "seconds": 0.719,
+              "status": "PASS"
+            },
+            "word_length": 1
+          },
+          {
+            "cache_reuse": true,
+            "expected": true,
+            "justification": "Independent P-automaton predecessor oracle accepts the supplied source path; the target is outside the false-push chain.",
+            "kind": "negative-supplied-separation",
+            "n": 4,
+            "name": "negative-supplied-separation-depth-2",
+            "run": {
+              "actual": true,
+              "marker": "SUBTAIL_FAST_GENERATED:negative-supplied-separation-depth-2:true",
+              "markers": [
+                "SUBTAIL_FAST_GENERATED:negative-supplied-separation-depth-2:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_GENERATED:negative-supplied-separation-depth-2:true\n",
+              "returncode": 0,
+              "seconds": 0.719,
+              "status": "PASS"
+            },
+            "word_length": 2
+          },
+          {
+            "cache_reuse": true,
+            "expected": true,
+            "justification": "Independent P-automaton predecessor oracle accepts the supplied source path; the target is outside the false-push chain.",
+            "kind": "negative-supplied-separation",
+            "n": 6,
+            "name": "negative-supplied-separation-depth-4",
+            "run": {
+              "actual": true,
+              "marker": "SUBTAIL_FAST_GENERATED:negative-supplied-separation-depth-4:true",
+              "markers": [
+                "SUBTAIL_FAST_GENERATED:negative-supplied-separation-depth-4:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_GENERATED:negative-supplied-separation-depth-4:true\n",
+              "returncode": 0,
+              "seconds": 0.869,
+              "status": "PASS"
+            },
+            "word_length": 4
+          },
+          {
+            "cache_reuse": true,
+            "expected": true,
+            "justification": "Independent P-automaton predecessor oracle accepts the supplied source path; the target is outside the false-push chain.",
+            "kind": "negative-supplied-separation",
+            "n": 10,
+            "name": "negative-supplied-separation-depth-8",
+            "run": {
+              "actual": true,
+              "marker": "SUBTAIL_FAST_GENERATED:negative-supplied-separation-depth-8:true",
+              "markers": [
+                "SUBTAIL_FAST_GENERATED:negative-supplied-separation-depth-8:true"
+              ],
+              "output_tail": "SUBTAIL_FAST_GENERATED:negative-supplied-separation-depth-8:true\n",
+              "returncode": 0,
+              "seconds": 4.33,
+              "status": "PASS"
+            },
+            "word_length": 8
+          },
+          {
+            "cache_reuse": true,
+            "expected": true,
+            "justification": "Independent P-automaton predecessor oracle accepts the supplied source path; the target is outside the false-push chain.",
+            "kind": "negative-supplied-separation",
+            "n": 14,
+            "name": "negative-supplied-separation-depth-12",
+            "run": {
+              "output_tail": "",
+              "reason": "time_limit",
+              "seconds": 20.008,
+              "status": "UNKNOWN"
+            },
+            "word_length": 12
+          },
+          {
+            "expected": false,
+            "function": "Subtail.EntailmentFast.entailsCheck",
+            "input_variables": 2,
+            "justification": "Set x=product(bottom,bottom), y=bottom; the first separating address is d zeroes.",
+            "kind": "negative-frontend-products",
+            "name": "negative-frontend-products-depth-3",
+            "run": {
+              "actual": false,
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:negative-frontend-products-depth-3:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:negative-frontend-products-depth-3:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:negative-frontend-products-depth-3:false\n",
+              "returncode": 0,
+              "seconds": 3.977,
+              "status": "PASS"
+            },
+            "word_length": 3
+          },
+          {
+            "expected": false,
+            "function": "Subtail.EntailmentFast.entailsCheck",
+            "input_variables": 2,
+            "justification": "Set x=product(bottom,bottom), y=bottom; the first separating address is d zeroes.",
+            "kind": "negative-frontend-products",
+            "name": "negative-frontend-products-depth-4",
+            "run": {
+              "actual": false,
+              "marker": "SUBTAIL_FAST_BENCHMARK:candidate:negative-frontend-products-depth-4:false",
+              "markers": [
+                "SUBTAIL_FAST_BENCHMARK:candidate:negative-frontend-products-depth-4:false"
+              ],
+              "output_tail": "SUBTAIL_FAST_BENCHMARK:candidate:negative-frontend-products-depth-4:false\n",
+              "returncode": 0,
+              "seconds": 12.501,
+              "status": "PASS"
+            },
+            "word_length": 4
+          },
+          {
+            "expected": false,
+            "function": "Subtail.EntailmentFast.entailsCheck",
+            "input_variables": 2,
+            "justification": "Set x=product(bottom,bottom), y=bottom; the first separating address is d zeroes.",
+            "kind": "negative-frontend-products",
+            "name": "negative-frontend-products-depth-6",
+            "run": {
+              "output_tail": "",
+              "reason": "time_limit",
+              "seconds": 20.008,
+              "status": "UNKNOWN"
+            },
+            "word_length": 6
+          },
+          {
+            "expected": false,
+            "function": "Subtail.EntailmentFast.entailsCheck",
+            "input_variables": 2,
+            "justification": "Set x=product(bottom,bottom), y=bottom; the first separating address is d zeroes.",
+            "kind": "negative-frontend-products",
+            "name": "negative-frontend-products-depth-8",
+            "run": {
+              "output_tail": "",
+              "reason": "time_limit",
+              "seconds": 20.008,
+              "status": "UNKNOWN"
+            },
+            "word_length": 8
+          }
+        ],
+        "status": "UNKNOWN"
+      }
+    },
+    "platform": "Linux-6.12.94-123.192.amzn2023.aarch64-aarch64-with-glibc2.43",
+    "python": "3.13.14",
+    "seed": 2026092020,
+    "source_sha256": {
+      "experiments/check_entailment_decision.py": "78262d84da6b5c1bc0cc446895a461720a9d5b3038953f4a5678a10ba450f1f0",
+      "experiments/check_entailment_lazy.py": "7a45b26348d11e2218b9fa42d4554c57ced32a262693670dceb6f99830d15fb3",
+      "experiments/check_fast_summary.py": "17b919052dd165bfa8b7b0c41e86477d5c5acde08b8de68704abba68550daa19",
+      "experiments/check_stack_summary.py": "a2cec595e2c4e1a6dad0958b30e5a2f38f4239170f63a43aa1ab655a52f83e71",
+      "lean/Subtail/AbsorbingTerminal.lean": "596d502361547a2b01c276fd41bc1b2b004bdbe4ce0de561cd4b6bce9002bb1b",
+      "lean/Subtail/Audit.lean": "0487d784c6f61affa4e332c2d8edba145d4cebb4d831ea2ddcf0e157a1821ad5",
+      "lean/Subtail/Basic.lean": "1a7cb0c1f7546ed2efdae96d1af9a84dc6f433531549a50f4738ed25eb64c6c6",
+      "lean/Subtail/Boundary.lean": "016ecea3ef35bcff2421cf5b25ac702a617db707c51014d49166de8715cc88c8",
+      "lean/Subtail/CanonicalModel.lean": "45b777cb26c2bde47870bdb1b9f6e243e3fa6d650b26752742680a5758fcd713",
+      "lean/Subtail/CanonicalModelAudit.lean": "140ab22c11130e6138f80824f2a2c8df936b2152b0353d792a4d3555523094da",
+      "lean/Subtail/CanonicalReachability.lean": "6400b93753493a13b9a4cc1cb391e3ca5ad8b7b45623824877e2ad1d78e72403",
+      "lean/Subtail/CanonicalReachabilityFast.lean": "6adfbb85117674122f0bceafe351bc4789206c61b00489486ddb4aeb53219273",
+      "lean/Subtail/Conditional.lean": "64f902acce370dadd3f0ac53cbd31ae4026664552c48e31ccd56b1ca542ac01b",
+      "lean/Subtail/EntailmentDecision.lean": "a899b12e1d2b968053a0062a1600c9d368fe5c16f1ba3b74aef591b311088f59",
+      "lean/Subtail/EntailmentFast.lean": "d2867bd220ec379ab19caa9f6d639082b0abd234ce548642d64e3e7d85017afc",
+      "lean/Subtail/Examples.lean": "3b3e091c4b944992f3aa65c7d5923e35558b05193dec7540ed0e9acda13864c7",
+      "lean/Subtail/ExpressionNormalization.lean": "6e69fa21ebf0a0ffa65f78c976eb6681a85e9c9778cf96e57d16fb86b1285b82",
+      "lean/Subtail/ExpressionNormalizationAudit.lean": "471699acaca0a37f6502f7f631c9b1c3bae3d393584252cbad9174ec27fc6074",
+      "lean/Subtail/FiniteSearch.lean": "10583fb950420ccfb3ae88c906a0e3f004d72fcb8a3aac53a24b4281800a4057",
+      "lean/Subtail/FirstReturnColours.lean": "848c71747fb6deff903b9ee850a8c6ecdf5f35cd79ce680c7da11c68b7909352",
+      "lean/Subtail/FirstReturnGenerator.lean": "d6c4266c59949785979e6f37dea7d0e93adf50e9a42ad447a7267912949bace6",
+      "lean/Subtail/FirstReturnGraph.lean": "06d11930a30fc4034e9a8997a4b2d57f82b5f8779b87f709287502fccbde88d8",
+      "lean/Subtail/InfiniteCycle.lean": "0a3559e3b09dc9a3a1d2ce80893fc354bd6aec7f2ab0a12b82fe9917fb4e2fb3",
+      "lean/Subtail/InfiniteDecision.lean": "d9679db4b52062a707f74c4a7198137f608660930e3f4a2d868ab4efac40228d",
+      "lean/Subtail/InfiniteWitness.lean": "778759b132b97fd0e8546a2ad0346b1e977e0cbf34423f69f0e04170f7624fdc",
+      "lean/Subtail/PeriodicGood.lean": "5f13030c1825fb396f0f288cc4a080d88810f9c08449841a913efc52486eaf9e",
+      "lean/Subtail/PeriodicMonitor.lean": "719ce76ea2d91c7325f733462791d4da924e38afb8ec9cbe7e4743da0402c7bb",
+      "lean/Subtail/PeriodicMonitorComplete.lean": "ff3333943b6ca5dbf5e9920f2a3071912244cddf6098f25eededa476d3b1fc32",
+      "lean/Subtail/PeriodicRotation.lean": "ce02774c6dd7f483dbc34b574c7894335dd5340c6ddc08459c5295d1dc64c6f4",
+      "lean/Subtail/PeriodicRun.lean": "d27cdbb13b08aca5410c76e4ae438a0cebcb7b2acf223bd94a95814717815a86",
+      "lean/Subtail/PeriodicTail.lean": "1243dc455f48858d1dc30e1543cdc3737e6078aa51f7cc2f761e8af67741b148",
+      "lean/Subtail/PrefixMatching.lean": "59de0b193b55765db895f0f9ceb2a4155cd4d4dcfe54fa58cb285ec0577931e4",
+      "lean/Subtail/RankMilestones.lean": "3a948deaea047bf02289869210fcc2cbf7ada1010983dee66fa8477e4832d1c6",
+      "lean/Subtail/RankQuery.lean": "e8ef2ec585c49a593c8cee4d11e7aeb75f0284179e36b26ea21d72dd313adb41",
+      "lean/Subtail/RankQueryCompiler.lean": "1e32f44935490d7e69c8157f4ce12f763c9732b26e4cef2a7fb94518941edb2c",
+      "lean/Subtail/RankQueryCoverage.lean": "b1ccfa2fe221d355451ccfffe3d701ee46489d616e7e20d015f3e4fb2e86b49f",
+      "lean/Subtail/RankQueryDecision.lean": "51fef747bb443d313559e57d8fb8e3c1ce68b804eb4883a7d504e2945da5bd8a",
+      "lean/Subtail/RankQueryEnumeration.lean": "f65f40733e4cd45c8499cf1874509b23bacfdfd9f32278b5d459d12dd7016189",
+      "lean/Subtail/RankQueryEnumerationAudit.lean": "93c60b30d903e2a30da0152fda5abdf45b923ee09facdb1293264e44ed98f853",
+      "lean/Subtail/RankQueryFinishFacts.lean": "8e67cbbcf2a2710ec5307455303180fea8c0d7756969b121efab025b8f7ff2a2",
+      "lean/Subtail/RankQueryFinishTrace.lean": "93653a3ade48c9c4c628a8f05583a1deef201d412427de87ce3209a91949a258",
+      "lean/Subtail/RankQueryFirstReturn.lean": "b029e89e706c0724428194ddbc7d08abd494710d29ac65fb21e1dc90d7df10e0",
+      "lean/Subtail/RankQueryLengthBound.lean": "daec0fabc8c8e8b5c9ff5b1078a110f2fddf48ef60d3cbfec04557261a794399",
+      "lean/Subtail/RankQueryPaths.lean": "d383b44afb6bb7625181fb58e1d269030fa388a477849c76b7bc7dc64172de2a",
+      "lean/Subtail/RankQuerySemanticUnwind.lean": "2b3968f40f9b42d9bc051a0d6b11de3c80e2c3bd30351b04f579765960c9b3de",
+      "lean/Subtail/RankQuerySound.lean": "7729268fb6f82a0c508747e774e92133f869e3038d05e6c8c1a0caf962c9cd76",
+      "lean/Subtail/RankQueryUnwind.lean": "c6006c46aa86de0d173711a14f8c4076fcd5723a7470664da0d87d18a70efa3e",
+      "lean/Subtail/RankQueryWeightBound.lean": "d92069dfe5de891ba9bcfe3c5599a6a5e726fd57e2995f87a3b569fa0daabe50",
+      "lean/Subtail/RankQueryWeightCounterexample.lean": "d3e2ebbe27bdc277f8080e5e75f8d8939784d670e396e52e69aac631681a68ce",
+      "lean/Subtail/RankWitnessReference.lean": "eb5f6485995190a3a829b6de2c87e31a79f47b408c6afb77cecfc031c03d7772",
+      "lean/Subtail/SandwichPredicates.lean": "81b031e2c472d632b1d1b0bc0ad206aa8977571d78c58afc5b3e03670457e177",
+      "lean/Subtail/StackReachability.lean": "c3d0efc707cbc0979e99cd26726ed2575f6c1c60e85d34e7449903bf3082ec7f",
+      "lean/Subtail/StackSummary.lean": "345b4b1719f31b3963ca5ccc50b2fc861fc19864fe891cd9fcd547121acbe1fc",
+      "lean/Subtail/StackSummaryAudit.lean": "743ce0dbd00b926a7ec22377f621156afb593695bc3c8a4ca2d4b22139658d46",
+      "lean/Subtail/StackSummaryFast.lean": "c3294589e5114d2d4b26c595226d94fd1d470fca22eff47e85ca7868c793cb6f",
+      "lean/Subtail/SubtypeTerminalBridge.lean": "4a6fb1e783fdf052c1ac61bfd24aae9dbc5d1c441961e41d7cd02f434d57b751",
+      "lean/Subtail/SummaryAutomaton.lean": "68832af44bc8907e99dd2889968c699245aff70d40bf5690539f3f9edd8ca37b",
+      "lean/Subtail/SummaryBridge.lean": "8c5d8038b87a1b419e9be03dee668d390260c2677e42f227622cd199dff58bd9",
+      "lean/Subtail/TerminalDecisionLazy.lean": "67f5735adca1e6d8f059a39aedd50d1529a436e2cf0b0ce6cfda9b00f001b8a9",
+      "lean/Subtail/TerminalRank.lean": "3771a1a58ff7e5ddb2aa5134e08fca65a1a05d64c3a5de8487c4f7d7630b6fc2",
+      "lean/Subtail/TreeSemantics.lean": "8b08b74d08bac48454f99f0241eb066ef6b218334641f284bc26423957a78f2e",
+      "lean/Subtail/Truncation.lean": "2e2af26dc02e8168715296f4296d78ca1ea9133a156e4792969cb04efb70df07",
+      "lean/Subtail/TwoState.lean": "063c3991d77f3037b209e8c74410cdb6449144545b3b1c4eb49fe0a5b4cf1b26",
+      "scripts/subtail.py": "82e8e5b138aed5c8bcaad620b961cb8f757df5e7f22ca3f0e0fa1f0375729d63"
+    },
+    "status": "UNKNOWN"
+  },
+  "proof_validation": {
+    "checked_revision": "cf125800a9c26cb4589d4eb0bd889d6a76b1a8e5",
+    "commands": [
+      {
+        "command": "python3 scripts/check_lean.py",
+        "status": "PASS"
+      },
+      {
+        "command": "(cd lean && lake build +Subtail.EntailmentFast)",
+        "status": "PASS"
+      },
+      {
+        "command": "(cd lean && lake env leanchecker Subtail.EntailmentFast)",
+        "status": "PASS"
+      },
+      {
+        "command": "python3 scripts/check_fast_summary.py",
+        "status": "PASS"
+      }
+    ],
+    "default_core": {
+      "axioms": {
+        "admissibleCheck": [
+          "propext"
+        ],
+        "admissibleCheck_correct": [
+          "Quot.sound",
+          "propext"
+        ],
+        "boundaryCheck": [
+          "propext"
+        ],
+        "boundaryCheck_correct": [
+          "Quot.sound",
+          "propext"
+        ],
+        "boundary_witness_of_length_le_one": [
+          "Quot.sound",
+          "propext"
+        ],
+        "exists_short_witness_two_states": [
+          "Quot.sound",
+          "propext"
+        ],
+        "finiteBudgetDecision": [],
+        "finiteBudgetDecision_correct": [
+          "Quot.sound",
+          "propext"
+        ],
+        "incomingLe_iff_flags": [
+          "propext"
+        ],
+        "lrs": [],
+        "lrs_spec": [
+          "Quot.sound",
+          "propext"
+        ],
+        "necessaryCheck": [
+          "propext"
+        ],
+        "necessaryCheck_correct": [
+          "Quot.sound",
+          "propext"
+        ],
+        "necessary_zero_iff_boundary": [
+          "Quot.sound",
+          "propext"
+        ],
+        "profile_truncation": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "sufficientCheck": [
+          "propext"
+        ],
+        "sufficientCheck_correct": [
+          "Quot.sound",
+          "propext"
+        ],
+        "sufficient_implies_witness": [
+          "Quot.sound",
+          "propext"
+        ],
+        "suffixBoundCheck": [],
+        "suffixBoundCheck_correct": [
+          "Quot.sound",
+          "propext"
+        ],
+        "suffixBound_iff_reverseSuffixBound": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "suffix_trace_truncation": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "twoStateWitnessCheck": [
+          "propext"
+        ],
+        "twoStateWitnessCheck_correct": [
+          "Quot.sound",
+          "propext"
+        ],
+        "visited_profile_truncation": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "witnessCheck": [
+          "propext"
+        ],
+        "witnessCheck_correct": [
+          "Quot.sound",
+          "propext"
+        ],
+        "witness_iff_finalSlice_proper": [
+          "Quot.sound",
+          "propext"
+        ],
+        "witness_implies_necessary": [
+          "propext"
+        ],
+        "witness_implies_sufficient_lrs": [
+          "Quot.sound",
+          "propext"
+        ]
+      },
+      "boundary_comparisons": 10160,
+      "budget_pairs": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "failures": 0,
+      "instances": 80,
+      "kernel_replay": "PASS (bundled leanchecker)",
+      "lrs_comparisons": 511,
+      "max_word_length": 6,
+      "necessary_comparisons": 60960,
+      "scope": "binary BorderAvoid core; conditional budget theorem; no SEP decision procedure",
+      "seed": 20260904,
+      "sufficient_comparisons": 60960,
+      "toolchain": "leanprover/lean4:v4.33.1",
+      "two_state_decision_comparisons": 33,
+      "witness_comparisons": 10160
+    },
+    "execution": "isolated wb-marcus checkout",
+    "new_declaration_audit": {
+      "declarations": {
+        "Subtail.CanonicalReachabilityFast.Cache": {
+          "axioms": [],
+          "kind": "structure"
+        },
+        "Subtail.CanonicalReachabilityFast.Correct": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "structure"
+        },
+        "Subtail.CanonicalReachabilityFast.Matrix": {
+          "axioms": [],
+          "kind": "abbrev"
+        },
+        "Subtail.CanonicalReachabilityFast.controlReachCheck": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.CanonicalReachabilityFast.controlReachCheck_eq": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.CanonicalReachabilityFast.derivedCheck": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.CanonicalReachabilityFast.derivedCheck_eq": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.CanonicalReachabilityFast.lookup": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.CanonicalReachabilityFast.lookup_matrix": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.CanonicalReachabilityFast.lookup_pathMatrix": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.CanonicalReachabilityFast.matrix": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.CanonicalReachabilityFast.mem_pathSet": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.CanonicalReachabilityFast.mem_popSet": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.CanonicalReachabilityFast.nextSet": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.CanonicalReachabilityFast.nextSet_eq": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.CanonicalReachabilityFast.pathMatrix": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.CanonicalReachabilityFast.pathSet": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.CanonicalReachabilityFast.popSet": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.CanonicalReachabilityFast.popSet_eq": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.CanonicalReachabilityFast.prepare": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.CanonicalReachabilityFast.prepare_correct": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.CanonicalReachabilityFast.reach_iff_path": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.CanonicalReachabilityFast.reachesCheck": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.CanonicalReachabilityFast.reachesCheck_eq": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.CanonicalReachabilityFast.safeCheck": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.CanonicalReachabilityFast.safeCheck_eq": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.CanonicalReachabilityFast.satCheck": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.CanonicalReachabilityFast.satCheck_eq": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.CanonicalReachabilityFast.separationCheck": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.CanonicalReachabilityFast.separationCheck_eq": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.CanonicalReachabilityFast.successors": {
+          "axioms": [],
+          "kind": "def"
+        },
+        "Subtail.EntailmentFast.Relation": {
+          "axioms": [],
+          "kind": "abbrev"
+        },
+        "Subtail.EntailmentFast.Sound": {
+          "axioms": [],
+          "kind": "def"
+        },
+        "Subtail.EntailmentFast.afterPositive": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.EntailmentFast.afterPositive_correct": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.EntailmentFast.candidatePaths": {
+          "axioms": [],
+          "kind": "def"
+        },
+        "Subtail.EntailmentFast.entailsCheck": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.EntailmentFast.entailsCheck_correct": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.EntailmentFast.entailsCheck_eq": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.EntailmentFast.expressionPaths": {
+          "axioms": [],
+          "kind": "def"
+        },
+        "Subtail.EntailmentFast.normalizedEntailsCheck": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.EntailmentFast.normalizedEntailsCheck_correct": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.EntailmentFast.normalizedWithPaths": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.EntailmentFast.normalizedWithPaths_correct": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.EntailmentFast.positiveCheck": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.EntailmentFast.positiveCheck_sound": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.EntailmentFast.positiveClosure": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.EntailmentFast.positiveClosure_sound": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.EntailmentFast.positiveRule": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.EntailmentFast.positiveRule_sound": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.EntailmentFast.positiveStep": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.EntailmentFast.positiveStep_sound": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.EntailmentFast.productRule": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.EntailmentFast.productRule_sound": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.EntailmentFast.separationExists": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.EntailmentFast.separationExists_sound": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.EntailmentFast.shortPaths": {
+          "axioms": [],
+          "kind": "def"
+        },
+        "Subtail.StackSummaryFast.Derivable": {
+          "axioms": [],
+          "kind": "inductive"
+        },
+        "Subtail.StackSummaryFast.Pair": {
+          "axioms": [],
+          "kind": "abbrev"
+        },
+        "Subtail.StackSummaryFast.balancedCheck": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.StackSummaryFast.balancedCheck_correct": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.StackSummaryFast.balancedCheck_eq_reference": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.StackSummaryFast.balancedTable": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.StackSummaryFast.balancedTable_closed": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.StackSummaryFast.balancedTable_complete": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.StackSummaryFast.balancedTable_sound": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.StackSummaryFast.candidates": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.StackSummaryFast.close": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.StackSummaryFast.close_length_mono": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.StackSummaryFast.close_ne_length_lt": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.StackSummaryFast.close_nodup": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.StackSummaryFast.close_sound": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.StackSummaryFast.close_subset": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.StackSummaryFast.close_subset_pairs": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.StackSummaryFast.closed_of_fixed": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.StackSummaryFast.closed_or_grow": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.StackSummaryFast.closed_saturate": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.StackSummaryFast.derivable": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.StackSummaryFast.derivable_eq_true_iff": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.StackSummaryFast.derivable_sound": {
+          "axioms": [],
+          "kind": "theorem"
+        },
+        "Subtail.StackSummaryFast.iter": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.StackSummaryFast.iter_of_fixed": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.StackSummaryFast.iter_sound": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.StackSummaryFast.mem_balancedTable": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.StackSummaryFast.mem_close_iff": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.StackSummaryFast.mem_iter": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.StackSummaryFast.nodup_iter": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.StackSummaryFast.relationMember": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.StackSummaryFast.saturate": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.StackSummaryFast.saturate_eq_iter": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.StackSummaryFast.subset_iter_pairs": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.StackSummaryFast.transStep": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.StackSummaryFast.transStep_eq_true": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.StackSummaryFast.wrapLetter": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.StackSummaryFast.wrapLetter_eq_true": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.StackSummaryFast.wrapStep": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "def"
+        },
+        "Subtail.StackSummaryFast.wrapStep_eq_true": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        }
+      },
+      "source_sha256": {
+        "lean/Subtail/CanonicalReachabilityFast.lean": "6adfbb85117674122f0bceafe351bc4789206c61b00489486ddb4aeb53219273",
+        "lean/Subtail/EntailmentFast.lean": "d2867bd220ec379ab19caa9f6d639082b0abd234ce548642d64e3e7d85017afc",
+        "lean/Subtail/StackSummaryFast.lean": "c3294589e5114d2d4b26c595226d94fd1d470fca22eff47e85ca7868c793cb6f"
+      },
+      "status": "PASS"
+    },
+    "scope": "No Lean source changed between the proof-checked revision and the native benchmark revision.",
+    "source_review": "notes/2026-09-20-fast-summary-readback.md"
+  },
+  "python_boundary_tests": {
+    "checked_revision": "9a866c196f30f2fe1f11d4201d6237642fbd3cb8",
+    "command": "python3 -m unittest discover -s scripts -p test_subtail.py",
+    "execution": "local Mac",
+    "status": "PASS",
+    "tests": 16
+  },
+  "status": "UNKNOWN"
+}

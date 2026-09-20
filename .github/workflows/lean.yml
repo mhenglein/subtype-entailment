@@ -26,6 +26,7 @@ on:
       - 'scripts/check_entailment_decision.py'
       - 'scripts/check_rank_weight_native.py'
       - 'scripts/check_terminal_lazy.py'
+      - 'scripts/check_fast_summary.py'
       - 'scripts/subtail.py'
       - 'scripts/test_subtail.py'
       - 'examples/entailment/**'
@@ -42,6 +43,7 @@ on:
       - 'scripts/check_entailment_decision.py'
       - 'scripts/check_rank_weight_native.py'
       - 'scripts/check_terminal_lazy.py'
+      - 'scripts/check_fast_summary.py'
       - 'scripts/subtail.py'
       - 'scripts/test_subtail.py'
       - 'examples/entailment/**'
@@ -524,6 +526,36 @@ jobs:
           path: |
             tmp/terminal-lazy-axioms.json
             tmp/entailment-lazy.json
+          retention-days: 90
+          if-no-files-found: warn
+      - name: Proved finite saturation and cached solver
+        run: |
+          (cd lean && lake build +Subtail.EntailmentFast)
+          (cd lean && lake env leanchecker Subtail.EntailmentFast)
+          python3 scripts/check_fast_summary.py --output tmp/fast-summary-axioms.json
+      - name: Independent cached components and full-expression acceptance target
+        run: |
+          python3 experiments/check_fast_summary.py --components --benchmark --generated --output tmp/entailment-fast.json
+          python3 - <<'PYCODE'
+          import json
+          from pathlib import Path
+          report = json.loads(Path('tmp/entailment-fast.json').read_text())
+          phases = report['phases']
+          assert phases['components']['status'] == 'PASS', phases['components']['status']
+          assert phases['normalized']['status'] == 'PASS', phases['normalized']['status']
+          counts = phases['benchmark']['counts_by_variant_and_kind']['candidate']
+          assert counts['frontend'] == {'PASS': 26}, counts
+          assert counts['normalized'] == {'PASS': 5}, counts
+          print('PASS: independent cached components and 26/26 full-expression cases; raw limits remain explicit')
+          PYCODE
+      - name: Preserve cached solver audits and diagnostic
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: entailment-fast-audit
+          path: |
+            tmp/fast-summary-axioms.json
+            tmp/entailment-fast.json
           retention-days: 90
           if-no-files-found: warn
       - name: Independent native normalization and original-syntax reference checks

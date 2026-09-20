@@ -4,12 +4,30 @@ Date: 2026-09-20. Reviewed baseline: `0ef097576686a5d3886fb89cbce504d03dc0bfa9`.
 Coordination: [#54](https://github.com/mhenglein/subtail/issues/54), integration
 [#37](https://github.com/mhenglein/subtail/issues/37). Related workstreams: A010/A018.
 
-**Status: proposed next programme, not work already executed.** This planning
-review changes no theorem, implementation, benchmark result or manuscript.
+**Planning baseline:** the initial review at `c360966` proposed the programme
+below. Later execution is recorded separately in the update below; completed
+solver work does not make the manuscript or extension programme complete.
 The previous [programme](POST_C081.md) produced a research checkpoint. A
 publication-ready paper, broadly useful solver and new signature theorems
 require further work. Implementation ownership remains in the registry and
 future scoped issue claims; this document assigns no workers or paths.
+
+## Execution update: cached solver proof
+
+The [finite saturation and cached solver](../notes/2026-09-20-fast-summary.md)
+now has an unconditional equality proof against the original C081 Boolean.
+This implements the sound shortcuts and a finite saturation path from items
+2–3 of the solver plan. The complete fallback still uses its old representations.
+The [separate source readback](../notes/2026-09-20-fast-summary-readback.md)
+found no correctness blocker. The first acceptance target is met: all 26
+full-expression cases complete
+under the same cap, and the matched total improves from 24/38 to 33/38.
+Five unchanged raw probes and three deeper generated cases remain UNKNOWN.
+The note and its [native receipt](../results/entailment-fast.json) preserve those
+limits. Constructing only needed summary states, complete countermodel
+extraction, the paper rewrite and extension
+proofs remain separate tasks. The review findings below describe the original
+planning baseline and preserve its earlier measurements.
 
 ## What the review found
 

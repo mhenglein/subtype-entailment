@@ -30,20 +30,22 @@ infinite countermodel and examples of the terminal first-return construction.
 
 **Limits.** This theorem has no explicit top constructor, multiple labelled
 constructors or contravariant function type. Finite-tree entailment is a
-different problem. The exhaustive implementation can be very slow. A matched
-wb-marcus diagnostic completed 24/38 cases after the proved gate, compared with 22/38
-before it. Fourteen cases remain `UNKNOWN`; both gains were direct raw-backend
-probes. The historical Mac 25/38 record is preserved separately. A timeout is
-`UNKNOWN`. Qualitative decidability does not establish the old C080 numerical
+different problem. The complete fallback can be very slow. The proved cached solver completes
+all 26 full-expression cases in the matched wb-marcus corpus (previously 17).
+Across all entry points it completes 33/38, up from 24/38; five unchanged
+raw-backend probes remain `UNKNOWN`. A larger generated suite completes 16/19,
+so deeper cases still expose scaling limits. [Proof and measurements](notes/2026-09-20-fast-summary.md).
+A timeout remains `UNKNOWN`. Qualitative decidability does not establish the old C080 numerical
 bounds, a complexity class, or novelty. The [post-C081 programme](research/POST_C081.md)
 tracks these separate questions. Author names and affiliations are placeholders;
 licensing is pending. The paper is a research draft, not a peer-reviewed publication.
 
 ## Try the solver
 
-With the pinned Lean toolchain on PATH:
+With the pinned Lean toolchain on PATH, build the solver once before timing queries:
 
 ```sh
+(cd lean && lake build +Subtail.EntailmentFast)
 python3 scripts/subtail.py examples/entailment/premise.json --timeout 20
 python3 scripts/subtail.py examples/entailment/reverse.json --timeout 20
 ```
@@ -51,8 +53,10 @@ python3 scripts/subtail.py examples/entailment/reverse.json --timeout 20
 Input is JSON with `variables`, a list of `constraints`, and one `query`.
 An inequality is `[left,right]`. An expression is a variable name, `"bottom"`,
 or `{"prod":[left,right]}`. The command returns ENTAILED, NOT_ENTAILED, or
-UNKNOWN on a resource limit. It uses the complete Lean decision with a proved
-evaluation-order optimization; a failed early test still reaches the backend.
+UNKNOWN on a resource limit. It uses proved positive closure and cached exact
+separation checks, then the complete Lean decision when those checks are
+inconclusive. The CLI timeout includes any needed build and explanation work;
+the benchmark measures queries after the initial build.
 
 Negative answers may include a finite graph for a regular infinite countermodel
 and a separating path (`[]` is the root). The small explanation search is
@@ -64,7 +68,8 @@ python3 scripts/subtail.py examples/entailment/zero-spine.json \
 ```
 
 The Lean decision is checked; the Python parser, launcher and graph checker
-are not Lean-verified. [Interface, proof, resources and evidence](notes/2026-09-20-c081-solver.md).
+are not Lean-verified. [Current solver proof and measurements](notes/2026-09-20-fast-summary.md);
+[interface and certificate format](notes/2026-09-20-c081-solver.md).
 
 ## Bounds and research checkpoint
 

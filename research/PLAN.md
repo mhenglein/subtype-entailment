@@ -1,6 +1,6 @@
 # Research plan
 
-Updated: 2026-09-20 (publication, solver and extension-proof plan)
+Updated: 2026-09-20 (cached solver acceptance target met)
 
 **Completed qualitative goal:** decide [Problem 1.7](problem.md) for bottom
 and binary product over arbitrary, possibly infinite trees. [C081](claims.md#c081)
@@ -19,13 +19,15 @@ an existential smaller compiler remain open. No issue closure changes that.
 The current [publication, solver and extension-proof plan](PUBLICATION_PLAN.md)
 sets concrete next acceptance criteria. Rewrite the manuscript as a standalone
 mathematical paper with integrated Henglein–Rehof attribution and no internal
-project notes. Address the nine full-expression timeouts with measured, proved
-optimizations. Finish checked regular countermodel extraction, test a specific
-finite-tree reduction, and pursue arity and explicit-top theorems under separate
+project notes. The [proved cached solver](../notes/2026-09-20-fast-summary.md)
+now resolves all nine full-expression timeouts: E055 completes 26/26 frontend
+cases and 33/38 overall. Three deeper generated cases still time out; profile
+them before selecting the next optimization. Finish checked regular
+countermodel extraction, test a specific finite-tree reduction, and pursue arity and explicit-top theorems under separate
 proof obligations. Tight complexity and exact literature transfers remain open.
 
-These are proposals, not active worker assignments. Ownership and reservations
-remain in [the registry](approaches.json), [#54](https://github.com/mhenglein/subtail/issues/54)
+The remaining items are proposals, not active worker assignments. Ownership and reservations
+remain in [the registry](approaches.json), [#55](https://github.com/mhenglein/subtail/issues/55)
 and [#37](https://github.com/mhenglein/subtail/issues/37). The owner deferred
 licensing and requested author/affiliation placeholders. No license grant or
 publication-ready authorship is asserted.
