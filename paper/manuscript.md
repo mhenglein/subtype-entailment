@@ -497,8 +497,9 @@ consuming the next letter. This is the prefix-matching update of Knuth, Morris a
 
 $$(r_j,M_j,\mathrm{next}_j,\mathrm{root}_j,\mathrm{end}_j).$$
 
-The next component is $b_j$ for $j<m$ and END for $j=m$; root and end are
-Boolean tests. Colours lie in the finite alphabet
+The next component is $b_j$ for $j<m$ and END for $j=m$. Define
+$\mathrm{root}_j=[j=0]$ and $\mathrm{end}_j=[j=m]$, with Boolean values.
+Every fresh vertex in an extension has root false. Colours lie in the finite alphabet
 $Q\times2^Q\times\{0,1,\mathrm{END}\}\times\{0,1\}^2$.
 A numerical position is **not** part of a colour. No inverse edge is supplied.
 
@@ -594,6 +595,10 @@ transition relation
 
 $$(s,c,\ell,d,t),\qquad \ell\in\{\mathsf F,\mathsf S,\mathsf K_0,\mathsf K_1\}.$$
 
+Here $s,t\in S$ and $c,d$ are colours. The tuple records an allowed observer
+move from control $s$ and source colour $c$ to control $t$ and target colour
+$d$ along an edge with label $\ell$.
+
 A graph path is accepted when its vertex/control pairs satisfy allow, consecutive
 pairs follow an edge and an observer transition, and its endpoint controls are
 initial/final. Empty paths are allowed when one control meets both endpoint
@@ -675,10 +680,15 @@ $$
 \begin{aligned}
 r&=v+2ab,\\
 z&=r+g+2b+a+\sigma+1;\\
-\#\text{groups}&\le g,\quad \#\text{core variables}\le r,\\
+\#\text{groups}&\le g,\quad \#\text{auxiliary core slots}\le r,\\
 \#\text{pieces in each atom}&\le2b,\quad
 \#\text{seam entries}\le bg.
 \end{aligned}\tag{7.4}$$
+
+Here $r$ bounds only auxiliary old-core slots. The compiled clause's total
+variable carrier has size $2+\#\mathrm{groups}+r$: two fixed variables $e,f$,
+one origin variable per group, and the auxiliary core slots. These variables
+are allowed to denote the same base vertex when no disequality forbids it.
 
 Each integer field in a piece or seam is less than $z$. There must be at least
 one fresh group, since a first return is nonempty. Enumerate every datum in
@@ -792,9 +802,17 @@ to the last. Use two base variables $e,f$ and the one-edge constraints
 $$e\mathrel{\mathsf F}f,\qquad
 f\mathrel{\mathsf K_{a_1}}z_0.$$
 
-Require $e$ to have the guessed old-endpoint colour. The diagram verifies the
-first reverse transition from that endpoint state to $q_0$ and its Bad/diagonal
-conditions; the second edge also checks $q_0$ against the origin's mask.
+Require $e$ to have the guessed old-endpoint colour. Write $q_{\mathrm{old}}$
+for that colour's state and $q_{\mathrm{fresh}}$ for the state guessed at the
+first fresh group. The diagram checks
+
+$$\delta(q_{\mathrm{fresh}},a_1)=q_{\mathrm{old}},\qquad
+q_{\mathrm{fresh}}\notin\mathrm{Bad},\qquad
+(q_{\mathrm{fresh}},q_{\mathrm{fresh}})\notin G.$$
+
+The second edge additionally checks $q_{\mathrm{fresh}}$ against the mask at
+$z_0$, namely $M_{h_1}$. Thus these states are $q_0$ and $q_1$, respectively,
+in the generator notation of Section 6.2. Fresh groups are numbered from zero.
 Its target is End exactly when $h=1$. Thus one fresh group handles the
 single-emission case directly.
 
