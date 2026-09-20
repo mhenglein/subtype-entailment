@@ -199,7 +199,10 @@ theorem rawNext_correct (M : System n) (seeds : List (Config n))
             subst b
             obtain ⟨u, t, hb, ht, hrest⟩ := hpop
             refine ⟨.inl t, control_mem seeds t, ?_, ys, z, r, hw, hrest, ha⟩
-            simpa [rawNext, List.any_eq_true] using ⟨u, hb, ht⟩
+            apply List.any_eq_true.mpr
+            refine ⟨u, by simp, ?_⟩
+            exact Bool.and_eq_true.mpr
+              ⟨(StackSummaryFast.balancedCheck_correct _ _ _).mpr hb, ht⟩
       · rintro ⟨p, _, ht, hl⟩
         cases p with
         | inl s =>
@@ -260,6 +263,7 @@ theorem canonicalGraph_exact (C : List (Constraint n)) (a : Fin n) (w : Word)
   have hr : ∀ u, RegularLanguageGraph.accepts D root u = true <->
       Derived C (pathSeeds C a w) q u := by
     intro u
+    dsimp only [D, root, canonicalRoot]
     simpa only [pathList_pred] using nfa_recognizes C (pathList C a w) q u
   have hc : PrefixClosed (fun u => RegularLanguageGraph.accepts D root u = true) := by
     intro x y hxy
@@ -328,8 +332,12 @@ theorem modelForWord_correct (G : Input n) (s t : Expr n) (w : Word)
   change ExprModels G (R.restrict eta) ∧
     (eval (R.restrict eta) s).nodes w ∧ ¬ (eval (R.restrict eta) t).nodes w
   refine ⟨restrict_models G s t eta hm.1, ?_, ?_⟩
-  · simpa only [representative_correct R eta hd s hs] using hm.2.1
-  · simpa only [representative_correct R eta hd t ht] using hm.2.2
+  · have hleft : (eta (R.ref s)).nodes w := hm.2.1
+    rw [representative_correct R eta hd s hs] at hleft
+    exact hleft
+  · have hright : ¬ (eta (R.ref t)).nodes w := hm.2.2
+    rw [representative_correct R eta hd t ht] at hright
+    exact hright
 
 theorem exists_input_word (G : Input n) (s t : Expr n) (h : ¬ ExprEntails G s t) :
     ∃ w, inputTest G s t w = true := by
@@ -371,11 +379,12 @@ theorem accessible_before_hit (p : Nat -> Bool) (i d : Nat) (h : p (i + d) = tru
 /-- The accessibility proof is erased; the executable code only tests successive p i. -/
 def seekAcc (p : Nat -> Bool) (i : Nat) (acc : Acc (Jump p) i) :
     {j : Nat // p j = true} :=
-  match acc with
-  | .intro _ below =>
-      if hi : p i = true then ⟨i, hi⟩
-      else seekAcc p (i + 1) (below (i + 1) ⟨rfl, by cases hp : p i <;> simp_all⟩)
-termination_by structural acc
+  if hi : p i = true then ⟨i, hi⟩
+  else seekAcc p (i + 1) (acc.inv ⟨rfl, by cases hp : p i <;> simp_all⟩)
+termination_by Subtype.mk i acc
+decreasing_by
+  change Jump p (i + 1) i
+  exact ⟨rfl, by cases hp : p i <;> simp_all⟩
 
 def seek (p : Nat -> Bool) (h : ∃ d, p d = true) : {j : Nat // p j = true} :=
   seekAcc p 0 (by
