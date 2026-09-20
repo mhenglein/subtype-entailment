@@ -15,7 +15,7 @@
       </group>
     </layout>
   </citation>
-  <bibliography hanging-indent="true" entry-spacing="1">
+  <bibliography hanging-indent="true" entry-spacing="0">
     <layout suffix=".">
       <text variable="citation-number" prefix="[" suffix="] "/>
       <names variable="author" suffix=". ">

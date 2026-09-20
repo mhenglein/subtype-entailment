@@ -28,6 +28,8 @@ def main():
     body = body.replace("Authors and affiliations: **[placeholders]**.\n", "", 1)
     # Promote section levels after extracting the title; numbers are authored.
     body = re.sub(r"^##", "#", body, flags=re.M)
+    # Keep the proof-end symbol with the preceding sentence.
+    body = body.replace(r" $\square$", r"\nobreak\hspace{.5em}$\square$")
     # Paper-relative source links become immutable repository links in the PDF.
     def absolute_link(match):
         label, target = match.groups()
