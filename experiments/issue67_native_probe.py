@@ -10,7 +10,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import math
 import os
 from pathlib import Path
 import platform
@@ -30,6 +29,26 @@ def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
+def process_group_memory(pgid):
+    """Linux current RSS/VmSize sum for only the isolated test process group."""
+    rss = virtual = 0
+    for entry in os.scandir('/proc'):
+        if not entry.name.isdigit():
+            continue
+        try:
+            status = Path(entry.path, 'stat').read_text().rsplit(') ', 1)[1].split()
+            if int(status[2]) != pgid:
+                continue
+            for line in Path(entry.path, 'status').read_text().splitlines():
+                if line.startswith('VmRSS:'):
+                    rss += int(line.split()[1])
+                elif line.startswith('VmSize:'):
+                    virtual += int(line.split()[1])
+        except (FileNotFoundError, ProcessLookupError, PermissionError):
+            continue
+    return rss, virtual
+
+
 def execute(command, cwd, wall, cpu, memory_mib):
     """One process group, always reaped, including failed/limited executions.
 
@@ -39,12 +58,13 @@ def execute(command, cwd, wall, cpu, memory_mib):
     env = dict(os.environ, LEAN_NUM_THREADS='1', LEAN_STACK_SIZE_KB='32768',
                PYTHONHASHSEED='2026092067')
     def limits():
-        if sys.platform.startswith('linux'):
-            resource.setrlimit(resource.RLIMIT_AS, (memory_mib * 1024**2,) * 2)
         resource.setrlimit(resource.RLIMIT_CPU, (cpu, cpu))
     began = time.monotonic()
     out = {'command': command, 'cwd': str(cwd),
-           'limits': {'wall_seconds': wall, 'cpu_seconds': cpu, 'memory_mib': memory_mib}}
+           'limits': {'wall_seconds': wall, 'cpu_seconds': cpu, 'memory_mib': memory_mib,
+                      'memory_kind': 'sampled_linux_process_group_rss', 'poll_seconds': .05}}
+    if not sys.platform.startswith('linux'):
+        return dict(out, status='NOT_RUN', reason='resident_memory_monitor_requires_linux')
     with tempfile.TemporaryFile() as capture:
         try:
             proc = subprocess.Popen(command, cwd=cwd, env=env, stdout=capture,
@@ -53,20 +73,26 @@ def execute(command, cwd, wall, cpu, memory_mib):
         except OSError as exc:
             return dict(out, status='NOT_RUN', reason='tool_unavailable', detail=str(exc))
         timed_out = False
+        memory_limited = False
+        peak_group_rss = peak_group_virtual = 0
         try:
             while True:
                 pid, status, usage = os.wait4(proc.pid, os.WNOHANG)
                 if pid:
                     break
-                if time.monotonic() - began >= wall:
-                    timed_out = True
+                rss, virtual = process_group_memory(proc.pid)
+                peak_group_rss = max(peak_group_rss, rss)
+                peak_group_virtual = max(peak_group_virtual, virtual)
+                timed_out = time.monotonic() - began >= wall
+                memory_limited = rss > memory_mib * 1024
+                if timed_out or memory_limited:
                     try:
                         os.killpg(proc.pid, signal.SIGKILL)
                     except ProcessLookupError:
                         pass
                     _, status, usage = os.wait4(proc.pid, 0)
                     break
-                time.sleep(0.01)
+                time.sleep(0.05)
         except BaseException:
             try:
                 os.killpg(proc.pid, signal.SIGKILL)
@@ -78,6 +104,11 @@ def execute(command, cwd, wall, cpu, memory_mib):
                 pass
             raise
         proc.returncode = os.waitstatus_to_exitcode(status)
+        # A crashed launcher must not leave a descendant running.
+        try:
+            os.killpg(proc.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
         capture.seek(0)
         raw = capture.read()
     text = raw.decode('utf-8', errors='replace')
@@ -86,14 +117,17 @@ def execute(command, cwd, wall, cpu, memory_mib):
         if line.startswith('ISSUE67:') and '=' in line:
             key, value = line[len('ISSUE67:'):].split('=', 1)
             events.append([key, value])
-    limited = timed_out or proc.returncode in (-signal.SIGXCPU, -signal.SIGKILL)
+    limited = timed_out or memory_limited or proc.returncode in (-signal.SIGXCPU, -signal.SIGKILL)
     limited = limited or any(s in text.lower() for s in ('stack overflow', 'out of memory', 'memory allocation failed'))
     verdict = 'UNKNOWN' if limited else ('PASS' if proc.returncode == 0 else 'FAIL')
-    out.update(status=verdict, reason='resource_limit' if limited else 'completed' if proc.returncode == 0 else 'process_error',
+    trigger = 'wall' if timed_out else 'sampled_group_rss' if memory_limited else 'signal_or_runtime' if limited else None
+    out.update(limit_trigger=trigger, status=verdict, reason='resource_limit' if limited else 'completed' if proc.returncode == 0 else 'process_error',
                returncode=proc.returncode, events=events,
                stdout=text[-16000:], stdout_sha256=hashlib.sha256(raw).hexdigest(),
                stdout_truncated=len(text) > 16000,
                resources={'wall_seconds': time.monotonic() - began,
+                          'observed_group_peak_rss_kib': peak_group_rss,
+                          'observed_group_peak_virtual_kib': peak_group_virtual,
                           'user_cpu_seconds': usage.ru_utime, 'system_cpu_seconds': usage.ru_stime,
                           'peak_rss_kib': usage.ru_maxrss // 1024 if sys.platform == 'darwin' else usage.ru_maxrss})
     return out
@@ -186,6 +220,7 @@ def check_result(row, argv, oracle):
 
 
 def selftest():
+    assert process_group_memory(os.getpgrp())[0] > 0
     cases = [('success', "print('ISSUE67:result=true')", 3, 'PASS'),
              ('nonzero', "print('ISSUE67:result=true'); raise SystemExit(2)", 3, 'FAIL'),
              ('timeout', "import time; print('ISSUE67:begin=x',flush=True); time.sleep(2)", .1, 'UNKNOWN')]
@@ -195,6 +230,9 @@ def selftest():
         assert row['status'] == want, row
         row['selftest'] = label
         rows.append(row)
+    memory = execute([sys.executable, '-c', 'import time; a=bytearray(128*1024*1024); time.sleep(2)'], ROOT, 3, 2, 64)
+    assert memory['status'] == 'UNKNOWN' and memory['limit_trigger'] == 'sampled_group_rss', memory
+    rows.append(dict(memory, selftest='resident_memory_cap'))
     for events in ([], [['result', 'true'], ['result', 'true']]):
         row = {'status': 'PASS', 'events': events}
         check_result(row, ['direct', '1', 'plain'], {'expected_boolean': True})
@@ -202,7 +240,7 @@ def selftest():
     # The known two-promotion positive and one shared-generator conflict.
     assert expected(3, 'plain')['witnesses'] == ['000']
     assert expected(3, 'ordered')['witnesses'] == []
-    return {'status': 'PASS', 'tests': 7, 'rows': rows}
+    return {'status': 'PASS', 'tests': 9, 'rows': rows}
 
 
 def main():
@@ -226,14 +264,23 @@ def main():
               'provenance': provenance(), 'command': [sys.executable, *sys.argv],
               'environment': {'python': sys.version, 'platform': platform.platform(),
                               'cpu_count': os.cpu_count(), 'LEAN_NUM_THREADS': 1,
-                              'rss_basis': 'wait4 child lifetime max RSS; not process-group sum'},
-              'native_execution': 'lake env lean --run (Lean runtime; not a standalone C binary)',
+                              'rss_basis': 'wait4 child lifetime max RSS plus separate 50ms group RSS samples; no address-space cap'},
+              'native_execution': 'lake env lean -j1 --run (Lean runtime; not a standalone C binary)',
               'rows': []}
     jobs = selected(args.mode)
     if args.only:
         jobs = [a for a in jobs if ' '.join(a) == args.only]
         if not jobs:
             parser.error('No matching job')
+    preflight = execute(['lake', 'env', 'lean', '-j1', '--version'], ROOT / 'lean',
+                        args.wall_seconds, args.cpu_seconds, args.memory_mib)
+    report['preflight'] = preflight
+    if preflight['status'] != 'PASS':
+        report['status'] = 'FAIL'
+        report['cases_status'] = 'NOT_RUN: native launcher preflight failed'
+        args.output.write_text(json.dumps(report, indent=2, sort_keys=True) + '\n')
+        print('PREFLIGHT ' + json.dumps(preflight, sort_keys=True), flush=True)
+        raise SystemExit(1)
     for argv in jobs:
         if argv[0] == 'frontend':
             oracle = {'expected_boolean': argv[1] == 'positive',
@@ -244,7 +291,7 @@ def main():
         else:
             oracle = expected(int(argv[1]), argv[2])
         print('RUN ' + ' '.join(argv), flush=True)
-        row = execute(['lake', 'env', 'lean', '--run', str(DRIVER), *argv],
+        row = execute(['lake', 'env', 'lean', '-j1', '--run', str(DRIVER), *argv],
                       ROOT / 'lean', args.wall_seconds, args.cpu_seconds, args.memory_mib)
         row.update(id=' '.join(argv), oracle=oracle,
                    input_sha256=hashlib.sha256(json.dumps(oracle['input'], sort_keys=True).encode()).hexdigest())
