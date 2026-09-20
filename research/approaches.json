@@ -176,12 +176,12 @@
     {
       "id": "A010",
       "title": "Build the exact top-free constraint-to-automata pipeline",
-      "status": "active",
+      "status": "tried",
       "outcome": "supported",
-      "owner": "Astra / raw-backend-20260920",
+      "owner": null,
       "updated": "2026-09-20",
-      "summary": "C081 now has a proved primitive-table solver with exact System and whole-decision equality. E058 resolves all three deeper generated timeouts (19/19) while preserving 33/38 original completions and five raw UNKNOWN cases. C085, the paper and quantitative/signature boundaries are unchanged.",
-      "next_step": "Profile the complete raw decision backend under #61; select one measured exact refinement while preserving all reference definitions and UNKNOWN boundaries.",
+      "summary": "C081 now has a proved primitive-table solver with exact System and whole-decision equality. E058 resolves all three deeper generated timeouts (19/19) while preserving 33/38 original completions and five raw UNKNOWN cases. C085, the paper and quantitative/signature boundaries are unchanged. E059 proves incremental raw cycle search and completes all 38 fixed inputs; a four-variable summary-construction stress probe remains UNKNOWN.",
+      "next_step": "Investigate reuse of proved balanced tables in raw summary construction on the measured four-variable stress case; retain separate terminal-promotion and countermodel producer obligations.",
       "record": "research/approaches/A010.md",
       "evidence": [
         "notes/2026-09-04-bridge-foundation.md",
@@ -264,7 +264,9 @@
         "scripts/check_prepared_summary.py",
         "notes/2026-09-20-solver-profile.md",
         "notes/2026-09-20-solver-profile-readback.md",
-        "results/solver-profile.json"
+        "results/solver-profile.json",
+        "notes/2026-09-20-raw-backend-readback.md",
+        "results/raw-backend.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/61"
     },
@@ -592,12 +594,12 @@
     {
       "id": "A018",
       "title": "Maintain the Lean core and verify critical obligations",
-      "status": "active",
+      "status": "tried",
       "outcome": "supported",
-      "owner": "Astra / raw-backend-20260920",
+      "owner": null,
       "updated": "2026-09-20",
-      "summary": "C081 now has a proved primitive-table solver with exact System and whole-decision equality. E058 resolves all three deeper generated timeouts (19/19) while preserving 33/38 original completions and five raw UNKNOWN cases. C085, the paper and quantitative/signature boundaries are unchanged.",
-      "next_step": "Profile the complete raw decision backend under #61; select one measured exact refinement while preserving all reference definitions and UNKNOWN boundaries.",
+      "summary": "C081 now has a proved primitive-table solver with exact System and whole-decision equality. E058 resolves all three deeper generated timeouts (19/19) while preserving 33/38 original completions and five raw UNKNOWN cases. C085, the paper and quantitative/signature boundaries are unchanged. E059 proves incremental raw cycle search and completes all 38 fixed inputs; a four-variable summary-construction stress probe remains UNKNOWN.",
+      "next_step": "Investigate reuse of proved balanced tables in raw summary construction on the measured four-variable stress case; retain separate terminal-promotion and countermodel producer obligations.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
@@ -742,7 +744,9 @@
         "scripts/check_prepared_summary.py",
         "notes/2026-09-20-solver-profile.md",
         "notes/2026-09-20-solver-profile-readback.md",
-        "results/solver-profile.json"
+        "results/solver-profile.json",
+        "notes/2026-09-20-raw-backend-readback.md",
+        "results/raw-backend.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/61"
     }

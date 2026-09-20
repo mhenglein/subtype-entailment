@@ -1298,3 +1298,46 @@ are retained in the [combined receipt](../results/solver-profile.json).
 [Ordinary proof and limits](../notes/2026-09-20-solver-profile.md);
 [exact readback and matched results](../notes/2026-09-20-solver-profile-readback.md).
 This does not change C080, the finite endpoint, complexity or explicit-top semantics.
+
+<a id="e059"></a>
+
+### E059 — Stream the exact raw cycle search
+
+```sh
+python3 scripts/check_infinite_lazy.py --cli --output tmp/infinite-lazy-audit.json
+python3 experiments/check_infinite_lazy.py --components --full38 --compare-baseline --timeout 20 --output tmp/infinite-lazy-matched.json --scratch tmp/infinite-lazy-matched
+python3 experiments/check_infinite_lazy.py --stress-raw --timeout 20 --output tmp/infinite-lazy-stress.json --scratch tmp/infinite-lazy-stress
+python3 experiments/profile_raw_backend.py --variant baseline --output tmp/raw-baseline.json --scratch tmp/raw-baseline
+python3 experiments/profile_raw_backend.py --variant stream --output tmp/raw-stream.json --scratch tmp/raw-stream
+python3 experiments/profile_raw_backend.py --variant gated --output tmp/raw-gated.json --scratch tmp/raw-gated
+```
+
+Use an isolated pinned Lean 4.33.1 checkout and build before benchmarking.
+The original 38 inputs, 20-second wall/CPU, Linux 16-GiB address-space,
+one-thread, 32768-KiB stack and original `#eval` invocation are retained.
+Raw probes compare the old `TerminalDecisionLazy` with `InfiniteDecisionLazy`
+directly; the other 31 compare existing fast and prepared endpoints. The
+fixed manifest includes all 38, the 19 generated fixtures and 14 named C029
+probes; CI freezes its hash. The independent validation writer owns no proof
+implementation. A parsed value without an expected value or reference
+comparison is not a validated result.
+
+The matched run at `471f973` completes 38/38 candidate inputs versus 33/38;
+all five raw UNKNOWNs are resolved, with the seven raw calls taking
+0.669–0.719 seconds. The unchanged deeper corpus still passes 19/19 in a
+separate E058 run. Fourteen abstract comparisons include missing transitions,
+pre-final loops, terminal-only cases, unsafe initial states and nonabsorbing
+instances. Two cases have no independent expected value and test Boolean
+equality only. The semantic C029 theorem still requires absorption.
+
+Separate larger raw tests complete n=3 and return UNKNOWN for n=4. The forced
+`--run` trace locates that n=4 timeout in summary construction, before cycle
+search. Diagnostic timings include forcing/output overhead and are separate
+from the matched uninstrumented run. The proof is generic exact/bounded-list
+search equality plus a necessary zero-cut safety gate, then raw and prepared
+composition. It changes no cycle bound, monitor language or terminal decision.
+
+[Source-pinned receipt and preserved ablations](../results/raw-backend.json);
+[ordinary argument](../notes/2026-09-20-raw-backend.md);
+[proof, review, tests and limitations](../notes/2026-09-20-raw-backend-readback.md).
+This is a proved runtime refinement, not a new complexity or signature result.

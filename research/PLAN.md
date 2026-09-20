@@ -1,6 +1,6 @@
 # Research plan
 
-Updated: 2026-09-20 (proved primitive-table solver and E058)
+Updated: 2026-09-20 (proved incremental raw backend and E059)
 
 **Completed qualitative goal:** decide [Problem 1.7](problem.md) for bottom
 and binary product over arbitrary, possibly infinite trees. [C081](claims.md#c081)
@@ -25,8 +25,10 @@ The [proved cached solver](../notes/2026-09-20-fast-summary.md)
 now resolves all nine full-expression timeouts: E055 completes 26/26 frontend
 cases and 33/38 overall. The [primitive-table refinement](../notes/2026-09-20-solver-profile-readback.md)
 now resolves the three deeper generated timeouts: E058 completes 19/19, compared
-with 16/19 for the prior fast layer under matched caps. Five unchanged raw
-probes remain UNKNOWN. C084 now checks regular graph
+with 16/19 for the prior fast layer under matched caps. The [incremental raw backend](../notes/2026-09-20-raw-backend-readback.md)
+now resolves all five remaining raw probes: E059 completes 38/38 fixed cases,
+with the same 19/19 deeper regression. A separate four-variable raw input stays
+UNKNOWN during summary construction. C084 now checks regular graph
 certificates and has a complete ordinary extractor. C085 now has an unconditional
 executable Lean decision for finite-expression entailment: the graph classifier
 supplies a forced loop or a proved uniform reverse-pop bound. The CLI calls
@@ -34,12 +36,13 @@ that checked function. [Exact readback and evidence](../notes/2026-09-20-finite-
 The [finite paper revision](../notes/2026-09-20-finite-paper-readback.md) now gives
 the consuming-cycle proof, exact finite normalization, worked examples and
 source correspondence, alongside a refreshed Henglein–Rehof/NP comparison.
-Next profile the raw terminal fallback before another optimization. Arity and explicit-top
+Next investigate reuse of proved balanced tables in the measured four-variable
+summary construction. Keep a separate family for terminal-promotion coverage. Arity and explicit-top
 results require separate proofs. Tight complexity and exact literature transfers
 remain open. JSON handling, extraction and graph finiteness remain Python.
 
 The remaining items are proposals, not active worker assignments. Ownership and reservations
-remain in [the registry](approaches.json), [#60](https://github.com/mhenglein/subtail/issues/60)
+remain in [the registry](approaches.json), [#61](https://github.com/mhenglein/subtail/issues/61)
 and [#37](https://github.com/mhenglein/subtail/issues/37). The owner deferred
 licensing and requested author/affiliation placeholders. No license grant or
 publication-ready authorship is asserted.

@@ -1,6 +1,36 @@
 # Subtail — current research state
 
+## September 20: all fixed raw probes complete with proved incremental search (E059)
+
+`InfiniteDecisionLazy` streams the original bounded cycle search and tests
+initial safety before enumeration. The Lean equality holds for every finite
+instance, without absorption; semantic C029 correctness retains its original
+absorption hypothesis. The summary automaton and terminal branch are unchanged.
+The prepared C081 endpoint now uses this proved equivalent raw fallback.
+[Ordinary proof and validation](notes/2026-09-20-raw-backend-readback.md).
+
+Matched wb-marcus tests at `471f973` complete **38/38** original candidate inputs,
+versus **33/38** for the baseline. All five remaining raw UNKNOWNs now finish;
+the seven raw calls take 0.669–0.719 seconds under the same 20-second cap.
+The other 31 cases already passed. The deeper suite remains **19/19**.
+Fourteen abstract C029 comparisons, pinned build/kernel/runtime audits,
+actual CLI/countermodel/cap checks, default proof core and 77 Python tests pass.
+[Receipt, including earlier failed ablations](results/raw-backend.json).
+
+This does not make every input practical: a separate empty-constraint raw
+probe with four normalized variables remains **UNKNOWN** at 20 seconds.
+Its trace stops in summary construction, before the new cycle scan; three
+variables finish in 1.220 seconds in the uninstrumented run. That construction
+is the next measured performance target. Terminal promotion still needs a
+separate discriminating family. No memory, worst-case complexity, new bound,
+finite-domain, signature or novelty improvement is claimed. Paper/proof pins
+and the finite endpoint are unchanged. All scopes release at the integrated
+checkpoint recorded in #61/#37; licensing and author placeholders remain deferred.
+
+
 ## September 20: deeper solver timeouts resolved by proved primitive tables (E058)
+
+Historical E058 checkpoint; E059 above subsequently improves the raw fallback.
 
 `EntailmentPrepared` caches the five primitive transition relations once and
 reuses them in the existing summary construction and path tests. Its Lean

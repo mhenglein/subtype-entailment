@@ -3,7 +3,7 @@
 Session: raw-backend-20260920. A010/A018, C029/C081, #61/#37.
 Base: `b02352efba0ceabec1c542da66e534bdc5675890`.
 Proof/runtime checkpoint: `262f57ad031aef2307f6398875dea108413067b3`.
-Status: native proof/CLI checks pass; benchmark and final integration pending.
+Status: proof, native regressions and matched benchmark pass; publication is recorded in #61/#37.
 
 ## Exact mathematical result
 
@@ -62,6 +62,64 @@ Local checks pass: 77 focused Python tests; research index validation; paper
 source/map/literal checks. The paper guard did not build or replay Lean and
 is not presented as formal evidence. No new PDF was needed.
 
+## Matched execution evidence
+
+The independently authored harness was pushed as `76fb9eb`, inspected and
+integrated with provenance as `471f973`. It owns no Lean implementation. At
+`471f9730bf3b93ef71446f2e105f0743d4c3c3ef`, the parent ran:
+
+```sh
+python3 experiments/check_infinite_lazy.py --components --full38 --compare-baseline --timeout 20 --output tmp/infinite-lazy-matched.json --scratch tmp/infinite-lazy-matched
+python3 experiments/check_infinite_lazy.py --stress-raw --timeout 20 --output tmp/infinite-lazy-stress.json --scratch tmp/infinite-lazy-stress
+```
+
+Each fixture uses the original fresh-process `lake env lean FILE` and `#eval`
+protocol, after module building. Limits are 20 seconds wall/CPU, Linux 16 GiB
+address space, one thread and a 32768 KiB Lean stack. These are uninstrumented
+end-to-end query times, including process/import overhead. No peak-memory
+improvement is claimed.
+
+| Fixed original corpus | Baseline | Candidate |
+|---|---:|---:|
+| Raw backend | 2 PASS, 5 UNKNOWN | 7 PASS |
+| Original expressions | 26 PASS | 26 PASS |
+| Normalized guarded inputs | 5 PASS | 5 PASS |
+| Total | 33 PASS, 5 UNKNOWN | 38 PASS |
+
+The raw baseline is `TerminalDecisionLazy.rawNormalizedEntailsCheckLazy`; its
+candidate is `InfiniteDecisionLazy.rawNormalizedEntailsCheckLazy`. Those probes
+bypass the frontend. The other rows compare the existing `EntailmentFast` and
+`EntailmentPrepared` endpoints. No additional full-expression completion is
+claimed. All seven new raw results take 0.669–0.719 seconds; the five former
+UNKNOWNs reach their 20-second limits in the matched baseline. Completed
+answers agree, and every candidate matches its original independent fixture
+expectation. The combined report remains UNKNOWN because it retains those
+five baseline timeouts; that status is not relabelled PASS in the raw receipt.
+
+Fourteen abstract C029 probes compare both exact implementations. Twelve have
+an independently stated expected Boolean or an existing named guard; two
+nonabsorbing cases test Boolean equality only. Three probes are nonabsorbing:
+the diagonally unsafe initial state also has a direct expected false answer
+from necessary initial safety. Missing transitions, terminal-only witnesses,
+ordered flags, pre-final loops and a positive stem/cycle are included. All
+28 native evaluations pass. This is bounded evidence, not a new completeness
+argument or a complete small-state census.
+
+A separate fresh E058 component/generated run at `262f57a` retains all 19
+prepared generated completions and six successful component vectors on
+62 systems. Its length/two-checksum comparison keeps the documented collision
+limitation; it is not an individual equality comparison of every vector bit.
+The matched harness manifest is
+`d5ed9de3af8e8b4fb5d1d088e1d7551a2e8bdc9617762c8bc0ed0057bdfbdb02`.
+[All receipts, including failed ablations and remaining UNKNOWNs](../results/raw-backend.json).
+
+The final uninstrumented larger probes complete n=3 in 1.220 seconds and leave
+n=4 UNKNOWN at 20.008 seconds. They are separate from the fixed 38. The
+corresponding diagnostic trace locates the n=4 cost in summary construction.
+Every executed source hash in the accepted proof, matched, stress and prepared
+receipts matches this contribution's final runtime source. Earlier traces
+retain their original revisions and hashes.
+
 ## Review scope and corrections
 
 A separate read-only source reviewer checked `262f57a`: generic enumeration
@@ -71,11 +129,26 @@ coverage. No blocker was found. This review inspected the proposed argument
 and parent-provided diagnostics; it was not blind rediscovery, an independent
 native timing run, or human peer review. The reviewer made no source edits.
 
+The same read-only reviewer separately checked the independent harness and CI
+at `96306cd`: both fixture manifests, exact raw routing, marker protocol,
+nonabsorbing/expected-value handling, caps, triggers, all required acceptance
+checks and artifact retention. No blocker remained. The writer's original
+`76fb9eb` contribution was released before integration. Neither worker ran the
+accepted native benchmark; the parent ran it and verified the combined receipt.
+The exact CI assertion block also passes against projections of actual native
+rows. This validates the guard logic, not a separate performance run.
+
 The first draft `f09a45b` needed explicit function-composition simplification
 and a Boolean-conjunction elaboration correction. Statements and hypotheses
 were unchanged. An initial tracker update supplied an integer issue ID where
 the existing schema requires a URL; validation caught it and the URL was fixed.
-The streaming-only ablation remains preserved: it resolves three of the five
+Parent review of the independent harness caught an E058 result-marker mismatch,
+a diagonally unsafe fixture incorrectly labelled absorbing, a missing decoder
+hash, and candidate-only acceptance without an expected answer. These were
+corrected before the native matched run; no failed native result was discarded.
+The two cases lacking an independent expected Boolean now remain UNKNOWN in
+candidate-only validation and are compared with the reference in the accepted
+component run. The streaming-only ablation remains preserved: it resolves three of the five
 raw timeouts but does not finish the two unsafe-initial positive instances.
 
 ## Limits and next question
