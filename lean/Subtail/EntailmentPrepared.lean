@@ -1,8 +1,10 @@
 import Subtail.EntailmentFast
+import Subtail.InfiniteDecisionLazy
 
 /-! Materialize primitive transitions once, then reuse the existing exact tests.
 The table-backed System equals its input on every control and letter. The
-reference terminal fallback and the order of all candidate tests are unchanged.
+terminal branch and candidate-path order are unchanged. The complete fallback
+uses the proved equivalent streaming cycle search.
 -/
 namespace Subtail.EntailmentPrepared
 
@@ -86,13 +88,15 @@ def afterPositive (C : List (Constraint n)) (P : Prepared n)
     (a b : Fin n) (paths : List Word) : Bool :=
   if satCheck C P then
     if paths.any (separationCheck C P a b) then false
-    else TerminalDecisionLazy.rawNormalizedEntailsCheckLazy C a b
+    else InfiniteDecisionLazy.rawNormalizedEntailsCheckLazy C a b
   else true
 
 theorem afterPositive_eq (C : List (Constraint n)) (a b : Fin n) (paths : List Word) :
     afterPositive C (prepare (systemOf C)) a b paths =
       EntailmentFast.afterPositive C (CanonicalReachabilityFast.prepare (systemOf C)) a b paths := by
   rw [prepare_eq]
+  simp only [afterPositive, EntailmentFast.afterPositive,
+    InfiniteDecisionLazy.rawNormalizedEntailsCheckLazy_eq]
   rfl
 
 def normalizedWithPaths (C : List (Constraint n)) (a b : Fin n) (paths : List Word) : Bool :=

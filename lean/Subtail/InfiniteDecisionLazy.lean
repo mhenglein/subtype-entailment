@@ -21,7 +21,7 @@ theorem anyExact_eq (xs : List α) (n : Nat) (test : List α → Bool) :
     anyExact xs n test = (exactLists xs n).any test := by
   induction n generalizing test with
   | zero => simp [anyExact, exactLists]
-  | succ n ih => simp [anyExact, exactLists, List.any_flatMap, List.any_map, ih]
+  | succ n ih => simp [anyExact, exactLists, List.any_flatMap, List.any_map, Function.comp_def, ih]
 
 /-- Same increasing length order as the existing bounded word list. -/
 def anyBounded (xs : List α) (n : Nat) (test : List α → Bool) : Bool :=
@@ -37,7 +37,8 @@ def endpointCheck (I : Instance k) (q : Fin k) : Bool :=
 theorem endpointCheck_of_cycleCheck (I : Instance k) (q : Fin k) (c : Word)
     (h : cycleCheck I q c = true) : endpointCheck I q = true := by
   simp only [cycleCheck, Bool.and_eq_true] at h
-  exact Bool.and_eq_true.mpr ⟨h.1.1.2, h.1.2⟩
+  simp only [endpointCheck, Bool.and_eq_true]
+  exact ⟨h.1.1.2, h.1.2⟩
 
 /-- Endpoint filtering and streaming preserve the complete original search. -/
 def scan (I : Instance k) : Bool :=
