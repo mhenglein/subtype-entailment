@@ -176,12 +176,12 @@
     {
       "id": "A010",
       "title": "Build the exact top-free constraint-to-automata pipeline",
-      "status": "active",
+      "status": "tried",
       "outcome": "supported",
-      "owner": "finite-trees-20260920 (#58)",
+      "owner": null,
       "updated": "2026-09-20",
-      "summary": "C081 remains exact; C084 checks finite-graph countermodels against original arbitrary-tree expressions. Complete ordinary extraction replaces the fixed graph library; every VERIFIED result has a kernel-checked instance proof.",
-      "next_step": "Prove or refute the Hot-denial finite-tree reduction, with independent tests and selective formalization under #58.",
+      "summary": "C085 proves the ordinary finite-tree cycle reduction; Lean checks closure, conditional semantic endpoints and finite-preserving normalization. The finite CLI is implemented, with the unverified classifier bridge explicit.",
+      "next_step": "Connect an executable Lean growth classifier to the forced-loop or uniform reverse-Pop bound endpoints. Keep Python naming/graph boundaries, E055 timeouts and explicit top separate; no worker assigned.",
       "record": "research/approaches/A010.md",
       "evidence": [
         "notes/2026-09-04-bridge-foundation.md",
@@ -241,7 +241,15 @@
         "notes/2026-09-20-regular-countermodels.md",
         "notes/2026-09-20-regular-countermodels-readback.md",
         "results/regular-countermodels.json",
-        "lean/Subtail/RegularTreeCertificate.lean"
+        "lean/Subtail/RegularTreeCertificate.lean",
+        "notes/2026-09-20-finite-tree-reduction.md",
+        "notes/2026-09-20-finite-tree-readback.md",
+        "lean/Subtail/FiniteTreeReduction.lean",
+        "scripts/finite_trees.py",
+        "scripts/check_finite_tree_reduction.py",
+        "scripts/test_finite_trees.py",
+        "experiments/check_finite_trees.py",
+        "results/finite-trees.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/3"
     },
@@ -569,12 +577,12 @@
     {
       "id": "A018",
       "title": "Maintain the Lean core and verify critical obligations",
-      "status": "active",
+      "status": "tried",
       "outcome": "supported",
-      "owner": "finite-trees-20260920 (#58)",
+      "owner": null,
       "updated": "2026-09-20",
-      "summary": "C081 remains exact; C084 checks finite-graph countermodels against original arbitrary-tree expressions. Complete ordinary extraction replaces the fixed graph library; every VERIFIED result has a kernel-checked instance proof.",
-      "next_step": "Prove or refute the Hot-denial finite-tree reduction, with independent tests and selective formalization under #58.",
+      "summary": "C085 proves the ordinary finite-tree cycle reduction; Lean checks closure, conditional semantic endpoints and finite-preserving normalization. The finite CLI is implemented, with the unverified classifier bridge explicit.",
+      "next_step": "Connect an executable Lean growth classifier to the forced-loop or uniform reverse-Pop bound endpoints. Keep Python naming/graph boundaries, E055 timeouts and explicit top separate; no worker assigned.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
@@ -696,7 +704,15 @@
         "notes/2026-09-20-regular-countermodels.md",
         "notes/2026-09-20-regular-countermodels-readback.md",
         "results/regular-countermodels.json",
-        "lean/Subtail/RegularTreeCertificate.lean"
+        "lean/Subtail/RegularTreeCertificate.lean",
+        "notes/2026-09-20-finite-tree-reduction.md",
+        "notes/2026-09-20-finite-tree-readback.md",
+        "lean/Subtail/FiniteTreeReduction.lean",
+        "scripts/finite_trees.py",
+        "scripts/check_finite_tree_reduction.py",
+        "scripts/test_finite_trees.py",
+        "experiments/check_finite_trees.py",
+        "results/finite-trees.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/31"
     }

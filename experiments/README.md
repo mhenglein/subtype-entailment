@@ -1171,3 +1171,51 @@ UNKNOWN when a killed process emits no message. Its 17 boundary tests and
 replay of 97 recorded native outcomes PASS; no measured answer or status
 changes. This is not a new native run, and the original `9a866c1` receipt is
 retained with its exact hashes.
+
+
+<a id="e056"></a>
+
+### E056 — Finite-tree growth classification and complete small finite models
+
+```sh
+python3 experiments/check_finite_trees.py --output tmp/finite-tree-experiment.json
+python3 -m unittest discover -s scripts -p 'test_finite_trees.py'
+python3 scripts/check_finite_tree_reduction.py --output tmp/finite-trees.json
+```
+
+The first command needs only Python. The final command uses pinned Lean 4.33.1
+and builds/replays the optional semantic module, audits every declaration,
+runs Python regressions, and exercises seven actual CLI cases. Use an isolated
+Lake checkout. The CLI cases allow 40 seconds each; one deliberately tiny cap
+must return UNKNOWN. Native successes do not erase the classifier's ordinary
+Python trust boundary.
+
+**Independent experiment.** Seed 5803, 300 systems with one to four controls:
+Hot endpoints from consuming-cycle analysis agree with a separate exact
+P-automaton predecessor-saturation oracle. The oracle checks accepted prefixes
+of length n and possible continuations; it does not use another SCC algorithm.
+148 systems have consuming cycles. Separately exhaust every set of at most
+three normalized clauses on one/two controls: 1,809 inputs and 44,880 finite
+valuations. The literal finite-tree evaluator finds 636 satisfiable inputs;
+1,147 inputs have growth obstructions, and 26 are unsatisfiable without growth.
+All results agree with the C085 finite-SAT reduction.
+
+The finite-SAT enumeration uses height at most n, justified by C085's bound
+for the least forced-root closure in the no-growth case. This is a complete
+cutoff for the stated satisfiability census, **not** a new entailment witness
+bound. These are finite regressions alongside the ordinary all-input proof;
+they do not prove classifier correctness in Lean.
+
+**Validation.** At `8f6fad6` on wb-marcus: module build/kernel, 31 declaration
+audits (13 non-theorems free of Classical.choice), 13 finite-mode tests, 24
+existing CLI tests and nine extraction tests PASS. Seven actual CLI checks
+cover finite/arbitrary disagreement, cold unsatisfiability, finite negative
+variable/ground inputs, infinite-certificate rejection and UNKNOWN on a cap.
+Three actual C084 instance proofs verify arbitrary non-entailment. The initial
+`0b772bb` contradiction fixture also triggered growth; it is retained in the
+receipt with that coverage limitation, and the corrected cold case was rerun.
+
+[Ordinary construction](../notes/2026-09-20-finite-tree-reduction.md),
+[exact source/mathematical readback](../notes/2026-09-20-finite-tree-readback.md),
+[combined receipt](../results/finite-trees.json). Existing E055 performance
+numbers and earlier extension-boundary receipts are preserved unchanged.

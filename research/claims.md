@@ -1294,6 +1294,68 @@ whole Lean process succeeds. JSON parsing and source emission remain outside
 the kernel boundary; resource limits can yield UNKNOWN. No new finite-tree,
 explicit-top, complexity or novelty conclusion is claimed.
 
+<a id="c085"></a>
+
+### C085 — Finite-tree entailment by a consuming-cycle test
+
+**Statement.** For every normalized bottom/product constraint list C and query
+variables a,b, let Growth(C) mean that the reverse-pop epsilon NFA has a cycle
+containing a letter edge. Its states are the controls, epsilon edges are
+balanced reverse-system pairs, and labelled edges are reverse-system pops.
+Then
+
+```text
+FiniteEntails(C,a,b) iff Growth(C) or Entails(C,a,b).
+FiniteSatisfiable(C) iff not Growth(C) and Satisfiable(C).
+```
+
+These are unconditional ordinary theorems, with exact finite computation of
+Growth. Every consuming cycle contains an edge reversing a push into a forced
+product root, so its repetition excludes finite models. Without such a cycle,
+reverse-pop words have length less than the number n of controls. A canonical
+closure seeded at words of maximum length d then has height at most n+d.
+Finite-valued definitional normalization transfers the result to original
+finite expressions. C081 supplies the arbitrary-tree decision in the second
+branch. The theorem does not identify every arbitrary model with a finite one.
+
+**Status.** `WRITTEN PROOF + REPRO`, independently reviewed for the complete
+ordinary reduction. `LEAN` for these exact semantic components in the new
+optional `FiniteTreeReduction` module:
+
+- `closureBounded_iff_noHot`: for any finite seed list in a finite pushdown
+  system, its full reachability closure has bounded word lengths iff no
+  reached control has an unbounded reverse-pop language.
+- `canonicalFinite_iff_noHot`: the same equivalence for canonical tree values.
+- `forced_reverse_pop_loop_noFiniteModel`: a **supplied** nonempty reverse-Pop
+  loop at a **supplied forced root** excludes finite satisfiability.
+- `finiteEntails_iff_entails_of_uniform_reverse_pop`: a **supplied global
+  reverse-Pop length bound** implies finite and arbitrary entailment agree.
+- `normalize_finite_entails_iff`: finite-expression entailment is equivalent
+  to finite entailment of the existing normalized input.
+
+`FiniteTree` means a common product-address length bound. On binary trees this
+is equivalent to a finite product-node set. `Hot` in Lean negates a bound
+uniform over initial controls; because there are finitely many controls, this
+agrees with infiniteness of at least one language L(q,m).
+
+**Evidence.** [Ordinary proof and finite construction](../notes/2026-09-20-finite-tree-reduction.md),
+[semantic/source readback](../notes/2026-09-20-finite-tree-readback.md),
+[Lean module](../lean/Subtail/FiniteTreeReduction.lean),
+[build/kernel/runtime/CLI driver](../scripts/check_finite_tree_reduction.py),
+[receipt](../results/finite-trees.json), [E056](../experiments/README.md#e056).
+The CLI's `--finite-trees` branch exposes vacuity and checks extracted graphs
+for cycles reachable from original variable roots. Ordinary and Lean evidence
+remain separate in the receipt.
+
+**Limits.** No all-input Lean Boolean theorem for finite entailment is claimed.
+The effective graph classifier's connection to the supplied-loop or uniform-
+bound hypotheses is still an ordinary proof. Python DAG normalization is
+separate from the checked Lean naming construction. The optional C084 instance
+certificate still proves arbitrary non-entailment; the graph-finiteness check
+is ordinary Python. Caps remain UNKNOWN. The seed-dependent height bound is
+not a new global shortest-witness bound. Explicit top, new constructor labels,
+variance, tight complexity and novelty remain separate obligations.
+
 ## Explicitly unestablished
 
 The following are deliberately not accepted claims in this ledger:

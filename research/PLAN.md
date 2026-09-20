@@ -1,6 +1,6 @@
 # Research plan
 
-Updated: 2026-09-20 (cached solver and standalone manuscript revisions)
+Updated: 2026-09-20 (finite-tree reduction and remaining classifier obligation)
 
 **Completed qualitative goal:** decide [Problem 1.7](problem.md) for bottom
 and binary product over arbitrary, possibly infinite trees. [C081](claims.md#c081)
@@ -24,12 +24,15 @@ review and exact novelty comparison remain distinct from formatting checks.
 The [proved cached solver](../notes/2026-09-20-fast-summary.md)
 now resolves all nine full-expression timeouts: E055 completes 26/26 frontend
 cases and 33/38 overall. Three deeper generated cases still time out; profile
-them before selecting the next optimization. Finish checked regular
-countermodel extraction, test a specific finite-tree reduction, and pursue arity and explicit-top theorems under separate
+them before selecting the next optimization. C084 now checks regular graph
+certificates and has a complete ordinary extractor. C085 proves the finite-tree
+cycle reduction in ordinary mathematics, with checked closure/semantic lemmas
+and finite-preserving normalization. Next connect its executable graph classifier
+to those hypotheses, or pursue arity and explicit-top results under separate
 proof obligations. Tight complexity and exact literature transfers remain open.
 
 The remaining items are proposals, not active worker assignments. Ownership and reservations
-remain in [the registry](approaches.json), [#56](https://github.com/mhenglein/subtail/issues/56)
+remain in [the registry](approaches.json), [#58](https://github.com/mhenglein/subtail/issues/58)
 and [#37](https://github.com/mhenglein/subtail/issues/37). The owner deferred
 licensing and requested author/affiliation placeholders. No license grant or
 publication-ready authorship is asserted.

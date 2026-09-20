@@ -34,8 +34,8 @@ product node and its right side has bottom. The paper also gives a regular
 infinite countermodel and examples of the terminal first-return construction.
 
 **Limits.** This theorem has no explicit top constructor, multiple labelled
-constructors or contravariant function type. Finite-tree entailment is a
-different problem. The complete fallback can be very slow. The proved cached solver completes
+constructors or contravariant function type. Finite-tree entailment has a
+separate [ordinary reduction and partial Lean formalization](research/claims.md#c085). The complete fallback can be very slow. The proved cached solver completes
 all 26 full-expression cases in the matched wb-marcus corpus (previously 17).
 Across all entry points it completes 33/38, up from 24/38; five unchanged
 raw-backend probes remain `UNKNOWN`. A larger generated suite completes 16/19,
@@ -92,6 +92,31 @@ emitted original expressions. JSON parsing, source emission and extraction
 remain ordinary Python; this is not a Lean-verified extractor. A verification
 timeout is reported separately. [Certificate proof and validation](notes/2026-09-20-regular-countermodels.md);
 [solver proof and performance limits](notes/2026-09-20-fast-summary.md).
+
+## Finite-tree mode
+
+[C085](research/claims.md#c085) gives a separate decision procedure for finite
+bottom/product trees. First test for a consuming reverse-pop cycle. Such a
+cycle forces an infinite branch, so there are no finite models and every
+query is entailed. Otherwise the arbitrary-tree answer is also the finite-tree
+answer; negative cases have finite canonical countermodels.
+
+```sh
+python3 scripts/subtail.py examples/finite-trees/forced-infinite.json --finite-trees
+python3 scripts/subtail.py examples/finite-trees/reverse.json --finite-trees --verify-certificate
+```
+
+The first input has an infinite countermodel under arbitrary semantics, but
+returns `ENTAILED` with reason `no_finite_model` under finite semantics. The
+second returns a finite countermodel of height 1 and separator `[]`.
+
+The complete reduction has an independently reviewed ordinary proof. Lean
+checks its closure lemmas, conditional semantic transfer and finite-preserving
+normalization. The graph classifier still needs a formal connection to those
+hypotheses. Python checks graph finiteness; C084 certificate verification
+checks arbitrary non-entailment. This is **not yet a fully Lean-verified
+finite-tree decision procedure**. [Proof and exact boundaries](notes/2026-09-20-finite-tree-reduction.md);
+[reproduction evidence](results/finite-trees.json). Resource limits stay UNKNOWN.
 
 ## Bounds and research checkpoint
 

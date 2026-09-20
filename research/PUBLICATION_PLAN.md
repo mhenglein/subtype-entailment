@@ -12,6 +12,26 @@ publication-ready paper, broadly useful solver and new signature theorems
 require further work. Implementation ownership remains in the registry and
 future scoped issue claims; this document assigns no workers or paths.
 
+## September 20 update: finite-tree reduction proved
+
+[C085](claims.md#c085) establishes the proposed finite-tree reduction by an
+ordinary proof and independent review. The hot-denial construction simplifies:
+any consuming reverse-pop cycle passes through a forced product root, excluding
+all finite models. Without such a cycle, the C081 answer is unchanged and
+canonical finite-seed countermodels are finite. The CLI exposes `--finite-trees`.
+
+The new Lean module checks the closure criterion, forced-loop obstruction,
+conditional semantic transfer and finite-preserving expression normalization.
+The **remaining formal obligation** is to connect the finite graph classifier
+to a supplied forced loop or a global reverse-pop length bound. A complete
+finite-tree Boolean correctness theorem is not yet claimed. [Proof](../notes/2026-09-20-finite-tree-reduction.md)
+and [validation/readback](../notes/2026-09-20-finite-tree-readback.md).
+
+The manuscript remains pinned to its arbitrary-tree result. Add the finite-tree
+consequence only with its exact ordinary/formal distinction after the next
+paper review. E055 timeouts, explicit top and novelty remain separate tasks.
+No next worker is assigned by this update.
+
 ## September 20 update: complete extraction and checked certificates
 
 Issue #57 supplies a complete ordinary canonical NFA/finite graph extractor
@@ -199,17 +219,16 @@ Expose an executable extractor, then connect it to the solver. Regular-model
 existence is already in the literature; identify the verified construction
 and implementation contribution without claiming the existence theorem as new.
 
-### Finite trees: test a specific reduction, not unchanged answers
+### Finite trees: ordinary reduction complete; classifier formalization remains
 
 The zero-spine example refutes using the same unmodified input and answer for
-finite trees. It does not refute a computable reduction. Investigate this
-candidate, using the existing stack factorization:
+finite trees. It does not refute a computable reduction. The original proposal
+below is now proved by C085 above; preserve it as the route history:
 
 For a normalized system with propagation system `W`, let
 `L(q,m) = {c : Pop_(W^op)(q,c,m)}` and
 `H = {m : L(q,m) is infinite for some q}`. The languages `L(q,m)` are regular. Add
-denials `x_m <= bottom` for every `m` in `H`, obtaining `C_fin`. Test and prove,
-or refute, the proposed equivalence
+denials `x_m <= bottom` for every `m` in `H`, obtaining `C_fin`. The proposal was
 
 ```text
 C entails a <= b over finite trees
@@ -226,8 +245,9 @@ model-transfer directions and finite-value preservation under normalization.
 Define finite trees explicitly and prove that finite product-node sets represent
 exactly those trees, so that the reduction targets the intended semantics.
 NFA infiniteness must detect a productive cycle consuming a letter, not just
-an epsilon cycle. This is a **candidate argument awaiting focused verification**,
-not an established extension or a new claim-ledger entry.
+an epsilon cycle. C085 proves this ordinary argument and its simpler consuming-
+cycle form. The old candidate status is superseded by the precise mixed
+ordinary/Lean evidence above; the executable classifier is not yet Lean-verified.
 
 ### One constructor of another fixed arity
 

@@ -1,5 +1,41 @@
 # Subtail — current research state
 
+## September 20: finite-tree entailment reduction (C085)
+
+[C085](research/claims.md#c085) proves the finite-tree extension in ordinary
+mathematics, with independent review. Compute the reverse-pop epsilon NFA.
+Any cycle consuming a letter passes through a forced product root and excludes
+all finite models. Otherwise reverse-pop words have bounded length, and the
+existing canonical countermodel for a failed query is finite. Thus finite
+entailment is equivalent to growth-cycle existence **or** arbitrary entailment.
+Exact finite-expression normalization preserves finite valuations both ways.
+[Full argument](notes/2026-09-20-finite-tree-reduction.md).
+
+The new optional Lean module checks the general finite-closure criterion,
+canonical finiteness, a supplied forced-loop obstruction, entailment transfer
+under a supplied uniform reverse-pop bound, and finite-preserving expression
+normalization. It does **not** compute those hypotheses: the graph-classifier
+bridge remains an ordinary proof. There is no fully Lean-verified finite-tree
+Boolean decision theorem yet. C081/C084 and their arbitrary-tree semantics
+are unchanged.
+
+The CLI adds `--finite-trees`, explicit `no_finite_model` vacuity, and a check
+that returned graph roots unfold to finite trees. Capped classification stays
+UNKNOWN. C084 instance verification continues to prove arbitrary non-entailment;
+the extra finiteness check is Python. Fresh wb-marcus validation at `8f6fad6`
+passes build/kernel, 31 declaration closures, 46 Python tests and seven actual
+CLI cases. E056 passes 300 independent infiniteness comparisons and a complete
+finite-SAT census of 1,809 inputs/44,880 valuations. The default core passes
+separately at `0b772bb`, with unchanged Lean source in the fixture correction.
+[Exact evidence and limitations](notes/2026-09-20-finite-tree-readback.md);
+[receipt](results/finite-trees.json).
+
+Next connect the executable graph classifier to the supplied-loop or uniform-
+bound Lean endpoints. The seed-dependent height bound is not a new global
+shortest-witness bound. E055 timeouts, C080 F, explicit top, other signatures
+and novelty remain separate. The paper is unchanged. No next worker is assigned;
+licensing and author placeholders are unchanged.
+
 ## September 20: complete countermodels with checked certificates (C084)
 
 The [canonical extractor](notes/2026-09-20-regular-countermodels.md) replaces

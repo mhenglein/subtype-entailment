@@ -1,0 +1,1098 @@
+{
+  "build": "PASS",
+  "cli_cases": [
+    {
+      "command": [
+        "python3",
+        "scripts/subtail.py",
+        "examples/finite-trees/forced-infinite.json",
+        "--timeout",
+        "40",
+        "--finite-trees",
+        "--verify-certificate"
+      ],
+      "name": "forced-infinite",
+      "result": {
+        "basis": "ordinary finite-tree cycle reduction; vacuous entailment",
+        "growth_analysis": {
+          "basis": "ordinary finite-tree reduction; growth classifier is not Lean-verified",
+          "controls": 3,
+          "cycle": {
+            "control": 2,
+            "forced_root": true,
+            "word": [
+              0
+            ]
+          },
+          "finite_model_obstruction": true,
+          "has_consuming_cycle": true,
+          "hot": [
+            0,
+            1,
+            2
+          ],
+          "status": "PASS"
+        },
+        "reason": "no_finite_model",
+        "seconds": 0.122,
+        "semantics": "finite bottom/product trees",
+        "stage": "finite_growth_analysis",
+        "status": "ENTAILED",
+        "trust_boundary": "Ordinary Python found a consuming cycle at a forced product root, excluding finite models. The cycle reduction and classifier are not Lean-verified; Lean was not run."
+      },
+      "status": "PASS"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/subtail.py",
+        "examples/finite-trees/contradiction.json",
+        "--timeout",
+        "40",
+        "--finite-trees",
+        "--verify-certificate"
+      ],
+      "name": "contradiction",
+      "result": {
+        "arbitrary_tree_basis": "Lean EntailmentFast.entailsCheck_correct",
+        "basis": "ordinary finite-tree cycle reduction followed by Lean arbitrary-tree decision",
+        "build_seconds": 0.217,
+        "growth_analysis": {
+          "basis": "ordinary finite-tree reduction; growth classifier is not Lean-verified",
+          "controls": 3,
+          "cycle": null,
+          "finite_model_obstruction": false,
+          "has_consuming_cycle": false,
+          "hot": [],
+          "status": "PASS"
+        },
+        "native_seconds": 0.719,
+        "seconds": 1.059,
+        "semantics": "finite bottom/product trees",
+        "stage": "decision",
+        "status": "ENTAILED",
+        "trust_boundary": "Finite-tree classification and graph finiteness use ordinary Python backed by the written reduction. The complete finite-tree procedure is not Lean-verified. Lean algorithm checked; Python parsing, launch and certificate checker are not Lean-verified.",
+        "wrapper_sha256": "d2867bd220ec379ab19caa9f6d639082b0abd234ce548642d64e3e7d85017afc"
+      },
+      "status": "PASS"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/subtail.py",
+        "examples/finite-trees/reverse.json",
+        "--timeout",
+        "40",
+        "--finite-trees",
+        "--verify-certificate"
+      ],
+      "name": "reverse",
+      "result": {
+        "arbitrary_tree_basis": "Lean EntailmentFast.entailsCheck_correct",
+        "basis": "ordinary finite-tree cycle reduction followed by Lean arbitrary-tree decision",
+        "build_seconds": 0.217,
+        "certificate_verification": {
+          "basis": "Lean RegularTreeCertificate.check_not_entails",
+          "checker_sha256": "f0a271f276adc997620f2034edd3d3e3e44a33045d1b69c489f48ae81c33579f",
+          "input_source_sha256": "49d0850926dca4f891c873de9a5220d16c59430bfe00f7fbf360ce1405ad0caf",
+          "instance_proof": "kernel-checked with decide; no native_decide",
+          "seconds": 0.819,
+          "status": "VERIFIED"
+        },
+        "countermodel": {
+          "checked_premises": 1,
+          "finite_height": 1,
+          "nodes": [
+            null,
+            [
+              0,
+              0
+            ]
+          ],
+          "roots": {
+            "x": 0,
+            "y": 1
+          },
+          "semantics": "finite bottom/product trees; all variable roots unfold to finite trees",
+          "separating_path": [],
+          "valid": true
+        },
+        "explanation_search": {
+          "candidates": 1,
+          "method": "canonical finite-seed NFA and subset graph",
+          "nfa_states": 3,
+          "normalized_controls": 2,
+          "separating_path": [],
+          "status": "FOUND"
+        },
+        "growth_analysis": {
+          "basis": "ordinary finite-tree reduction; growth classifier is not Lean-verified",
+          "controls": 2,
+          "cycle": null,
+          "finite_model_obstruction": false,
+          "has_consuming_cycle": false,
+          "hot": [],
+          "status": "PASS"
+        },
+        "native_seconds": 0.669,
+        "seconds": 2.165,
+        "semantics": "finite bottom/product trees",
+        "stage": "decision",
+        "status": "NOT_ENTAILED",
+        "trust_boundary": "Finite-tree classification and graph finiteness use ordinary Python backed by the written reduction. The complete finite-tree procedure is not Lean-verified. Lean verified the finite-graph certificate against emitted original expressions. JSON parsing, source emission and the extractor remain ordinary Python.",
+        "wrapper_sha256": "d2867bd220ec379ab19caa9f6d639082b0abd234ce548642d64e3e7d85017afc"
+      },
+      "status": "PASS"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/subtail.py",
+        "examples/finite-trees/ground.json",
+        "--timeout",
+        "40",
+        "--finite-trees",
+        "--verify-certificate"
+      ],
+      "name": "ground",
+      "result": {
+        "arbitrary_tree_basis": "Lean EntailmentFast.entailsCheck_correct",
+        "basis": "ordinary finite-tree cycle reduction followed by Lean arbitrary-tree decision",
+        "build_seconds": 0.218,
+        "certificate_verification": {
+          "basis": "Lean RegularTreeCertificate.check_not_entails",
+          "checker_sha256": "f0a271f276adc997620f2034edd3d3e3e44a33045d1b69c489f48ae81c33579f",
+          "input_source_sha256": "088144553b1acbe74c684dc13787b36b8767b9655a2155a47a779164dab73ae5",
+          "instance_proof": "kernel-checked with decide; no native_decide",
+          "seconds": 0.869,
+          "status": "VERIFIED"
+        },
+        "countermodel": {
+          "checked_premises": 0,
+          "finite_height": 0,
+          "nodes": [
+            null
+          ],
+          "roots": {},
+          "semantics": "finite bottom/product trees; all variable roots unfold to finite trees",
+          "separating_path": [],
+          "valid": true
+        },
+        "explanation_search": {
+          "candidates": 1,
+          "method": "canonical finite-seed NFA and subset graph",
+          "nfa_states": 3,
+          "normalized_controls": 2,
+          "separating_path": [],
+          "status": "FOUND"
+        },
+        "growth_analysis": {
+          "basis": "ordinary finite-tree reduction; growth classifier is not Lean-verified",
+          "controls": 2,
+          "cycle": null,
+          "finite_model_obstruction": false,
+          "has_consuming_cycle": false,
+          "hot": [],
+          "status": "PASS"
+        },
+        "native_seconds": 0.669,
+        "seconds": 2.217,
+        "semantics": "finite bottom/product trees",
+        "stage": "decision",
+        "status": "NOT_ENTAILED",
+        "trust_boundary": "Finite-tree classification and graph finiteness use ordinary Python backed by the written reduction. The complete finite-tree procedure is not Lean-verified. Lean verified the finite-graph certificate against emitted original expressions. JSON parsing, source emission and the extractor remain ordinary Python.",
+        "wrapper_sha256": "d2867bd220ec379ab19caa9f6d639082b0abd234ce548642d64e3e7d85017afc"
+      },
+      "status": "PASS"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/subtail.py",
+        "examples/finite-trees/forced-infinite.json",
+        "--timeout",
+        "40",
+        "--verify-certificate"
+      ],
+      "name": "same-input-arbitrary",
+      "result": {
+        "basis": "Lean EntailmentFast.entailsCheck_correct",
+        "build_seconds": 0.218,
+        "certificate_verification": {
+          "basis": "Lean RegularTreeCertificate.check_not_entails",
+          "checker_sha256": "f0a271f276adc997620f2034edd3d3e3e44a33045d1b69c489f48ae81c33579f",
+          "input_source_sha256": "a0907bde8d22a3b82295870ce4ada24a4ed3cd71598c70547bfcae5c74dad4c3",
+          "instance_proof": "kernel-checked with decide; no native_decide",
+          "seconds": 0.77,
+          "status": "VERIFIED"
+        },
+        "countermodel": {
+          "checked_premises": 1,
+          "nodes": [
+            null,
+            [
+              1,
+              0
+            ]
+          ],
+          "roots": {
+            "x": 1
+          },
+          "semantics": "arbitrary bottom/product trees; finite graph denotes regular trees",
+          "separating_path": [],
+          "valid": true
+        },
+        "explanation_search": {
+          "candidates": 1,
+          "method": "canonical finite-seed NFA and subset graph",
+          "nfa_states": 4,
+          "normalized_controls": 3,
+          "separating_path": [],
+          "status": "FOUND"
+        },
+        "native_seconds": 0.669,
+        "seconds": 1.996,
+        "semantics": "arbitrary bottom/product trees",
+        "stage": "decision",
+        "status": "NOT_ENTAILED",
+        "trust_boundary": "Lean verified the finite-graph certificate against emitted original expressions. JSON parsing, source emission and the extractor remain ordinary Python.",
+        "wrapper_sha256": "d2867bd220ec379ab19caa9f6d639082b0abd234ce548642d64e3e7d85017afc"
+      },
+      "status": "PASS"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/subtail.py",
+        "examples/finite-trees/forced-infinite.json",
+        "--timeout",
+        "40",
+        "--finite-trees",
+        "--check-model",
+        "examples/entailment/zero-spine-model.json"
+      ],
+      "name": "reject-infinite-model",
+      "result": {
+        "basis": "independent Python regular-tree certificate check",
+        "countermodel": {
+          "reason": "infinite_variable_tree",
+          "valid": false
+        },
+        "seconds": 0.003,
+        "semantics": "finite bottom/product trees",
+        "status": "INVALID_MODEL",
+        "trust_boundary": "Finite-tree classification and graph finiteness use ordinary Python backed by the written reduction. The complete finite-tree procedure is not Lean-verified. Python certificate check only; Lean was not run. Parser and graph checker are not Lean-verified."
+      },
+      "status": "PASS"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/subtail.py",
+        "examples/finite-trees/ground.json",
+        "--timeout",
+        "40",
+        "--finite-trees",
+        "--timeout",
+        "0.000001"
+      ],
+      "name": "capped-growth",
+      "result": {
+        "reason": "time_limit",
+        "seconds": 0.003,
+        "semantics": "finite bottom/product trees",
+        "stage": "finite_growth_analysis",
+        "status": "UNKNOWN",
+        "trust_boundary": "Finite-tree classification and graph finiteness use ordinary Python backed by the written reduction. The complete finite-tree procedure is not Lean-verified. Lean algorithm checked; Python parsing, launch and certificate checker are not Lean-verified."
+      },
+      "status": "PASS"
+    }
+  ],
+  "declarations": {
+    "Subtail.FiniteTreeReduction.BoundedReversePop": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.FiniteTreeReduction.ClosureBounded": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.FiniteTreeReduction.DerivedBounded": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.FiniteTreeReduction.FiniteEntails": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.FiniteTreeReduction.FiniteExprEntails": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.FiniteTreeReduction.FiniteSatisfiable": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.FiniteTreeReduction.FiniteTree": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.FiniteTreeReduction.Hot": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.FiniteTreeReduction.Reachable": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.FiniteTreeReduction.ReachesControl": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.FiniteTreeReduction.ReachesHot": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.FiniteTreeReduction.UniformReversePopBound": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.FiniteTreeReduction.canonicalFinite_iff_noHot": {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.FiniteTreeReduction.closureBounded_iff_noHot": {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.FiniteTreeReduction.closureFinite_iff_derivedBounded": {
+      "axioms": [
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.FiniteTreeReduction.derivedBounded_iff_closureBounded": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.FiniteTreeReduction.derivedBounded_iff_noHot": {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.FiniteTreeReduction.fin_bound": {
+      "axioms": [
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.FiniteTreeReduction.finiteEntails_iff_entails_of_uniform_reverse_pop": {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.FiniteTreeReduction.finiteTree_bottom": {
+      "axioms": [],
+      "kind": "theorem"
+    },
+    "Subtail.FiniteTreeReduction.finiteTree_eval": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.FiniteTreeReduction.finiteTree_extend": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.FiniteTreeReduction.finiteTree_product": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.FiniteTreeReduction.forced_reverse_pop_loop_noFiniteModel": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.FiniteTreeReduction.normalize_finite_entails_iff": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.FiniteTreeReduction.pathDerivedBounded_iff_noHot": {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.FiniteTreeReduction.repeatWord": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.FiniteTreeReduction.repeatWord_length": {
+      "axioms": [
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.FiniteTreeReduction.repeat_reaches_of_cycle": {
+      "axioms": [],
+      "kind": "theorem"
+    },
+    "Subtail.FiniteTreeReduction.reverse_pop_reaches_suffix": {
+      "axioms": [],
+      "kind": "theorem"
+    },
+    "Subtail.FiniteTreeReduction.seed_length_bounded": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    }
+  },
+  "default_core": {
+    "command": "python scripts/check_lean.py",
+    "failures": 0,
+    "host": "wb-marcus",
+    "kernel_replay": "PASS",
+    "note": "Default import build/kernel plus existing core axiom/differential checks. The later fixture/checker correction changes no Lean or core source. This does not claim every optional module audit or the whole CI suite was rerun locally.",
+    "result_file": "results/lean-checks.json",
+    "result_sha256": "f4247571aeef26288acef82804a70f5d76f25c962ea578883c1c3cdb094c7acf",
+    "revision": "0b772bba77328fc458a39f0075570e70c97d5ac5",
+    "status": "PASS"
+  },
+  "experiment": {
+    "completeness": "Finite-SAT height <= n follows from no consuming cycle and the least forced-root closure. No fixed-height entailment bound is asserted.",
+    "counts": {
+      "consuming_systems": 148,
+      "denial_unsat_without_growth": 26,
+      "finite_sat_inputs": 1809,
+      "finite_sat_yes": 636,
+      "finite_valuations": 44880,
+      "growth_systems": 300,
+      "growth_unsat": 1147
+    },
+    "scope": "300 finite-system infiniteness comparisons and complete finite-SAT census for <=3 clauses on 1/2 controls",
+    "seed": 5803,
+    "status": "PASS",
+    "trust": "Independent ordinary Python checks; no Lean classifier equivalence is claimed."
+  },
+  "host": "wb-marcus",
+  "independent_review": {
+    "checked_revision": "8f6fad6fcbd9af510e466351b00fd3d4d4c4383a",
+    "report": "https://github.com/mhenglein/subtail/issues/58#issuecomment-5747715457",
+    "status": "PASS",
+    "supplementary_probe": {
+      "controls": "1..5; 1000 each",
+      "epsilon_probability": 0.15,
+      "push_pop_probability": 0.12,
+      "seed": 1739,
+      "source_note": "Executed before fixture correction; classifier source unchanged at 8f6fad6. Reported by independent reviewer, not rerun by parent. Exact command in finite-tree-readback note.",
+      "status": "PASS",
+      "systems": 5000
+    }
+  },
+  "initial_validation": {
+    "coverage_note": "The initial contradiction fixture also triggered growth. The current receipt replaces it with a checked cold-but-unsatisfiable input; no theorem failure was found.",
+    "receipt": {
+      "build": "PASS",
+      "cli_cases": [
+        {
+          "command": [
+            "python3",
+            "scripts/subtail.py",
+            "examples/finite-trees/forced-infinite.json",
+            "--timeout",
+            "40",
+            "--finite-trees",
+            "--verify-certificate"
+          ],
+          "name": "forced-infinite",
+          "result": {
+            "basis": "ordinary finite-tree cycle reduction; vacuous entailment",
+            "growth_analysis": {
+              "basis": "ordinary finite-tree reduction; growth classifier is not Lean-verified",
+              "controls": 3,
+              "cycle": {
+                "control": 2,
+                "forced_root": true,
+                "word": [
+                  0
+                ]
+              },
+              "finite_model_obstruction": true,
+              "has_consuming_cycle": true,
+              "hot": [
+                0,
+                1,
+                2
+              ],
+              "status": "PASS"
+            },
+            "reason": "no_finite_model",
+            "seconds": 0.122,
+            "semantics": "finite bottom/product trees",
+            "stage": "finite_growth_analysis",
+            "status": "ENTAILED",
+            "trust_boundary": "Ordinary Python found a consuming cycle at a forced product root, excluding finite models. The cycle reduction and classifier are not Lean-verified; Lean was not run."
+          },
+          "status": "PASS"
+        },
+        {
+          "command": [
+            "python3",
+            "scripts/subtail.py",
+            "examples/finite-trees/contradiction.json",
+            "--timeout",
+            "40",
+            "--finite-trees",
+            "--verify-certificate"
+          ],
+          "name": "contradiction",
+          "result": {
+            "basis": "ordinary finite-tree cycle reduction; vacuous entailment",
+            "growth_analysis": {
+              "basis": "ordinary finite-tree reduction; growth classifier is not Lean-verified",
+              "controls": 2,
+              "cycle": {
+                "control": 1,
+                "forced_root": true,
+                "word": [
+                  0
+                ]
+              },
+              "finite_model_obstruction": true,
+              "has_consuming_cycle": true,
+              "hot": [
+                0,
+                1
+              ],
+              "status": "PASS"
+            },
+            "reason": "no_finite_model",
+            "seconds": 0.121,
+            "semantics": "finite bottom/product trees",
+            "stage": "finite_growth_analysis",
+            "status": "ENTAILED",
+            "trust_boundary": "Ordinary Python found a consuming cycle at a forced product root, excluding finite models. The cycle reduction and classifier are not Lean-verified; Lean was not run."
+          },
+          "status": "PASS"
+        },
+        {
+          "command": [
+            "python3",
+            "scripts/subtail.py",
+            "examples/finite-trees/reverse.json",
+            "--timeout",
+            "40",
+            "--finite-trees",
+            "--verify-certificate"
+          ],
+          "name": "reverse",
+          "result": {
+            "arbitrary_tree_basis": "Lean EntailmentFast.entailsCheck_correct",
+            "basis": "ordinary finite-tree cycle reduction followed by Lean arbitrary-tree decision",
+            "build_seconds": 0.218,
+            "certificate_verification": {
+              "basis": "Lean RegularTreeCertificate.check_not_entails",
+              "checker_sha256": "f0a271f276adc997620f2034edd3d3e3e44a33045d1b69c489f48ae81c33579f",
+              "input_source_sha256": "49d0850926dca4f891c873de9a5220d16c59430bfe00f7fbf360ce1405ad0caf",
+              "instance_proof": "kernel-checked with decide; no native_decide",
+              "seconds": 0.719,
+              "status": "VERIFIED"
+            },
+            "countermodel": {
+              "checked_premises": 1,
+              "finite_height": 1,
+              "nodes": [
+                null,
+                [
+                  0,
+                  0
+                ]
+              ],
+              "roots": {
+                "x": 0,
+                "y": 1
+              },
+              "semantics": "finite bottom/product trees; all variable roots unfold to finite trees",
+              "separating_path": [],
+              "valid": true
+            },
+            "explanation_search": {
+              "candidates": 1,
+              "method": "canonical finite-seed NFA and subset graph",
+              "nfa_states": 3,
+              "normalized_controls": 2,
+              "separating_path": [],
+              "status": "FOUND"
+            },
+            "growth_analysis": {
+              "basis": "ordinary finite-tree reduction; growth classifier is not Lean-verified",
+              "controls": 2,
+              "cycle": null,
+              "finite_model_obstruction": false,
+              "has_consuming_cycle": false,
+              "hot": [],
+              "status": "PASS"
+            },
+            "native_seconds": 0.669,
+            "seconds": 2.067,
+            "semantics": "finite bottom/product trees",
+            "stage": "decision",
+            "status": "NOT_ENTAILED",
+            "trust_boundary": "Finite-tree classification and graph finiteness use ordinary Python backed by the written reduction. The complete finite-tree procedure is not Lean-verified. Lean verified the finite-graph certificate against emitted original expressions. JSON parsing, source emission and the extractor remain ordinary Python.",
+            "wrapper_sha256": "d2867bd220ec379ab19caa9f6d639082b0abd234ce548642d64e3e7d85017afc"
+          },
+          "status": "PASS"
+        },
+        {
+          "command": [
+            "python3",
+            "scripts/subtail.py",
+            "examples/finite-trees/ground.json",
+            "--timeout",
+            "40",
+            "--finite-trees",
+            "--verify-certificate"
+          ],
+          "name": "ground",
+          "result": {
+            "arbitrary_tree_basis": "Lean EntailmentFast.entailsCheck_correct",
+            "basis": "ordinary finite-tree cycle reduction followed by Lean arbitrary-tree decision",
+            "build_seconds": 0.218,
+            "certificate_verification": {
+              "basis": "Lean RegularTreeCertificate.check_not_entails",
+              "checker_sha256": "f0a271f276adc997620f2034edd3d3e3e44a33045d1b69c489f48ae81c33579f",
+              "input_source_sha256": "088144553b1acbe74c684dc13787b36b8767b9655a2155a47a779164dab73ae5",
+              "instance_proof": "kernel-checked with decide; no native_decide",
+              "seconds": 0.77,
+              "status": "VERIFIED"
+            },
+            "countermodel": {
+              "checked_premises": 0,
+              "finite_height": 0,
+              "nodes": [
+                null
+              ],
+              "roots": {},
+              "semantics": "finite bottom/product trees; all variable roots unfold to finite trees",
+              "separating_path": [],
+              "valid": true
+            },
+            "explanation_search": {
+              "candidates": 1,
+              "method": "canonical finite-seed NFA and subset graph",
+              "nfa_states": 3,
+              "normalized_controls": 2,
+              "separating_path": [],
+              "status": "FOUND"
+            },
+            "growth_analysis": {
+              "basis": "ordinary finite-tree reduction; growth classifier is not Lean-verified",
+              "controls": 2,
+              "cycle": null,
+              "finite_model_obstruction": false,
+              "has_consuming_cycle": false,
+              "hot": [],
+              "status": "PASS"
+            },
+            "native_seconds": 0.669,
+            "seconds": 2.118,
+            "semantics": "finite bottom/product trees",
+            "stage": "decision",
+            "status": "NOT_ENTAILED",
+            "trust_boundary": "Finite-tree classification and graph finiteness use ordinary Python backed by the written reduction. The complete finite-tree procedure is not Lean-verified. Lean verified the finite-graph certificate against emitted original expressions. JSON parsing, source emission and the extractor remain ordinary Python.",
+            "wrapper_sha256": "d2867bd220ec379ab19caa9f6d639082b0abd234ce548642d64e3e7d85017afc"
+          },
+          "status": "PASS"
+        },
+        {
+          "command": [
+            "python3",
+            "scripts/subtail.py",
+            "examples/finite-trees/forced-infinite.json",
+            "--timeout",
+            "40",
+            "--verify-certificate"
+          ],
+          "name": "same-input-arbitrary",
+          "result": {
+            "basis": "Lean EntailmentFast.entailsCheck_correct",
+            "build_seconds": 0.218,
+            "certificate_verification": {
+              "basis": "Lean RegularTreeCertificate.check_not_entails",
+              "checker_sha256": "f0a271f276adc997620f2034edd3d3e3e44a33045d1b69c489f48ae81c33579f",
+              "input_source_sha256": "a0907bde8d22a3b82295870ce4ada24a4ed3cd71598c70547bfcae5c74dad4c3",
+              "instance_proof": "kernel-checked with decide; no native_decide",
+              "seconds": 0.871,
+              "status": "VERIFIED"
+            },
+            "countermodel": {
+              "checked_premises": 1,
+              "nodes": [
+                null,
+                [
+                  1,
+                  0
+                ]
+              ],
+              "roots": {
+                "x": 1
+              },
+              "semantics": "arbitrary bottom/product trees; finite graph denotes regular trees",
+              "separating_path": [],
+              "valid": true
+            },
+            "explanation_search": {
+              "candidates": 1,
+              "method": "canonical finite-seed NFA and subset graph",
+              "nfa_states": 4,
+              "normalized_controls": 3,
+              "separating_path": [],
+              "status": "FOUND"
+            },
+            "native_seconds": 0.669,
+            "seconds": 2.098,
+            "semantics": "arbitrary bottom/product trees",
+            "stage": "decision",
+            "status": "NOT_ENTAILED",
+            "trust_boundary": "Lean verified the finite-graph certificate against emitted original expressions. JSON parsing, source emission and the extractor remain ordinary Python.",
+            "wrapper_sha256": "d2867bd220ec379ab19caa9f6d639082b0abd234ce548642d64e3e7d85017afc"
+          },
+          "status": "PASS"
+        },
+        {
+          "command": [
+            "python3",
+            "scripts/subtail.py",
+            "examples/finite-trees/forced-infinite.json",
+            "--timeout",
+            "40",
+            "--finite-trees",
+            "--check-model",
+            "examples/entailment/zero-spine-model.json"
+          ],
+          "name": "reject-infinite-model",
+          "result": {
+            "basis": "independent Python regular-tree certificate check",
+            "countermodel": {
+              "reason": "infinite_variable_tree",
+              "valid": false
+            },
+            "seconds": 0.003,
+            "semantics": "finite bottom/product trees",
+            "status": "INVALID_MODEL",
+            "trust_boundary": "Finite-tree classification and graph finiteness use ordinary Python backed by the written reduction. The complete finite-tree procedure is not Lean-verified. Python certificate check only; Lean was not run. Parser and graph checker are not Lean-verified."
+          },
+          "status": "PASS"
+        },
+        {
+          "command": [
+            "python3",
+            "scripts/subtail.py",
+            "examples/finite-trees/ground.json",
+            "--timeout",
+            "40",
+            "--finite-trees",
+            "--timeout",
+            "0.000001"
+          ],
+          "name": "capped-growth",
+          "result": {
+            "reason": "time_limit",
+            "seconds": 0.004,
+            "semantics": "finite bottom/product trees",
+            "stage": "finite_growth_analysis",
+            "status": "UNKNOWN",
+            "trust_boundary": "Finite-tree classification and graph finiteness use ordinary Python backed by the written reduction. The complete finite-tree procedure is not Lean-verified. Lean algorithm checked; Python parsing, launch and certificate checker are not Lean-verified."
+          },
+          "status": "PASS"
+        }
+      ],
+      "declarations": {
+        "Subtail.FiniteTreeReduction.BoundedReversePop": {
+          "axioms": [],
+          "kind": "def"
+        },
+        "Subtail.FiniteTreeReduction.ClosureBounded": {
+          "axioms": [],
+          "kind": "def"
+        },
+        "Subtail.FiniteTreeReduction.DerivedBounded": {
+          "axioms": [],
+          "kind": "def"
+        },
+        "Subtail.FiniteTreeReduction.FiniteEntails": {
+          "axioms": [],
+          "kind": "def"
+        },
+        "Subtail.FiniteTreeReduction.FiniteExprEntails": {
+          "axioms": [],
+          "kind": "def"
+        },
+        "Subtail.FiniteTreeReduction.FiniteSatisfiable": {
+          "axioms": [],
+          "kind": "def"
+        },
+        "Subtail.FiniteTreeReduction.FiniteTree": {
+          "axioms": [],
+          "kind": "def"
+        },
+        "Subtail.FiniteTreeReduction.Hot": {
+          "axioms": [],
+          "kind": "def"
+        },
+        "Subtail.FiniteTreeReduction.Reachable": {
+          "axioms": [],
+          "kind": "def"
+        },
+        "Subtail.FiniteTreeReduction.ReachesControl": {
+          "axioms": [],
+          "kind": "def"
+        },
+        "Subtail.FiniteTreeReduction.ReachesHot": {
+          "axioms": [],
+          "kind": "def"
+        },
+        "Subtail.FiniteTreeReduction.UniformReversePopBound": {
+          "axioms": [],
+          "kind": "def"
+        },
+        "Subtail.FiniteTreeReduction.canonicalFinite_iff_noHot": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.FiniteTreeReduction.closureBounded_iff_noHot": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.FiniteTreeReduction.closureFinite_iff_derivedBounded": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.FiniteTreeReduction.derivedBounded_iff_closureBounded": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.FiniteTreeReduction.derivedBounded_iff_noHot": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.FiniteTreeReduction.fin_bound": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.FiniteTreeReduction.finiteEntails_iff_entails_of_uniform_reverse_pop": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.FiniteTreeReduction.finiteTree_bottom": {
+          "axioms": [],
+          "kind": "theorem"
+        },
+        "Subtail.FiniteTreeReduction.finiteTree_eval": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.FiniteTreeReduction.finiteTree_extend": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.FiniteTreeReduction.finiteTree_product": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.FiniteTreeReduction.forced_reverse_pop_loop_noFiniteModel": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.FiniteTreeReduction.normalize_finite_entails_iff": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.FiniteTreeReduction.pathDerivedBounded_iff_noHot": {
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.FiniteTreeReduction.repeatWord": {
+          "axioms": [],
+          "kind": "def"
+        },
+        "Subtail.FiniteTreeReduction.repeatWord_length": {
+          "axioms": [
+            "propext"
+          ],
+          "kind": "theorem"
+        },
+        "Subtail.FiniteTreeReduction.repeat_reaches_of_cycle": {
+          "axioms": [],
+          "kind": "theorem"
+        },
+        "Subtail.FiniteTreeReduction.reverse_pop_reaches_suffix": {
+          "axioms": [],
+          "kind": "theorem"
+        },
+        "Subtail.FiniteTreeReduction.seed_length_bounded": {
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "kind": "theorem"
+        }
+      },
+      "experiment": {
+        "completeness": "Finite-SAT height <= n follows from no consuming cycle and the least forced-root closure. No fixed-height entailment bound is asserted.",
+        "counts": {
+          "consuming_systems": 148,
+          "denial_unsat_without_growth": 26,
+          "finite_sat_inputs": 1809,
+          "finite_sat_yes": 636,
+          "finite_valuations": 44880,
+          "growth_systems": 300,
+          "growth_unsat": 1147
+        },
+        "scope": "300 finite-system infiniteness comparisons and complete finite-SAT census for <=3 clauses on 1/2 controls",
+        "seed": 5803,
+        "status": "PASS",
+        "trust": "Independent ordinary Python checks; no Lean classifier equivalence is claimed."
+      },
+      "host": "wb-marcus",
+      "kernel_replay": "PASS",
+      "platform": "Linux-6.12.94-123.192.amzn2023.aarch64-aarch64-with-glibc2.43",
+      "python_tests": {
+        "test_finite_trees.py": {
+          "status": "PASS",
+          "tests": 13
+        },
+        "test_regular_countermodel.py": {
+          "status": "PASS",
+          "tests": 9
+        },
+        "test_subtail.py": {
+          "status": "PASS",
+          "tests": 24
+        }
+      },
+      "revision": "0b772bba77328fc458a39f0075570e70c97d5ac5",
+      "source_sha256": {
+        "experiments/check_finite_trees.py": "5109e712eb2c90d7940051f9f7afde17e9ce18f2cd327a4ad82ba2ffd50da69d",
+        "experiments/check_stack_summary.py": "a2cec595e2c4e1a6dad0958b30e5a2f38f4239170f63a43aa1ab655a52f83e71",
+        "lean/Subtail/FiniteTreeReduction.lean": "2b6200f4f913e515bd4f863c77ab4208bef75bb192ac1dc89dfa69614eb415e4",
+        "scripts/check_finite_tree_reduction.py": "0e9c8b35853959485cc674fce1ab34a49ed495e106e09634a2a0be94affa2225",
+        "scripts/check_regular_certificate.py": "27f519f07b1f2fc944aa8c1827c1ef20c0b21b79d547bda9b57c09dfbd135053",
+        "scripts/finite_trees.py": "0b68dcd02f2d3b081f3afb7e2ee1dd67edecb870b3758e19ee99620612d0c475",
+        "scripts/regular_countermodel.py": "e77c547f7f4697609a37d23705bbb33c42361a3f5412378f08dba6c5235ce127",
+        "scripts/subtail.py": "afde7d5442d373bff46ce6cb24e0f4ef81348b10403f0040ef5935dc57325bc4",
+        "scripts/test_finite_trees.py": "239120922b54ba7069a8d5696e9829c598b375ef195c0a50d03d1120ca9359d1"
+      },
+      "status": "PASS",
+      "toolchain": "Lean (version 4.33.1, aarch64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
+      "trust": "Selective closure/semantic lemmas are Lean-checked. The complete finite-tree classifier, Python normalization and graph finiteness remain ordinary mathematics/Python."
+    }
+  },
+  "kernel_replay": "PASS",
+  "platform": "Linux-6.12.94-123.192.amzn2023.aarch64-aarch64-with-glibc2.43",
+  "python_tests": {
+    "test_finite_trees.py": {
+      "status": "PASS",
+      "tests": 13
+    },
+    "test_regular_countermodel.py": {
+      "status": "PASS",
+      "tests": 9
+    },
+    "test_subtail.py": {
+      "status": "PASS",
+      "tests": 24
+    }
+  },
+  "revision": "8f6fad6fcbd9af510e466351b00fd3d4d4c4383a",
+  "source_sha256": {
+    "experiments/check_finite_trees.py": "5109e712eb2c90d7940051f9f7afde17e9ce18f2cd327a4ad82ba2ffd50da69d",
+    "experiments/check_stack_summary.py": "a2cec595e2c4e1a6dad0958b30e5a2f38f4239170f63a43aa1ab655a52f83e71",
+    "lean/Subtail/FiniteTreeReduction.lean": "2b6200f4f913e515bd4f863c77ab4208bef75bb192ac1dc89dfa69614eb415e4",
+    "scripts/check_finite_tree_reduction.py": "5e7061670ab20fad31ea59ad9496df6b8b114cd1fa546f5d0185ca6b31087916",
+    "scripts/check_regular_certificate.py": "27f519f07b1f2fc944aa8c1827c1ef20c0b21b79d547bda9b57c09dfbd135053",
+    "scripts/finite_trees.py": "0b68dcd02f2d3b081f3afb7e2ee1dd67edecb870b3758e19ee99620612d0c475",
+    "scripts/regular_countermodel.py": "e77c547f7f4697609a37d23705bbb33c42361a3f5412378f08dba6c5235ce127",
+    "scripts/subtail.py": "afde7d5442d373bff46ce6cb24e0f4ef81348b10403f0040ef5935dc57325bc4",
+    "scripts/test_finite_trees.py": "239120922b54ba7069a8d5696e9829c598b375ef195c0a50d03d1120ca9359d1"
+  },
+  "status": "PASS",
+  "toolchain": "Lean (version 4.33.1, aarch64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
+  "trust": "Selective closure/semantic lemmas are Lean-checked. The complete finite-tree classifier, Python normalization and graph finiteness remain ordinary mathematics/Python."
+}
