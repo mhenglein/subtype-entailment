@@ -187,8 +187,9 @@ height zero; an acyclic product node has one plus its maximum child height.
   spine in every model, so the finite-tree answer is ENTAILED vacuously.
 - Under x<=y, the query y<=x is false under both semantics. Assign bottom to
   x and bottom×bottom to y; the separating address is epsilon and height is 1.
-- Under bottom×bottom<=bottom there is no model under either semantics.
-  Absence of a growth cycle alone does not establish satisfiability.
+- Under x×x<=bottom there is no model under either semantics, but the
+  normalized system has no consuming cycle. Absence of growth alone therefore
+  does not establish satisfiability.
 - The ground query bottom×bottom<=bottom with no premises is false even with
   zero original variables. Its expression values are finite automatically.
 

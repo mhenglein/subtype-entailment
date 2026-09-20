@@ -1,1 +1,1 @@
-{"variables":[],"constraints":[[{"prod":["bottom","bottom"]},"bottom"]],"query":[{"prod":["bottom","bottom"]},"bottom"]}
+{"variables":["x"],"constraints":[[{"prod":["x","x"]},"bottom"]],"query":["x","bottom"]}

@@ -62,6 +62,8 @@ def cli_cases():
             raise RuntimeError('Missing finite countermodel height: '+name)
         if verified and result.get('certificate_verification',{}).get('status')!='VERIFIED':
             raise RuntimeError('Missing actual kernel certificate proof: '+name)
+        if name == 'contradiction' and result.get('growth_analysis',{}).get('finite_model_obstruction') is not False:
+            raise RuntimeError('Contradiction fixture must exercise the no-growth arbitrary-unsatisfiable branch')
         cases.append({'name':name,'command':args,'status':'PASS','result':result})
     for name,expected,height in (('forced-infinite','ENTAILED',None),('contradiction','ENTAILED',None),
                                  ('reverse','NOT_ENTAILED',1),('ground','NOT_ENTAILED',0)):
