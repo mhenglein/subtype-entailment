@@ -110,13 +110,20 @@ The first input has an infinite countermodel under arbitrary semantics, but
 returns `ENTAILED` with reason `no_finite_model` under finite semantics. The
 second returns a finite countermodel of height 1 and separator `[]`.
 
-The complete reduction has an independently reviewed ordinary proof. Lean
-checks its closure lemmas, conditional semantic transfer and finite-preserving
-normalization. The graph classifier still needs a formal connection to those
-hypotheses. Python checks graph finiteness; C084 certificate verification
-checks arbitrary non-entailment. This is **not yet a fully Lean-verified
-finite-tree decision procedure**. [Proof and exact boundaries](notes/2026-09-20-finite-tree-reduction.md);
-[reproduction evidence](results/finite-trees.json). Resource limits stay UNKNOWN.
+The complete reduction has an independently reviewed ordinary proof and an
+unconditional Lean Boolean theorem:
+`FiniteTreeDecision.entailsCheck G s t = true ↔ FiniteExprEntails G s t`.
+The executable cycle classifier now supplies the obstruction or length bound
+used by the semantic proof. The CLI calls this checked function directly.
+JSON parsing/emission and graph finiteness remain Python; C084 certificates
+check arbitrary non-entailment. Resource limits stay UNKNOWN.
+[Ordinary proof](notes/2026-09-20-finite-tree-reduction.md),
+[checked construction and limits](notes/2026-09-20-finite-tree-decision-readback.md),
+[reproduction evidence](results/finite-tree-decision.json).
+
+```sh
+python3 scripts/check_finite_tree_decision.py --output tmp/finite-tree-decision.json
+```
 
 ## Bounds and research checkpoint
 

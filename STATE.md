@@ -1,6 +1,37 @@
 # Subtail — current research state
 
+## September 20: unconditional checked finite-tree decision (C085)
+
+The graph-classifier gap in the earlier entry below is closed. The total
+`FiniteTreeDecision.entailsCheck` is proved equivalent to `FiniteExprEntails`
+for the original finite-expression input, with no supplied bound, growth
+classification or satisfiability hypothesis. A positive consuming-cycle test
+gives a forced infinite branch; a negative test excludes every nonempty
+reverse-Pop loop. The new `PopAcyclic` argument then bounds every consumed word
+by the number of controls, completing the existing C085 semantic composition.
+[Exact statement, construction and independent readback](notes/2026-09-20-finite-tree-decision-readback.md).
+
+The finite CLI now calls that checked function. Python parsing/emission,
+extraction and graph finiteness remain outside the proof; C084 certificates
+still prove arbitrary non-entailment. Caps and failed native output remain
+UNKNOWN. The ordinary Python classifier is diagnostic only.
+
+At `4159c58`, fresh isolated wb-marcus checks PASS: build/kernel, all 13 new
+declaration closures, 308 actual native/oracle comparisons and nine CLI cases.
+The existing 31 semantic audits, 46 Python tests, E056 census and default Lean
+core also pass. [E057 receipt](results/finite-tree-decision.json). Independent
+source review covered the mathematics, runtime interface and audit coverage.
+The historical finite-tree receipt is retained unchanged.
+
+Next integrate this finite-tree consequence into the manuscript with an exact
+literature comparison, or profile the deeper E055 timeouts. No performance,
+finite-SAT Boolean, C080 F, explicit-top or novelty result is added here. Existing
+Lean definitions, default imports and the paper are unchanged. No next worker
+is assigned; author placeholders and licensing remain unchanged.
+
 ## September 20: finite-tree entailment reduction (C085)
+
+This earlier checkpoint is historical; the classifier gap is closed above.
 
 [C085](research/claims.md#c085) proves the finite-tree extension in ordinary
 mathematics, with independent review. Compute the reverse-pop epsilon NFA.

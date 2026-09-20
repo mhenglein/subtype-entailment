@@ -1,6 +1,6 @@
 # Research plan
 
-Updated: 2026-09-20 (finite-tree reduction and remaining classifier obligation)
+Updated: 2026-09-20 (unconditional checked finite-tree decision)
 
 **Completed qualitative goal:** decide [Problem 1.7](problem.md) for bottom
 and binary product over arbitrary, possibly infinite trees. [C081](claims.md#c081)
@@ -25,11 +25,14 @@ The [proved cached solver](../notes/2026-09-20-fast-summary.md)
 now resolves all nine full-expression timeouts: E055 completes 26/26 frontend
 cases and 33/38 overall. Three deeper generated cases still time out; profile
 them before selecting the next optimization. C084 now checks regular graph
-certificates and has a complete ordinary extractor. C085 proves the finite-tree
-cycle reduction in ordinary mathematics, with checked closure/semantic lemmas
-and finite-preserving normalization. Next connect its executable graph classifier
-to those hypotheses, or pursue arity and explicit-top results under separate
-proof obligations. Tight complexity and exact literature transfers remain open.
+certificates and has a complete ordinary extractor. C085 now has an unconditional
+executable Lean decision for finite-expression entailment: the graph classifier
+supplies a forced loop or a proved uniform reverse-pop bound. The CLI calls
+that checked function. [Exact readback and evidence](../notes/2026-09-20-finite-tree-decision-readback.md).
+Next integrate the finite-tree consequence into the manuscript with an exact
+literature comparison, or profile the deeper E055 timeouts. Arity and explicit-top
+results require separate proofs. Tight complexity and exact literature transfers
+remain open. JSON handling, extraction and graph finiteness remain Python.
 
 The remaining items are proposals, not active worker assignments. Ownership and reservations
 remain in [the registry](approaches.json), [#58](https://github.com/mhenglein/subtail/issues/58)

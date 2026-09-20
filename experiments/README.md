@@ -1190,6 +1190,9 @@ Lake checkout. The CLI cases allow 40 seconds each; one deliberately tiny cap
 must return UNKNOWN. Native successes do not erase the classifier's ordinary
 Python trust boundary.
 
+This paragraph describes the E056 checkpoint. E057 below closes the classifier
+gap in Lean and changes the current CLI; the E056 receipt remains historical.
+
 **Independent experiment.** Seed 5803, 300 systems with one to four controls:
 Hot endpoints from consuming-cycle analysis agree with a separate exact
 P-automaton predecessor-saturation oracle. The oracle checks accepted prefixes
@@ -1219,3 +1222,37 @@ receipt with that coverage limitation, and the corrected cold case was rerun.
 [exact source/mathematical readback](../notes/2026-09-20-finite-tree-readback.md),
 [combined receipt](../results/finite-trees.json). Existing E055 performance
 numbers and earlier extension-boundary receipts are preserved unchanged.
+
+<a id="e057"></a>
+
+### E057 — Checked finite-tree classifier and original-expression decision
+
+```sh
+python3 scripts/check_finite_tree_decision.py --output tmp/finite-tree-decision.json
+```
+
+Use pinned Lean 4.33.1 in an isolated Lake checkout. The driver builds and
+kernel-replays `PopAcyclic` and `FiniteTreeDecision`, audits all 13 named
+declaration closures (including the private trace lemma), and forbids classical
+choice in the three runtime definitions. Those closure audits also include
+the imported runtime dependencies.
+
+The actual Lean `growthCheck` is compared with the independent predecessor-
+saturation oracle on 300 seeded systems and eight named boundary cases.
+Seed: 5807; random systems have one to four controls. Named cases include zero
+controls, epsilon-only cycles, both letter self-loops, a balanced excursion
+without growth, and a consuming cycle whose return needs a balanced excursion.
+The oracle uses no cycle classifier. These regressions supplement the all-input
+theorem; they do not establish it.
+
+Nine actual CLI cases cover forced infinite growth, unsatisfiability without
+growth, finite negative variable/ground inputs, the same growth input under
+arbitrary semantics, rejection of an infinite supplied graph, a cap returning
+UNKNOWN, zero-variable reflexivity and query-only product names. Three negative
+cases also receive C084 kernel-checked arbitrary non-entailment certificates.
+Finiteness of certificate roots remains a Python check.
+
+[Source-pinned receipt](../results/finite-tree-decision.json) and
+[readback](../notes/2026-09-20-finite-tree-decision-readback.md) record host,
+revision, source hashes, commands and independent review. This is a correctness
+and interface test, not a new E055 performance measurement or finite-SAT theorem.

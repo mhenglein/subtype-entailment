@@ -1318,9 +1318,22 @@ Finite-valued definitional normalization transfers the result to original
 finite expressions. C081 supplies the arbitrary-tree decision in the second
 branch. The theorem does not identify every arbitrary model with a finite one.
 
-**Status.** `WRITTEN PROOF + REPRO`, independently reviewed for the complete
-ordinary reduction. `LEAN` for these exact semantic components in the new
-optional `FiniteTreeReduction` module:
+**Status.** `LEAN` for the total executable finite-expression decision:
+
+```lean
+FiniteTreeDecision.entailsCheck G s t = true ↔ FiniteExprEntails G s t
+```
+
+No supplied classification, word bound, satisfiability or regularity hypothesis
+remains. `growthCheck_correct` connects the cached Boolean to an actual
+reverse-pop return word. A positive test supplies a forced nonempty loop;
+a negative test excludes all nonempty loops. `PopAcyclic` then proves every
+consumed word has length less than the number of controls, discharging the
+uniform-bound hypothesis below. The separate normalized satisfiability
+equivalence above retains its independently reviewed `WRITTEN PROOF + REPRO`
+status; this update does not add a separate finite-SAT Boolean theorem.
+
+The earlier checked semantic components in `FiniteTreeReduction` remain:
 
 - `closureBounded_iff_noHot`: for any finite seed list in a finite pushdown
   system, its full reachability closure has bounded word lengths iff no
@@ -1347,10 +1360,16 @@ The CLI's `--finite-trees` branch exposes vacuity and checks extracted graphs
 for cycles reachable from original variable roots. Ordinary and Lean evidence
 remain separate in the receipt.
 
-**Limits.** No all-input Lean Boolean theorem for finite entailment is claimed.
-The effective graph classifier's connection to the supplied-loop or uniform-
-bound hypotheses is still an ordinary proof. Python DAG normalization is
-separate from the checked Lean naming construction. The optional C084 instance
+The later [executable bridge](../lean/Subtail/FiniteTreeDecision.lean),
+[acyclic path bound](../lean/Subtail/PopAcyclic.lean),
+[independent readback](../notes/2026-09-20-finite-tree-decision-readback.md),
+[new checker](../scripts/check_finite_tree_decision.py) and
+[E057 receipt](../results/finite-tree-decision.json) supersede the earlier
+classifier gap. The CLI now uses the Lean naming construction and decision;
+the separate Python growth implementation is diagnostic only.
+
+**Limits.** JSON parsing/emission and countermodel extraction remain Python;
+the latter's DAG normalization is separate from Lean naming. The C084 instance
 certificate still proves arbitrary non-entailment; the graph-finiteness check
 is ordinary Python. Caps remain UNKNOWN. The seed-dependent height bound is
 not a new global shortest-witness bound. Explicit top, new constructor labels,

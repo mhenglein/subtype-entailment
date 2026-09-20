@@ -12,7 +12,22 @@ publication-ready paper, broadly useful solver and new signature theorems
 require further work. Implementation ownership remains in the registry and
 future scoped issue claims; this document assigns no workers or paths.
 
-## September 20 update: finite-tree reduction proved
+## September 20 update: finite-tree decision fully connected in Lean
+
+The executable graph-classifier gap below is closed by `PopAcyclic` and
+`FiniteTreeDecision`. C085 now gives a total Boolean equivalent to finite
+entailment over the original expressions, with no supplied witness bound or
+classification. The CLI calls that function. [Proof readback and validation](../notes/2026-09-20-finite-tree-decision-readback.md).
+Python parsing/emission and graph finiteness remain outside the proof; C084
+certificates keep their arbitrary-tree statement.
+
+The next manuscript revision should explain the consuming-cycle dichotomy,
+the no-repeated-control length argument, and the transfer to finite expressions,
+then compare this exact signature and tree domain with Henglein–Rehof and
+Niehren–Priesnitz. This update changes no novelty claim or paper source pin.
+Performance profiling and explicit-top research remain separate proposals.
+
+## Earlier September 20 checkpoint: finite-tree reduction proved
 
 [C085](claims.md#c085) establishes the proposed finite-tree reduction by an
 ordinary proof and independent review. The hot-denial construction simplifies:

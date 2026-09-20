@@ -2,8 +2,9 @@
 
 Date/session: 2026-09-20, finite-decision-20260920. C085, A010/A018; #58/#37.
 Base: 52e790fb7360ec676ca76f5a391c9a35375a912b.
-Status: exact implementation refinement of the independently reviewed C085
-ordinary proof. Formal obligations below are not assumed discharged.
+Status: the obligations below were the entry contract. They are discharged by
+`PopAcyclic` and `FiniteTreeDecision` at `4159c58`; the exact checked statement,
+independent review and validation are in the [readback](2026-09-20-finite-tree-decision-readback.md).
 
 ## Finish line and retained semantics
 
@@ -62,7 +63,7 @@ fragment; explicit-top semantics remain outside the argument.
 ## Worker interface and ownership
 
 The helper writer owns only new `lean/Subtail/PopAcyclic.lean`, namespace
-`Subtail.PopAcyclic`, with proposed declaration:
+`Subtail.PopAcyclic`, with the agreed declaration:
 
 ```lean
 theorem pop_length_lt_of_no_nonempty_loop (M : StackSummary.System n)
