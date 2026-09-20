@@ -84,6 +84,12 @@ An exhaustive negative cycle search may still inspect exponentially many words.
 The prefix monitor and promoted terminal query can also be expensive. No
 improved worst-case complexity, memory bound, general speedup, new signature,
 C080 bound or novelty result follows. A cap remains UNKNOWN. Licensing and
-authorship remain as deferred by the owner. The next performance experiment
-should force the terminal-promotion branch; formal countermodel production
-and explicit-top separation remain separate research questions.
+authorship remain as deferred by the owner. A separate diagnostic at `262f57a` uses the same empty-constraint raw problem
+with three or four normalized variables. The three-variable case completes in
+1.471 seconds; the four-variable case is UNKNOWN at 20.008 seconds inside
+summary construction, before cycle search. This trace uses the gated ablation
+and `--run`, so it is not a matched final-endpoint timing. The independent
+root-only/bottom valuation proves the expected negative answer in both cases.
+The next measured target is this summary construction; a separate family
+should also force terminal promotion. Formal countermodel production and
+explicit-top separation remain separate research questions.

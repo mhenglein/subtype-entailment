@@ -100,3 +100,16 @@ Outstanding acceptance obligations: Lean proof and runtime audit; independent
 ordinary readback; native abstract-component checks; matched original #eval
 benchmark; current frontend/deeper/CLI regressions. Performance outside these
 measured families, a memory bound, and the terminal promotion cost remain open.
+
+
+## Larger diagnostic boundary
+
+At `262f57a`, separate gated diagnostic probes with empty constraints and query
+0<=1 finish for n=3 in 1.471 seconds, but return UNKNOWN for n=4 at 20.008
+seconds while constructing the summary instance. The expected false answer
+has the same direct root-only/bottom model, with unused variables bottom.
+These probes stay outside the original seven-fixture identity. The n=4 trace
+does not evaluate the new cycle scan and suggests reusing the already proved
+balanced tables in summary construction as the next exact refinement. That
+construction, its equality proof and any resulting speedup are unperformed.
+The terminal-promotion branch still needs its own discriminating family.
