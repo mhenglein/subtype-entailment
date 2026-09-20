@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Audit the selective Lean boundary and exercise the ordinary finite solver.
+"""Audit the original finite-tree semantic lemmas and exercise the current CLI.
 
-This does not turn Python graph classification or normalization into a Lean
-proof. Every declaration's actual hypotheses remain part of the audit record.
+The separate check_finite_tree_decision.py audits the later executable bridge.
+Every declaration's actual hypotheses remain part of this audit record.
 """
 from __future__ import annotations
 
@@ -117,7 +117,7 @@ def main():
             'host':platform.node(),'platform':platform.platform(),'toolchain':version,
             'build':'PASS','kernel_replay':'PASS','declarations':declarations,
             'python_tests':tests,'experiment':experiments,'cli_cases':cases,
-            'trust':'Selective closure/semantic lemmas are Lean-checked. The complete finite-tree classifier, Python normalization and graph finiteness remain ordinary mathematics/Python.'}
+            'trust':'This receipt audits the original semantic lemmas. The later executable classifier and unconditional decision are audited separately by check_finite_tree_decision.py. JSON emission and rooted graph finiteness remain Python.'}
     target.write_text(json.dumps(result,indent=2,sort_keys=True)+'\n')
     print(f'PASS: build/kernel, {len(declarations)} declaration closures, {len(cases)} actual CLI cases')
 

@@ -88,25 +88,28 @@ class FiniteTreeTests(unittest.TestCase):
         self.assertFalse(result['cycle']['forced_root'])
         self.assertNotIn('finite_model_obstruction',result)
 
-    def test_growth_gate_does_not_run_the_arbitrary_solver(self):
-        p=subtail.parse_problem({'variables':['x'],
-            'constraints':[[{'prod':['x','bottom']},'x']], 'query':['x','bottom']})
-        with patch.object(subtail,'run_native',side_effect=AssertionError('unexpected native call')):
-            result=finite.run_decision(p,time.monotonic()+5)
-        self.assertEqual(result['status'],'ENTAILED')
-        self.assertEqual(result['reason'],'no_finite_model')
-
-    def test_cold_gate_preserves_arbitrary_unknown(self):
-        p=subtail.parse_problem({'variables':['x'], 'constraints':[], 'query':['x','bottom']})
-        with patch.object(subtail,'run_native',return_value={'status':'UNKNOWN','reason':'time_limit'}):
-            result=finite.run_decision(p,time.monotonic()+5)
-        self.assertEqual(result['status'],'UNKNOWN')
-        self.assertFalse(result['growth_analysis']['finite_model_obstruction'])
-
-    def test_growth_limit_does_not_become_a_decision(self):
+    def test_finite_native_requires_both_result_markers(self):
         p=subtail.parse_problem({'variables':[], 'constraints':[], 'query':['bottom','bottom']})
-        with patch.object(subtail,'run_native',side_effect=AssertionError('unexpected native call')):
-            self.assertEqual(finite.run_decision(p,0)['status'],'UNKNOWN')
+        for text in (subtail.MARKER+'true',
+                     subtail.GROWTH_MARKER+'true\n'+subtail.MARKER+'false',
+                     subtail.GROWTH_MARKER+'false\n'+subtail.GROWTH_MARKER+'false\n'+subtail.MARKER+'true'):
+            with self.subTest(text=text), patch.object(subtail,'run_process',side_effect=[
+                {'status':'PASS','seconds':0}, {'status':'PASS','seconds':0,'output':text}]):
+                self.assertEqual(subtail.run_native(p,time.monotonic()+1,finite_trees=True)['status'],'UNKNOWN')
+
+    def test_finite_process_failure_cannot_supply_a_decision(self):
+        p=subtail.parse_problem({'variables':[], 'constraints':[], 'query':['bottom','bottom']})
+        with patch.object(subtail,'run_process',side_effect=[{'status':'PASS','seconds':0},
+             {'status':'UNKNOWN','reason':'time_limit','output':subtail.GROWTH_MARKER+'true\n'+subtail.MARKER+'true'}]):
+            self.assertEqual(subtail.run_native(p,time.monotonic()+1,finite_trees=True)['status'],'UNKNOWN')
+
+    def test_finite_source_calls_checked_procedure(self):
+        name='x); #eval IO.println "bad" --'
+        p=subtail.parse_problem({'variables':[name], 'constraints':[], 'query':[name,'bottom']})
+        source=subtail.lean_source(p,finite_trees=True)
+        self.assertNotIn(name,source)
+        self.assertIn('Subtail.FiniteTreeDecision.run input left right',source)
+        self.assertIn('toString answer.2',source)
 
     def test_finite_cli_rejects_infinite_graph(self):
         output=io.StringIO()
@@ -118,19 +121,23 @@ class FiniteTreeTests(unittest.TestCase):
         self.assertEqual(result['status'],'INVALID_MODEL')
         self.assertEqual(result['countermodel']['reason'],'infinite_variable_tree')
 
-    def test_finite_cli_reports_vacuity_and_its_trust_boundary(self):
+    def test_finite_cli_uses_native_growth_and_reports_its_boundary(self):
         output=io.StringIO()
-        with contextlib.redirect_stdout(output):
+        with patch.object(finite,'analyze_problem',side_effect=AssertionError('Python gate called')), \
+             patch.object(subtail,'run_process',side_effect=[{'status':'PASS','seconds':0},
+                {'status':'PASS','seconds':0,'output':subtail.GROWTH_MARKER+'true\n'+subtail.MARKER+'true'}]), \
+             contextlib.redirect_stdout(output):
             code=subtail.main([str(subtail.ROOT/'examples/entailment/zero-spine.json'),'--finite-trees'])
         result=json.loads(output.getvalue())
         self.assertEqual(code,0)
         self.assertEqual(result['status'],'ENTAILED')
-        self.assertEqual(result['semantics'],'finite bottom/product trees')
-        self.assertIn('Lean was not run',result['trust_boundary'])
+        self.assertEqual(result['reason'],'no_finite_model')
+        self.assertEqual(result['basis'],'Lean FiniteTreeDecision.entailsCheck_correct')
+        self.assertIn('unconditional correctness proofs',result['trust_boundary'])
 
     def test_finite_cli_rechecks_extracted_graph(self):
         output=io.StringIO()
-        with patch.object(finite,'run_decision',return_value={'status':'NOT_ENTAILED'}), \
+        with patch.object(subtail,'run_native',return_value={'status':'NOT_ENTAILED'}), \
              patch.object(subtail,'find_countermodel',return_value={'status':'FOUND',
                 'countermodel':{'valid':True,'nodes':[None,[1,0]],'roots':{'x':1}}}), \
              contextlib.redirect_stdout(output):

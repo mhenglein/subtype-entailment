@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""Capped JSON interface to the checked C081 entailment procedure.
+"""Capped JSON interface to the checked arbitrary- and finite-tree procedures.
 
 The input parser, launcher and finite-graph certificate checker are ordinary
-Python, not Lean proofs. Optional finite-tree mode adds an ordinary proved
-cycle reduction, whose implementation is not yet Lean-verified.
+Python, not Lean proofs. Both decision modes call their proved Lean functions.
 """
 from __future__ import annotations
 
@@ -23,7 +22,9 @@ import time
 
 ROOT = Path(__file__).resolve().parents[1]
 MODULE = ROOT / 'lean/Subtail/EntailmentFast.lean'
+FINITE_MODULE = ROOT / 'lean/Subtail/FiniteTreeDecision.lean'
 MARKER = 'SUBTAIL_RESULT:'
+GROWTH_MARKER = 'SUBTAIL_GROWTH:'
 CERTIFICATE_MARKER = 'SUBTAIL_CERTIFICATE:'
 
 
@@ -75,19 +76,25 @@ def lean_expr(e):
     return f'(.prod {lean_expr(e[1])} {lean_expr(e[2])})'
 
 
-def lean_source(p: Problem) -> str:
+def lean_source(p: Problem, finite_trees=False) -> str:
     # Only parsed integer indices and fixed syntax enter Lean source. Names do not.
     premises = ', '.join(f'({lean_expr(l)}, {lean_expr(r)})' for l, r in p.constraints)
-    return f'''import Subtail.EntailmentFast
+    module = 'Subtail.FiniteTreeDecision' if finite_trees else 'Subtail.EntailmentFast'
+    output = f'''#eval do
+  let answer := Subtail.FiniteTreeDecision.run input left right
+  IO.println ("{GROWTH_MARKER}" ++ toString answer.1)
+  IO.println ("{MARKER}" ++ toString answer.2)
+''' if finite_trees else f'''#eval IO.println ("{MARKER}" ++ toString
+  (Subtail.EntailmentFast.entailsCheck input left right))
+'''
+    return f'''import {module}
 open Subtail.ExpressionNormalization
 set_option maxRecDepth 100000
 set_option maxHeartbeats 0
 def input : Input {len(p.variables)} := [{premises}]
 def left : Expr {len(p.variables)} := {lean_expr(p.query[0])}
 def right : Expr {len(p.variables)} := {lean_expr(p.query[1])}
-#eval IO.println ("{MARKER}" ++ toString
-  (Subtail.EntailmentFast.entailsCheck input left right))
-'''
+''' + output
 
 
 def run_process(command, cwd, timeout, memory_gib=16.0):
@@ -137,14 +144,15 @@ def run_process(command, cwd, timeout, memory_gib=16.0):
     return result
 
 
-def run_native(p: Problem, deadline, memory_gib=16.0):
-    build = run_process(['lake', 'build', '+Subtail.EntailmentFast'], ROOT / 'lean',
+def run_native(p: Problem, deadline, memory_gib=16.0, finite_trees=False):
+    module = 'Subtail.FiniteTreeDecision' if finite_trees else 'Subtail.EntailmentFast'
+    build = run_process(['lake', 'build', '+' + module], ROOT / 'lean',
                         deadline - time.monotonic(), memory_gib)
     if build['status'] != 'PASS':
         return {**build, 'stage': 'build'}
     with tempfile.TemporaryDirectory(prefix='subtail-input-') as directory:
         source = Path(directory) / 'Input.lean'
-        source.write_text(lean_source(p))
+        source.write_text(lean_source(p, finite_trees))
         result = run_process(['lake', 'env', 'lean', str(source)], ROOT / 'lean',
                              deadline - time.monotonic(), memory_gib)
     if result['status'] != 'PASS':
@@ -152,11 +160,23 @@ def run_native(p: Problem, deadline, memory_gib=16.0):
     markers = [x.strip() for x in result['output'].splitlines() if x.startswith(MARKER)]
     if len(markers) != 1 or markers[0] not in (MARKER + 'true', MARKER + 'false'):
         return {'status': 'UNKNOWN', 'reason': 'missing_or_ambiguous_result', 'stage': 'decision'}
-    return {'status': 'ENTAILED' if markers[0].endswith('true') else 'NOT_ENTAILED',
+    answer = {'status': 'ENTAILED' if markers[0].endswith('true') else 'NOT_ENTAILED',
             'stage': 'decision', 'native_seconds': result['seconds'],
             'build_seconds': build['seconds'],
-            'basis': 'Lean EntailmentFast.entailsCheck_correct',
-            'wrapper_sha256': hashlib.sha256(MODULE.read_bytes()).hexdigest()}
+            'basis': 'Lean ' + module.removeprefix('Subtail.') + '.entailsCheck_correct',
+            'wrapper_sha256': hashlib.sha256((FINITE_MODULE if finite_trees else MODULE).read_bytes()).hexdigest()}
+    if finite_trees:
+        growth = [x.strip() for x in result['output'].splitlines() if x.startswith(GROWTH_MARKER)]
+        if len(growth) != 1 or growth[0] not in (GROWTH_MARKER + 'true', GROWTH_MARKER + 'false'):
+            return {'status': 'UNKNOWN', 'reason': 'missing_or_ambiguous_growth_result', 'stage': 'decision'}
+        obstruction = growth[0].endswith('true')
+        if obstruction and answer['status'] != 'ENTAILED':
+            return {'status': 'UNKNOWN', 'reason': 'inconsistent_native_results', 'stage': 'decision'}
+        answer['growth_analysis'] = {'status': 'PASS', 'finite_model_obstruction': obstruction,
+                                    'basis': 'Lean FiniteTreeDecision.growthCheck_correct'}
+        if obstruction:
+            answer['reason'] = 'no_finite_model'
+    return answer
 
 
 def separating_path(nodes, left, right, deadline=None):
@@ -401,7 +421,7 @@ def main(argv=None):
     parser.add_argument('--memory-gib', type=float, default=16.0, help='Process address-space cap on Linux')
     parser.add_argument('--no-explain', action='store_true')
     parser.add_argument('--finite-trees', action='store_true',
-                        help='Restrict valuations to finite trees using the ordinary cycle reduction')
+                        help='Use the checked decision for finite-tree valuations')
     parser.add_argument('--check-model', type=Path, help='Check a supplied graph instead of running the entailment decision')
     parser.add_argument('--verify-certificate', action='store_true',
                         help='Also verify a found/supplied countermodel with the Lean certificate checker')
@@ -424,8 +444,7 @@ def main(argv=None):
                       'basis': 'independent Python regular-tree certificate check',
                       'countermodel': checked}
         else:
-            decision = finite_trees.run_decision if args.finite_trees else run_native
-            result = decision(p, deadline, args.memory_gib)
+            result = run_native(p, deadline, args.memory_gib, finite_trees=True) if args.finite_trees else run_native(p, deadline, args.memory_gib)
             if result['status'] == 'NOT_ENTAILED' and not args.no_explain:
                 try:
                     explanation = find_countermodel(p, deadline, args.memory_gib)
@@ -470,13 +489,13 @@ def main(argv=None):
             '. JSON parsing and source emission remain ordinary Python.')
     result['semantics'] = 'finite bottom/product trees' if args.finite_trees else 'arbitrary bottom/product trees'
     if args.finite_trees:
-        result['trust_boundary'] = (
-            'Finite-tree classification and graph finiteness use ordinary Python backed by the written reduction. '
-            'The complete finite-tree procedure is not Lean-verified. ' + result['trust_boundary'])
-        if result.get('reason') == 'no_finite_model':
+        if args.check_model:
+            result['trust_boundary'] += ' Finiteness of the supplied graph is checked by Python.'
+        else:
             result['trust_boundary'] = (
-                'Ordinary Python found a consuming cycle at a forced product root, excluding finite models. '
-                'The cycle reduction and classifier are not Lean-verified; Lean was not run.')
+                'The finite-tree Lean Boolean and growth classifier have unconditional correctness proofs. '
+                'JSON parsing, source emission, native launch, extraction and graph finiteness remain Python. '
+                'Optional C084 certificates prove arbitrary non-entailment of the emitted expressions.')
     print(json.dumps(result, indent=2))
     return 0 if result['status'] in ('ENTAILED', 'NOT_ENTAILED') else 2 if result['status'] == 'UNKNOWN' else 1
 

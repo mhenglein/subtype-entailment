@@ -29,6 +29,7 @@ on:
       - 'scripts/check_fast_summary.py'
       - 'scripts/check_regular_certificate.py'
       - 'scripts/check_finite_tree_reduction.py'
+      - 'scripts/check_finite_tree_decision.py'
       - 'scripts/finite_trees.py'
       - 'scripts/test_finite_trees.py'
       - 'examples/finite-trees/**'
@@ -54,6 +55,7 @@ on:
       - 'scripts/check_fast_summary.py'
       - 'scripts/check_regular_certificate.py'
       - 'scripts/check_finite_tree_reduction.py'
+      - 'scripts/check_finite_tree_decision.py'
       - 'scripts/finite_trees.py'
       - 'scripts/test_finite_trees.py'
       - 'examples/finite-trees/**'
@@ -201,6 +203,8 @@ jobs:
         run: python3 scripts/check_regular_certificate.py
       - name: Verify finite-tree semantic lemmas and interface
         run: python3 scripts/check_finite_tree_reduction.py --output /tmp/finite-trees.json
+      - name: Verify the unconditional finite-tree decision and native classifier
+        run: python3 scripts/check_finite_tree_decision.py --output /tmp/finite-tree-decision.json
       - name: Audit first-return graph and query-interface declarations
         run: |
           mkdir -p tmp
