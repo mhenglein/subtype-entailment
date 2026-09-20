@@ -1,0 +1,10 @@
+{
+  "variables": ["x", "y"],
+  "constraints": [
+    ["x", {"prod": ["bottom", "y"]}],
+    [{"prod": ["bottom", "y"]}, "x"],
+    ["y", {"prod": ["x", "bottom"]}],
+    [{"prod": ["x", "bottom"]}, "y"]
+  ],
+  "query": ["x", {"prod": ["bottom", "bottom"]}]
+}

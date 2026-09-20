@@ -23,6 +23,7 @@ import time
 ROOT = Path(__file__).resolve().parents[1]
 MODULE = ROOT / 'lean/Subtail/EntailmentFast.lean'
 MARKER = 'SUBTAIL_RESULT:'
+CERTIFICATE_MARKER = 'SUBTAIL_CERTIFICATE:'
 
 
 @dataclass(frozen=True)
@@ -230,6 +231,117 @@ def check_countermodel(p: Problem, model, deadline=None):
             'semantics': 'arbitrary bottom/product trees; finite graph denotes regular trees'}
 
 
+def certificate_data(p: Problem, model, deadline=None):
+    """Prepare data, not proofs, for Lean's original-expression verifier."""
+    nodes, roots = validate_model(p, model)
+    intern = {node: i for i, node in enumerate(nodes)}
+    embedding = {}
+
+    def check_time():
+        if deadline is not None and time.monotonic() >= deadline:
+            raise TimeoutError('certificate generation time limit')
+
+    def name(e):
+        check_time()
+        if e in embedding:
+            return embedding[e]
+        if e[0] == 'var':
+            q = roots[p.variables[e[1]]]
+        else:
+            node = None if e[0] == 'bot' else (name(e[1]), name(e[2]))
+            if node not in intern:
+                intern[node] = len(nodes)
+                nodes.append(node)
+            q = intern[node]
+        embedding[e] = q
+        return q
+
+    for pair in (*p.constraints, p.query):
+        for e in pair:
+            name(e)
+    relation, pending = set(), deque((name(l), name(r)) for l, r in p.constraints)
+    while pending:
+        check_time()
+        a, b = pending.popleft()
+        if (a, b) in relation:
+            continue
+        relation.add((a, b))
+        if nodes[a] is not None and nodes[b] is not None:
+            pending.extend(zip(nodes[a], nodes[b]))
+    path = separating_path(nodes, name(p.query[0]), name(p.query[1]), deadline)
+    return nodes, roots, embedding, relation, path
+
+
+def certificate_source(p: Problem, model, deadline=None):
+    nodes, roots, embedding, relation, path = certificate_data(p, model, deadline)
+    if path is None:
+        # The checker will reject this address; absence of a path is never a
+        # proof of a negative answer and is not rendered as an erased premise.
+        path = []
+    n, v = len(p.variables), len(nodes)
+    if v * v > 1_000_000:
+        raise MemoryError('certificate relation table limit')
+    def vector(entries):
+        return '#v[' + ', '.join(entries) + ']'
+    graph = vector('none' if node is None else f'some ({node[0]}, {node[1]})' for node in nodes)
+    root_vector = vector(str(roots[name]) for name in p.variables)
+    rows = []
+    for a in range(v):
+        if deadline is not None and time.monotonic() >= deadline:
+            raise TimeoutError('certificate generation time limit')
+        rows.append(vector('true' if (a, b) in relation else 'false' for b in range(v)))
+    matrix = vector(rows)
+    embed = ''.join(f'if e == {lean_expr(e)} then {q} else\n  ' for e, q in embedding.items()) + '0'
+    premises = ', '.join(f'({lean_expr(l)}, {lean_expr(r)})' for l, r in p.constraints)
+    word = '[' + ', '.join('true' if b else 'false' for b in path) + ']'
+    return f'''import Subtail.RegularTreeCertificate
+open Subtail.ExpressionNormalization Subtail.RegularTreeCertificate
+set_option maxRecDepth 100000
+set_option maxHeartbeats 0
+def input : Input {n} := [{premises}]
+def left : Expr {n} := {lean_expr(p.query[0])}
+def right : Expr {n} := {lean_expr(p.query[1])}
+def graph : Graph {v} := ⟨{graph}⟩
+def rootTable : Vector (Fin {v}) {n} := {root_vector}
+def relationTable : Vector (Vector Bool {v}) {v} := {matrix}
+def cert : Certificate {n} {v} := {{
+  graph := graph
+  roots := fun x => rootTable.get x
+  embed := fun e => {embed}
+  relation := fun p q => (relationTable.get p).get q
+  word := {word}
+}}
+#eval IO.println ("{CERTIFICATE_MARKER}" ++ toString (check input left right cert))
+'''
+
+
+def verify_certificate(p: Problem, model, deadline, memory_gib=16.0):
+    try:
+        source = certificate_source(p, model, deadline)
+    except (TimeoutError, RecursionError, MemoryError):
+        return {'status': 'UNKNOWN', 'reason': 'certificate_generation_resource_limit'}
+    build = run_process(['lake', 'build', '+Subtail.RegularTreeCertificate'], ROOT / 'lean',
+                        deadline - time.monotonic(), memory_gib)
+    if build['status'] != 'PASS':
+        return {k: v for k, v in {**build, 'stage': 'certificate_build'}.items() if k != 'output'}
+    with tempfile.TemporaryDirectory(prefix='subtail-certificate-') as directory:
+        file = Path(directory) / 'Certificate.lean'
+        file.write_text(source)
+        run = run_process(['lake', 'env', 'lean', str(file)], ROOT / 'lean',
+                          deadline - time.monotonic(), memory_gib)
+    if run['status'] != 'PASS':
+        return {k: v for k, v in {**run, 'stage': 'certificate_check'}.items() if k != 'output'}
+    markers = [line.strip() for line in run['output'].splitlines() if line.startswith(CERTIFICATE_MARKER)]
+    if markers == [CERTIFICATE_MARKER + 'true']:
+        return {'status': 'VERIFIED', 'basis': 'Lean RegularTreeCertificate.check_not_entails',
+                'checker_sha256': hashlib.sha256((ROOT / 'lean/Subtail/RegularTreeCertificate.lean').read_bytes()).hexdigest(),
+                'input_source_sha256': hashlib.sha256(source.encode()).hexdigest(),
+                'seconds': run['seconds']}
+    if markers == [CERTIFICATE_MARKER + 'false']:
+        return {'status': 'REJECTED', 'reason': 'Lean_certificate_check_false'}
+    return {'status': 'UNKNOWN', 'reason': 'missing_or_ambiguous_certificate_result'}
+
+
 def problem_json(p: Problem):
     def expression(e):
         if e[0] == 'bot':
@@ -285,6 +397,8 @@ def main(argv=None):
     parser.add_argument('--memory-gib', type=float, default=16.0, help='Process address-space cap on Linux')
     parser.add_argument('--no-explain', action='store_true')
     parser.add_argument('--check-model', type=Path, help='Check a supplied finite-graph model instead of running Lean')
+    parser.add_argument('--verify-certificate', action='store_true',
+                        help='Also verify a found/supplied countermodel with the Lean certificate checker')
     args = parser.parse_args(argv)
     if not math.isfinite(args.timeout) or args.timeout <= 0 or not math.isfinite(args.memory_gib) or args.memory_gib <= 0:
         parser.error('timeout and memory-gib must be finite positive numbers')
@@ -303,10 +417,22 @@ def main(argv=None):
         else:
             result = run_native(p, deadline, args.memory_gib)
             if result['status'] == 'NOT_ENTAILED' and not args.no_explain:
-                explanation = find_countermodel(p, deadline, args.memory_gib)
+                try:
+                    explanation = find_countermodel(p, deadline, args.memory_gib)
+                except (TimeoutError, RecursionError, MemoryError):
+                    explanation = {'status': 'UNKNOWN', 'reason': 'extraction_resource_limit'}
+                except (ValueError, OSError, TypeError):
+                    explanation = {'status': 'UNKNOWN', 'reason': 'extraction_failed'}
                 result['explanation_search'] = {k: v for k, v in explanation.items() if k != 'countermodel'}
                 if 'countermodel' in explanation:
                     result['countermodel'] = explanation['countermodel']
+        if args.verify_certificate and result.get('countermodel', {}).get('valid'):
+            result['certificate_verification'] = verify_certificate(p, result['countermodel'], deadline, args.memory_gib)
+            if result['certificate_verification']['status'] == 'REJECTED':
+                # Retain a native decision, but remove the disputed certificate.
+                result.pop('countermodel')
+                if args.check_model:
+                    result['status'] = 'INVALID_MODEL'
     except TimeoutError:
         result = {"status": "UNKNOWN", "reason": "certificate_time_limit"}
     except (ValueError, OSError, TypeError) as exc:
@@ -318,6 +444,9 @@ def main(argv=None):
         'Python certificate check only; Lean was not run. Parser and graph checker are not Lean-verified.'
         if args.check_model else
         'Lean algorithm checked; Python parsing, launch and certificate checker are not Lean-verified.')
+    if result.get('certificate_verification', {}).get('status') == 'VERIFIED':
+        result['trust_boundary'] = ('Lean verified the finite-graph certificate against emitted original expressions. '
+            'JSON parsing, source emission and the extractor remain ordinary Python.')
     print(json.dumps(result, indent=2))
     return 0 if result['status'] in ('ENTAILED', 'NOT_ENTAILED') else 2 if result['status'] == 'UNKNOWN' else 1
 

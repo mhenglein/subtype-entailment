@@ -128,6 +128,30 @@ class ExtractionTests(unittest.TestCase):
         p = subtail.parse_problem({'variables':['x'], 'constraints':[], 'query':['x','bottom']})
         self.assertEqual(rc.extract(p, deadline=0)['reason'], 'time_limit')
 
+    def test_generated_inputs_with_independent_cyclic_countermodels(self):
+        rng = random.Random(5702)
+        for sample in range(120):
+            # This graph supplies an independent witness of non-entailment.
+            # Premises are retained only when exact pair-graph inclusion holds.
+            nodes = [None] + [[rng.randrange(5), rng.randrange(5)] for _ in range(4)]
+            roots = {'x': rng.randrange(5), 'y': rng.randrange(5)}
+            model = {'nodes': nodes, 'roots': roots}
+            terms = ['bottom', 'x', 'y', {'prod':['x','y']},
+                     {'prod':['bottom','x']}, {'prod':['y','bottom']}]
+            valid, negative = [], []
+            for s, t in product(terms, repeat=2):
+                p = subtail.parse_problem({'variables':['x','y'], 'constraints':[], 'query':[s,t]})
+                checked = subtail.check_countermodel(p, model)
+                if not checked['valid']:
+                    valid.append([s,t])
+                elif len(checked['separating_path']) <= 3:
+                    negative.append([s,t])
+            if not negative:
+                continue
+            self.check({'variables':['x','y'],
+                        'constraints':rng.sample(valid, min(5, len(valid))),
+                        'query':rng.choice(negative)})
+
 
 if __name__ == '__main__':
     unittest.main()

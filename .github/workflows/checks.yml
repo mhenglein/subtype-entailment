@@ -33,6 +33,8 @@ jobs:
         run: python3 -m unittest discover -s scripts -p 'test_research_index.py'
       - name: Check JSON interface and independent graph certificates
         run: python3 -m unittest discover -s scripts -p 'test_subtail.py'
+      - name: Check canonical regular countermodel extraction
+        run: python3 -m unittest discover -s scripts -p 'test_regular_countermodel.py'
       - name: Check paper declarations and literal examples
         run: |
           python3 - <<'PY'

@@ -126,6 +126,39 @@ class SubtailTests(unittest.TestCase):
         self.assertEqual(report['status'], 'FOUND')
         self.assertTrue(cli.check_countermodel(p, report['countermodel'])['valid'])
 
+    def test_certificate_emission_contains_no_user_names(self):
+        name = 'x); #eval IO.println "bad" --'
+        p = cli.parse_problem({'variables':[name], 'constraints':[], 'query':[name,'bottom']})
+        source = cli.certificate_source(p, {'nodes':[None,[0,0]], 'roots':{name:1}})
+        self.assertNotIn(name, source)
+        self.assertIn('Certificate 1 2', source)
+        self.assertIn('check input left right cert', source)
+
+    def test_certificate_emission_handles_no_original_variables(self):
+        p = cli.parse_problem({'variables':[], 'constraints':[],
+                              'query':[{'prod':['bottom','bottom']},'bottom']})
+        source = cli.certificate_source(p, {'nodes':[None], 'roots':{}})
+        self.assertIn('Vector (Fin 2) 0 := #v[]', source)
+
+    def test_certificate_marker_cannot_override_process_failure(self):
+        with patch.object(cli, 'run_process', side_effect=[{'status':'PASS'},
+             {'status':'UNKNOWN','reason':'process_failed_or_resource_limit',
+              'output':cli.CERTIFICATE_MARKER+'true'}]):
+            result = cli.verify_certificate(self.problem(),
+                {'nodes':[None,[0,0]],'roots':{'x':1,'y':0}}, time.monotonic()+3)
+            self.assertEqual(result['status'], 'UNKNOWN')
+
+    def test_explanation_exception_preserves_decision(self):
+        output = io.StringIO()
+        with patch.object(cli, 'run_native', return_value={'status':'NOT_ENTAILED'}), \
+             patch.object(cli, 'find_countermodel', side_effect=MemoryError), \
+             contextlib.redirect_stdout(output):
+            code = cli.main([str(cli.ROOT/'examples/entailment/zero-spine.json')])
+        report = json.loads(output.getvalue())
+        self.assertEqual(code, 0)
+        self.assertEqual(report['status'], 'NOT_ENTAILED')
+        self.assertEqual(report['explanation_search']['status'], 'UNKNOWN')
+
     def test_certificate_timeout(self):
         with self.assertRaises(TimeoutError):
             cli.check_countermodel(self.problem(), {'nodes':[None,[0,0]],'roots':{'x':1,'y':0}},0)

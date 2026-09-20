@@ -27,6 +27,10 @@ on:
       - 'scripts/check_rank_weight_native.py'
       - 'scripts/check_terminal_lazy.py'
       - 'scripts/check_fast_summary.py'
+      - 'scripts/check_regular_certificate.py'
+      - 'scripts/regular_countermodel.py'
+      - 'scripts/test_regular_countermodel.py'
+      - 'examples/countermodels/**'
       - 'scripts/subtail.py'
       - 'scripts/test_subtail.py'
       - 'examples/entailment/**'
@@ -44,6 +48,10 @@ on:
       - 'scripts/check_rank_weight_native.py'
       - 'scripts/check_terminal_lazy.py'
       - 'scripts/check_fast_summary.py'
+      - 'scripts/check_regular_certificate.py'
+      - 'scripts/regular_countermodel.py'
+      - 'scripts/test_regular_countermodel.py'
+      - 'examples/countermodels/**'
       - 'scripts/subtail.py'
       - 'scripts/test_subtail.py'
       - 'examples/entailment/**'
@@ -181,6 +189,8 @@ jobs:
               assert set(a.strip() for a in axioms.split(',') if a.strip()) <= allowed, (name,axioms)
           print('PASS:',len(rows),'complete axiom dependency closures')
           PY
+      - name: Verify regular countermodel certificates
+        run: python3 scripts/check_regular_certificate.py
       - name: Audit first-return graph and query-interface declarations
         run: |
           mkdir -p tmp
