@@ -29,7 +29,7 @@ import check_entailment_decision as decision
 PREFIX = "SUBTAIL_PROFILE:"
 CASES = ("supplied-8", "supplied-12", "frontend-3", "frontend-4", "frontend-6", "frontend-8")
 
-PRELUDE = r'''import Subtail.EntailmentFast
+PRELUDE = r'''import Subtail.EntailmentPrepared
 open Subtail Subtail.TreeSemantics Subtail.StackSummary Subtail.CanonicalReachability
 open Subtail.ExpressionNormalization
 set_option maxRecDepth 100000
@@ -55,27 +55,14 @@ def matrixSummary {n : Nat} (m : CanonicalReachabilityFast.Matrix n) : String :=
   toString ((List.finRange n).foldl (fun count p =>
     count + (List.finRange n).countP (fun q => CanonicalReachabilityFast.lookup m p q)) 0)
 
-def tabulate (edge : Fin n → Fin n → Bool) : CanonicalReachabilityFast.Matrix n :=
-  Vector.ofFn fun p => Vector.ofFn fun q => edge p q
-
-def materialize (m : System n) : System n :=
-  let eps := tabulate m.eps
-  let push0 := tabulate (m.push false)
-  let push1 := tabulate (m.push true)
-  let pop0 := tabulate (m.pop false)
-  let pop1 := tabulate (m.pop true)
-  ⟨CanonicalReachabilityFast.lookup eps,
-   fun a => CanonicalReachabilityFast.lookup (if a then push1 else push0),
-   fun a => CanonicalReachabilityFast.lookup (if a then pop1 else pop0)⟩
-
 def systemSummary {n : Nat} (m : System n) : String :=
   toString ((List.finRange n).foldl (fun count p => count +
     (List.finRange n).countP (m.eps p) +
     (List.finRange n).countP (m.push false p) + (List.finRange n).countP (m.push true p) +
     (List.finRange n).countP (m.pop false p) + (List.finRange n).countP (m.pop true p)) 0)
 
-def prepareTrace (m : System n) (useTables : Bool) : IO (CanonicalReachabilityFast.Cache m) := do
-  let input ← if useTables then timed "primitive_tables" (fun _ => materialize m) systemSummary
+def prepareTrace (m : System n) (useTables useQueries : Bool) : IO (EntailmentPrepared.Prepared n) := do
+  let input ← if useTables then timed "primitive_tables" (fun _ => EntailmentPrepared.materialize m) systemSummary
     else pure m
   let forward ← timed "forward" (fun _ =>
     CanonicalReachabilityFast.matrix (StackSummaryFast.balancedTable input)) matrixSummary
@@ -84,20 +71,20 @@ def prepareTrace (m : System n) (useTables : Bool) : IO (CanonicalReachabilityFa
   let edge := fun p q => CanonicalReachabilityFast.lookup backward p q ||
     (reverse input).pop false p q || (reverse input).pop true p q
   let paths ← timed "control_paths" (fun _ => CanonicalReachabilityFast.pathMatrix edge) matrixSummary
-  return ⟨forward, backward, paths⟩
+  return ⟨if useQueries then input else m, ⟨forward, backward, paths⟩⟩
 
 def separateTrace (C : List (Constraint n))
-    (cache : CanonicalReachabilityFast.Cache (systemOf C)) (a b : Fin n)
+    (cache : EntailmentPrepared.Prepared n) (a b : Fin n)
     (paths : List Word) : IO Bool := do
   for (word, i) in paths.zipIdx do
     let found ← timed ("separation_" ++ toString i ++ "_length_" ++ toString word.length)
-      (fun _ => CanonicalReachabilityFast.separationCheck C cache a b word) toString
+      (fun _ => EntailmentPrepared.separationCheck C cache a b word) toString
     if found then return true
   return false
 '''
 
 
-def source(case: str, primitive_tables: bool = False) -> tuple[str, bool]:
+def source(case: str, primitive_tables: bool = False, prepared: bool = False) -> tuple[str, bool]:
     kind, depth_text = case.split("-")
     depth = int(depth_text)
     if kind == "supplied":
@@ -106,7 +93,7 @@ def source(case: str, primitive_tables: bool = False) -> tuple[str, bool]:
         body = f'''  let C : List (Constraint {row.n}) := {fast.render_constraints(row.constraints, row.n)}
   emit "input:controls:{row.n}"
   let cache ← prepareTrace (systemOf C)
-  let answer ← timed "separation" (fun _ => CanonicalReachabilityFast.separationCheck C cache
+  let answer ← timed "separation" (fun _ => EntailmentPrepared.separationCheck C cache
     {fast.render_fin(row.a, row.n)} {fast.render_fin(row.b, row.n)} {fast.render_word(row.word)}) toString
   emit ("result:" ++ toString answer)
 '''
@@ -129,7 +116,7 @@ def source(case: str, primitive_tables: bool = False) -> tuple[str, bool]:
     emit "result:true"
     return
   let cache ← prepareTrace (systemOf C)
-  let sat ← timed "satisfiability" (fun _ => CanonicalReachabilityFast.satCheck C cache) toString
+  let sat ← timed "satisfiability" (fun _ => EntailmentPrepared.satCheck C cache) toString
   if !sat then
     emit "result:true"
     return
@@ -142,7 +129,8 @@ def source(case: str, primitive_tables: bool = False) -> tuple[str, bool]:
 '''
         expected = False
     body = body.replace("prepareTrace (systemOf C)",
-                        "prepareTrace (systemOf C) " + str(primitive_tables).lower())
+                        "prepareTrace (systemOf C) " + str(primitive_tables or prepared).lower()
+                        + " " + str(prepared).lower())
     return PRELUDE + "\ndef main : IO Unit := do\n" + body, expected
 
 
@@ -257,6 +245,7 @@ def main() -> int:
     ap.add_argument("--case", action="append", choices=CASES)
     ap.add_argument("--timeout", type=float, default=20)
     ap.add_argument("--primitive-tables", action="store_true", help="ablate primitive lookup cost in cache construction only")
+    ap.add_argument("--prepared", action="store_true", help="reuse primitive tables in preparation and queries")
     ap.add_argument("--output", type=Path, required=True)
     ap.add_argument("--scratch", type=Path, required=True)
     args = ap.parse_args()
@@ -265,7 +254,7 @@ def main() -> int:
     args.scratch = args.scratch.resolve()
     args.scratch.mkdir(parents=True, exist_ok=True)
     receipt = {"revision": fast.git_revision(), "system": platform.platform(),
-               "variant": "primitive_tables" if args.primitive_tables else "baseline",
+               "variant": "prepared" if args.prepared else "primitive_tables" if args.primitive_tables else "baseline",
                "source_hashes": fast.source_hashes(),
                "profiler_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                "caps": {"wall_seconds": args.timeout, "cpu_seconds": math.ceil(args.timeout),
@@ -277,7 +266,7 @@ def main() -> int:
                "timing_boundary": "phase tracing includes forced summaries and output; not uninstrumented end-to-end timing",
                "cases": []}
     for name in args.case or CASES:
-        code, expected = source(name, args.primitive_tables)
+        code, expected = source(name, args.primitive_tables, args.prepared)
         path = args.scratch / (name + ".lean")
         path.write_text(code)
         measured = run(path, args.timeout, expected)

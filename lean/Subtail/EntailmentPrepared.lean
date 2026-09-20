@@ -6,7 +6,7 @@ reference terminal fallback and the order of all candidate tests are unchanged.
 -/
 namespace Subtail.EntailmentPrepared
 
-open TreeSemantics ExpressionNormalization StackSummary CanonicalReachability
+open TreeSemantics ExpressionNormalization StackSummary StackReachability CanonicalReachability
 open CanonicalReachabilityFast
 
 def tabulate (edge : Fin n → Fin n → Bool) : Matrix n :=
@@ -27,7 +27,7 @@ def materialize (M : System n) : System n :=
 
 theorem materialize_eq (M : System n) : materialize M = M := by
   rcases M with ⟨eps, push, pop⟩
-  unfold materialize
+  dsimp only [materialize]
   congr 1
   · funext p q
     exact lookup_tabulate eps p q
