@@ -114,7 +114,13 @@ def run_analysis(problem, deadline, memory_gib=16.0):
             return {k: v for k, v in run.items() if k != 'output'}
         if not target.exists() or target.stat().st_size > 8 * 1024**2:
             return {'status': 'UNKNOWN', 'reason': 'missing_or_oversize_growth_result'}
-        return {'status': 'PASS', **json.loads(target.read_text())}
+        try:
+            result = json.loads(target.read_text())
+            if type(result.get('finite_model_obstruction')) is not bool:
+                raise ValueError('missing growth Boolean')
+            return {**result, 'status': 'PASS'}
+        except (ValueError, AttributeError):
+            return {'status': 'UNKNOWN', 'reason': 'invalid_growth_result'}
 
 
 def run_decision(problem, deadline, memory_gib=16.0):

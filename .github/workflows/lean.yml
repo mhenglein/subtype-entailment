@@ -28,6 +28,10 @@ on:
       - 'scripts/check_terminal_lazy.py'
       - 'scripts/check_fast_summary.py'
       - 'scripts/check_regular_certificate.py'
+      - 'scripts/check_finite_tree_reduction.py'
+      - 'scripts/finite_trees.py'
+      - 'scripts/test_finite_trees.py'
+      - 'examples/finite-trees/**'
       - 'scripts/regular_countermodel.py'
       - 'scripts/test_regular_countermodel.py'
       - 'examples/countermodels/**'
@@ -49,6 +53,10 @@ on:
       - 'scripts/check_terminal_lazy.py'
       - 'scripts/check_fast_summary.py'
       - 'scripts/check_regular_certificate.py'
+      - 'scripts/check_finite_tree_reduction.py'
+      - 'scripts/finite_trees.py'
+      - 'scripts/test_finite_trees.py'
+      - 'examples/finite-trees/**'
       - 'scripts/regular_countermodel.py'
       - 'scripts/test_regular_countermodel.py'
       - 'examples/countermodels/**'
@@ -191,6 +199,8 @@ jobs:
           PY
       - name: Verify regular countermodel certificates
         run: python3 scripts/check_regular_certificate.py
+      - name: Verify finite-tree semantic lemmas and interface
+        run: python3 scripts/check_finite_tree_reduction.py --output /tmp/finite-trees.json
       - name: Audit first-return graph and query-interface declarations
         run: |
           mkdir -p tmp

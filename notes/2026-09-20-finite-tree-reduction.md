@@ -143,8 +143,9 @@ Conversely, restriction of a finite normalized valuation is finite, and its
 definitional equations make each name equal to the corresponding evaluated
 expression. Premise satisfaction and query truth are preserved both ways.
 Thus the normalized theorem applies to original finite-expression semantics.
-The finite preservation refinement and correspondence of the Python naming
-implementation are ordinary proofs here, not extra checked Lean declarations.
+The finite preservation refinement for the existing Lean naming construction
+is checked by `normalize_finite_entails_iff` in the new module. Correspondence
+of the separate Python DAG implementation remains an ordinary proof.
 
 ## 7. The original hot-control route and its simplification
 
@@ -219,5 +220,7 @@ The new isolated Lean module targets the general closure criterion and finite
 semantic corollaries. Its exact checked declarations, bounds and remaining
 hypotheses are read back separately after compilation and kernel replay. The
 next formal obligation is the finite graph classifier's connection to these
-semantic predicates, followed by finite-preserving syntax normalization. A
-conditional closure theorem does not discharge either obligation.
+semantic predicates. Finite-preserving syntax normalization is already checked
+for the existing Lean normalization, but the separate Python DAG naming still
+has its ordinary implementation boundary. A conditional closure theorem does
+not discharge the classifier obligation.

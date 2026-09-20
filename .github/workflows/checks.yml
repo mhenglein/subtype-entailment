@@ -35,6 +35,10 @@ jobs:
         run: python3 -m unittest discover -s scripts -p 'test_subtail.py'
       - name: Check canonical regular countermodel extraction
         run: python3 -m unittest discover -s scripts -p 'test_regular_countermodel.py'
+      - name: Check finite-tree reduction and independent small models
+        run: |
+          python3 -m unittest discover -s scripts -p 'test_finite_trees.py'
+          python3 experiments/check_finite_trees.py --output /tmp/finite-tree-experiment.json
       - name: Check paper declarations and literal examples
         run: |
           python3 - <<'PY'
