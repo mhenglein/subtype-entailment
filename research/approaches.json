@@ -181,7 +181,7 @@
       "owner": "publication-sequence-20260920 (Astra, parent integrator)",
       "updated": "2026-09-20",
       "summary": "C081 has a proved cached raw summary with literal whole-Instance equality and unconditional endpoint correctness. E060 resolves the four/five-variable empty raw stress probes, retains 38/38 fixed and 19/19 deeper completions, and exactly checks 83 small query instances. Six-variable raw stress remains UNKNOWN; state/flag counts and signature/quantitative boundaries are unchanged.",
-      "next_step": "ACTIVE #64 manuscript/contribution audit and #65 clean reproduction on codex/publication-audit-20260920. Exact owned paths and read-only reviewer are in STATE.md and #37. #67 terminal coverage then #66 performance are queued, not claimed. Licensing/authorship remain deferred; no Lean proof or scientific claim is changed by starting this review.",
+      "next_step": "ACTIVE parent #64 manuscript/contribution audit and #65 clean reproduction on codex/publication-audit-20260920. #67 fixtures and #66 profiling are explicitly handed to disjoint contributors; other announced scopes and exact ownership agreements are in STATE.md/#37. The parent retains shared-record integration. Licensing/authorship remain deferred; ownership does not establish a new mathematical result.",
       "record": "research/approaches/A010.md",
       "evidence": [
         "notes/2026-09-04-bridge-foundation.md",
@@ -624,7 +624,7 @@
       "owner": "publication-sequence-20260920 (Astra, parent integrator)",
       "updated": "2026-09-20",
       "summary": "C081 has a proved cached raw summary with literal whole-Instance equality and unconditional endpoint correctness. E060 resolves the four/five-variable empty raw stress probes, retains 38/38 fixed and 19/19 deeper completions, and exactly checks 83 small query instances. Six-variable raw stress remains UNKNOWN; state/flag counts and signature/quantitative boundaries are unchanged.",
-      "next_step": "ACTIVE #64 manuscript/contribution audit and #65 clean reproduction on codex/publication-audit-20260920. Exact owned paths and read-only reviewer are in STATE.md and #37. #67 terminal coverage then #66 performance are queued, not claimed. Licensing/authorship remain deferred; no Lean proof or scientific claim is changed by starting this review.",
+      "next_step": "ACTIVE parent #64 manuscript/contribution audit and #65 clean reproduction on codex/publication-audit-20260920. #67 fixtures and #66 profiling are explicitly handed to disjoint contributors; other announced scopes and exact ownership agreements are in STATE.md/#37. The parent retains shared-record integration. Licensing/authorship remain deferred; ownership does not establish a new mathematical result.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",

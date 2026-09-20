@@ -19,12 +19,26 @@ this bounded work; their established mathematical results are unchanged.
 | `publication_proof_review` | None: independent read-only review | Reads the manuscript and mapped definitions; sends findings to #64 and parent; does not edit the proof or paper. |
 | Parent integration only | `README.md`, `CONTRIBUTING.md`, this file, `research/COMPLETION.md`, claim/approach ledgers, generated indexes, A010/A017/A018 histories, `experiments/README.md` when needed | One writer for these shared paths. Coordinate changes in #37 first. |
 
-**Queued, not claimed:** #67 terminal/shared-generator coverage, then #66
-six-variable raw-summary performance. Their implementation paths are not
-reserved by this queue. Other research issues are unassigned; claim a disjoint
-scope in the relevant issue and #37 before starting. No source-module,
-toolchain or shared-CI change is authorized by the current file reservation.
-Licensing and author identities remain deferred.
+**Agreed contributor scopes.** These are recorded ownership and handoff
+agreements, not a claim that a worker is running in the background. Follow the
+linked issue for its latest status, exact new paths, pushed head and release.
+The parent has handed off #66/#67 and will not implement competing work.
+
+| Issue / bounded task | Contributor session | Agreed write boundary |
+|---|---|---|
+| [#67 terminal/shared-generator fixtures](https://github.com/mhenglein/subtail/issues/67#issuecomment-5750364458) | `issue67-independent-fixtures-20260920` | New independent fixture harness, JSON fixtures, dated note and results under the exact issue paths. Existing interfaces are read-only. |
+| [#66 raw n=6 profiling](https://github.com/mhenglein/subtail/issues/66#issuecomment-5750364553) | `raw-summary-scope-readback-20260920` | New `experiments/profile_raw_summary_66.py`, dated `raw-summary-66` note and result. A refinement module requires a further exact invariant/path agreement. |
+| [#68 countermodel producer](https://github.com/mhenglein/subtail/issues/68#issuecomment-5750364625) | `regular-producer-68-20260920` | Six new producer/module/audit/note/checker/result paths from the issue, plus its isolated new CI workflow. Existing certificate interfaces are read-only. |
+| [#70 Henglein–Rehof transfer](https://github.com/mhenglein/subtail/issues/70#issuecomment-5750364870) | `hr-topfree-transfer-70-20260920` | Three new `hr-topfree-transfer-70` note/checker/result paths. Paper and novelty matrix remain parent-owned. |
+| [#71 explicit-top projection](https://github.com/mhenglein/subtail/issues/71#issuecomment-5750364966) | `explicit-top-dual-projection-20260920` | New dual-projection note/checker/result, optional isolated Lean module and CI. No shared source changes. |
+| [#72 ternary constructor](https://github.com/mhenglein/subtail/issues/72#issuecomment-5750364712) | `ternary-transfer-20260920` | Only the six new ternary paths in its scope claim, including optional `TernaryTransfer.lean`. |
+| [#72 standalone first-return theorem](https://github.com/mhenglein/subtail/issues/72#issuecomment-5750364712) | `standalone-first-return-20260920-astra` | Only four new `standalone-first-return-astra` note/review/checker/result paths. |
+| [#74 function variance, child of #72](https://github.com/mhenglein/subtail/issues/74#issuecomment-5750364796) | `function-only-transfer-20260920` | Only three new function-only note/checker/result paths. Covariant core and other signature targets are read-only. |
+
+New independent reviews requested by these contributors remain pending; none
+is implied by an ownership agreement. Shared ledgers, paper, imports, existing
+CI and toolchain stay with the integrator. Other subtasks are not reserved by
+these bounded claims. Licensing and author identities remain deferred.
 
 The parent will update this section and release its paths explicitly when the
 scope changes, completes or stops. An old timestamp alone is not a release.
