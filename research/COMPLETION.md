@@ -71,7 +71,8 @@ construction and dense flag construction as capped phases; its n=6 complete
 answer is still UNKNOWN. [E061](../experiments/README.md#e061) closes the scoped
 independent Python fixture/review/replay portion of #67. Automatic successful
 native depth-two and original-expression coverage remain open; six stress
-calls stay UNKNOWN. The new #67 native follow-up has its own scope. The
+calls stay UNKNOWN. The new #67 native handoff is released and awaits its own
+review; its author report is not relabelled as accepted evidence here. The
 [submission review](../notes/2026-09-20-submission-review.md) accepted the scoped
 producer, hardness and extension contributions; their integration remains
 separate from the completed compiler/F integration. Read the current ownership

@@ -150,7 +150,8 @@ Integrating C086 into that exposition is a separate editorial task.
 
 Other accepted submissions retain their separate integration gates. In
 particular, producer/top modules still need continuing CI before publication.
-The #67 native follow-up owns its announced new paths and remains untouched.
+The #67 native follow-up was released at `3135cd075e8c` during this integration.
+Its new diagnostic handoff remains untouched and awaits its own review.
 Issue #69 closes only after actual main publication. The final #37/#69 readback
 records the main revision, hosted CI state and explicit release of this lease.
 Uninspected local work, other branches and stashes remain preserved.
