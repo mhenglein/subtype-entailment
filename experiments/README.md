@@ -1386,3 +1386,23 @@ its summary marker. It is separate from the matched uninstrumented benchmark.
 Batched timeout, output truncation and initial proof-elaboration failures are
 preserved. No smaller state space, complexity, memory, C080 or signature claim
 is inferred from these measurements.
+
+
+## Reconciled supporting evidence (September 20)
+
+The original [concrete compiler-weight counterexample](check_rank_query_weight_counterexample.py)
+and its [deterministic output](../results/rank-query-weight-counterexample.json)
+are preserved from PR #47. Reproduce with
+`python3 experiments/check_rank_query_weight_counterexample.py > /tmp/weight.json`
+and `cmp results/rank-query-weight-counterexample.json /tmp/weight.json`.
+This source-transcribed checker is separate from C082's checked native theorem;
+the original F alone is not refuted by its oversized emitted clause.
+
+The optional C030 direct proof is now integrated with continued CI coverage.
+Its independent replay command is
+`python3 experiments/replay_c030_independent.py --output /tmp/c030-replay.json`.
+Fresh combined-tree build, kernel/dependency audit and replay commands/results
+are recorded in the [reconciliation note](../notes/2026-09-20-repository-reconciliation.md)
+and [receipt](../results/repository-reconciliation.json). Existing fixtures,
+seeds, counts and original failed attempts are unchanged; no new performance
+experiment or formal budget-preservation claim is inferred from this replay.

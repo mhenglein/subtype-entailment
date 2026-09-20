@@ -1,6 +1,11 @@
 # Post-C081 programme
 
 Started: 2026-09-19. Updated: 2026-09-20. Owner: Marcus. Coordination: [#53](https://github.com/mhenglein/subtail/issues/53), integration [#37](https://github.com/mhenglein/subtail/issues/37).
+Current remaining-work map: [COMPLETION.md](COMPLETION.md), tracked in
+[#63](https://github.com/mhenglein/subtail/issues/63). The table below records
+the original programme checkpoint; later completed finite/solver results and
+new release gates are summarized in that current map.
+
 Starting checkpoint: `c946d86b9e65da2877e0df42c710abbdcb5a4037`.
 
 The qualitative decision theorem C081 is complete at this checkpoint. This
@@ -102,26 +107,26 @@ proposals do not reserve paths or launch workers.
   construction for regular countermodels, finite/top/variance obstructions and
   the remaining arity/label obligations. E053 is bounded evidence only.
 
-The most useful next implementation question is whether cached balanced
-reachability or a smaller summary representation can reduce the unchanged
-full-expression timeouts. A complete regular-countermodel extractor remains
-open; the current candidate library is deliberately incomplete. Other next
-questions are tighter complexity, external mathematical review and explicit-top
-label semantics. The [current plan](PLAN.md) gives distinct follow-up targets.
+That historical solver checkpoint has been superseded: E060 completes all
+38 fixed and 19 deeper cases, and complete ordinary countermodel extraction
+is implemented. The remaining measured cost is the six-variable raw summary;
+producer formalization, terminal stress, exact complexity and explicit-top
+proofs have separate issues in [the completion map](COMPLETION.md).
 
 ## Issue and branch disposition
 
-Remote states and exact heads were read on September 20. None of these
-dispositions certifies unreviewed unique content or retires a branch.
+September 20 reconciliation preserves all four original PR heads as merge
+ancestors. [Exact validation and disposition](../notes/2026-09-20-repository-reconciliation.md).
+No historical branch or unowned local workspace is retired by this pass.
 
 | Item | Exact source or head | Disposition |
 |---|---|---|
 | #48 quantitative proof | `881d4beeb903d679d7d36a8a9abc2aa0efa60a52` | Closed as integrated in main `98bbcde`; exact source files retained, isolated workflow folded into the shared Lean job. Branch retained. |
-| #47 ordinary counterexample | `42be43f35a98d4d23a4ba26439833730bbcd6510` | Open historical discovery/proof evidence. C082 supersedes the old bound; unique experiment/notes remain preserved for separate patch reconciliation. |
-| #44 semantic audit | `99d951077ace1c93d0fec604839674fb3f19dbc9` | Open advisory note. Not newly certified or integrated by this programme; retain for a separate provenance/readback pass. |
-| #45 normalization advisory | `c33d0c8d65158fc7ba53e5bc24c14132f071dc42` | Open advisory note. The final normalization proof is on main; this note's unique observations are retained for separate reconciliation. |
-| #51 direct realization | `db55acded6064b12d5d483216e29653ae3d884f3` | Open optional C030 converse certification. Outside the required forward C081 proof; no integration or independent validation is claimed here. |
-| #30 and #34 quantitative tracking | Main `98bbcde` correction | Remain open for original F alone and an existential smaller compiler. Their bodies distinguish the refuted old concrete U from C082. |
+| #47 ordinary counterexample | `42be43f35a98d4d23a4ba26439833730bbcd6510` | Merged with its original ancestry; unique checker, result and ordinary discovery note preserved alongside the later C082 correction. Original F/smaller-compiler obligations move to #69. |
+| #44 semantic audit | `99d951077ace1c93d0fec604839674fb3f19dbc9` | Merged as historical advisory evidence, with a visible pointer to the later completed C081 readback. No new Lean verification is inferred from this note. |
+| #45 normalization advisory | `c33d0c8d65158fc7ba53e5bc24c14132f071dc42` | Merged as historical ordinary proof, interface proposal and adversarial examples. A current-status notice points to the completed normalizer. |
+| #51 direct realization | `db55acded6064b12d5d483216e29653ae3d884f3` | Merged after independent source readback and fresh combined-tree build/kernel/dependency/regression checks. Main/dependency CI triggers repaired. Formal budget preservation remains #73. |
+| #30 and #34 quantitative tracking | Main `98bbcde` correction | Retired as superseded trackers; #69 retains both exact unresolved quantitative questions. Neither is marked solved. |
 | #37 integration coordination | Main and scoped release comments | Remains the shared coordination record; this session releases its lease after final checked publication. |
 | #53 this programme | Source and publication receipts in comments | The seven requested deliverables are covered at the stated evidence levels. Final main CI and release are recorded in the issue; licensing/authorship remain owner-deferred. |
 

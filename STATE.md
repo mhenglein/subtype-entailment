@@ -1,5 +1,25 @@
 # Subtail — current research state
 
+## September 20: PR reconciliation and a current completion checklist
+
+The [completion map](research/COMPLETION.md) replaces obsolete stage trackers
+with release gates and exact remaining research questions. C081 and C085 stay
+complete; C080's original F and smaller-compiler questions stay open.
+
+C030's direct `2k+1`-variable constructor, satisfiability and same-word
+arbitrary-tree separation equivalence are now Lean-checked and independently
+read back. Terminal-finality is the sole extra instance hypothesis. Fixed-budget
+preservation remains written proof plus reproduction, not a checked subclaim.
+The optional converse is independent of the forward C081 decision.
+[Source heads, review and fresh combined validation](notes/2026-09-20-repository-reconciliation.md).
+
+Historical semantic/normalization advisories and the original concrete-weight
+counterexample are retained alongside the newer corrections. This integration
+changes no existing Lean definition, default import, paper source or benchmark.
+It makes no stronger complexity, novelty or extension claim. No new researcher
+is assigned; license/authorship decisions remain owner-deferred.
+
+
 ## September 20: proved cached raw summary resolves larger stress probes (E060)
 
 `SummaryInstanceCached` reuses exact relation tables and stores the original

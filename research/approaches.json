@@ -181,7 +181,7 @@
       "owner": null,
       "updated": "2026-09-20",
       "summary": "C081 has a proved cached raw summary with literal whole-Instance equality and unconditional endpoint correctness. E060 resolves the four/five-variable empty raw stress probes, retains 38/38 fixed and 19/19 deeper completions, and exactly checks 83 small query instances. Six-variable raw stress remains UNKNOWN; state/flag counts and signature/quantitative boundaries are unchanged.",
-      "next_step": "Profile the six-variable construction by subphase before refining transition encoding or dense flags. Keep terminal-promotion coverage and explicit-top separation as separate, unassigned proposals.",
+      "next_step": "Follow #63 completion gates. Practical #66 profiles six-variable raw construction; #67 adds terminal-promotion coverage. Proof hardening and explicit-top/signature targets are separate #68/#71/#72 issues. No worker is assigned.",
       "record": "research/approaches/A010.md",
       "evidence": [
         "notes/2026-09-04-bridge-foundation.md",
@@ -273,9 +273,14 @@
         "scripts/check_summary_cached.py",
         "notes/2026-09-20-raw-summary.md",
         "notes/2026-09-20-raw-summary-readback.md",
-        "results/raw-summary.json"
+        "results/raw-summary.json",
+        "research/COMPLETION.md",
+        "notes/2026-09-20-repository-reconciliation.md",
+        "results/repository-reconciliation.json",
+        "notes/2026-09-19-end-to-end-semantic-audit.md",
+        "notes/2026-09-19-finite-expression-normalization-advisory.md"
       ],
-      "issue": "https://github.com/mhenglein/subtail/issues/62"
+      "issue": "https://github.com/mhenglein/subtail/issues/63"
     },
     {
       "id": "A011",
@@ -283,9 +288,9 @@
       "status": "tried",
       "outcome": "supported",
       "owner": null,
-      "updated": "2026-09-09",
-      "summary": "Every k-state terminal-final binary abstract instance has an exact word-preserving subtype realization on 2k+1 variables.",
-      "next_step": "Use C067/C068 to constrain negative encodings: single-source and effectively bounded-source outputs are decidable. Continue the concurrent two-counter investigation at its exact terminal-anchor/trailing-context gap; no unrestricted reduction is established.",
+      "updated": "2026-09-20",
+      "summary": "C030 has an independently reviewed Lean-checked direct realization on 2k+1 variables: arbitrary-tree satisfiability and exact same-word separation under terminal-finality. Budget preservation remains written proof plus reproduction; no arbitrary-final or complexity equivalence is claimed.",
+      "next_step": "Optional #73: formalize the exact remaining budget-preservation subclaim. Changed-signature and explicit-top investigations are separate #71/#72 targets; no researcher is assigned.",
       "record": "research/approaches/A011.md",
       "evidence": [
         "notes/2026-09-05-terminal-realization.md",
@@ -302,9 +307,16 @@
         "notes/2026-09-09-source-capture-word-equations.md",
         "experiments/source_capture.py",
         "experiments/check_source_capture.py",
-        "results/source-capture.json"
+        "results/source-capture.json",
+        "research/COMPLETION.md",
+        "notes/2026-09-20-repository-reconciliation.md",
+        "results/repository-reconciliation.json",
+        "lean/Subtail/TerminalRealization.lean",
+        "lean/Subtail/TerminalRealizationModel.lean",
+        "lean/Subtail/TerminalRealizationAudit.lean",
+        "notes/2026-09-19-c030-certification.md"
       ],
-      "issue": null
+      "issue": "https://github.com/mhenglein/subtail/issues/73"
     },
     {
       "id": "A012",
@@ -477,8 +489,8 @@
       "outcome": "supported",
       "owner": null,
       "updated": "2026-09-20",
-      "summary": "C081 qualitative entailment, corrected C082 terminal witness bound, ordinary input resource account and C083 NL lower bound are recorded with exact limits. The optional equality-proved gate and JSON interface pass source/kernel/runtime and boundary checks. Matched E054 completes 24/38 versus 22/38 original, with 14 UNKNOWN and unchanged full-expression coverage. Paper, novelty and extension studies are complete research drafts.",
-      "next_step": "Choose a scoped follow-up: prove faster summary representations, extract complete regular countermodels, narrow complexity bounds or seek external review. Explicit top and changed signatures need new arguments; original C080 F remains open. No worker is currently assigned.",
+      "summary": "C081 qualitative decision and C082 corrected terminal bound are checked. The original concrete U estimate is refuted; original F alone and an existential smaller compiler remain open. Historical counterexample evidence is reconciled. The ordinary input resource account and C083 NL lower bound retain their exact scope.",
+      "next_step": "Unassigned #69 retains the two exact C080 questions; #70 targets tighter exact-semantic complexity and #67 terminal/shared-generator stress. Release requirements are separate in #63.",
       "record": "research/approaches/A017.md",
       "evidence": [
         "notes/2026-09-04-minimal-witness-structure.md",
@@ -594,9 +606,15 @@
         "scripts/subtail.py",
         "scripts/check_terminal_lazy.py",
         "experiments/check_entailment_lazy.py",
-        "results/entailment-lazy.json"
+        "results/entailment-lazy.json",
+        "research/COMPLETION.md",
+        "notes/2026-09-20-repository-reconciliation.md",
+        "results/repository-reconciliation.json",
+        "notes/2026-09-19-rank-query-weight-counterexample.md",
+        "experiments/check_rank_query_weight_counterexample.py",
+        "results/rank-query-weight-counterexample.json"
       ],
-      "issue": "https://github.com/mhenglein/subtail/issues/34"
+      "issue": "https://github.com/mhenglein/subtail/issues/69"
     },
     {
       "id": "A018",
@@ -606,7 +624,7 @@
       "owner": null,
       "updated": "2026-09-20",
       "summary": "C081 has a proved cached raw summary with literal whole-Instance equality and unconditional endpoint correctness. E060 resolves the four/five-variable empty raw stress probes, retains 38/38 fixed and 19/19 deeper completions, and exactly checks 83 small query instances. Six-variable raw stress remains UNKNOWN; state/flag counts and signature/quantitative boundaries are unchanged.",
-      "next_step": "Profile the six-variable construction by subphase before refining transition encoding or dense flags. Keep terminal-promotion coverage and explicit-top separation as separate, unassigned proposals.",
+      "next_step": "Follow #63 completion gates. Practical #66 profiles six-variable raw construction; #67 adds terminal-promotion coverage. Proof hardening and explicit-top/signature targets are separate #68/#71/#72 issues. No worker is assigned.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
@@ -760,9 +778,14 @@
         "scripts/check_summary_cached.py",
         "notes/2026-09-20-raw-summary.md",
         "notes/2026-09-20-raw-summary-readback.md",
-        "results/raw-summary.json"
+        "results/raw-summary.json",
+        "research/COMPLETION.md",
+        "notes/2026-09-20-repository-reconciliation.md",
+        "results/repository-reconciliation.json",
+        "notes/2026-09-19-end-to-end-semantic-audit.md",
+        "notes/2026-09-19-finite-expression-normalization-advisory.md"
       ],
-      "issue": "https://github.com/mhenglein/subtail/issues/62"
+      "issue": "https://github.com/mhenglein/subtail/issues/63"
     }
   ]
 }

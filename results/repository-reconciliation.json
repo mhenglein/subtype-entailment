@@ -1,0 +1,675 @@
+{
+  "scope": "Combined C030 integration and historical evidence replay; not a new solver benchmark",
+  "base_main": "bfa50cc53e8d6f5d7699cc699ceb266a8686168b",
+  "pr_heads": {
+    "44": "99d951077ace1c93d0fec604839674fb3f19dbc9",
+    "45": "c33d0c8d65158fc7ba53e5bc24c14132f071dc42",
+    "47": "42be43f35a98d4d23a4ba26439833730bbcd6510",
+    "51": "db55acded6064b12d5d483216e29653ae3d884f3"
+  },
+  "native": {
+    "commit": "036c64f2268f60955c33cb3c40fd0d483182912f",
+    "steps": [
+      {
+        "name": "Compile direct theorem and kernel-checked fixtures",
+        "command": "lake build +Subtail.TerminalRealizationAudit",
+        "cwd": "lean",
+        "returncode": 0,
+        "elapsed_seconds": 2.973564901854843,
+        "log": "step-0.log"
+      },
+      {
+        "name": "Independent kernel replay",
+        "command": "lake env leanchecker Subtail.TerminalRealization\nlake env leanchecker Subtail.TerminalRealizationModel\nlake env leanchecker Subtail.TerminalRealizationAudit\n",
+        "cwd": "lean",
+        "returncode": 0,
+        "elapsed_seconds": 3.4274876518175006,
+        "log": "step-1.log"
+      },
+      {
+        "name": "Audit every new declaration dependency closure",
+        "command": "python3 - <<'PY'\nimport hashlib, json, re, subprocess\nfrom pathlib import Path\ninputs = [\n    ('Subtail/TerminalRealization.lean', 'Subtail.TerminalRealization'),\n    ('Subtail/TerminalRealizationModel.lean', 'Subtail.TerminalRealization'),\n    ('Subtail/TerminalRealizationAudit.lean', 'Subtail.TerminalRealization.Audit'),\n]\nnames, hashes = [], {}\nfor filename, prefix in inputs:\n    source = Path(filename).read_text()\n    hashes[filename] = hashlib.sha256(source.encode()).hexdigest()\n    names += [prefix + '.' + n for n in re.findall(\n        r'^(?:@\\[[^\\n]+\\]\\s*)?(?:def|theorem)\\s+(\\w+)', source, re.M)]\naudit = Path('_C030DependencyAudit.lean')\naudit.write_text('import Subtail.TerminalRealizationAudit\\n' +\n                 '\\n'.join('#print axioms ' + n for n in names) + '\\n')\ntext = subprocess.check_output(['lake', 'env', 'lean', str(audit)], text=True, timeout=120)\nprint(text)\nentries = re.findall(r\"'([^']+)' (?:depends on axioms: \\[([^\\]]*)\\]|does not depend on any axioms)\", text)\nfound = {name: set(filter(None, (a.strip() for a in axioms.split(','))))\n         for name, axioms in entries}\nif set(found) != set(names):\n    raise SystemExit('Incomplete dependency readback: ' + repr(set(names) - set(found)))\nallowed = {'propext', 'Quot.sound', 'Classical.choice'}\nfor name, axioms in found.items():\n    if not axioms <= allowed:\n        raise SystemExit('Unexpected axiom in ' + name + ': ' + repr(axioms))\nruntime = ['a', 'v', 'b', 'child', 'upperClause', 'lowerClause', 'constraints']\nfor name in runtime:\n    if 'Classical.choice' in found['Subtail.TerminalRealization.' + name]:\n        raise SystemExit('Classical.choice in executable constructor ' + name)\nprint(json.dumps({'status': 'PASS', 'declarations': len(names),\n                  'source_sha256': hashes, 'constructor_choice_free': True}, indent=2))\nPY\n",
+        "cwd": "lean",
+        "returncode": 0,
+        "elapsed_seconds": 0.686112002003938,
+        "log": "step-2.log"
+      },
+      {
+        "name": "Preserved independent exact-tree regression",
+        "command": "PYTHONDONTWRITEBYTECODE=1 python3 experiments/replay_c030_independent.py --output /tmp/c030-replay.json\n",
+        "cwd": ".",
+        "returncode": 0,
+        "elapsed_seconds": 24.554541802033782,
+        "log": "step-3.log"
+      },
+      {
+        "name": "Default core build, kernel replay and independent regressions",
+        "command": "python3 scripts/check_lean.py",
+        "cwd": ".",
+        "returncode": 0,
+        "elapsed_seconds": 102.40038764104247,
+        "log": "step-4.log"
+      },
+      {
+        "name": "Concrete weight counterexample byte replay",
+        "command": "python3 experiments/check_rank_query_weight_counterexample.py > tmp/reconcile-prs/weight.json && cmp results/rank-query-weight-counterexample.json tmp/reconcile-prs/weight.json",
+        "cwd": ".",
+        "returncode": 0,
+        "elapsed_seconds": 0.06497108610346913,
+        "log": "step-5.log"
+      }
+    ],
+    "lean_sha256": {
+      "lean/Subtail/AbsorbingTerminal.lean": "596d502361547a2b01c276fd41bc1b2b004bdbe4ce0de561cd4b6bce9002bb1b",
+      "lean/Subtail/Audit.lean": "0487d784c6f61affa4e332c2d8edba145d4cebb4d831ea2ddcf0e157a1821ad5",
+      "lean/Subtail/Basic.lean": "1a7cb0c1f7546ed2efdae96d1af9a84dc6f433531549a50f4738ed25eb64c6c6",
+      "lean/Subtail/Boundary.lean": "016ecea3ef35bcff2421cf5b25ac702a617db707c51014d49166de8715cc88c8",
+      "lean/Subtail/CanonicalModel.lean": "45b777cb26c2bde47870bdb1b9f6e243e3fa6d650b26752742680a5758fcd713",
+      "lean/Subtail/CanonicalModelAudit.lean": "140ab22c11130e6138f80824f2a2c8df936b2152b0353d792a4d3555523094da",
+      "lean/Subtail/CanonicalReachability.lean": "6400b93753493a13b9a4cc1cb391e3ca5ad8b7b45623824877e2ad1d78e72403",
+      "lean/Subtail/CanonicalReachabilityFast.lean": "6adfbb85117674122f0bceafe351bc4789206c61b00489486ddb4aeb53219273",
+      "lean/Subtail/Conditional.lean": "64f902acce370dadd3f0ac53cbd31ae4026664552c48e31ccd56b1ca542ac01b",
+      "lean/Subtail/EntailmentDecision.lean": "a899b12e1d2b968053a0062a1600c9d368fe5c16f1ba3b74aef591b311088f59",
+      "lean/Subtail/EntailmentFast.lean": "d2867bd220ec379ab19caa9f6d639082b0abd234ce548642d64e3e7d85017afc",
+      "lean/Subtail/EntailmentPrepared.lean": "9810cb89e8a25646d75281621c616a1d7c5e09abb1d38250e12e0da272d3256d",
+      "lean/Subtail/Examples.lean": "3b3e091c4b944992f3aa65c7d5923e35558b05193dec7540ed0e9acda13864c7",
+      "lean/Subtail/ExpressionNormalization.lean": "6e69fa21ebf0a0ffa65f78c976eb6681a85e9c9778cf96e57d16fb86b1285b82",
+      "lean/Subtail/ExpressionNormalizationAudit.lean": "471699acaca0a37f6502f7f631c9b1c3bae3d393584252cbad9174ec27fc6074",
+      "lean/Subtail/FiniteSearch.lean": "10583fb950420ccfb3ae88c906a0e3f004d72fcb8a3aac53a24b4281800a4057",
+      "lean/Subtail/FiniteTreeDecision.lean": "b8a42b54bbfb626290dd73bdbfc2df2f1880d80af610d9cf458da24998734fd8",
+      "lean/Subtail/FiniteTreeReduction.lean": "2b6200f4f913e515bd4f863c77ab4208bef75bb192ac1dc89dfa69614eb415e4",
+      "lean/Subtail/FirstReturnColours.lean": "848c71747fb6deff903b9ee850a8c6ecdf5f35cd79ce680c7da11c68b7909352",
+      "lean/Subtail/FirstReturnGenerator.lean": "d6c4266c59949785979e6f37dea7d0e93adf50e9a42ad447a7267912949bace6",
+      "lean/Subtail/FirstReturnGraph.lean": "06d11930a30fc4034e9a8997a4b2d57f82b5f8779b87f709287502fccbde88d8",
+      "lean/Subtail/InfiniteCycle.lean": "0a3559e3b09dc9a3a1d2ce80893fc354bd6aec7f2ab0a12b82fe9917fb4e2fb3",
+      "lean/Subtail/InfiniteDecision.lean": "d9679db4b52062a707f74c4a7198137f608660930e3f4a2d868ab4efac40228d",
+      "lean/Subtail/InfiniteDecisionLazy.lean": "e9ad300545cde49da4979ec62f214db59d9453953919118962e206dc12c68a75",
+      "lean/Subtail/InfiniteWitness.lean": "778759b132b97fd0e8546a2ad0346b1e977e0cbf34423f69f0e04170f7624fdc",
+      "lean/Subtail/PeriodicGood.lean": "5f13030c1825fb396f0f288cc4a080d88810f9c08449841a913efc52486eaf9e",
+      "lean/Subtail/PeriodicMonitor.lean": "719ce76ea2d91c7325f733462791d4da924e38afb8ec9cbe7e4743da0402c7bb",
+      "lean/Subtail/PeriodicMonitorComplete.lean": "ff3333943b6ca5dbf5e9920f2a3071912244cddf6098f25eededa476d3b1fc32",
+      "lean/Subtail/PeriodicRotation.lean": "ce02774c6dd7f483dbc34b574c7894335dd5340c6ddc08459c5295d1dc64c6f4",
+      "lean/Subtail/PeriodicRun.lean": "d27cdbb13b08aca5410c76e4ae438a0cebcb7b2acf223bd94a95814717815a86",
+      "lean/Subtail/PeriodicTail.lean": "1243dc455f48858d1dc30e1543cdc3737e6078aa51f7cc2f761e8af67741b148",
+      "lean/Subtail/PopAcyclic.lean": "f1529b5d4dc81e5eca039ce865d1209771730078bea1f949da91525389d802c3",
+      "lean/Subtail/PrefixMatching.lean": "59de0b193b55765db895f0f9ceb2a4155cd4d4dcfe54fa58cb285ec0577931e4",
+      "lean/Subtail/RankMilestones.lean": "3a948deaea047bf02289869210fcc2cbf7ada1010983dee66fa8477e4832d1c6",
+      "lean/Subtail/RankQuery.lean": "e8ef2ec585c49a593c8cee4d11e7aeb75f0284179e36b26ea21d72dd313adb41",
+      "lean/Subtail/RankQueryCompiler.lean": "1e32f44935490d7e69c8157f4ce12f763c9732b26e4cef2a7fb94518941edb2c",
+      "lean/Subtail/RankQueryCoverage.lean": "b1ccfa2fe221d355451ccfffe3d701ee46489d616e7e20d015f3e4fb2e86b49f",
+      "lean/Subtail/RankQueryDecision.lean": "51fef747bb443d313559e57d8fb8e3c1ce68b804eb4883a7d504e2945da5bd8a",
+      "lean/Subtail/RankQueryEnumeration.lean": "f65f40733e4cd45c8499cf1874509b23bacfdfd9f32278b5d459d12dd7016189",
+      "lean/Subtail/RankQueryEnumerationAudit.lean": "93c60b30d903e2a30da0152fda5abdf45b923ee09facdb1293264e44ed98f853",
+      "lean/Subtail/RankQueryFinishFacts.lean": "8e67cbbcf2a2710ec5307455303180fea8c0d7756969b121efab025b8f7ff2a2",
+      "lean/Subtail/RankQueryFinishTrace.lean": "93653a3ade48c9c4c628a8f05583a1deef201d412427de87ce3209a91949a258",
+      "lean/Subtail/RankQueryFirstReturn.lean": "b029e89e706c0724428194ddbc7d08abd494710d29ac65fb21e1dc90d7df10e0",
+      "lean/Subtail/RankQueryLengthBound.lean": "daec0fabc8c8e8b5c9ff5b1078a110f2fddf48ef60d3cbfec04557261a794399",
+      "lean/Subtail/RankQueryPaths.lean": "d383b44afb6bb7625181fb58e1d269030fa388a477849c76b7bc7dc64172de2a",
+      "lean/Subtail/RankQuerySemanticUnwind.lean": "2b3968f40f9b42d9bc051a0d6b11de3c80e2c3bd30351b04f579765960c9b3de",
+      "lean/Subtail/RankQuerySound.lean": "7729268fb6f82a0c508747e774e92133f869e3038d05e6c8c1a0caf962c9cd76",
+      "lean/Subtail/RankQueryUnwind.lean": "c6006c46aa86de0d173711a14f8c4076fcd5723a7470664da0d87d18a70efa3e",
+      "lean/Subtail/RankQueryWeightBound.lean": "d92069dfe5de891ba9bcfe3c5599a6a5e726fd57e2995f87a3b569fa0daabe50",
+      "lean/Subtail/RankQueryWeightCounterexample.lean": "d3e2ebbe27bdc277f8080e5e75f8d8939784d670e396e52e69aac631681a68ce",
+      "lean/Subtail/RankWitnessReference.lean": "eb5f6485995190a3a829b6de2c87e31a79f47b408c6afb77cecfc031c03d7772",
+      "lean/Subtail/RegularTreeCertificate.lean": "f0a271f276adc997620f2034edd3d3e3e44a33045d1b69c489f48ae81c33579f",
+      "lean/Subtail/SandwichPredicates.lean": "81b031e2c472d632b1d1b0bc0ad206aa8977571d78c58afc5b3e03670457e177",
+      "lean/Subtail/StackReachability.lean": "c3d0efc707cbc0979e99cd26726ed2575f6c1c60e85d34e7449903bf3082ec7f",
+      "lean/Subtail/StackSummary.lean": "345b4b1719f31b3963ca5ccc50b2fc861fc19864fe891cd9fcd547121acbe1fc",
+      "lean/Subtail/StackSummaryAudit.lean": "743ce0dbd00b926a7ec22377f621156afb593695bc3c8a4ca2d4b22139658d46",
+      "lean/Subtail/StackSummaryFast.lean": "c3294589e5114d2d4b26c595226d94fd1d470fca22eff47e85ca7868c793cb6f",
+      "lean/Subtail/SubtypeTerminalBridge.lean": "4a6fb1e783fdf052c1ac61bfd24aae9dbc5d1c441961e41d7cd02f434d57b751",
+      "lean/Subtail/SummaryAutomaton.lean": "68832af44bc8907e99dd2889968c699245aff70d40bf5690539f3f9edd8ca37b",
+      "lean/Subtail/SummaryBridge.lean": "8c5d8038b87a1b419e9be03dee668d390260c2677e42f227622cd199dff58bd9",
+      "lean/Subtail/SummaryInstanceCached.lean": "011b62cb5dfdc945c2c8b9ef0eb85da7549e21ec9fce3bcca4e050ed7e81f75c",
+      "lean/Subtail/TerminalDecisionLazy.lean": "67f5735adca1e6d8f059a39aedd50d1529a436e2cf0b0ce6cfda9b00f001b8a9",
+      "lean/Subtail/TerminalRank.lean": "3771a1a58ff7e5ddb2aa5134e08fca65a1a05d64c3a5de8487c4f7d7630b6fc2",
+      "lean/Subtail/TerminalRealization.lean": "7ab0df63e8deb4ec4d9448298cee34cca74548e6578cb3994bbe204c3a56c429",
+      "lean/Subtail/TerminalRealizationAudit.lean": "064fa8410b668e94df2e6741632f34f69dbcec6ed179b4070db2faf4461d935d",
+      "lean/Subtail/TerminalRealizationModel.lean": "aecfb3159e0d110acc57792370a600f90b945b224eeb74bb80102928020297f0",
+      "lean/Subtail/TreeSemantics.lean": "8b08b74d08bac48454f99f0241eb066ef6b218334641f284bc26423957a78f2e",
+      "lean/Subtail/Truncation.lean": "2e2af26dc02e8168715296f4296d78ca1ea9133a156e4792969cb04efb70df07",
+      "lean/Subtail/TwoState.lean": "063c3991d77f3037b209e8c74410cdb6449144545b3b1c4eb49fe0a5b4cf1b26"
+    }
+  },
+  "c030_axioms": {
+    "Subtail.TerminalRealization.TerminalFinal": [
+      "propext"
+    ],
+    "Subtail.TerminalRealization.a": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.v": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.b": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.child": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.upperClause": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.lowerClause": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.constraints": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.Laws": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.models_append": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.models_singleton": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.models_fin_flat": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.models_if_true": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.models_if_false": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.models_iff_laws": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.split_run": [
+      "propext"
+    ],
+    "Subtail.TerminalRealization.nonfinal_of_nonempty_run": [
+      "propext"
+    ],
+    "Subtail.TerminalRealization.b_empty": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.upper_letter": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.lower_letter": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.upper_run": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.lower_run": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.separation_implies_witness": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.baseNodes": [
+      "propext"
+    ],
+    "Subtail.TerminalRealization.base_closed": [
+      "propext"
+    ],
+    "Subtail.TerminalRealization.baseTree": [
+      "propext"
+    ],
+    "Subtail.TerminalRealization.valuation": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.valuation_a": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.valuation_v": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.valuation_b": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.baseline_models": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.realization_satisfiable": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.upperNodes": [
+      "propext"
+    ],
+    "Subtail.TerminalRealization.upper_closed": [
+      "propext"
+    ],
+    "Subtail.TerminalRealization.upperTree": [
+      "propext"
+    ],
+    "Subtail.TerminalRealization.witness_final_run": [
+      "propext"
+    ],
+    "Subtail.TerminalRealization.upper_next": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.upper_safe": [
+      "propext"
+    ],
+    "Subtail.TerminalRealization.lowerNodes": [
+      "propext"
+    ],
+    "Subtail.TerminalRealization.cut_append": [
+      "propext"
+    ],
+    "Subtail.TerminalRealization.lower_closed": [
+      "propext"
+    ],
+    "Subtail.TerminalRealization.lowerTree": [
+      "propext"
+    ],
+    "Subtail.TerminalRealization.lower_root": [
+      "propext"
+    ],
+    "Subtail.TerminalRealization.lower_prepend": [
+      "propext"
+    ],
+    "Subtail.TerminalRealization.flag_seed": [
+      "propext"
+    ],
+    "Subtail.TerminalRealization.wordModel": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.wordModel_models": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.wordModel_left": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.wordModel_right": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.witness_iff_separating": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.not_entails_iff_witness": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.Audit.lone": [
+      "propext"
+    ],
+    "Subtail.TerminalRealization.Audit.empty_yes": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.Audit.no_of_check": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.Audit.nonfinal_sink_no": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.Audit.bad_initial_no": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.Audit.diagonal_no": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.Audit.empty_separation": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.Audit.nonfinal_sink_clauses": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.Audit.edge": [
+      "propext"
+    ],
+    "Subtail.TerminalRealization.Audit.reverse_flag_yes": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.Audit.forward_flag_no": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.Audit.undefined_transition_no": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.Audit.reverse_flag_separation": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.Audit.forward_flag_no_separation": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.Audit.reverse_flag_clauses": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.Audit.spine": [
+      "propext"
+    ],
+    "Subtail.TerminalRealization.Audit.spine_terminal": [
+      "propext"
+    ],
+    "Subtail.TerminalRealization.Audit.spine_witness": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.Audit.spine_satisfiable": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.Audit.spine_forced": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.TerminalRealization.Audit.spine_unbounded": [
+      "Quot.sound",
+      "propext"
+    ]
+  },
+  "c030_regression": {
+    "status": "PASS",
+    "checker_sha256": "6c35e4e518f3db0e432ca0c66b58d7164e222e5cd24b06521b34229dfe220146",
+    "inspected_source_revision": "064fc7306b679bf607b91e7d8de259823f200c62",
+    "environment": {
+      "python": "3.13.14",
+      "system": "Linux",
+      "machine": "aarch64",
+      "suite_timeout_seconds": 120,
+      "explicit_memory_limit": null,
+      "random_seed": 2026091930
+    },
+    "counts": {
+      "instances": 12956,
+      "words": 200196,
+      "positive_words": 416,
+      "exact_model_checks": 200196,
+      "exact_satisfiability_models": 12956
+    },
+    "semantic_replay_matches_archived_results": true,
+    "terminality_countermodel": {
+      "scope": "Counterexample only after dropping the required terminal-final hypothesis",
+      "delta": [
+        [
+          1,
+          -1
+        ],
+        [
+          -1,
+          -1
+        ]
+      ],
+      "start": 0,
+      "final": [
+        0
+      ],
+      "flags": [],
+      "bad": [],
+      "word": "0",
+      "witness": false,
+      "separates_in_constructed_system": true,
+      "finite_product_address_sets": {
+        "a0": [
+          "",
+          "0"
+        ],
+        "a1": [
+          ""
+        ],
+        "v0": [],
+        "v1": [
+          ""
+        ],
+        "b": []
+      },
+      "exact_constraint_validation_errors": []
+    },
+    "suite_elapsed_seconds": {
+      "fixtures.json": 0.003,
+      "exhaustive_k1.json": 0.046,
+      "exhaustive_k2.json": 22.253,
+      "random_k3_k6.json": 1.872
+    },
+    "not_run": [
+      "Lean build/kernel replay",
+      "Repository E021 script",
+      "Repository budget differential",
+      "Repository-wide navigation/index/CI checks"
+    ]
+  },
+  "native_default_core": {
+    "toolchain": "leanprover/lean4:v4.33.1",
+    "kernel_replay": "PASS (bundled leanchecker)",
+    "seed": 20260904,
+    "instances": 80,
+    "max_word_length": 6,
+    "witness_comparisons": 10160,
+    "boundary_comparisons": 10160,
+    "budget_pairs": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        0,
+        2
+      ]
+    ],
+    "necessary_comparisons": 60960,
+    "sufficient_comparisons": 60960,
+    "two_state_decision_comparisons": 33,
+    "lrs_comparisons": 511,
+    "axioms": {
+      "witnessCheck": [
+        "propext"
+      ],
+      "lrs": [],
+      "finiteBudgetDecision": [],
+      "boundaryCheck": [
+        "propext"
+      ],
+      "admissibleCheck": [
+        "propext"
+      ],
+      "necessaryCheck": [
+        "propext"
+      ],
+      "suffixBoundCheck": [],
+      "sufficientCheck": [
+        "propext"
+      ],
+      "twoStateWitnessCheck": [
+        "propext"
+      ],
+      "witnessCheck_correct": [
+        "Quot.sound",
+        "propext"
+      ],
+      "incomingLe_iff_flags": [
+        "propext"
+      ],
+      "lrs_spec": [
+        "Quot.sound",
+        "propext"
+      ],
+      "profile_truncation": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "visited_profile_truncation": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "suffix_trace_truncation": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "finiteBudgetDecision_correct": [
+        "Quot.sound",
+        "propext"
+      ],
+      "boundaryCheck_correct": [
+        "Quot.sound",
+        "propext"
+      ],
+      "witness_iff_finalSlice_proper": [
+        "Quot.sound",
+        "propext"
+      ],
+      "necessary_zero_iff_boundary": [
+        "Quot.sound",
+        "propext"
+      ],
+      "boundary_witness_of_length_le_one": [
+        "Quot.sound",
+        "propext"
+      ],
+      "admissibleCheck_correct": [
+        "Quot.sound",
+        "propext"
+      ],
+      "necessaryCheck_correct": [
+        "Quot.sound",
+        "propext"
+      ],
+      "suffixBoundCheck_correct": [
+        "Quot.sound",
+        "propext"
+      ],
+      "sufficientCheck_correct": [
+        "Quot.sound",
+        "propext"
+      ],
+      "suffixBound_iff_reverseSuffixBound": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "witness_implies_necessary": [
+        "propext"
+      ],
+      "sufficient_implies_witness": [
+        "Quot.sound",
+        "propext"
+      ],
+      "witness_implies_sufficient_lrs": [
+        "Quot.sound",
+        "propext"
+      ],
+      "exists_short_witness_two_states": [
+        "Quot.sound",
+        "propext"
+      ],
+      "twoStateWitnessCheck_correct": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    "failures": 0,
+    "scope": "binary BorderAvoid core; conditional budget theorem; no SEP decision procedure"
+  },
+  "log_sha256": {
+    "step-5.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "step-4.log": "f4247571aeef26288acef82804a70f5d76f25c962ea578883c1c3cdb094c7acf",
+    "step-0.log": "8482fc83169fc8aced7f4a0c1799826b76a1481e9de80406eabe71619fd41d28",
+    "step-1.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "step-3.log": "a27604f10063620936531e952cd3b2dfd330421b028b6d053eadd8be6e79a946",
+    "step-2.log": "c03ae07b565e14ccdf16e7275e65411b3cbb16eb586720a9de3ad844fc2ecdc6"
+  },
+  "environment": {
+    "host": "wb-marcus",
+    "os": "Linux",
+    "arch": "aarch64",
+    "lean": "4.33.1",
+    "python": "3.13.14",
+    "cache": "Independent copied .lake cache; Lake validated dependencies, not a cache-free installation"
+  },
+  "limits": [
+    "The C030 replay wrapper not_run list is local to that wrapper; separate build/kernel/audit steps above actually ran.",
+    "No fresh E021 production-realizer or budget differential, complete solver benchmark, literature search or manuscript rendering in this integration.",
+    "Independent reviewers read sources and patch history; they did not run native tests.",
+    "Unowned workspaces, local branches and stashes were not audited or retired."
+  ],
+  "local_checks": {
+    "paper/check.py": "PASS: 21 mapped results, 4 ordinary results; no Lean execution by that check",
+    "python3 -m unittest discover -s scripts -p test_research_index.py": "PASS: 13 tests",
+    "experiments/run_experiments.py": "PASS; tracked deterministic receipt unchanged",
+    "initial_unittest_module_invocation": "FAIL: scripts.test_research_index cannot import research_index; corrected documented discover invocation passes; no source fix required",
+    "scripts/research_index.py --check": "PASS: 18 approaches, 166 A/C/E/Q records, paths and ID links",
+    "git diff --check": "PASS",
+    "C030 workflow trigger readback": "PASS: main, all Lean dependencies, both checker scripts, archived result and workflow",
+    "historical body and provenance readback": "PASS: all four note bodies match original PR heads after removing the labelled integration notices; all four heads retained as ancestors"
+  },
+  "reviews": [
+    {
+      "role": "Independent C030 statement/source reviewer",
+      "source_revision": "db55acded6064b12d5d483216e29653ae3d884f3",
+      "finding": "No mathematical or statement blocker; main/dependency CI trigger gap repaired",
+      "final_readback": "Repaired workflow, C030 ledger, receipt, note and completion map checked; no blocker",
+      "native_tests_run_by_reviewer": false
+    },
+    {
+      "role": "Independent historical patch reviewer",
+      "source_revisions": [
+        "99d951077ace1c93d0fec604839674fb3f19dbc9",
+        "c33d0c8d65158fc7ba53e5bc24c14132f071dc42",
+        "42be43f35a98d4d23a4ba26439833730bbcd6510"
+      ],
+      "finding": "Unique artifacts preserved; sole compiler-note conflict retains newer C082 correction; no blocker",
+      "native_tests_run_by_reviewer": false,
+      "final_readback": "Status banners preserve exact historical bodies; completion map and replacement issues retain unresolved quantitative and partial stress obligations; no blocker"
+    }
+  ]
+}

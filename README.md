@@ -2,6 +2,9 @@
 
 Collaborative research on **Problem 1.7: subtype entailment over bottom and binary product**, with possibly infinite trees. The repository now contains a complete Lean-checked decision theorem for this problem; see [C081](research/claims.md#c081).
 
+The [completion checklist](research/COMPLETION.md) separates release requirements
+from the remaining performance, complexity and extension research.
+
 ## The result
 
 Given any finite list of constraints and a query built from variables, bottom

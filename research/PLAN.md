@@ -1,11 +1,15 @@
 # Research plan
 
-Updated: 2026-09-20 (proved cached raw summary and E060)
+Updated: 2026-09-20 (reviewed PR reconciliation and completion issues)
 
 **Completed qualitative goal:** decide [Problem 1.7](problem.md) for bottom
 and binary product over arbitrary, possibly infinite trees. [C081](claims.md#c081)
 gives the total executable Boolean and unconditional correctness theorem.
 [Source pins and validation](../notes/2026-09-19-entailment-decision.md).
+
+The [completion checklist](COMPLETION.md) is the current map from remaining
+deliverables to issues. It separates final paper/release gates from further
+scientific targets. No worker is assigned by that map.
 
 ## Post-C081 results and next questions
 
@@ -45,7 +49,7 @@ Tight complexity and exact literature transfers
 remain open. JSON handling, extraction and graph finiteness remain Python.
 
 The remaining items are proposals, not active worker assignments. Ownership and reservations
-remain in [the registry](approaches.json), [#62](https://github.com/mhenglein/subtail/issues/62)
+remain in [the registry](approaches.json), [#63](https://github.com/mhenglein/subtail/issues/63)
 and [#37](https://github.com/mhenglein/subtail/issues/37). The owner deferred
 licensing and requested author/affiliation placeholders. No license grant or
 publication-ready authorship is asserted.

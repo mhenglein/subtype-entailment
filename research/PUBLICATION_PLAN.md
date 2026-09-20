@@ -4,6 +4,14 @@ Date: 2026-09-20. Reviewed baseline: `0ef097576686a5d3886fb89cbce504d03dc0bfa9`.
 Coordination: [#54](https://github.com/mhenglein/subtail/issues/54), integration
 [#37](https://github.com/mhenglein/subtail/issues/37). Related workstreams: A010/A018.
 
+**Current completion map:** [COMPLETION.md](COMPLETION.md) and
+[#63](https://github.com/mhenglein/subtail/issues/63) now track the remaining
+acceptance gates. C081/C085, complete ordinary extraction and the first solver
+acceptance milestones are done. E060 retains 38/38 fixed and 19/19 deeper
+completions; six-variable raw stress remains UNKNOWN. The dated updates below
+preserve earlier measurements and proposals, not outstanding versions of
+already completed tasks.
+
 **Planning baseline:** the initial review at `c360966` proposed the programme
 below. Later execution is recorded separately in the update below; completed
 solver work does not make the manuscript or extension programme complete.

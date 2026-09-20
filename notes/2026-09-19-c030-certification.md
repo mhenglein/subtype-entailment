@@ -1,5 +1,12 @@
 # C030: kernel-checked direct terminal realization
 
+> **September 20 integration update.** The unchanged proof sources now have an
+> independent statement/source readback and fresh combined-tree validation.
+> [Integration record](2026-09-20-repository-reconciliation.md). The dedicated
+> workflow now covers main and semantic dependencies; the modules remain optional.
+> Budget preservation is still a separate ordinary-proof subclaim. The handoff
+> and pending-review wording below retain their original checkpoint scope.
+
 Date: 2026-09-19. Workstreams A011/A013; coordination #37; prior review PR #46.
 Session: ChatGPT c030-integration-certification-20260919.
 

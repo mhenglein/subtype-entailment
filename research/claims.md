@@ -705,10 +705,22 @@ No stronger witness bound or complexity result follows.
 an always-satisfiable normalized subtype realization on `2k+1` variables,
 preserving exactly its witness words and budgets.
 
-**Status / scope.** `WRITTEN PROOF + REPRO`; arbitrary flags and `Bad` are
-allowed, and every accepting state must be terminal.
+**Status / scope.** `LEAN` for arbitrary-tree satisfiability and exact same-word
+realization; `WRITTEN PROOF + REPRO` for the separate budget-preservation clause.
+Arbitrary ordered flags, `Bad`, initial and final sets are allowed; every
+accepting state must be terminal. This is not an arbitrary-final realization
+or a complexity equivalence.
 
-**Record.** [Full statement and proof](../notes/2026-09-05-terminal-realization.md).
+`TerminalRealization.realization_satisfiable`, `witness_iff_separating` and
+`not_entails_iff_witness` use the direct finite constructor on `2k+1` variables.
+The proof does not use the forward summary bridge, C029 or a numerical bound.
+The optional modules have their own build/kernel/dependency/regression CI.
+
+**Record.** [Full ordinary proof](../notes/2026-09-05-terminal-realization.md),
+[original independent review](../notes/2026-09-19-c030-independent-review.md),
+[Lean certification](../notes/2026-09-19-c030-certification.md), and
+[independent source readback and combined validation](../notes/2026-09-20-repository-reconciliation.md).
+Formal budget preservation remains [#73](https://github.com/mhenglein/subtail/issues/73).
 
 <a id="c031"></a>
 
