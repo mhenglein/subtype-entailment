@@ -53,3 +53,50 @@ checks and a semantic readback, plus independent small-instance regressions.
 The old receipts and failed trials stay unchanged. Tests do not strengthen C081,
 C080 bounds, finite semantics or novelty. This already decided fragment has no
 remaining undecidability route; richer signatures retain separate questions.
+
+## Measured obstruction and sufficient ordinary proof
+
+Baseline `9b359df` completes summary construction in 13–28ms on the five n=2
+fixtures, then exhausts each 20-second limit inside eager cycle-candidate
+construction. The two n=1 controls complete. At `a47e59f`, streaming alone
+completes five/seven; the two entailed n=2 cases still exhaust their limits
+while searching cycles. The initial-safety gate completes all seven in
+0.819–0.870s diagnostic wall. These are ablations, not final matched timings.
+
+For a finite alphabet list X, define E(X,d,P) recursively. At d=0 it returns
+P([]). At d+1 it tests, in order, each x in X using E(X,d,w ↦ P(x::w)),
+stopping at the first true result. Induction on d proves equality with
+`(exactLists X d).any P`: the successor step is exactly list flatMap followed
+by any, and mapping a cons is composition with P. Duplicates and the empty
+alphabet do not matter. Then B(X,k,P) scans d=0,...,k with E. The definition
+of `boundedLists` as this flatMap proves equality with its any. Both procedures
+terminate structurally and store no complete exponential word list. They may
+still examine exponentially many words if every answer is false.
+
+For each endpoint q, keep its final and empty-incoming-column checks ahead
+of B. These conjuncts are already necessary in `cycleCheck`, so inserting
+them changes neither successful pairs nor the final disjunction. Within B,
+test the unchanged `cycleCheck I q c && prefixCheck I q c`. The finite
+q scan and exact word scan therefore have the same Boolean as the original
+candidate-list filter followed by any. No PrefixGood check is approximated.
+
+Finally, every successful pair in the reference infinite check supplies,
+by `candidate_prefixCheck_correct`, a word w with `SafeRun I I.initial w q`.
+Its cut at zero exists and is safe, even if w is empty. Thus a false
+`safeState I I.initial` makes the whole reference check false. Testing this
+bit first preserves the Boolean for all finite instances, including those
+which are not absorbing. Only the inherited interpretation as InfWitness
+requires absorption. This proof does not confuse a safe endpoint with a
+reachable endpoint; `prefixCheck` still decides the full safe prefix language.
+
+Substitute the resulting equality into the raw disjunction while retaining
+the exact same summary automaton, terminalization and terminal decision.
+Substitution into the prepared frontend's final fallback then preserves its
+original-expression correctness. No frontend shortcut enters a raw probe.
+The initial unsafe case skips only the infinite branch; the terminal branch
+is still evaluated by its established procedure.
+
+Outstanding acceptance obligations: Lean proof and runtime audit; independent
+ordinary readback; native abstract-component checks; matched original #eval
+benchmark; current frontend/deeper/CLI regressions. Performance outside these
+measured families, a memory bound, and the terminal promotion cost remain open.
