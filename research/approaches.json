@@ -176,12 +176,12 @@
     {
       "id": "A010",
       "title": "Build the exact top-free constraint-to-automata pipeline",
-      "status": "tried",
+      "status": "active",
       "outcome": "supported",
-      "owner": null,
+      "owner": "solver-profile-20260920 (#60)",
       "updated": "2026-09-20",
       "summary": "C081/C085 now have a standalone arbitrary- and finite-tree paper, with the full terminal and consuming-cycle arguments, exact multi-revision Lean correspondence, checked examples and bounded Henglein–Rehof/NP review. The unconditional finite decision is unchanged; finite SAT, novelty and quantitative limits stay separate.",
-      "next_step": "Profile deeper E055 timeouts under matched caps before selecting a proved representation change; alternatively formalize the countermodel producer or pursue explicit-top separation. The finite paper step is complete under #59; no next worker assigned.",
+      "next_step": "Profile deeper E055 failures on wb-marcus, then prove and measure one targeted optimization; #60 owns the scoped continuation.",
       "record": "research/approaches/A010.md",
       "evidence": [
         "notes/2026-09-04-bridge-foundation.md",
@@ -585,12 +585,12 @@
     {
       "id": "A018",
       "title": "Maintain the Lean core and verify critical obligations",
-      "status": "tried",
+      "status": "active",
       "outcome": "supported",
-      "owner": null,
+      "owner": "solver-profile-20260920 (#60)",
       "updated": "2026-09-20",
       "summary": "C081/C085 now have a standalone arbitrary- and finite-tree paper, with the full terminal and consuming-cycle arguments, exact multi-revision Lean correspondence, checked examples and bounded Henglein–Rehof/NP review. The unconditional finite decision is unchanged; finite SAT, novelty and quantitative limits stay separate.",
-      "next_step": "Profile deeper E055 timeouts under matched caps before selecting a proved representation change; alternatively formalize the countermodel producer or pursue explicit-top separation. The finite paper step is complete under #59; no next worker assigned.",
+      "next_step": "Profile deeper E055 failures on wb-marcus, then prove and measure one targeted optimization; #60 owns the scoped continuation.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
