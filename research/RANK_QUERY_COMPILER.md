@@ -9,6 +9,31 @@ and a smaller existential compiler are not refuted. Earlier unqualified size
 arguments and reviews below are superseded at precisely that point; the text
 is preserved as history. [Exact correction and dependency audit](../notes/2026-09-20-post-c081-quantitative-integration.md).
 
+## Historical September 19 discovery: quantitative counterexample for the concrete Lean enumeration
+
+A separate advisory review at `064fc7306b679bf607b91e7d8de259823f200c62`
+finds that `preimage I RankQueryCoverage.budget` does **not** satisfy the
+proposed `U_k(T)=64*k*T^(2*T+2)` clause-weight conjunct. Its oversized per-atom
+piece allowance admits a valid, satisfiable five-state example with input
+weight 17 and output weight `12+30*2^175 > 320*17^36`. The paper's existential
+product-simple normal form does not bound every diagram emitted by this
+larger Lean enumeration. This is not a refutation of the Python enumerator's
+separate caps or of an existentially chosen smaller compiler.
+
+[Full counterexample, enumeration counts, sufficient replacement proof and handoff](../notes/2026-09-19-rank-query-weight-counterexample.md),
+[standalone fixture](../experiments/check_rank_query_weight_counterexample.py),
+[deterministic result](../results/rank-query-weight-counterexample.json).
+The review gives the conservative replacement `64*k*T^(6*T^2+2)` for the
+unchanged Lean compiler, with the corresponding larger T/F recurrence, as
+ordinary mathematics awaiting separate review/native Lean verification at that
+checkpoint. The September 20 correction above records the later checked result.
+The old F(k) witness statement itself is **not** refuted. The checked
+qualitative terminal decision uses neither U nor F and is unaffected.
+No Lean definitions or proof interfaces are changed. The September 17 material
+below is preserved as historical evidence; current STATE and C080 remain the
+canonical status records. Coordination and integration handoff: #30, #34, #37.
+
+
 Date: 2026-09-17. Base main: `afbb2954bb984998db3ecac252b5e2e23f62341a`.
 
 **PROPOSED COMPLETE PROOF; INDEPENDENT REVIEW PENDING; NOT LEAN-CHECKED.**
