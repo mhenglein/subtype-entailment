@@ -707,16 +707,16 @@ jobs:
           components = checks['phases']['components']
           assert components['status'] == 'PASS' and components['case_count'] == 29 and len(components['rows']) == 29
           assert components['instance_count'] == 83
-          assert components['process_count'] == 83
+          assert components['process_count'] == 166
           assert sum(len(case['rows']) for case in components['rows']) == 83
           for case in components['rows']:
               assert case['status'] == case['native']['status'] == 'PASS', case['name']
               assert len(case['rows']) == case['query_count']
               assert len(case['native']['markers']) == 2 * case['query_count']
               processes = case['native']['processes']
-              assert len(processes) == case['query_count'] == case['n'] ** 2
-              assert {tuple(p['query']) for p in processes} == {(a, b) for a in range(case['n']) for b in range(case['n'])}
-              assert all(p['status'] == 'PASS' and len(p['markers']) == 2 for p in processes)
+              assert len(processes) == 2 * case['query_count'] == 2 * case['n'] ** 2
+              assert {(p['variant'], *p['query']) for p in processes} == {(v, a, b) for v in ('candidate', 'reference') for a in range(case['n']) for b in range(case['n'])}
+              assert all(p['status'] == 'PASS' and len(p['markers']) == 1 for p in processes)
               for row in case['rows']:
                   assert row['status'] == 'PASS' and row['candidate_present'] and row['reference_present'], row['name']
                   assert row['candidate_reference_field'] is None and row['candidate_python_field'] is None
@@ -743,7 +743,8 @@ jobs:
                   assert actual['actual'] is row['expected'] is False
               else:
                   assert 'actual' not in actual, 'A capped run supplies no Boolean answer'
-          print('PASS: 83 exact all-query instances, seven raw answers, n=3/4/5 raw stress; n=6 UNKNOWN remains explicit')
+          n6 = next(row['variants']['candidate']['status'] for row in rows if row['n'] == 6)
+          print(f'PASS: 83 exact all-query instances, seven raw answers, n=3/4/5 raw stress; n=6 status: {n6}')
           PYCODE
       - name: Preserve cached-summary proof and native evidence
         if: always()

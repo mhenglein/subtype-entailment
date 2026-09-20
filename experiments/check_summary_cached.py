@@ -449,8 +449,11 @@ def instance_encoding(instance) -> dict[str, object]:
     }
 
 
-def component_source(case: ComponentCase, marker: str) -> tuple[str, dict[str, dict[str, object]]]:
-    """Emit candidate/reference fields for every query in one constraint case."""
+def component_source(case: ComponentCase, marker: str, variant: str) -> tuple[str, dict[str, dict[str, object]]]:
+    """Emit one variant; the caller uses one query to fit the capped output."""
+
+    if variant not in ("candidate", "reference"):
+        raise ValueError(f"unknown component variant: {variant}")
 
     ctext = render_constraints(case.constraints, case.n)
     query_rows: dict[str, dict[str, object]] = {}
@@ -492,21 +495,20 @@ def emitInstance {{k : Nat}} (tag : String) (I : Subtail.Instance k) : IO Unit :
 
 def C : List (Constraint {case.n}) := {ctext}
 '''
-    body = [
-        "def main : IO Unit := do",
-        "  let M := Subtail.CanonicalReachability.systemOf C",
-        "  let P := Subtail.EntailmentPrepared.prepare M",
-    ]
+    body = ["def main : IO Unit := do"]
+    if variant == "candidate":
+        body.extend([
+            "  let M := Subtail.CanonicalReachability.systemOf C",
+            "  let P := Subtail.EntailmentPrepared.prepare M",
+        ])
     for a, b in case.queries:
         key = f"{case.name}|{a}|{b}"
         fin_a = decision.fin(a, case.n)
         fin_b = decision.fin(b, case.n)
-        body.extend(
-            [
-                f'  emitInstance "candidate|{key}" (Subtail.SummaryInstanceCached.summaryInstance C P.machine P.cache {fin_a} {fin_b})',
-                f'  emitInstance "reference|{key}" (Subtail.SummaryAutomaton.summaryInstance C {fin_a} {fin_b})',
-            ]
-        )
+        if variant == "candidate":
+            body.append(f'  emitInstance "candidate|{key}" (Subtail.SummaryInstanceCached.summaryInstance C P.machine P.cache {fin_a} {fin_b})')
+        else:
+            body.append(f'  emitInstance "reference|{key}" (Subtail.SummaryAutomaton.summaryInstance C {fin_a} {fin_b})')
     body.append("\n#eval main")
     return prelude + "\n".join(body) + "\n", query_rows
 
@@ -546,16 +548,17 @@ def component_phase(
         expected: dict[str, dict[str, object]] = {}
         processes: list[dict[str, object]] = []
         for a, b in case.queries:
-            source, query_expected = component_source(replace(case, queries=((a, b),)), marker)
-            expected.update(query_expected)
-            path = scratch / f"component-{case.name}-{a}-{b}.lean"
-            process = run_marked(source, path, marker, timeout, expected_markers=2)
-            process["query"] = [a, b]
-            processes.append(process)
+            for variant in ("candidate", "reference"):
+                source, query_expected = component_source(replace(case, queries=((a, b),)), marker, variant)
+                expected.update(query_expected)
+                path = scratch / f"component-{case.name}-{a}-{b}-{variant}.lean"
+                process = run_marked(source, path, marker, timeout, expected_markers=1)
+                process.update(query=[a, b], variant=variant)
+                processes.append(process)
         statuses = [process.get("status", "FAIL") for process in processes]
         run: dict[str, object] = {
             "status": "FAIL" if "FAIL" in statuses else "UNKNOWN" if "UNKNOWN" in statuses else "PASS",
-            "process_scope": "One candidate/reference query pair per capped process",
+            "process_scope": "One query and one variant per capped process",
             "processes": processes,
             "markers": [item for process in processes for item in process.get("markers", [])],
         }
@@ -646,7 +649,7 @@ def component_phase(
         "exact_fields": ["initial", "transitions", "bad", "final", "flags"],
         "oracle": "Independent P-automaton predecessor saturation in check_subtype_summary.reference",
         "process_count": sum(len(row["native"]["processes"]) for row in rows),
-        "process_scope": "One candidate/reference query pair per capped process; case totals are not solver timings",
+        "process_scope": "One query and one variant per capped process; case totals are not solver timings",
         "rows": rows,
         "limitation": "Reference equality and Python agreement are finite validation evidence; they do not prove the all-input Lean equality theorem.",
     }
@@ -730,7 +733,7 @@ def main(argv=None) -> int:
             "lean_stack_KiB": 32768,
             "runner": "scripts/subtail.py:run_process",
             "protocol": "lake env lean <source.lean> with #eval main",
-            "component_process_scope": "One candidate/reference query pair; all queries retained",
+            "component_process_scope": "One query and one variant; all queries and both variants retained",
             "variants": list(selected_variants(args.compare_baseline)),
         },
         "source_sha256": source_hashes(),
