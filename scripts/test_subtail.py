@@ -98,9 +98,33 @@ class SubtailTests(unittest.TestCase):
             if path is not None:self.assertIn(tuple(path),difference)
 
     def test_no_model_is_unknown_not_entailment(self):
-        report = cli.find_countermodel(self.problem(query=['x','x']), time.monotonic()+1, max_models=3)
+        from regular_countermodel import extract
+        report = extract(self.problem(query=['x','x']), time.monotonic()+1, max_words=3)
         self.assertEqual(report['status'], 'UNKNOWN')
         self.assertEqual(report['candidates'], 3)
+
+    def test_explanation_limit_preserves_completed_negative_decision(self):
+        output = io.StringIO()
+        with patch.object(cli, 'run_native', return_value={'status':'NOT_ENTAILED'}), \
+             patch.object(cli, 'find_countermodel', return_value={'status':'UNKNOWN', 'reason':'time_limit'}), \
+             contextlib.redirect_stdout(output):
+            code = cli.main([str(cli.ROOT/'examples/entailment/zero-spine.json')])
+        report = json.loads(output.getvalue())
+        self.assertEqual(code, 0)
+        self.assertEqual(report['status'], 'NOT_ENTAILED')
+        self.assertEqual(report['explanation_search']['status'], 'UNKNOWN')
+
+    def test_problem_json_roundtrip(self):
+        p = self.problem(query=[{'prod':['x','bottom']}, 'y'])
+        self.assertEqual(cli.parse_problem(cli.problem_json(p)), p)
+
+    def test_countermodel_worker_uses_original_input_checker(self):
+        p = cli.parse_problem({'variables':['x'],
+                              'constraints':[[{'prod':['x','bottom']},'x']],
+                              'query':['x','bottom']})
+        report = cli.find_countermodel(p, time.monotonic()+5)
+        self.assertEqual(report['status'], 'FOUND')
+        self.assertTrue(cli.check_countermodel(p, report['countermodel'])['valid'])
 
     def test_certificate_timeout(self):
         with self.assertRaises(TimeoutError):

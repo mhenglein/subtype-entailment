@@ -10,7 +10,6 @@ import argparse
 from collections import deque
 from dataclasses import dataclass
 import hashlib
-from itertools import islice, product
 import json
 import math
 import os
@@ -231,23 +230,52 @@ def check_countermodel(p: Problem, model, deadline=None):
             'semantics': 'arbitrary bottom/product trees; finite graph denotes regular trees'}
 
 
-def find_countermodel(p: Problem, deadline, max_models=2000):
-    # A small explicit candidate library; it is not a complete model enumeration.
-    nodes = [None, [0, 0], [2, 2], [3, 0], [0, 4]]
-    count = 0
-    for assignment in islice(product(range(len(nodes)), repeat=len(p.variables)), max_models):
-        if time.monotonic() >= deadline:
-            break
-        count += 1
-        model = {'nodes': nodes, 'roots': dict(zip(p.variables, assignment))}
-        try:
-            report = check_countermodel(p, model, deadline)
-        except TimeoutError:
-            break
-        if report['valid']:
-            return {'status': 'FOUND', 'candidates': count, 'countermodel': report}
-    return {'status': 'UNKNOWN', 'candidates': count,
-            'reason': 'bounded candidate library or time limit; no completeness claim'}
+def problem_json(p: Problem):
+    def expression(e):
+        if e[0] == 'bot':
+            return 'bottom'
+        if e[0] == 'var':
+            return p.variables[e[1]]
+        return {'prod': [expression(e[1]), expression(e[2])]}
+    return {'variables': list(p.variables),
+            'constraints': [[expression(l), expression(r)] for l, r in p.constraints],
+            'query': [expression(e) for e in p.query]}
+
+
+def find_countermodel(p: Problem, deadline, memory_gib=16.0):
+    """Complete conditional extraction, with explicit operational limits.
+
+    The worker's unbounded version terminates on non-entailed inputs. Resource
+    exhaustion is UNKNOWN here; it never changes a previously proved decision.
+    """
+    with tempfile.TemporaryDirectory(prefix='subtail-model-') as directory:
+        source, target = Path(directory) / 'input.json', Path(directory) / 'model.json'
+        source.write_text(json.dumps(problem_json(p)))
+        remaining = deadline - time.monotonic()
+        result = run_process([sys.executable, str(ROOT / 'scripts/regular_countermodel.py'),
+                              str(source), str(target), str(max(0, remaining))],
+                             ROOT, remaining, memory_gib)
+        if result['status'] != 'PASS':
+            return {k: v for k, v in result.items() if k != 'output'}
+        if not target.exists():
+            return {'status': 'UNKNOWN', 'reason': 'missing_extraction_result'}
+        if target.stat().st_size > 8 * 1024**2:
+            return {'status': 'UNKNOWN', 'reason': 'certificate_size_limit'}
+        found = json.loads(target.read_text())
+    if found['status'] != 'FOUND':
+        return found
+    try:
+        checked = check_countermodel(p, found.pop('model'), deadline)
+    except (TimeoutError, RecursionError, MemoryError):
+        return {'status': 'UNKNOWN', 'reason': 'certificate_resource_limit'}
+    if not checked['valid']:
+        return {'status': 'UNKNOWN', 'reason': 'extracted_model_rejected', 'check': checked}
+    if checked['separating_path'] != found['separating_path']:
+        # Different valid paths are harmless: the independent checker returns
+        # the shortest path of the final graph, not necessarily the seed word.
+        found['seed_path'] = found['separating_path']
+    found['separating_path'] = checked['separating_path']
+    return {**found, 'countermodel': checked}
 
 
 def main(argv=None):
@@ -275,7 +303,7 @@ def main(argv=None):
         else:
             result = run_native(p, deadline, args.memory_gib)
             if result['status'] == 'NOT_ENTAILED' and not args.no_explain:
-                explanation = find_countermodel(p, min(deadline, time.monotonic() + 2.0))
+                explanation = find_countermodel(p, deadline, args.memory_gib)
                 result['explanation_search'] = {k: v for k, v in explanation.items() if k != 'countermodel'}
                 if 'countermodel' in explanation:
                     result['countermodel'] = explanation['countermodel']
