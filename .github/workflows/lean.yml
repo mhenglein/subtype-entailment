@@ -26,6 +26,7 @@ on:
       - 'scripts/check_entailment_decision.py'
       - 'scripts/check_rank_weight_native.py'
       - 'scripts/check_original_bounds.py'
+      - 'scripts/check_explicit_top.py'
       - 'scripts/test_check_original_bounds.py'
       - 'scripts/check_terminal_lazy.py'
       - 'scripts/check_fast_summary.py'
@@ -59,6 +60,7 @@ on:
       - 'scripts/check_entailment_decision.py'
       - 'scripts/check_rank_weight_native.py'
       - 'scripts/check_original_bounds.py'
+      - 'scripts/check_explicit_top.py'
       - 'scripts/test_check_original_bounds.py'
       - 'scripts/check_terminal_lazy.py'
       - 'scripts/check_fast_summary.py'
@@ -550,6 +552,16 @@ jobs:
           path: tmp/rank-weight-native.json
           retention-days: 90
           if-no-files-found: error
+      - name: Explicit-top language lifting and independent transfer corpora
+        run: python3 scripts/check_explicit_top.py
+      - name: Preserve explicit-top language and hardness checks
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: explicit-top-audit
+          path: tmp/explicit-top-*
+          retention-days: 90
+          if-no-files-found: warn
       - name: Original terminal witness bound and smaller compiler
         env:
           LEAN_NUM_THREADS: '1'
