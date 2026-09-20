@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" class="in-text" default-locale="en-US">
+  <info>
+    <title>Subtail numeric references</title>
+    <id>https://github.com/mhenglein/subtail/paper/references.csl</id>
+    <updated>2026-09-20T00:00:00+00:00</updated>
+  </info>
+  <citation collapse="citation-number">
+    <sort><key variable="citation-number"/></sort>
+    <layout prefix="[" suffix="]" delimiter="; ">
+      <text variable="citation-number"/>
+      <group prefix=", " delimiter=" ">
+        <label variable="locator" form="short"/>
+        <text variable="locator"/>
+      </group>
+    </layout>
+  </citation>
+  <bibliography hanging-indent="true" entry-spacing="1">
+    <layout suffix=".">
+      <text variable="citation-number" prefix="[" suffix="] "/>
+      <names variable="author" suffix=". ">
+        <name and="text" delimiter=", " initialize-with=". "/>
+      </names>
+      <text variable="title" suffix=". "/>
+      <group delimiter=", " suffix=". ">
+        <text variable="container-title" font-style="italic"/>
+        <group>
+          <text variable="volume"/>
+          <text variable="issue" prefix="(" suffix=")"/>
+        </group>
+        <text variable="page" prefix="pp. "/>
+        <date variable="issued"><date-part name="year"/></date>
+      </group>
+      <text variable="note" suffix=". "/>
+      <choose>
+        <if variable="DOI"><text variable="DOI" prefix="https://doi.org/"/></if>
+        <else><text variable="URL"/></else>
+      </choose>
+    </layout>
+  </bibliography>
+</style>

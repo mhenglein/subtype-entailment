@@ -1,9 +1,6 @@
 # Deciding subtype entailment for bottom and binary product over arbitrary trees
 
-**Research manuscript — draft for review.** Authors and affiliations: **[placeholders]**.
-Revised: 2026-09-20. Formal source checkpoint:
-[c946d86](https://github.com/mhenglein/subtail/commit/c946d86b9e65da2877e0df42c710abbdcb5a4037) (claim C081).
-Licensing: pending the owner's decision. This draft makes no publication-priority claim.
+Authors and affiliations: **[placeholders]**.
 
 ## Abstract
 
@@ -22,19 +19,103 @@ finite construction that pulls a whole existential regular-path query back
 through this extension. Products of observers over each physical interval
 preserve the single shared generated word. Iterating this construction a
 bounded number of times and evaluating the resulting query on two-vertex graphs
-decides the terminal case. The construction, both semantic directions, and
-its composition with type normalization are checked in Lean. No numerical
-witness bound is assumed. Practical efficiency, stronger quantitative bounds,
-and extensions of the type signature are separate questions.
+decides the terminal case. We prove soundness, completeness and termination of both branches and
+compose them with exact expression normalization. The decision procedure and
+its correctness theorem are also formalized in Lean. The construction does
+not assume a numerical witness-length bound.
 
-## 1. The theorem and its semantic boundary
+## 1. Introduction and main result
+
+Subtype entailment asks whether every assignment satisfying a finite set of
+type inequalities also satisfies a specified inequality. The distinction
+between satisfiability and entailment is substantial: a constraint solver
+may find some consistent assignment without deciding what holds in all of
+them. Recursive types add a second difficulty, because a counterexample may
+require an infinite tree even though the input expressions are finite.
+
+We study the signature consisting of bottom and one covariant binary product.
+Variables range over all trees in this signature, with no regularity
+restriction. The main result is a terminating decision procedure for the full
+finite-expression entailment problem in this domain. Its central ingredient
+is a finite preimage construction for existential regular-path queries on
+coloured prefix graphs. It eliminates a shared, unbounded first-return word
+while preserving every path constraint in a conjunction.
+
+### 1.1 Relation to previous work
+
+Henglein and Rehof established two important complexity landmarks for subtype
+entailment. For structural finite simple types over lattice-ordered base
+types, they proved coNP-completeness; their hardness construction already
+uses a binary covariant constructor [@HR97, Theorems 4.7--4.8 and Corollary 4.9].
+They subsequently introduced constraint automata for nonstructural entailment
+and proved PSPACE-hardness for both finite and infinite trees in a signature
+with bottom, product and explicit top [@HR98, Section 3 and Theorems 1--2].
+The same paper proves PSPACE-completeness for structural infinite-tree
+entailment [@HR98, Theorem 5]. These results established the need to distinguish
+structural from nonstructural subtyping, and finite from infinite semantics,
+in both algorithms and complexity claims.
+
+Our order is nonstructural: bottom lies below products of arbitrary shape.
+The variable domain, however, has no explicit top-labelled leaf. The presence
+of a greatest infinite product tree does not identify these two signatures.
+In particular, a lower-bound construction whose constraints mention only
+products can still use top in its valuations. The Henglein--Rehof hardness
+theorems therefore require a separate semantic transfer before they can be
+claimed as lower bounds for the exact domain studied here.
+
+Niehren and Priesnitz developed the constraint-automaton approach into a
+characterization by restricted cap-automaton universality and a shared word
+equation [@NP03, Theorems 1--4 and Lemma 1]. Their ambient signature contains
+both bottom and explicit top, and they distinguish finite, regular and
+arbitrary trees. This characterization exposes the repeated-word condition;
+it does not by itself provide a general universality algorithm. Their earlier
+PSPACE-completeness theorem concerns a restricted syntax of product equations
+and variable inequalities [@NP99, Theorem 14]. Section 12 gives an explicit
+reduction of our constant-free fragment to that decidable case.
+
+The starting top-free separation characterization was developed in an
+unpublished memo [@Memo26, Problem 1.7 and Theorem 2.6], which builds on earlier
+Henglein--Rehof--Urzyczyn notes. We use its product-address semantics and
+canonical propagation route. Address languages, constraint automata and
+periodic continuations are inherited ideas. The additional construction here
+is the whole-conjunction first-return preimage of Section 7 and its bounded
+iteration in Section 9. Together with the absorbing summary and the periodic
+case, it yields a complete decision procedure for the stated domain.
+
+### 1.2 Proof strategy
+
+Failure of entailment has a finite separating address. A least propagation
+closure determines whether that address is consistent with all premises.
+Finite stack summaries turn the closure conditions into a deterministic
+word automaton with forbidden ordered pairs of cuts. A pair matters precisely
+when the suffix at its later cut agrees with the beginning of the earlier
+suffix; the difficulty is this repeated-word condition, not ordinary
+finite-state reachability.
+
+The derived automata satisfy an absorption property. After an accepting state,
+a safe continuation has no new incoming forbidden pairs. This separates two
+cases. A safe cyclic continuation is decided by a finite reverse monitor.
+Otherwise, it suffices to consider an accepting state with no safe successor.
+
+For the terminal case, reverse the word and count the nested borders of its
+prefixes. The number of states bounds this rank, although it need not bound
+the word's length. Successive first rank milestones are first returns of a
+reference prefix. Each such return adds a directed path with one entrance to
+its prefix graph. A whole query can be pulled back through this addition by
+finitely many diagrams. All observations of one interval use a common product
+observer, ensuring that they describe one generated word. A bounded number
+of these eliminations reduces the question to finite queries on two-vertex
+graphs. Sections 5--9 give the construction and prove both directions.
+
+### 1.3 Semantics and theorem
 
 Let $V$ be a finite set of variables and let expressions be generated by
 
 $$e ::= x\in V\mid\bot\mid e\times e.$$
 
-Write $\Sigma=\{0,1\}$ and $\epsilon$ for the empty word. A type is a
-prefix-closed set $X\subseteq\Sigma^*$ of **product-labelled addresses**.
+Write $\Sigma=\{0,1\}$ and $\epsilon$ for the empty word. Concatenation is
+juxtaposition. For $0\le i\le |w|$, write $w[:i]$ for the prefix of length
+$i$ and $w[i:]$ for the remaining suffix. A type is a prefix-closed set $X\subseteq\Sigma^*$ of **product-labelled addresses**.
 The empty set represents bottom. A product is
 
 $$X\times Y=\{\epsilon\}\cup\{0u:u\in X\}\cup\{1u:u\in Y\}.$$
@@ -53,14 +134,14 @@ There is no computability, regularity, finite-depth, or decidable-membership
 restriction on $\rho$. The query $s\le t$ is not inserted into $\Gamma$.
 Inconsistent constraints entail every query.
 
-**Theorem P1 (C081).** There is a total executable Boolean procedure $D$ such
+**Theorem 1.1 (decidability).** There is a total executable Boolean procedure $D$ such
 that, for every finite $\Gamma,s,t$,
 
 $$D(\Gamma,s,t)=\mathsf{true}\quad\Longleftrightarrow\quad\Gamma\models s\le t.$$
 
-The Lean input is a finite list over `Expr (Fin n)`. Indexing a finite named
-variable set gives this input effectively; repeated premises do not change
-its interpretation. The theorem does not certify an arbitrary text parser.
+Variables can be indexed by a finite initial segment of the natural numbers.
+Thus the input is an effective finite object; repeated premises do not change
+its interpretation.
 
 The address-set representation includes the ordinary labelled-tree boundary
 conditions. The root exists even for bottom; a nonroot address $ua$ exists
@@ -69,9 +150,9 @@ Conversely, a rooted bottom/product diagram in which exactly product nodes have
 two children determines a prefix-closed product set. These two descriptions
 agree. The full set $\Sigma^*$ is a greatest type in this domain, but it is an
 infinite tree of products, not an explicit top-labelled leaf. Adding such a
-leaf changes the signature and is not covered by P1.
+leaf changes the signature and is not covered by Theorem 1.1.
 
-### A small example
+### 1.4 Examples
 
 For $\Gamma=\{x\le y\}$, we have
 $\Gamma\models x\times\bot\le y\times\bot$ by covariance. The reverse
@@ -85,7 +166,7 @@ $\{x\times\bot\le x\}$ is satisfiable, and does not entail $x\le\bot$.
 It has no finite-tree model: its premise forces the root of $x$, then its left
 child, then every address $0^j$. Finite-tree entailment would make every query
 true for this input. This is a concrete reason not to replace arbitrary trees
-by finite trees in P1.
+by finite trees in Theorem 1.1.
 
 ## 2. Normalize expressions without changing their models
 
@@ -96,13 +177,13 @@ when it occurs. For a product name $z$ representing $u\times v$, impose both
 $$z\le u\times v,\qquad u\times v\le z.$$
 
 Impose $b\le\bot$. Original variables retain their identities; named premises
-become inequalities between names. The checked allocator may retain duplicate
-product slots. Their defining constraints give each the same interpretation;
-sharing is not required for correctness. The four resulting clause forms are
+become inequalities between names. Distinct occurrences may receive distinct
+names. Their defining constraints give each the required interpretation;
+sharing repeated subexpressions is unnecessary for correctness. The four resulting clause forms are
 
 $$x\le y,\qquad x\le y\times z,\qquad y\times z\le x,\qquad x\le\bot.$$
 
-**Lemma P2 (exact naming).** Every original model extends to a model of the
+**Lemma 2.1 (exact naming).** Every original model extends to a model of the
 normalized constraints by assigning each new name the value of its expression.
 Conversely, restricting any normalized model to the original variables gives
 an original model, and every expression name has its expression's value.
@@ -118,7 +199,10 @@ Nothing in this induction unfolds a possibly infinite value. It is an induction
 on input syntax only. $\square$
 
 We henceforth fix a normalized constraint list $C$ on $n$ controls and a
-variable query $\alpha\le\beta$.
+variable query $\alpha\le\beta$. This passage from constraints to an
+address automaton follows the constraint-automaton perspective of
+Henglein and Rehof [@HR98, Section 3] and Niehren and Priesnitz [@NP03].
+We give the exact top-free propagation and summary construction needed here.
 
 ## 3. Canonical propagation and finite stack summaries
 
@@ -141,7 +225,7 @@ Use all forced roots as seeds. To ask whether an address $w$ separates
 $\alpha$ from $\beta$, also seed $(\alpha,u)$ for **every prefix** $u$ of $w$.
 Call this finite seed set $S_{\alpha,w}$.
 
-**Lemma P3 (canonical separation).** The query fails exactly when some finite
+**Lemma 3.1 (canonical separation).** The query fails exactly when some finite
 word $w$ satisfies
 
 $$\operatorname{cl}(S_{\alpha,w})\cap(N_0\times\Sigma^*)=\varnothing,
@@ -150,9 +234,12 @@ $$\operatorname{cl}(S_{\alpha,w})\cap(N_0\times\Sigma^*)=\varnothing,
 *Proof.* Each propagation rule preserves truth in every model containing its
 seeds. Induction on a derivation proves that the closure is contained in every
 such model. The closure is prefix-closed: truncate a derivation at an arbitrary
-address length. Epsilon and pop steps preserve the corresponding truncated
-step; a push truncated to length zero is justified by the forced root of its
-target. All other truncated pushes use the induction hypothesis. Thus the
+address length. For an epsilon step, truncate its predecessor to the same length.
+For a pop producing a prefix of length $i$, truncate its predecessor to length
+$i+1$ and perform that pop. For a push producing a nonempty prefix of length
+$i+1$, truncate its predecessor to length $i$ and perform the push. A push
+truncated to length zero is justified by the forced root of its target.
+Seed truncation is valid because the seed family is prefix-closed. Thus the
 closure defines trees. If no denial is reached, these trees satisfy all four
 clause forms, directly by the rules, including the forced root in a lower clause.
 They contain $w$ at $\alpha$ and omit it at $\beta$ exactly as in (3.1).
@@ -174,19 +261,21 @@ and epsilon edges and closed under composition and
 $$p\mathrel{\mathrm{push}(a)}r,\quad E_W(r,s),\quad
 s\mathrel{\mathrm{pop}(a)}q\quad\Longrightarrow\quad E_W(p,q).$$
 
-This is an effective relation on $n^2$ pairs. One may saturate these finite
-Horn rules. The current checked implementation instead tests membership in
-**every closed table**, by enumerating all subsets of the $n^2$ pairs. This
-very expensive choice is still finite and exact: the least closed relation
-is their intersection. The paper does not attribute a saturation running time
-to that implementation.
+This relation is effectively computable by saturation on $n^2$ pairs.
+Start with identities and epsilon edges, repeatedly insert every pair
+required by composition or a matched push/pop, and stop when no pair changes.
+Every inserted pair is a balanced excursion by induction. Conversely, the
+stable relation contains the generators and is closed under both rules;
+induction on a balanced derivation proves that it contains every balanced
+excursion. There are at most $n^2$ strict insertions. This is the finite
+summary form of pushdown reachability; its factorization is proved below.
 
 Define $\operatorname{Pop}_W(p,u,q)$ recursively: for $u=\epsilon$, use $E_W(p,q)$;
 for $u=av$, take a balanced excursion, pop $a$, then use $\operatorname{Pop}$
 on $v$. It means that the prefix $u$ can be removed, leaving any unchanged
 stack suffix. It is decidable from the finite balanced table.
 
-**Lemma P4 (minimum-stack factorization).** A configuration $(p,u)$ reaches
+**Lemma 3.2 (minimum-stack factorization).** A configuration $(p,u)$ reaches
 $(q,v)$ if and only if there are words $a,b,z$ and a control $r$ such that
 
 $$u=az,\quad v=bz,\quad
@@ -240,8 +329,13 @@ annotations are:
 * it is Bad iff $C$ is unsatisfiable or $B\cap D_0\ne\varnothing$;
 * the ordered pair $((B,A),(B',A'))$ is flagged iff $B\cap A'\ne\varnothing$.
 
-For any finite partial deterministic binary automaton
-$I=(Q,\delta,s,F,\mathrm{Bad},G)$, call $w$ a **witness** when its whole run
+More generally, a **flagged instance** is a tuple
+$I=(Q,\delta,s,F,\mathrm{Bad},G)$, where $Q$ is a finite nonempty set,
+$\delta:Q\times\Sigma\rightharpoonup Q$ is a partial deterministic
+transition function, $s\in Q$, $F,\mathrm{Bad}\subseteq Q$, and
+$G\subseteq Q\times Q$. The preceding construction has total transitions;
+partial transitions will arise when unsafe edges are deleted.
+Call $w$ a **witness** when its whole run
 $c_0,\ldots,c_N$ exists, avoids Bad, ends in $F$, and
 
 $$\forall\,0\le i\le j\le N:\quad
@@ -251,7 +345,7 @@ w[j:]\text{ is a prefix of }w[i:]
 The diagonal $i=j$, the empty suffix $j=N$, and the initial cut $i=0$ are all
 part of this definition. In particular, a diagonally flagged state is unsafe.
 
-**Lemma P5 (exact summary bridge).** In the constructed instance, $w$ is a
+**Lemma 3.3 (exact summary bridge).** In the constructed instance, $w$ is a
 witness iff it satisfies (3.1). Consequently, $C\not\models\alpha\le\beta$
 iff the constructed instance has a witness.
 
@@ -266,7 +360,7 @@ This proves the flagged-pair condition, including its boundaries.
 A prefix seed reaches some denied control iff a popped prefix reaches a
 member of $D_0$. Thus safety of every prefix is exactly the Bad check, together
 with the forced-root satisfiability check. These are all canonical sources.
-Apply P3. $\square$
+Apply Lemma 3.1. $\square$
 
 ## 4. Absorption separates two complete cases
 
@@ -276,7 +370,7 @@ final state is final and has an empty incoming flag column:
 $$\delta(f,a)=q,\ f\in F\quad\Longrightarrow\quad
 q\in F\ \land\ \forall p\in Q, (p,q)\notin G.\tag{4.1}$$
 
-**Lemma P6 (summary absorption).** The instance of Section 3 is absorbing,
+**Lemma 4.1 (summary absorption).** The instance of Section 3 is absorbing,
 on all its physical states.
 
 *Proof.* Every source of a pop in $W^{\mathrm{op}}$ is a target of a push
@@ -291,7 +385,7 @@ the original state set, initial state, Bad set and flags, and make final exactly
 the safe **original** finals that have no remaining outgoing edge. These
 finals are terminal. A new sink that was not originally final stays rejecting.
 
-**Lemma P7 (terminal/cyclic split).** For an absorbing instance, a witness
+**Lemma 4.2 (terminal/cyclic split).** For an absorbing instance, a witness
 exists iff either $I_{\mathrm{term}}$ has a witness, or an original witness
 has a safe continuation reaching a nonempty safe cycle.
 
@@ -342,7 +436,7 @@ $$M_j=\operatorname{col}(r_j)\cup M_{\pi(j)}.\tag{5.2}$$
 Let $d(j)$ be the number of positive borders of $B[:j]$, including the whole
 prefix. Thus $d(0)=0$ and $d(j)=1+d(\pi(j))$ for $j>0$.
 
-**Lemma P8 (terminal rank bound).** Every prefix of a reversed terminal
+**Lemma 5.1 (terminal rank bound).** Every prefix of a reversed terminal
 accepting run has $d(j)\le k-1$.
 
 *Proof.* Accepted words from a fixed state form a prefix-free language:
@@ -365,7 +459,7 @@ length of $R[:j]$. Let $m_h\le |R|$ be the first position with $d(m_h)\ge h$,
 when it exists. The first such position has rank exactly $h$, since its proper-border
 parent is an earlier position and $d=1+d\circ\pi$. In particular $m_1=1$.
 
-**Lemma P9 (milestones are first returns).** If $m_h,m_{h+1}$ exist and $h>0$,
+**Lemma 5.2 (milestones are first returns).** If $m_h,m_{h+1}$ exist and $h>0$,
 then $\pi(m_{h+1})=m_h$, and the occurrence of $R[:m_h]$ ending at $m_{h+1}$
 is its first occurrence ending strictly after $m_h$.
 
@@ -378,7 +472,7 @@ have a proper border of rank $h$ and thus rank at least $h+1$. Conversely
 the border at $n$ supplies the return. Overlap is allowed throughout. $\square$
 
 Choose the **maximum rank over all prefixes** of $R$, and its first milestone.
-P9 gives at most $k-2$ first-return extensions after the first letter. The
+Lemma 5.2 gives at most $k-2$ first-return extensions after the first letter. The
 remaining suffix makes no further complete return of the last reference:
 a return, including one at the ultimate endpoint, would have larger rank.
 The complete word's rank alone is insufficient: rank falls from 3 at `000`
@@ -396,8 +490,8 @@ The prefix graph $P(B)$ has vertices $0,\ldots,m$ and four directed edge labels:
   is the length of the longest prefix of $B$ that is a suffix of $B[:j]a$.
 
 At $j=m$ the matching update uses the full-pattern fallback $\pi(m)$ before
-consuming the next letter. This is the usual prefix-matching update, here
-specified by literal prefix/suffix equality. Each vertex has colour
+consuming the next letter. This is the prefix-matching update of Knuth, Morris and Pratt
+[@KMP77], here specified by literal prefix/suffix equality. Each vertex has colour
 
 $$(r_j,M_j,\mathrm{next}_j,\mathrm{root}_j,\mathrm{end}_j).$$
 
@@ -426,7 +520,7 @@ Choose reverse-run states $q_0=r_m,q_1,\ldots,q_L$, where
 $$\delta(q_i,a_i)=q_{i-1},\quad q_i\notin\mathrm{Bad},\quad
 (q_i,q_i)\notin G,\quad q_i\notin M_{h_i}.\tag{6.2}$$
 
-**Lemma P10 (generator and graph surgery).** Equations (6.1)–(6.2) generate
+**Lemma 6.1 (generator and graph surgery).** Equations (6.1)–(6.2) generate
 exactly the safe first-return extensions of $B$. Their prefix graphs are
 obtained by the following finite local rules.
 
@@ -454,7 +548,7 @@ $$\mathsf F(v_L)=m,\qquad \mathsf K_{a_1}(v_L)=v_1,\qquad
 *Proof.* Before the first new occurrence of $B$, a proper border of a fresh
 prefix has length less than $m$; at the first return its longest proper
 border has length exactly $m$. A longer proper border would contain an earlier
-return of $B$, as in P9. Hence the proper-border parent at $v_i$ is exactly
+return of $B$, as in Lemma 5.2. Hence the proper-border parent at $v_i$ is exactly
 $h_i$. Equation (5.2) gives its mask and (6.2) checks precisely all new safety
 conditions. This proves the generator equivalence, including the final return.
 For matching edges, a matching next letter advances along the fresh strip.
@@ -518,7 +612,7 @@ in the product of the graph with its observer. At most the product's number
 of vertices is needed for reachability saturation. A query therefore gives
 a concrete finite decision problem even when its observers are very large.
 
-**Theorem P11 (semantic promotion preimage).** From a finite instance $I$ and
+**Theorem 7.1 (semantic promotion preimage).** From a finite instance $I$ and
 query $\varphi$, effectively construct a finite query $\operatorname{Pre}_I\varphi$
 in the same language, such that for every safe labelled reference $B$,
 
@@ -534,10 +628,9 @@ local theorem; it supplies the global rank bound later.
 The proof has two separate directions: extract a diagram from an actual
 satisfying extension (coverage, Section 7.7), and reconstruct one extension
 from a satisfied compiled clause (Section 7.8). Both use the concrete finite
-envelope below. This is a semantic closure theorem. It does not assert the
-additional numerical clause-weight estimate in the historical Lean predicate
-`ClosureFor`. The source map identifies the coverage construction and
-`compile_sound` separately; the labelled safety part of P10 is also used there.
+envelope below. The construction below specifies the finite data, consistency tests and
+observers needed for both implications; no bound on reference-word length
+is used.
 
 ### 7.2 Why finitely many diagrams cover every satisfying extension
 
@@ -573,8 +666,7 @@ entrance, exit, and wrap pieces for each atom. It also records the observer
 controls at piece boundaries and at crossed mark seams. Zero-length core or
 forward pieces are permitted; the edge pieces still denote one edge.
 
-To make the enumeration literally finite, the checked implementation uses
-this deliberately generous, reference-independent envelope:
+The following reference-independent bounds give an effective enumeration:
 
 $$
 \begin{aligned}
@@ -588,7 +680,37 @@ z&=r+g+2b+a+\sigma+1;\\
 Each integer field in a piece or seam is less than $z$. There must be at least
 one fresh group, since a first return is nonempty. Enumerate every datum in
 these ranges, every state/next-bit/colour choice, and every old/fresh location
-assignment. Filter malformed diagrams by finite consistency tests.
+assignment. Retain exactly the diagrams satisfying these finite tests:
+
+1. A clause variable is assigned one core slot or one fresh group. State and
+   next-value lists have one entry per group. Only the last group has next
+   value END. The guessed old endpoint is nonroot, has its end bit set, and
+   has next value END.
+2. Each path atom has a nonempty list of pieces. Its first and last locations
+   equal the locations of that atom's variables, and its first and last
+   controls belong to the observer's initial and final sets. Adjacent pieces
+   have the same location and control at their common boundary.
+3. A core piece joins two core slots. A forward piece goes from a group to
+   an equal or later group; if the groups are equal, its two controls are
+   equal. Otherwise, it records a valid observer control at every intermediate
+   group. Every used seam control is in that observer's state set.
+4. An entrance goes from a core slot to the first group and has label
+   $\mathsf S$ or $\mathsf K_{a_1}$. A wrap goes from the last group to the
+   first with label $\mathsf K_{a_1}$. An exit goes from a fresh group to a
+   core slot and is either $\mathsf F$ or a mismatching $\mathsf K_b$; the
+   mismatch is tested against the group's next bit, or against $a_1$ at the
+   last group.
+5. The first fresh state obeys its reverse transition from the guessed old
+   endpoint and is neither Bad nor diagonally flagged. The query's equalities
+   and disequalities respect the old/fresh partition and fresh-group identity.
+   Equalities between core slots are retained as constraints, rather than
+   decided from the names of those slots.
+
+Every piece has a source, a target and two observer controls. A portal piece
+also has one edge label. An empty accepted path is represented by a single
+zero-length core or forward piece. Repeated seam entries may be suppressed;
+one control per used atom/piece/group triple suffices. All remaining colour
+and edge requirements are emitted as tests in the compiled clause, as follows.
 
 Here is why these bounds suffice. The block argument gives (7.2). Splitting
 at core/fresh boundaries adds at most one connecting portal edge per block,
@@ -599,7 +721,7 @@ piece index, atom index, and observer-control index. This gives a diagram for
 any satisfying extension. The enumeration also includes redundant diagrams.
 It does not claim that all emitted diagrams retain the original product-simple
 normal form, or a small bound on the number of active observer coordinates.
-That distinction matters for quantitative estimates.
+The proof needs finite coverage, rather than minimal diagrams.
 
 ### 7.3 Pull back the old core
 
@@ -664,7 +786,7 @@ back fresh variable colour tests through (7.5).
 Let the distinct fresh groups be $t=0,\ldots,h-1$, from the first fresh vertex
 to the last. Use two base variables $e,f$ and the one-edge constraints
 
-$$e\mathrel{\mathsf F}f,qquad
+$$e\mathrel{\mathsf F}f,\qquad
 f\mathrel{\mathsf K_{a_1}}z_0.$$
 
 Require $e$ to have the guessed old-endpoint colour. The diagram verifies the
@@ -734,7 +856,7 @@ inside the enumerated envelope. Interpret its fresh groups at their actual
 positions in the one strip of $C$, and its origin variables at the actual
 cursors $h_i$. Use their actual states, next bits, endpoint colour and observer
 controls for all guesses. The old/fresh partition preserves equality, including
-coincident roles. P10 gives every portal edge and old-core rewrite exactly.
+coincident roles. Lemma 6.1 gives every portal edge and old-core rewrite exactly.
 
 Split the actual generator at the global marks. In each interval, pair this
 same generator with each active piece's actual observer run. Their product
@@ -751,7 +873,7 @@ and seam controls match. Together with the first-emission edge, concatenate
 them to form **one** generator walk. Positivity puts consecutive groups at
 distinct ordered positions; the End guards force the last emission to be its
 first complete return. Equations (6.1)–(6.2) therefore give a definite safe
-reference $C$, and P10 gives its exact graph.
+reference $C$, and Lemma 6.1 gives its exact graph.
 
 Place every fresh query variable at its shared physical group in this strip,
 and each old variable at its base assignment. The colour tests and equality
@@ -760,7 +882,7 @@ observer paths on each interval of this same strip. Join them across seams
 for each forward piece. Join these pieces with the core paths and portal
 edges prescribed by the diagram. The stored controls agree at every join,
 so each original observer accepts its reconstructed path. Zero-length pieces
-use their endpoint allow/control tests; a single-group wrap uses P10's genuine
+use their endpoint allow/control tests; a single-group wrap uses Lemma 6.1's genuine
 self-loop. Thus the original clause holds in $P(C)$, proving (7.1). $\square$
 
 ### A complete two-observer diagram
@@ -804,8 +926,6 @@ Reconstruction emits first 1 and then 0, obtaining exactly $C=010$ and both
 paths in that one graph. Replacing the second observer's sole label by
 $\mathsf K_1$ would remove this product transition: the first observer and
 the second cannot choose different emissions for the same physical interval.
-The literal graph and product transition of this example are checked by the
-paper's small example checker, separately from the all-input proof.
 
 ### Why sharing is indispensable
 
@@ -823,7 +943,7 @@ For $B=0$ and $C=0\,1^n\,0$, every internal prefix ending in 1 has failure
 parent 0. If inverse failure edges were available, the old root would have
 edges to arbitrarily many fresh vertices. The one-entrance proof would fail.
 Our compiler introduces no inverse edge. Nor does it introduce equality of
-independent path labels or negative reachability. P11 asserts closure only
+independent path labels or negative reachability. Theorem 7.1 asserts closure only
 for the specified positive directed query language.
 
 ## 8. Finish without another return
@@ -847,7 +967,7 @@ and a continuation-observer atom from $f$ to $x$ starting with control $q$.
 Thus the observer starts at the proper-border cursor with the old endpoint's
 original control; those are two different coordinates.
 
-**Lemma P12 (finishing).** For a safe reference $B$, $P(B)\models\mathrm{Finish}_I$
+**Lemma 8.1 (finishing).** For a safe reference $B$, $P(B)\models\mathrm{Finish}_I$
 iff some safe extension ending at original state $s$ makes no further complete
 return of $B$.
 
@@ -868,19 +988,19 @@ Set
 $$\Phi_0=\mathrm{Finish}_I,\qquad
 \Phi_{h+1}=\Phi_h\lor\operatorname{Pre}_I\Phi_h.\tag{9.1}$$
 
-**Lemma P13 (semantic unwind).** For a safe reference $B$, $P(B)\models\Phi_h$
+**Lemma 9.1 (semantic unwind).** For a safe reference $B$, $P(B)\models\Phi_h$
 iff there is a chain of at most $h$ safe first-return extensions from $B$ to a
 reference satisfying $\mathrm{Finish}_I$.
 
 *Proof.* Induct on $h$. At zero the chain is empty. At a successor, the first
-disjunct permits the shorter chain; P11 applied to the second supplies its
+disjunct permits the shorter chain; Theorem 7.1 applied to the second supplies its
 first return and a remaining chain of at most $h$ returns. In the reverse
 direction, an empty chain satisfies the inherited disjunct; otherwise apply
-P11 to its first return and the induction hypothesis to the remaining chain.
+Theorem 7.1 to its first return and the induction hypothesis to the remaining chain.
 Safety of every intermediate reference is part of the first-return relation.
 $\square$
 
-**Theorem P14 (terminal decision).** Witness existence is decidable for every
+**Theorem 9.2 (terminal decision).** Witness existence is decidable for every
 finite binary instance with terminal finals.
 
 *Algorithm.* Check the empty word directly. If $k\ge2$, construct
@@ -889,7 +1009,7 @@ Retain the safe one-letter references with labels $f,p$, including
 $\delta(p,a)=f$ and all boundary checks. Evaluate $\Phi_{k-2}$ on each of their
 two-vertex prefix graphs. Accept iff one test succeeds. For $k=1$, no
 nonempty terminal accepting word is possible: its zero and full borders
-would require two distinct states by P8. An instance with $k=0$ has no
+would require two distinct states by Lemma 5.1. An instance with $k=0$ has no
 possible initial state.
 
 The enumerated reference has word $a$ and labels $f,p$ at positions 0 and 1.
@@ -898,27 +1018,21 @@ function beyond position 1 is irrelevant; thus this finite enumeration covers
 the first-letter graph of every nonempty safe reference.
 
 *Termination.* Equation (9.1) performs exactly $k-2$ finite syntactic operations
-of P11. The remaining enumeration and finite-graph query tests terminate by
+of Theorem 7.1. The remaining enumeration and finite-graph query tests terminate by
 Section 7.1. This is a complete finite construction, not an unbounded search
 waiting to discover a witness or a length bound.
 
-*Soundness.* By P13, a successful test reconstructs a finite safe chain and
-then, by P12, a completed reference ending at $s$. Its reversal satisfies the
+*Soundness.* By Lemma 9.1, a successful test reconstructs a finite safe chain and
+then, by Lemma 8.1, a completed reference ending at $s$. Its reversal satisfies the
 original witness predicate. Soundness does not use terminality.
 
 *Completeness.* Reverse any nonempty original witness. Choose its maximum
-rank over **all** prefixes and its first milestone. P8 bounds that rank by
-$k-1$. P9 expresses the reference up to that milestone as a chain of at most
+rank over **all** prefixes and its first milestone. Lemma 5.1 bounds that rank by
+$k-1$. Lemma 5.2 expresses the reference up to that milestone as a chain of at most
 $k-2$ first returns from its first letter. Its remaining completion has no
-further return, including at the final cut, so P12 makes the finishing query
-true there. P13 makes $\Phi_{k-2}$ true on the initial one-letter graph, which
+further return, including at the final cut, so Lemma 8.1 makes the finishing query
+true there. Lemma 9.1 makes $\Phi_{k-2}$ true on the initial one-letter graph, which
 the algorithm enumerates. The empty witness was checked separately. $\square$
-
-The proof uses only the semantic equivalence (7.1). A historical Lean predicate
-named `ClosureFor` additionally asks for a specific numerical clause-weight
-bound. That stronger bundle is not a hypothesis of P14 or P1. The checked
-semantic compiler and unwind have separate declarations. Counterexamples to
-a bound on redundant emitted diagrams do not invalidate (7.1).
 
 ## 10. Decide the infinite-continuation branch
 
@@ -928,7 +1042,7 @@ ending at a safe final state $q$ with empty incoming flag column, on a safe
 nonempty cycle $c$ of length $d\le k$. To see this, first take a positive safe
 extension to enter the empty-column region; absorption keeps that region
 closed along the chosen continuation. Repeated states in a finite safe graph
-supply a nonempty cycle of length at most $k$. P7's safe-extension argument
+supply a nonempty cycle of length at most $k$. Lemma 4.2's safe-extension argument
 preserves the witness while moving to its base. The prefix can remain arbitrarily
 long; only the cycle is bounded.
 
@@ -982,7 +1096,7 @@ These are effective transitions on finite data. Undefined or unsafe original
 edges produce no monitor edge. Reachability from the seed to the accepting
 set therefore terminates by finite graph search.
 
-**Lemma P15 (monitor equivalence).** Fix one of the retained cycles: its word
+**Lemma 10.1 (monitor equivalence).** Fix one of the retained cycles: its word
 $c$ is nonempty, it is safe, and its base $q$ is final with empty incoming
 flag column. An accepting reverse path from its safe seed represents
 exactly a safe prefix $v$ to $q$ with no flagged equal infinite suffixes among
@@ -1005,7 +1119,7 @@ case. $\square$
 
 ### 10.3 Return from an infinite stream to a finite witness
 
-**Lemma P16 (finite extraction).** A good prefix accepted by this monitor
+**Lemma 10.2 (finite extraction).** A good prefix accepted by this monitor
 gives an original finite witness with a safe cyclic continuation. Conversely,
 a witness ending at the chosen cycle base gives a good prefix.
 
@@ -1021,27 +1135,27 @@ $v c^{n+1}$, which ends at the same cycle base and has sufficient length.
 Conversely, an original witness already contains a mismatch for each flagged
 pair; appending an infinite continuation cannot erase it. $\square$
 
-**Theorem P17 (infinite-continuation decision).** On a finite absorbing
+**Theorem 10.3 (infinite-continuation decision).** On a finite absorbing
 instance, the cycle enumeration followed by the finite monitor tests decides
 whether some original witness has a safe cyclic continuation.
 
-*Proof.* The cycle reduction covers every such witness. P15–P16 prove both
+*Proof.* The cycle reduction covers every such witness. Lemma 10.1–Lemma 10.2 prove both
 directions for each enumerated cycle. There are finitely many cycles to test,
 and each monitor is finite. $\square$
 
 ## 11. Compose the complete decision
 
-Normalize the expressions by P2, construct the summary instance $I$ of P5,
+Normalize the expressions by Lemma 2.1, construct the summary instance $I$ of Lemma 3.3,
 and compute
 
 $$D(\Gamma,s,t)=\neg\bigl(
 \mathrm{InfiniteWitnessCheck}(I)\ \lor\
 \mathrm{TerminalWitnessCheck}(I_{\mathrm{term}})\bigr).\tag{11.1}$$
 
-P6 supplies absorption without a caller hypothesis. P7 gives the exact split,
-P14 and P17 decide its branches, P5 identifies their disjunction with normalized
-non-entailment, and P2 transports it to the original expressions. This proves
-P1, including unsatisfiable inputs and arbitrary infinite valuations.
+Lemma 4.1 supplies absorption without a caller hypothesis. Lemma 4.2 gives the exact split,
+Theorem 9.2 and Theorem 10.3 decide its branches, Lemma 3.3 identifies their disjunction with normalized
+non-entailment, and Lemma 2.1 transports it to the original expressions. This proves
+Theorem 1.1, including unsatisfiable inputs and arbitrary infinite valuations.
 
 Every stage terminates on finite input: syntax traversal, finite relation and
 subset enumeration, a finite safe-graph transformation, bounded query promotion,
@@ -1051,142 +1165,203 @@ cutoffs. Classical reasoning may select witnesses inside erased correctness
 proofs; the executable definitions enumerate concrete finite data and do not
 use classical choice as a runtime decision procedure.
 
-The current implementation adds proved early returns for reflexivity, a listed
-normalized premise, unsatisfiability and a separating root address. Failure
-of the root test invokes (11.1); it never establishes entailment by itself.
-These guards change performance, not the theorem's scope.
+### 11.1 A uniform computable witness bound
 
-### A computable bound without a useful numerical estimate
+**Corollary 11.1.** There is a total computable function $L$ such that every
+terminal $k$-state instance with a witness has one of length at most $L(k)$.
 
-As an ordinary consequence of P14, terminal witness existence has a computable
-uniform length bound at every state count. For $k\ge1$ there are
+*Proof.* For $k\ge1$ there are
 
 $$k(k+1)^{2k}2^{2k+k^2}$$
 
 labelled partial binary instances: choose the initial state, two partial
 successors per state, final and Bad bits, and ordered flags. Filter terminal
-finals and decide every remaining instance with P14. For each positive
+finals and decide every remaining instance with Theorem 9.2. For each positive
 instance, enumerate finite words by length until its decidable original
 witness predicate succeeds. This terminates on every positive instance.
 Take the maximum of the resulting lengths, or zero if there are none.
 Adding one bounds every source's number of visits. There is no instance with
 zero states; define the bound there as zero.
 
-This is the repository's Q004 computability corollary. It is not the old C080
-formula, a resource bound for evaluating (11.1), or evidence of useful speed.
-An explicit quantitative analysis must separately bound generated syntax,
-finite relation work, graph evaluation and the chosen machine representation.
+Every finite classification and every positive-instance search terminates,
+so their maximum is a total computable function of $k$. $\square$
 
-## 12. Validation, provenance, and present limits
+This corollary gives no useful running-time estimate. An explicit resource
+analysis must also bound the generated query syntax and its evaluation.
 
-The theorem and its semantics are read back at source checkpoint
-[c946d86](https://github.com/mhenglein/subtail/commit/c946d86b9e65da2877e0df42c710abbdcb5a4037). The final decision module's source
-is unchanged from [9f7d57c](https://github.com/mhenglein/subtail/commit/9f7d57cbd695a68dd52a69dc81b8446bd7c85d9e).
-The [declaration map](lean-map.md) identifies the definitions and checked
-lemmas supporting P1–P17. [The dependency map](dependency-map.md) distinguishes
-this route from the larger collection of exploratory imports and earlier
-conditional claims. Ordinary arguments above are intended to stand on their
-own; the map is an audit aid, not a replacement for them.
+## 12. Comparison with restricted entailment results
 
-The recorded validation for that checkpoint includes the pinned Lean 4.33.1
-build, kernel replay, imported-declaration/axiom audits, runtime checks excluding
-classical choice, and separate semantic readbacks. Full details, exact source
-hashes and workflow links remain in the [C081 completion record](../notes/2026-09-19-entailment-decision.md).
-Those are historical results at the stated revision, not fresh proof runs
-caused by editing this paper. The separate [exposition readback](../notes/2026-09-19-post-c081-paper-readback.md)
-compares the central ordinary argument with those definitions. Its scope and
-remaining limits are recorded there; it is not human peer review.
+### 12.1 The constant-free fragment
 
-Native diagnostics completed 25 of 38 attempts under a 20-second per-process
-cap; 13 timed out. Those timeouts are **UNKNOWN**, never negative entailment
-or nonexistence answers. All completed direct raw-backend probes in that
-corpus returned non-entailment; raw true-answer probes timed out. The checked
-algorithm itself contains no resource cap. These observations expose severe
-implementation costs; they are not a limitation on the quantifiers of P1.
+The absence of a constant from the input syntax does not restrict the values
+assigned to its variables. For example, consider
 
-The current theorem does not by itself prove:
+$$x=x\times x,\qquad x\le y,\qquad\text{with query }y\le x.$$
 
-* a particular complexity class or the historical numerical C080 bounds;
-* decidability for an explicit-top signature, multiple competing constructors,
-  or contravariant arrows;
-* equality with finite-tree entailment;
-* a verified parser or an efficient countermodel-producing command-line solver;
-* publication novelty, methodological independence from all prior work, or
-  human peer review.
+Over the present bottom/product domain the equation forces
+$x=\Omega=\Sigma^*$, and hence $y=x$. In a domain with an explicit top leaf,
+the assignment $x=\Omega$, $y=\top$ satisfies the premises and falsifies the
+query. Thus identity translation of constant-free constraints between these
+two domains is unsound.
 
-Countermodels in regular form, other arities, and extensions require their
-own transfer arguments. The finite-tree example in Section 1 already rules
-out one tempting transfer. Such arguments are recorded separately rather than
-added as implicit conclusions of P1.
+There is, nevertheless, a polynomial reduction of our constant-free input
+fragment to the restricted problem of Niehren and Priesnitz [@NP99, Theorem 14].
+The target permits product equations and inequalities between variables,
+with valuations in the bottom/product/top domain. Name every product
+subexpression as in Section 2, writing its two defining inequalities as a
+single product equation. Add a fresh variable $\omega$ and the constraints
 
-## 13. Related work and attribution status
+$$\omega=\omega\times\omega,
+\qquad z\le\omega\quad\text{for every original or auxiliary name }z.$$
 
-The supplied August 31 memo, preserved in
-[papers/sep-topfree.pdf](../papers/sep-topfree.pdf), provides the starting problem,
-product-address semantics and separating-path characterization. Our proof
-builds on that route. The [focused C081 review](../notes/prior-work/c081-review-2026-09-19.md)
-and [comparison matrix](../notes/prior-work/novelty-matrix.md) record exact
-source statements, signatures, variance, tree domains and citation trails.
+**Proposition 12.1.** This construction preserves entailment over arbitrary
+trees. Consequently, our constant-free fragment belongs to PSPACE.
 
-Niehren and Priesnitz's
-[2003 automata and word-equation characterization](https://www.ps.uni-saarland.de/Publications/details/SubTypeEntailment:02.html)
-is the closest established comparison. Their Theorem 1 equates non-structural
-entailment over one covariant constructor **with bottom and explicit top**
-to restricted cap universality; Theorems 2 and 4 give the automata translations.
-Their treatment includes finite, regular and arbitrary trees, and identifies
-the shared word equation behind the cap condition. This establishes prior art
-for address languages, cap automata and periodic shared words. It is a
-characterization of the decision problem, not a general decision algorithm.
-A translation into those automata alone would therefore not subsume P1 under
-an earlier decidability theorem.
+*Proof.* Equality with its own product forces the root of $\omega$ to be a
+product. Repeating the equation at each finite address forces every node to
+be a product; hence $\omega=\Omega$. In the target order, $X\le\Omega$ holds
+exactly for trees $X$ with no top-labelled node. One direction follows by
+following the product children until any top label, which cannot lie below
+a product. The other follows directly from the pointwise covariant order
+with bottom least.
 
-The [1999 restricted result](https://www.ps.uni-saarland.de/Publications/details/SubTypeEntailment:99.html)
-gives PSPACE-completeness for its product-equality and variable-inequality
-syntax. Its ambient valuations still contain top-labelled trees, although the
-restricted constraints omit constants. Identity translation already fails on
-the constant-free premises $x=x\times x$, $x\le y$ and query $y\le x$:
-top-free models force $x=y=\Omega$, whereas $x=\Omega,y=\top$ is a full-signature
-countermodel. Here $\Omega$ is the full infinite product tree.
+Every source valuation extends to a target valuation by setting $\omega$ to
+$\Omega$ and interpreting each auxiliary name by its expression. Conversely,
+the guards in a target model ensure that each named value is top-free.
+Restriction therefore gives a source model; the product equations preserve
+all expression values and the query. Both model maps preserve any failure of
+the query as well as its truth. Rename only the variables that occur in the input. There is at most one new
+name and one equation per product occurrence, and one guard per name. The
+construction is polynomial in the concrete input length, including variable
+indices; it does not enumerate an unused ambient variable carrier.
+The PSPACE upper bound follows from the cited restricted entailment theorem.
+$\square$
 
-There is nevertheless an exact reduction for the input fragment **without
-bottom constants**. Name product subexpressions, add a fresh equation
-$\omega=\omega\times\omega$, and guard each name $z$ by $z\le\omega$.
-The equation forces $\omega=\Omega$; the guards exclude every top-labelled
-address. Source models extend to this target and target models restrict back,
-with the same query value. The construction has polynomial size and uses
-exactly the restricted syntax. Theorem 14 therefore supplies a PSPACE upper
-bound for this fragment over arbitrary trees. The
-[ordinary transfer proof](../notes/2026-09-19-post-c081-extensions.md)
-states both model maps and the finite-support encoding, and explains the
-regular-tree consequence. This covers no bottom literals or denial constraints,
-and the omega equation makes it unsuitable for finite-tree semantics. It also
-gives no hardness transfer and no PSPACE bound for the full P1 input or its
-reference implementation. Thus decidability of this restricted fragment should
-not be claimed as new here.
+This proposition concerns inputs without bottom literals. It does not remove
+denial constraints from the full problem of Theorem 1.1. Its equation for
+$\omega$ also requires an infinite tree, so the same construction gives no
+finite-tree transfer. The upper bound is inherited from the earlier result;
+no matching PSPACE lower bound for our variable domain follows from it.
 
-Other nearby results also have distinct contracts. The Su--Aiken--Niehren--
-Priesnitz--Treinen first-order theory result uses a richer logical language;
-its undecidability is not an undecidability theorem for this entailment fragment.
-The [Breuvart--Penelle--Rehof 2019 slides](https://lipn.univ-paris13.fr/~breuvart/articles/NSSA_journee.pdf)
-announce a restricted result and periodic-selection machinery, but the focused
-review did not locate an archival complete proof to import. The
-[Schubert 2021 preprint](https://arxiv.org/abs/2109.02458) was withdrawn because
-its Lemma 5.5 was formulated incorrectly; its claimed PSPACE upper bound is
-not an established predecessor theorem.
+### 12.2 Effective regular countermodels
 
-The candidate contribution is consequently specific: an effective terminal
-first-return preimage construction preserving an entire conjunction through
-one shared generated word, combined with the infinite branch and exact
-normalization into a checked total decision over the bottom/product arbitrary-
-tree domain. Neither the use of automata nor periodicity is new in isolation.
-The distinction between the explicit top leaf and the full infinite product
-tree is substantive: the latter equals its own product, whereas the former
-does not. The [extension study](../notes/2026-09-19-post-c081-extensions.md)
-gives a small failure of the naive identification.
+A regular tree has only finitely many distinct subtrees, equivalently a finite
+graph representation with bottom nodes of outdegree zero and product nodes
+with a designated child for each bit. The address method also gives a
+constructive regular-countermodel property, compatible with the established
+regular-model results in the entailment literature [@NP03; @Memo26].
 
-This is a bounded novelty review. It follows the main backward and forward
-lineage and states its search limits; it does not establish publication priority
-or prove that no equivalent prior algorithm exists. Remaining comparisons
-include exact reductions to the restricted prior decidability results and
-verification of the slide-level announcement's full theorem. Those questions
-are separate from the correctness and termination proof above.
+**Proposition 12.2.** If an input of Theorem 1.1 fails, it has an effectively
+constructible regular countermodel. Thus entailment over arbitrary trees is
+equivalent to entailment over regular trees for the same inputs.
+
+*Proof.* First consider a normalized failed query. By Lemma 3.1, some finite
+word $w$ gives a separating canonical closure with the finite seed set
+$S_{\alpha,w}$. Let $Q_W$ be the controls of $W$. For $q,r\in Q_W$, define
+
+$$L(q,r)=\{b:\operatorname{Pop}_{W^{\mathrm{op}}}(q,b,r)\}.$$
+
+This language has a finite epsilon-NFA: its states are the controls of $W$,
+its initial state is $q$, its accepting state is $r$, its epsilon edges are
+all balanced pairs of $W^{\mathrm{op}}$, and its $a$-edges are the pop-$a$
+rules of $W^{\mathrm{op}}$. Epsilon steps are allowed before, between and
+after letters. Induction on the consumed word gives exactly the recursive
+Pop definition, including balanced reachability for the empty word. All its
+edges are computable by Section 3.2.
+
+For each seed $(p,u)$, Lemma 3.2 gives the exact language equality
+
+$$\{v:(p,u)\text{ reaches }(q,v)\}
+=\bigcup_{\substack{0\le i\le |u|,\ r\in Q_W\\
+\operatorname{Pop}_W(p,u[:i],r)}} L(q,r)\,\{u[i:]\}.$$
+
+The fixed suffix is on the right. The union is finite, and its terms are
+selected by decidable Pop tests. Appending a fixed suffix and taking a finite
+union preserve effective regularity. Union over the finite seeds therefore
+gives a finite NFA for the product-address language $D_q$ of every control.
+Lemma 3.1 supplies prefix closure, denial safety and the model property.
+
+Determinize each NFA. Create one product node for each reachable accepting
+DFA state, and one bottom node. From a product node, the $a$-child is its DFA
+successor when that state accepts, and bottom otherwise. Choose the initial
+DFA state as root if it accepts, and bottom otherwise. Prefix closure implies
+that a rejected word has no accepted extension. Hence induction along an
+address shows that this graph unfolds to a tree with product addresses
+exactly $D_q$. The resulting regular valuation is the same separating
+canonical model.
+
+Products and bottom preserve finite graph representations, while restriction
+to original variables selects existing roots. The two naming maps of
+Lemma 2.1 therefore preserve regularity, giving the full-expression result.
+For effectiveness, first decide failure using Theorem 1.1, then enumerate
+finite words until the decidable test (3.1) finds a separating word; this
+search terminates on a failed input. Apply the finite constructions above.
+Finally, a regular countermodel is itself an arbitrary-tree countermodel,
+which proves the converse implication for entailment. $\square$
+
+This argument specifies complete extraction, but does not bound its cost or
+assert that the current interface implements every step. It also does not
+supply a finite-tree countermodel: the constructed graph may have cycles.
+
+### 12.3 Scope of the contribution
+
+The distinction from prior automata characterizations lies in the effective
+elimination in Theorem 7.1. The common generated word is not replaced by
+independent choices for individual path atoms. The one-entrance property
+bounds the number of pieces in product-simple paths, and the common interval
+observer enforces their simultaneous realizability. This gives a finite
+construction that can be iterated using the terminal rank bound. Standard
+automata reductions and word periodicity remain essential components of the
+argument, rather than novelty claims in isolation.
+
+The richer first-order theories studied by Su, Aiken, Niehren, Priesnitz and
+Treinen [@SANPT06] have different logical quantifiers and cannot be identified
+with the entailment fragment here. Later work of Breuvart, Penelle and Rehof
+[@BPR19] describes periodic selections in a cap-language setting; its slide
+presentation is relevant to the lineage, but does not supply the
+whole-conjunction preimage theorem proved here. Schubert's proposed PSPACE
+procedure [@Schubert21] was withdrawn following an incorrectly formulated
+lemma, and is not used as a decision theorem. These comparisons delimit the
+results on which the present proof relies; they do not assert that the general
+nonstructural problem with explicit top has been resolved.
+
+## 13. Formalization and further questions
+
+The decision procedure is implemented in Lean, together with a proof that its
+Boolean result is equivalent to the semantic entailment definition for every
+finite input. The quantified valuations are arbitrary prefix-closed sets;
+neither regularity nor decidable membership is imposed on them. The executable
+construction enumerates finite data. Classical reasoning used inside proof
+terms does not provide a runtime decision oracle. The reference implementation
+computes some finite relations by exhaustive table enumeration; a separate
+saturation implementation computes the same least closed relations. Proved
+equivalences justify the optimized entry point.
+
+The accompanying artifact [@SubtailArtifact] contains the source, reproduction
+instructions, examples and a result-by-result map for the seventeen lemmas
+and theorems supporting the decision procedure in Sections 1--10. Corollary 11.1 and
+Propositions 12.1--12.2 are ordinary mathematical consequences proved here; they are
+identified separately from the checked declarations. The correspondence map
+also distinguishes the mathematical dependencies from the larger source
+import graph.
+
+Several questions remain. The finite query construction is large, and the
+qualitative argument does not give a tight complexity classification or a
+practical worst-case algorithm. Proved finite saturation and sound early
+certificates improve evaluation, but do not eliminate all expensive cases.
+Implementing the extraction in Proposition 12.2 would complement the
+decision Boolean.
+The finite-tree example in Section 1 shows that finite-tree entailment needs
+its own argument. Other constructor arities, competing labels, and
+contravariant arguments likewise require separate semantic transfers.
+
+An explicit top constructor poses a particular obstruction to the present
+propagation proof: from $X\times Y\le Z$, the root of $Z$ may be top rather
+than product. The single-label Horn closure in Section 3 then ceases to express
+all model choices. Extending the decision theorem to that signature requires
+a construction that preserves those choices across repeated occurrences.
+
+## References
+
+::: {#refs}
+:::

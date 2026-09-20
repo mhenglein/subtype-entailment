@@ -1,31 +1,31 @@
 # Proof dependency map
 
 This is the mathematical route used by C081 at source checkpoint
-`c946d86b9e65da2877e0df42c710abbdcb5a4037`. Every P-number refers to the
+`c946d86b9e65da2877e0df42c710abbdcb5a4037`. Numbered results refer to the
 [ordinary manuscript](manuscript.md); exact declarations and source identities
 are in the [Lean map](lean-map.md).
 
 ```mermaid
 flowchart TD
-  A[Finite bottom/product expression constraints] -->|P2 exact naming| B[Normalized variable query]
-  B -->|P3 canonical model; P4 finite stack summaries| C[Finite separating address]
-  C -->|P5 exact ordered cuts| D[Finite flagged summary instance]
-  D -->|P6 all-state absorption; P7 safe extension| E[Two complete cases]
+  A[Finite bottom/product expression constraints] -->|Lemma 2.1 exact naming| B[Normalized variable query]
+  B -->|Lemma 3.1 canonical model; Lemma 3.2 finite stack summaries| C[Finite separating address]
+  C -->|Lemma 3.3 exact ordered cuts| D[Finite flagged summary instance]
+  D -->|Lemma 4.1 all-state absorption; Lemma 4.2 safe extension| E[Two complete cases]
   E --> T[Terminal finals]
   E --> I[Safe cyclic continuation]
-  T -->|P8 border rank; P9 milestones| R[At most k-2 first returns]
-  R -->|P10 exact graph surgery| Q[One-entrance directed strip]
-  Q -->|P11 joint finite preimage| U[Queries pulled back through first returns]
-  U -->|P12 finishing; P13 semantic unwind| V[Finite query on one-letter graphs]
-  V -->|P14| J[Terminal Boolean]
-  I -->|P15 periodic monitor; P16 finite extraction| K[Finite cycle and reverse-monitor search]
-  K -->|P17| L[Infinite-branch Boolean]
+  T -->|Lemma 5.1 border rank; Lemma 5.2 milestones| R[At most k-2 first returns]
+  R -->|Lemma 6.1 exact graph surgery| Q[One-entrance directed strip]
+  Q -->|Theorem 7.1 joint finite preimage| U[Queries pulled back through first returns]
+  U -->|Lemma 8.1 finishing; Lemma 9.1 semantic unwind| V[Finite query on one-letter graphs]
+  V -->|Theorem 9.2| J[Terminal Boolean]
+  I -->|Lemma 10.1 periodic monitor; Lemma 10.2 finite extraction| K[Finite cycle and reverse-monitor search]
+  K -->|Theorem 10.3| L[Infinite-branch Boolean]
   J --> N[Negate disjunction]
   L --> N
-  N -->|P2 and P5| Z[P1 / C081 original entailment]
+  N -->|Lemma 2.1 and Lemma 3.3| Z[Theorem 1.1 / C081 original entailment]
 ```
 
-The difficult dependency is P11: semantic coverage and reconstruction of an
+The difficult dependency is Theorem 7.1: semantic coverage and reconstruction of an
 entire conjunction using a common generator. Bounding each path separately
 without preserving the common strip would not prove it.
 

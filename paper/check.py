@@ -43,7 +43,7 @@ def render_map(data):
         lines.append(f"| {row['id']} | {row['statement']} | {'; '.join(refs)} |")
     lines += ["", "## Source identities", "", "These hashes let a reader detect source drift from the mapped checkpoint.", "", "```text"]
     lines += [f"{value}  {key}" for key, value in sorted(hashes.items())]
-    lines += ["```", "", "The stronger numerical conjunct of `RankQuery.ClosureFor` is deliberately", "not a premise of P11, P13, P14 or P1. A conditional theorem referring to it", "does not establish the concrete compiler's old numerical bound.", ""]
+    lines += ["```", "", "The stronger numerical conjunct of `RankQuery.ClosureFor` is deliberately", "not a premise of Theorems 7.1, 9.2 or 1.1, or Lemma 9.1. A conditional theorem referring to it", "does not establish the concrete compiler's old numerical bound.", ""]
     return "\n".join(lines)
 
 
@@ -131,8 +131,19 @@ def main():
             raise SystemExit(f"Stale map {dest}; run python3 paper/check.py --write and review drift")
     manuscript = (PAPER / "manuscript.md").read_text()
     for entry in data["entries"]:
-        if not re.search(r"\b" + entry["id"] + r"\b", manuscript):
+        if not re.search(r"\b" + re.escape(entry["id"]) + r"\b", manuscript):
             raise ValueError(f"Unreferenced paper result {entry['id']}")
+    bibliography = (PAPER / "references.bib").read_text()
+    keys = re.findall(r"@[A-Za-z]+\{([^,]+),", bibliography)
+    if len(keys) != len(set(keys)):
+        raise ValueError("Duplicate bibliography key")
+    cited = set(re.findall(r"@([A-Za-z][A-Za-z0-9]+)", manuscript))
+    if cited != set(keys):
+        raise ValueError(f"Bibliography mismatch: missing={cited-set(keys)}, unused={set(keys)-cited}")
+    for pattern in (r"\b[ACQ]0\d{2}\b", r"\bP\d+\b", r"/issues/", r"/commit/",
+                    r"(?i)licensing|workflow|checkpoint|internal note|\bClosureFor\b"):
+        if re.search(pattern, manuscript):
+            raise ValueError(f"Internal research administration in manuscript: {pattern}")
     literal_examples()
     print(f"PASS: {len(data['entries'])} paper results, declaration/source maps and literal worked examples")
     print("Lean build/kernel replay: NOT RUN by this documentation check")

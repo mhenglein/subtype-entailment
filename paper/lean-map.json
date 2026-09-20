@@ -1,22 +1,344 @@
 {
   "source_revision": "c946d86b9e65da2877e0df42c710abbdcb5a4037",
   "entries": [
-    {"id":"P1","statement":"Complete finite-expression arbitrary-tree entailment", "declarations":[["EntailmentDecision","entailsCheck_correct"],["ExpressionNormalization","ExprEntails"],["TreeSemantics","Tree"]]},
-    {"id":"P2","statement":"Exact expression naming and model transfer", "declarations":[["ExpressionNormalization","extend_models"],["ExpressionNormalization","restrict_models"],["ExpressionNormalization","normalize_entails_iff"]]},
-    {"id":"P3","statement":"Least canonical model and separating-address equivalence", "declarations":[["CanonicalModel","closure_models"],["CanonicalModel","canonical_least"],["CanonicalModel","not_entails_iff_canonical"]]},
-    {"id":"P4","statement":"Minimum-stack factorization and finite reachability", "declarations":[["StackSummary","balancedCheck_correct"],["StackReachability","reaches_iff_normal"],["StackReachability","reachesCheck_correct"],["StackReachability","controlReachCheck_correct"]]},
-    {"id":"P5","statement":"Exact ordered-cut summary bridge", "declarations":[["SummaryBridge","prefix_reaches_iff_cut"],["SummaryBridge","prefix_denial_iff"],["SummaryAutomaton","witness_iff_separation"],["SummaryAutomaton","not_entails_iff_witness"]]},
-    {"id":"P6","statement":"Strong absorption on all physical states", "declarations":[["SummaryAutomaton","summary_absorbs"],["SubtypeTerminalBridge","summary_absorbing"]]},
-    {"id":"P7","statement":"Safe extension and terminal/cyclic split", "declarations":[["AbsorbingTerminal","witness_append_safeRun"],["AbsorbingTerminal","terminalize"],["AbsorbingTerminal","c031"]]},
-    {"id":"P8","statement":"Terminal prefix freeness and reversed-prefix rank bound", "declarations":[["TerminalRank","accepted_prefix_eq"],["TerminalRank","border_count_le"],["RankMilestones","reversed_prefix_rank_le"]]},
-    {"id":"P9","statement":"First rank milestones are first returns", "declarations":[["RankMilestones","first_milestones_parent"],["RankMilestones","milestones_are_first_returns"]]},
-    {"id":"P10","statement":"First-return generator and exact coloured graph surgery", "declarations":[["FirstReturnGenerator","generator_first_hit_iff"], ["RankQueryCoverage","Ext"], ["RankQueryCoverage","exists_ext"],["FirstReturnColours","first_return_graph_exact"],["RankQueryFirstReturn","old_to_fresh"],["RankQueryFirstReturn","fresh_edge_shape"]]},
-    {"id":"P11","statement":"Finite whole-conjunction preimage, both directions", "declarations":[["RankQueryCompiler","intervalObs"],["RankQueryCompiler","compileDiagram"],["RankQueryEnumeration","diagrams"],["RankQueryEnumeration","mem_diagrams"],["RankQuerySound","compile_sound"],["RankQueryCoverage","budget"],["RankQueryCoverage","coverage"],["RankQueryCoverage","closure_iff"]]},
-    {"id":"P12","statement":"Finishing without another full return", "declarations":[["RankQuery","finishQuery"],["RankQueryFinishTrace","finish_iff_no_return_completion"],["RankQueryFinishTrace","finish_implies_witness"]]},
-    {"id":"P13","statement":"Semantic unwind without a numerical weight premise", "declarations":[["RankQuerySemanticUnwind","sat_promote_preimage_iff"]]},
-    {"id":"P14","statement":"Unconditional terminal witness decision under terminal finals", "declarations":[["RankQueryDecision","milestone_chain"],["RankQueryDecision","terminalWitnessCheck"],["RankQueryDecision","terminalWitnessCheck_correct"]]},
-    {"id":"P15","statement":"Finite reverse-monitor language equivalence", "declarations":[["PeriodicTail","eventually_sameSuffix_iff"],["PeriodicMonitorComplete","accepted_path_iff"]]},
-    {"id":"P16","statement":"Periodic good prefix and original finite witness", "declarations":[["PeriodicRun","infWitness_of_prefix_good"],["PeriodicRun","prefixGood_of_witness"]]},
-    {"id":"P17","statement":"Infinite-continuation decision under strong absorption", "declarations":[["InfiniteCycle","infWitness_iff_bounded_cycle"],["InfiniteDecision","infiniteWitnessCheck"],["InfiniteDecision","infiniteWitnessCheck_correct"]]}
+    {
+      "id": "Theorem 1.1",
+      "statement": "Complete finite-expression arbitrary-tree entailment",
+      "declarations": [
+        [
+          "EntailmentDecision",
+          "entailsCheck_correct"
+        ],
+        [
+          "ExpressionNormalization",
+          "ExprEntails"
+        ],
+        [
+          "TreeSemantics",
+          "Tree"
+        ]
+      ],
+      "legacy_id": "P1"
+    },
+    {
+      "id": "Lemma 2.1",
+      "statement": "Exact expression naming and model transfer",
+      "declarations": [
+        [
+          "ExpressionNormalization",
+          "extend_models"
+        ],
+        [
+          "ExpressionNormalization",
+          "restrict_models"
+        ],
+        [
+          "ExpressionNormalization",
+          "normalize_entails_iff"
+        ]
+      ],
+      "legacy_id": "P2"
+    },
+    {
+      "id": "Lemma 3.1",
+      "statement": "Least canonical model and separating-address equivalence",
+      "declarations": [
+        [
+          "CanonicalModel",
+          "closure_models"
+        ],
+        [
+          "CanonicalModel",
+          "canonical_least"
+        ],
+        [
+          "CanonicalModel",
+          "not_entails_iff_canonical"
+        ]
+      ],
+      "legacy_id": "P3"
+    },
+    {
+      "id": "Lemma 3.2",
+      "statement": "Minimum-stack factorization and finite reachability",
+      "declarations": [
+        [
+          "StackSummary",
+          "balancedCheck_correct"
+        ],
+        [
+          "StackReachability",
+          "reaches_iff_normal"
+        ],
+        [
+          "StackReachability",
+          "reachesCheck_correct"
+        ],
+        [
+          "StackReachability",
+          "controlReachCheck_correct"
+        ]
+      ],
+      "legacy_id": "P4"
+    },
+    {
+      "id": "Lemma 3.3",
+      "statement": "Exact ordered-cut summary bridge",
+      "declarations": [
+        [
+          "SummaryBridge",
+          "prefix_reaches_iff_cut"
+        ],
+        [
+          "SummaryBridge",
+          "prefix_denial_iff"
+        ],
+        [
+          "SummaryAutomaton",
+          "witness_iff_separation"
+        ],
+        [
+          "SummaryAutomaton",
+          "not_entails_iff_witness"
+        ]
+      ],
+      "legacy_id": "P5"
+    },
+    {
+      "id": "Lemma 4.1",
+      "statement": "Strong absorption on all physical states",
+      "declarations": [
+        [
+          "SummaryAutomaton",
+          "summary_absorbs"
+        ],
+        [
+          "SubtypeTerminalBridge",
+          "summary_absorbing"
+        ]
+      ],
+      "legacy_id": "P6"
+    },
+    {
+      "id": "Lemma 4.2",
+      "statement": "Safe extension and terminal/cyclic split",
+      "declarations": [
+        [
+          "AbsorbingTerminal",
+          "witness_append_safeRun"
+        ],
+        [
+          "AbsorbingTerminal",
+          "terminalize"
+        ],
+        [
+          "AbsorbingTerminal",
+          "c031"
+        ]
+      ],
+      "legacy_id": "P7"
+    },
+    {
+      "id": "Lemma 5.1",
+      "statement": "Terminal prefix freeness and reversed-prefix rank bound",
+      "declarations": [
+        [
+          "TerminalRank",
+          "accepted_prefix_eq"
+        ],
+        [
+          "TerminalRank",
+          "border_count_le"
+        ],
+        [
+          "RankMilestones",
+          "reversed_prefix_rank_le"
+        ]
+      ],
+      "legacy_id": "P8"
+    },
+    {
+      "id": "Lemma 5.2",
+      "statement": "First rank milestones are first returns",
+      "declarations": [
+        [
+          "RankMilestones",
+          "first_milestones_parent"
+        ],
+        [
+          "RankMilestones",
+          "milestones_are_first_returns"
+        ]
+      ],
+      "legacy_id": "P9"
+    },
+    {
+      "id": "Lemma 6.1",
+      "statement": "First-return generator and exact coloured graph surgery",
+      "declarations": [
+        [
+          "FirstReturnGenerator",
+          "generator_first_hit_iff"
+        ],
+        [
+          "RankQueryCoverage",
+          "Ext"
+        ],
+        [
+          "RankQueryCoverage",
+          "exists_ext"
+        ],
+        [
+          "FirstReturnColours",
+          "first_return_graph_exact"
+        ],
+        [
+          "RankQueryFirstReturn",
+          "old_to_fresh"
+        ],
+        [
+          "RankQueryFirstReturn",
+          "fresh_edge_shape"
+        ]
+      ],
+      "legacy_id": "P10"
+    },
+    {
+      "id": "Theorem 7.1",
+      "statement": "Finite whole-conjunction preimage, both directions",
+      "declarations": [
+        [
+          "RankQueryCompiler",
+          "intervalObs"
+        ],
+        [
+          "RankQueryCompiler",
+          "compileDiagram"
+        ],
+        [
+          "RankQueryEnumeration",
+          "diagrams"
+        ],
+        [
+          "RankQueryEnumeration",
+          "mem_diagrams"
+        ],
+        [
+          "RankQuerySound",
+          "compile_sound"
+        ],
+        [
+          "RankQueryCoverage",
+          "budget"
+        ],
+        [
+          "RankQueryCoverage",
+          "coverage"
+        ],
+        [
+          "RankQueryCoverage",
+          "closure_iff"
+        ]
+      ],
+      "legacy_id": "P11"
+    },
+    {
+      "id": "Lemma 8.1",
+      "statement": "Finishing without another full return",
+      "declarations": [
+        [
+          "RankQuery",
+          "finishQuery"
+        ],
+        [
+          "RankQueryFinishTrace",
+          "finish_iff_no_return_completion"
+        ],
+        [
+          "RankQueryFinishTrace",
+          "finish_implies_witness"
+        ]
+      ],
+      "legacy_id": "P12"
+    },
+    {
+      "id": "Lemma 9.1",
+      "statement": "Semantic unwind without a numerical weight premise",
+      "declarations": [
+        [
+          "RankQuerySemanticUnwind",
+          "sat_promote_preimage_iff"
+        ]
+      ],
+      "legacy_id": "P13"
+    },
+    {
+      "id": "Theorem 9.2",
+      "statement": "Unconditional terminal witness decision under terminal finals",
+      "declarations": [
+        [
+          "RankQueryDecision",
+          "milestone_chain"
+        ],
+        [
+          "RankQueryDecision",
+          "terminalWitnessCheck"
+        ],
+        [
+          "RankQueryDecision",
+          "terminalWitnessCheck_correct"
+        ]
+      ],
+      "legacy_id": "P14"
+    },
+    {
+      "id": "Lemma 10.1",
+      "statement": "Finite reverse-monitor language equivalence",
+      "declarations": [
+        [
+          "PeriodicTail",
+          "eventually_sameSuffix_iff"
+        ],
+        [
+          "PeriodicMonitorComplete",
+          "accepted_path_iff"
+        ]
+      ],
+      "legacy_id": "P15"
+    },
+    {
+      "id": "Lemma 10.2",
+      "statement": "Periodic good prefix and original finite witness",
+      "declarations": [
+        [
+          "PeriodicRun",
+          "infWitness_of_prefix_good"
+        ],
+        [
+          "PeriodicRun",
+          "prefixGood_of_witness"
+        ]
+      ],
+      "legacy_id": "P16"
+    },
+    {
+      "id": "Theorem 10.3",
+      "statement": "Infinite-continuation decision under strong absorption",
+      "declarations": [
+        [
+          "InfiniteCycle",
+          "infWitness_iff_bounded_cycle"
+        ],
+        [
+          "InfiniteDecision",
+          "infiniteWitnessCheck"
+        ],
+        [
+          "InfiniteDecision",
+          "infiniteWitnessCheck_correct"
+        ]
+      ],
+      "legacy_id": "P17"
+    }
   ]
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render the C081 manuscript with Pandoc/Tectonic; preserve source provenance."""
+"""Render the mathematical manuscript with Pandoc/Tectonic; preserve source provenance."""
 import hashlib
 import json
 import re
@@ -25,6 +25,7 @@ def main():
     source = (PAPER / "manuscript.md").read_text()
     title, body = source.split("\n", 1)
     title = title.removeprefix("# ")
+    body = body.replace("Authors and affiliations: **[placeholders]**.\n", "", 1)
     # Promote section levels after extracting the title; numbers are authored.
     body = re.sub(r"^##", "#", body, flags=re.M)
     # Paper-relative source links become immutable repository links in the PDF.
@@ -41,27 +42,32 @@ def main():
         return f"[{label}](https://github.com/mhenglein/subtail/blob/{revision}/{rel}{suffix})"
     body = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", absolute_link, body)
     # Force a separate contents page after the abstract and before Section 1.
-    body = body.replace("# 1. The theorem", "\\newpage\n\\begingroup\\small\n\\tableofcontents\n\\endgroup\n\\newpage\n\n# 1. The theorem", 1)
+    body = body.replace("# 1. Introduction", "\\newpage\n\\begingroup\\small\n\\tableofcontents\n\\endgroup\n\\newpage\n\n# 1. Introduction", 1)
     OUT.mkdir(parents=True, exist_ok=True)
-    scratch = ROOT / "tmp" / "pdfs" / "c081"
+    scratch = ROOT / "tmp" / "pdfs" / "paper-rewrite"
     scratch.mkdir(parents=True, exist_ok=True)
     md = scratch / "paper.md"
     md.write_text(body)
     tex = OUT / "subtail-paper.tex"
     run(["pandoc", str(md), "--from=markdown+tex_math_dollars+raw_tex", "--standalone",
          "--to=latex", "--metadata", f"title={title}", "--metadata", "author=Author and affiliation placeholders",
-         "--metadata", "date=Research draft, 20 September 2026",
-         "--variable", "documentclass=article", "--variable", "fontsize=11pt",
+         "--metadata", "date=20 September 2026",
+         "--citeproc", "--bibliography", str(PAPER / "references.bib"),
+         "--csl", str(PAPER / "references.csl"), "--metadata", "link-citations=true",
+         "--variable", "documentclass=article", "--variable", "fontsize=11pt", "--variable", "papersize=a4",
          "--variable", "geometry=margin=25mm", "--variable", "colorlinks=true",
          "--variable", "urlcolor=blue", "--variable", "toc-depth=2",
          "--include-in-header", str(PAPER / "header.tex"), "--output", str(tex)])
     run(["tectonic", str(tex), "--outdir", str(OUT), "--keep-logs"])
     pdf = OUT / "subtail-paper.pdf"
-    source_paths = (PAPER / "manuscript.md", PAPER / "header.tex", PAPER / "build.py", PAPER / "lean-map.json")
-    source_matches = all(
-        run(["git", "show", f"{revision}:{p.relative_to(ROOT).as_posix()}"], capture_output=True).stdout
-        == p.read_text() for p in source_paths
-    )
+    source_paths = (PAPER / "manuscript.md", PAPER / "header.tex", PAPER / "build.py", PAPER / "lean-map.json",
+                    PAPER / "references.bib", PAPER / "references.csl")
+    def committed_source_matches(path):
+        result = subprocess.run(
+            ["git", "show", f"{revision}:{path.relative_to(ROOT).as_posix()}"],
+            cwd=ROOT, text=True, capture_output=True)
+        return result.returncode == 0 and result.stdout == path.read_text()
+    source_matches = all(committed_source_matches(p) for p in source_paths)
     manifest = {
         "status": "research draft; licensing pending; author placeholders",
         "repository_revision_at_render": revision,
