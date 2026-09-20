@@ -176,12 +176,12 @@
     {
       "id": "A010",
       "title": "Build the exact top-free constraint-to-automata pipeline",
-      "status": "active",
+      "status": "tried",
       "outcome": "supported",
-      "owner": "paper-finite-20260920 (#59)",
+      "owner": null,
       "updated": "2026-09-20",
-      "summary": "C085 now has an unconditional executable Lean finite-expression entailment theorem. The classifier supplies a forced loop or proved acyclic word bound; the CLI uses the checked function, with Python parsing and graph-finiteness boundaries explicit.",
-      "next_step": "Integrate the checked C085 finite-tree consequence into the paper, with exact ordinary proof, source correspondence and Henglein–Rehof/NP comparison; #59 owns the manuscript revision.",
+      "summary": "C081/C085 now have a standalone arbitrary- and finite-tree paper, with the full terminal and consuming-cycle arguments, exact multi-revision Lean correspondence, checked examples and bounded Henglein–Rehof/NP review. The unconditional finite decision is unchanged; finite SAT, novelty and quantitative limits stay separate.",
+      "next_step": "Profile deeper E055 timeouts under matched caps before selecting a proved representation change; alternatively formalize the countermodel producer or pursue explicit-top separation. The finite paper step is complete under #59; no next worker assigned.",
       "record": "research/approaches/A010.md",
       "evidence": [
         "notes/2026-09-04-bridge-foundation.md",
@@ -255,7 +255,9 @@
         "lean/Subtail/PopAcyclic.lean",
         "lean/Subtail/FiniteTreeDecision.lean",
         "scripts/check_finite_tree_decision.py",
-        "results/finite-tree-decision.json"
+        "results/finite-tree-decision.json",
+        "notes/2026-09-20-finite-paper-readback.md",
+        "notes/prior-work/finite-tree-comparison-2026-09-20.md"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/3"
     },
@@ -583,12 +585,12 @@
     {
       "id": "A018",
       "title": "Maintain the Lean core and verify critical obligations",
-      "status": "active",
+      "status": "tried",
       "outcome": "supported",
-      "owner": "paper-finite-20260920 (#59)",
+      "owner": null,
       "updated": "2026-09-20",
-      "summary": "C085 now has an unconditional executable Lean finite-expression entailment theorem. The classifier supplies a forced loop or proved acyclic word bound; the CLI uses the checked function, with Python parsing and graph-finiteness boundaries explicit.",
-      "next_step": "Integrate the checked C085 finite-tree consequence into the paper, with exact ordinary proof, source correspondence and Henglein–Rehof/NP comparison; #59 owns the manuscript revision.",
+      "summary": "C081/C085 now have a standalone arbitrary- and finite-tree paper, with the full terminal and consuming-cycle arguments, exact multi-revision Lean correspondence, checked examples and bounded Henglein–Rehof/NP review. The unconditional finite decision is unchanged; finite SAT, novelty and quantitative limits stay separate.",
+      "next_step": "Profile deeper E055 timeouts under matched caps before selecting a proved representation change; alternatively formalize the countermodel producer or pursue explicit-top separation. The finite paper step is complete under #59; no next worker assigned.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
@@ -724,7 +726,9 @@
         "lean/Subtail/PopAcyclic.lean",
         "lean/Subtail/FiniteTreeDecision.lean",
         "scripts/check_finite_tree_decision.py",
-        "results/finite-tree-decision.json"
+        "results/finite-tree-decision.json",
+        "notes/2026-09-20-finite-paper-readback.md",
+        "notes/prior-work/finite-tree-comparison-2026-09-20.md"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/31"
     }

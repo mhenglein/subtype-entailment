@@ -1,5 +1,26 @@
 # Subtail — current research state
 
+## September 20: paper now covers arbitrary and finite trees
+
+The [manuscript](paper/manuscript.md) now states both executable decision
+theorems. Section 13 gives the finite reverse-pop automaton, consuming-cycle
+obstruction, acyclic word bound, finite canonical replacements and both
+directions of the finite-expression reduction. The full terminal argument in
+Sections 5–9 is retained. [Revision and validation](notes/2026-09-20-finite-paper-readback.md).
+
+The declaration map retains the seventeen original source pins and adds four
+finite entries at `4159c58`. Finite satisfiability and the displayed `n+d`
+seed estimate remain ordinary consequences. The
+[finite literature comparison](notes/prior-work/finite-tree-comparison-2026-09-20.md)
+credits Henglein–Rehof's structural and nonstructural results and distinguishes
+Niehren–Priesnitz's finite top-valued domain. No full-input PSPACE or novelty
+transfer is asserted. This is an exposition and artifact improvement; Lean
+sources and solver performance are unchanged.
+
+Next profile the deeper E055 timeouts before choosing a representation change,
+or develop the separate explicit-top separation argument. Neither is assigned.
+Author placeholders and licensing remain unchanged.
+
 ## September 20: unconditional checked finite-tree decision (C085)
 
 The graph-classifier gap in the earlier entry below is closed. The total
@@ -23,10 +44,9 @@ core also pass. [E057 receipt](results/finite-tree-decision.json). Independent
 source review covered the mathematics, runtime interface and audit coverage.
 The historical finite-tree receipt is retained unchanged.
 
-Next integrate this finite-tree consequence into the manuscript with an exact
-literature comparison, or profile the deeper E055 timeouts. No performance,
+The proposed manuscript integration is completed above. No performance,
 finite-SAT Boolean, C080 F, explicit-top or novelty result is added here. Existing
-Lean definitions, default imports and the paper are unchanged. No next worker
+Lean definitions and default imports are unchanged. No next worker
 is assigned; author placeholders and licensing remain unchanged.
 
 ## September 20: finite-tree entailment reduction (C085)

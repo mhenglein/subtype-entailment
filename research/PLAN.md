@@ -1,6 +1,6 @@
 # Research plan
 
-Updated: 2026-09-20 (unconditional checked finite-tree decision)
+Updated: 2026-09-20 (arbitrary- and finite-tree paper revision)
 
 **Completed qualitative goal:** decide [Problem 1.7](problem.md) for bottom
 and binary product over arbitrary, possibly infinite trees. [C081](claims.md#c081)
@@ -29,13 +29,15 @@ certificates and has a complete ordinary extractor. C085 now has an unconditiona
 executable Lean decision for finite-expression entailment: the graph classifier
 supplies a forced loop or a proved uniform reverse-pop bound. The CLI calls
 that checked function. [Exact readback and evidence](../notes/2026-09-20-finite-tree-decision-readback.md).
-Next integrate the finite-tree consequence into the manuscript with an exact
-literature comparison, or profile the deeper E055 timeouts. Arity and explicit-top
+The [finite paper revision](../notes/2026-09-20-finite-paper-readback.md) now gives
+the consuming-cycle proof, exact finite normalization, worked examples and
+source correspondence, alongside a refreshed Henglein–Rehof/NP comparison.
+Next profile the deeper E055 timeouts before choosing an optimization. Arity and explicit-top
 results require separate proofs. Tight complexity and exact literature transfers
 remain open. JSON handling, extraction and graph finiteness remain Python.
 
 The remaining items are proposals, not active worker assignments. Ownership and reservations
-remain in [the registry](approaches.json), [#58](https://github.com/mhenglein/subtail/issues/58)
+remain in [the registry](approaches.json), [#59](https://github.com/mhenglein/subtail/issues/59)
 and [#37](https://github.com/mhenglein/subtail/issues/37). The owner deferred
 licensing and requested author/affiliation placeholders. No license grant or
 publication-ready authorship is asserted.

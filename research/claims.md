@@ -1368,6 +1368,12 @@ The later [executable bridge](../lean/Subtail/FiniteTreeDecision.lean),
 classifier gap. The CLI now uses the Lean naming construction and decision;
 the separate Python growth implementation is diagnostic only.
 
+The [paper's Theorem 1.2 and Section 13](../paper/manuscript.md#13-entailment-over-finite-trees)
+now present the full ordinary argument. The [declaration map](../paper/lean-map.md)
+preserves both proof revisions, and the [revision readback](../notes/2026-09-20-finite-paper-readback.md)
+records the checked correspondence and example. The [finite literature review](../notes/prior-work/finite-tree-comparison-2026-09-20.md)
+does not change this claim's mathematical status or establish novelty.
+
 **Limits.** JSON parsing/emission and countermodel extraction remain Python;
 the latter's DAG normalization is separate from Lean naming. The C084 instance
 certificate still proves arbitrary non-entailment; the graph-finiteness check

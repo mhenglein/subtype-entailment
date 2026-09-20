@@ -12,6 +12,25 @@ publication-ready paper, broadly useful solver and new signature theorems
 require further work. Implementation ownership remains in the registry and
 future scoped issue claims; this document assigns no workers or paths.
 
+## September 20 update: finite-tree theorem integrated into the paper
+
+The manuscript now states both arbitrary- and finite-tree decisions and gives
+the complete finite consuming-cycle argument in Section 13, while retaining
+the terminal proof in Sections 5–9. It defines the automaton, proves both
+cycle branches and finite-expression transfer, and separates finite SAT from
+entailment. The source map has twenty-one checked entries and four ordinary
+consequences, with separate immutable proof revisions. The
+[revision readback](../notes/2026-09-20-finite-paper-readback.md) records bounded
+mathematical and primary-source reviews, the executed example and PDF checks.
+
+The [finite comparison](../notes/prior-work/finite-tree-comparison-2026-09-20.md)
+gives exact HR97/HR98/NP99/NP03 domains and theorem locators. The absence of top
+from an input grammar does not remove it from valuations. The infinite omega
+guard is not a finite-tree transfer. The paper therefore makes no new full-input
+PSPACE or global priority claim. This completes the manuscript step proposed
+below; external mathematical review and the deeper performance work remain
+useful next targets. Author placeholders and licensing remain deferred.
+
 ## September 20 update: finite-tree decision fully connected in Lean
 
 The executable graph-classifier gap below is closed by `PopAcyclic` and
@@ -21,10 +40,10 @@ classification. The CLI calls that function. [Proof readback and validation](../
 Python parsing/emission and graph finiteness remain outside the proof; C084
 certificates keep their arbitrary-tree statement.
 
-The next manuscript revision should explain the consuming-cycle dichotomy,
-the no-repeated-control length argument, and the transfer to finite expressions,
-then compare this exact signature and tree domain with Henglein–Rehof and
-Niehren–Priesnitz. This update changes no novelty claim or paper source pin.
+The proposed manuscript revision is now recorded above. It explains the
+consuming-cycle dichotomy, no-repeated-control length argument and transfer
+to finite expressions, with an exact Henglein–Rehof/NP comparison. The
+original arbitrary-tree source pins are retained.
 Performance profiling and explicit-top research remain separate proposals.
 
 ## Earlier September 20 checkpoint: finite-tree reduction proved
@@ -234,11 +253,12 @@ Expose an executable extractor, then connect it to the solver. Regular-model
 existence is already in the literature; identify the verified construction
 and implementation contribution without claiming the existence theorem as new.
 
-### Finite trees: ordinary reduction complete; classifier formalization remains
+### Finite trees: decision and manuscript complete
 
 The zero-spine example refutes using the same unmodified input and answer for
 finite trees. It does not refute a computable reduction. The original proposal
-below is now proved by C085 above; preserve it as the route history:
+below is now proved and its classifier checked by C085 above; preserve it as
+the route history:
 
 For a normalized system with propagation system `W`, let
 `L(q,m) = {c : Pop_(W^op)(q,c,m)}` and
@@ -261,8 +281,9 @@ Define finite trees explicitly and prove that finite product-node sets represent
 exactly those trees, so that the reduction targets the intended semantics.
 NFA infiniteness must detect a productive cycle consuming a letter, not just
 an epsilon cycle. C085 proves this ordinary argument and its simpler consuming-
-cycle form. The old candidate status is superseded by the precise mixed
-ordinary/Lean evidence above; the executable classifier is not yet Lean-verified.
+cycle form. The old candidate status is superseded by the precise evidence
+above, including the now-checked executable classifier. The separate finite-SAT
+corollary retains its ordinary-proof status.
 
 ### One constructor of another fixed arity
 
@@ -308,8 +329,9 @@ or proof; neither follows from changing the alphabet or flipping an edge.
 ## 4. Review, integrate and release in stages
 
 The first manuscript rewrite and measured closure optimization are recorded
-above. Next finish checked regular extraction and test the finite-tree reduction,
-while profiling deeper solver cases and inviting further mathematical review.
+above. The finite-tree reduction and its executable decision are complete.
+Next formalize the countermodel producer, profile deeper solver cases, or
+invite further mathematical review.
 Audit fixed arity next. Pursue explicit top
 under its own proof outline, without making the current paper wait for it.
 
