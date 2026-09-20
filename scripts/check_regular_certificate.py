@@ -96,8 +96,11 @@ def native(directory):
         source = source.split('\n', 1)[1]
         source = source[:source.index('#eval')]
         term = override or 'cert'
+        instance_proof = ('example : ¬ ExprEntails input left right :=\n'
+                          '  check_not_entails input left right cert (by decide)\n') if expected else ''
         sources.append(f'namespace Case{i}\n' + source +
-            f'#eval IO.println ("CERT_{i}:" ++ toString (check input left right {term}))\nend Case{i}\n')
+            f'#eval IO.println ("CERT_{i}:" ++ toString (check input left right {term}))\n'
+            + instance_proof + f'end Case{i}\n')
     path = directory / 'Native.lean'
     path.write_text('\n'.join(sources))
     output = command(['lake', 'env', 'lean', str(path)])
