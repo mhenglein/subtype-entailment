@@ -53,22 +53,22 @@ theorem mem_preClause (I : Instance k) (c out : Clause k) :
 /-! ## The existing coverage diagram survives the guard -/
 
 section CoverageCount
-open RankQueryCoverage
+open RankQueryCoverage RankQuerySound
 
 /-- Indexing a finite list does not change multiplicity, even with duplicates. -/
-theorem map_range_getD {alpha : Type} [Inhabited alpha] (xs : List alpha) :
-    (List.range xs.length).map (fun j => xs.getD j default) = xs := by
+theorem map_range_getD {alpha : Type} (xs : List alpha) (d : alpha) :
+    (List.range xs.length).map (fun j => xs.getD j d) = xs := by
   apply List.ext_getElem
   . simp
   . intro j hj hx
     simp [List.getElem_map, List.getElem_range, List.getD_eq_getElem?_getD,
       List.getElem?_eq_getElem hx]
 
-theorem filter_indices_length {alpha : Type} [Inhabited alpha]
-    (xs : List alpha) (p : alpha -> Bool) :
-    ((List.range xs.length).filter fun j => p (xs.getD j default)).length =
+theorem filter_indices_length {alpha : Type}
+    (xs : List alpha) (p : alpha -> Bool) (d : alpha) :
+    ((List.range xs.length).filter fun j => p (xs.getD j d)).length =
       (xs.filter p).length := by
-  have h := congrArg (fun ys : List alpha => (ys.filter p).length) (map_range_getD xs)
+  have h := congrArg (fun ys : List alpha => (ys.filter p).length) (map_range_getD xs d)
   simpa [List.filter_map, List.length_map, Function.comp_def] using h
 
 /-- Inject contributing piece indices into fresh block indices. Portal pieces
@@ -91,7 +91,7 @@ theorem covered_count_le {I : Instance k} {B : Reference k} {E : Ext I B}
   rw [List.length_map] at h
   have he : freshIndices.length = freshCount B.word.length (X.segs ai) := by
     simpa [freshIndices, Cov.segCount, Cov.blk, freshCount] using
-      filter_indices_length (X.segs ai) (isFresh B.word.length)
+      filter_indices_length (X.segs ai) (isFresh B.word.length) []
   exact Nat.le_trans h (Nat.le_of_eq he)
 
 /-- Per-atom product-simple paths were chosen inside the SAME C. Their fresh
