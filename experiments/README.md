@@ -1341,3 +1341,48 @@ composition. It changes no cycle bound, monitor language or terminal decision.
 [ordinary argument](../notes/2026-09-20-raw-backend.md);
 [proof, review, tests and limitations](../notes/2026-09-20-raw-backend-readback.md).
 This is a proved runtime refinement, not a new complexity or signature result.
+
+
+<a id="e060"></a>
+
+### E060 — Exact cached raw summary construction
+
+```sh
+python3 scripts/check_summary_cached.py --cli --output tmp/summary-audit.json
+python3 experiments/check_summary_cached.py --components --timeout 60 --output tmp/summary-components.json --scratch tmp/summary-components
+python3 experiments/check_summary_cached.py --full38 --compare-baseline --timeout 20 --output tmp/summary-matched.json --scratch tmp/summary-matched
+python3 experiments/check_summary_cached.py --stress-raw --compare-baseline --timeout 20 --output tmp/summary-stress.json --scratch tmp/summary-stress
+python3 experiments/profile_raw_summary.py --variant cached --timeout 20 --output tmp/summary-profile.json --scratch tmp/summary-profile
+```
+
+Build `Subtail.EntailmentPrepared` on pinned Lean 4.33.1 first. Raw comparison
+uses the previous `InfiniteDecisionLazy` endpoint and the cached public raw
+endpoint directly, retaining the original `#eval` invocation and 20-second
+wall/CPU, Linux 16-GiB address-space, one-thread, 32768-KiB stack limits. All 38
+fixtures and 19 deeper inputs retain their identity. Larger stress has empty
+premises and query `0 <= 1` at 3/4/5/6 variables, independently false by the root/bottom
+countermodel. Only the displayed inputs support performance claims.
+
+Whole-instance validation covers 29 constraint cases and all 83 queries, with
+candidate and reference emitted in 166 separate processes. The independent
+P-automaton oracle compares every initial index, transition, Bad/final bit and
+ordered flag, including diagonal/unreachable states. There are no digest-only
+comparisons in this new check. Its correctness-only CI cap is 60 seconds for the
+slow reference; raw performance remains 20 seconds. UNKNOWN cannot pass the
+component gate or supply a Boolean answer.
+
+The Lean proof is literal whole-Instance equality under the exact System/cache
+invariant, then unconditional public raw/frontend equality. Build, kernel,
+47 declaration closures, 23 runtime closures and actual CLI/model/cap checks pass.
+The earlier core and deeper/component checks retain their distinct scopes.
+
+[Ordinary route and failed attempts](../notes/2026-09-20-raw-summary.md);
+[exact proof/measurement readback](../notes/2026-09-20-raw-summary-readback.md);
+[source-pinned receipts](../results/raw-summary.json).
+Relation caching alone failed to remove the four-variable timeout. Reusing
+decoded physical states succeeds on four/five variables; six remains UNKNOWN.
+The `--run` profiler is diagnostic and forces only the final-vector size at
+its summary marker. It is separate from the matched uninstrumented benchmark.
+Batched timeout, output truncation and initial proof-elaboration failures are
+preserved. No smaller state space, complexity, memory, C080 or signature claim
+is inferred from these measurements.

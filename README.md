@@ -40,9 +40,10 @@ constructors or contravariant function type. Finite-tree entailment has a
 separate [unconditional checked decision](research/claims.md#c085). The complete fallback can be very slow.
 The proved implementation now completes all 38 fixed benchmark inputs,
 including all seven raw-backend probes, under the matched 20-second cap.
-The deeper suite completes 19/19. A separate four-variable raw stress input
-still returns `UNKNOWN`; its cost is in summary construction.
-[Exact proof, measurements and limits](notes/2026-09-20-raw-backend-readback.md).
+The deeper suite completes 19/19. Separate empty-constraint raw probes with
+four and five variables now finish in 1.221s and 7.139s; six variables
+still return `UNKNOWN`.
+[Exact proof, matched measurements and limits](notes/2026-09-20-raw-summary-readback.md).
 A timeout remains `UNKNOWN`. Qualitative decidability does not establish the old C080 numerical
 bounds, a complexity class, or novelty. The [post-C081 programme](research/POST_C081.md)
 tracks these separate questions. Author names and affiliations are placeholders;
@@ -63,8 +64,8 @@ An inequality is `[left,right]`. An expression is a variable name, `"bottom"`,
 or `{"prod":[left,right]}`. The command returns ENTAILED, NOT_ENTAILED, or
 UNKNOWN on a resource limit. It materializes the five primitive transition
 relations once, then uses proved positive closure and cached exact separation checks, then the complete Lean decision when those checks are
-inconclusive. The raw fallback streams the exact cycle search and keeps the
-original terminal procedure. The CLI timeout includes any needed build and explanation work;
+inconclusive. The raw fallback reuses exact relation and physical-state tables,
+streams the exact cycle search and keeps the original terminal procedure. The CLI timeout includes any needed build and explanation work;
 the benchmark measures queries after the initial build.
 
 Negative answers trigger a complete countermodel search: without resource

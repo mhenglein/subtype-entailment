@@ -1,6 +1,38 @@
 # Subtail — current research state
 
+## September 20: proved cached raw summary resolves larger stress probes (E060)
+
+`SummaryInstanceCached` reuses exact relation tables and stores the original
+ordered physical states once. Lean proves equality of the entire summary
+`Instance`, including unreachable states and every ordered flag. The prepared
+raw and original-expression endpoints preserve unconditional C081 correctness.
+[Ordinary proof and validation](notes/2026-09-20-raw-summary-readback.md).
+
+Matched wb-marcus runs at `66f545e` retain **38/38** fixed candidate cases;
+the separate deeper suite retains **19/19**. The four- and five-variable empty
+raw probes now finish in **1.221s and 7.139s**, where the previous constructor
+returns UNKNOWN under the same 20-second limits. Six variables remain UNKNOWN.
+These are direct complete-backend calls, without frontend shortcuts.
+[Full receipts and preserved failures](results/raw-summary.json).
+
+All 83 small query instances pass exact candidate/reference/Python comparisons
+of initial state, transitions, Bad, final and ordered flags. Build/kernel,
+47 declaration closures (23 executable), actual CLI/model/cap checks, the
+default proof core and 77 Python tests pass. Independent source review covers
+the equality and corrected validation harness. Correctness-only CI comparisons
+allow 60 seconds for the slow reference; raw performance caps remain 20 seconds.
+
+Relation caching alone did not resolve the four-variable timeout; caching
+physical-state lookups did. The state count and dense flags remain exponential.
+Next isolate the six-variable construction cost, including transition encoding
+and flag materialization, before another refinement. Terminal-promotion coverage
+still needs its own discriminating family. No new worst-case, memory, C080,
+finite-mode, signature or novelty claim follows. All scopes release at the
+checkpoint in #62/#37; licensing and author placeholders remain unchanged.
+
 ## September 20: all fixed raw probes complete with proved incremental search (E059)
+
+Historical E059 checkpoint; E060 above improves the summary construction.
 
 `InfiniteDecisionLazy` streams the original bounded cycle search and tests
 initial safety before enumeration. The Lean equality holds for every finite

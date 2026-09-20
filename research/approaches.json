@@ -176,12 +176,12 @@
     {
       "id": "A010",
       "title": "Build the exact top-free constraint-to-automata pipeline",
-      "status": "active",
+      "status": "tried",
       "outcome": "supported",
-      "owner": "raw-summary-20260920",
+      "owner": null,
       "updated": "2026-09-20",
-      "summary": "C081 now has a proved primitive-table solver with exact System and whole-decision equality. E058 resolves all three deeper generated timeouts (19/19) while preserving 33/38 original completions and five raw UNKNOWN cases. C085, the paper and quantitative/signature boundaries are unchanged. E059 proves incremental raw cycle search and completes all 38 fixed inputs; a four-variable summary-construction stress probe remains UNKNOWN.",
-      "next_step": "Construct the exact raw summary with the existing proved balanced/control tables; validate all physical states, raw stress, and frontend regressions under #62.",
+      "summary": "C081 has a proved cached raw summary with literal whole-Instance equality and unconditional endpoint correctness. E060 resolves the four/five-variable empty raw stress probes, retains 38/38 fixed and 19/19 deeper completions, and exactly checks 83 small query instances. Six-variable raw stress remains UNKNOWN; state/flag counts and signature/quantitative boundaries are unchanged.",
+      "next_step": "Profile the six-variable construction by subphase before refining transition encoding or dense flags. Keep terminal-promotion coverage and explicit-top separation as separate, unassigned proposals.",
       "record": "research/approaches/A010.md",
       "evidence": [
         "notes/2026-09-04-bridge-foundation.md",
@@ -266,7 +266,14 @@
         "notes/2026-09-20-solver-profile-readback.md",
         "results/solver-profile.json",
         "notes/2026-09-20-raw-backend-readback.md",
-        "results/raw-backend.json"
+        "results/raw-backend.json",
+        "lean/Subtail/SummaryInstanceCached.lean",
+        "experiments/check_summary_cached.py",
+        "experiments/profile_raw_summary.py",
+        "scripts/check_summary_cached.py",
+        "notes/2026-09-20-raw-summary.md",
+        "notes/2026-09-20-raw-summary-readback.md",
+        "results/raw-summary.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/62"
     },
@@ -594,12 +601,12 @@
     {
       "id": "A018",
       "title": "Maintain the Lean core and verify critical obligations",
-      "status": "active",
+      "status": "tried",
       "outcome": "supported",
-      "owner": "raw-summary-20260920",
+      "owner": null,
       "updated": "2026-09-20",
-      "summary": "C081 now has a proved primitive-table solver with exact System and whole-decision equality. E058 resolves all three deeper generated timeouts (19/19) while preserving 33/38 original completions and five raw UNKNOWN cases. C085, the paper and quantitative/signature boundaries are unchanged. E059 proves incremental raw cycle search and completes all 38 fixed inputs; a four-variable summary-construction stress probe remains UNKNOWN.",
-      "next_step": "Construct the exact raw summary with the existing proved balanced/control tables; validate all physical states, raw stress, and frontend regressions under #62.",
+      "summary": "C081 has a proved cached raw summary with literal whole-Instance equality and unconditional endpoint correctness. E060 resolves the four/five-variable empty raw stress probes, retains 38/38 fixed and 19/19 deeper completions, and exactly checks 83 small query instances. Six-variable raw stress remains UNKNOWN; state/flag counts and signature/quantitative boundaries are unchanged.",
+      "next_step": "Profile the six-variable construction by subphase before refining transition encoding or dense flags. Keep terminal-promotion coverage and explicit-top separation as separate, unassigned proposals.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
@@ -746,7 +753,14 @@
         "notes/2026-09-20-solver-profile-readback.md",
         "results/solver-profile.json",
         "notes/2026-09-20-raw-backend-readback.md",
-        "results/raw-backend.json"
+        "results/raw-backend.json",
+        "lean/Subtail/SummaryInstanceCached.lean",
+        "experiments/check_summary_cached.py",
+        "experiments/profile_raw_summary.py",
+        "scripts/check_summary_cached.py",
+        "notes/2026-09-20-raw-summary.md",
+        "notes/2026-09-20-raw-summary-readback.md",
+        "results/raw-summary.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/62"
     }

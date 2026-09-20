@@ -1196,6 +1196,17 @@ existing arbitrary-tree endpoint with no new assumption. Raw measurements
 invoke the raw function directly; they do not use frontend shortcuts.
 [Proof and execution boundary](../notes/2026-09-20-raw-backend-readback.md).
 
+**Equivalent cached summary construction (September 20).**
+`SummaryInstanceCached.summaryInstance_eq` proves literal equality of the
+complete physical `Instance`, including unreachable states and every ordered
+flag. It requires the exact constraint System and a correct cache.
+`EntailmentPrepared.rawNormalizedEntailsCheck` supplies both internally;
+its raw and original-expression correctness theorems add no caller hypothesis.
+The refinement reuses relation tables and decoded states, retaining the
+reference state enumeration and complete decisions.
+[Ordinary argument, checked declarations and bounded measurements](../notes/2026-09-20-raw-summary-readback.md).
+This is an implementation refinement of C081, not a new bound or signature.
+
 <a id="c082"></a>
 
 ### C082 — Corrected compiler weight and terminal witness bound

@@ -2,7 +2,10 @@
 
 Date: 2026-09-20. Actor: raw-summary-20260920. A010/A018, C081, issue #62,
 coordinated in #37. Base: `5adaa2949ffaeab94c4b7687d12b8ca6bd84ee94`.
-Status: ordinary equality argument; implementation and measurement pending.
+Status: implemented with checked whole-Instance and endpoint equality.
+Final validation, revisions and remaining limits are in the
+[readback](2026-09-20-raw-summary-readback.md). The initial route and failed
+attempts below are preserved.
 
 ## Exact target
 
@@ -88,7 +91,7 @@ enumeration, the `4^n` physical-state enumeration, dense flag matrix, encoding
 search or the unchanged infinite/terminal decision may become the next cost.
 No universal speedup or peak-memory improvement follows from a passing suite.
 
-## Review and next decision
+## Initial review and next decision
 
 The existing E059 trace places the four-variable timeout in summary
 construction. The present source inspection identifies reference balanced
@@ -116,3 +119,46 @@ pairs once and reuse their lookups. The finite table has the same order and
 its entry at `q` is exactly `decode q`; replacing these occurrences therefore
 preserves the existing whole-Instance equality. This does not reduce the
 physical state count or flag-matrix size. Performance remains to be measured.
+
+## Second ablation: reuse decoded physical states
+
+At `2233aea`, the ordered physical-state vector is shared by every Bad, final
+and flag lookup. `stateTable_get` proves its lookup equals the original
+`decode`; the whole-Instance theorem substitutes that equality. The original
+transition encoding remains unchanged. Kernel replay, runtime dependency
+checks and actual CLI checks pass. Diagnostic empty-constraint probes at
+three, four and five variables complete; six variables remain UNKNOWN in
+construction. This does not change the exponential state or dense flag counts.
+
+The first proof draft at `c74323b` left a definitional index-cast equality.
+Adding `rfl` after simplification fixed elaboration without changing the
+statement or runtime construction. This is a proof-script repair, not an
+additional mathematical assumption.
+
+## Validation batching correction
+
+The independently authored harness at `82b3e68` placed all queries for a
+constraint case in one process. Its 26 one/two-variable cases passed; each
+three-variable case timed out while testing nine candidate/reference pairs.
+These results remain UNKNOWN in the receipt.
+
+At `5047afa`, each query pair receives its own unchanged 20-second process
+cap. All 29 cases, 83 queries, physical fields and fixture identities remain.
+This increases the total allowed validation time per constraint case. It is
+not a speedup measurement; raw benchmarks retain one query per process and
+their original caps. Final acceptance requires every pair to complete, with
+both exact Lean instances checked against the independent Python oracle.
+
+This first repair was insufficient: a candidate/reference pair prints over
+9,000 bytes, while the existing runner keeps an 8,000-byte tail. Independent
+review identified the dropped first marker. At `66f545e`, one variant and one
+query run in each process; the largest fixed marker is 4,611 bytes. The full
+corpus still has 83 pairs, now emitted by 166 processes.
+
+That repaired capture completes 157 processes under 20 seconds. The nine
+remaining reference runs for the n=3 contradiction case time out; all 83
+candidate runs complete. These are UNKNOWN reference comparisons, not failed
+candidate answers. The final correctness-only run and CI use 60 seconds per
+process to validate the slow original constructor. Raw performance measurements
+keep their original 20-second cap. The readback records the actual acceptance
+results and preserves every earlier receipt.
