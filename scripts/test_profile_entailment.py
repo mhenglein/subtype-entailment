@@ -2,9 +2,12 @@
 import sys
 from pathlib import Path
 import unittest
+import tempfile
+from types import SimpleNamespace
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "experiments"))
-from profile_entailment import parse_trace
+from profile_entailment import parse_trace, run
 
 
 class ProfileTraceTests(unittest.TestCase):
@@ -54,6 +57,30 @@ class ProfileTraceTests(unittest.TestCase):
                  "SUBTAIL_PROFILE:result:false\n")
         for bad in [trace.replace("positive", "bogus"), "SUBTAIL_PROFILE:input:controls:2\n" + trace]:
             self.assertEqual(parse_trace(bad, True, False)["status"], "FAIL")
+
+    def test_launch_error_is_unknown(self):
+        with tempfile.TemporaryDirectory() as directory, \
+             patch("profile_entailment.subprocess.Popen", side_effect=FileNotFoundError("missing tool")):
+            result = run(Path(directory) / "test.lean", 1, False)
+        self.assertEqual(result["status"], "UNKNOWN")
+        self.assertEqual(result["reason"], "launch_error")
+        self.assertNotIn("actual", result)
+
+    def test_truncated_completed_output_is_rejected_and_tail_is_real(self):
+        trace = ("SUBTAIL_PROFILE:input:controls:2\nSUBTAIL_PROFILE:begin:positive\n"
+                 "SUBTAIL_PROFILE:value:positive:false\nSUBTAIL_PROFILE:end:positive:1\n"
+                 "SUBTAIL_PROFILE:result:false\n" + "x" * 70000 + "REAL_TAIL")
+
+        def launch(command, **kwargs):
+            kwargs["stdout"].write(trace.encode())
+            return SimpleNamespace(returncode=0, wait=lambda **kwargs: 0)
+
+        with tempfile.TemporaryDirectory() as directory, patch("profile_entailment.subprocess.Popen", launch):
+            result = run(Path(directory) / "test.lean", 1, False)
+        self.assertEqual(result["status"], "FAIL")
+        self.assertEqual(result["reason"], "trace_output_truncated")
+        self.assertNotIn("actual", result)
+        self.assertTrue(result["output_tail"].endswith("REAL_TAIL"))
 
 
 if __name__ == "__main__":

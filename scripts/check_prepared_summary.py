@@ -41,6 +41,8 @@ def cli_smoke(directory):
         expected_exit = 2 if expected == "UNKNOWN" else 0
         if proc.returncode != expected_exit or result["status"] != expected:
             raise RuntimeError(f"CLI mismatch for {name}: {proc.returncode} {proc.stdout} {proc.stderr}")
+        if name == "capped" and result.get("reason") != "time_limit":
+            raise RuntimeError("Cap smoke did not stop at the time limit")
         if expected != "UNKNOWN" and result.get("basis") != "Lean EntailmentPrepared.entailsCheck_correct":
             raise RuntimeError("CLI did not use the checked prepared endpoint")
         if name.startswith("products-depth-"):
@@ -110,6 +112,8 @@ def main():
               "checked_revision": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
               "toolchain": version, "build": "PASS", "kernel_replay": "PASS",
               "runtime_declarations": sum(kind != "theorem" for kind in expected.values()),
+              "lean_source_sha256": {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
+                                     for p in sorted((ROOT / "lean/Subtail").glob("*.lean"))},
               "checker_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
     if args.cli:
         directory = args.output.resolve().parent / "prepared-cli"
