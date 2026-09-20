@@ -42,6 +42,12 @@ class ExtractionTests(unittest.TestCase):
         self.assertTrue(nfa.accepts(1, (1, 0, 1)))
         self.assertFalse(nfa.accepts(1, (0, 1, 1)))
 
+    def test_graph_rejects_non_prefix_closed_language(self):
+        system = rc.System(1, set(), set(), set(), set(), set(), 0, 0)
+        nfa = rc.ClosureNFA(rc.PopMachine(system), rc.PopMachine(system.reverse()), {(0, (0,))})
+        with self.assertRaisesRegex(ValueError, 'not prefix-closed'):
+            nfa.graph(('x',))
+
     def test_nfa_matches_complete_literal_acyclic_closures(self):
         rng = random.Random(5701)
         for sample in range(80):

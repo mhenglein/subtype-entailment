@@ -199,9 +199,12 @@ class ClosureNFA:
         The caller must not use this conversion for arbitrary NFA languages.
         """
         nodes, ids, pending = [None], {}, deque()
+        productive = self.productive()
 
         def intern(states):
             if not states & self.final:
+                if states & productive:
+                    raise ValueError('closure is not prefix-closed: a rejected residual can accept an extension')
                 return 0
             if states not in ids:
                 ids[states] = len(nodes)
@@ -257,6 +260,8 @@ def extract(problem, deadline=None, max_words=None):
                 continue
             if nfa.accepts(system.right, word):
                 continue
+            if not nfa.accepts(system.left, word):
+                raise ValueError('canonical closure lost its separating-path seed')
             return {'status': 'FOUND', 'candidates': tried,
                     'separating_path': list(word), 'model': nfa.graph(problem.variables),
                     'normalized_controls': system.size, 'nfa_states': nfa.size,
