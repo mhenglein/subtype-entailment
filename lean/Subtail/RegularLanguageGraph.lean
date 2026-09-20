@@ -138,8 +138,9 @@ theorem accepts_iff (A : NFA alpha) (L : alpha -> Word -> Prop)
         exact List.any_eq_true.mpr
           ⟨p, hp, (hfinal p (decode_member A q hp)).mpr hl⟩
   | cons a w ih =>
-      rw [accepts, ih]
-      simp only [determinize, decode_encode]
+      have hd : decode A ((determinize A).next q a) = nextSet A (decode A q) a :=
+        decode_encode A _ _
+      rw [accepts, ih, hd]
       constructor
       · rintro ⟨r, hr, hl⟩
         obtain ⟨hrU, p, hp, ht⟩ := (mem_nextSet A (decode A q) a r).mp hr
@@ -159,6 +160,6 @@ theorem accepts_initial_iff (A : NFA alpha) (L : alpha -> Word -> Prop)
     (p : alpha) (hp : p ∈ A.carrier) (w : Word) :
     accepts (determinize A) (initial A p) w = true <-> L p w := by
   rw [accepts_iff A L hfinal hnext]
-  simp [initial, initialSet, hp]
+  simp [initial, initialSet, and_assoc, hp]
 
 end Subtail.RegularLanguageGraph
