@@ -1,0 +1,208 @@
+{
+  "coding": {
+    "binary_witnesses": 16422,
+    "binary_words_checked": 124440,
+    "complete_word_comparisons": 39136,
+    "instances": 488,
+    "nontruncation_fixture": {
+      "completed_binary": [
+        0,
+        1,
+        0
+      ],
+      "decoded": [
+        0,
+        1
+      ],
+      "partial_binary": [
+        0,
+        1
+      ],
+      "source": {
+        "bad": [],
+        "finals": [
+          1,
+          2
+        ],
+        "flags": [
+          [
+            0,
+            1
+          ]
+        ],
+        "initial": 0,
+        "r": 3,
+        "transitions": [
+          [
+            1,
+            null,
+            null
+          ],
+          [
+            null,
+            2,
+            null
+          ],
+          [
+            null,
+            null,
+            null
+          ]
+        ]
+      }
+    },
+    "partial_witnesses_completed": 5358,
+    "random_nontruncation_found": false,
+    "scope": "all one-state absorbing encodings for arities 1..4; seeded samples for 1..5"
+  },
+  "elapsed_seconds": 1.028,
+  "evidence": "bounded component regressions plus exact finite-graph/NFA checks",
+  "expressions": {
+    "exact_infinite_graph_and_expression_cases": [
+      {
+        "canonical_graph_nodes": 10,
+        "fixture": "zero_spine",
+        "normalized_variables": 4,
+        "same_separating_address": []
+      },
+      {
+        "canonical_graph_nodes": 14,
+        "fixture": "nonroot_zero_spine",
+        "normalized_variables": 5,
+        "same_separating_address": [
+          0
+        ]
+      },
+      {
+        "canonical_graph_nodes": 10,
+        "fixture": "middle_spine",
+        "normalized_variables": 4,
+        "same_separating_address": []
+      },
+      {
+        "canonical_graph_nodes": 14,
+        "fixture": "nonroot_middle_spine",
+        "normalized_variables": 5,
+        "same_separating_address": [
+          1
+        ]
+      },
+      {
+        "canonical_graph_nodes": 10,
+        "fixture": "last_spine",
+        "normalized_variables": 4,
+        "same_separating_address": []
+      },
+      {
+        "canonical_graph_nodes": 18,
+        "fixture": "nonroot_last_spine",
+        "normalized_variables": 6,
+        "same_separating_address": [
+          2,
+          2
+        ]
+      },
+      {
+        "canonical_graph_nodes": 10,
+        "fixture": "full_infinite",
+        "normalized_variables": 4,
+        "same_separating_address": []
+      },
+      {
+        "canonical_graph_nodes": 10,
+        "fixture": "mixed_bottom_and_auxiliary",
+        "normalized_variables": 6,
+        "same_separating_address": []
+      },
+      {
+        "canonical_graph_nodes": 5,
+        "fixture": "query_only_constructor",
+        "normalized_variables": 4,
+        "same_separating_address": []
+      }
+    ],
+    "finite_semantics": "not identified with arbitrary-tree semantics",
+    "positive_bounded_source_values": 9,
+    "unsat_mixed_case": "PASS"
+  },
+  "full_pipeline_fixtures": {
+    "boundary": "C029 results certified for these fixtures; actual C029 executable NOT RUN",
+    "inconsistent_branch": "PASS",
+    "positive_infinite_branch_certificate": {
+      "cycle": [
+        0
+      ],
+      "stem": [
+        0
+      ],
+      "witness": []
+    },
+    "terminal_branch": {
+      "binary_full_physical_states": 128,
+      "decoded_separating_word": [],
+      "exact_output_graph_nodes": 372,
+      "negative_infinite_branch_certificate": "safe initial sink",
+      "off_image_left_root": true,
+      "output_constraints": 2697,
+      "output_variables": 257,
+      "source": "y<=T(bottom,bottom,bottom); query y<=bottom",
+      "source_full_physical_states": 64,
+      "source_normalized_names": 3
+    }
+  },
+  "naive_counterexample": {
+    "binary_nodes": 3,
+    "binary_value": [
+      [],
+      [
+        0
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "minimal_for_this_instance": true,
+    "separating_address": [
+      0,
+      1
+    ],
+    "source_models_exhausted": 9,
+    "source_premise": "y <= T(M,M,M), M=T(bottom,bottom,bottom)",
+    "source_query": "y <= T(y,y,y)"
+  },
+  "not_run": [
+    "Lean build",
+    "Lean kernel replay",
+    "C029 executable",
+    "complete source-to-target command-line translator",
+    "independent mathematical review"
+  ],
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "preserved_failed_attempts": [
+    "Naive homomorphic type encoding refuted by a three-node off-image model.",
+    "An initial nontruncation TEST FIXTURE used partial word 101; literal Witness correctly rejected it. Repaired fixture uses 01 and completes to 010; encoding algorithm unchanged.",
+    "Unconditional summary/model equivalence is invalid without source SAT. A disconnected forced denial regression explicitly preserves this guard."
+  ],
+  "python": "3.13.5",
+  "script_sha256": "235b59485219f1d26247afd73427c53d05021da0f4a3f43130d35981bbc46fb9",
+  "seed": 2026092072,
+  "status": "PASS",
+  "summary_vs_independent_post": {
+    "disconnected_unsat_guard": "PASS",
+    "exact_regular_countermodels_checked": 448,
+    "exact_sat_comparisons": 70,
+    "oracles": "independent Post* epsilon-NFA saturation and graph pair reachability",
+    "physical_states_checked_for_absorption": 1936,
+    "word_comparisons": 2467
+  },
+  "terminal_realization": {
+    "always_sat_graphs": 61,
+    "decoded_realized_countermodels": 3,
+    "exact_countermodels": 23,
+    "implementation": "independent Python C030 formula, not executed Lean",
+    "terminal_instances": 61,
+    "word_model_comparisons": 1891
+  },
+  "upstream_base": "19b06d4fed9da635d9b911f0e908d04e4fc4b099"
+}
