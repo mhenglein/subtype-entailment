@@ -7,6 +7,15 @@
     "pr77": "910e3071eab494e58e01c53b1e6891186ed73b30"
   },
   "base_main": "fed560c6682e5ac1e1661d5c60e595f948e768ba",
+  "ci_history_fix": {
+    "full_history_recheck": "same clone after unshallow; unchanged native provenance passes; 79 source files; protected diff []",
+    "proof_sources_changed": false,
+    "shallow_reproduction": "depth-one main clone; git merge-base for 9f4b957 fails with exit 128, missing commit",
+    "status": "PASS",
+    "superseded_lean_run": "https://github.com/mhenglein/subtail/actions/runs/35556038555",
+    "superseded_run_disposition": "Cancellation requested before known-missing-history step; not a passing proof check",
+    "workflow_change": "actions/checkout fetch-depth: 0"
+  },
   "deferred": {
     "producer68": {
       "head": "049aa110cf13688d4058b1cbecf80aa0fc3a7fb6",
@@ -34,6 +43,7 @@
     "status": "PASS",
     "steps": 27,
     "subsequent_source_changes": {
+      ".github/workflows/lean.yml": "CI-only checkout configuration: fetch-depth 0 restores the source history required by native provenance. A depth-one clone reproduced the missing base; full-history fetch passed the unchanged guard over 79 source files. The fresh Linux run already had full history.",
       "paper/README.md": "Documentation-only clarification: Section 11 proves a computable bound by finite enumeration; it does not expound the explicit C082/C086 numerical bounds. No render input or executable source changed."
     },
     "wall_seconds_sum": 313.477

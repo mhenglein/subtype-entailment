@@ -127,9 +127,16 @@ are preserved separately.
 
 After the run, `paper/README.md` received one prose correction: Section 11 uses
 finite enumeration to prove a computable bound; it does not expound the explicit
-C082/C086 numerical estimates. Every other inventoried source, all executable
-code, proof sources, workflows and render inputs/PDF are byte-identical to the
-freshly checked tree. Final paper/index checks are rerun on the combined record.
+C082/C086 numerical estimates. A final CI readback also found that the consolidated workflow used a shallow
+checkout, while native provenance needs its original base commit and file
+blobs. A depth-one clone reproduced exit 128 for the missing base; after a
+full-history fetch, the unchanged provenance function passed over 79 source
+files with an empty protected diff. The Lean workflow now sets `fetch-depth: 0`.
+The superseded Lean run for `ef35920` was cancelled before the known-broken
+step; it is not reported as a pass. The fresh Linux run already used full
+history. These two later inventory differences are documented explicitly.
+All proof code, scripts, tests and render inputs/PDF remain byte-identical to
+the freshly checked tree. Final paper/index checks are rerun on the combined record.
 The full fresh run is attributed to its actual revision, not a later commit
 that adds its receipt. Published-main/PR/CI readback and final lease release are
 recorded in [#37](https://github.com/mhenglein/subtail/issues/37). No final release tag, license grant, author attribution, public

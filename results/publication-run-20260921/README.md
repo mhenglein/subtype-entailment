@@ -15,8 +15,9 @@ receipts refer to the raw files. [The file index](file-hashes.json) gives both
 original and stored SHA-256 values so normalization is not confused with a
 byte-identical copy. Source-content hashes are unchanged.
 
-The root wrapper records the one later source-inventory difference:
+The root wrapper records two later source-inventory differences:
 `paper/README.md` received a prose-only correction about Section 11's computable
-bound. Render inputs, PDF, proof code, scripts, tests and workflows stayed
-byte-identical. The final index/paper checks are recorded in the integration
+bound. The consolidated Lean workflow restores full Git history for native
+provenance, checked with a separate shallow/full-history clone comparison.
+Render inputs, PDF, proof code, scripts and tests stayed byte-identical. The final index/paper checks are recorded in the integration
 receipt; the full fresh run is attributed only to its actual checked revision.
