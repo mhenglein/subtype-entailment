@@ -1,0 +1,149 @@
+{
+  "rows": [
+    {
+      "command": [
+        "<user-home>/workspaces/subtail/.venv/bin/python3",
+        "-c",
+        "print('ISSUE67:result=true')"
+      ],
+      "cwd": "<checkout>",
+      "events": [
+        [
+          "result",
+          "true"
+        ]
+      ],
+      "limit_trigger": null,
+      "limits": {
+        "cpu_seconds": 2,
+        "memory_kind": "sampled_linux_process_group_rss",
+        "memory_mib": 512,
+        "poll_seconds": 0.05,
+        "wall_seconds": 3
+      },
+      "reason": "completed",
+      "resources": {
+        "observed_group_peak_rss_kib": 3492,
+        "observed_group_peak_virtual_kib": 23272,
+        "peak_rss_kib": 14376,
+        "system_cpu_seconds": 0.0,
+        "user_cpu_seconds": 0.02712,
+        "wall_seconds": 0.05457067210227251
+      },
+      "returncode": 0,
+      "selftest": "success",
+      "status": "PASS",
+      "stdout": "ISSUE67:result=true\n",
+      "stdout_sha256": "b498d0e7869b2cbf15603a9f5a3e48abd1a7bf0baf18ec8b22e704e1dbdb88f2",
+      "stdout_truncated": false
+    },
+    {
+      "command": [
+        "<user-home>/workspaces/subtail/.venv/bin/python3",
+        "-c",
+        "print('ISSUE67:result=true'); raise SystemExit(2)"
+      ],
+      "cwd": "<checkout>",
+      "events": [
+        [
+          "result",
+          "true"
+        ]
+      ],
+      "limit_trigger": null,
+      "limits": {
+        "cpu_seconds": 2,
+        "memory_kind": "sampled_linux_process_group_rss",
+        "memory_mib": 512,
+        "poll_seconds": 0.05,
+        "wall_seconds": 3
+      },
+      "reason": "process_error",
+      "resources": {
+        "observed_group_peak_rss_kib": 3000,
+        "observed_group_peak_virtual_kib": 23272,
+        "peak_rss_kib": 13572,
+        "system_cpu_seconds": 0.00808,
+        "user_cpu_seconds": 0.024242,
+        "wall_seconds": 0.05476839514449239
+      },
+      "returncode": 2,
+      "selftest": "nonzero",
+      "status": "FAIL",
+      "stdout": "ISSUE67:result=true\n",
+      "stdout_sha256": "b498d0e7869b2cbf15603a9f5a3e48abd1a7bf0baf18ec8b22e704e1dbdb88f2",
+      "stdout_truncated": false
+    },
+    {
+      "command": [
+        "<user-home>/workspaces/subtail/.venv/bin/python3",
+        "-c",
+        "import time; print('ISSUE67:begin=x',flush=True); time.sleep(2)"
+      ],
+      "cwd": "<checkout>",
+      "events": [
+        [
+          "begin",
+          "x"
+        ]
+      ],
+      "limit_trigger": "wall",
+      "limits": {
+        "cpu_seconds": 2,
+        "memory_kind": "sampled_linux_process_group_rss",
+        "memory_mib": 512,
+        "poll_seconds": 0.05,
+        "wall_seconds": 0.1
+      },
+      "reason": "resource_limit",
+      "resources": {
+        "observed_group_peak_rss_kib": 15680,
+        "observed_group_peak_virtual_kib": 29988,
+        "peak_rss_kib": 15624,
+        "system_cpu_seconds": 0.0,
+        "user_cpu_seconds": 0.024904,
+        "wall_seconds": 0.1082765506580472
+      },
+      "returncode": -9,
+      "selftest": "timeout",
+      "status": "UNKNOWN",
+      "stdout": "ISSUE67:begin=x\n",
+      "stdout_sha256": "bcae6f0914f137af2d0b7283180ddb311e5e8f54af242cbdf0ba796c92fb0bb6",
+      "stdout_truncated": false
+    },
+    {
+      "command": [
+        "<user-home>/workspaces/subtail/.venv/bin/python3",
+        "-c",
+        "import time; a=bytearray(128*1024*1024); time.sleep(2)"
+      ],
+      "cwd": "<checkout>",
+      "events": [],
+      "limit_trigger": "sampled_group_rss",
+      "limits": {
+        "cpu_seconds": 2,
+        "memory_kind": "sampled_linux_process_group_rss",
+        "memory_mib": 64,
+        "poll_seconds": 0.05,
+        "wall_seconds": 3
+      },
+      "reason": "resource_limit",
+      "resources": {
+        "observed_group_peak_rss_kib": 145544,
+        "observed_group_peak_virtual_kib": 159856,
+        "peak_rss_kib": 145468,
+        "system_cpu_seconds": 0.0,
+        "user_cpu_seconds": 0.027208999999999997,
+        "wall_seconds": 0.0573696899227798
+      },
+      "returncode": -9,
+      "selftest": "resident_memory_cap",
+      "status": "UNKNOWN",
+      "stdout": "",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_truncated": false
+    }
+  ],
+  "status": "PASS",
+  "tests": 9
+}

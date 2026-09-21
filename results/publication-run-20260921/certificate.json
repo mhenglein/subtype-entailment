@@ -1,0 +1,361 @@
+{
+  "build": "PASS",
+  "declarations": {
+    "Subtail.RegularTreeCertificate.Certificate": {
+      "axioms": [],
+      "kind": "structure"
+    },
+    "Subtail.RegularTreeCertificate.Graph": {
+      "axioms": [],
+      "kind": "structure"
+    },
+    "Subtail.RegularTreeCertificate.IsSimulation": {
+      "axioms": [
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.RegularTreeCertificate.Node": {
+      "axioms": [],
+      "kind": "abbrev"
+    },
+    "Subtail.RegularTreeCertificate.SimulationStep": {
+      "axioms": [
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.RegularTreeCertificate.below_iff_simulation": {
+      "axioms": [
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.RegularTreeCertificate.check": {
+      "axioms": [
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.RegularTreeCertificate.check_not_entails": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.RegularTreeCertificate.check_sound": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.RegularTreeCertificate.embedCheck": {
+      "axioms": [
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.RegularTreeCertificate.embed_eval": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.RegularTreeCertificate.expressionForest": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.RegularTreeCertificate.graphNodes": {
+      "axioms": [
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.RegularTreeCertificate.graphNodes_prefix": {
+      "axioms": [
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.RegularTreeCertificate.premisesCheck": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.RegularTreeCertificate.simulationCheck": {
+      "axioms": [
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.RegularTreeCertificate.simulationCheck_closed": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.RegularTreeCertificate.simulationStep": {
+      "axioms": [
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.RegularTreeCertificate.simulation_sound": {
+      "axioms": [
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.RegularTreeCertificate.simulation_sound_prop": {
+      "axioms": [
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.RegularTreeCertificate.treeOf": {
+      "axioms": [
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.RegularTreeCertificate.treeOf_product": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.RegularTreeCertificate.tree_eq_of_nodes": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.RegularTreeCertificate.valuation": {
+      "axioms": [
+        "propext"
+      ],
+      "kind": "def"
+    }
+  },
+  "kernel_replay": "PASS",
+  "native_cases": [
+    {
+      "actual": true,
+      "expected": true,
+      "name": "examples/entailment/reverse.json",
+      "status": "PASS"
+    },
+    {
+      "actual": true,
+      "expected": true,
+      "name": "examples/entailment/zero-spine.json",
+      "status": "PASS"
+    },
+    {
+      "actual": true,
+      "expected": true,
+      "name": "examples/countermodels/alternating-spine.json",
+      "status": "PASS"
+    },
+    {
+      "actual": true,
+      "expected": true,
+      "name": "examples/countermodels/no-variables.json",
+      "status": "PASS"
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "name": "missing-simulation",
+      "status": "PASS"
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "name": "fabricated-simulation",
+      "status": "PASS"
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "name": "wrong-root-address",
+      "status": "PASS"
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "name": "bad-expression-embedding",
+      "status": "PASS"
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "name": "wrong-variable-roots",
+      "status": "PASS"
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "name": "all-bottom-graph",
+      "status": "PASS"
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "name": "cyclic-0",
+      "status": "PASS"
+    },
+    {
+      "actual": true,
+      "expected": true,
+      "name": "cyclic-1",
+      "status": "PASS"
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "name": "cyclic-2",
+      "status": "PASS"
+    },
+    {
+      "actual": true,
+      "expected": true,
+      "name": "cyclic-3",
+      "status": "PASS"
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "name": "cyclic-4",
+      "status": "PASS"
+    },
+    {
+      "actual": true,
+      "expected": true,
+      "name": "cyclic-5",
+      "status": "PASS"
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "name": "cyclic-6",
+      "status": "PASS"
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "name": "cyclic-7",
+      "status": "PASS"
+    },
+    {
+      "actual": true,
+      "expected": true,
+      "name": "cyclic-8",
+      "status": "PASS"
+    },
+    {
+      "actual": true,
+      "expected": true,
+      "name": "cyclic-9",
+      "status": "PASS"
+    },
+    {
+      "actual": true,
+      "expected": true,
+      "name": "cyclic-10",
+      "status": "PASS"
+    },
+    {
+      "actual": true,
+      "expected": true,
+      "name": "cyclic-11",
+      "status": "PASS"
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "name": "cyclic-12",
+      "status": "PASS"
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "name": "cyclic-13",
+      "status": "PASS"
+    },
+    {
+      "actual": true,
+      "expected": true,
+      "name": "cyclic-14",
+      "status": "PASS"
+    },
+    {
+      "actual": true,
+      "expected": true,
+      "name": "cyclic-15",
+      "status": "PASS"
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "name": "cyclic-16",
+      "status": "PASS"
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "name": "cyclic-17",
+      "status": "PASS"
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "name": "cyclic-18",
+      "status": "PASS"
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "name": "cyclic-19",
+      "status": "PASS"
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "name": "cyclic-20",
+      "status": "PASS"
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "name": "cyclic-21",
+      "status": "PASS"
+    },
+    {
+      "actual": true,
+      "expected": true,
+      "name": "cyclic-22",
+      "status": "PASS"
+    },
+    {
+      "actual": true,
+      "expected": true,
+      "name": "cyclic-23",
+      "status": "PASS"
+    }
+  ],
+  "revision": "a22d1fb323026fb1c10411d4418ceb03dd2798c2",
+  "scope": "Lean certificate soundness boundary and finite native regressions; Python extraction is not Lean-verified",
+  "source_sha256": {
+    "lean/Subtail/RegularTreeCertificate.lean": "f0a271f276adc997620f2034edd3d3e3e44a33045d1b69c489f48ae81c33579f",
+    "scripts/check_regular_certificate.py": "27f519f07b1f2fc944aa8c1827c1ef20c0b21b79d547bda9b57c09dfbd135053",
+    "scripts/regular_countermodel.py": "e77c547f7f4697609a37d23705bbb33c42361a3f5412378f08dba6c5235ce127",
+    "scripts/subtail.py": "d399857d7206828dcc6a75c1fe34d33b22c584fc5542b7fbb2afd933b492eb5a"
+  },
+  "status": "PASS"
+}

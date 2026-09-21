@@ -1,0 +1,70 @@
+{
+  "status": "PASS",
+  "checker_sha256": "6c35e4e518f3db0e432ca0c66b58d7164e222e5cd24b06521b34229dfe220146",
+  "inspected_source_revision": "064fc7306b679bf607b91e7d8de259823f200c62",
+  "environment": {
+    "python": "3.13.14",
+    "system": "Linux",
+    "machine": "aarch64",
+    "suite_timeout_seconds": 120,
+    "explicit_memory_limit": null,
+    "random_seed": 2026091930
+  },
+  "counts": {
+    "instances": 12956,
+    "words": 200196,
+    "positive_words": 416,
+    "exact_model_checks": 200196,
+    "exact_satisfiability_models": 12956
+  },
+  "semantic_replay_matches_archived_results": true,
+  "terminality_countermodel": {
+    "scope": "Counterexample only after dropping the required terminal-final hypothesis",
+    "delta": [
+      [
+        1,
+        -1
+      ],
+      [
+        -1,
+        -1
+      ]
+    ],
+    "start": 0,
+    "final": [
+      0
+    ],
+    "flags": [],
+    "bad": [],
+    "word": "0",
+    "witness": false,
+    "separates_in_constructed_system": true,
+    "finite_product_address_sets": {
+      "a0": [
+        "",
+        "0"
+      ],
+      "a1": [
+        ""
+      ],
+      "v0": [],
+      "v1": [
+        ""
+      ],
+      "b": []
+    },
+    "exact_constraint_validation_errors": []
+  },
+  "suite_elapsed_seconds": {
+    "fixtures.json": 0.003,
+    "exhaustive_k1.json": 0.044,
+    "exhaustive_k2.json": 22.188,
+    "random_k3_k6.json": 1.875
+  },
+  "not_run": [
+    "Lean build/kernel replay",
+    "Repository E021 script",
+    "Repository budget differential",
+    "Repository-wide navigation/index/CI checks"
+  ]
+}

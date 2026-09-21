@@ -1,0 +1,9 @@
+{
+  "baseline_marker_checks": 8,
+  "lean_compilation": "NOT_RUN",
+  "native_performance": "NOT_RUN",
+  "ordinary_row_identity_cells_n0_through_n4": 69905,
+  "rendered_sources": 32,
+  "scope": "Python/source-template checks only; not the 83 full-field Lean comparisons or independent review",
+  "status": "PASS"
+}

@@ -14,9 +14,32 @@
       "request": "https://github.com/mhenglein/subtail/issues/68#issuecomment-5754530885"
     }
   },
-  "fresh_reproduction": "PENDING",
+  "fresh_reproduction": {
+    "archive": "results/publication-run-20260921",
+    "initial_lake_absent": true,
+    "installed_toolchain_reused": true,
+    "native_stress": {
+      "UNKNOWN": 6,
+      "automatic_two_promotion_success": false,
+      "memory_mib": 2048,
+      "reason": "sampled_group_rss"
+    },
+    "native_strict": {
+      "PASS": 14
+    },
+    "project_cache_copied": false,
+    "receipt": "results/publication-reproduction-20260921.json",
+    "revision": "a22d1fb323026fb1c10411d4418ceb03dd2798c2",
+    "source_files": 363,
+    "status": "PASS",
+    "steps": 27,
+    "subsequent_source_changes": {
+      "paper/README.md": "Documentation-only clarification: Section 11 proves a computable bound by finite enumeration; it does not expound the explicit C082/C086 numerical bounds. No render input or executable source changed."
+    },
+    "wall_seconds_sum": 313.477
+  },
   "integration_branch": "codex/publication-candidate-20260921",
-  "limits": "Candidate preparation only; no completed fresh reproduction or final publication claimed.",
+  "limits": "Technical review and fresh reproduction passed within recorded scopes. Six native stress cases remain UNKNOWN. No human refereeing, priority certificate, new solver performance claim or final public release.",
   "local_checks": {
     "diff_check": "PASS",
     "index": {
@@ -39,7 +62,13 @@
       "status": "PASS"
     }
   },
-  "publication": "PENDING",
+  "publication": {
+    "branch_retirement": "NOT PERFORMED",
+    "coordination": "https://github.com/mhenglein/subtail/issues/37",
+    "final_public_release": "DEFERRED: license and author choices unchanged",
+    "mechanism": "Owner-authorized nonforced fast-forward from inspected main; exact published SHA and CI outcomes belong to the final #37 readback",
+    "producer68": "DEFERRED: author handoff absent"
+  },
   "render": {
     "pages": 35,
     "pdf_sha256": "5e269f54dd8062ba2ad703b42bebef668cd866f472e40fc20722cdd567c7412f",
@@ -69,6 +98,7 @@
       "status": "ACCEPT"
     }
   },
+  "scope": "Combined review, render and fresh reproduction gates; publication readback is in coordinating issue #37.",
   "session": "publication-candidate-20260921",
-  "status": "PENDING"
+  "status": "PASS"
 }

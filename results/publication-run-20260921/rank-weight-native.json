@@ -1,0 +1,447 @@
+{
+  "checkout_sha": "a22d1fb323026fb1c10411d4418ceb03dd2798c2",
+  "commands": [
+    {
+      "command": [
+        "lake",
+        "env",
+        "lean",
+        "--version"
+      ],
+      "elapsed_seconds": 0.126,
+      "exit_code": 0,
+      "wall_timeout_seconds": 60
+    },
+    {
+      "command": [
+        "lake",
+        "build",
+        "+Subtail.RankQueryWeightCounterexample",
+        "+Subtail.RankQueryWeightBound",
+        "+Subtail.RankQueryLengthBound"
+      ],
+      "elapsed_seconds": 4.978,
+      "exit_code": 0,
+      "wall_timeout_seconds": 900
+    },
+    {
+      "command": [
+        "lake",
+        "env",
+        "leanchecker",
+        "Subtail.RankQueryWeightCounterexample"
+      ],
+      "elapsed_seconds": 5.203,
+      "exit_code": 0,
+      "wall_timeout_seconds": 600
+    },
+    {
+      "command": [
+        "lake",
+        "env",
+        "lean",
+        "<checkout>/rank-weight-audit-a3gxvog7/Audit.lean"
+      ],
+      "elapsed_seconds": 0.788,
+      "exit_code": 0,
+      "wall_timeout_seconds": 300
+    },
+    {
+      "command": [
+        "lake",
+        "env",
+        "leanchecker",
+        "Subtail.RankQueryWeightBound"
+      ],
+      "elapsed_seconds": 1.906,
+      "exit_code": 0,
+      "wall_timeout_seconds": 600
+    },
+    {
+      "command": [
+        "lake",
+        "env",
+        "lean",
+        "<checkout>/rank-weight-audit-swd552qd/Audit.lean"
+      ],
+      "elapsed_seconds": 0.657,
+      "exit_code": 0,
+      "wall_timeout_seconds": 300
+    },
+    {
+      "command": [
+        "lake",
+        "env",
+        "leanchecker",
+        "Subtail.RankQueryLengthBound"
+      ],
+      "elapsed_seconds": 1.244,
+      "exit_code": 0,
+      "wall_timeout_seconds": 600
+    },
+    {
+      "command": [
+        "lake",
+        "env",
+        "lean",
+        "<checkout>/rank-weight-audit-1wx_hen1/Audit.lean"
+      ],
+      "elapsed_seconds": 0.708,
+      "exit_code": 0,
+      "wall_timeout_seconds": 300
+    }
+  ],
+  "driver_sha256": "87f4d0e5d8114b2d8c6bb15d24ef9d1ad36ffafb1921c8af2b7f68135915e9b3",
+  "full_enumerator_executed": false,
+  "full_lake_build": true,
+  "independent_mathematical_review": false,
+  "large_observer_materialized": false,
+  "lean": "Lean (version 4.33.1, aarch64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
+  "lean_num_threads": null,
+  "modules": {
+    "RankQueryLengthBound": {
+      "declarations_audited": 25,
+      "dependencies": {
+        "Subtail.RankQueryLengthBound.LengthRun": [],
+        "Subtail.RankQueryLengthBound.LengthRun.prepend": [],
+        "Subtail.RankQueryLengthBound.LengthRun.rec": [],
+        "Subtail.RankQueryLengthBound.LengthRun.refl": [],
+        "Subtail.RankQueryLengthBound.LengthRun.step": [],
+        "Subtail.RankQueryLengthBound.LengthRun.toRun": [],
+        "Subtail.RankQueryLengthBound.accepts_length_bound": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryLengthBound.allNodes_length": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryLengthBound.compile_bounded": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryLengthBound.exists_bounded_recon": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryLengthBound.finish_bounded": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryLengthBound.growth": [],
+        "Subtail.RankQueryLengthBound.growth_step": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryLengthBound.interval_trace_bounded": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryLengthBound.lengthRun_finish_trace": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryLengthBound.lengthRun_gen": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryLengthBound.lengthRun_of_chain": [
+          "propext"
+        ],
+        "Subtail.RankQueryLengthBound.one_state_empty": [
+          "propext"
+        ],
+        "Subtail.RankQueryLengthBound.preimage_bounded": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryLengthBound.promoted_finish_bounded": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryLengthBound.recon_length_le": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryLengthBound.sum_map_mul_le": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryLengthBound.terminal_witness_bound_iff": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryLengthBound.terminal_witness_bounded": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryLengthBound.witnessBound": []
+      },
+      "runtime_definitions_choice_free": true,
+      "sha256": "daec0fabc8c8e8b5c9ff5b1078a110f2fddf48ef60d3cbfec04557261a794399",
+      "status": "PASS"
+    },
+    "RankQueryWeightBound": {
+      "declarations_audited": 38,
+      "dependencies": {
+        "Subtail.RankQueryWeightBound.Estimate": [],
+        "Subtail.RankQueryWeightBound.Estimate.active": [],
+        "Subtail.RankQueryWeightBound.Estimate.activeSizes": [],
+        "Subtail.RankQueryWeightBound.Estimate.atoms": [],
+        "Subtail.RankQueryWeightBound.Estimate.mk": [],
+        "Subtail.RankQueryWeightBound.Estimate.sizes": [],
+        "Subtail.RankQueryWeightBound.allEmitted_estimate": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightBound.atomSum": [],
+        "Subtail.RankQueryWeightBound.compileAtom_estimate": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightBound.compilePiece_estimate": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightBound.compileValid_weight_le": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightBound.compile_atoms_length": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightBound.compile_sum": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightBound.coverage_sum_eq": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightBound.estimate_append": [
+          "propext"
+        ],
+        "Subtail.RankQueryWeightBound.estimate_blank": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightBound.estimate_fold": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightBound.estimate_fold_aux": [
+          "propext"
+        ],
+        "Subtail.RankQueryWeightBound.estimate_fold_le": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightBound.estimate_mono": [],
+        "Subtail.RankQueryWeightBound.filter_add_length_le_one": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightBound.forward_selected_length": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightBound.forward_selected_observer": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightBound.improvedBound": [],
+        "Subtail.RankQueryWeightBound.improvedBound_mono": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightBound.interval_cardinality": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightBound.interval_size_le": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightBound.le_improvedBound": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightBound.member_le_sum": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightBound.piecesOf_length_le": [
+          "propext"
+        ],
+        "Subtail.RankQueryWeightBound.preimage_clause_weight_le": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightBound.prod_sizes_le": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightBound.selected": [],
+        "Subtail.RankQueryWeightBound.selected_append": [
+          "propext"
+        ],
+        "Subtail.RankQueryWeightBound.two_le_weightBudget": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightBound.weightBudget": [],
+        "Subtail.RankQueryWeightBound.weight_preimage_le": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightBound.weight_promote_finish_le": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      },
+      "runtime_definitions_choice_free": true,
+      "sha256": "d92069dfe5de891ba9bcfe3c5599a6a5e726fd57e2995f87a3b569fa0daabe50",
+      "status": "PASS"
+    },
+    "RankQueryWeightCounterexample": {
+      "declarations_audited": 24,
+      "dependencies": {
+        "Subtail.RankQueryWeightCounterexample.active_count": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightCounterexample.diagram": [
+          "propext"
+        ],
+        "Subtail.RankQueryWeightCounterexample.diagram_bounded": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightCounterexample.diagram_valid": [
+          "propext"
+        ],
+        "Subtail.RankQueryWeightCounterexample.exact_budget": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightCounterexample.exceeds_old_bound": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightCounterexample.forward": [],
+        "Subtail.RankQueryWeightCounterexample.input": [
+          "propext"
+        ],
+        "Subtail.RankQueryWeightCounterexample.input_weight": [
+          "propext"
+        ],
+        "Subtail.RankQueryWeightCounterexample.inst": [
+          "propext"
+        ],
+        "Subtail.RankQueryWeightCounterexample.interval_size": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightCounterexample.not_closureFor": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightCounterexample.obs": [
+          "propext"
+        ],
+        "Subtail.RankQueryWeightCounterexample.original_witness": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightCounterexample.output": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightCounterexample.output_atoms": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightCounterexample.output_mem": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightCounterexample.output_vars": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightCounterexample.output_weight": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightCounterexample.pathPieces": [],
+        "Subtail.RankQueryWeightCounterexample.singleton_weight": [
+          "propext"
+        ],
+        "Subtail.RankQueryWeightCounterexample.terminal": [
+          "propext"
+        ],
+        "Subtail.RankQueryWeightCounterexample.terminal_counterexample": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Subtail.RankQueryWeightCounterexample.wrap": []
+      },
+      "runtime_definitions_choice_free": true,
+      "sha256": "d3e2ebbe27bdc277f8080e5e75f8d8939784d670e396e52e69aac631681a68ce",
+      "status": "PASS"
+    }
+  },
+  "platform": "Linux-6.12.94-123.192.amzn2023.aarch64-aarch64-with-glibc2.43",
+  "python": "3.13.14 (main, Aug  5 2026, 15:42:48) [Clang 22.1.3 ]",
+  "scope": "Lean elaboration, kernel replay, transitive axiom audit",
+  "source_dependency_sha256": {
+    "lean/Subtail/Basic.lean": "1a7cb0c1f7546ed2efdae96d1af9a84dc6f433531549a50f4738ed25eb64c6c6",
+    "lean/Subtail/FirstReturnColours.lean": "848c71747fb6deff903b9ee850a8c6ecdf5f35cd79ce680c7da11c68b7909352",
+    "lean/Subtail/FirstReturnGenerator.lean": "d6c4266c59949785979e6f37dea7d0e93adf50e9a42ad447a7267912949bace6",
+    "lean/Subtail/FirstReturnGraph.lean": "06d11930a30fc4034e9a8997a4b2d57f82b5f8779b87f709287502fccbde88d8",
+    "lean/Subtail/PrefixMatching.lean": "59de0b193b55765db895f0f9ceb2a4155cd4d4dcfe54fa58cb285ec0577931e4",
+    "lean/Subtail/RankMilestones.lean": "3a948deaea047bf02289869210fcc2cbf7ada1010983dee66fa8477e4832d1c6",
+    "lean/Subtail/RankQuery.lean": "e8ef2ec585c49a593c8cee4d11e7aeb75f0284179e36b26ea21d72dd313adb41",
+    "lean/Subtail/RankQueryCompiler.lean": "1e32f44935490d7e69c8157f4ce12f763c9732b26e4cef2a7fb94518941edb2c",
+    "lean/Subtail/RankQueryCoverage.lean": "b1ccfa2fe221d355451ccfffe3d701ee46489d616e7e20d015f3e4fb2e86b49f",
+    "lean/Subtail/RankQueryDecision.lean": "51fef747bb443d313559e57d8fb8e3c1ce68b804eb4883a7d504e2945da5bd8a",
+    "lean/Subtail/RankQueryEnumeration.lean": "f65f40733e4cd45c8499cf1874509b23bacfdfd9f32278b5d459d12dd7016189",
+    "lean/Subtail/RankQueryFinishFacts.lean": "8e67cbbcf2a2710ec5307455303180fea8c0d7756969b121efab025b8f7ff2a2",
+    "lean/Subtail/RankQueryFinishTrace.lean": "93653a3ade48c9c4c628a8f05583a1deef201d412427de87ce3209a91949a258",
+    "lean/Subtail/RankQueryFirstReturn.lean": "b029e89e706c0724428194ddbc7d08abd494710d29ac65fb21e1dc90d7df10e0",
+    "lean/Subtail/RankQueryLengthBound.lean": "daec0fabc8c8e8b5c9ff5b1078a110f2fddf48ef60d3cbfec04557261a794399",
+    "lean/Subtail/RankQueryPaths.lean": "d383b44afb6bb7625181fb58e1d269030fa388a477849c76b7bc7dc64172de2a",
+    "lean/Subtail/RankQuerySemanticUnwind.lean": "2b3968f40f9b42d9bc051a0d6b11de3c80e2c3bd30351b04f579765960c9b3de",
+    "lean/Subtail/RankQuerySound.lean": "7729268fb6f82a0c508747e774e92133f869e3038d05e6c8c1a0caf962c9cd76",
+    "lean/Subtail/RankQueryUnwind.lean": "c6006c46aa86de0d173711a14f8c4076fcd5723a7470664da0d87d18a70efa3e",
+    "lean/Subtail/RankQueryWeightBound.lean": "d92069dfe5de891ba9bcfe3c5599a6a5e726fd57e2995f87a3b569fa0daabe50",
+    "lean/Subtail/RankQueryWeightCounterexample.lean": "d3e2ebbe27bdc277f8080e5e75f8d8939784d670e396e52e69aac631681a68ce",
+    "lean/Subtail/RankWitnessReference.lean": "eb5f6485995190a3a829b6de2c87e31a79f47b408c6afb77cecfc031c03d7772",
+    "lean/Subtail/TerminalRank.lean": "3771a1a58ff7e5ddb2aa5134e08fca65a1a05d64c3a5de8487c4f7d7630b6fc2"
+  },
+  "source_sha": "a22d1fb323026fb1c10411d4418ceb03dd2798c2",
+  "status": "PASS"
+}

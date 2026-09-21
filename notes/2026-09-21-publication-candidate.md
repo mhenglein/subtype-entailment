@@ -52,7 +52,7 @@ critical definitions and declaration boundaries. The integrator owns all
 corrections, the primary literature refresh and rendering. This is an agent
 review of supplied arguments, with inherited context, not blind rediscovery,
 external human refereeing or venue acceptance. Exact findings and final visual
-coverage are recorded below before publication.
+coverage are recorded below.
 
 ## Reproduction contract
 
@@ -80,8 +80,8 @@ records the exact checked revision, source hashes, commands and per-step status.
 [Integration/review receipt](../results/publication-candidate-20260921.json)
 records review and publication evidence. A missing, pending or failed receipt
 is not completion. These files preserve earlier failures rather than relabeling
-them as successful checks. Raw logs remain at the recorded durable run location;
-committed paths are sanitized to avoid requiring a private host configuration.
+them as successful checks. Logs are preserved in the committed evidence directory;
+private paths are normalized without changing scientific or source-content hashes.
 
 ## Review findings, execution and handoff
 
@@ -107,8 +107,31 @@ checks find no characters outside pages, all expected running headers and
 page numbers, and the TeX log reports no missing glyphs or overflowing boxes.
 The manifest ties the PDF to committed render inputs at `8a57dd7`.
 
-The fresh Linux execution is pending at this preparation checkpoint. Its
-actual receipt and outcomes will be recorded before main publication. No final release tag, license grant, author attribution, public
+The fresh Linux execution at `a22d1fb323026fb1c10411d4418ceb03dd2798c2`
+passed all **27 run gates** in 313.477 seconds (sum of recorded step times).
+It started with a clean checkout and no `lean/.lake`, copied no project cache,
+and finished with no tracked/untracked changes. The receipt inventories 363
+source files. All 14 strict native cases passed. The six stress cases all
+reached the sampled 2,048 MiB process-group RSS threshold and remain UNKNOWN;
+no automatic depth-two promotion succeeded. A successful diagnostic gate means
+that those inconclusive outcomes were classified correctly, not that the six
+problems were decided.
+
+[The complete evidence directory](../results/publication-run-20260921/README.md)
+retains 92 raw-output files with path normalization and both original/stored
+hashes. Fresh subordinate receipts cover the C082/C086 audits, C087/C088 corpora,
+C030 kernel/axiom checks, the actual checked alternating-spine countermodel,
+all 96 Python tests and the exact paper example outputs. All earlier receipts
+are preserved separately.
+
+After the run, `paper/README.md` received one prose correction: Section 11 uses
+finite enumeration to prove a computable bound; it does not expound the explicit
+C082/C086 numerical estimates. Every other inventoried source, all executable
+code, proof sources, workflows and render inputs/PDF are byte-identical to the
+freshly checked tree. Final paper/index checks are rerun on the combined record.
+The full fresh run is attributed to its actual revision, not a later commit
+that adds its receipt. Published-main/PR/CI readback and final lease release are
+recorded in [#37](https://github.com/mhenglein/subtail/issues/37). No final release tag, license grant, author attribution, public
 visibility change, branch retirement or external invitation is authorized or
 performed by these steps. Older worktrees, stashes and unknown author-local
 changes are neither modified nor claimed fully inventoried.

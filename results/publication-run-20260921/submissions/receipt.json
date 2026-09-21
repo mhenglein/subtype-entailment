@@ -1,0 +1,55 @@
+{
+  "corpora": [
+    {
+      "cap_seconds": 180,
+      "exit_code": 0,
+      "ignored_fields": [
+        "python",
+        "platform",
+        "elapsed_seconds"
+      ],
+      "log_sha256": "96612cf26ba4be233d19d93c5e7c2eb352ed6f239323d95d706b1356b62c2f06",
+      "name": "ternary",
+      "receipt": "ternary-transfer.json",
+      "receipt_sha256": "96612cf26ba4be233d19d93c5e7c2eb352ed6f239323d95d706b1356b62c2f06",
+      "saved_receipt_sha256": "733570fa7ce5ed0617c2d2f8b5c80831ff79cc5dcb54a98d532846e37c36294a",
+      "source_sha256": "235b59485219f1d26247afd73427c53d05021da0f4a3f43130d35981bbc46fb9",
+      "status": "PASS",
+      "wall_seconds": 1.969
+    },
+    {
+      "cap_seconds": 180,
+      "exit_code": 0,
+      "ignored_fields": [
+        "python"
+      ],
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "first_return",
+      "receipt": "standalone-first-return-astra.json",
+      "receipt_sha256": "363d0ecb3350e8e1092d09936e55b9e69982188f1a7c1647829760461c4ffa99",
+      "saved_receipt_sha256": "6eebda7f4ba994792d3650945ec7a19c158d50d5ae86a15467152b785d5a2600",
+      "source_sha256": "10369e0856e9240fe4217748fc47900394fd63af00a34597e6bcdbc02b4aeeab",
+      "status": "PASS",
+      "wall_seconds": 0.365
+    },
+    {
+      "cap_seconds": 180,
+      "exit_code": 0,
+      "ignored_fields": [
+        "environment",
+        "elapsed_seconds"
+      ],
+      "log_sha256": "3b3d4d3d931bfd26a5d7f4585639470621ea4aad6ece0eb05f052fefd48ff423",
+      "name": "function",
+      "receipt": "function-only-transfer.json",
+      "receipt_sha256": "3b3d4d3d931bfd26a5d7f4585639470621ea4aad6ece0eb05f052fefd48ff423",
+      "saved_receipt_sha256": "2f6dbf9a45a1bfd7513dbf62f0bd1a4a5cbe54ec77b2f832018950fc99d79f93",
+      "source_sha256": "6fe91892aed56517256c67a4052dd9eee96ab6fd0b4d5f805fa889898340aa03",
+      "status": "PASS",
+      "wall_seconds": 0.265
+    }
+  ],
+  "limits": "Bounded component evidence; no generic compiler implementation, new Lean proof or priority claim.",
+  "revision": "a22d1fb323026fb1c10411d4418ceb03dd2798c2",
+  "status": "PASS"
+}

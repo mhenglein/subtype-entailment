@@ -1,0 +1,578 @@
+{
+  "declarations": {
+    "Subtail.EntailmentDecision.entailsCheck": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.EntailmentDecision.entailsCheck_correct": {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.EntailmentDecision.entailsCheck_false_iff": {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.EntailmentDecision.entails_of_premise": {
+      "axioms": [],
+      "kind": "theorem"
+    },
+    "Subtail.EntailmentDecision.entails_self": {
+      "axioms": [],
+      "kind": "theorem"
+    },
+    "Subtail.EntailmentDecision.normalizedEntailsCheck": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.EntailmentDecision.normalizedEntailsCheck_correct": {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.EntailmentDecision.rawNormalizedEntailsCheck": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.EntailmentDecision.rawNormalizedEntailsCheck_correct": {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.Expr": {
+      "axioms": [],
+      "kind": "inductive"
+    },
+    "Subtail.ExpressionNormalization.Expr.hasBot": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.Expr.pairs": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.Expr.productCount": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.ExprEntails": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.ExprModels": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.Fixture": {
+      "axioms": [],
+      "kind": "structure"
+    },
+    "Subtail.ExpressionNormalization.Input": {
+      "axioms": [],
+      "kind": "abbrev"
+    },
+    "Subtail.ExpressionNormalization.Naming": {
+      "axioms": [],
+      "kind": "structure"
+    },
+    "Subtail.ExpressionNormalization.Naming.Closed": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.Naming.botIndex": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.Naming.definitions": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.Naming.extend": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.Naming.extra": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.Naming.lower": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.Naming.old": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.Naming.ref": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.Naming.restrict": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.Naming.slot": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.Naming.total": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.Naming.upper": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.Supports": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.added_variables": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.clauseJson": {
+      "axioms": [
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.definitions_length": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.denial_mem": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.eval": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.extend_bottom": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.extend_definitions": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.extend_models": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.extend_old": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.extend_ref": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.extend_restrict": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.extend_slot": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.fixtureJson": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.fixtures": {
+      "axioms": [
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.fixturesFor": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.flat_pairs_length": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.forest": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.forest_pairs_length": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.get_locate": {
+      "axioms": [
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.impossibleInput": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.impossible_input_unsatisfiable": {
+      "axioms": [
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.infiniteInput": {
+      "axioms": [
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.infinite_input_every_model_unbounded": {
+      "axioms": [
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.infinite_input_model": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.infinite_input_not_entails": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.locate": {
+      "axioms": [
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.lower_mem": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.models_bottom": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.models_slot": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.naming": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.naming_closed": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.naming_support": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.nestedInput": {
+      "axioms": [
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.normalize_entails_iff": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.normalize_satisfiable_iff": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.normalize_separating_iff": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.normalized": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.normalized_definitions": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.normalized_impossible_unsatisfiable": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.normalized_infinite_input_not_entails": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.normalized_length": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.old_ne_bottom": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.old_ne_slot": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.old_value": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.pairs_length_count": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.premise_mem_forest": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.representative_correct": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.restrict_extend": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.restrict_models": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.smallExprs": {
+      "axioms": [],
+      "kind": "def"
+    },
+    "Subtail.ExpressionNormalization.supported_size_pos": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.supports_children": {
+      "axioms": [
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.supports_forest": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.supports_mono": {
+      "axioms": [],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.supports_self": {
+      "axioms": [
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.tree_eq_of_below": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.unique_definition_extension": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.upper_mem": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "Subtail.ExpressionNormalization.variable_query_preserved": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "theorem"
+    },
+    "main": {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "kind": "def"
+    }
+  },
+  "source_sha256": {
+    "lean/Subtail/EntailmentDecision.lean": "a899b12e1d2b968053a0062a1600c9d368fe5c16f1ba3b74aef591b311088f59",
+    "lean/Subtail/ExpressionNormalization.lean": "6e69fa21ebf0a0ffa65f78c976eb6681a85e9c9778cf96e57d16fb86b1285b82",
+    "lean/Subtail/ExpressionNormalizationAudit.lean": "471699acaca0a37f6502f7f631c9b1c3bae3d393584252cbad9174ec27fc6074"
+  },
+  "status": "PASS"
+}

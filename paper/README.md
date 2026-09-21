@@ -126,8 +126,9 @@ that review for the expanded paper and package. Its
 [fresh receipt](../results/publication-reproduction-20260921.json) records the
 actual outcome; historical checks are not relabelled as fresh evidence.
 
-C086's original smaller witness bound is a checked companion result. Section 11
-retains its existing larger construction and does not claim to expound C086.
+C086's original terminal witness bound is a checked companion result. Section 11
+retains its finite-enumeration proof of a computable bound. It does not expound
+the explicit numerical bounds of C082 or C086.
 Likewise, the new fixed-arity, graph-only and function-only research notes are
 separate from this manuscript's theorem and proof map.
 

@@ -11,7 +11,7 @@ The manuscript now separates four contributions: whole-conjunction first-return
 preimages and their decision composition; the finite consuming-cycle decision;
 the exact-domain hardness transfer; and the explicit-top reduction. Formal
 coverage remains explicit. C086 is a separately checked companion result; the
-paper retains its existing larger quantitative construction in Section 11.
+paper retains its finite-enumeration proof of a computable bound in Section 11.
 The new arity, graph-only and function-only records are also companion research,
 not silently added claims in the paper.
 

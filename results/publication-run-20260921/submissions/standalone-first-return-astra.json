@@ -1,0 +1,260 @@
+{
+  "base_revision": "19b06d4fed9da635d9b911f0e908d04e4fc4b099",
+  "bounds": {
+    "binary_base_length_max": 3,
+    "binary_full_word_length_max": 7,
+    "generator_length_max": 4,
+    "generators_per_base_max": 3,
+    "interval_walk_length_max": 4,
+    "observer_sizes": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "relational_base_count": 40,
+    "relational_base_vertices": 3
+  },
+  "fixtures": {
+    "distinct_marks_equal_origins": {
+      "fresh_positions": [
+        2,
+        3,
+        4
+      ],
+      "origins": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "word": "0110"
+    },
+    "interval_mutation_traps": "PASS: zero interval, leave End, no-observation/no-generator",
+    "inverse_S_family": [
+      [
+        2,
+        0,
+        1
+      ],
+      [
+        3,
+        1,
+        2
+      ],
+      [
+        4,
+        2,
+        3
+      ],
+      [
+        5,
+        3,
+        4
+      ],
+      [
+        6,
+        4,
+        5
+      ],
+      [
+        7,
+        5,
+        6
+      ],
+      [
+        8,
+        6,
+        7
+      ],
+      [
+        9,
+        7,
+        8
+      ],
+      [
+        10,
+        8,
+        9
+      ],
+      [
+        11,
+        9,
+        10
+      ],
+      [
+        12,
+        10,
+        11
+      ]
+    ],
+    "later_return_surgery_counterexample": {
+      "actual_F": [
+        3,
+        2
+      ],
+      "base": "0",
+      "later_word": "000",
+      "wrong_F": [
+        3,
+        1
+      ]
+    },
+    "old_safety_premise": "PASS: fresh q safe, old bad persists",
+    "relational_exits": {
+      "distinct_targets": [
+        0,
+        1
+      ],
+      "fresh_vertex": 2
+    },
+    "repeated_interval": {
+      "coordinates_required": 2,
+      "run": [
+        [
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        [
+          "S",
+          "K1",
+          "S"
+        ]
+      ],
+      "word": "010"
+    },
+    "same_word_different_origin_traces": {
+      "each_alone": true,
+      "joint": false,
+      "word": "10"
+    },
+    "shared_extension": {
+      "2": [
+        "00"
+      ],
+      "3": [
+        "010"
+      ],
+      "joint": []
+    },
+    "singleton_empty_and_equality": "PASS: loop, empty allowed, disallowed empty, distinct endpoints",
+    "two_entrances": {
+      "fresh_blocks": 3,
+      "observer_controls": 1,
+      "p": 2
+    },
+    "unbounded_entrance_family": [
+      [
+        1,
+        1,
+        2
+      ],
+      [
+        2,
+        2,
+        4
+      ],
+      [
+        3,
+        3,
+        6
+      ],
+      [
+        4,
+        4,
+        8
+      ],
+      [
+        5,
+        5,
+        10
+      ],
+      [
+        6,
+        6,
+        12
+      ],
+      [
+        7,
+        7,
+        14
+      ],
+      [
+        8,
+        8,
+        16
+      ],
+      [
+        9,
+        9,
+        18
+      ],
+      [
+        10,
+        10,
+        20
+      ],
+      [
+        11,
+        11,
+        22
+      ],
+      [
+        12,
+        12,
+        24
+      ]
+    ]
+  },
+  "interval_products": {
+    "comparisons": 720,
+    "negative": 565,
+    "positive": 155,
+    "zero_coordinate_cases": 180
+  },
+  "limits": [
+    "No repository modules imported",
+    "No full compiler implemented or exhausted",
+    "No all-input claim derived from finite counts",
+    "No Lean build or repository CI executed",
+    "All-length fixture conclusions are ordinary arguments in the accompanying note"
+  ],
+  "python": "3.13.14",
+  "relational_bounds": {
+    "accepted_product_paths": 1536,
+    "bases": 40,
+    "empty_paths": 176,
+    "endpoint_tests": 4572,
+    "generated_extensions": 47,
+    "joint_mark_checks": 173,
+    "nonfunctional_bases": 35
+  },
+  "review_status": "Author checks only; independent mathematical review of generalized theorem pending",
+  "scope": "Independent bounded graph/interval checks; NOT full Pre_T enumeration or Lean verification",
+  "seed": 2026092072,
+  "source_sha256": "10369e0856e9240fe4217748fc47900394fd63af00a34597e6bcdbc02b4aeeab",
+  "status": "PASS",
+  "word_surgery": {
+    "alias_traces": 108,
+    "coloured_graph_equalities": 192,
+    "first_return_pairs": 64,
+    "overlaps": 6,
+    "safe_base_equivalences": 71,
+    "singleton_returns": 6,
+    "valid_reverse_run_annotations": 81
+  }
+}

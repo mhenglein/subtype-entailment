@@ -1,0 +1,72 @@
+{
+  "boundaries": {
+    "bad_state_rejected": true,
+    "empty_border_flag_rejected": true,
+    "empty_query_union_output": [],
+    "once_only_filter_counterexample": {
+      "path": [
+        "S",
+        "K0",
+        "S"
+      ],
+      "required_forward_blocks": 2,
+      "word": "0101"
+    },
+    "ordered_flag_cases": {
+      "safe": 14,
+      "unsafe": 11
+    },
+    "preserved_counterexample": {
+      "input_weight": 17,
+      "old_diagram_filtered": true,
+      "old_output_weight": "1436714569561770804710950337953414859642567927047127052",
+      "original_target": "63286510177916475148846592658733814121868185920",
+      "rejected_coordinate_count": 175,
+      "retained_coordinate_cap": 15,
+      "smaller_coordinate_count": 5,
+      "smaller_output_weight": 972
+    },
+    "shared_generator_conflict": {
+      "duplicate_same_observation": true,
+      "individual_words": [
+        "10",
+        "110"
+      ],
+      "joint": false,
+      "oracle": "exact finite product reachability, all lengths"
+    },
+    "zero_length_interval_mutant_rejected": true,
+    "zero_state_observer_unsatisfiable": true
+  },
+  "counts": {
+    "binary_first_return_pairs_through_length_6": 44,
+    "certificates": 158,
+    "changed_length_reconstructions": 6,
+    "coincident_first_last": 33,
+    "coincident_variable_roles": 103,
+    "distinct_marks_same_origin": 23,
+    "fresh_zero_blocks": 183,
+    "integer_envelope_checks": 8100,
+    "interior_seam_positions": 10,
+    "intervals": 167,
+    "multiple_atom_conjunctions": 140,
+    "old_zero_blocks": 88,
+    "overlapping_returns": 38,
+    "path_relation_comparisons": 1644,
+    "repeated_observer_intervals": 8,
+    "shared_intervals": 26,
+    "unchanged_python_compiler_certificates": 62,
+    "unchanged_python_counterexample_replays": 1
+  },
+  "evidence": "Independent finite corpus; complete finite interval-product oracles; exact integer arithmetic.",
+  "limits": [
+    "Not a full enumeration of all bounded diagrams.",
+    "Not a Lean execution.",
+    "No shortest-witness F claim.",
+    "No human or separate-agent review implied."
+  ],
+  "repository_comparison": "RUN",
+  "seed": 2026092069,
+  "source_revision": "19b06d4fed9da635d9b911f0e908d04e4fc4b099",
+  "status": "PASS"
+}

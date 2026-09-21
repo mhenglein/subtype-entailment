@@ -42,8 +42,8 @@ on every input, a complete formal explicit-top implementation, or other signatur
 
 | Order | Remaining deliverable | Acceptance | Issue |
 |---|---|---|---|
-| 1 | Frozen-paper mathematical and contribution review | Whole-manuscript readback, exact contribution/source domains, declaration map and rendered PDF; outcome at the current candidate receipt | [#79](https://github.com/mhenglein/subtail/issues/79); earlier [#64](https://github.com/mhenglein/subtail/issues/64) preserved |
-| 2 | Reproducible release | Clean-environment proof/CLI/experiment receipt; accurate documentation; finalized metadata and immutable release checkpoint | [#65](https://github.com/mhenglein/subtail/issues/65) |
+| 1 | Frozen-paper mathematical and contribution review | Complete whole-manuscript agent readback, contribution/source comparison, declaration map and 35-page visual inspection; exact scope in the receipt | [#79](https://github.com/mhenglein/subtail/issues/79); earlier [#64](https://github.com/mhenglein/subtail/issues/64) preserved |
+| 2 | Reproducible release | 27 fresh-clone run gates PASS, 14 native strict cases PASS and six diagnostic UNKNOWN; final metadata/public checkpoint owner-deferred | [#65](https://github.com/mhenglein/subtail/issues/65) |
 
 The proof milestone is complete. A paper/artifact release is done when both
 rows are complete at one recorded revision. The release can state the current
@@ -129,7 +129,8 @@ whole-paper agent review, primary-source comparison, visual inspection and fresh
 Linux reproduction. Its receipt is the authority for actual checked revisions
 and outcomes. The release runner now includes the optional quantitative/top
 modules and newly accepted corpora and rejects stale PDF provenance or missing
-case coverage. This completes only the technical gates once the receipt passes.
+case coverage. All 27 run gates passed at `a22d1fb`, with six stress UNKNOWN outcomes retained.
+The technical review/reproduction gates are complete at their recorded scope.
 License, authors/affiliations and a final public release remain explicitly
 deferred. No external human referee, venue or cloud service is required or
 commissioned by repository cleanup.

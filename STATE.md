@@ -12,10 +12,10 @@ is assigned by this record. Read current issue comments before writing.
 
 | Issue / bounded task | Current disposition and next obligation |
 |---|---|
-| [#64](https://github.com/mhenglein/subtail/issues/64), [#79 manuscript](https://github.com/mhenglein/subtail/issues/79) | #64 preserves the earlier review. #79 covers the expanded frozen paper, exact contribution comparison and rendered artifact; see the current receipt for its actual status. No human refereeing or priority claim. |
-| [#65 release](https://github.com/mhenglein/subtail/issues/65) | Expanded fresh-clone reproduction has a separate source-pinned receipt. Licensing, author identities and a final public release remain owner-deferred. |
+| [#64](https://github.com/mhenglein/subtail/issues/64), [#79 manuscript](https://github.com/mhenglein/subtail/issues/79) | #64 preserves the earlier review. #79 completes the expanded whole-paper review, exact contribution comparison and 35-page rendered artifact. No human refereeing or priority claim. |
+| [#65 release](https://github.com/mhenglein/subtail/issues/65) | All 27 fresh-clone run gates pass at `a22d1fb`; the source-pinned receipt retains six diagnostic UNKNOWN cases. Licensing, author identities and a final public release remain owner-deferred. |
 | [#66](https://github.com/mhenglein/subtail/issues/66) / [PR #76](https://github.com/mhenglein/subtail/pull/76) | Released raw-summary diagnostics integrated. A measured proved optimization remains open; complete raw n=6 remains UNKNOWN. |
-| [#67](https://github.com/mhenglein/subtail/issues/67) | Released native follow-up reviewed and integrated with continuing main/PR coverage. Inspections and frontend shortcuts receive no terminal-promotion credit. Automatic depth-two and full-expression terminal coverage remain open unless new successful receipts establish them. |
+| [#67](https://github.com/mhenglein/subtail/issues/67) | Released native follow-up reviewed and integrated with continuing main/PR coverage. Inspections and frontend shortcuts receive no terminal-promotion credit. All 14 strict native cases pass; six stress cases hit the 2,048 MiB memory threshold and remain UNKNOWN. Automatic depth-two/full-expression terminal coverage stays open. |
 | [#68 producer](https://github.com/mhenglein/subtail/issues/68) | Reviewed core at `049aa110cf13` explicitly deferred pending the author's promised final handoff. Branch preserved. Certificate decoration, Python refinement, finite boundary and JSON work remain open. |
 | [#69 bounds](https://github.com/mhenglein/subtail/issues/69) | C086 smaller compiler and original F are integrated and checked; old universal U counterexample remains valid. |
 | [#70 complexity](https://github.com/mhenglein/subtail/issues/70) | C087 ordinary arbitrary/regular PSPACE lower bound integrated. Tight upper classification and finite transfer remain separate. |
@@ -41,9 +41,11 @@ The expanded [release runner](scripts/reproduce_release.py) verifies paper
 provenance, optional quantitative/top modules, exact native case identities,
 independent corpora, actual CLI certificates and source stability in a fresh
 Linux clone. Its diagnostic branch permits UNKNOWN without promoting it to a
-mathematical answer. Read the [receipt](results/publication-reproduction-20260921.json)
-for the checked revision and actual outcome; candidate preparation is not a
-passing run. Author placeholders and licensing remain as requested.
+mathematical answer. All 27 run gates pass at `a22d1fb` in about five minutes,
+including 14 strict native cases and the separately inconclusive six stress
+cases. The [receipt](results/publication-reproduction-20260921.json) records
+exact commands, source hashes and the later documentation-only clarification.
+Author placeholders and licensing remain as requested.
 
 The dated entries below retain earlier evidence and then-current pending work;
 the current disposition table above takes precedence for task status.

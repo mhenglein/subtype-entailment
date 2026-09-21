@@ -1,0 +1,228 @@
+{
+  "axioms": {
+    "Subtail.ExplicitTopDualProjection.Cover": [],
+    "Subtail.ExplicitTopDualProjection.Entails": [],
+    "Subtail.ExplicitTopDualProjection.ForcedTop": [],
+    "Subtail.ExplicitTopDualProjection.Included": [],
+    "Subtail.ExplicitTopDualProjection.Languages": [],
+    "Subtail.ExplicitTopDualProjection.Model": [],
+    "Subtail.ExplicitTopDualProjection.PairedModel": [],
+    "Subtail.ExplicitTopDualProjection.PositiveEntails": [],
+    "Subtail.ExplicitTopDualProjection.PositiveSatisfiable": [],
+    "Subtail.ExplicitTopDualProjection.PrefixClosed": [],
+    "Subtail.ExplicitTopDualProjection.Remaining": [],
+    "Subtail.ExplicitTopDualProjection.Satisfiable": [],
+    "Subtail.ExplicitTopDualProjection.System": [],
+    "Subtail.ExplicitTopDualProjection.System.dual": [],
+    "Subtail.ExplicitTopDualProjection.System.dual_dual": [],
+    "Subtail.ExplicitTopDualProjection.Word": [],
+    "Subtail.ExplicitTopDualProjection.entails_iff_of_satisfiable": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.ExplicitTopDualProjection.entails_iff_projections": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.ExplicitTopDualProjection.forcedTop_disjoint_negative": [],
+    "Subtail.ExplicitTopDualProjection.forcedTop_in_positive": [],
+    "Subtail.ExplicitTopDualProjection.forcedTop_suffix": [],
+    "Subtail.ExplicitTopDualProjection.negative_projection_surjective": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.ExplicitTopDualProjection.paired_dual_iff": [],
+    "Subtail.ExplicitTopDualProjection.positive_countermodel_lift": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.ExplicitTopDualProjection.positive_covered": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.ExplicitTopDualProjection.positive_projection_surjective": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Subtail.ExplicitTopDualProjection.remaining_closed": [],
+    "Subtail.ExplicitTopDualProjection.remaining_model": [],
+    "Subtail.ExplicitTopDualProjection.satisfiable_iff_projections": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ]
+  },
+  "commands": [
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": ".",
+      "elapsed_seconds": 0.004,
+      "exit_code": 0,
+      "log": "explicit-top-6z1e9b2b/git-head.log",
+      "name": "git-head",
+      "status": "PASS",
+      "wall_timeout_seconds": 180
+    },
+    {
+      "command": [
+        "git",
+        "status",
+        "--short",
+        "--untracked-files=no"
+      ],
+      "cwd": ".",
+      "elapsed_seconds": 0.008,
+      "exit_code": 0,
+      "log": "explicit-top-6z1e9b2b/git-status.log",
+      "name": "git-status",
+      "status": "PASS",
+      "wall_timeout_seconds": 180
+    },
+    {
+      "command": [
+        "lean",
+        "--version"
+      ],
+      "cwd": "lean",
+      "elapsed_seconds": 0.064,
+      "exit_code": 0,
+      "log": "explicit-top-6z1e9b2b/toolchain.log",
+      "name": "toolchain",
+      "status": "PASS",
+      "wall_timeout_seconds": 180
+    },
+    {
+      "command": [
+        "lake",
+        "build",
+        "+Subtail.ExplicitTopDualProjection"
+      ],
+      "cwd": "lean",
+      "elapsed_seconds": 0.916,
+      "exit_code": 0,
+      "log": "explicit-top-6z1e9b2b/build.log",
+      "name": "build",
+      "status": "PASS",
+      "wall_timeout_seconds": 180
+    },
+    {
+      "command": [
+        "lake",
+        "env",
+        "leanchecker",
+        "Subtail.ExplicitTopDualProjection"
+      ],
+      "cwd": "lean",
+      "elapsed_seconds": 1.117,
+      "exit_code": 0,
+      "log": "explicit-top-6z1e9b2b/kernel.log",
+      "name": "kernel",
+      "status": "PASS",
+      "wall_timeout_seconds": 180
+    },
+    {
+      "command": [
+        "lake",
+        "env",
+        "lean",
+        "<checkout>/tmp/release-reproduction/explicit-top-6z1e9b2b/axioms.lean"
+      ],
+      "cwd": "lean",
+      "elapsed_seconds": 0.616,
+      "exit_code": 0,
+      "log": "explicit-top-6z1e9b2b/axioms.log",
+      "name": "axioms",
+      "status": "PASS",
+      "wall_timeout_seconds": 180
+    },
+    {
+      "command": [
+        "<user-home>/workspaces/subtail/.venv/bin/python3",
+        "experiments/check_explicit_top_dual_projection.py",
+        "--output",
+        "<checkout>/tmp/release-reproduction/explicit-top-6z1e9b2b/explicit-top-dual-projection.json"
+      ],
+      "cwd": ".",
+      "elapsed_seconds": 1.067,
+      "exit_code": 0,
+      "log": "explicit-top-6z1e9b2b/top-corpus.log",
+      "name": "top-corpus",
+      "status": "PASS",
+      "wall_timeout_seconds": 180
+    },
+    {
+      "command": [
+        "<user-home>/workspaces/subtail/.venv/bin/python3",
+        "experiments/check_hr_topfree_transfer_70.py",
+        "--output",
+        "<checkout>/tmp/release-reproduction/explicit-top-6z1e9b2b/hr-topfree-transfer-70.json"
+      ],
+      "cwd": ".",
+      "elapsed_seconds": 0.866,
+      "exit_code": 0,
+      "log": "explicit-top-6z1e9b2b/hardness-corpus.log",
+      "name": "hardness-corpus",
+      "status": "PASS",
+      "wall_timeout_seconds": 180
+    }
+  ],
+  "declarations": 29,
+  "finite_diagnostics": {
+    "hardness-corpus": {
+      "comparison": "MATCH_EXCEPT_ENVIRONMENT",
+      "ignored_fields": [
+        "python",
+        "platform",
+        "machine"
+      ],
+      "receipt": "explicit-top-6z1e9b2b/hr-topfree-transfer-70.json",
+      "status": "PASS"
+    },
+    "top-corpus": {
+      "comparison": "MATCH_EXCEPT_ENVIRONMENT",
+      "ignored_fields": [
+        "python",
+        "platform"
+      ],
+      "receipt": "explicit-top-6z1e9b2b/explicit-top-dual-projection.json",
+      "status": "PASS"
+    }
+  },
+  "git_head": "a22d1fb323026fb1c10411d4418ceb03dd2798c2",
+  "lean_version": "Lean (version 4.33.1, aarch64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
+  "limits": [
+    "Labelled-tree identification, finite naming/projection and the four-call decision remain ordinary proofs.",
+    "This is no native explicit-top solver, parser or end-to-end Lean theorem.",
+    "Finite diagnostic corpora supply no universal model bound; capped misses remain UNKNOWN.",
+    "The hardness theorem is ordinary mathematics for arbitrary and regular trees, not finite trees."
+  ],
+  "non_theorem_definitions_choice_free": true,
+  "platform": "Linux-6.12.94-123.192.amzn2023.aarch64-aarch64-with-glibc2.43",
+  "python": "3.13.14",
+  "scope": "Check the explicit-top language core and two independent finite corpora.\n\nThe full labelled-tree/expression reduction is an ordinary theorem. This gate\ndoes not certify or expose an executable Lean explicit-top decision procedure.",
+  "source_sha256": {
+    "experiments/check_explicit_top_dual_projection.py": "c5da4fc788f3d1b33db843eb9fc205e53bb08538e5b2ac98d25bcbaa33f9e058",
+    "experiments/check_hr_topfree_transfer_70.py": "81e54110e789c9ef282236bec55e5fee97df194e6040a719fe5ba89533396e0a",
+    "lean/Subtail/ExplicitTopDualProjection.lean": "bac45e1f4613e6c95035b3d24f42950f3bf3fcd98324ee25bd8515888e130993",
+    "lean/lake-manifest.json": "7d0c22bfe200e71ceec96760909d8f9162a5d1e4b96398fa14ba8a4c013bee15",
+    "lean/lakefile.toml": "cc1765726c70b0a02e969ffa24ee5732fd6aab703ef8c71d0f0dd415a545c938",
+    "lean/lean-toolchain": "3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71",
+    "results/explicit-top-dual-projection.json": "a9af0bf9bd1a2c31d1199726f0cc5b75f086f6eee5ef6f2b3ecff9aa067632c2",
+    "results/hr-topfree-transfer-70.json": "955cfc11197fbed16ca52079f496171d365d2733e83b4bd54c5dcb885da1c75a",
+    "scripts/check_explicit_top.py": "ad5316a5d3d421b2a943cfcf8694ae71c7f011564132b94ef3570015eb83e659",
+    "scripts/check_original_bounds.py": "68f56317b8068d17c56da31ea4bb52f0c3c1c2377e3f80714e3c55d1dcc38a6b",
+    "scripts/test_check_explicit_top.py": "cf13ade9c21e047ed099320e3b2116dc85f3967eed8ace09bacb91bdf91970f2"
+  },
+  "status": "PASS",
+  "tracked_status_before": []
+}

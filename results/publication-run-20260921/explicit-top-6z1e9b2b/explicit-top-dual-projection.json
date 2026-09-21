@@ -1,0 +1,45 @@
+{
+  "bounds": {
+    "additional_seeded_systems": 250,
+    "all_system_clause_count_at_most": 2,
+    "comparison_word_depth": 3,
+    "direct_derivation_stack_cap": 6,
+    "enumerated_graph_nodes": 2,
+    "finite_tree_depth": 2,
+    "random_max_clauses": 8,
+    "right_extension_depth": 2,
+    "targeted_graph_nodes_at_most": 4
+  },
+  "command": "python3 experiments/check_explicit_top_dual_projection.py --output results/explicit-top-dual-projection.json",
+  "counts": {
+    "bounded_derivation_membership_comparisons": 11790,
+    "cyclic_graph_order_pairs": 5184,
+    "finite_tree_order_pairs": 1444,
+    "larger_targeted_lifts": 6,
+    "larger_top_cone_membership_checks": 1397,
+    "literal_boundary_fixtures": 6,
+    "projected_models_lifted": 5156,
+    "right_ideal_checks": 33838,
+    "same_word_countermodels": 292,
+    "source_model_projection_checks": 2384,
+    "systems_checked": 393,
+    "systems_with_two_projection_witnesses": 176,
+    "systems_without_two_bounded_projection_witnesses_UNKNOWN": 217
+  },
+  "limits": [
+    "All graph comparisons are exact for the given regular graph unfoldings.",
+    "The input/model corpus is finite; it supplies no universal model bound.",
+    "Absent bounded model witnesses and capped derivation misses remain UNKNOWN.",
+    "No C081 implementation was executed; its use in the decision proof is imported.",
+    "No independent mathematical reviewer or full repository suite was run by this script."
+  ],
+  "maximum_lift_graph_nodes": 6,
+  "maximum_nfa_saturation_rounds": 2,
+  "nfa_positive_without_bounded_derivation_UNKNOWN": 0,
+  "platform": "Linux-6.12.94-123.192.amzn2023.aarch64-aarch64-with-glibc2.43",
+  "python": "3.13.14",
+  "script_sha256": "c5da4fc788f3d1b33db843eb9fc205e53bb08538e5b2ac98d25bcbaa33f9e058",
+  "seed": 2026092071,
+  "source_base": "19b06d4fed9da635d9b911f0e908d04e4fc4b099",
+  "status": "PASS"
+}
