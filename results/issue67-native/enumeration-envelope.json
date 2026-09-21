@@ -1,0 +1,59 @@
+{
+  "basis": "Exact combinatorial counts from pinned definitions, not measured allocations or emitted valid clauses.",
+  "formula": "5 PieceKind values * scalar^4 * 4 Label values = 20*scalar^4",
+  "rows": [
+    {
+      "atoms": 2,
+      "blocks": 14,
+      "core": 59,
+      "groups": 17,
+      "observer_sizes": [
+        2,
+        2
+      ],
+      "per_atom": 28,
+      "piece_alphabet_size": 3036140820,
+      "scalar": 111,
+      "seam_entries": 238,
+      "states": 2,
+      "sum_sizes": 4,
+      "variables": 3
+    },
+    {
+      "atoms": 2,
+      "blocks": 16,
+      "core": 67,
+      "groups": 19,
+      "observer_sizes": [
+        2,
+        3
+      ],
+      "per_atom": 32,
+      "piece_alphabet_size": 5040947520,
+      "scalar": 126,
+      "seam_entries": 304,
+      "states": 3,
+      "sum_sizes": 5,
+      "variables": 3
+    },
+    {
+      "atoms": 2,
+      "blocks": 18,
+      "core": 75,
+      "groups": 21,
+      "observer_sizes": [
+        2,
+        4
+      ],
+      "per_atom": 36,
+      "piece_alphabet_size": 7905083220,
+      "scalar": 141,
+      "seam_entries": 378,
+      "states": 4,
+      "sum_sizes": 6,
+      "variables": 3
+    }
+  ],
+  "source": "RankQueryCoverage sumSizes/blockBound/groupBound/coreBound/scalarBound/budget; RankQueryEnumeration pieces; RankQuery finishQuery",
+  "source_revision": "9f4b95784a212c322c48a957b80645a1077543ed"
+}

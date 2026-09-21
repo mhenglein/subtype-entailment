@@ -1,0 +1,25 @@
+{
+  "artifact_id": 10608591931,
+  "artifact_sha256": "8251c689fdc9c1077ee8a4ed8e85967255edc0f9bc64830d1660d7be55a284ac",
+  "base": "9f4b95784a212c322c48a957b80645a1077543ed",
+  "conclusion": "FAIL",
+  "correction": "Only new workflow checkout fetch-depth changed to 0. Provenance check retained.",
+  "correction_revision": "1f63117844d9a664317db1af8c7e450952fec6ce",
+  "default_build": "PASS_CACHED_SOURCE_CHECK",
+  "evidence_source": "GitHub Actions job log read via connector. Summary transcribed; not a raw log file.",
+  "failure": "Shallow checkout omitted pinned base object; git merge-base --is-ancestor returned 128 before native fixtures ran.",
+  "failure_class": "HARNESS_PROVENANCE",
+  "job": 106106875455,
+  "kernel_replays": [
+    "Subtail.RankQueryDecision",
+    "Subtail.TerminalDecisionLazy"
+  ],
+  "native_cases": "NOT_RUN",
+  "probe_typecheck": "PASS",
+  "revision": "80dd090b18bb0ed67d235b0f03cf6080e6c90a68",
+  "run": 35521735640,
+  "selftest": {
+    "status": "PASS",
+    "tests": 7
+  }
+}
