@@ -40,7 +40,20 @@
     }
   },
   "publication": "PENDING",
-  "render": "PENDING",
+  "render": {
+    "pages": 35,
+    "pdf_sha256": "5e269f54dd8062ba2ad703b42bebef668cd866f472e40fc20722cdd567c7412f",
+    "source_files_match_render_revision": true,
+    "source_revision": "8a57dd71205f31353c6d0b0553098cdb8da96246",
+    "status": "PASS",
+    "tex_log": "No missing glyphs or overfull horizontal/vertical boxes",
+    "text_geometry": "No characters outside any page; expected running headers on pages 2-35; page numbers 1-35",
+    "tools": {
+      "pandoc": "pandoc 3.11",
+      "tectonic": "Tectonic 0.17.0"
+    },
+    "visual_scope": "All 35 pages inspected in six contact sheets; full page views for 4, 27, 30, 35"
+  },
   "reviews": {
     "code": {
       "limits": "Read-only source review; no builds or raw artifact inspection",

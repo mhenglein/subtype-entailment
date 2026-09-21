@@ -101,9 +101,14 @@ The integrator's local Python suite passes 96 tests; paper mapping checks 23
 mapped and seven ordinary results, the scholarship check validates 26 sources,
 and the index checks 179 records. No local Lean run is claimed here.
 
-Final PDF inspection and the fresh Linux run are pending at this preparation
-checkpoint. Their actual receipts and outcomes will be recorded before main
-publication. No final release tag, license grant, author attribution, public
+The new PDF has 35 pages. All pages were visually checked in six contact
+sheets; pages 4, 27, 30 and 35 also received full-page inspection. Text geometry
+checks find no characters outside pages, all expected running headers and
+page numbers, and the TeX log reports no missing glyphs or overflowing boxes.
+The manifest ties the PDF to committed render inputs at `8a57dd7`.
+
+The fresh Linux execution is pending at this preparation checkpoint. Its
+actual receipt and outcomes will be recorded before main publication. No final release tag, license grant, author attribution, public
 visibility change, branch retirement or external invitation is authorized or
 performed by these steps. Older worktrees, stashes and unknown author-local
 changes are neither modified nor claimed fully inventoried.

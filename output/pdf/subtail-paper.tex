@@ -130,7 +130,7 @@
 \title{Subtype entailment for bottom and binary product, with an
 explicit-top extension}
 \author{Author and affiliation placeholders}
-\date{20 September 2026}
+\date{21 September 2026}
 
 \begin{document}
 \maketitle
@@ -269,6 +269,46 @@ projections. Its key step lifts every model of either projection when
 the other projection is satisfiable. This supplies the compatibility
 needed for a complete reduction; merely replacing top by an infinite
 product would not do so.
+
+The use of two observations has a precedent: Niehren and Priesnitz
+characterize entailment by simultaneous left and right safety, using
+inherited bottom and top observations {[}\citeproc{ref-NP03}{3, sec. 4},
+Proposition 1{]}. Our contribution is not this dual viewpoint. It is the
+construction of two finite top-free systems and the proof that, when the
+opposite system is satisfiable, every model of either system lifts to a
+model of the original constraints. The covering condition in Section 14
+makes this compatibility explicit.
+
+The contributions can therefore be separated as follows.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Sections 7--9 give an effective preimage construction for a whole
+  conjunction of regular-path constraints under a first-return
+  extension. Shared interval observers and a bounded rank iteration
+  yield the terminal decision. Together with the separation and
+  infinite-continuation arguments, this proves Theorem 1.1 for arbitrary
+  bottom/product trees.
+\item
+  Section 13 proves a consuming-cycle dichotomy and derives the
+  finite-tree decision, Theorem 1.2. Both executable decision theorems
+  are checked in Lean.
+\item
+  Section 12.3 transfers the Henglein--Rehof PSPACE-hard source problem
+  to arbitrary and regular bottom/product valuations by a logspace
+  construction. This gives a lower bound, not a matching complexity
+  classification.
+\item
+  Section 14 proves a reduction with at most four top-free calls for
+  arbitrary bottom/product/top trees. Its language-level lifting lemmas
+  are checked in Lean; its labelled-tree and expression-level
+  composition is an ordinary mathematical proof.
+\end{enumerate}
+
+These statements specify the results proved here; their priority remains
+a separate literature question.
 
 \subsection{1.2 Proof strategy}\label{proof-strategy}
 
@@ -2015,8 +2055,9 @@ saturation.
 Let \(T\) be reflexive transitive reachability in this automaton after
 forgetting edge labels, retaining both balanced epsilon edges and letter
 edges. A return path may therefore mix balanced epsilon edges and
-consuming letter edges. Define \(\operatorname{Growth}(C)\) by the
-finite test
+consuming letter edges. Thus \(T(r,p)\) means that a forward walk leads
+from \(r\) to \(p\). Define \(\operatorname{Growth}(C)\) by the finite
+test
 
 \[\exists p,r,a\quad
 p\mathrel{\xrightarrow{a}}r\text{ in }\mathcal A_C
