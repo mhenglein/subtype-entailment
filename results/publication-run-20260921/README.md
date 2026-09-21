@@ -6,9 +6,10 @@ The run used a new Linux clone with no project build cache, reusing installed
 Python 3.13.14 and Lean 4.33.1. All 27 strict run gates passed; the stress gate
 records six diagnostic UNKNOWN cases at the memory threshold, not six answers.
 
-This directory preserves all 92 files from the execution output and the
-separate quantitative receipt, including logs, subordinate JSON and generated
-audit inputs. It is evidence, not a source directory imported by the library.
+This directory preserves 82 receipt/log files from the execution output and
+the separate quantitative receipt. Ten generated Lean audit inputs remain
+outside Git as reproducible scratch sources; their original hashes are retained
+in the file index. This is execution evidence, not an imported source directory.
 Private checkout/toolchain/home prefixes are normalized. Execution hashes in
 receipts refer to the raw files. [The file index](file-hashes.json) gives both
 original and stored SHA-256 values so normalization is not confused with a

@@ -1,0 +1,9 @@
+git-head
+git-status
+toolchain
+build
+kernel
+axioms
+top-corpus
+hardness-corpus
+{"status": "PASS", "receipt": "<checkout>/tmp/release-reproduction/explicit_top_and_hardness.json", "error": null}

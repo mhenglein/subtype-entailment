@@ -118,8 +118,9 @@ that those inconclusive outcomes were classified correctly, not that the six
 problems were decided.
 
 [The complete evidence directory](../results/publication-run-20260921/README.md)
-retains 92 raw-output files with path normalization and both original/stored
-hashes. Fresh subordinate receipts cover the C082/C086 audits, C087/C088 corpora,
+retains 82 receipt/log files with path normalization and both original/stored
+hashes. Ten generated audit inputs stay outside Git as reproducible scratch
+sources, with their raw hashes retained in the index. Fresh subordinate receipts cover the C082/C086 audits, C087/C088 corpora,
 C030 kernel/axiom checks, the actual checked alternating-spine countermodel,
 all 96 Python tests and the exact paper example outputs. All earlier receipts
 are preserved separately.

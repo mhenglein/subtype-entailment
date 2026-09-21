@@ -1,0 +1,4 @@
+With premise x <= y, query x <= y: true
+With premise x <= y, query y <= x: false
+With premise x * bottom <= x, query x <= bottom (arbitrary): false
+With premise x * bottom <= x, query x <= bottom (finite): true

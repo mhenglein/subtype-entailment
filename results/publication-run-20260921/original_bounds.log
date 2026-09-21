@@ -1,0 +1,15 @@
+git-head
+git-status
+toolchain
+build-dependencies
+compile-FOnlyAstra
+compile-FOnlyCompilerBridge
+kernel-Subtail.SmallerCompilerAstra
+kernel-FOnlyAstra
+kernel-FOnlyCompilerBridge
+axioms
+native-guards
+python-compiler
+python-compiler-repository
+python-f-bounded
+{"status": "PASS", "receipt": "<checkout>/tmp/release-reproduction/original_bounds.json", "error": null}

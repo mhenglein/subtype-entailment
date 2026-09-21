@@ -1,0 +1,39 @@
+'Subtail.ExplicitTopDualProjection.Word' does not depend on any axioms
+'Subtail.ExplicitTopDualProjection.Languages' does not depend on any axioms
+'Subtail.ExplicitTopDualProjection.PrefixClosed' does not depend on any axioms
+'Subtail.ExplicitTopDualProjection.Included' does not depend on any axioms
+'Subtail.ExplicitTopDualProjection.System' does not depend on any axioms
+'Subtail.ExplicitTopDualProjection.System.dual' does not depend on any axioms
+'Subtail.ExplicitTopDualProjection.System.dual_dual' does not depend on any axioms
+'Subtail.ExplicitTopDualProjection.Model' does not depend on any axioms
+'Subtail.ExplicitTopDualProjection.Cover' does not depend on any axioms
+'Subtail.ExplicitTopDualProjection.PairedModel' does not depend on any axioms
+'Subtail.ExplicitTopDualProjection.ForcedTop' does not depend on any axioms
+'Subtail.ExplicitTopDualProjection.forcedTop_suffix' does not depend on any axioms
+'Subtail.ExplicitTopDualProjection.forcedTop_in_positive' does not depend on any axioms
+'Subtail.ExplicitTopDualProjection.forcedTop_disjoint_negative' does not depend on any axioms
+'Subtail.ExplicitTopDualProjection.Remaining' does not depend on any axioms
+'Subtail.ExplicitTopDualProjection.remaining_closed' does not depend on any axioms
+'Subtail.ExplicitTopDualProjection.remaining_model' does not depend on any axioms
+'Subtail.ExplicitTopDualProjection.positive_covered' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Subtail.ExplicitTopDualProjection.PositiveSatisfiable' does not depend on any axioms
+'Subtail.ExplicitTopDualProjection.Satisfiable' does not depend on any axioms
+'Subtail.ExplicitTopDualProjection.positive_projection_surjective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Subtail.ExplicitTopDualProjection.paired_dual_iff' does not depend on any axioms
+'Subtail.ExplicitTopDualProjection.negative_projection_surjective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Subtail.ExplicitTopDualProjection.satisfiable_iff_projections' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Subtail.ExplicitTopDualProjection.PositiveEntails' does not depend on any axioms
+'Subtail.ExplicitTopDualProjection.Entails' does not depend on any axioms
+'Subtail.ExplicitTopDualProjection.entails_iff_of_satisfiable' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Subtail.ExplicitTopDualProjection.entails_iff_projections' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Subtail.ExplicitTopDualProjection.positive_countermodel_lift' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

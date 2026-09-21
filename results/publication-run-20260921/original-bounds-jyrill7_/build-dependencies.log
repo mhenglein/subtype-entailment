@@ -1,0 +1,66 @@
+⚠ [11/25] Replayed Subtail.RankQueryFirstReturn
+warning: Subtail/RankQueryFirstReturn.lean:73:5: Variable name `hm` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hm
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [12/25] Replayed Subtail.RankQueryCompiler
+warning: Subtail/RankQueryCompiler.lean:363:16: Variable name `I` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _I
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Subtail/RankQueryCompiler.lean:434:15: Variable name `I` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _I
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [15/25] Replayed Subtail.RankQueryCoverage
+warning: Subtail/RankQueryCoverage.lean:55:17: This simp argument is unused:
+  List.getElem_map
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [List.getElem_range]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Subtail/RankQueryCoverage.lean:1077:48: Variable name `j` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _j
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Subtail/RankQueryCoverage.lean:1153:4: Variable name `s` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _s
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Subtail/RankQueryCoverage.lean:1771:32: This simp argument is unused:
+  List.mem_singleton
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [List.mem_cons] at hps
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Subtail/RankQueryCoverage.lean:1799:32: This simp argument is unused:
+  List.mem_singleton
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [List.mem_cons] at hps
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Subtail/RankQueryCoverage.lean:2771:40: Variable name `hai` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hai
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [16/25] Replayed Subtail.RankQueryUnwind
+warning: Subtail/RankQueryUnwind.lean:203:4: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+✔ [25/25] Built Subtail.SmallerCompilerAstra (2.8s)
+Build completed successfully (25 jobs).

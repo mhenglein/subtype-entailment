@@ -1,0 +1,227 @@
+✔ [2/68] Built Subtail.Basic (856ms)
+✔ [3/68] Built Subtail.FiniteSearch (866ms)
+ℹ [4/68] Built Subtail.Conditional (790ms)
+info: Subtail/Conditional.lean:131:0: 'Subtail.finiteBudgetDecision_correct' depends on axioms: [propext, Quot.sound]
+✔ [5/68] Built Subtail.TerminalRank (914ms)
+✔ [6/68] Built Subtail.PeriodicTail (1.0s)
+✔ [7/68] Built Subtail.TreeSemantics (1.1s)
+✔ [8/68] Built Subtail.StackSummary (1.3s)
+✔ [9/68] Built Subtail.Truncation (1.8s)
+✔ [10/68] Built Subtail.CanonicalModel (1.0s)
+✔ [11/68] Built Subtail.StackSummaryFast (1.7s)
+✔ [12/68] Built Subtail.TerminalRealization (1.9s)
+⚠ [13/68] Built Subtail.StackReachability (1.8s)
+warning: Subtail/StackReachability.lean:266:29: This simp argument is unused:
+  and_assoc
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [controlReachCheck, List.any_eq_true, Nat.lt_succ_iff, ← exists_pop_iff_path]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✔ [14/68] Built Subtail.Examples (1.6s)
+✔ [15/68] Built Subtail.AbsorbingTerminal (2.6s)
+✔ [16/68] Built Subtail.RankMilestones (2.7s)
+✔ [17/68] Built Subtail.ExpressionNormalization (2.7s)
+⚠ [18/68] Built Subtail.CanonicalModelAudit (896ms)
+warning: Subtail/CanonicalModelAudit.lean:22:4: Try `simp at hw` instead of `simpa using hw`
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: Subtail/CanonicalModelAudit.lean:31:2: Try `simp at hb` instead of `simpa using hb`
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+info: Subtail/CanonicalModelAudit.lean:80:0: 'Subtail.TreeSemantics.tree_roundtrip' depends on axioms: [propext]
+info: Subtail/CanonicalModelAudit.lean:81:0: 'Subtail.TreeSemantics.diagram_domain_exact' depends on axioms: [propext]
+info: Subtail/CanonicalModelAudit.lean:82:0: 'Subtail.CanonicalModel.derived_closed' depends on axioms: [propext]
+info: Subtail/CanonicalModelAudit.lean:83:0: 'Subtail.CanonicalModel.closure_models_iff' depends on axioms: [propext]
+info: Subtail/CanonicalModelAudit.lean:84:0: 'Subtail.CanonicalModel.satisfiable_iff_forced_safe' depends on axioms: [propext, Quot.sound]
+info: Subtail/CanonicalModelAudit.lean:85:0: 'Subtail.CanonicalModel.not_entails_iff_canonical' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Subtail/CanonicalModelAudit.lean:86:0: 'Subtail.CanonicalModelAudit.spine_no_bounded_model' depends on axioms: [propext, Quot.sound]
+info: Subtail/CanonicalModelAudit.lean:87:0: 'Subtail.CanonicalModelAudit.spine_separates_at_empty' depends on axioms: [propext, Quot.sound]
+✔ [19/68] Built Subtail.SandwichPredicates (1.9s)
+⚠ [20/68] Built Subtail.CanonicalReachability (1.1s)
+warning: Subtail/CanonicalReachability.lean:122:4: Try `simp at hh` instead of `simpa using hh`
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: Subtail/CanonicalReachability.lean:143:73: This simp argument is unused:
+  and_assoc
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [forcedList, forcedSeeds, Forced, List.mem_map, eq_comm, and_left_comm]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✔ [21/68] Built Subtail.PopAcyclic (845ms)
+✔ [22/68] Built Subtail.TerminalRealizationModel (1.2s)
+✔ [23/68] Built Subtail.InfiniteCycle (1.0s)
+✔ [24/68] Built Subtail.InfiniteWitness (1.3s)
+✔ [25/68] Built Subtail.PrefixMatching (1.3s)
+✔ [26/68] Built Subtail.Boundary (1.2s)
+ℹ [27/68] Built Subtail.TerminalRealizationAudit (1.2s)
+info: Subtail/TerminalRealizationAudit.lean:4:0: 'Subtail.TerminalRealization.constraints' depends on axioms: [propext, Quot.sound]
+info: Subtail/TerminalRealizationAudit.lean:5:0: 'Subtail.TerminalRealization.separation_implies_witness' depends on axioms: [propext, Quot.sound]
+info: Subtail/TerminalRealizationAudit.lean:6:0: 'Subtail.TerminalRealization.realization_satisfiable' depends on axioms: [propext, Quot.sound]
+info: Subtail/TerminalRealizationAudit.lean:7:0: 'Subtail.TerminalRealization.witness_iff_separating' depends on axioms: [propext, Quot.sound]
+info: Subtail/TerminalRealizationAudit.lean:8:0: 'Subtail.TerminalRealization.not_entails_iff_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Subtail/TerminalRealizationAudit.lean:10:0: Subtail.TerminalRealization.realization_satisfiable {k : Nat} (I : Subtail.Instance k)
+  (ht : Subtail.TerminalRealization.TerminalFinal I) :
+  Subtail.TreeSemantics.Satisfiable (Subtail.TerminalRealization.constraints I)
+info: Subtail/TerminalRealizationAudit.lean:11:0: Subtail.TerminalRealization.witness_iff_separating {k : Nat} (I : Subtail.Instance k)
+  (ht : Subtail.TerminalRealization.TerminalFinal I) (w : Subtail.Word) :
+  Subtail.Witness I w ↔
+    ∃ rho,
+      Subtail.TreeSemantics.Models (Subtail.TerminalRealization.constraints I) rho ∧
+        (rho (Subtail.TerminalRealization.a I.initial)).nodes w ∧
+          ¬(rho (Subtail.TerminalRealization.v I.initial)).nodes w
+info: Subtail/TerminalRealizationAudit.lean:12:0: Subtail.TerminalRealization.not_entails_iff_witness {k : Nat} (I : Subtail.Instance k)
+  (ht : Subtail.TerminalRealization.TerminalFinal I) :
+  ¬Subtail.TreeSemantics.Entails (Subtail.TerminalRealization.constraints I) (Subtail.TerminalRealization.a I.initial)
+        (Subtail.TerminalRealization.v I.initial) ↔
+    ∃ w, Subtail.Witness I w
+✔ [28/68] Built Subtail.ExpressionNormalizationAudit (1.3s)
+⚠ [29/68] Built Subtail.RegularTreeCertificate (1.7s)
+warning: Subtail/RegularTreeCertificate.lean:218:14: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: Subtail/RegularTreeCertificate.lean:223:18: This simp argument is unused:
+  R
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [treeOf, graphNodes, hp, hq] at hroot
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Subtail/RegularTreeCertificate.lean:280:51: This simp argument is unused:
+  valuation
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [treeOf, graphNodes, hn, eval, bottom]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Subtail/RegularTreeCertificate.lean:281:56: This simp argument is unused:
+  valuation
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [treeOf, graphNodes, hn, eval, bottom]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✔ [30/68] Built Subtail.FiniteTreeReduction (1.3s)
+✔ [31/68] Built Subtail.SummaryBridge (1.3s)
+✔ [32/68] Built Subtail.RankQuery (2.8s)
+✔ [33/68] Built Subtail.TwoState (1.2s)
+⚠ [34/68] Built Subtail.PeriodicRun (1.6s)
+warning: Subtail/PeriodicRun.lean:50:2: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: Subtail/PeriodicRun.lean:52:44: Variable name `hc` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hc
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Subtail/PeriodicRun.lean:104:8: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: Subtail/PeriodicRun.lean:85:43: Variable name `hc` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hc
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+✔ [35/68] Built Subtail.FirstReturnGraph (2.0s)
+✔ [36/68] Built Subtail.RankQueryFinishFacts (1.1s)
+✔ [37/68] Built Subtail.SummaryAutomaton (1.6s)
+✔ [38/68] Built Subtail.RankQueryPaths (1.1s)
+⚠ [39/68] Built Subtail.RankQueryUnwind (1.4s)
+warning: Subtail/RankQueryUnwind.lean:203:4: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+✔ [40/68] Built Subtail.RankWitnessReference (1.6s)
+✔ [41/68] Built Subtail.StackSummaryAudit (3.1s)
+✔ [42/68] Built Subtail.PeriodicRotation (1.3s)
+✔ [43/68] Built Subtail.FirstReturnGenerator (1.1s)
+✔ [44/68] Built Subtail.CanonicalReachabilityFast (1.1s)
+✔ [45/68] Built Subtail.PeriodicGood (726ms)
+✔ [46/68] Built Subtail.FirstReturnColours (985ms)
+⚠ [47/68] Built Subtail.RankQueryFirstReturn (1.2s)
+warning: Subtail/RankQueryFirstReturn.lean:73:5: Variable name `hm` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hm
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [48/68] Built Subtail.RankQueryCompiler (1.0s)
+warning: Subtail/RankQueryCompiler.lean:363:16: Variable name `I` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _I
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Subtail/RankQueryCompiler.lean:434:15: Variable name `I` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _I
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+✔ [49/68] Built Subtail.RankQueryFinishTrace (1.0s)
+✔ [50/68] Built Subtail.RankQuerySound (6.9s)
+✔ [51/68] Built Subtail.RankQueryEnumeration (1.3s)
+✔ [52/68] Built Subtail.RankQueryEnumerationAudit (681ms)
+⚠ [53/68] Built Subtail.PeriodicMonitor (2.2s)
+warning: Subtail/PeriodicMonitor.lean:257:28: Variable name `hm` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hm
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+✔ [54/68] Built Subtail.PeriodicMonitorComplete (1.0s)
+✔ [55/68] Built Subtail.InfiniteDecision (811ms)
+⚠ [56/68] Built Subtail.RankQueryCoverage (10s)
+warning: Subtail/RankQueryCoverage.lean:55:17: This simp argument is unused:
+  List.getElem_map
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [List.getElem_range]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Subtail/RankQueryCoverage.lean:1077:48: Variable name `j` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _j
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Subtail/RankQueryCoverage.lean:1153:4: Variable name `s` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _s
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Subtail/RankQueryCoverage.lean:1771:32: This simp argument is unused:
+  List.mem_singleton
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [List.mem_cons] at hps
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Subtail/RankQueryCoverage.lean:1799:32: This simp argument is unused:
+  List.mem_singleton
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [List.mem_cons] at hps
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Subtail/RankQueryCoverage.lean:2771:40: Variable name `hai` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hai
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+✔ [57/68] Built Subtail.RankQuerySemanticUnwind (680ms)
+✔ [58/68] Built Subtail.RankQueryDecision (1.2s)
+✔ [59/68] Built Subtail.SubtypeTerminalBridge (605ms)
+✔ [60/68] Built Subtail.EntailmentDecision (665ms)
+✔ [61/68] Built Subtail (561ms)
+✔ [63/68] Built Subtail.TerminalDecisionLazy (747ms)
+✔ [64/68] Built Subtail.InfiniteDecisionLazy (743ms)
+✔ [65/68] Built Subtail.EntailmentFast (1.0s)
+✔ [66/68] Built Subtail.SummaryInstanceCached (787ms)
+✔ [67/68] Built Subtail.FiniteTreeDecision (680ms)
+✔ [68/68] Built Subtail.EntailmentPrepared (782ms)
+Build completed successfully (68 jobs).

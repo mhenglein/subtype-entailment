@@ -1,0 +1,52 @@
+{
+  "status": "NOT_ENTAILED",
+  "stage": "decision",
+  "native_seconds": 0.819,
+  "build_seconds": 0.218,
+  "basis": "Lean EntailmentPrepared.entailsCheck_correct",
+  "wrapper_sha256": "9810cb89e8a25646d75281621c616a1d7c5e09abb1d38250e12e0da272d3256d",
+  "explanation_search": {
+    "status": "FOUND",
+    "candidates": 3,
+    "separating_path": [
+      1
+    ],
+    "normalized_controls": 6,
+    "nfa_states": 8,
+    "method": "canonical finite-seed NFA and subset graph"
+  },
+  "countermodel": {
+    "valid": true,
+    "separating_path": [
+      1
+    ],
+    "nodes": [
+      null,
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "roots": {
+      "x": 1,
+      "y": 2
+    },
+    "checked_premises": 4,
+    "semantics": "arbitrary bottom/product trees; finite graph denotes regular trees"
+  },
+  "certificate_verification": {
+    "status": "VERIFIED",
+    "basis": "Lean RegularTreeCertificate.check_not_entails",
+    "instance_proof": "kernel-checked with decide; no native_decide",
+    "checker_sha256": "f0a271f276adc997620f2034edd3d3e3e44a33045d1b69c489f48ae81c33579f",
+    "input_source_sha256": "b587a892b8618ab96bcfe2e51d03d85fd5b628f216b17802fb70a9c2faafc911",
+    "seconds": 0.819
+  },
+  "seconds": 2.196,
+  "trust_boundary": "Lean verified the finite-graph certificate against emitted original expressions. JSON parsing, source emission and the extractor remain ordinary Python.",
+  "semantics": "arbitrary bottom/product trees"
+}

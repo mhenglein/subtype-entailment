@@ -1,0 +1,15 @@
+theorem Subtail.FOnlyCompilerBridge.original_F : ∀ {k : Nat} (I : Instance k),
+  TerminalRank.TerminalFinals I → ((∃ w, Witness I w) ↔ ∃ w, Witness I w ∧ List.length w ≤ originalF k) :=
+fun {k} I ht =>
+  { mp := terminal_witness_original_bounded I ht,
+    mpr := fun x =>
+      match x with
+      | Exists.intro w ⟨hw, right⟩ => Exists.intro w hw }
+'Subtail.FOnlyCompilerBridge.small_preimage_bounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Subtail.FOnlyCompilerBridge.oldGrowth_step' depends on axioms: [propext, Quot.sound]
+'Subtail.FOnlyCompilerBridge.promoted_finish_original_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Subtail.FOnlyCompilerBridge.coverage_small' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Subtail.FOnlyCompilerBridge.terminal_witness_original_bounded' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Subtail.FOnlyCompilerBridge.original_F' depends on axioms: [propext, Classical.choice, Quot.sound]
