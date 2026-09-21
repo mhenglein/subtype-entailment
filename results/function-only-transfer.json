@@ -1,0 +1,93 @@
+{
+  "checker_sha256": "6fe91892aed56517256c67a4052dd9eee96ab6fd0b4d5f805fa889898340aa03",
+  "command": "python3 experiments/check_function_only_transfer.py --output results/function-only-transfer.json",
+  "counterexample": {
+    "A": "B -> bottom",
+    "B": "bottom -> bottom",
+    "C": [
+      "x <= y"
+    ],
+    "S1": [
+      [
+        1,
+        ""
+      ],
+      [
+        1,
+        "0"
+      ]
+    ],
+    "S2": [
+      [
+        0,
+        ""
+      ],
+      [
+        1,
+        ""
+      ]
+    ],
+    "closure_union": [
+      [
+        0,
+        ""
+      ],
+      [
+        0,
+        "0"
+      ],
+      [
+        1,
+        ""
+      ],
+      [
+        1,
+        "0"
+      ]
+    ],
+    "new_fact": [
+      0,
+      "0"
+    ]
+  },
+  "counts": {
+    "canonical_witness_classes": {
+      "empty": 100,
+      "nonempty_even": 580,
+      "odd": 620
+    },
+    "exhaustive_regular_graph_pairs": 729,
+    "finite_expression_Horn_cases": 2025,
+    "finite_pair_comparisons": 676,
+    "finite_trees_max_constructor_depth_3": 26,
+    "random_regular_graph_pairs_up_to_six_states": 500,
+    "regular_graphs_on_one_or_two_labelled_states_root_zero": 27,
+    "variable_only_canonical_countermodel_cases": 1300
+  },
+  "elapsed_seconds": 0.078227,
+  "environment": {
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.13.5",
+    "workspace": "isolated standalone worktree; not a Subtail clone"
+  },
+  "input_revision": "19b06d4fed9da635d9b911f0e908d04e4fc4b099",
+  "limitations": [
+    "Author-run independent ALGORITHMS, not independent mathematical review.",
+    "No Subtail, Lean, full-suite, integration or performance claim.",
+    "Finite expression truth checks are bounded evidence.",
+    "Variable-only finite-seed closure is exact; no general guarded-closure solver implemented.",
+    "Regular comparisons concern supplied graphs, not regular or arbitrary entailment.",
+    "Absence of finite recursive solutions in this census is not the all-depth proof."
+  ],
+  "named_checks": [
+    "inactive odd-address parity refuted",
+    "node-union closure refuted",
+    "odd and even contravariant cycles accepted coinductively",
+    "same-address canonical reconstruction",
+    "finite model of (X->bottom)<=X",
+    "infinite greatest right-spine fixtures"
+  ],
+  "random_seed": 2026092074,
+  "session": "function-only-transfer-20260920",
+  "status": "PASS"
+}
