@@ -2,38 +2,51 @@
 
 ## Active work and file ownership
 
-**Updated 20 September 2026.** The owner-authorized
-`hardness-top-integration-20260920` session integrates the reviewed #70/#71
-contributions after the completed C086 compiler/F integration.
-[C087](research/claims.md#c087) proves PSPACE hardness for arbitrary and regular
-bottom/product entailment. [C088](research/claims.md#c088) gives a complete
-ordinary explicit-top arbitrary-tree decision reduction, with its language
-lifting core checked in Lean. [Exact validation and boundaries](notes/2026-09-20-hardness-top-integration.md).
-The final publication readback in [#37](https://github.com/mhenglein/subtail/issues/37)
-releases this integration lease. No later implementation is reserved.
+**Updated 21 September 2026.** The owner-authorized
+`publication-candidate-20260921` episode reconciles the released contributions,
+reviews the frozen manuscript and performs expanded fresh-clone reproduction.
+[Exact scope, source heads and validation](notes/2026-09-21-publication-candidate.md).
+The final [#37](https://github.com/mhenglein/subtail/issues/37) readback names
+its published checkpoint and releases the lease. No follow-up research scope
+is assigned by this record. Read current issue comments before writing.
 
-The [submission review](notes/2026-09-20-submission-review.md) accepted nine
-contributions within their exact scopes. The compiler/F pair and hardness/top
-pair are integrated here. The remaining accepted submissions still need their
-own handoff, combined validation and coordinated integration.
-
-| Issue / bounded task | Current disposition and ownership |
+| Issue / bounded task | Current disposition and next obligation |
 |---|---|
-| [#64 manuscript](https://github.com/mhenglein/subtail/issues/64) | Bounded source, mathematical and visual acceptance complete at its recorded checkpoint. No human refereeing or priority claim. |
-| [#65 release](https://github.com/mhenglein/subtail/issues/65) | Technical reproduction complete; licensing, author identities and final release checkpoint remain owner-deferred. |
-| [#66 raw n=6 profiling](https://github.com/mhenglein/subtail/issues/66) / [PR #76](https://github.com/mhenglein/subtail/pull/76) | Diagnostic contribution reviewed; author scope released. Integration and a measured optimization remain separate tasks. Complete n=6 answer stays UNKNOWN. |
-| [#67 native terminal fixtures](https://github.com/mhenglein/subtail/issues/67#issuecomment-5751100015) | `issue67-native-followup-20260920` released all nine new paths at `3135cd075e8c`. This new native diagnostic handoff awaits review and integration; it is outside the earlier nine-submission review. Earlier E061 partial fixtures remain integrated. |
-| [#68 countermodel producer](https://github.com/mhenglein/subtail/issues/68) | Producer core at `049aa110cf13` reviewed. Continuing CI, source handoff and integration remain separate gates; certificate adapter and Python/JSON boundaries remain open. |
-| [#69 smaller compiler and F](https://github.com/mhenglein/subtail/issues/69) / [PR #78](https://github.com/mhenglein/subtail/pull/78) | C086 integrates compiler head `db0a6d3505e9` and F head `6aa7047cc6cbc`, with unchanged proof/checker blobs and continuing combined-tree CI. Coordinator accepts these exact published compiler blobs; unknown local author work is not claimed released. |
-| [#70 hardness](https://github.com/mhenglein/subtail/issues/70) | C087 integrates the ordinary PSPACE lower bound from `371b97c40d53`, with paper proof and E063 replay. Remains open for tighter upper bounds/classification; no finite-tree transfer. |
-| [#71 explicit top](https://github.com/mhenglein/subtail/issues/71) | C088 integrates the complete ordinary arbitrary-tree decision from `0eff4818d990`, the optional checked language core and continuing CI. The theorem task is complete; expression-level formalization/JSON support remain separate proposals. |
-| [#72 arity](https://github.com/mhenglein/subtail/issues/72) | Released ordinary fixed-positive-arity reduction at `3fca2e8bf8a0` reviewed; integration pending. |
-| [#72 standalone first-return theorem](https://github.com/mhenglein/subtail/pull/77) | Released ordinary schema theorem at `910e3071eab4` reviewed; integration pending. No generic compiler implementation or generalized Lean proof. |
-| [#74 variance](https://github.com/mhenglein/subtail/pull/75) | Released ordinary characterization/obstruction at `4ed2fb67458f` reviewed; integration pending. General function-only decidability remains open. |
+| [#64](https://github.com/mhenglein/subtail/issues/64), [#79 manuscript](https://github.com/mhenglein/subtail/issues/79) | #64 preserves the earlier review. #79 covers the expanded frozen paper, exact contribution comparison and rendered artifact; see the current receipt for its actual status. No human refereeing or priority claim. |
+| [#65 release](https://github.com/mhenglein/subtail/issues/65) | Expanded fresh-clone reproduction has a separate source-pinned receipt. Licensing, author identities and a final public release remain owner-deferred. |
+| [#66](https://github.com/mhenglein/subtail/issues/66) / [PR #76](https://github.com/mhenglein/subtail/pull/76) | Released raw-summary diagnostics integrated. A measured proved optimization remains open; complete raw n=6 remains UNKNOWN. |
+| [#67](https://github.com/mhenglein/subtail/issues/67) | Released native follow-up reviewed and integrated with continuing main/PR coverage. Inspections and frontend shortcuts receive no terminal-promotion credit. Automatic depth-two and full-expression terminal coverage remain open unless new successful receipts establish them. |
+| [#68 producer](https://github.com/mhenglein/subtail/issues/68) | Reviewed core at `049aa110cf13` explicitly deferred pending the author's promised final handoff. Branch preserved. Certificate decoration, Python refinement, finite boundary and JSON work remain open. |
+| [#69 bounds](https://github.com/mhenglein/subtail/issues/69) | C086 smaller compiler and original F are integrated and checked; old universal U counterexample remains valid. |
+| [#70 complexity](https://github.com/mhenglein/subtail/issues/70) | C087 ordinary arbitrary/regular PSPACE lower bound integrated. Tight upper classification and finite transfer remain separate. |
+| [#71 explicit top](https://github.com/mhenglein/subtail/issues/71) | C088 ordinary arbitrary-tree theorem and checked language core integrated. Full expression formalization and JSON support remain separate. |
+| [#72 arity and automata](https://github.com/mhenglein/subtail/issues/72) / [PR #77](https://github.com/mhenglein/subtail/pull/77) | C089 fixed-positive-arity reduction and C090 graph-only preimages integrated as reviewed ordinary results. No complete generic compiler or new Lean transfer is claimed. Multiple constructors and other transfers remain open. |
+| [#74 variance](https://github.com/mhenglein/subtail/issues/74) / [PR #75](https://github.com/mhenglein/subtail/pull/75) | C091 active-path/Horn characterization and nonadditivity obstruction integrated. General function-only entailment remains open. |
+| [#73 C030 budget](https://github.com/mhenglein/subtail/issues/73) | Optional formal budget-preservation obligation remains separate from the checked realization and C081. |
 
-These are scope records, not a claim that every contributor is running.
-Shared records, imports, workflows and publication require a fresh integrator
-lease. Unknown local work, historical branches and stashes are preserved.
+These are bounded dispositions, not claims that every contributor is running
+or all private work is saved. Shared records and integration require a fresh
+lease after this episode; no other author workspace or stash is retired.
+
+## September 21: scrutiny, presentation and reproduction
+
+[C089–C091](research/claims.md#c089) record accepted ordinary results with their
+exact restrictions. E065–E067 now have stable experiment entries and continuing
+corpus checks. C081/C085 and the production solver retain their source definitions.
+The manuscript adds explicit contribution statements and primary-source credit
+for the earlier dual-safety viewpoint. Its stronger universal model lifting,
+expression compiler and formalization boundaries remain distinct.
+
+The expanded [release runner](scripts/reproduce_release.py) verifies paper
+provenance, optional quantitative/top modules, exact native case identities,
+independent corpora, actual CLI certificates and source stability in a fresh
+Linux clone. Its diagnostic branch permits UNKNOWN without promoting it to a
+mathematical answer. Read the [receipt](results/publication-reproduction-20260921.json)
+for the checked revision and actual outcome; candidate preparation is not a
+passing run. Author placeholders and licensing remain as requested.
+
+The dated entries below retain earlier evidence and then-current pending work;
+the current disposition table above takes precedence for task status.
 
 ## September 20: PSPACE hardness and explicit top (C087/C088)
 

@@ -53,3 +53,9 @@ jobs:
           python3 paper/check.py
       - name: Replay extension boundary evidence
         run: python3 experiments/check_extension_boundaries.py --check results/extension-boundaries.json
+      - name: Release evidence guards and accepted ordinary extension corpora
+        run: |
+          python3 -m unittest discover -s scripts -p 'test_reproduce_release.py'
+          python3 -m unittest discover -s scripts -p 'test_issue67_provenance.py'
+          python3 scripts/check_research_submissions.py
+          python3 experiments/profile_raw_summary_66.py --self-test --output tmp/raw-summary-guards.json

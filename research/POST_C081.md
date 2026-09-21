@@ -1,5 +1,12 @@
 # Post-C081 programme
 
+**21 September current checkpoint:** the [publication integration](../notes/2026-09-21-publication-candidate.md)
+records five released contributions, the frozen-paper review and expanded fresh
+reproduction. C089–C091 are ordinary companion results with separate limits.
+The #68 producer remains explicitly deferred pending handoff. The
+[completion map](COMPLETION.md) separates remaining research from owner-deferred
+release metadata. Older dated plans below preserve history, not new assignments.
+
 Started: 2026-09-19. Updated: 2026-09-20. Owner: Marcus. Coordination: [#53](https://github.com/mhenglein/subtail/issues/53), integration [#37](https://github.com/mhenglein/subtail/issues/37).
 Current remaining-work map: [COMPLETION.md](COMPLETION.md), tracked in
 [#63](https://github.com/mhenglein/subtail/issues/63). The table below records

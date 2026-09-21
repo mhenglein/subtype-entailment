@@ -1,5 +1,12 @@
 # Function-only variance: guarded closure survives, linear reachability does not
 
+> Current status, 21 September 2026: the ordinary result was independently
+> accepted in the [submission review](2026-09-20-submission-review.md).
+> Its exact integrated scope is [C091](../research/claims.md#c091).
+> [Current integration and reproduction](2026-09-21-publication-candidate.md).
+> The dated author record below is preserved, including its original pending
+> review status and execution limits.
+
 Date: 2026-09-20. Author/session: `function-only-transfer-20260920`.
 Parent #72; child/interface #74; coordination #37; A010/A011/A018.
 Input revision: `19b06d4fed9da635d9b911f0e908d04e4fc4b099`.

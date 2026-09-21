@@ -116,6 +116,34 @@ key step lifts every model of either projection when the other projection is
 satisfiable. This supplies the compatibility needed for a complete reduction;
 merely replacing top by an infinite product would not do so.
 
+The use of two observations has a precedent: Niehren and Priesnitz characterize
+entailment by simultaneous left and right safety, using inherited bottom and
+top observations [@NP03, Section 4, Proposition 1]. Our contribution is not
+this dual viewpoint. It is the construction of two finite top-free systems
+and the proof that, when the opposite system is satisfiable, every model of
+either system lifts to a model of the original constraints. The covering
+condition in Section 14 makes this compatibility explicit.
+
+The contributions can therefore be separated as follows.
+
+1. Sections 7--9 give an effective preimage construction for a whole conjunction
+   of regular-path constraints under a first-return extension. Shared interval
+   observers and a bounded rank iteration yield the terminal decision. Together
+   with the separation and infinite-continuation arguments, this proves
+   Theorem 1.1 for arbitrary bottom/product trees.
+2. Section 13 proves a consuming-cycle dichotomy and derives the finite-tree
+   decision, Theorem 1.2. Both executable decision theorems are checked in Lean.
+3. Section 12.3 transfers the Henglein--Rehof PSPACE-hard source problem to
+   arbitrary and regular bottom/product valuations by a logspace construction.
+   This gives a lower bound, not a matching complexity classification.
+4. Section 14 proves a reduction with at most four top-free calls for arbitrary
+   bottom/product/top trees. Its language-level lifting lemmas are checked in
+   Lean; its labelled-tree and expression-level composition is an ordinary
+   mathematical proof.
+
+These statements specify the results proved here; their priority remains a
+separate literature question.
+
 ### 1.2 Proof strategy
 
 Failure of entailment has a finite separating address. A least propagation
@@ -1557,7 +1585,8 @@ The balanced relation is computable by finite saturation.
 
 Let $T$ be reflexive transitive reachability in this automaton after forgetting
 edge labels, retaining both balanced epsilon edges and letter edges. A return
-path may therefore mix balanced epsilon edges and consuming letter edges. Define
+path may therefore mix balanced epsilon edges and consuming letter edges.
+Thus $T(r,p)$ means that a forward walk leads from $r$ to $p$. Define
 $\operatorname{Growth}(C)$ by the finite test
 
 $$\exists p,r,a\quad

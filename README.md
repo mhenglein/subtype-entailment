@@ -36,7 +36,7 @@ bottom/product PSPACE lower bound. Section 14 proves the explicit-top extension.
 review records are kept in the artifact guide, outside the manuscript.
 Section 13 now gives the full finite-tree proof, including the cycle test,
 finite canonical replacements and worked differences between the two domains.
-[Current manuscript acceptance and review scope](notes/2026-09-20-publication-acceptance.md).
+[Current manuscript review and artifact scope](notes/2026-09-21-publication-candidate.md).
 
 **Small example.** From `x <= y`, covariance gives
 `x × bottom <= y × bottom`. The reverse query fails: set `x = bottom` and
@@ -207,12 +207,17 @@ Its [verification record](notes/2026-09-19-entailment-decision.md) names exact
 builds, kernel replay, semantic reviews and native checks. Use Lean **4.33.1**,
 selected by `lean/lean-toolchain`, and Python 3.9 or newer for the core checks.
 
-For the logged clean-build procedure, use pinned Python **3.13.14** and a
-fresh clone with no `lean/.lake`, then run `python3 scripts/reproduce_release.py`.
-The [clean reproduction record](notes/2026-09-20-clean-reproduction.md) gives
-the exact checked revision and 18-step receipt, including optional modules,
-kernel/runtime audits, CLI countermodels and finite/arbitrary/timeout cases.
-Installed tools are reused; this does not claim a fresh OS installation.
+For the logged clean-build procedure, use **Linux**, pinned Python **3.13.14**
+and Lean **4.33.1** in a fresh clone with no `lean/.lake`, then run
+`python3 scripts/reproduce_release.py`. Linux supplies the native diagnostic
+process-group memory monitor; the individual core checks also run on macOS.
+The [current reproduction record](notes/2026-09-21-publication-candidate.md)
+and [receipt](results/publication-reproduction-20260921.json) give the exact
+checked revision, optional proof modules, accepted extension corpora, native
+strict/diagnostic coverage, PDF provenance and actual CLI certificates.
+The [earlier 18-step receipt](notes/2026-09-20-clean-reproduction.md) remains
+historical evidence. Installed tools are reused; no fresh OS installation or
+particular cloud provider is required. Capped stress remains UNKNOWN.
 Individual checks can also be run as follows:
 
 ```sh

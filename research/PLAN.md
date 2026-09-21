@@ -1,5 +1,12 @@
 # Research plan
 
+**21 September current checkpoint:** the [publication integration](../notes/2026-09-21-publication-candidate.md)
+records five released contributions, the frozen-paper review and expanded fresh
+reproduction. C089–C091 are ordinary companion results with separate limits.
+The #68 producer remains explicitly deferred pending handoff. The
+[completion map](COMPLETION.md) separates remaining research from owner-deferred
+release metadata. Older dated plans below preserve history, not new assignments.
+
 Updated: 2026-09-20 (hardness and explicit-top integration)
 
 **Completed qualitative goal:** decide [Problem 1.7](problem.md) for bottom

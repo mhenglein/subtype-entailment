@@ -176,12 +176,12 @@
     {
       "id": "A010",
       "title": "Build the exact top-free constraint-to-automata pipeline",
-      "status": "active",
+      "status": "tried",
       "outcome": "supported",
-      "owner": "Issue-scoped contributors in STATE.md/#37; hardness/top parent integration complete",
-      "updated": "2026-09-20",
-      "summary": "C081/C085 and C086 remain checked. C087 establishes ordinary arbitrary/regular PSPACE hardness; C088 establishes ordinary explicit-top arbitrary-tree decision with a checked arbitrary-language lifting core. Full explicit-top expression compilation and JSON support remain separate. Existing raw n=6 stress stays UNKNOWN.",
-      "next_step": "Hardness/top integrated with paper and continuing CI; no follow-up scope retained. Recheck #68 producer handoff then integrate its reviewed core; independently review #67 native follow-up at 3135cd0. Other accepted arity/automata/variance contributions await serialization. #70 stays open for tight complexity. License/authors/final release remain deferred; read current issue claims before writing.",
+      "owner": null,
+      "updated": "2026-09-21",
+      "summary": "C081/C085 and C086 remain checked; C087 hardness and C088 ordinary explicit-top decision retain their precise boundaries. C089 fixed arity, C090 graph-only preimages and C091 function-only characterization/obstruction are reviewed ordinary companion results. Publication-candidate review/reproduction and native diagnostics do not strengthen the theorem or solve remaining stress cases.",
+      "next_step": "Read the September 21 publication receipt and current issue claims. #68 producer core is deferred pending explicit author handoff. #66 measured optimization, #67 automatic terminal coverage, #70 tighter complexity, #72 multiple constructors and #74 general function entailment remain separate. Release metadata stays owner-deferred; no worker or write scope is assigned by this record.",
       "record": "research/approaches/A010.md",
       "evidence": [
         "notes/2026-09-04-bridge-foundation.md",
@@ -294,7 +294,18 @@
         "lean/Subtail/ExplicitTopDualProjection.lean",
         "scripts/check_explicit_top.py",
         "experiments/check_explicit_top_dual_projection.py",
-        "results/explicit-top-dual-projection.json"
+        "results/explicit-top-dual-projection.json",
+        "notes/2026-09-21-publication-candidate.md",
+        "results/publication-candidate-20260921.json",
+        "results/publication-reproduction-20260921.json",
+        "notes/prior-work/publication-comparison-2026-09-21.md",
+        "scripts/check_research_submissions.py",
+        "notes/2026-09-20-ternary-transfer.md",
+        "results/ternary-transfer.json",
+        "notes/2026-09-20-standalone-first-return-astra.md",
+        "results/standalone-first-return-astra.json",
+        "notes/2026-09-20-function-only-transfer.md",
+        "results/function-only-transfer.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/63"
     },
@@ -504,9 +515,9 @@
       "status": "tried",
       "outcome": "supported",
       "owner": null,
-      "updated": "2026-09-20",
+      "updated": "2026-09-21",
       "summary": "C081 qualitative decision, C082 larger bound and C086 original terminal F are checked. A filtered compiler now satisfies the original U contract; the old concrete compiler U remains refuted. No practical speedup or tight input complexity class follows. C087 now integrates the reviewed ordinary PSPACE lower bound for arbitrary/regular bottom-product trees; no finite transfer or tight class follows.",
-      "next_step": "C086 original F/smaller-compiler and C087 hardness are integrated. Preserve the old counterexample and valid C082 bound. #70 remains open for tighter upper bounds/classification, with a fresh scope required. The new #67 native handoff at 3135cd0 awaits separate review/integration.",
+      "next_step": "Read the September 21 publication receipt and current issue claims. #68 producer core is deferred pending explicit author handoff. #66 measured optimization, #67 automatic terminal coverage, #70 tighter complexity, #72 multiple constructors and #74 general function entailment remain separate. Release metadata stays owner-deferred; no worker or write scope is assigned by this record.",
       "record": "research/approaches/A017.md",
       "evidence": [
         "notes/2026-09-04-minimal-witness-structure.md",
@@ -646,19 +657,24 @@
         "results/hardness-top-integration-20260920.json",
         "notes/2026-09-20-hr-topfree-transfer-70.md",
         "experiments/check_hr_topfree_transfer_70.py",
-        "results/hr-topfree-transfer-70.json"
+        "results/hr-topfree-transfer-70.json",
+        "notes/2026-09-21-publication-candidate.md",
+        "results/publication-candidate-20260921.json",
+        "results/publication-reproduction-20260921.json",
+        "notes/prior-work/publication-comparison-2026-09-21.md",
+        "scripts/check_research_submissions.py"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/69"
     },
     {
       "id": "A018",
       "title": "Maintain the Lean core and verify critical obligations",
-      "status": "active",
+      "status": "tried",
       "outcome": "supported",
-      "owner": "Issue-scoped contributors in STATE.md/#37; hardness/top parent integration complete",
-      "updated": "2026-09-20",
-      "summary": "C081/C085 and C086 remain checked. C087 establishes ordinary arbitrary/regular PSPACE hardness; C088 establishes ordinary explicit-top arbitrary-tree decision with a checked arbitrary-language lifting core. Full explicit-top expression compilation and JSON support remain separate. Existing raw n=6 stress stays UNKNOWN.",
-      "next_step": "Hardness/top integrated with paper and continuing CI; no follow-up scope retained. Recheck #68 producer handoff then integrate its reviewed core; independently review #67 native follow-up at 3135cd0. Other accepted arity/automata/variance contributions await serialization. #70 stays open for tight complexity. License/authors/final release remain deferred; read current issue claims before writing.",
+      "owner": null,
+      "updated": "2026-09-21",
+      "summary": "C081/C085 and C086 remain checked; C087 hardness and C088 ordinary explicit-top decision retain their precise boundaries. C089 fixed arity, C090 graph-only preimages and C091 function-only characterization/obstruction are reviewed ordinary companion results. Publication-candidate review/reproduction and native diagnostics do not strengthen the theorem or solve remaining stress cases.",
+      "next_step": "Read the September 21 publication receipt and current issue claims. #68 producer core is deferred pending explicit author handoff. #66 measured optimization, #67 automatic terminal coverage, #70 tighter complexity, #72 multiple constructors and #74 general function entailment remain separate. Release metadata stays owner-deferred; no worker or write scope is assigned by this record.",
       "record": "research/approaches/A018.md",
       "evidence": [
         "lean/README.md",
@@ -846,7 +862,18 @@
         "lean/Subtail/ExplicitTopDualProjection.lean",
         "scripts/check_explicit_top.py",
         "experiments/check_explicit_top_dual_projection.py",
-        "results/explicit-top-dual-projection.json"
+        "results/explicit-top-dual-projection.json",
+        "notes/2026-09-21-publication-candidate.md",
+        "results/publication-candidate-20260921.json",
+        "results/publication-reproduction-20260921.json",
+        "notes/prior-work/publication-comparison-2026-09-21.md",
+        "scripts/check_research_submissions.py",
+        "notes/2026-09-20-ternary-transfer.md",
+        "results/ternary-transfer.json",
+        "notes/2026-09-20-standalone-first-return-astra.md",
+        "results/standalone-first-return-astra.json",
+        "notes/2026-09-20-function-only-transfer.md",
+        "results/function-only-transfer.json"
       ],
       "issue": "https://github.com/mhenglein/subtail/issues/63"
     }

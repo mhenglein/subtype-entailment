@@ -1429,6 +1429,25 @@ No existing implementation, proof, default import or CI workflow changes.
 [complete parent receipt](../results/issue67-independent/full-checkout-replay.json).
 
 
+**Native follow-up, September 21.** The accepted driver and supervisor from
+`3135cd075e8ce31292fa609d3e9b3a80b2b9bb35` are now integrated. On Linux run:
+
+```sh
+(cd lean && lake build +Subtail.EntailmentPrepared +Subtail.TerminalDecisionLazy)
+python3 experiments/issue67_native_probe.py --mode selftest --output tmp/issue67/native-supervisor.json
+python3 experiments/issue67_native_probe.py --mode acceptance --output tmp/issue67/native-acceptance.json
+python3 experiments/issue67_native_probe.py --mode stress --output tmp/issue67/native-stress.json
+```
+
+Fourteen strict cases must pass. The six stress cases may remain UNKNOWN;
+inspections, phase probes and frontend shortcuts never receive automatic
+promotion credit. Wall/CPU limits and a sampled process-group RSS threshold
+bound runs; a 50ms sampler can overshoot its memory threshold. The fresh
+[publication receipt](../results/publication-reproduction-20260921.json) records
+actual outcomes and all source pins. This is diagnostic validation, not a new
+proof, performance improvement or completion of the broader #67 scope.
+
+
 <a id="e062"></a>
 
 ### E062 — Smaller compiler and original-F regression evidence
@@ -1514,6 +1533,50 @@ an ordinary proof, not a result of finite tests or a native Lean top solver.
 [unchanged receipt](../results/explicit-top-dual-projection.json),
 [ordinary proof](../notes/2026-09-20-explicit-top-dual-projection.md),
 [combined validation](../notes/2026-09-20-hardness-top-integration.md).
+
+<a id="e065"></a>
+
+### E065 — Fixed-arity summary and binary-code components
+
+- **Command:** `python3 experiments/ternary_transfer.py --output tmp/ternary-transfer.json`
+- **Claim:** [C089](../research/claims.md#c089); ordinary reduction with independent review.
+- **Saved evidence:** [author receipt](../results/ternary-transfer.json).
+- **Coverage:** finite summary/oracle comparisons, binary coding including
+  incomplete-word completion, exact graph countermodels and naming fixtures.
+  The `coding`, `expressions`, `full_pipeline_fixtures` and `status` fields
+  distinguish the checks. The complete generalized pipeline and its actual
+  C029 invocation are not executed.
+
+<a id="e066"></a>
+
+### E066 — Graph-only first-return component checks
+
+- **Command:** `python3 experiments/standalone_first_return_astra.py --output tmp/standalone-first-return-astra.json`
+- **Claim:** [C090](../research/claims.md#c090); ordinary schema theorem with independent review.
+- **Saved evidence:** [author receipt](../results/standalone-first-return-astra.json).
+- **Coverage:** shared-generator and origin constraints, interval products,
+  empty and singleton boundaries, and failed stronger entrance/inverse-edge
+  claims. `bounds`, `fixtures`, `interval_products` and `status` retain the
+  finite scope. This is not an implementation of the complete generic compiler.
+
+<a id="e067"></a>
+
+### E067 — Function-only characterization and obstruction fixtures
+
+- **Command:** `python3 experiments/check_function_only_transfer.py --output tmp/function-only-transfer.json`
+- **Claim:** [C091](../research/claims.md#c091); ordinary characterization and precise obstruction.
+- **Saved evidence:** [author receipt](../results/function-only-transfer.json).
+- **Coverage:** 676 finite-pair comparisons, 729 small regular graph pairs,
+  500 seeded graph samples, 2,025 finite-expression Horn cases and 1,300
+  variable-only seeded countermodel cases. `counts`, `counterexample`,
+  `random_seed`, `limitations` and `status` delimit evidence. This proves no
+  general function decision and implements no general guarded-closure solver.
+
+The continuing main/PR checks replay E065–E067 using
+`python3 scripts/check_research_submissions.py`. It compares all scientific
+receipt fields, including embedded source hashes, against preserved author
+receipts. Only recorded platform/Python/timing metadata is ignored. Fresh
+outputs go to `tmp/`; the historical receipts are not overwritten.
 
 ## Reconciled supporting evidence (September 20)
 

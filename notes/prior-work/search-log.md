@@ -70,3 +70,11 @@ no paid-index search, no author contact and no claimed search of every venue
 or dissertation. No named search round establishes the absence of an existing
 solution. The two-round stopping criterion above is a proposed workflow;
 it is not asserted to have been reached for all topic families in this pass.
+
+
+## Frozen-candidate refresh, 2026-09-21
+
+The [publication comparison](publication-comparison-2026-09-21.md) records
+six exact queries, freshly inspected primary theorem locators, two inaccessible
+forward leads, and the limits of the search. NP03's dual safety is now credited
+explicitly; universal projection lifting remains the comparison target.

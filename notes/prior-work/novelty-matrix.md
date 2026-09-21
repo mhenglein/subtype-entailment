@@ -1,5 +1,14 @@
 # Novelty and transfer matrix
 
+## September 21 frozen-candidate comparison
+
+The [fresh bounded comparison](publication-comparison-2026-09-21.md) checks the
+primary Henglein–Rehof statements and adds NP03 Section 4 Proposition 1 as the
+explicit dual-safety precedent for C088. The manuscript now separates its four
+contributions and their formalization boundaries. No general priority claim or
+exhaustive search follows. C089–C091 are companion results with separate ordinary
+proofs and review; they do not expand the frozen paper's scope.
+
 This table specifies claims to compare, not novelty scores. A theorem not found in this bounded search is **not** thereby absent from the literature. Source keys resolve in [bibliography.md](bibliography.md); scientific status resolves in the current [claims ledger](../../research/claims.md). The [agent handoff](agent-handoff.md) points to current authority; historical pauses and task lists are not current instructions. The [dated detailed review](review-2026-09-19.md) supplies source-to-obligation reading routes.
 
 **September 20 acceptance pass.** The [publication review](../2026-09-20-publication-acceptance.md)
@@ -90,7 +99,7 @@ are established in the ledger; their novelty and any PSPACE transfer are not.
 | C081: complete finite-expression decision | PW-NP99; PW-NP03; PW-PRI04; PW-BPR19; PW-SCH21 | A total executable Boolean and kernel-checked correctness theorem for finite syntax over bottom and one covariant binary product, with arbitrary prefix-closed product-node valuations, including nonregular infinite trees; the checked summary/infinite/terminal composition is part of the candidate contribution | Candidate new relative to the inspected sources, not a priority claim. The exact no-top and bottom/top domains are distinct; C088 now supplies an ordinary decision reduction from the latter. Compare its two projections and universal lifting with prior encodings. Compare the terminal first-return/rank-query compiler with cap universality and periodic-selection results. Preserve the withdrawn status of SCH21 and slide-only status of BPR19. Keep complexity, finite-tree restrictions, and C080 U/F claims separate. See [dated C081 review](c081-review-2026-09-19.md). |
 | C085: complete finite-tree decision | HR97 Theorems 4.7–4.8/Corollary 4.9; HR98 Theorem 2; NP99 Theorem 14; NP03 Theorems 1, 2, 4/Lemma 1 | A consuming reverse-pop cycle rules out finite models; otherwise finite-seed canonical countermodels are finite. A total checked Boolean decides the original expressions over finite bottom/product valuations. | Compare the forced-target hypothesis and both model-transfer directions with the older finite results. Structural simple-type results use a different order; nonstructural comparisons allow semantic top. The infinite omega guard cannot transfer a finite upper bound. Other encodings, exact non-subsumption and priority remain open. See [dated finite review](finite-tree-comparison-2026-09-20.md). |
 | C087: exact PSPACE lower bound | HR98 Section 4 and Theorem 1 | Marker coding transfers binary CLOSED-UNIV into always-satisfiable arbitrary/regular bottom-product inputs | The ordinary proof and source audit establish transfer. Priority, tight complexity and a finite-domain lower bound remain separate. |
-| C088: explicit-top arbitrary-tree decision | HR98; NP99/NP03; C081 | Two compatible projections and least forced-top language reduce all finite expressions to at most four top-free calls | The ordinary theorem is reviewed and the language core checked. Compare exact lifting/compilation statements before claiming novelty; no full Lean expression endpoint yet. |
+| C088: explicit-top arbitrary-tree decision | HR98; NP99; NP03 Section 4 Proposition 1; C081 | Two compatible projections and least forced-top language reduce all finite expressions to at most four top-free calls | The ordinary theorem is reviewed and the language core checked. Compare exact lifting/compilation statements before claiming novelty; no full Lean expression endpoint yet. |
 | Problem 1.7 itself | Historical full-signature NSSE lineage; withdrawn attempted solution | C081 supplies the total checked decision for the exact top-free arbitrary-tree model | Compare the complete construction and semantic domain with prior work. Keep explicit numerical bounds, complexity classification and other NSSE signatures separate. The result is established in the current ledger; novelty remains a comparison question. |
 
 ## Two corrections to the earlier comparison method

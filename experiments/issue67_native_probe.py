@@ -214,6 +214,18 @@ def selected(mode):
         ['lazy', '3', 'plain'], ['lazy', '3', 'ordered'], ['phases', '3', 'plain']]
 
 
+def protected_source_changes(root, base, paths):
+    """Allow additive modules while retaining every pre-existing dependency pin."""
+    names = subprocess.check_output(
+        ['git', 'ls-tree', '-r', '--name-only', '-z', base, '--', *paths], cwd=root)
+    files = [p.decode() for p in names.split(b'\0') if p]
+    if not files:
+        raise ValueError('Protected base contains no source files')
+    changed = subprocess.check_output(
+        ['git', 'diff', '--name-only', '-z', base, '--', *files], cwd=root)
+    return [p.decode() for p in changed.split(b'\0') if p]
+
+
 def provenance():
     from issue67_independent_fixtures import source_receipt
     old = source_receipt()
@@ -222,11 +234,15 @@ def provenance():
     protected = ['lean/Subtail', 'scripts/subtail.py',
                  'experiments/issue67_independent_fixtures.py',
                  'tests/fixtures/issue67-independent/cases.json']
-    changed = subprocess.check_output(['git', 'diff', '--name-only', BASE, '--', *protected], cwd=ROOT, text=True)
-    if changed.strip():
-        raise ValueError('Protected source differs from pinned base: ' + changed)
+    changed = protected_source_changes(ROOT, BASE, protected)
+    if changed:
+        raise ValueError('Protected source differs from pinned base: ' + ', '.join(changed))
     sources = [DRIVER, Path(__file__).resolve(), ROOT / 'lean/lean-toolchain',
-               ROOT / 'scripts/subtail.py', *sorted((ROOT / 'lean/Subtail').glob('*.lean'))]
+               ROOT / 'lean/lakefile.toml', ROOT / 'lean/lake-manifest.json',
+               ROOT / 'scripts/subtail.py',
+               ROOT / 'experiments/issue67_independent_fixtures.py',
+               ROOT / 'tests/fixtures/issue67-independent/cases.json',
+               *sorted((ROOT / 'lean/Subtail').rglob('*.lean'))]
     return {'base_revision': BASE, 'checkout_revision': head,
             'protected_source_diff': changed, 'E061_dependency_pins': old,
             'source_sha256': {str(p.relative_to(ROOT)): sha(p) for p in sources}}

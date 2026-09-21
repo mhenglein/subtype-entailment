@@ -1,0 +1,61 @@
+{
+  "author_heads": {
+    "arity": "3fca2e8bf8a0036469867cb528b3ff96b9d9eb96",
+    "native67": "3135cd075e8ce31292fa609d3e9b3a80b2b9bb35",
+    "pr75": "4ed2fb67458f37b286740a325d91404bb22b58f0",
+    "pr76": "986e34b4b61a1ba05a45282bd1f3c84f28103fee",
+    "pr77": "910e3071eab494e58e01c53b1e6891186ed73b30"
+  },
+  "base_main": "fed560c6682e5ac1e1661d5c60e595f948e768ba",
+  "deferred": {
+    "producer68": {
+      "head": "049aa110cf13688d4058b1cbecf80aa0fc3a7fb6",
+      "reason": "Final author handoff absent; branch preserved",
+      "request": "https://github.com/mhenglein/subtail/issues/68#issuecomment-5754530885"
+    }
+  },
+  "fresh_reproduction": "PENDING",
+  "integration_branch": "codex/publication-candidate-20260921",
+  "limits": "Candidate preparation only; no completed fresh reproduction or final publication claimed.",
+  "local_checks": {
+    "diff_check": "PASS",
+    "index": {
+      "records": 179,
+      "status": "PASS"
+    },
+    "lean": "NOT RUN locally",
+    "paper_map": {
+      "mapped": 23,
+      "ordinary": 7,
+      "status": "PASS"
+    },
+    "python_tests": {
+      "command": "python3 -m unittest discover -s scripts -p 'test_*.py'",
+      "status": "PASS",
+      "tests": 96
+    },
+    "scholarship": {
+      "sources": 26,
+      "status": "PASS"
+    }
+  },
+  "publication": "PENDING",
+  "render": "PENDING",
+  "reviews": {
+    "code": {
+      "limits": "Read-only source review; no builds or raw artifact inspection",
+      "reviewer": "historical_pr_review",
+      "scope": "Native provenance, oracle and resource/status boundaries; release case/manifest/verdict guards and main/PR workflow triggers",
+      "status": "ACCEPT_AFTER_FIXES"
+    },
+    "mathematical": {
+      "limits": "Readback of supplied argument with inherited context; no builds, human refereeing or exhaustive declaration audit",
+      "manuscript_sha256": "18f1f4f0353ae2472dffe7cf803e9ae59be8500a66dbe1ba6c29a7483b50c446",
+      "reviewer": "publication_proof_review",
+      "scope": "Sections 1-15, dependency/declaration maps, selected critical declarations; two wording fixes re-read",
+      "status": "ACCEPT"
+    }
+  },
+  "session": "publication-candidate-20260921",
+  "status": "PENDING"
+}

@@ -1,5 +1,12 @@
 # Publication, solver and extension-proof plan
 
+**21 September current checkpoint:** the [publication integration](../notes/2026-09-21-publication-candidate.md)
+records five released contributions, the frozen-paper review and expanded fresh
+reproduction. C089–C091 are ordinary companion results with separate limits.
+The #68 producer remains explicitly deferred pending handoff. The
+[completion map](COMPLETION.md) separates remaining research from owner-deferred
+release metadata. Older dated plans below preserve history, not new assignments.
+
 Date: 2026-09-20. Reviewed baseline: `0ef097576686a5d3886fb89cbce504d03dc0bfa9`.
 Coordination: [#54](https://github.com/mhenglein/subtail/issues/54), integration
 [#37](https://github.com/mhenglein/subtail/issues/37). Related workstreams: A010/A018.

@@ -61,7 +61,7 @@ def main():
     tex = OUT / "subtail-paper.tex"
     run(["pandoc", str(md), "--from=markdown+tex_math_dollars+raw_tex", "--standalone",
          "--to=latex", "--metadata", f"title={title}", "--metadata", "author=Author and affiliation placeholders",
-         "--metadata", "date=20 September 2026",
+         "--metadata", "date=21 September 2026",
          "--citeproc", "--bibliography", str(PAPER / "references.bib"),
          "--csl", str(PAPER / "references.csl"), "--metadata", "link-citations=true",
          "--variable", "documentclass=article", "--variable", "fontsize=11pt", "--variable", "papersize=a4",

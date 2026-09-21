@@ -26,6 +26,9 @@ on:
       - 'scripts/check_entailment_decision.py'
       - 'scripts/check_rank_weight_native.py'
       - 'scripts/check_original_bounds.py'
+      - 'scripts/reproduce_release.py'
+      - 'scripts/test_reproduce_release.py'
+      - 'scripts/test_issue67_provenance.py'
       - 'scripts/check_explicit_top.py'
       - 'scripts/test_check_explicit_top.py'
       - 'scripts/test_check_original_bounds.py'
@@ -61,6 +64,9 @@ on:
       - 'scripts/check_entailment_decision.py'
       - 'scripts/check_rank_weight_native.py'
       - 'scripts/check_original_bounds.py'
+      - 'scripts/reproduce_release.py'
+      - 'scripts/test_reproduce_release.py'
+      - 'scripts/test_issue67_provenance.py'
       - 'scripts/check_explicit_top.py'
       - 'scripts/test_check_explicit_top.py'
       - 'scripts/test_check_original_bounds.py'
@@ -840,6 +846,28 @@ jobs:
           PYCODE
       - name: Earlier Lean core, axioms and Python agreement
         run: python3 scripts/check_lean.py
+      - name: Native terminal probe and supervisor boundaries
+        run: |
+          (cd lean && lake build +Subtail.EntailmentPrepared +Subtail.TerminalDecisionLazy && lake env lean Issue67NativeProbe.lean)
+          python3 experiments/issue67_native_probe.py --mode selftest --output tmp/issue67-native/selftest.json
+          python3 experiments/issue67_native_probe.py --output tmp/issue67-native/acceptance.json
+          python3 experiments/issue67_native_probe.py --mode stress --output tmp/issue67-native/stress.json
+          python3 - <<'PY'
+          import sys
+          from pathlib import Path
+          sys.path.insert(0, 'scripts')
+          from reproduce_release import native_receipt
+          print(native_receipt(Path('tmp/issue67-native/acceptance.json')))
+          print(native_receipt(Path('tmp/issue67-native/stress.json'), diagnostic=True))
+          PY
+      - name: Preserve native terminal receipts
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: issue67-native-audit
+          path: tmp/issue67-native/
+          retention-days: 90
+          if-no-files-found: warn
       - name: Verify recorded Lean evidence and research records
         run: |
           git diff --exit-code -- results/lean-checks.json

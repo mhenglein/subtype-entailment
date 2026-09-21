@@ -1568,6 +1568,103 @@ The corpus's 217 systems without two bounded witnesses remain UNKNOWN.
 Finite/regular explicit-top theorems, additional constructors, other variance,
 tight complexity and publication priority require separate arguments.
 
+<a id="c089"></a>
+
+### C089 — Fixed positive arity reduces to binary bottom/product entailment
+
+**Statement.** For each fixed positive arity r, finite-expression entailment
+with bottom and one covariant r-ary constructor, under arbitrary possibly
+nonregular trees, has a total computable query-dependent many-one reduction
+to binary bottom/product entailment. The reduction preserves satisfiability
+and supplies countermodel maps in both directions.
+
+**Status.** `WRITTEN PROOF + INDEPENDENT REVIEW + COMPONENT REPRO`.
+The construction uses exact naming, finite push/pop summaries and a binary
+prefix code. Its strong absorption invariant permits completion of partial
+codewords; truncation alone is false. A source inconsistency test gives a
+fixed inconsistent output. Otherwise the existing binary C029 decision handles
+the infinite-continuation case; C031 terminalization and C030 realization
+handle the remaining case. All target valuations are covered, not only encoded
+ones. C081 then gives decidability for the source domain.
+
+**Evidence.** [Ordinary construction and failed homomorphism](../notes/2026-09-20-ternary-transfer.md),
+[accepted submission readback](../notes/2026-09-20-submission-review.md),
+[E065](../experiments/README.md#e065), and
+[publication integration](../notes/2026-09-21-publication-candidate.md).
+
+**Limits.** No polynomial preprocessing bound, homomorphic expression encoding,
+finite-tree transfer, complete implemented translator or new generalized Lean
+proof is claimed. The component corpus does not execute the whole generalized
+pipeline or its C029 call. Other labels, explicit top and variance need their
+own argument. This does not establish priority.
+
+<a id="c090"></a>
+
+### C090 — Graph-only first-return preimages preserve a shared generator
+
+**Statement.** For the finite relational single-entrance extension schema T
+and observer/query language defined in Sections 1–2 of the linked note, a
+finite query Pre_T(phi) is effectively constructible from T and phi alone.
+For every admissible finite coloured base graph H,
+
+```text
+H satisfies Pre_T(phi) iff some single legal decorated g satisfies H[g] |= phi.
+```
+
+The output uses the same query language. All atoms share the same decorated
+generator, including its origins, emitted word and finite controls. No bound
+on the size of H, generator length or accepting paths is an input. The formula
+equivalence also holds for infinite H with finite-walk semantics; effective
+finite-graph evaluation is a separate assertion.
+
+**Status.** `WRITTEN PROOF + INDEPENDENT REVIEW + COMPONENT REPRO`.
+Bounded diagrams and products of all observer occurrences on each physical
+interval give coverage and reconstruction. The exact relational surgery,
+finite tables and unique-End colour conditions are hypotheses. The note also
+proves a bounded-portal variant with its fixed attachment interface.
+
+**Evidence.** [Schema, construction, counterexamples and source comparison](../notes/2026-09-20-standalone-first-return-astra.md),
+[accepted submission readback](../notes/2026-09-20-submission-review.md),
+[E066](../experiments/README.md#e066), and
+[publication integration](../notes/2026-09-21-publication-candidate.md).
+
+**Limits.** This is an ordinary graph theorem, not an implemented generic
+compiler, a new generalized Lean theorem or an arbitrary graph transformation
+result. Inverse edges and unbounded fresh entrances break the given bound.
+Bounded component tests and the limited prior-work comparison prove neither
+all-input correctness nor publication priority.
+
+<a id="c091"></a>
+
+### C091 — Function-only guarded closure and a precise reachability obstruction
+
+**Statement.** Over arbitrary trees with bottom and one binary function
+constructor, contravariant in its first argument and covariant in its second,
+subtyping is characterized by absence of a finite active-address mismatch,
+with comparison direction reversed at odd argument polarity. Finite constraints
+have an exact positive guarded ground-Horn presentation. Their least closure
+under function-node inclusion yields the stated finite-address seeded
+countermodel characterization. This closure is not additive in its seeds.
+
+**Status.** `WRITTEN PROOF + INDEPENDENT REVIEW + COMPONENT REPRO`.
+The nonadditivity example rules out a fixed graph representation with per-fact
+seed encoding and existential reachability decoding, even with auxiliary or
+signed controls. A separate finite example shows that subtype-least solutions
+need not exist. These are different assertions: the node-inclusion least
+closure does exist. The finite obstructions also apply to regular and finite
+valuation domains.
+
+**Evidence.** [Exact order, guarded closure and counterexamples](../notes/2026-09-20-function-only-transfer.md),
+[accepted submission readback](../notes/2026-09-20-submission-review.md),
+[E067](../experiments/README.md#e067), and
+[publication integration](../notes/2026-09-21-publication-candidate.md).
+
+**Limits.** Neither decidability nor undecidability of function-only entailment
+is proved. The obstruction does not exclude other reductions, and semantic
+least closure alone supplies no effective finite representation or terminating
+word search. There is no new Lean proof or general guarded-closure solver.
+#74 and the wider variance task remain open.
+
 ## Explicitly unestablished
 
 The following are deliberately not accepted claims in this ledger:

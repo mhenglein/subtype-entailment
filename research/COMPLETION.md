@@ -1,6 +1,6 @@
 # Completion checklist
 
-Updated: 2026-09-20. Owner: Marcus. Completion tracker: [#63](https://github.com/mhenglein/subtail/issues/63).
+Updated: 2026-09-21. Owner: Marcus. Completion tracker: [#63](https://github.com/mhenglein/subtail/issues/63).
 Integration and scope claims stay in [#37](https://github.com/mhenglein/subtail/issues/37).
 This document maps remaining deliverables to issues; mathematical status remains
 in [STATE](../STATE.md) and the [claim ledger](claims.md). Issue creation assigns
@@ -28,6 +28,9 @@ no worker, changes no workstream owner and reserves no path.
   countermodel extraction and Lean checking of supplied arbitrary-tree graph
   certificates. E060 completes 38/38 fixed and 19/19 deeper cases; the six-variable
   empty raw stress input remains UNKNOWN under its 20-second cap.
+- **C089–C091:** reviewed ordinary fixed-positive-arity reduction, graph-only
+  first-return preimage theorem, and function-only characterization/nonadditivity
+  obstruction. These are separate companion results with bounded component checks.
 - **Paper/artifact draft:** full ordinary terminal and finite-tree arguments,
   Henglein–Rehof/ Niehren–Priesnitz comparison, declaration map and research tag.
 
@@ -39,7 +42,7 @@ on every input, a complete formal explicit-top implementation, or other signatur
 
 | Order | Remaining deliverable | Acceptance | Issue |
 |---|---|---|---|
-| 1 | Final mathematical and contribution review — completed at the recorded checkpoint | Exact source/theorem/domain attribution, examples/maps and all 28 PDF pages checked; bounded independent review accepted | [#64](https://github.com/mhenglein/subtail/issues/64) |
+| 1 | Frozen-paper mathematical and contribution review | Whole-manuscript readback, exact contribution/source domains, declaration map and rendered PDF; outcome at the current candidate receipt | [#79](https://github.com/mhenglein/subtail/issues/79); earlier [#64](https://github.com/mhenglein/subtail/issues/64) preserved |
 | 2 | Reproducible release | Clean-environment proof/CLI/experiment receipt; accurate documentation; finalized metadata and immutable release checkpoint | [#65](https://github.com/mhenglein/subtail/issues/65) |
 
 The proof milestone is complete. A paper/artifact release is done when both
@@ -50,7 +53,7 @@ placeholders. Work on reproducibility can proceed; final metadata and a licensed
 public release wait for those choices. Do not ask again merely to clean up issues.
 No external human referee is automatically commissioned.
 
-September 20 technical checkpoint: the [manuscript acceptance record](../notes/2026-09-20-publication-acceptance.md)
+Earlier September 20 technical checkpoint: the [manuscript acceptance record](../notes/2026-09-20-publication-acceptance.md)
 separates source/literature, mathematical and visual reviews. The
 [fresh project-cache reproduction](../notes/2026-09-20-clean-reproduction.md)
 passed 18 selected checks at its recorded revision, including the optional
@@ -71,17 +74,15 @@ and the issue comments; this record grants no overlapping write scope.
 | Other consequences | Arity, constructor labels, variance and automata results | One exact reviewed transfer/result at a time; separate semantic obligations | [#72](https://github.com/mhenglein/subtail/issues/72) |
 | Optional converse certification | Formal C030 budget preservation | Connect the exact ordinary budget statement to checked declarations and differential evidence | [#73](https://github.com/mhenglein/subtail/issues/73) |
 
-Current practical evidence: #66's separate native diagnostic identifies transition
-construction and dense flag construction as capped phases; its n=6 complete
-answer is still UNKNOWN. [E061](../experiments/README.md#e061) closes the scoped
-independent Python fixture/review/replay portion of #67. Automatic successful
-native depth-two and original-expression coverage remain open; six stress
-calls stay UNKNOWN. The new #67 native handoff is released and awaits its own
-review; its author report is not relabelled as accepted evidence here. The
-[submission review](../notes/2026-09-20-submission-review.md) accepted the scoped
-producer, hardness and extension contributions; their integration remains
-separate from the completed compiler/F integration. Read the current ownership
-record in [STATE](../STATE.md#active-work-and-file-ownership).
+Current bounded dispositions: #66 diagnostics, C089 fixed arity, C090 graph-only
+preimages, C091 variance analysis and #67 native diagnostics are integrated in
+the [publication candidate](../notes/2026-09-21-publication-candidate.md).
+Their broader issues remain open for the exact questions above. The native
+suite distinguishes strict answers, inspections, frontend shortcuts and capped
+stress; none is substituted for automatic depth-two terminal coverage. #68's
+reviewed producer is explicitly deferred pending its promised author handoff.
+Its branch is preserved, with a public coordination request. New implementation
+requires a fresh scoped claim; no worker is assigned here.
 
 These issues preserve the wider requested programme. They are separate from
 release gates and from the completed proof of Problem 1.7. A restricted result
@@ -116,6 +117,19 @@ open for the exact complexity frontier. #71's stated ordinary theorem and
 selective-formalization acceptance are complete. A future implementation should
 formalize the labelled-tree correspondence and finite projection compiler,
 compose the four C081 calls, then add explicit-top syntax and countermodel
-output. No worker or file is reserved for that follow-up. The remaining reviewed
-producer, arity and automata submissions still need serialized integration;
-#67's new native handoff requires its own review.
+output. No worker or file is reserved for that follow-up. The later publication candidate integrates the released arity, automata,
+variance and native diagnostic submissions. The reviewed producer remains
+deferred pending handoff. See the current disposition above.
+
+
+## Current technical publication checkpoint
+
+The [September 21 record](../notes/2026-09-21-publication-candidate.md) separates
+whole-paper agent review, primary-source comparison, visual inspection and fresh
+Linux reproduction. Its receipt is the authority for actual checked revisions
+and outcomes. The release runner now includes the optional quantitative/top
+modules and newly accepted corpora and rejects stale PDF provenance or missing
+case coverage. This completes only the technical gates once the receipt passes.
+License, authors/affiliations and a final public release remain explicitly
+deferred. No external human referee, venue or cloud service is required or
+commissioned by repository cleanup.

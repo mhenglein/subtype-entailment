@@ -1,5 +1,12 @@
 # A graph-only first-return preimage theorem
 
+> Current status, 21 September 2026: the ordinary result was independently
+> accepted in the [submission review](2026-09-20-submission-review.md).
+> Its exact integrated scope is [C090](../research/claims.md#c090).
+> [Current integration and reproduction](2026-09-21-publication-candidate.md).
+> The dated author record below is preserved, including its original pending
+> review status and execution limits.
+
 Date: 2026-09-20. Actor: `standalone-first-return-20260920-astra`.
 Repository input: `19b06d4fed9da635d9b911f0e908d04e4fc4b099`.
 Remote branch: `codex/standalone-first-return-20260920-astra`.

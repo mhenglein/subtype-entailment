@@ -30,6 +30,8 @@ establish publication priority or human peer review.
   findings, corrections and validation limits for the standalone manuscript.
 - [Original exposition review](../notes/2026-09-19-post-c081-paper-readback.md):
   preserved evidence for the earlier manuscript and source checkpoint.
+- [Frozen-candidate review](../notes/2026-09-21-publication-candidate.md): whole-paper
+  readback, exact contribution comparison, render and expanded reproduction.
 
 The seventeen original mapped results retain mathematical source revision
 `c946d86b9e65da2877e0df42c710abbdcb5a4037`. The four finite-tree results use
@@ -92,8 +94,8 @@ Historical results apply to their recorded revisions; a new PDF build does not
 repeat them. JSON handling, extraction and rooted graph finiteness retain the
 external boundaries documented in the solver notes.
 
-For one logged reproduction from a fresh clone, put Python 3.13.14 and Lean
-4.33.1 on PATH and run:
+For one logged reproduction from a fresh Linux clone, put Python 3.13.14 and
+Lean 4.33.1 on PATH and run:
 
 ```sh
 python3 scripts/reproduce_release.py
@@ -102,17 +104,32 @@ python3 scripts/reproduce_release.py
 The runner refuses an existing `lean/.lake`, a dirty checkout, or an existing
 output directory. It builds the default library and optional normalization,
 C030, finite, optimized and certificate modules explicitly, then runs their
-checks and the paper example. The normalization audit is not a default-library
+checks and the paper example. It also checks C082/C086 quantitative modules,
+C087's corpus, the C088 language core, the three accepted ordinary extension
+corpora, and native strict/diagnostic cases. Native process-group RSS monitoring
+requires Linux. The normalization audit is not a default-library
 import. Logs and a source-pinned receipt are written to
 `tmp/release-reproduction/`. This reuses the installed toolchain; it does not
 claim a fresh operating-system/toolchain installation or every historical
-experiment. A failed or capped step stops the run and remains in its receipt.
+experiment. A failed or capped strict step stops the run and remains in its
+receipt. The separately labelled stress step permits UNKNOWN without counting
+it as a mathematical answer. PDF/manifest/source hashes must agree with the
+recorded committed render inputs.
 
 The [September 20 clean reproduction](../notes/2026-09-20-clean-reproduction.md)
 records the actual fresh-cache run, exact revision, the preserved initial
 setup failure and the successful 18-step receipt. The
 [publication acceptance record](../notes/2026-09-20-publication-acceptance.md)
 separates mathematical review, source comparison and visual inspection.
+The [September 21 candidate](../notes/2026-09-21-publication-candidate.md) refreshes
+that review for the expanded paper and package. Its
+[fresh receipt](../results/publication-reproduction-20260921.json) records the
+actual outcome; historical checks are not relabelled as fresh evidence.
+
+C086's original smaller witness bound is a checked companion result. Section 11
+retains its existing larger construction and does not claim to expound C086.
+Likewise, the new fixed-arity, graph-only and function-only research notes are
+separate from this manuscript's theorem and proof map.
 
 ## Remaining scientific and publication questions
 

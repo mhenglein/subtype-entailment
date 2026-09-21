@@ -1,5 +1,12 @@
 # Ternary covariant entailment: an automata-mediated binary transfer
 
+> Current status, 21 September 2026: the ordinary result was independently
+> accepted in the [submission review](2026-09-20-submission-review.md).
+> Its exact integrated scope is [C089](../research/claims.md#c089).
+> [Current integration and reproduction](2026-09-21-publication-candidate.md).
+> The dated author record below is preserved, including its original pending
+> review status and execution limits.
+
 Date: 2026-09-20. Session: ternary-transfer-20260920. Issue #72, coordination #37.
 Approaches: A010/A011/A018. Base: 19b06d4fed9da635d9b911f0e908d04e4fc4b099.
 Status at outline creation: ordinary-proof route; independent mathematical review pending.
