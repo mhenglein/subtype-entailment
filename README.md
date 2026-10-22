@@ -1,14 +1,67 @@
-# Subtail
+# Subtype entailment
 
-Collaborative research on **Problem 1.7: subtype entailment over bottom and binary product**, with possibly infinite trees. The repository now contains a complete Lean-checked decision theorem for this problem; see [C081](research/claims.md#c081).
+Collaborative research on the **subtype entailment problem (SEP)**, specifically
+**Problem 1.7: subtype entailment over bottom and binary product**, with possibly
+infinite trees. This project, originally called **Subtail**, contains a complete
+Lean-checked decision theorem for this problem; see [C081](research/claims.md#c081).
 
-The [completion checklist](research/COMPLETION.md) separates release requirements
-from the remaining performance, complexity and extension research.
+Read the **[Astra-authored mathematical paper](output/pdf/subtail-paper.pdf)**,
+*Subtype entailment for bottom and binary product, with an explicit-top extension*,
+or its [Markdown source](paper/manuscript.md).
 
-**Before starting agent work:** read the [active tasks and owned files](STATE.md#active-work-and-file-ownership),
-the [research tracker](research/README.md#active-work), and the latest
-[coordination comments](https://github.com/mhenglein/subtail/issues/37).
-Claim a disjoint scope before editing; queued tasks are not file reservations.
+## Background and contributors
+
+Subtype entailment asks whether every assignment satisfying a finite set of
+subtype constraints also satisfies a proposed inequality. It arises in
+constraint-based type inference and simplification. The
+[paper's introduction](paper/manuscript.md#11-relation-to-previous-work)
+places this result in the earlier work of Henglein and Rehof, and Niehren and
+Priesnitz.
+
+The project's starting approach goes back to **Pawel Urzyczyn in 2003**.
+Contributors to the research process include **Fritz Henglein**, **Jakob Rehof**
+and **Marcus Henglein** ([Kernel](https://kernel.ai/)), together with the AI
+tools **Fable** and **Astra**. Astra authored the accompanying mathematical
+paper. **Kernel supported the project.**
+
+The process combined mathematical investigation, computational experiments,
+proof development, review and Lean formalization. This repository preserves
+that process through the original memo, dated notes, failed approaches,
+claims, proof sources, experiments and verification records.
+
+## Project timeline
+
+The proof and accompanying paper were in place by **21 September 2026**.
+The recorded milestones are:
+
+- **31 August 2026:** the [original memo](papers/sep-topfree.pdf), preserved
+  with its [provenance and checksum](papers/README.md).
+- **4 September 2026:** the [research repository was established](https://github.com/mhenglein/subtype-entailment/commit/1996b6b4f65b365040ab33a31b6d1a932bc88363),
+  followed by the [initial review](REVIEW.md), experiments and formalization.
+- **19 September 2026:** the complete core entailment decision theorem was
+  recorded at [commit `c946d86`](https://github.com/mhenglein/subtype-entailment/commit/c946d86b9e65da2877e0df42c710abbdcb5a4037),
+  with its [proof and verification record](notes/2026-09-19-entailment-decision.md).
+- **21 September 2026:** the paper, reviewed extensions and fresh-clone
+  reproduction were recorded in the
+  [publication checkpoint](https://github.com/mhenglein/subtype-entailment/commit/a6debdd634a8a50a7cceee5f02d613aa400cfe37).
+  The [review record](notes/2026-09-21-publication-candidate.md) and
+  [reproduction receipt](results/publication-reproduction-20260921.json)
+  document the exact sources and checks.
+- **22 October 2026:** this README was updated to add the project history,
+  contributor credits and related-work reference in preparation for public
+  release. This update changes only `README.md`; the September proof, paper
+  and research records retain their original history.
+
+## Related project
+
+[noti0na1/deci-nsse](https://github.com/noti0na1/deci-nsse) gives a Lean
+formalization of non-structural subtype entailment for bottom, top and one
+constructor of arbitrary finite arity and variance, over arbitrary, regular
+and finite trees. Its signature is broader than this project's core
+bottom/binary-product theorem; our explicit-top extension is described below.
+Its [proof commit `fc807660`](https://github.com/noti0na1/deci-nsse/commit/fc807660204f5cb98b0140a5964ee8aad8e44b28)
+is dated **3 October 2026**, after this project's **21 September 2026**
+checkpoint. The linked records document the respective timelines and scopes.
 
 ## The result
 
@@ -57,7 +110,7 @@ still return `UNKNOWN`.
 A timeout remains `UNKNOWN`. The original terminal witness bound is now
 proved separately as [C086](research/claims.md#c086), using a smaller compiler.
 Neither result establishes a tight complexity class or novelty. The [post-C081 programme](research/POST_C081.md)
-tracks these separate questions. Author names and affiliations are placeholders;
+tracks these separate questions. The paper's author and affiliation fields remain placeholders;
 licensing is pending. The paper is a research draft, not a peer-reviewed publication.
 
 ## Explicit top and complexity
@@ -190,19 +243,19 @@ bound is Lean-checked. These do not give a tight
 complexity class or bound the runtime of this native frontend.
 
 The earlier reader checkpoint is
-[`c081-research-2026-09-20`](https://github.com/mhenglein/subtail/tree/c081-research-2026-09-20),
+[`c081-research-2026-09-20`](https://github.com/mhenglein/subtype-entailment/tree/c081-research-2026-09-20),
 at `29cda9a`, with all four main checks passing. Its paper explains the
 qualitative C081 proof. Later quantitative, solver and standalone-paper revisions are separate
 additive contributions; original proof source pins remain unchanged.
 The revised standalone paper is preserved at
-[`c081-paper-2026-09-20`](https://github.com/mhenglein/subtail/tree/c081-paper-2026-09-20).
+[`c081-paper-2026-09-20`](https://github.com/mhenglein/subtype-entailment/tree/c081-paper-2026-09-20).
 Its [review record](notes/2026-09-20-paper-rewrite-readback.md) separates the
 manuscript readback, literature comparison, PDF inspection and formal evidence.
 
 ## Reproduce the result
 
 The mathematical source checkpoint is
-[`c946d86`](https://github.com/mhenglein/subtail/commit/c946d86b9e65da2877e0df42c710abbdcb5a4037).
+[`c946d86`](https://github.com/mhenglein/subtype-entailment/commit/c946d86b9e65da2877e0df42c710abbdcb5a4037).
 Its [verification record](notes/2026-09-19-entailment-decision.md) names exact
 builds, kernel replay, semantic reviews and native checks. Use Lean **4.33.1**,
 selected by `lean/lean-toolchain`, and Python 3.9 or newer for the core checks.
@@ -221,8 +274,8 @@ particular cloud provider is required. Capped stress remains UNKNOWN.
 Individual checks can also be run as follows:
 
 ```sh
-git clone https://github.com/mhenglein/subtail.git
-cd subtail
+git clone https://github.com/mhenglein/subtype-entailment.git
+cd subtype-entailment
 python3 scripts/check_lean.py
 python3 scripts/check_original_bounds.py
 (cd lean && lake build +Subtail.ExpressionNormalizationAudit)
@@ -250,6 +303,14 @@ needs Pandoc 3.11 and Tectonic 0.17.0; see [paper reproduction](paper/README.md)
 PDF generation and source-link checks do not repeat Lean verification.
 
 ## Start here
+
+The [completion checklist](research/COMPLETION.md) separates release requirements
+from the remaining performance, complexity and extension research.
+
+**Before starting agent work:** read the [active tasks and owned files](STATE.md#active-work-and-file-ownership),
+the [research tracker](research/README.md#active-work), and the latest
+[coordination comments](https://github.com/mhenglein/subtype-entailment/issues/37).
+Claim a disjoint scope before editing; queued tasks are not file reservations.
 
 Read these in order when joining or resuming the project:
 
